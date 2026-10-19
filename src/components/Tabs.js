@@ -1,9 +1,13 @@
-import { h, cx, useId, useRef, useState, useEffect, createContext, useContext, useControllable } from '../react.js';
+import { h, cx, React, useId, useRef, useState, useEffect, createContext, useContext, useControllable } from '../react.js';
 import { Icon } from '../icons.js';
+import { Badge } from './Badge.js';
+import { IconButton } from './Button.js';
 import { describe } from '../doc.js';
 
 const TabsContext = createContext(null);
-const TabListContext = createContext({ showIcon: true, showLabel: true, showCounter: true, showBadge: true });
+const TabListContext = createContext({ size: 'md', showIcon: true, showLabel: true, showCounter: true, showBadge: true });
+// Icon stroke thickness that matches the weight of the Bold label at each size (the label stem is about 0.135 of its font size).
+const STROKE = { sm: 3.25, md: 3.25, lg: 3.25, xl: 3.75 };
 const useTabs = () => useContext(TabsContext);
 
 export function Tabs({ value, defaultValue, onValueChange, children, className, ...rest }) {
@@ -21,6 +25,8 @@ export function TabList({ size = 'md', fullWidth = false, showIcon = true, showL
   const { current, setCurrent } = useTabs();
   const ref = useRef(null);
   const [edge, setEdge] = useState({ left: false, right: false });
+  const [bar, setBar] = useState(null);
+  const [ready, setReady] = useState(false);
   // Slide buttons appear when the row is wider than its container, like the Figma "slide left / right".
   useEffect(() => {
     const el = ref.current;
@@ -32,6 +38,19 @@ export function TabList({ size = 'md', fullWidth = false, showIcon = true, showL
     return () => { el.removeEventListener('scroll', measure); ro.disconnect(); };
   }, [children, size, showLabel, showIcon, showCounter, showBadge]);
   useEffect(() => { ref.current?.querySelector('[aria-selected="true"]')?.scrollIntoView({ block: 'nearest', inline: 'nearest' }); }, [current]);
+  // The underline is one element that slides to the selected tab; it is measured again when the row changes size.
+  React.useLayoutEffect(() => {
+    const el = ref.current;
+    const measure = () => {
+      const t = el.querySelector('[aria-selected="true"]');
+      setBar(t ? { x: t.offsetLeft, w: t.offsetWidth } : null);
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [current, children, size, fullWidth, showIcon, showLabel, showCounter, showBadge]);
+  useEffect(() => { const id = requestAnimationFrame(() => setReady(true)); return () => cancelAnimationFrame(id); }, []);
   const slide = (dir) => ref.current.scrollBy({ left: dir * ref.current.clientWidth * 0.6, behavior: 'smooth' });
   const onKeyDown = (e) => {
     const tabs = [...ref.current.querySelectorAll('[role="tab"]:not(:disabled)')];
@@ -46,11 +65,12 @@ export function TabList({ size = 'md', fullWidth = false, showIcon = true, showL
     next.focus();
     setCurrent(next.dataset.value);
   };
-  return h(TabListContext.Provider, { value: { showIcon, showLabel, showCounter, showBadge } },
-    h('div', { className: cx('bui-tablist-wrap', `bui-tablist-wrap--${size}`, fullWidth && 'bui-tablist-wrap--full', className) },
-      edge.left && h('button', { type: 'button', tabIndex: -1, 'aria-hidden': 'true', className: 'bui-tablist__slide bui-tablist__slide--left', onClick: () => slide(-1) }, h(Icon, { name: 'chevronLeft', size: 24 })),
-      h('div', { role: 'tablist', 'aria-label': label, ref, onKeyDown, className: 'bui-tablist', ...rest }, children),
-      edge.right && h('button', { type: 'button', tabIndex: -1, 'aria-hidden': 'true', className: 'bui-tablist__slide bui-tablist__slide--right', onClick: () => slide(1) }, h(Icon, { name: 'chevronRight', size: 24 }))));
+  return h(TabListContext.Provider, { value: { size, showIcon, showLabel, showCounter, showBadge } },
+    h('div', { className: cx('bui-tablist-wrap', `bui-tablist-wrap--${size}`, fullWidth && 'bui-tablist-wrap--full', ready && 'bui-tablist-wrap--ready', className) },
+      edge.left && h('div', { className: 'bui-tablist__slide bui-tablist__slide--left' }, h(IconButton, { variant: 'ghost', size: 'xsm', label: 'Slide left', tabIndex: -1, icon: h(Icon, { name: 'chevronLeft', size: 24 }), onClick: () => slide(-1) })),
+      h('div', { role: 'tablist', 'aria-label': label, ref, onKeyDown, className: 'bui-tablist', ...rest }, children,
+        bar && h('span', { className: 'bui-tablist__indicator', 'aria-hidden': 'true', style: { width: bar.w, transform: `translateX(${bar.x}px)` } })),
+      edge.right && h('div', { className: 'bui-tablist__slide bui-tablist__slide--right' }, h(IconButton, { variant: 'ghost', size: 'xsm', label: 'Slide right', tabIndex: -1, icon: h(Icon, { name: 'chevronRight', size: 24 }), onClick: () => slide(1) }))));
 }
 describe(TabList, 'The row of tabs. Its settings work like the Segmented Control ones; a row wider than its container scrolls with slide buttons.', {
   size: ["'sm' | 'md' | 'lg' | 'xl'", "'md'", 'Tab size: the label goes from 16 to 28px (Figma Small to Extra Large)'],
@@ -64,7 +84,7 @@ describe(TabList, 'The row of tabs. Its settings work like the Segmented Control
 
 export function Tab({ value, icon, counter, badge, disabled = false, children, className, ...rest }) {
   const { current, setCurrent, uid } = useTabs();
-  const { showIcon, showLabel, showCounter, showBadge } = useContext(TabListContext);
+  const { size, showIcon, showLabel, showCounter, showBadge } = useContext(TabListContext);
   const selected = current === value;
   const hasIcon = showIcon && icon;
   const labelShown = showLabel || !hasIcon;
@@ -75,18 +95,18 @@ export function Tab({ value, icon, counter, badge, disabled = false, children, c
     className: cx('bui-tab', className), onClick: () => setCurrent(value), ...rest,
   },
   h('span', { className: 'bui-tab__block' },
-    hasIcon && h('span', { className: 'bui-tab__icon', 'aria-hidden': 'true' }, icon),
+    hasIcon && h('span', { className: 'bui-tab__icon', 'aria-hidden': 'true' }, React.isValidElement(icon) && icon.props.strokeWidth == null ? React.cloneElement(icon, { strokeWidth: STROKE[size] }) : icon),
     (labelShown || (showCounter && counter != null)) && h('span', { className: 'bui-tab__text' },
       labelShown && h('span', { className: 'bui-tab__label' }, children),
       showCounter && counter != null && h('span', { className: 'bui-tab__counter' }, counter)),
-    showBadge && badge != null && (typeof badge === 'object' ? badge : h('span', { className: 'bui-tab__badge' }, badge))),
+    showBadge && badge != null && (typeof badge === 'object' ? badge : h(Badge, { label: badge, variant: 'red' }))),
   h('span', { className: 'bui-tab__line', 'aria-hidden': 'true' }));
 }
 describe(Tab, 'A tab button.', {
   value: ['string', null, 'Identifier matching a `TabPanel`'],
   icon: ['ReactNode', null, 'Icon before the label'],
   counter: ['number | string', null, 'Counter after the label'],
-  badge: ['ReactNode | string', null, 'A red badge after the counter'],
+  badge: ['ReactNode | string', null, 'A Badge after the counter (red by default)'],
   disabled: ['boolean', 'false', 'Disable the tab'],
 });
 
