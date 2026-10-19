@@ -2,15 +2,16 @@ import { h, cx, useState } from '../react.js';
 import { Button as Base } from '../base.js';
 import { Tooltip } from './Tooltip.js';
 import { describe } from '../doc.js';
+import { outlineClass } from '../theme-flags.js';
 
 export function Button({
-  label, children, variant = 'secondary', size, isDisabled, isLoading = false, icon, endContent, isIconOnly = false, shape = 'rounded',
+  label, children, variant = 'secondary', size, isDisabled, isLoading = false, icon, endContent, isIconOnly = false, shape = 'rounded', outline,
   width, tooltip, href, target, rel, type = 'button', onClick, clickAction, className, style, ref, ...rest
 }) {
   const [pending, setPending] = useState(false);
   const sz = size || 'md';
   const disabled = isDisabled ?? false;
-  const common = { size: sz, loading: isLoading || pending, disabled, className: cx(isIconOnly && `bui-btn-icon bui-btn-icon--${sz}`, shape === 'circle' && 'bui-shape-circle', className), style: { width, ...(variant === 'destructive' && { '--baseui-button-custom-hover': 'var(--baseui-Extensions-Background-Error-Hover)' }), ...style } };
+  const common = { size: sz, loading: isLoading || pending, disabled, className: cx(isIconOnly && `bui-btn-icon bui-btn-icon--${sz}`, shape === 'circle' && 'bui-shape-circle', outlineClass(outline), className), style: { width, ...(variant === 'destructive' && { '--baseui-button-custom-hover': 'var(--baseui-Extensions-Background-Error-Hover)' }), ...style } };
   const variantProps = variant === 'ghost' ? { variant: 'text' }
     : variant === 'destructive' ? { variant: 'custom', customBackground: 'var(--baseui-Extensions-Background-Error)', customColor: 'var(--baseui-Extensions-Text-and-Icon-AlwaysDark)' }
       : { variant };
@@ -36,6 +37,7 @@ describe(Button, 'Triggers an action or navigates.', {
   icon: ['ReactNode', null, 'Icon before the label'],
   endContent: ['ReactNode', null, 'Content after the label, e.g. a chevron'],
   shape: ["'rounded' | 'circle'", "'rounded'", 'circle makes a pill (a circle for an icon button); rounded follows the theme radius. `data-shape="circle"` on a parent does it for all buttons inside'],
+  outline: ['boolean', 'theme', 'A thin inner rim (not on a ghost button); true or false overrides the Outline setting of the theme'],
   isIconOnly: ['boolean', 'false', 'Square icon-only button; `label` becomes `aria-label`'],
   width: ['number | string', null, 'Number is px; `"100%"` fills the container'],
   tooltip: ['string | false', null, 'Hover text; false turns the tooltip off (an icon-only button shows its label by default)'],

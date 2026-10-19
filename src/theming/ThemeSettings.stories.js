@@ -38,7 +38,7 @@ describe(ThemePreview, 'The theme of this site and of your own app: the settings
   motion: ["'off' | 'basic' | 'enhanced'", "'basic'", 'off: nothing moves (loading indicators still run); basic (the default): simple transitions, the highlight of a tab, segment or bar item appears in its new place with a fade; enhanced: the highlight slides there, and the underline of the tabs also nudges toward the hovered tab (`data-motion` on `<html>`)'],
   floating: ['boolean', 'false', 'Bars and panels float above the content: rounded, inset, with a shadow (`data-floating` on `<html>`; the Navbar and Bottom Bar follow it)'],
   glass: ['boolean', 'false', 'Translucent, blurred surfaces for bars, menus, dialogs and toasts (`data-glass` on `<html>`)'],
-  outline: ['boolean', 'false', 'A thin rim around bars, menus, dialogs, toasts, cards and the floating panels; with glass on it is a lit glass edge (`data-outline` on `<html>`)'],
+  outline: ['boolean', 'false', 'A thin rim around bars, menus, dialogs, toasts, cards and the floating panels, and inside buttons, fields, tokens, segmented controls and switches; with glass on it is a lit glass edge (`data-outline` on `<html>`)'],
 });
 
 const custom = { preset: 'custom' };

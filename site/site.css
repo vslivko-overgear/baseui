@@ -19,7 +19,7 @@ code {
 .shell { min-height: 100vh; }
 .body { display: grid; grid-template-columns: var(--baseui-layout-sidebar-width) minmax(0, 1fr); min-height: calc(100vh - var(--bar-h)); }
 .body--settings { grid-template-columns: var(--baseui-layout-sidebar-width) minmax(0, 1fr) var(--baseui-layout-settings-width); }
-.settings { position: sticky; top: var(--bar-h); height: calc(100vh - var(--bar-h)); overflow-y: auto; box-sizing: border-box; padding: var(--baseui-spacing-24); border-left: 1px solid var(--baseui-Border-Primary); background: var(--baseui-Background-Primary); }
+.settings { position: sticky; top: var(--bar-h); height: calc(100vh - var(--bar-h)); overflow: hidden; box-sizing: border-box; border-left: 1px solid var(--baseui-Border-Primary); background: var(--baseui-Background-Primary); }
 .settings .controls, .settings-sheet .controls { border: 0; border-radius: 0; padding: 0; background: none; }
 .settings-fab { display: none; }
 
@@ -30,12 +30,13 @@ code {
 
 /* sidebar */
 .side {
-  position: sticky; top: var(--bar-h); height: calc(100vh - var(--bar-h)); overflow-y: auto;
-  display: flex; flex-direction: column; gap: var(--baseui-spacing-12);
-  padding: var(--baseui-spacing-24);
+  position: sticky; top: var(--bar-h); height: calc(100vh - var(--bar-h)); overflow: hidden;
   background: var(--baseui-Background-Primary);
   border-right: 1px solid var(--baseui-Border-Primary);
 }
+/* the columns: the panel keeps its edge (background, shadow, rim) and the content scrolls inside it */
+.panel-scroll { box-sizing: border-box; height: 100%; overflow-y: auto; padding: var(--baseui-spacing-24); }
+.side .panel-scroll { display: flex; flex-direction: column; gap: var(--baseui-spacing-12); }
 .brand { display: inline-flex; align-items: center; text-decoration: none; color: var(--baseui-Text-and-Icon-Primary); }
 .brand-logo { display: block; }
 .search { padding-top: var(--baseui-spacing-8); }
@@ -79,7 +80,7 @@ h3 { font: var(--baseui-Typography-Header-20); margin: 0 0 var(--baseui-spacing-
 }
 .controls > button { align-self: flex-start; }
 .controls-title { font: var(--baseui-Typography-Header-20); color: var(--baseui-Text-and-Icon-Primary); margin: 0; padding: 16px 0 8px; }
-.settings { padding-top: 8px; }
+.settings .panel-scroll { padding-top: 8px; }
 .controls-row { display: flex; gap: var(--baseui-spacing-16); }
 .controls-row > .control { flex: 1; min-width: 0; }
 .control { display: flex; flex-direction: column; gap: var(--baseui-spacing-8); }
@@ -223,4 +224,8 @@ html[data-outline="on"][data-floating="on"] :is(.appbar, .side, .settings)::befo
   background: var(--bui-rim);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
 }
-html[data-outline="on"][data-floating="on"][data-glass="on"] :is(.appbar, .side, .settings)::before { background: linear-gradient(135deg, color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 70%, transparent), color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 10%, transparent) 45%, color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 40%, transparent)), linear-gradient(var(--bui-rim), var(--bui-rim)); }
+html[data-outline="on"][data-floating="on"][data-glass="on"] :is(.appbar, .side, .settings)::before { background: var(--bui-rim-glass); }
+html[data-outline="on"][data-floating="on"][data-glass="on"] :is(.appbar, .side, .settings)::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; pointer-events: none;
+  box-shadow: inset 0 0 14px 0 color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 9%, transparent), inset 2px 2px 3px -1px color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 24%, transparent), inset -2px -2px 3px -1px color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 14%, transparent);
+}

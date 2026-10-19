@@ -391,10 +391,10 @@ function App() {
             h('svg', { className: 'brand-logo', viewBox: '0 0 64 14', width: 128, height: 28, fill: 'currentColor', 'aria-hidden': 'true', focusable: 'false' }, LOGO_PATHS.map((d) => h('path', { key: d.slice(0, 24), d })))),
           h('div', { className: 'appbar-end' }, h('div', { className: 'view-control' }, viewControl), themeControl)),
         h('div', { className: 'body' + (settings ? ' body--settings' : '') },
-          h('aside', { className: 'side' }, catalog),
+          h('aside', { className: 'side' }, h('div', { className: 'panel-scroll' }, catalog)),
           h('main', { id: 'main', 'data-viewport': viewport },
             entry ? h(Page, { entry, key: entry.slug }) : h(Home)),
-          settings && h('aside', { className: 'settings', 'aria-label': 'Settings' }, h(Controls, settings))),
+          settings && h('aside', { className: 'settings', 'aria-label': 'Settings' }, h('div', { className: 'panel-scroll' }, h(Controls, settings)))),
         settings && h(Button, { variant: 'primary', size: 'md', className: 'settings-fab', icon: h(icons.Sliders01), onClick: () => setSheet(true) }, 'Settings'),
         h(Modal, { open: menu, onOpenChange: _setMenu, title: 'Catalog', height: 'viewport' }, h('div', { className: 'catalog-sheet' }, catalog)),
         h(Modal, { open: sheet && !!settings, onOpenChange: setSheet, title: 'Settings', primaryAction: h(Button, { onClick: () => setSheet(false) }, 'Done') }, settings && h('div', { className: 'settings-sheet' }, h(Controls, { ...settings, title: null })))));

@@ -536,7 +536,7 @@
 .bui-navbar--floating { margin: var(--baseui-spacing-8) var(--baseui-spacing-12) 0; border-radius: var(--baseui-radius-full); background: var(--baseui-Extensions-Background-Surface); box-shadow: var(--baseui-shadow-med); }
 /* glass: translucent surfaces that blur what is behind them; .bui-glass forces it, .bui-glass-off prevents it (the glass prop of a component) */
 .bui-glass, [data-glass="on"] :is(.bui-navbar, .bui-bottombar, .bui-popover__panel, .bui-dropdown, [class*="_popup_vmty2"], [class*="_popup_1nnzw"], .bui-toast:not(.bui-toast--inverse)):not(.bui-glass-off) {
-  --bui-rim-bg: linear-gradient(135deg, color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 70%, transparent), color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 10%, transparent) 45%, color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 40%, transparent)), linear-gradient(var(--bui-rim), var(--bui-rim));
+  --bui-rim-bg: var(--bui-rim-glass);
   background: color-mix(in srgb, var(--baseui-Extensions-Background-Surface) 62%, transparent);
   -webkit-backdrop-filter: blur(20px) saturate(160%); backdrop-filter: blur(20px) saturate(160%);
 }
@@ -576,10 +576,35 @@
 
 /* ---------- Outline: a thin rim around surfaces (data-outline on <html>, or the outline prop of one component) ---------- */
 /* the rim is a mask-ring on ::before, so it takes no space and keeps the shadow; with glass it is a lit edge, not a flat line */
-:root { --bui-rim: color-mix(in srgb, var(--baseui-Text-and-Icon-Primary) 12%, transparent); }
+:root {
+  --bui-rim: color-mix(in srgb, var(--baseui-Text-and-Icon-Primary) 12%, transparent);
+  /* glass: a lit edge, bright at two corners and faint in between, not a dark line */
+  --bui-rim-glass: linear-gradient(135deg, color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 50%, transparent), color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 6%, transparent) 35%, color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 6%, transparent) 65%, color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 34%, transparent)), color-mix(in srgb, var(--baseui-Text-and-Icon-Primary) 5%, transparent);
+}
 .bui-navbar, .bui-toast { position: relative; }
 .bui-outline::before, [data-outline="on"] :is(.bui-navbar, .bui-bottombar, .bui-popover__panel, .bui-dropdown, [class*="_popup_vmty2"], [class*="_popup_1nnzw"], .bui-toast:not(.bui-toast--inverse), .bui-card):not(.bui-outline-off)::before {
   content: ""; position: absolute; inset: 0; z-index: 1; box-sizing: border-box; padding: 1px; border-radius: inherit; pointer-events: none;
   background: var(--bui-rim-bg, var(--bui-rim));
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
+}
+
+/* Outline of controls: buttons (not ghost), fields, tokens, segmented controls and switches get an inner 1px rim.
+   --bui-ol is 1 where data-outline="on" (nearest ancestor wins); a Button can set it itself with its outline prop. */
+:root { --bui-ol: 0; }
+[data-outline="on"] { --bui-ol: 1; }
+[data-outline="off"], button.bui-outline-off { --bui-ol: 0; }
+button.bui-outline { --bui-ol: 1; }
+:is(button[class*="_h5cjz_"]:not([class*="_text_h5cjz"]), [class*="_cell_2ah00"], [class*="_chip_"], .bui-segmented, [class*="_track_1epgh"]) {
+  box-shadow: inset 0 0 0 calc(1px * var(--bui-ol)) var(--bui-rim);
+}
+/* with glass the rim of a control is a lit edge: a bright line on top and a faint one around */
+:is([data-glass="on"] :is(button[class*="_h5cjz_"]:not([class*="_text_h5cjz"]), [class*="_cell_2ah00"], [class*="_chip_"], .bui-segmented, [class*="_track_1epgh"]), button.bui-glass) {
+  box-shadow: inset 0 0 0 calc(1px * var(--bui-ol)) color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 16%, transparent), inset 0 calc(1px * var(--bui-ol)) 0 0 color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 40%, transparent);
+}
+
+/* glass + outline: besides the lit hairline the edge has a soft inner glow, like the bevel of a glass pane */
+html[data-glass="on"][data-outline="on"] :is(.bui-navbar, .bui-bottombar, .bui-popover__panel, .bui-dropdown, [class*="_popup_vmty2"], [class*="_popup_1nnzw"], .bui-toast:not(.bui-toast--inverse)):not(.bui-glass-off):not(.bui-outline-off)::after,
+.bui-glass.bui-outline::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; pointer-events: none;
+  box-shadow: inset 0 0 14px 0 color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 9%, transparent), inset 2px 2px 3px -1px color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 24%, transparent), inset -2px -2px 3px -1px color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 14%, transparent);
 }
