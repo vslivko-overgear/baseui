@@ -18,6 +18,7 @@ export { Pagination } from './components/Pagination.js';
 export { Popover } from './components/Popover.js';
 export { ProgressBar } from './components/ProgressBar.js';
 export { SegmentedControl } from './components/SegmentedControl.js';
+export { Rating, RatingDisplay } from './components/Rating.js';
 export { Skeleton } from './components/Skeleton.js';
 export { Slider } from './components/Slider.js';
 export { Spinner } from './components/Spinner.js';
