@@ -12,10 +12,10 @@ const items = [
 ];
 export default meta({
   title: 'Components/Tabs', component: Tabs,
-  args: { defaultValue: 'overview', size: 'md', fullWidth: false, showIcon: true, showLabel: true, showCounter: true, showBadge: true },
+  args: { defaultValue: 'overview', size: 'md', fullWidth: false, showIcon: true, showCounter: true, showBadge: true },
   argTypes: {
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg', 'xl'] }, fullWidth: { control: 'boolean' },
-    showIcon: { control: 'boolean' }, showLabel: { control: 'boolean' }, showCounter: { control: 'boolean' }, showBadge: { control: 'boolean' },
+    showIcon: { control: 'boolean' }, showCounter: { control: 'boolean' }, showBadge: { control: 'boolean' },
     defaultValue: { control: false },
   },
 });
@@ -33,12 +33,8 @@ export const Playground = {
 </Tabs>` }),
   render: ({ defaultValue, ...args }) => h('div', { style: { width: 560, maxWidth: '100%' } }, list(args)),
 };
-export const IconsOnly = example({
-  name: 'Icons Only', render: () => h('div', { style: { width: 280, maxWidth: '100%' } }, list({ showLabel: false, showCounter: false, showBadge: false })),
-  source: `<TabList showLabel={false}>…</TabList>`,
-});
 export const FullWidth = example({
-  name: 'Full Width', render: () => h('div', { style: { width: 480, maxWidth: '100%' } }, list({ fullWidth: true, showIcon: false })),
+  name: 'Full Width', render: () => h('div', { style: { width: 720, maxWidth: '100%' } }, list({ fullWidth: true })),
   source: `<TabList fullWidth>…</TabList>`,
 });
 export const Sizes = example({
@@ -51,4 +47,4 @@ export const Slide = example({
 });
 export const SingleTab = example({ name: 'Tab', render: () => h(Tabs, { defaultValue: 'a' }, h(TabList, { label: 'Demo' }, h(Tab, { value: 'a' }, 'First'), h(Tab, { value: 'b' }, 'Second')), h(TabPanel, { value: 'a' }, 'First panel'), h(TabPanel, { value: 'b' }, 'Second panel')), source: `<Tab value="a">First</Tab>
 <TabPanel value="a">First panel</TabPanel>` });
-export const __namedExportsOrder = ['Playground', 'IconsOnly', 'FullWidth', 'Sizes', 'Slide', 'SingleTab'];
+export const __namedExportsOrder = ['Playground', 'FullWidth', 'Sizes', 'Slide', 'SingleTab'];
