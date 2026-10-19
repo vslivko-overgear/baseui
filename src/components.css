@@ -453,6 +453,9 @@
 .bui-calendar__weekday { display: flex; align-items: center; justify-content: center; height: var(--cal-day); font: var(--baseui-Typography-Text-12-Regular); color: var(--baseui-Text-and-Icon-Secondary); text-transform: capitalize; }
 .bui-calendar__cell { display: flex; align-items: center; justify-content: center; height: var(--cal-day); }
 .bui-calendar__cell--range { background: var(--baseui-Background-Secondary); }
+.bui-calendar__cell--preview { background: var(--baseui-Background-Transparent-Hover); }
+.bui-calendar__cell--preview-start { background: linear-gradient(90deg, transparent 50%, var(--baseui-Background-Transparent-Hover) 50%); }
+.bui-calendar__cell--preview-end { background: linear-gradient(90deg, var(--baseui-Background-Transparent-Hover) 50%, transparent 50%); }
 .bui-calendar__cell--start { background: linear-gradient(90deg, transparent 50%, var(--baseui-Background-Secondary) 50%); }
 .bui-calendar__cell--end { background: linear-gradient(90deg, var(--baseui-Background-Secondary) 50%, transparent 50%); }
 .bui-calendar__day {

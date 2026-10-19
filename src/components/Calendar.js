@@ -43,6 +43,7 @@ export function Calendar({
   const visible = monthStart(parse(visibleIso));
   const setVisible = (d) => setVisibleIso(iso(monthStart(d)));
   const [focus, setFocus] = useState(null);
+  const [hover, setHover] = useState(null);
   const grid = useRef(null);
   const moved = useRef(false);
   const titleId = useId();
@@ -117,6 +118,9 @@ export function Calendar({
     if (!inView(next)) setVisible(cmp(next, visible) < 0 ? next : addMonths(next, -(numberOfMonths - 1)));
   };
 
+  // While a range is being picked, hovering (or focusing) a later day previews the range up to it.
+  const previewEnd = picking && hover && cmp(hover, sel.start) > 0 && !disabled(hover) ? hover : null;
+  const inPreview = (d) => previewEnd && cmp(d, sel.start) > 0 && cmp(d, previewEnd) <= 0;
   const inRange = (d) => sel && mode === 'range' && sel.start && sel.end && cmp(d, sel.start) >= 0 && cmp(d, sel.end) <= 0;
   const title = numberOfMonths === 1 ? fmt.monthYear.format(visible) : `${fmt.monthYear.format(months[0])} – ${fmt.monthYear.format(months[months.length - 1])}`;
 
@@ -144,12 +148,12 @@ export function Calendar({
           const off = disabled(d);
           const isToday = cmp(d, today) === 0;
           const ranged = inRange(d);
-          return h('div', { key: j, role: 'gridcell', 'aria-selected': on || (ranged || undefined), className: cx('bui-calendar__cell', ranged && 'bui-calendar__cell--range', rs && sel.end && cmp(sel.start, sel.end) !== 0 && 'bui-calendar__cell--start', re && cmp(sel.start, sel.end) !== 0 && 'bui-calendar__cell--end') },
+          return h('div', { key: j, role: 'gridcell', 'aria-selected': on || (ranged || undefined), className: cx('bui-calendar__cell', ranged && 'bui-calendar__cell--range', inPreview(d) && 'bui-calendar__cell--preview', previewEnd && rs && 'bui-calendar__cell--preview-start', previewEnd && cmp(d, previewEnd) === 0 && 'bui-calendar__cell--preview-end', rs && sel.end && cmp(sel.start, sel.end) !== 0 && 'bui-calendar__cell--start', re && cmp(sel.start, sel.end) !== 0 && 'bui-calendar__cell--end') },
             h('button', {
               type: 'button', 'data-date': iso(d), tabIndex: cmp(d, tabStop) === 0 && !outside ? 0 : -1, 'aria-label': fmt.long.format(d), 'aria-disabled': off || undefined,
               'aria-current': isToday ? 'date' : undefined, 'aria-pressed': on,
               className: cx('bui-calendar__day', on && 'bui-calendar__day--selected', isToday && 'bui-calendar__day--today', outside && 'bui-calendar__day--outside', off && 'bui-calendar__day--disabled'),
-              onClick: () => pick(d), onFocus: () => setFocus(d),
+              onClick: () => pick(d), onFocus: () => { setFocus(d); setHover(d); }, onBlur: () => setHover(null), onPointerEnter: (e) => { if (e.pointerType === 'mouse') setHover(d); }, onPointerLeave: () => setHover(null),
             }, fmt.number.format(d.getDate())));
         }))));
   };
