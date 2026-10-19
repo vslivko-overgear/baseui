@@ -36,7 +36,7 @@ export const Sizes = example({
 export const Spacing = example({
   name: 'Spacing', render: () => W(360, h('div', { style: { display: 'flex', flexDirection: 'column', gap: 'var(--baseui-spacing-16)' } },
     ['sm', 'md', 'lg'].map((sp) => h(List, { key: sp, title: `spacing ${sp}`, spacing: sp }, rows({ rows: 3, ...ROW_ARGS, leading: 'icon' }, 'md'))))),
-  source: `<List spacing="lg">…</List>  // sm compact | md +8px | lg +16px`,
+  source: `<List spacing="lg">…</List>  // sm compact | md +4px | lg +8px`,
 });
 export const Settings = example({
   name: 'Switches', render: () => W(360, h(List, { title: 'Notifications' }, rows({ rows: 3, ...ROW_ARGS, control: 'switch', subtitle: true }, 'md'))),
