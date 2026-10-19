@@ -623,11 +623,10 @@ html[data-glass="on"][data-outline="on"] :is(.bui-navbar, .bui-bottombar, .bui-p
 :is(button[class*="_primary_h5cjz"], button[class*="_custom_h5cjz"], [class*="_track_1epgh"][data-checked]) { box-shadow: none !important; }
 
 /* ---------- Menus and panels (Dropdown, Popover, Selector and Typeahead lists): enhanced animation ----------
-   basic = a quick fade (as before), off = none (data-motion="off"), enhanced = the panel grows from its trigger, items follow one by one,
+   basic = a quick fade (as before), off = none (data-motion="off"), enhanced = the panel grows from its trigger,
    and the panel plays out when it closes. The theme sets data-motion on <html>; a Dropdown or Popover can set bui-motion--* itself. */
 @keyframes bui-menu-in { from { opacity: 0; transform: translateY(var(--bui-menu-shift, -6px)) scale(0.92); } }
 @keyframes bui-menu-out { to { opacity: 0; transform: translateY(var(--bui-menu-shift, -6px)) scale(0.95); } }
-@keyframes bui-menu-item { from { opacity: 0; transform: translateY(var(--bui-menu-shift, -6px)); } }
 :is(.bui-dropdown--standalone, .bui-popover__panel) {
   &[data-placement="bottom-start"] { transform-origin: top left; }
   &[data-placement="bottom-end"] { transform-origin: top right; }
@@ -637,18 +636,10 @@ html[data-glass="on"][data-outline="on"] :is(.bui-navbar, .bui-bottombar, .bui-p
 :is(html[data-motion="enhanced"] :is(.bui-dropdown--standalone, .bui-popover__panel):not(.bui-motion--basic):not(.bui-motion--off), :is(.bui-dropdown--standalone, .bui-popover__panel).bui-motion--enhanced) {
   animation: bui-menu-in var(--baseui-duration-medium) var(--baseui-ease-emphasized) both;
   &[data-closing] { animation: bui-menu-out var(--baseui-duration-fast) var(--baseui-ease-standard) both; pointer-events: none; }
-  &:not([data-closing]) .bui-dropdown__item { animation: bui-menu-item var(--baseui-duration-medium) var(--baseui-ease-emphasized) both; animation-delay: calc(40ms + var(--i, 0) * 22ms); }
 }
 /* the lists of Selector and Typeahead are drawn by the compiled components: the same movement through their open and closing states */
 html[data-motion="enhanced"] [class*="_popup_vmty2"] {
   transition: opacity var(--baseui-duration-medium) var(--baseui-ease-emphasized), transform var(--baseui-duration-medium) var(--baseui-ease-emphasized);
   &[data-starting-style], &[data-ending-style] { opacity: 0; transform: translateY(-6px) scale(0.92); }
   &[data-side="top"][data-starting-style], &[data-side="top"][data-ending-style] { transform: translateY(6px) scale(0.92); }
-  &[data-open] .bui-dropdown__item { animation: bui-menu-item var(--baseui-duration-medium) var(--baseui-ease-emphasized) both; }
-  &[data-open] .bui-dropdown__item:nth-child(2) { animation-delay: 62ms; }
-  &[data-open] .bui-dropdown__item:nth-child(3) { animation-delay: 84ms; }
-  &[data-open] .bui-dropdown__item:nth-child(4) { animation-delay: 106ms; }
-  &[data-open] .bui-dropdown__item:nth-child(5) { animation-delay: 128ms; }
-  &[data-open] .bui-dropdown__item:nth-child(n+6) { animation-delay: 150ms; }
-  &[data-open] .bui-dropdown__item:nth-child(1) { animation-delay: 40ms; }
 }

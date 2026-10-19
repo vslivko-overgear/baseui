@@ -22,7 +22,11 @@ export function Dropdown({
   const id = useId();
   const real = useMemo(() => options.filter(isOption), [options]);
   const enabled = real.filter((o) => !o.disabled);
-  const isOn = (o) => (multiple ? (selected || []).includes(o.value) : selected === o.value);
+  // while the menu plays out after a choice, it keeps showing what was selected before, so the new check mark does not flash on a fading menu
+  const frozen = useRef(selected);
+  if (!closing) frozen.current = selected;
+  const shownValue = closing ? frozen.current : selected;
+  const isOn = (o) => (multiple ? (shownValue || []).includes(o.value) : shownValue === o.value);
   const allOn = multiple && enabled.length > 0 && enabled.every(isOn);
 
   useEffect(() => {
@@ -64,7 +68,7 @@ export function Dropdown({
         const index = o.disabled ? -1 : enabled.indexOf(o);
         return h('div', {
           key: o.value, role: 'option', 'aria-selected': isOn(o), 'aria-disabled': o.disabled || undefined, 'data-highlighted': index === active && index >= 0 ? '' : undefined, tabIndex: -1,
-          style: { '--i': Math.min(i, 10) }, className: itemClass(o), onClick: () => choose(o), onPointerMove: () => index >= 0 && setActive(index),
+          className: itemClass(o), onClick: () => choose(o), onPointerMove: () => index >= 0 && setActive(index),
         }, h(DropdownItemContent, { option: o, check: h('span', { className: 'bui-dropdown__check' }, h(CheckMark)) }));
       })));
 }
@@ -81,7 +85,7 @@ describe(Dropdown, 'A menu of options that opens from any trigger. It stands alo
   onOpenChange: ['(open: boolean) => void', null, 'Called when it opens or closes'],
   placement: ["'bottom-start' | 'bottom-end' | 'top-start' | 'top-end'", "'bottom-start'", 'Where the menu appears'],
   label: ['string', null, 'Accessible name of the menu'],
-  motion: ["'off' | 'basic' | 'enhanced'", 'theme', 'Animation of opening and closing: off, basic (a quick fade), or enhanced (the menu grows from its trigger, the items follow one by one, and it plays out when it closes); by default the Animations setting of the theme'],
+  motion: ["'off' | 'basic' | 'enhanced'", 'theme', 'Animation of opening and closing: off, basic (a quick fade), or enhanced (the menu grows from its trigger, and it plays out when it closes); by default the Animations setting of the theme'],
   glass: ['boolean', 'theme', 'Translucent, blurred menu; true or false overrides the Glass setting of the theme'],
   outline: ['boolean', 'theme', 'A thin rim around the menu (glassy when glass is on); true or false overrides the Outline setting of the theme'],
 });
