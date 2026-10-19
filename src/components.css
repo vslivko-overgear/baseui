@@ -553,3 +553,22 @@
 .bui-list--spacing-lg ._xsm_1xp1v_201 { min-height: 48px; }
 .bui-list--spacing-lg ._small_1xp1v_200 { min-height: 56px; }
 .bui-list--spacing-lg ._list_1f5ju_14 { gap: 4px; }
+
+/* ---------- Checkbox and Radio: size and animation ---------- */
+/* sm: a 20px control with a 14px label (md is 24px and 16px) */
+:is(.bui-check--sm._root_1p6mm_9, .bui-check--sm ._root_1p6mm_9, .bui-check--sm._root_e1rix_1, .bui-check--sm ._root_e1rix_1) { font: var(--baseui-Typography-Text-14-Regular); gap: var(--baseui-spacing-8); }
+:is(.bui-check--sm._root_1p6mm_9, .bui-check--sm ._root_1p6mm_9) ._box_1p6mm_18 { width: 20px; height: 20px; border-radius: var(--baseui-radius-6); }
+:is(.bui-check--sm._root_1p6mm_9, .bui-check--sm ._root_1p6mm_9) ._indicator_1p6mm_51 svg { width: 14px; height: 14px; }
+:is(.bui-check--sm._root_e1rix_1, .bui-check--sm ._root_e1rix_1) ._button_e1rix_11 { width: 20px; height: 20px; }
+:is(.bui-check--sm._root_e1rix_1, .bui-check--sm ._root_e1rix_1) ._indicator_e1rix_47 { width: 8px; height: 8px; }
+/* motion classes of one control (the page sets data-motion on <html>) */
+.bui-motion--enhanced { --bui-fx: 1; }
+.bui-motion--basic, .bui-motion--off { --bui-fx: 0; }
+.bui-motion--off, .bui-motion--off * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+/* enhanced: the box pops and the check mark is drawn; the radio dot grows (the durations scale to nothing in basic) */
+@keyframes bui-box-pop { 0% { transform: scale(0.82); } 55% { transform: scale(1.1); } 100% { transform: scale(1); } }
+@keyframes bui-check-draw { from { stroke-dashoffset: 24; } to { stroke-dashoffset: 0; } }
+@keyframes bui-dot-grow { 0% { transform: scale(0); } 60% { transform: scale(1.3); } 100% { transform: scale(1); } }
+._box_1p6mm_18[data-checked], ._box_1p6mm_18[data-indeterminate] { animation: bui-box-pop calc(280ms * var(--bui-fx)) var(--baseui-ease-standard); }
+._box_1p6mm_18[data-checked] ._indicator_1p6mm_51 svg path, ._box_1p6mm_18[data-indeterminate] ._indicator_1p6mm_51 svg path { stroke-dasharray: 24; animation: bui-check-draw calc(280ms * var(--bui-fx)) var(--baseui-ease-standard) both; }
+._button_e1rix_11[data-checked] ._indicator_e1rix_47 { animation: bui-dot-grow calc(280ms * var(--bui-fx)) var(--baseui-ease-standard); }

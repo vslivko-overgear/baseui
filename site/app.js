@@ -1,5 +1,6 @@
 import { t as requireReact } from '../lib/react-BZJXY1be.js';
 import { documentControls } from './controls-docs.js';
+import { Checkbox, CheckboxGroup, Radio, RadioGroup } from '../src/components/Checks.js';
 import { t as initDom, r as renderInto } from '../lib/react-18-D4o7zN8K.js';
 import manifest from './manifest.js';
 import { TextField, Switch, Chip, ChipGroup, Modal } from '../src/base.js';
@@ -60,9 +61,24 @@ const store = {
 
 /* ------------------------------------------------- component registry (UI) */
 
+// The compiled Checkbox, Radio and their groups get the size and animation settings of the design system.
+const CHECK_PAGES = { 'Checkbox.stories': Checkbox, 'CheckboxGroup.stories': CheckboxGroup, 'RadioGroup.stories': RadioGroup, 'Radio.stories': Radio };
+function enhanceChecks(file, m) {
+  const key = Object.keys(CHECK_PAGES).find((k) => file.includes(`/${k}-`));
+  const meta = m.default;
+  if (!key || meta.__checks) return;
+  meta.__checks = true;
+  meta.component = CHECK_PAGES[key];
+  meta.args = { size: 'md', motion: 'theme', ...meta.args };
+  meta.argTypes = {
+    ...meta.argTypes,
+    size: { control: 'inline-radio', options: ['sm', 'md'] },
+    motion: { control: 'inline-radio', options: ['theme', 'off', 'basic', 'enhanced'], mapping: { theme: undefined } },
+  };
+}
 const modules = new Map();
 const loadModule = (file) => {
-  if (!modules.has(file)) modules.set(file, import(file).then((m) => { documentControls(m.default); return m; }));
+  if (!modules.has(file)) modules.set(file, import(file).then((m) => { enhanceChecks(file, m); documentControls(m.default); return m; }));
   return modules.get(file);
 };
 const ui = { Button, TextField, Switch, Chip };
