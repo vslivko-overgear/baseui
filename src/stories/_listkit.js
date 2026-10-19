@@ -29,7 +29,7 @@ export function rowProps({ leading, subtitle, details, control }, size = 'md', i
     ...(subtitle && { subtitle: 'Caption' }),
     ...(details === 'text' && { details: '12 min' }),
     ...(details === 'badge' && { details: h(Badge, { variant: 'red', type: 'counter', size: 'sm', label: i + 2 }) }),
-    ...(control === 'switch' && { control: h(Switch, { size: 'sm', 'aria-label': `Row ${i + 1}` }) }),
+    ...(control === 'switch' && { control: h(Switch, { size: 'md', 'aria-label': `Row ${i + 1}` }) }),
     ...(control === 'checkbox' && { control: h(Checkbox, { 'aria-label': `Row ${i + 1}` }) }),
   };
 }

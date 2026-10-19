@@ -8,7 +8,7 @@ fixDocs(ListItem, {
   icon: { description: 'Leading icon, 24px (20px in `xsm` rows); it follows `currentColor` and dims with the row' },
   avatar: { description: 'Leading `Avatar`: size `md` in `md` rows and `sm` in `sm` and `xsm` rows; it dims with its own `disabled`' },
   details: { description: 'Text or a `Badge` on the right of the title' },
-  control: { description: 'Slot on the right: a `Switch` (size sm) or a `Checkbox`, or your own control. It sits outside the row button, so it is never a button inside a button' },
+  control: { description: 'Slot on the right: a `Switch` (size md) or a `Checkbox`, or your own control. It sits outside the row button, so it is never a button inside a button' },
   items: { description: 'Nested `ListItem rows`: they make the row expandable (a button with a chevron)' },
 });
 
@@ -32,7 +32,7 @@ export const Playground = {
   icon={<HeartIcon />}
   subtitle="Caption"
   details="12 min"
-  control={<Switch size="sm" aria-label="Inbox" />}
+  control={<Switch size="md" aria-label="Inbox" />}
   onClick={open}
 >
   Inbox
@@ -62,7 +62,7 @@ export const Trailing = example({
     h(ListItem, rowProps({ ...ROW_ARGS, control: 'switch' }, 'md'), 'Switch'),
     h(ListItem, rowProps({ ...ROW_ARGS, control: 'checkbox' }, 'md'), 'Checkbox'),
     h(ListItem, { disabled: true, ...rowProps({ ...ROW_ARGS, control: 'switch' }, 'md') }, 'Disabled: the control is inert'))),
-  source: `<ListItem details={<Badge type="counter" variant="red" label={3} />}>Badge</ListItem>\n<ListItem control={<Switch size="sm" aria-label="Notifications" />}>Switch</ListItem>`,
+  source: `<ListItem details={<Badge type="counter" variant="red" label={3} />}>Badge</ListItem>\n<ListItem control={<Switch size="md" aria-label="Notifications" />}>Switch</ListItem>`,
 });
 function Folders() {
   const [open, setOpen] = useState(true);

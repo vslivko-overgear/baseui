@@ -41,6 +41,6 @@ export const Sizes = example({
 });
 export const Settings = example({
   name: 'Switches', render: () => W(360, h(List, { title: 'Notifications' }, rows({ rows: 3, ...ROW_ARGS, control: 'switch', subtitle: true }, 'md'))),
-  source: `<ListItem subtitle="Caption" control={<Switch size="sm" aria-label="Inbox" />}>Inbox</ListItem>`,
+  source: `<ListItem subtitle="Caption" control={<Switch size="md" aria-label="Inbox" />}>Inbox</ListItem>`,
 });
 export const __namedExportsOrder = ['Playground', 'Sections', 'Sizes', 'Settings'];
