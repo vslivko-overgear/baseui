@@ -72,7 +72,7 @@ describe(ToastProvider, 'Shows brief notifications: a message, an optional actio
   limit: ['number', '4', 'Maximum simultaneous toasts'],
   message: ['ReactNode', null, 'toast() option: the text'],
   variant: ["'base' | 'inverse'", "'base'", 'toast() option: base is a surface with a shadow, inverse is dark (light in a dark theme) without a shadow'],
-  status: ["'neutral' | 'success' | 'error' | 'info'", "'neutral'", 'toast() option: the icon; neutral has none'],
+  status: ["'neutral' | 'success' | 'error' | 'info'", "'neutral'", 'toast() option: the icon; neutral has none. Settings: none, success, error, info, or custom (a custom icon)'],
   icon: ['ReactNode', null, 'toast() option: a custom icon instead of the status one'],
   action: ['{ label: string; onClick?: () => void }', null, 'toast() option: an optional button; it closes the toast'],
   duration: ['number', '5000', 'toast() option: milliseconds before it closes; 0 keeps it open'],

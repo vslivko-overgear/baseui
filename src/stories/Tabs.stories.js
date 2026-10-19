@@ -10,6 +10,8 @@ const items = [
   { value: 'settings', label: 'Settings', icon: h(Settings02) },
   { value: 'billing', label: 'Billing', icon: h(Menu01), disabled: true, badge: 9 },
 ];
+// The settings are those of the tab row, so its props are listed with Tabs on this page.
+Object.assign(Tabs.__docgenInfo.props, TabList.__docgenInfo.props);
 export default meta({
   title: 'Components/Tabs', component: Tabs,
   args: { defaultValue: 'overview', size: 'md', fullWidth: false, showIcon: true, showCounter: true, showBadge: true },
@@ -31,7 +33,7 @@ export const Playground = {
   <TabPanel value="overview">…</TabPanel>
   <TabPanel value="activity">…</TabPanel>
 </Tabs>` }),
-  render: ({ defaultValue, ...args }) => h('div', { style: { width: 560, maxWidth: '100%' } }, list(args)),
+  render: ({ defaultValue, ...args }) => list(args),
 };
 export const FullWidth = example({
   name: 'Full Width', render: () => h('div', { style: { width: 720, maxWidth: '100%' } }, list({ fullWidth: true })),

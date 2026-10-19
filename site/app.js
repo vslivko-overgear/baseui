@@ -1,4 +1,5 @@
 import { t as requireReact } from '../lib/react-BZJXY1be.js';
+import { documentControls } from './controls-docs.js';
 import { t as initDom, r as renderInto } from '../lib/react-18-D4o7zN8K.js';
 import manifest from './manifest.js';
 import { TextField, Switch, Chip, ChipGroup, List, ListItem, Modal } from '../src/base.js';
@@ -58,7 +59,7 @@ const store = {
 
 const modules = new Map();
 const loadModule = (file) => {
-  if (!modules.has(file)) modules.set(file, import(file));
+  if (!modules.has(file)) modules.set(file, import(file).then((m) => { documentControls(m.default); return m; }));
   return modules.get(file);
 };
 const ui = { Button, TextField, Switch, Chip };

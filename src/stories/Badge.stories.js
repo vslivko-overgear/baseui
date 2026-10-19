@@ -5,8 +5,8 @@ import { meta, playground, example, Row } from './_helpers.js';
 
 const VARIANTS = ['neutral', 'info', 'success', 'warning', 'error', 'blue', 'blue-light', 'green', 'green-light', 'orange', 'pink', 'red', 'inverse'];
 export default meta({
-  title: 'Components/Badge', component: Badge, args: { variant: 'neutral', size: 'md', label: 'Badge' },
-  argTypes: { variant: { control: 'select', options: VARIANTS }, size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] }, label: { control: 'text' } },
+  title: 'Components/Badge', component: Badge, args: { variant: 'neutral', size: 'md', disabled: false, label: 'Badge' },
+  argTypes: { variant: { control: 'select', options: VARIANTS }, size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] }, disabled: { control: 'boolean' }, label: { control: 'text' } },
 });
 export const Playground = playground({ source: `<Badge variant="success" label="Active" />` });
 export const Variants = example({

@@ -5,7 +5,7 @@ import { meta, playground, example } from './_helpers.js';
 const people = ['Anna Petrova', 'Mark Lee', 'Sofia Rossi', 'John Smith', 'Eva Novak', 'Li Wei'];
 export default meta({
   title: 'Components/Avatar Group', component: AvatarGroup, args: { size: 'md', shape: 'circle' },
-  argTypes: { size: { control: 'inline-radio', options: ['xsm', 'sm', 'md', 'lg'] }, shape: { control: 'inline-radio', options: ['circle', 'rounded', 'square'] } },
+  argTypes: { size: { control: 'inline-radio', options: ['xsm', 'sm', 'md', 'lg', 'xl'] }, shape: { control: 'inline-radio', options: ['circle', 'rounded', 'square'] } },
 });
 export const Playground = {
   ...playground({ source: `<AvatarGroup size="md">

@@ -3,8 +3,8 @@ import { ToggleButton, ToggleButtonGroup } from '../components/Button.js';
 import { meta, playground } from './_helpers.js';
 
 export default meta({
-  title: 'Components/Toggle Button Group', component: ToggleButtonGroup, args: { label: 'Alignment', type: 'single', size: 'md' },
-  argTypes: { type: { control: 'inline-radio', options: ['single', 'multiple'] }, size: { control: 'inline-radio', options: ['xsm', 'sm', 'md', 'lg'] } },
+  title: 'Components/Toggle Button Group', component: ToggleButtonGroup, args: { label: 'Alignment', type: 'single', size: 'md', isDisabled: false },
+  argTypes: { isDisabled: { control: 'boolean' }, type: { control: 'inline-radio', options: ['single', 'multiple'] }, size: { control: 'inline-radio', options: ['xsm', 'sm', 'md', 'lg'] } },
 });
 function Demo({ type, ...rest }) {
   const [value, setValue] = useState(type === 'multiple' ? ['bold'] : 'left');
