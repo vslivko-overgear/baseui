@@ -226,3 +226,7 @@
 ._nestedWrap_1xp1v_130 ._header_1xp1v_5 { margin-inline: 0; }
 /* List Item: the control slot sizes its own svg to 24px; the Checkbox check mark stays 16px as in the Checkbox itself */
 ._control_1xp1v_94 ._indicator_1p6mm_51 svg { width: 16px; height: 16px; }
+
+/* Dialog: the buttons keep 16px of air above them, also when the content scrolls under them */
+._actions_1nnzw_144 { padding-top: var(--baseui-spacing-16); }
+._content_1nnzw_124:has(+ ._actions_1nnzw_144) { padding-bottom: var(--baseui-spacing-8); }
