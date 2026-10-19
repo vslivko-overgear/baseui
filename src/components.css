@@ -622,24 +622,27 @@ html[data-glass="on"][data-outline="on"] :is(.bui-navbar, .bui-bottombar, .bui-p
 /* no rim on active, strongly filled elements: primary and custom-colour buttons, switches that are on */
 :is(button[class*="_primary_h5cjz"], button[class*="_custom_h5cjz"], [class*="_track_1epgh"][data-checked]) { box-shadow: none !important; }
 
-/* ---------- Menus and panels (Dropdown, Popover, Selector and Typeahead lists): enhanced animation ----------
-   basic = a quick fade (as before), off = none (data-motion="off"), enhanced = the panel grows from its trigger,
-   and the panel plays out when it closes. The theme sets data-motion on <html>; a Dropdown or Popover can set bui-motion--* itself. */
+/* ---------- Menus and panels: one animation for Dropdown, Selector, Typeahead and Popover ----------
+   They all draw .bui-dropdown (the Popover its .bui-popover__panel), so the motion is defined once here.
+   basic = a quick fade (as before), off = none (data-motion="off"), enhanced = the panel grows from its trigger and plays out when it closes.
+   The theme sets data-motion on <html>; a Dropdown or Popover can set bui-motion--* itself.
+   A panel is closing when it has data-closing (Dropdown, Popover) or data-ending-style (Base UI: Selector, Typeahead). */
 @keyframes bui-menu-in { from { opacity: 0; transform: translateY(var(--bui-menu-shift, -6px)) scale(0.92); } }
 @keyframes bui-menu-out { to { opacity: 0; transform: translateY(var(--bui-menu-shift, -6px)) scale(0.95); } }
-:is(.bui-dropdown--standalone, .bui-popover__panel) {
-  &[data-placement="bottom-start"] { transform-origin: top left; }
-  &[data-placement="bottom-end"] { transform-origin: top right; }
-  &[data-placement="top-start"] { transform-origin: bottom left; --bui-menu-shift: 6px; }
-  &[data-placement="top-end"] { transform-origin: bottom right; --bui-menu-shift: 6px; }
+:is(.bui-dropdown, .bui-popover__panel) {
+  transform-origin: var(--transform-origin, top left);
+  &[data-placement="bottom-end"] { --transform-origin: top right; }
+  &[data-placement="top-start"] { --transform-origin: bottom left; --bui-menu-shift: 6px; }
+  &[data-placement="top-end"] { --transform-origin: bottom right; --bui-menu-shift: 6px; }
+  &[data-side="top"] { --bui-menu-shift: 6px; }
 }
-:is(html[data-motion="enhanced"] :is(.bui-dropdown--standalone, .bui-popover__panel):not(.bui-motion--basic):not(.bui-motion--off), :is(.bui-dropdown--standalone, .bui-popover__panel).bui-motion--enhanced) {
+:is(html[data-motion="enhanced"] :is(.bui-dropdown, .bui-popover__panel):not(.bui-motion--basic):not(.bui-motion--off), :is(.bui-dropdown, .bui-popover__panel).bui-motion--enhanced) {
+  transition: none;
   animation: bui-menu-in var(--baseui-duration-medium) var(--baseui-ease-emphasized) both;
-  &[data-closing] { animation: bui-menu-out var(--baseui-duration-fast) var(--baseui-ease-standard) both; pointer-events: none; }
+  &[data-closing], &[data-ending-style] { opacity: 1; transform: none; animation: bui-menu-out var(--baseui-duration-fast) var(--baseui-ease-standard) both; pointer-events: none; }
+  &[data-starting-style] { opacity: 1; transform: none; }
 }
-/* the lists of Selector and Typeahead are drawn by the compiled components: the same movement through their open and closing states */
-html[data-motion="enhanced"] [class*="_popup_vmty2"] {
-  transition: opacity var(--baseui-duration-medium) var(--baseui-ease-emphasized), transform var(--baseui-duration-medium) var(--baseui-ease-emphasized);
-  &[data-starting-style], &[data-ending-style] { opacity: 0; transform: translateY(-6px) scale(0.92); }
-  &[data-side="top"][data-starting-style], &[data-side="top"][data-ending-style] { transform: translateY(6px) scale(0.92); }
-}
+/* while a menu plays out after a choice it still shows the selection it had, so the new check mark does not flash on a fading menu
+   (data-was is kept by trackSelection in lib/Dropdown.js) */
+:is(.bui-dropdown[data-closing], .bui-dropdown[data-ending-style]) .bui-dropdown__item .bui-dropdown__check { visibility: hidden; }
+:is(.bui-dropdown[data-closing], .bui-dropdown[data-ending-style]) .bui-dropdown__item[data-was] .bui-dropdown__check { visibility: visible; }

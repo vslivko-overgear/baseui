@@ -2,7 +2,7 @@ import { h, cx, useEffect, useId, useMemo, useRef, useState, useControllable } f
 import { Button } from './Button.js';
 import { describe } from '../doc.js';
 import { glassClass, outlineClass, usePresence, useMotion } from '../theme-flags.js';
-import { DropdownItemContent, DropdownGroup, DropdownDivider, DropdownSelectAll, CheckMark, itemClass, isOption } from '../../lib/Dropdown.js';
+import { DropdownItemContent, DropdownGroup, DropdownDivider, DropdownSelectAll, CheckMark, trackSelection, itemClass, isOption } from '../../lib/Dropdown.js';
 
 /**
  * A menu of options that opens from any trigger. It is standalone: no field, no Selector. Selector and Typeahead draw
@@ -22,11 +22,7 @@ export function Dropdown({
   const id = useId();
   const real = useMemo(() => options.filter(isOption), [options]);
   const enabled = real.filter((o) => !o.disabled);
-  // while the menu plays out after a choice, it keeps showing what was selected before, so the new check mark does not flash on a fading menu
-  const frozen = useRef(selected);
-  if (!closing) frozen.current = selected;
-  const shownValue = closing ? frozen.current : selected;
-  const isOn = (o) => (multiple ? (shownValue || []).includes(o.value) : shownValue === o.value);
+  const isOn = (o) => (multiple ? (selected || []).includes(o.value) : selected === o.value);
   const allOn = multiple && enabled.length > 0 && enabled.every(isOn);
 
   useEffect(() => {
@@ -60,7 +56,7 @@ export function Dropdown({
   let n = -1;
   return h('span', { ref: root, className: cx('bui-dropdown-root', className), ...rest },
     typeof trigger === 'function' ? trigger(triggerProps) : (trigger ?? h(Button, { variant: 'secondary', ...triggerProps }, 'Open')),
-    shown && h('div', { ref: panel, id, role: 'listbox', tabIndex: -1, 'aria-label': label, 'aria-multiselectable': multiple || undefined, className: cx('bui-dropdown bui-dropdown--standalone', glassClass(glass), outlineClass(outline), motion && `bui-motion--${motion}`), 'data-placement': placement, 'data-closing': closing || undefined, onKeyDown },
+    shown && h('div', { ref: (el) => { panel.current = el; trackSelection(el); }, id, role: 'listbox', tabIndex: -1, 'aria-label': label, 'aria-multiselectable': multiple || undefined, className: cx('bui-dropdown bui-dropdown--standalone', glassClass(glass), outlineClass(outline), motion && `bui-motion--${motion}`), 'data-placement': placement, 'data-closing': closing || undefined, onKeyDown },
       multiple && selectAll && h(DropdownSelectAll, { label: allOn ? 'Remove all' : 'Select all', onClick: () => setSelected(allOn ? [] : enabled.map((o) => o.value)) }),
       options.map((o, i) => {
         if (o.type === 'group') return h(DropdownGroup, { key: `g${i}`, label: o.label });
