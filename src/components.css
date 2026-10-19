@@ -657,9 +657,10 @@ html[data-glass="on"][data-outline="on"] :is(.bui-navbar:not(.bui-navbar--floati
   box-sizing: border-box; min-height: 48px; border-radius: var(--baseui-radius-full); background: var(--baseui-Extensions-Background-Surface);
   box-shadow: var(--baseui-shadow-med), inset 0 0 0 calc(1px * var(--bui-ol)) var(--bui-rim);
 }
-.bui-navbar--floating .bui-navbar__side { justify-self: start; padding: 0 var(--baseui-spacing-4); }
+.bui-navbar--floating { grid-template-columns: auto minmax(0, 1fr) auto; gap: var(--baseui-spacing-8); }
+.bui-navbar--floating .bui-navbar__side { justify-self: start; padding: 0; gap: 0; }
 .bui-navbar--floating .bui-navbar__side--end { justify-self: end; }
-.bui-navbar--floating .bui-navbar__heading { justify-self: center; max-width: 100%; display: flex; flex-direction: column; justify-content: center; padding: 0 var(--baseui-spacing-20, 20px); }
+.bui-navbar--floating .bui-navbar__heading { justify-self: stretch; display: flex; flex-direction: column; justify-content: center; padding: 0 var(--baseui-spacing-20, 20px); }
 .bui-bottombar--floating .bui-bottombar__bar { padding: var(--baseui-spacing-4); }
 .bui-bottombar--floating .bui-bottombar__item { height: 56px; border-radius: var(--baseui-radius-full); }
 .bui-bottombar--floating.bui-bottombar--compact .bui-bottombar__item { height: 44px; }
