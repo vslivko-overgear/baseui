@@ -213,3 +213,6 @@
 .bui-dropdown__divider::before{content:"";display:block;height:1px;background:var(--baseui-Border-Primary)}
 /* The select-all row is not a list item: while it is hovered, the highlight left on the last item goes away so only one row is lit */
 .bui-dropdown:has(.bui-dropdown__select-all:hover) .bui-dropdown__item[data-highlighted]:not(.bui-dropdown__select-all),.bui-dropdown:has(.bui-dropdown__select-all:hover) .bui-dropdown__item:not(.bui-dropdown__select-all):hover{background-color:transparent}
+
+/* Dialog: the close and back icons are as bold as the Header-20 title */
+._closeButton_1nnzw_188 svg path, ._iconButton_1nnzw_92 svg path { stroke-width: 3; }
