@@ -266,8 +266,8 @@
 
   /* Sizes */
   --baseui-layout-header-height: 64px;
-  --baseui-layout-sidebar-width: 272px;
-  --baseui-layout-settings-width: 320px;
+  --baseui-layout-sidebar-width: 280px;
+  --baseui-layout-settings-width: 280px;
   --baseui-layout-content-max-width: 1040px;
   --baseui-layout-dialog-width: 520px;
   --baseui-layout-mobile-preview-width: 360px;

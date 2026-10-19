@@ -209,3 +209,7 @@ html[data-floating="on"] .settings { top: var(--bar-h); height: calc(100vh - var
 html[data-glass="on"] :is(.appbar, .side, .settings) { background: color-mix(in srgb, var(--baseui-Extensions-Background-Surface) 62%, transparent); -webkit-backdrop-filter: blur(20px) saturate(160%); backdrop-filter: blur(20px) saturate(160%); }
 
 .controls-reset { margin-top: var(--baseui-spacing-16); }
+
+/* floating: the columns keep their width, their 12px margin comes on top of it */
+html[data-floating="on"] .body { grid-template-columns: calc(var(--baseui-layout-sidebar-width) + var(--baseui-spacing-12)) minmax(0, 1fr); }
+html[data-floating="on"] .body--settings { grid-template-columns: calc(var(--baseui-layout-sidebar-width) + var(--baseui-spacing-12)) minmax(0, 1fr) calc(var(--baseui-layout-settings-width) + var(--baseui-spacing-12)); }

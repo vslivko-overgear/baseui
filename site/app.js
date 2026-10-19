@@ -370,7 +370,7 @@ function App() {
       h('div', { className: 'shell' },
         h('a', { className: 'skip', href: '#main', onClick: skip }, 'Skip to content'),
         h('header', { className: 'appbar' },
-          h(Button, { variant: 'ghost', size: 'sm', isIconOnly: true, label: 'Open catalog', icon: h(icons.Menu01), className: 'menu-btn', onClick: () => _setMenu(true) }),
+          h(Button, { variant: 'ghost', size: 'sm', isIconOnly: true, label: 'Open catalog', icon: h(icons.Menu01), className: 'menu-btn', tooltip: false, onClick: () => _setMenu(true) }),
           h('a', { className: 'brand', href: '#/', 'aria-label': 'baseui' },
             h('svg', { className: 'brand-logo', viewBox: '0 0 64 14', width: 128, height: 28, fill: 'currentColor', 'aria-hidden': 'true', focusable: 'false' }, LOGO_PATHS.map((d) => h('path', { key: d.slice(0, 24), d })))),
           h('div', { className: 'appbar-end' }, h('div', { className: 'view-control' }, viewControl), themeControl)),
