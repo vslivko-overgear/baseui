@@ -169,3 +169,18 @@
 ._clear_raho5_116:focus-visible{outline-offset:var(--baseui-focus-outline-offset)}
 ._small_2ah00_25 ._clear_raho5_116{width:28px;height:28px;flex-basis:28px}
 ._small_2ah00_25 ._clear_raho5_116 svg{width:20px;height:20px}
+/* Standard hover: each control moves to the "-Hover" token paired with its own color token */
+@media (hover:hover){
+/* Text Input, Selector, Typeahead (one shell): filled uses Secondary-Hover, standard uses Primary-Hover; not while focused or open */
+._filled_2ah00_60:not(._disabled_2ah00_230):not(._loading_2ah00_245) ._cell_2ah00_30:hover:not(:focus-within):not(:has([data-popup-open])){background-color:var(--baseui-Background-Secondary-Hover)}
+._field_2ah00_13:not(._filled_2ah00_60):not(._disabled_2ah00_230):not(._loading_2ah00_245) ._cell_2ah00_30:hover:not(:focus-within):not(:has([data-popup-open])){background-color:var(--baseui-Background-Primary-Hover)}
+/* Checkbox */
+._root_1p6mm_9:hover:not(:has([data-disabled])) ._box_1p6mm_18:not([data-checked]):not([data-indeterminate]){border-color:var(--baseui-Border-Accent-Hover);background-color:var(--baseui-Background-Primary-Hover)}
+._root_1p6mm_9:hover:not(:has([data-disabled])) ._box_1p6mm_18:is([data-checked],[data-indeterminate]){background-color:var(--baseui-Text-and-Icon-Primary-Hover);border-color:var(--baseui-Text-and-Icon-Primary-Hover)}
+/* Radio */
+._root_e1rix_1:hover:not(:has([data-disabled])) ._button_e1rix_11:not([data-checked]){border-color:var(--baseui-Border-Accent-Hover);background-color:var(--baseui-Background-Primary-Hover)}
+._root_e1rix_1:hover:not(:has([data-disabled])) ._button_e1rix_11[data-checked]{background-color:var(--baseui-Text-and-Icon-Primary-Hover);border-color:var(--baseui-Text-and-Icon-Primary-Hover)}
+/* Switch */
+._root_1epgh_9:hover:not(:has([data-disabled])) ._track_1epgh_17:not([data-checked]){background-color:var(--baseui-Background-Tertiary-Hover)}
+._root_1epgh_9:hover:not(:has([data-disabled])) ._track_1epgh_17[data-checked]{background-color:var(--baseui-Extensions-Background-InversePrimary-Hover)}
+}
