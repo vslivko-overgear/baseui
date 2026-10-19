@@ -27,7 +27,7 @@ export function Button({
     startIcon: isIconOnly ? undefined : icon, endIcon: isIconOnly ? undefined : endContent,
     ...(href && { render: h('a', { href, target, rel }) }), ...rest,
   }, isIconOnly ? icon : children ?? label);
-  const tip = tooltip || (isIconOnly ? label : undefined);
+  const tip = tooltip === false ? undefined : tooltip || (isIconOnly ? label : undefined);
   return tip ? h(Tooltip, { content: tip }, node) : node;
 }
 describe(Button, 'Triggers an action or navigates.', {
@@ -41,7 +41,7 @@ describe(Button, 'Triggers an action or navigates.', {
   endContent: ['ReactNode', null, 'Content after the label, e.g. a chevron'],
   isIconOnly: ['boolean', 'false', 'Square icon-only button; `label` becomes `aria-label`'],
   width: ['number | string', null, 'Number is px; `"100%"` fills the container'],
-  tooltip: ['string', null, 'Hover text'],
+  tooltip: ['string | false', null, 'Hover text; false turns the tooltip off (an icon-only button shows its label by default)'],
   href: ['string', null, 'Renders a link'],
   onClick: ['(event) => void', null, 'Click handler'],
   clickAction: ['(event) => void | Promise<void>', null, 'Async action; shows loading while pending'],

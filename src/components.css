@@ -111,9 +111,10 @@
 @media (hover: hover) { .bui-tab:hover:not(:disabled):not([aria-selected="true"]) { color: var(--baseui-Text-and-Icon-Primary); } }
 .bui-tab:disabled { cursor: not-allowed; color: var(--baseui-Text-and-Icon-Disabled); }
 .bui-tab:disabled .bui-tab:focus-visible { outline: var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color); outline-offset: var(--baseui-focus-outline-offset); border-radius: var(--baseui-radius-6); }
-.bui-tablist__slide { position: absolute; bottom: 0; z-index: 1; display: flex; align-items: center; min-height: 32px; background: var(--baseui-Background-Primary); box-shadow: inset 0 -2px 0 var(--baseui-Border-Primary); }
-.bui-tablist__slide--left { left: 0; padding-right: var(--baseui-spacing-8); }
-.bui-tablist__slide--right { right: 0; padding-left: var(--baseui-spacing-8); }
+.bui-tablist__slide { position: absolute; top: 0; z-index: 1; display: flex; align-items: center; width: 72px; height: var(--tab-block); }
+.bui-tablist__slide--left { left: 0; justify-content: flex-start; background: linear-gradient(90deg, var(--baseui-Background-Primary) 55%, transparent); }
+.bui-tablist__slide--right { right: 0; justify-content: flex-end; background: linear-gradient(270deg, var(--baseui-Background-Primary) 55%, transparent); }
+.bui-tab .bui-badge { flex: none; }
 .bui-tabpanel { padding-top: var(--baseui-spacing-16); font: var(--baseui-Typography-Text-16-Regular); border-radius: var(--baseui-radius-12); }
 
 /* ---------- Collapsible ---------- */

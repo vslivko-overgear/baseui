@@ -1,7 +1,8 @@
 import { h } from '../react.js';
 import { Tabs, TabList, Tab, TabPanel } from '../components/Tabs.js';
 import { meta, playground, example } from './_helpers.js';
-import { Menu01, Grid01, Bell01, Settings02 } from './_ui.js';
+import { Filled } from './_ui.js';
+const { Menu01, Grid01, Bell01, Settings02 } = Filled;
 
 const items = [
   { value: 'overview', label: 'Overview', icon: h(Grid01), counter: 12 },
