@@ -536,6 +536,7 @@
 .bui-navbar--floating { margin: var(--baseui-spacing-8) var(--baseui-spacing-12) 0; border-radius: var(--baseui-radius-full); background: var(--baseui-Extensions-Background-Surface); box-shadow: var(--baseui-shadow-med); }
 /* glass: translucent surfaces that blur what is behind them; .bui-glass forces it, .bui-glass-off prevents it (the glass prop of a component) */
 .bui-glass, [data-glass="on"] :is(.bui-navbar, .bui-bottombar, .bui-popover__panel, .bui-dropdown, [class*="_popup_vmty2"], [class*="_popup_1nnzw"], .bui-toast:not(.bui-toast--inverse)):not(.bui-glass-off) {
+  --bui-rim-bg: linear-gradient(135deg, color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 70%, transparent), color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 10%, transparent) 45%, color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 40%, transparent)), linear-gradient(var(--bui-rim), var(--bui-rim));
   background: color-mix(in srgb, var(--baseui-Extensions-Background-Surface) 62%, transparent);
   -webkit-backdrop-filter: blur(20px) saturate(160%); backdrop-filter: blur(20px) saturate(160%);
 }
@@ -572,3 +573,13 @@
 ._box_1p6mm_18[data-checked], ._box_1p6mm_18[data-indeterminate] { animation: bui-box-pop calc(280ms * var(--bui-fx)) var(--baseui-ease-standard); }
 ._box_1p6mm_18[data-checked] ._indicator_1p6mm_51 svg path, ._box_1p6mm_18[data-indeterminate] ._indicator_1p6mm_51 svg path { stroke-dasharray: 24; animation: bui-check-draw calc(280ms * var(--bui-fx)) var(--baseui-ease-standard) both; }
 ._button_e1rix_11[data-checked] ._indicator_e1rix_47 { animation: bui-dot-grow calc(280ms * var(--bui-fx)) var(--baseui-ease-standard); }
+
+/* ---------- Outline: a thin rim around surfaces (data-outline on <html>, or the outline prop of one component) ---------- */
+/* the rim is a mask-ring on ::before, so it takes no space and keeps the shadow; with glass it is a lit edge, not a flat line */
+:root { --bui-rim: color-mix(in srgb, var(--baseui-Text-and-Icon-Primary) 12%, transparent); }
+.bui-navbar, .bui-toast { position: relative; }
+.bui-outline::before, [data-outline="on"] :is(.bui-navbar, .bui-bottombar, .bui-popover__panel, .bui-dropdown, [class*="_popup_vmty2"], [class*="_popup_1nnzw"], .bui-toast:not(.bui-toast--inverse), .bui-card):not(.bui-outline-off)::before {
+  content: ""; position: absolute; inset: 0; z-index: 1; box-sizing: border-box; padding: 1px; border-radius: inherit; pointer-events: none;
+  background: var(--bui-rim-bg, var(--bui-rim));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
+}

@@ -16,14 +16,14 @@ export const TEXT_FONTS = {
   Geist: null, Inter: '400;600;700', Manrope: '400;600;700', Roboto: '400;500;700', 'Open Sans': '400;600;700', 'PT Sans': '400;700', Nunito: '400;600;700', 'Golos Text': '400;600;700', Onest: '400;600;700', 'IBM Plex Sans': '400;600;700',
 };
 
-export const DEFAULT = { preset: 'default', brand: 'default', brandColor: '#575df6', shape: 'rounded', radius: 12, headingFont: 'Geist', textFont: 'Geist', motion: 'basic', floating: false, glass: false };
+export const DEFAULT = { preset: 'default', brand: 'default', brandColor: '#575df6', shape: 'rounded', radius: 12, headingFont: 'Geist', textFont: 'Geist', motion: 'basic', floating: false, glass: false, outline: false };
 export const PRESETS = {
   default: { ...DEFAULT },
-  ocean: { brand: 'blue', shape: 'rounded', radius: 16, headingFont: 'Montserrat Alternates', textFont: 'Inter', motion: 'enhanced', floating: false, glass: true },
-  forest: { brand: 'green', shape: 'rounded', radius: 8, headingFont: 'Playfair Display', textFont: 'Manrope', motion: 'basic', floating: false, glass: false },
-  sunset: { brand: 'orange', shape: 'circle', radius: 12, headingFont: 'Unbounded', textFont: 'Golos Text', motion: 'enhanced', floating: true, glass: false },
-  berry: { brand: 'pink', shape: 'circle', radius: 20, headingFont: 'Comfortaa', textFont: 'Nunito', motion: 'enhanced', floating: true, glass: true },
-  graphite: { brand: 'default', shape: 'rounded', radius: 4, headingFont: 'Oswald', textFont: 'IBM Plex Sans', motion: 'basic', floating: false, glass: false },
+  ocean: { brand: 'blue', shape: 'rounded', radius: 16, headingFont: 'Montserrat Alternates', textFont: 'Inter', motion: 'enhanced', floating: false, glass: true, outline: true },
+  forest: { brand: 'green', shape: 'rounded', radius: 8, headingFont: 'Playfair Display', textFont: 'Manrope', motion: 'basic', floating: false, glass: false, outline: false },
+  sunset: { brand: 'orange', shape: 'circle', radius: 12, headingFont: 'Unbounded', textFont: 'Golos Text', motion: 'enhanced', floating: true, glass: false, outline: false },
+  berry: { brand: 'pink', shape: 'circle', radius: 20, headingFont: 'Comfortaa', textFont: 'Nunito', motion: 'enhanced', floating: true, glass: true, outline: true },
+  graphite: { brand: 'default', shape: 'rounded', radius: 4, headingFont: 'Oswald', textFont: 'IBM Plex Sans', motion: 'basic', floating: false, glass: false, outline: false },
 };
 delete PRESETS.default.preset;
 export const MOTION_OPTIONS = ['off', 'basic', 'enhanced'];
@@ -75,7 +75,7 @@ export function applyTheme(t) {
   loadFont(t.headingFont, head); loadFont(t.textFont, text);
   set('--baseui-Typography-Headline-Font-Family', family(t.headingFont, head));
   set('--baseui-Typography-Font-Family', family(t.textFont, text));
-  root.dataset.motion = t.motion; root.dataset.floating = t.floating ? 'on' : 'off'; root.dataset.glass = t.glass ? 'on' : 'off';
+  root.dataset.motion = t.motion; root.dataset.floating = t.floating ? 'on' : 'off'; root.dataset.glass = t.glass ? 'on' : 'off'; root.dataset.outline = t.outline ? 'on' : 'off';
 }
 
 /** Applies the stored theme now and again when the light/dark theme changes (the brand text color depends on it). */

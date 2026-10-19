@@ -4,8 +4,8 @@ import { meta, playground, example, Row } from './_helpers.js';
 
 const VARIANTS = ['default', 'transparent', 'muted', 'blue', 'green', 'orange', 'pink', 'red'];
 export default meta({
-  title: 'Components/Card', component: Card, args: { variant: 'default', padding: 16, elevation: 'none', children: 'Card content' },
-  argTypes: {
+  title: 'Components/Card', component: Card, args: { outline: 'theme', variant: 'default', padding: 16, elevation: 'none', children: 'Card content' },
+  argTypes: { outline: { control: 'inline-radio', options: ['theme', 'on', 'off'], mapping: { theme: undefined, on: true, off: false } },
     variant: { control: 'select', options: VARIANTS },
     padding: { control: 'inline-radio', options: [8, 12, 16, 24, 32] },
     elevation: { control: 'inline-radio', options: ['none', 'low', 'med', 'high'] },

@@ -216,3 +216,11 @@ html[data-floating="on"] .body--settings { grid-template-columns: calc(var(--bas
 
 /* mobile preview with floating panels: the gray reaches the whole page, behind the header and the columns and above the header too (the header margin collapses into the body) */
 html[data-floating="on"]:has(main[data-viewport="mobile"]) body { background: var(--baseui-Background-Secondary); }
+
+/* Outline of the floating site panels */
+html[data-outline="on"][data-floating="on"] :is(.appbar, .side, .settings)::before {
+  content: ""; position: absolute; inset: 0; z-index: 1; box-sizing: border-box; padding: 1px; border-radius: inherit; pointer-events: none;
+  background: var(--bui-rim);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
+}
+html[data-outline="on"][data-floating="on"][data-glass="on"] :is(.appbar, .side, .settings)::before { background: linear-gradient(135deg, color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 70%, transparent), color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 10%, transparent) 45%, color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 40%, transparent)), linear-gradient(var(--bui-rim), var(--bui-rim)); }

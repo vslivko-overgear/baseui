@@ -29,3 +29,5 @@ export function useAppear(ref, container, key) {
     if (el && el.animate && motionOf(container.current) === 'basic') el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 150, easing: 'ease-out' });
   }, [key]);
 }
+/** The class that forces the outline (the thin rim) on or off for one component; nothing follows the theme. */
+export const outlineClass = (outline) => (outline === true ? 'bui-outline' : outline === false ? 'bui-outline-off' : undefined);
