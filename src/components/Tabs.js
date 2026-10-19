@@ -1,7 +1,9 @@
 import { h, cx, useId, useRef, createContext, useContext, useControllable } from '../react.js';
 import { describe } from '../doc.js';
+import { Badge } from './Badge.js';
 
 const TabsContext = createContext(null);
+const TabListContext = createContext({ showIcon: true, showLabel: true, showCounter: true, showBadge: true });
 const useTabs = () => useContext(TabsContext);
 
 export function Tabs({ value, defaultValue, onValueChange, children, className, ...rest }) {
@@ -15,7 +17,7 @@ describe(Tabs, 'Switches between related views.', {
   onValueChange: ['(value: string) => void', null, 'Called when the selected tab changes'],
 });
 
-export function TabList({ variant = 'underline', label, children, className, ...rest }) {
+export function TabList({ size = 'md', fullWidth = false, showIcon = true, showLabel = true, showCounter = true, showBadge = true, label, children, className, ...rest }) {
   const { current, setCurrent } = useTabs();
   const ref = useRef(null);
   const onKeyDown = (e) => {
@@ -31,23 +33,42 @@ export function TabList({ variant = 'underline', label, children, className, ...
     next.focus();
     setCurrent(next.dataset.value);
   };
-  return h('div', { role: 'tablist', 'aria-label': label, ref, onKeyDown, className: cx('bui-tablist', `bui-tablist--${variant}`, className), ...rest }, children);
+  return h(TabListContext.Provider, { value: { showIcon, showLabel, showCounter, showBadge } },
+    h('div', { role: 'tablist', 'aria-label': label, ref, onKeyDown, className: cx('bui-tablist', `bui-tablist--${size}`, fullWidth && 'bui-tablist--full', className), ...rest }, children));
 }
-describe(TabList, 'The row of tabs.', {
-  variant: ["'underline' | 'pill'", "'underline'", 'Visual style of the list'],
+describe(TabList, 'The row of tabs. Its settings work like the Segmented Control ones.', {
+  size: ["'sm' | 'md'", "'md'", 'Tab height'],
+  fullWidth: ['boolean', 'false', 'Fill the container width; the tabs are equal'],
+  showIcon: ['boolean', 'true', 'Show the tab icons'],
+  showLabel: ['boolean', 'true', 'Show the tab labels; with it off the tabs are icons only and the text becomes the accessible name'],
+  showCounter: ['boolean', 'true', 'Show the tab counters'],
+  showBadge: ['boolean', 'true', 'Show the tab badges'],
   label: ['string', null, 'Accessible name'],
 });
 
-export function Tab({ value, disabled = false, children, className, ...rest }) {
+export function Tab({ value, icon, counter, badge, disabled = false, children, className, ...rest }) {
   const { current, setCurrent, uid } = useTabs();
+  const { showIcon, showLabel, showCounter, showBadge } = useContext(TabListContext);
   const selected = current === value;
+  const hasIcon = showIcon && icon;
+  const labelShown = showLabel || !hasIcon;
+  const text = typeof children === 'string' ? children : undefined;
+  const iconOnly = hasIcon && !labelShown && !(showCounter && counter != null) && !(showBadge && badge != null);
   return h('button', {
     type: 'button', role: 'tab', id: `${uid}-t-${value}`, 'data-value': value, 'aria-selected': selected, 'aria-controls': `${uid}-p-${value}`,
-    tabIndex: selected ? 0 : -1, disabled, className: cx('bui-tab', className), onClick: () => setCurrent(value), ...rest,
-  }, children);
+    tabIndex: selected ? 0 : -1, disabled, title: labelShown ? undefined : text, 'aria-label': labelShown ? undefined : text,
+    className: cx('bui-tab', iconOnly && 'bui-tab--icon', className), onClick: () => setCurrent(value), ...rest,
+  },
+  hasIcon && h('span', { className: 'bui-tab__icon', 'aria-hidden': 'true' }, icon),
+  labelShown && h('span', { className: 'bui-tab__label' }, children),
+  showCounter && counter != null && h('span', { className: 'bui-tab__counter' }, counter),
+  showBadge && badge != null && (typeof badge === 'object' ? badge : h(Badge, { label: badge, variant: 'red' })));
 }
 describe(Tab, 'A tab button.', {
   value: ['string', null, 'Identifier matching a `TabPanel`'],
+  icon: ['ReactNode', null, 'Icon before the label'],
+  counter: ['number | string', null, 'Counter after the label'],
+  badge: ['ReactNode | string', null, 'Badge after the label'],
   disabled: ['boolean', 'false', 'Disable the tab'],
 });
 
