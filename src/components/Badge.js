@@ -1,13 +1,14 @@
 import { h, cx } from '../react.js';
 import { describe } from '../doc.js';
 
-export function Badge({ variant = 'neutral', label, icon, className, ...rest }) {
-  return h('span', { className: cx('bui-badge', `bui-badge--${variant}`, className), title: typeof label === 'string' || typeof label === 'number' ? String(label) : undefined, ...rest },
+export function Badge({ variant = 'neutral', size = 'md', label, icon, className, ...rest }) {
+  return h('span', { className: cx('bui-badge', `bui-badge--${variant}`, size !== 'md' && `bui-badge--${size}`, className), title: typeof label === 'string' || typeof label === 'number' ? String(label) : undefined, ...rest },
     icon && h('span', { className: 'bui-badge__icon', 'aria-hidden': 'true' }, icon),
     h('span', { className: 'bui-badge__label' }, label));
 }
 describe(Badge, 'A compact label for a status, category or count.', {
-  variant: ["'neutral' | 'info' | 'success' | 'warning' | 'error' | 'blue' | 'blue-light' | 'green' | 'green-light' | 'orange' | 'pink' | 'red'", "'neutral'", 'Semantic and accent colors from the palette, all solid'],
+  variant: ["'neutral' | 'info' | 'success' | 'warning' | 'error' | 'blue' | 'blue-light' | 'green' | 'green-light' | 'orange' | 'pink' | 'red' | 'inverse'", "'neutral'", 'Semantic and accent colors from the palette, all solid'],
+  size: ["'sm' | 'md' | 'lg'", "'md'", 'Badge height: 18, 22 or 28px'],
   label: ['ReactNode', null, 'Badge text'],
   icon: ['ReactNode', null, 'Icon before the label'],
 });
