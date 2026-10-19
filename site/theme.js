@@ -51,23 +51,12 @@ const loadFont = (name, weights) => {
 };
 const family = (name, weights) => (weights == null ? GEIST : `"${name}", system-ui, -apple-system, "Segoe UI", sans-serif`);
 
-// White or near-black text, whichever reads better on the brand color: it becomes Text-and-Icon-OnColor.
-function onColor(css) {
-  const probe = document.createElement('span');
-  probe.style.color = css; document.body.append(probe);
-  const [r, g, b] = getComputedStyle(probe).color.match(/[\d.]+/g).map(Number);
-  probe.remove();
-  const lin = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
-  return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b) > 0.4 ? '#171717' : '#ffffff';
-}
-
 export function applyTheme(t) {
   const root = document.documentElement;
   const set = (k, v) => (v == null ? root.style.removeProperty(k) : root.style.setProperty(k, v));
   const brand = t.brand === 'custom' ? t.brandColor : BRANDS[t.brand];
   set('--baseui-Background-Brand', brand);
   set('--baseui-Background-Brand-Hover', brand && `color-mix(in srgb, ${brand} 88%, black)`);
-  set('--baseui-Text-and-Icon-OnColor', brand && onColor(brand));
   root.dataset.shape = t.shape;
   const k = t.radius / DEFAULT.radius;
   for (const n of RADII) set(`--baseui-radius-${n}`, k === 1 ? null : `${Math.round(n * k * 2) / 2}px`);
