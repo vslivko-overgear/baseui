@@ -91,11 +91,11 @@
 ._small_1epgh_45 ._thumb_1epgh_43{width:14px;height:14px}
 ._small_1epgh_45 ._track_1epgh_17[data-checked] ._thumb_1epgh_43{transform:translate(12px)}
 
-/* Loading: the whole field becomes a skeleton (content, icons and label hidden, same shimmer as Skeleton) */
-._field_2ah00_13._loading_2ah00_245 ._cell_2ah00_30{position:relative;overflow:hidden}
+/* Loading: the whole field becomes a skeleton (content, icons and label hidden). The shimmer is a moving background of the cell itself,
+   painted under the border too, so it covers the entire field, not just the area inside the outline. Same soft, slow motion as Skeleton. */
 ._field_2ah00_13._loading_2ah00_245 ._cell_2ah00_30 *{visibility:hidden}
-._field_2ah00_13._loading_2ah00_245 ._cell_2ah00_30::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,var(--baseui-Background-Tertiary),transparent);opacity:.6;transform:translateX(-100%);animation:bui-shimmer 1.4s var(--baseui-ease-standard) infinite}
-@media (prefers-reduced-motion:reduce){._field_2ah00_13._loading_2ah00_245 ._cell_2ah00_30::after{animation:none}}
+._field_2ah00_13._loading_2ah00_245 ._cell_2ah00_30{background-image:linear-gradient(90deg,transparent 0%,color-mix(in srgb,var(--baseui-Background-Tertiary) 70%,transparent) 50%,transparent 100%);background-size:200% 100%;background-origin:border-box;background-clip:border-box;animation:bui-shimmer-x 2.4s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){._field_2ah00_13._loading_2ah00_245 ._cell_2ah00_30{animation:none}}
 /* Actions (clear, reveal, custom): a small transparent-button hover */
 .bui-field-action{all:unset}
 ._iconButton_1xjg3_93,.bui-field-action{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:inherit;padding:4px;margin:-4px;border-radius:var(--baseui-radius-10);transition:background-color var(--baseui-duration-fast) var(--baseui-ease-standard)}

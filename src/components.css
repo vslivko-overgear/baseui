@@ -31,14 +31,15 @@
 }
 .bui-skeleton::after {
   content: ""; position: absolute; inset: 0;
-  background: linear-gradient(90deg, transparent, var(--baseui-Background-Tertiary), transparent);
-  opacity: 0.6; transform: translateX(-100%); animation: bui-shimmer 1.4s var(--baseui-ease-standard) infinite;
+  background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--baseui-Background-Tertiary) 70%, transparent) 50%, transparent 100%);
+  opacity: 0.55; transform: translateX(-100%); animation: bui-shimmer 2.4s ease-in-out infinite;
 }
 .bui-skeleton--text { height: 1em; width: 100%; border-radius: var(--baseui-radius-6); }
 .bui-skeleton--rect { width: 100%; height: 96px; border-radius: var(--baseui-radius-12); }
 .bui-skeleton--circle { width: 40px; height: 40px; border-radius: var(--baseui-radius-full); }
 .bui-skeleton-lines { display: flex; flex-direction: column; gap: var(--baseui-spacing-8); font: var(--baseui-Typography-Text-16-Regular); }
 @keyframes bui-shimmer { to { transform: translateX(100%); } }
+@keyframes bui-shimmer-x { from { background-position: 100% 0; } to { background-position: -100% 0; } }
 @media (prefers-reduced-motion: reduce) { .bui-skeleton::after { animation: none; } }
 
 /* ---------- Progress ---------- */
