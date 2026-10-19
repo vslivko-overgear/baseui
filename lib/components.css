@@ -189,3 +189,25 @@
 @media (width>1200px){
 ._iconButton_1nnzw_92{margin-block:calc(var(--baseui-layout-margin-desktop) - var(--baseui-spacing-4) - var(--baseui-spacing-8)) var(--baseui-spacing-4)}
 }
+
+/* ---------- Dropdown (specs from the Figma Menu and Menu Item) ---------- */
+.bui-dropdown{box-sizing:border-box;padding:var(--baseui-spacing-8);background-color:var(--baseui-Extensions-Background-Surface);color:var(--baseui-Text-and-Icon-Primary);border-radius:var(--baseui-radius-20);box-shadow:0 4px 28px color-mix(in srgb,var(--baseui-Extensions-Text-and-Icon-AlwaysDark) 12%,transparent);font:var(--baseui-Typography-Text-16-Regular);outline:none}
+.bui-dropdown__list{outline:none;overflow-y:auto;max-height:min(var(--available-height,320px) - 16px,304px)}
+.bui-dropdown__item{box-sizing:border-box;display:flex;align-items:center;gap:var(--baseui-spacing-12);width:100%;height:48px;padding-inline:var(--baseui-spacing-8);border-radius:var(--baseui-radius-12);color:var(--baseui-Text-and-Icon-Primary);font:var(--baseui-Typography-Text-16-Regular);cursor:pointer;-webkit-user-select:none;user-select:none;outline:none;transition:background-color var(--baseui-duration-fast) var(--baseui-ease-standard)}
+.bui-dropdown__item--subitem{padding-left:calc(var(--baseui-spacing-8) + 20px)}
+.bui-dropdown__item[data-highlighted]{background-color:var(--baseui-Background-Transparent-Hover)}
+@media (hover:hover){.bui-dropdown__item:hover:not([data-disabled]):not([aria-disabled=true]){background-color:var(--baseui-Background-Transparent-Hover)}}
+.bui-dropdown__item[data-disabled],.bui-dropdown__item[aria-disabled=true]{color:var(--baseui-Text-and-Icon-Disabled);cursor:not-allowed}
+.bui-dropdown__icon{display:inline-flex;flex:none;width:24px;height:24px}
+.bui-dropdown__icon>*{width:100%;height:100%}
+.bui-dropdown__avatar{flex:none;width:24px;height:24px;border-radius:var(--baseui-radius-full);object-fit:cover}
+.bui-dropdown__item[data-disabled] .bui-dropdown__avatar,.bui-dropdown__item[aria-disabled=true] .bui-dropdown__avatar{opacity:.4}
+.bui-dropdown__label{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bui-dropdown__details{flex:none;white-space:nowrap;color:var(--baseui-Text-and-Icon-Secondary)}
+.bui-dropdown__item[data-disabled] .bui-dropdown__details,.bui-dropdown__item[aria-disabled=true] .bui-dropdown__details{color:var(--baseui-Text-and-Icon-Disabled)}
+.bui-dropdown__check{flex:none;display:inline-flex;width:24px;height:24px;visibility:hidden}
+.bui-dropdown__check svg{width:24px;height:24px;display:block}
+.bui-dropdown__item[data-selected] .bui-dropdown__check,.bui-dropdown__item[aria-selected=true] .bui-dropdown__check{visibility:visible}
+.bui-dropdown__group{padding:var(--baseui-spacing-12) var(--baseui-spacing-8) var(--baseui-spacing-8);font:var(--baseui-Typography-Text-14-Regular);color:var(--baseui-Text-and-Icon-Secondary)}
+.bui-dropdown__divider{padding-block:var(--baseui-spacing-8)}
+.bui-dropdown__divider::before{content:"";display:block;height:1px;background:var(--baseui-Border-Primary)}

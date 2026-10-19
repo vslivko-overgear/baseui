@@ -476,3 +476,12 @@
 /* the same surface as the Selector / Typeahead dropdown */
 .bui-datepicker .bui-popover__panel { box-sizing: border-box; width: 100%; min-width: 0; max-width: none; padding: var(--baseui-spacing-16); border-radius: var(--baseui-radius-20); box-shadow: 0 4px 28px color-mix(in srgb, var(--baseui-Extensions-Text-and-Icon-AlwaysDark) 12%, transparent); }
 @media (prefers-reduced-motion: reduce) { .bui-calendar__day, .bui-calendar__nav { transition: none; } }
+
+/* ---------- Dropdown (standalone; the item styles live in lib/components.css as .bui-dropdown*) ---------- */
+.bui-dropdown-root { position: relative; display: inline-flex; }
+.bui-dropdown--standalone { position: absolute; z-index: var(--baseui-z-index-300); min-width: 240px; max-height: 360px; overflow-y: auto; animation: bui-fade var(--baseui-duration-fast) var(--baseui-ease-standard); }
+.bui-dropdown--standalone[data-placement="bottom-start"] { top: calc(100% + 8px); left: 0; }
+.bui-dropdown--standalone[data-placement="bottom-end"] { top: calc(100% + 8px); right: 0; }
+.bui-dropdown--standalone[data-placement="top-start"] { bottom: calc(100% + 8px); left: 0; }
+.bui-dropdown--standalone[data-placement="top-end"] { bottom: calc(100% + 8px); right: 0; }
+@media (prefers-reduced-motion: reduce) { .bui-dropdown--standalone { animation: none; } }
