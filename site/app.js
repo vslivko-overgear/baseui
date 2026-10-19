@@ -24,12 +24,13 @@ const stemOf = (file) => file.split('/').pop().replace(/\.stories.*$/, '').toLow
 /** manifest (sections → items → children) → flat list of routable pages: one page per story file. */
 const pages = [];
 for (const { section, items } of manifest) {
-  const add = (item, parent) => {
-    const page = { section, parent, title: item.title, slug: kebab(item.title), file: item.file, lead: item.lead, examples: item.examples || [] };
+  const add = (item, parent, group) => {
+    const page = { section, group, parent, title: item.title, slug: kebab(item.title), file: item.file, lead: item.lead, examples: item.examples || [] };
     pages.push(page);
-    (item.children || []).forEach((c) => add(c, page));
+    (item.children || []).forEach((c) => add(c, page, group));
   };
-  items.forEach((item) => add(item));
+  // An item with `group` is a catalog folder (no page of its own) that holds several pages.
+  items.forEach((item) => (item.group ? item.items.forEach((i) => add(i, undefined, item.group)) : add(item)));
 }
 const routeOf = (p) => `#/${p.section.toLowerCase()}/${p.slug}`;
 
@@ -201,7 +202,7 @@ const storiesOf = (state, stem) => (state.__namedExportsOrder || Object.keys(sta
 /** The page frame while its module loads: the known title is real, everything else is a skeleton of the same layout. */
 function PageSkeleton({ entry }) {
   return h('article', { className: 'page page--loading', 'aria-busy': 'true', 'aria-label': `Loading ${entry.title}` },
-    h('div', { className: 'eyebrow' }, entry.parent ? `${entry.section} · ${entry.parent.title}` : entry.section),
+    h('div', { className: 'eyebrow' }, entry.parent ? `${entry.section} · ${entry.parent.title}` : entry.group ? `${entry.section} · ${entry.group}` : entry.section),
     h('h1', null, entry.title),
     h(Skeleton, { variant: 'text', lines: 2, width: '70%', className: 'skel-lead' }),
     h('div', { className: 'skel-chips' }, [88, 64, 96, 80].map((w, i) => h(Skeleton, { key: i, variant: 'rect', width: w, height: 32, style: { borderRadius: 'var(--baseui-radius-full)' } }))),
@@ -247,7 +248,7 @@ function Page({ entry }) {
   });
 
   return h('article', { className: 'page' },
-    h('div', { className: 'eyebrow' }, entry.parent ? `${entry.section} · ${entry.parent.title}` : entry.section),
+    h('div', { className: 'eyebrow' }, entry.parent ? `${entry.section} · ${entry.parent.title}` : entry.group ? `${entry.section} · ${entry.group}` : entry.section),
     h('h1', null, entry.title),
     h(Md, { text: entry.lead || brief(desc && desc.component, 240) + '.', className: 'prose lead' }),
     anchors.length > 1 && h(Toc, { items: anchors }),
@@ -278,24 +279,48 @@ function Nav({ entry, query }) {
   const kids = (p) => pages.filter((x) => x.parent === p);
   const match = (p) => p.title.toLowerCase().includes(query);
   const root = (p) => (p && p.parent ? p.parent : p);
-  useEffect(() => { const r = root(entry); if (r) setOpen((o) => ({ ...o, [r.title]: true })); }, [entry]);
+  useEffect(() => {
+    const r = root(entry);
+    if (r) setOpen((o) => ({ ...o, [r.title]: true, ...(r.group ? { [`group:${r.group}`]: true } : {}) }));
+  }, [entry]);
   const go = (p) => () => { location.hash = routeOf(p); };
-  const sections = manifest.map(({ section }) => ({
-    section,
-    shown: pages.filter((p) => p.section === section && !p.parent).map((p) => {
-      const sub = kids(p).filter((c) => match(c) || match(p));
-      return match(p) || sub.length ? { p, sub } : null;
-    }).filter(Boolean),
-  })).filter((x) => x.shown.length > 0);
+  // A page with sub-pages is an expandable row; a group is an expandable folder whose rows are the pages (sub-pages follow their page).
+  const pageRow = ({ p, sub }) => {
+    const own = entry === p;
+    if (!sub.length) return h(ListItem, { key: p.title, active: own, onClick: go(p) }, p.title);
+    return h(ListItem, {
+      key: p.title, active: own, expanded: query ? true : !!open[p.title], onExpandedChange: (v) => setOpen((o) => ({ ...o, [p.title]: v })), onClick: go(p),
+      items: sub.map((c) => h(ListItem, { key: c.title, subitem: true, active: entry === c, onClick: go(c) }, c.title)),
+    }, p.title);
+  };
+  const entries = (section) => {
+    const out = [];
+    for (const item of manifest.find((m) => m.section === section).items) {
+      if (item.group) {
+        const rows = pages.filter((p) => p.section === section && p.group === item.group && !p.parent).map((p) => {
+          const sub = kids(p).filter((c) => match(c) || match(p));
+          return match(p) || sub.length ? { p, sub } : null;
+        }).filter(Boolean);
+        if (rows.length) out.push({ group: item.group, rows });
+      } else {
+        const p = pages.find((x) => x.section === section && x.title === item.title);
+        const sub = kids(p).filter((c) => match(c) || match(p));
+        if (match(p) || sub.length) out.push({ p, sub });
+      }
+    }
+    return out;
+  };
+  const sections = manifest.map(({ section }) => ({ section, shown: entries(section) })).filter((x) => x.shown.length > 0);
   return h('nav', { 'aria-label': 'Documentation' }, sections.map(({ section, shown }, i) =>
     h(List, { key: section, title: section, size: 'xsm', divider: i < sections.length - 1 },
-      shown.map(({ p, sub }) => {
-        const own = entry === p;
-        if (!sub.length) return h(ListItem, { key: p.title, active: own, onClick: go(p) }, p.title);
+      shown.map((e) => {
+        if (!e.group) return pageRow(e);
+        const k = `group:${e.group}`;
+        const pagesIn = e.rows.flatMap(({ p, sub }) => [p, ...sub]);
         return h(ListItem, {
-          key: p.title, active: own, expanded: query ? true : !!open[p.title], onExpandedChange: (v) => setOpen((o) => ({ ...o, [p.title]: v })), onClick: go(p),
-          items: sub.map((c) => h(ListItem, { key: c.title, subitem: true, active: entry === c, onClick: go(c) }, c.title)),
-        }, p.title);
+          key: k, active: false, expanded: query ? true : !!open[k], onExpandedChange: (v) => setOpen((o) => ({ ...o, [k]: v })), onClick: () => setOpen((o) => ({ ...o, [k]: !o[k] })),
+          items: pagesIn.map((c) => h(ListItem, { key: c.title, subitem: true, active: entry === c, onClick: go(c) }, c.title)),
+        }, e.group);
       }))));
 }
 
