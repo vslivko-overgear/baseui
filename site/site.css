@@ -107,6 +107,7 @@ code.type { white-space: pre-wrap; word-break: break-word; color: var(--baseui-T
   border: 1px solid var(--baseui-Border-Primary); border-radius: var(--baseui-radius-16); text-decoration: none;
   font: var(--baseui-Typography-Text-16-Semi-Bold);
 }
+.card-icon { display: inline-flex; margin-bottom: var(--baseui-spacing-12); color: var(--baseui-Text-and-Icon-Primary); }
 .card small { font: var(--baseui-Typography-Text-12-Regular); color: var(--baseui-Text-and-Icon-Secondary); }
 .card:hover { background: var(--baseui-Background-Secondary); }
 .card:focus-visible { outline: var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color); outline-offset: var(--baseui-focus-outline-offset); }

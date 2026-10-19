@@ -12,22 +12,22 @@ export default [
   {
     section: 'Theming',
     items: [
-      { title: 'Theme Settings', file: '../src/theming/ThemeSettings.stories.js', lead: 'Pick a ready theme, the brand color, the shape, the base radius and the fonts. Everything is applied at once to this site and stored in a cookie on your device.' },
+      { title: 'Theme Settings', file: '../src/theming/ThemeSettings.stories.js', icon: 'Palette', lead: 'Pick a ready theme, the brand color, the shape, the base radius and the fonts. Everything is applied at once to this site and stored in a cookie on your device.' },
     ],
   },
   {
     section: 'Foundations',
     items: [
-      { title: 'All Tokens', file: F('AllTokens') },
-      { title: 'Color', file: F('Color') },
-      { title: 'Focus', file: F('Focus') },
-      { title: 'Icons', file: B('Icons.stories-n14M4pOg'), lead: 'The icon catalog. Choose outline or filled, and the stroke width for outline.' },
-      { title: 'Layout', file: F('Layout') },
-      { title: 'Motion', file: F('Motion') },
-      { title: 'Shadow', file: F('Shadow') },
-      { title: 'Shape', file: F('Shape') },
-      { title: 'Spacing', file: F('Spacing') },
-      { title: 'Typography', file: B('Typography.stories-CQDoRPEx'), lead: 'Type styles for headings and text.' },
+      { title: 'All Tokens', file: F('AllTokens'), icon: 'Hash01' },
+      { title: 'Color', file: F('Color'), icon: 'Droplets01' },
+      { title: 'Focus', file: F('Focus'), icon: 'Scan' },
+      { title: 'Icons', file: B('Icons.stories-n14M4pOg'), icon: 'Star01', lead: 'The icon catalog. Choose outline or filled, and the stroke width for outline.' },
+      { title: 'Layout', file: F('Layout'), icon: 'LayoutGrid01' },
+      { title: 'Motion', file: F('Motion'), icon: 'PlayCircle' },
+      { title: 'Shadow', file: F('Shadow'), icon: 'LayersTwo01' },
+      { title: 'Shape', file: F('Shape'), icon: 'IntersectSquare' },
+      { title: 'Spacing', file: F('Spacing'), icon: 'Ruler' },
+      { title: 'Typography', file: B('Typography.stories-CQDoRPEx'), icon: 'Type01', lead: 'Type styles for headings and text.' },
     ],
   },
   {

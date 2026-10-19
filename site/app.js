@@ -28,7 +28,7 @@ const stemOf = (file) => file.split('/').pop().replace(/\.stories.*$/, '').toLow
 const pages = [];
 for (const { section, items } of manifest) {
   const add = (item, parent, group) => {
-    const page = { section, group, parent, title: item.title, slug: kebab(item.title), file: item.file, lead: item.lead, examples: item.examples || [] };
+    const page = { section, group, parent, title: item.title, slug: kebab(item.title), file: item.file, lead: item.lead, icon: item.icon, examples: item.examples || [] };
     pages.push(page);
     (item.children || []).forEach((c) => add(c, page, group));
   };
@@ -279,10 +279,13 @@ function Home() {
     manifest.map((s) => h('section', { className: 'section', key: s.section },
       h('h2', null, s.section),
       h('div', { className: 'cards' }, pages.filter((p) => p.section === s.section && !p.parent).map((p) =>
-        h('a', { className: 'card', key: p.title, href: routeOf(p) }, h('span', null, p.title)))))));
+        h('a', { className: 'card', key: p.title, href: routeOf(p) }, pageIcon(p, 24) && h('span', { className: 'card-icon', 'aria-hidden': 'true' }, pageIcon(p, 24)), h('span', null, p.title)))))));
 }
 
 /* -------------------------------------------------------------- navigation */
+
+/** The icon of a page of Theming and Foundations (a name of the line icon set in the manifest). */
+const pageIcon = (p, size) => (p.icon && icons[p.icon] ? h(icons[p.icon], { size }) : undefined);
 
 function Nav({ entry, query }) {
   // One folder is open at a time; a folder is a row that opens a list and is not a page itself.
@@ -320,7 +323,7 @@ function Nav({ entry, query }) {
   const sections = manifest.map(({ section }) => ({ section, shown: entries(section) })).filter((x) => x.shown.length > 0);
   return h('nav', { 'aria-label': 'Documentation' }, sections.map(({ section, shown }, i) =>
     h(List, { key: section, title: section, size: 'xsm', divider: i < sections.length - 1 },
-      shown.map((e) => (e.p ? h(ListItem, { key: e.p.title, active: entry === e.p, onClick: go(e.p) }, e.p.title) : folder(e.name, e.list))))));
+      shown.map((e) => (e.p ? h(ListItem, { key: e.p.title, active: entry === e.p, icon: pageIcon(e.p, 20), onClick: go(e.p) }, e.p.title) : folder(e.name, e.list))))));
 }
 
 /* --------------------------------------------------------------------- app */
