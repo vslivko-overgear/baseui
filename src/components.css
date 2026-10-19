@@ -241,6 +241,8 @@
 .bui-segmented__icon { display: inline-flex; flex: none; width: 20px; height: 20px; }
 .bui-segmented__icon > * { width: 100%; height: 100%; }
 .bui-segmented__counter { font: inherit; font-weight: 400; color: var(--baseui-Text-and-Icon-Secondary); }
+/* the counter and the badge sit closer to the title (4px) than the icon does (8px) */
+.bui-segmented__counter, .bui-segmented__item .bui-badge { margin-inline-start: calc(var(--baseui-spacing-4) * -1); }
 .bui-segmented__item--icon { padding-inline: 0; width: var(--seg-item); }
 .bui-segmented--full .bui-segmented__item--icon { width: auto; }
 .bui-segmented__item:disabled { cursor: not-allowed; color: var(--baseui-Text-and-Icon-Disabled); }
