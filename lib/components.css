@@ -163,3 +163,9 @@
 ._popup_1nnzw_24{width:var(--baseui-layout-dialog-width);max-height:min(640px,calc(var(--modal-visual-viewport-height,100%) - var(--baseui-spacing-32)))}
 ._popup_1nnzw_24[data-height=viewport]{height:min(640px,calc(var(--modal-visual-viewport-height,100%) - var(--baseui-spacing-32)))}
 }
+/* Typeahead clear: the same small transparent-button hover as Text Input actions (32px box around the 24px icon, 28px around 20px in sm) */
+._clear_raho5_116{width:32px;height:32px;flex:0 0 32px;margin-left:calc(var(--baseui-spacing-12) - var(--baseui-spacing-4));margin-right:calc(var(--baseui-spacing-4) * -1);border-radius:var(--baseui-radius-10);transition:background-color var(--baseui-duration-fast) var(--baseui-ease-standard)}
+@media (hover:hover){._clear_raho5_116:hover{background-color:var(--baseui-Background-Transparent-Hover)}}
+._clear_raho5_116:focus-visible{outline-offset:var(--baseui-focus-outline-offset)}
+._small_2ah00_25 ._clear_raho5_116{width:28px;height:28px;flex-basis:28px}
+._small_2ah00_25 ._clear_raho5_116 svg{width:20px;height:20px}
