@@ -214,5 +214,5 @@ html[data-glass="on"] :is(.appbar, .side, .settings) { background: color-mix(in 
 html[data-floating="on"] .body { grid-template-columns: calc(var(--baseui-layout-sidebar-width) + var(--baseui-spacing-12)) minmax(0, 1fr); }
 html[data-floating="on"] .body--settings { grid-template-columns: calc(var(--baseui-layout-sidebar-width) + var(--baseui-spacing-12)) minmax(0, 1fr) calc(var(--baseui-layout-settings-width) + var(--baseui-spacing-12)); }
 
-/* mobile preview with floating panels: the gray reaches the whole page, behind the header and the columns too */
-html[data-floating="on"] .shell:has(main[data-viewport="mobile"]) { background: var(--baseui-Background-Secondary); }
+/* mobile preview with floating panels: the gray reaches the whole page, behind the header and the columns and above the header too (the header margin collapses into the body) */
+html[data-floating="on"]:has(main[data-viewport="mobile"]) body { background: var(--baseui-Background-Secondary); }
