@@ -31,3 +31,18 @@ export function useAppear(ref, container, key) {
 }
 /** The class that forces the outline (the thin rim) on or off for one component; nothing follows the theme. */
 export const outlineClass = (outline) => (outline === true ? 'bui-outline' : outline === false ? 'bui-outline-off' : undefined);
+
+/** Keeps a panel mounted for `ms` after it closes so it can play an exit animation; returns [mounted, closing]. */
+export function usePresence(open, ms) {
+  const [mounted, setMounted] = useState(open);
+  useEffect(() => {
+    if (open) { setMounted(true); return undefined; }
+    if (!ms) { setMounted(false); return undefined; }
+    const t = setTimeout(() => setMounted(false), ms);
+    return () => clearTimeout(t);
+  }, [open, ms]);
+  if (!ms) return [open, false];
+  return [open || mounted, !open && mounted];
+}
+/** The motion level of one component: its own prop, else the theme setting. */
+export const useMotion = (motion) => { const root = useRootAttr('motion'); return motion || root || 'basic'; };

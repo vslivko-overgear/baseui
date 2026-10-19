@@ -1,7 +1,7 @@
 import { h, cx, useEffect, useId, useMemo, useRef, useState, useControllable } from '../react.js';
 import { Button } from './Button.js';
 import { describe } from '../doc.js';
-import { glassClass, outlineClass } from '../theme-flags.js';
+import { glassClass, outlineClass, usePresence, useMotion } from '../theme-flags.js';
 import { DropdownItemContent, DropdownGroup, DropdownDivider, DropdownSelectAll, CheckMark, itemClass, isOption } from '../../lib/Dropdown.js';
 
 /**
@@ -10,12 +10,14 @@ import { DropdownItemContent, DropdownGroup, DropdownDivider, DropdownSelectAll,
  */
 export function Dropdown({
   trigger, options, value, defaultValue, onValueChange, multiple = false, selectAll = false, open, defaultOpen = false, onOpenChange,
-  placement = 'bottom-start', glass, outline, label, className, ...rest
+  placement = 'bottom-start', glass, outline, motion, label, className, ...rest
 }) {
   const [isOpen, setOpen] = useControllable(open, defaultOpen, onOpenChange);
   const [selected, setSelected] = useControllable(value, defaultValue ?? (multiple ? [] : null), onValueChange);
   const [active, setActive] = useState(-1);
   const root = useRef(null);
+  const level = useMotion(motion);
+  const [shown, closing] = usePresence(isOpen, level === 'enhanced' ? 160 : 0);
   const panel = useRef(null);
   const id = useId();
   const real = useMemo(() => options.filter(isOption), [options]);
@@ -54,7 +56,7 @@ export function Dropdown({
   let n = -1;
   return h('span', { ref: root, className: cx('bui-dropdown-root', className), ...rest },
     typeof trigger === 'function' ? trigger(triggerProps) : (trigger ?? h(Button, { variant: 'secondary', ...triggerProps }, 'Open')),
-    isOpen && h('div', { ref: panel, id, role: 'listbox', tabIndex: -1, 'aria-label': label, 'aria-multiselectable': multiple || undefined, className: cx('bui-dropdown bui-dropdown--standalone', glassClass(glass), outlineClass(outline)), 'data-placement': placement, onKeyDown },
+    shown && h('div', { ref: panel, id, role: 'listbox', tabIndex: -1, 'aria-label': label, 'aria-multiselectable': multiple || undefined, className: cx('bui-dropdown bui-dropdown--standalone', glassClass(glass), outlineClass(outline), motion && `bui-motion--${motion}`), 'data-placement': placement, 'data-closing': closing || undefined, onKeyDown },
       multiple && selectAll && h(DropdownSelectAll, { label: allOn ? 'Remove all' : 'Select all', onClick: () => setSelected(allOn ? [] : enabled.map((o) => o.value)) }),
       options.map((o, i) => {
         if (o.type === 'group') return h(DropdownGroup, { key: `g${i}`, label: o.label });
@@ -62,7 +64,7 @@ export function Dropdown({
         const index = o.disabled ? -1 : enabled.indexOf(o);
         return h('div', {
           key: o.value, role: 'option', 'aria-selected': isOn(o), 'aria-disabled': o.disabled || undefined, 'data-highlighted': index === active && index >= 0 ? '' : undefined, tabIndex: -1,
-          className: itemClass(o), onClick: () => choose(o), onPointerMove: () => index >= 0 && setActive(index),
+          style: { '--i': Math.min(i, 10) }, className: itemClass(o), onClick: () => choose(o), onPointerMove: () => index >= 0 && setActive(index),
         }, h(DropdownItemContent, { option: o, check: h('span', { className: 'bui-dropdown__check' }, h(CheckMark)) }));
       })));
 }
@@ -79,6 +81,7 @@ describe(Dropdown, 'A menu of options that opens from any trigger. It stands alo
   onOpenChange: ['(open: boolean) => void', null, 'Called when it opens or closes'],
   placement: ["'bottom-start' | 'bottom-end' | 'top-start' | 'top-end'", "'bottom-start'", 'Where the menu appears'],
   label: ['string', null, 'Accessible name of the menu'],
+  motion: ["'off' | 'basic' | 'enhanced'", 'theme', 'Animation of opening and closing: off, basic (a quick fade), or enhanced (the menu grows from its trigger, the items follow one by one, and it plays out when it closes); by default the Animations setting of the theme'],
   glass: ['boolean', 'theme', 'Translucent, blurred menu; true or false overrides the Glass setting of the theme'],
   outline: ['boolean', 'theme', 'A thin rim around the menu (glassy when glass is on); true or false overrides the Outline setting of the theme'],
 });
