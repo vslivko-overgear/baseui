@@ -1,4 +1,5 @@
 import { h, cx, React, useControllable, useRef, useState } from '../react.js';
+import { useAppear } from '../theme-flags.js';
 import { describe } from '../doc.js';
 import { Badge } from './Badge.js';
 
@@ -6,6 +7,7 @@ export function SegmentedControl({ items, value, defaultValue, onValueChange, si
   const [current, setCurrent] = useControllable(value, defaultValue ?? items.find((i) => !i.disabled)?.value, onValueChange);
   const ref = useRef(null);
   const [thumb, setThumb] = useState(null);
+  const thumbRef = useRef(null);
   const [ready, setReady] = useState(false);
   const enabled = items.filter((i) => !i.disabled);
   // Icon-only is just the label switched off; an item with nothing else to show keeps its label.
@@ -36,8 +38,9 @@ export function SegmentedControl({ items, value, defaultValue, onValueChange, si
     setCurrent(next.value);
     ref.current.querySelector(`[data-value="${CSS.escape(String(next.value))}"]`)?.focus();
   };
+  useAppear(thumbRef, ref, thumb && `${thumb.x}/${thumb.y}/${thumb.w}`);
   return h('div', { 'data-motion': motion, role: 'radiogroup', 'aria-label': label, ref, onKeyDown, className: cx('bui-segmented', `bui-segmented--${size}`, fullWidth && 'bui-segmented--full', ready && 'bui-segmented--ready', shape === 'circle' && 'bui-shape-circle', className), ...rest },
-    thumb && h('span', { className: 'bui-segmented__thumb', 'aria-hidden': 'true', style: { width: thumb.w, height: thumb.h, transform: `translate(${thumb.x}px, ${thumb.y}px)` } }),
+    thumb && h('span', { ref: thumbRef, className: 'bui-segmented__thumb', 'aria-hidden': 'true', style: { width: thumb.w, height: thumb.h, transform: `translate(${thumb.x}px, ${thumb.y}px)` } }),
     items.map((it) => h('button', {
       key: it.value, type: 'button', role: 'radio', 'data-value': it.value, 'aria-checked': it.value === current, tabIndex: it.value === current ? 0 : -1,
       disabled: it.disabled, title: labelShown(it) ? undefined : it.label, 'aria-label': labelShown(it) ? undefined : it.label, className: cx('bui-segmented__item', iconOnlyItem(it) && 'bui-segmented__item--icon'), onClick: () => setCurrent(it.value),

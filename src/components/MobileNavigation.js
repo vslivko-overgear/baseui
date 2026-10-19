@@ -3,7 +3,7 @@ import { Icon } from '../icons.js';
 import { IconButton } from './Button.js';
 import { Badge } from './Badge.js';
 import { describe } from '../doc.js';
-import { useRootAttr, glassClass } from '../theme-flags.js';
+import { useRootAttr, glassClass, useAppear } from '../theme-flags.js';
 
 /** The bar at the top of a mobile screen: back, title, up to two actions. */
 export function Navbar({ title, subtitle, showBack = true, onBack, backLabel = 'Back', actions = [], floating, glass, className, ...rest }) {
@@ -35,6 +35,7 @@ export function BottomBar({ items = [], value, defaultValue, onValueChange, show
   const ref = useRef(null);
   const [pill, setPill] = useState(null);
   const [ready, setReady] = useState(false);
+  const pillRef = useRef(null);
   // The highlight is one element that slides to the active item; it is measured again when the bar changes size.
   React.useLayoutEffect(() => {
     const nav = ref.current;
@@ -51,8 +52,9 @@ export function BottomBar({ items = [], value, defaultValue, onValueChange, show
     return () => ro.disconnect();
   }, [current, items.length, showLabels, isFloating]);
   useEffect(() => { const id = requestAnimationFrame(() => setReady(true)); return () => cancelAnimationFrame(id); }, []);
+  useAppear(pillRef, ref, pill && `${pill.x}/${pill.y}`);
   return h('nav', { ref, 'data-motion': motion, 'aria-label': label, className: cx('bui-bottombar', ready && 'bui-bottombar--ready', !showLabels && 'bui-bottombar--compact', isFloating && 'bui-bottombar--floating', glassClass(glass), className), ...rest },
-    pill && h('span', { className: 'bui-bottombar__pill', 'aria-hidden': 'true', style: { width: pill.w, height: pill.h, transform: `translate(${pill.x}px, ${pill.y}px)` } }),
+    pill && h('span', { ref: pillRef, className: 'bui-bottombar__pill', 'aria-hidden': 'true', style: { width: pill.w, height: pill.h, transform: `translate(${pill.x}px, ${pill.y}px)` } }),
     items.slice(0, 6).map((it) => {
       const active = it.value === current;
       const badge = it.badge === true ? h(Badge, { type: 'dot', variant: 'red', size: 'lg', label: 'New', className: 'bui-bottombar__badge' }) : it.badge != null && h(Badge, { type: 'counter', variant: 'red', size: 'sm', label: it.badge, className: 'bui-bottombar__badge' });

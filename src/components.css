@@ -105,7 +105,7 @@
 .bui-tab__line { height: 2px; background: var(--baseui-Border-Primary); transition: background-color var(--baseui-duration-fast) var(--baseui-ease-standard); }
 .bui-tab[aria-selected="true"] { color: var(--baseui-Text-and-Icon-Primary); }
 .bui-tablist__indicator { position: absolute; left: 0; bottom: 0; height: 2px; background: var(--baseui-Text-and-Icon-Primary); pointer-events: none; }
-.bui-tablist-wrap--ready .bui-tablist__indicator { transition: transform var(--baseui-duration-medium) var(--baseui-ease-standard), width var(--baseui-duration-medium) var(--baseui-ease-standard); }
+.bui-tablist-wrap--ready .bui-tablist__indicator { transition: transform calc(var(--baseui-duration-medium) * var(--bui-fx)) var(--baseui-ease-standard), width calc(var(--baseui-duration-medium) * var(--bui-fx)) var(--baseui-ease-standard); }
 @media (prefers-reduced-motion: reduce) { .bui-tablist-wrap--ready .bui-tablist__indicator { transition: none; } }
 @media (hover: hover) { .bui-tab:hover:not(:disabled):not([aria-selected="true"]) { color: var(--baseui-Text-and-Icon-Primary); } }
 .bui-tab:disabled { cursor: not-allowed; color: var(--baseui-Text-and-Icon-Disabled); }
@@ -227,7 +227,7 @@
 .bui-segmented__thumb {
   position: absolute; top: 0; left: 0; border-radius: var(--baseui-radius-12); background: var(--baseui-Extensions-Background-Surface); pointer-events: none;
 }
-.bui-segmented--ready .bui-segmented__thumb { transition: transform var(--baseui-duration-medium) var(--baseui-ease-standard), width var(--baseui-duration-medium) var(--baseui-ease-standard), height var(--baseui-duration-medium) var(--baseui-ease-standard); }
+.bui-segmented--ready .bui-segmented__thumb { transition: transform calc(var(--baseui-duration-medium) * var(--bui-fx)) var(--baseui-ease-standard), width calc(var(--baseui-duration-medium) * var(--bui-fx)) var(--baseui-ease-standard), height calc(var(--baseui-duration-medium) * var(--bui-fx)) var(--baseui-ease-standard); }
 .bui-segmented__item {
   all: unset; box-sizing: border-box; position: relative; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: var(--baseui-spacing-8); text-align: center; white-space: nowrap;
   border-radius: var(--baseui-radius-12); padding-inline: var(--baseui-spacing-16);
@@ -507,7 +507,7 @@
 .bui-bottombar__badge.bui-badge--dot { top: 3px; left: calc(50% + 5px); }
 .bui-bottombar__pill { position: absolute; left: 0; top: 0; z-index: 0; border-radius: var(--baseui-radius-full); background: var(--baseui-Background-Secondary); pointer-events: none; }
 .bui-bottombar__item { position: relative; z-index: 1; }
-.bui-bottombar--ready .bui-bottombar__pill { transition: transform var(--baseui-duration-medium) var(--baseui-ease-standard), width var(--baseui-duration-medium) var(--baseui-ease-standard), height var(--baseui-duration-medium) var(--baseui-ease-standard); }
+.bui-bottombar--ready .bui-bottombar__pill { transition: transform calc(var(--baseui-duration-medium) * var(--bui-fx)) var(--baseui-ease-standard), width calc(var(--baseui-duration-medium) * var(--bui-fx)) var(--baseui-ease-standard), height calc(var(--baseui-duration-medium) * var(--bui-fx)) var(--baseui-ease-standard); }
 @media (prefers-reduced-motion: reduce) { .bui-bottombar--ready .bui-bottombar__pill { transition: none; } }
 .bui-bottombar--floating .bui-bottombar__item { height: 56px; }
 .bui-bottombar--floating.bui-bottombar--compact .bui-bottombar__item { height: 44px; }
@@ -527,6 +527,7 @@
 [data-motion="basic"], [data-motion="off"] { --bui-fx: 0; --baseui-ease-slide: var(--baseui-ease-standard); }
 [data-motion="enhanced"] { --bui-fx: 1; --baseui-ease-slide: var(--baseui-ease-spring); }
 .bui-tablist-wrap--ready .bui-tablist__indicator, .bui-segmented--ready .bui-segmented__thumb, .bui-bottombar--ready .bui-bottombar__pill { transition-timing-function: var(--baseui-ease-slide); }
+/* the sliding highlights move only in enhanced (--bui-fx is 1); in basic they appear in place with a short fade (see useAppear) */
 /* off: nothing moves; loading indicators keep going */
 [data-motion="off"], [data-motion="off"] *:not(.bui-spinner, .bui-spinner *, .bui-skeleton) { animation-duration: 0.001ms !important; animation-delay: 0s !important; transition-duration: 0.001ms !important; transition-delay: 0s !important; scroll-behavior: auto !important; }
 /* enhanced: presses and lifts on top of the basic transitions (they scale to nothing when --bui-fx is 0) */
