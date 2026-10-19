@@ -8,10 +8,10 @@ const COLORS = {
   'on-color': 'var(--baseui-Text-and-Icon-OnColor)',
 };
 
-export function Spinner({ size = 'md', color = 'primary', label = 'Loading', className, style, ...rest }) {
+export function Spinner({ size = 'md', color = 'primary', className, style, ...rest }) {
   const px = typeof size === 'number' ? size : SIZES[size];
   return h('span', {
-    role: 'status', 'aria-label': label, className: cx('bui-spinner', className),
+    role: 'status', 'aria-label': 'Loading', className: cx('bui-spinner', className),
     style: { width: px, height: px, color: COLORS[color], ...style }, ...rest,
   }, h('svg', { viewBox: '0 0 24 24', fill: 'none', 'aria-hidden': 'true' },
     h('circle', { className: 'bui-spinner__track', cx: 12, cy: 12, r: 9, strokeWidth: 3 }),
@@ -21,5 +21,4 @@ export function Spinner({ size = 'md', color = 'primary', label = 'Loading', cla
 describe(Spinner, 'A loading indicator.', {
   size: ["'xsm' | 'sm' | 'md' | 'lg' | number", "'md'", 'Size: 16 / 24 / 40 / 56 px, or a number in px'],
   color: ["'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'error' | 'on-color'", "'primary'", 'Color preset; on-color is for use on filled backgrounds'],
-  label: ['string', "'Loading'", 'Accessible name'],
 });
