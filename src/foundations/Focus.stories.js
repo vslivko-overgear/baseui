@@ -2,7 +2,8 @@ import { h, Fragment } from '../react.js';
 import { useTokens, section, Block, TokenTable, Loading } from './_kit.js';
 import { Button, IconButton } from '../components/Button.js';
 import { SegmentedControl } from '../components/SegmentedControl.js';
-import { TextField, Checkbox, Switch, List, ListItem } from '../base.js';
+import { TextField, Checkbox, Switch } from '../base.js';
+import { List, ListItem } from '../components/List.js';
 import { Heart } from '../stories/_ui.js';
 
 export default {
@@ -34,6 +35,6 @@ export function page() {
     h(Block, { title: 'Inside Clipped Containers' },
       h('p', { className: 'doc-p' }, 'Where a container clips its content (list rows, dropdown options, the dialog close button), the ring is drawn inside the element, with the same width and color.'),
       h('p', { className: 'doc-p' }, 'Scrolling containers (the dialog content) keep a 4px gutter at their edges, so the outer ring of an input is never cut off.'),
-      h('div', { className: 'focus-demo__list' }, h(List, { size: 'sm' }, h(ListItem, { onClick: () => {} }, 'Item'), h(ListItem, { onClick: () => {} }, 'Item')))));
+      h('div', { className: 'focus-demo__list' }, h(List, { size: 'md' }, h(ListItem, { onClick: () => {} }, 'Item'), h(ListItem, { onClick: () => {} }, 'Item')))));
 }
 export const __namedExportsOrder = [];

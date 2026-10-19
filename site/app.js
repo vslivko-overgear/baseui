@@ -2,7 +2,8 @@ import { t as requireReact } from '../lib/react-BZJXY1be.js';
 import { documentControls } from './controls-docs.js';
 import { t as initDom, r as renderInto } from '../lib/react-18-D4o7zN8K.js';
 import manifest from './manifest.js';
-import { TextField, Switch, Chip, ChipGroup, List, ListItem, Modal } from '../src/base.js';
+import { TextField, Switch, Chip, ChipGroup, Modal } from '../src/base.js';
+import { List, ListItem } from '../src/components/List.js';
 import { Button } from '../src/components/Button.js';
 import { LOGO_PATHS } from './logo.js';
 import { SegmentedControl } from '../src/components/SegmentedControl.js';
@@ -322,7 +323,7 @@ function Nav({ entry, query }) {
   };
   const sections = manifest.map(({ section }) => ({ section, shown: entries(section) })).filter((x) => x.shown.length > 0);
   return h('nav', { 'aria-label': 'Documentation' }, sections.map(({ section, shown }, i) =>
-    h(List, { key: section, title: section, size: 'xsm', divider: i < sections.length - 1 },
+    h(List, { key: section, title: section, size: 'sm', divider: i < sections.length - 1 },
       shown.map((e) => (e.p ? h(ListItem, { key: e.p.title, active: entry === e.p, icon: pageIcon(e.p, 20), onClick: go(e.p) }, e.p.title) : folder(e.name, e.list))))));
 }
 

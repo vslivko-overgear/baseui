@@ -1,13 +1,14 @@
 // Shared by the List and List Item pages: the same row content settings, built from the design system itself
 // (Avatar, Switch, Checkbox, Badge and the icons), so the lists are shown the way they are used.
 import { h } from '../react.js';
-import { List, ListItem, Switch, Checkbox } from '../base.js';
+import { Switch, Checkbox } from '../base.js';
+import { List, ListItem } from '../components/List.js';
 import { Avatar } from '../components/Avatar.js';
 import { Badge } from '../components/Badge.js';
 import { Heart, Bell01, Settings02, User01, Home01 } from './_ui.js';
 
 export { List, ListItem };
-export const AVATAR_BY_ROW = { md: 'md', sm: 'sm', xsm: 'sm' };
+export const AVATAR_BY_ROW = { sm: 'sm', md: 'md' };
 const NAMES = ['Anna Petrova', 'Mark Lee', 'Sofia Rossi', 'John Smith', 'Eva Novak', 'Li Wei'];
 const ICONS = [Home01, Bell01, Heart, User01, Settings02, Home01];
 
@@ -24,7 +25,7 @@ export const ROW_ARGTYPES = {
 export function rowProps({ leading, subtitle, details, control }, size = 'md', i = 0) {
   const Icon = ICONS[i % ICONS.length];
   return {
-    ...(leading === 'icon' && { icon: h(Icon, { size: size === 'xsm' ? 20 : 24 }) }),
+    ...(leading === 'icon' && { icon: h(Icon, { size: size === 'sm' ? 20 : 24 }) }),
     ...(leading === 'avatar' && { avatar: h(Avatar, { name: NAMES[i % NAMES.length], size: AVATAR_BY_ROW[size] || 'md', tooltip: false }) }),
     ...(subtitle && { subtitle: 'Caption' }),
     ...(details === 'text' && { details: '12 min' }),
@@ -34,9 +35,3 @@ export function rowProps({ leading, subtitle, details, control }, size = 'md', i
   };
 }
 export const TITLES = ['Inbox', 'Drafts', 'Sent', 'Archive', 'Spam', 'Trash'];
-
-/** Replaces descriptions that the compiled component documents with outdated values. */
-export function fixDocs(component, fixes) {
-  const props = component.__docgenInfo.props;
-  for (const [k, v] of Object.entries(fixes)) if (props[k]) props[k] = { ...props[k], ...v };
-}

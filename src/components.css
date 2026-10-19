@@ -589,3 +589,11 @@
   background: color-mix(in srgb, var(--baseui-Extensions-Background-Surface) 62%, transparent);
   -webkit-backdrop-filter: blur(20px) saturate(160%); backdrop-filter: blur(20px) saturate(160%);
 }
+
+/* List: spacing between the rows (the size sets the row height, the spacing adds air) */
+.bui-list--spacing-md ._xsm_1xp1v_201 { min-height: 48px; }
+.bui-list--spacing-md ._small_1xp1v_200 { min-height: 56px; }
+.bui-list--spacing-md ._list_1f5ju_14 { gap: 4px; }
+.bui-list--spacing-lg ._xsm_1xp1v_201 { min-height: 56px; }
+.bui-list--spacing-lg ._small_1xp1v_200 { min-height: 64px; }
+.bui-list--spacing-lg ._list_1f5ju_14 { gap: 6px; }

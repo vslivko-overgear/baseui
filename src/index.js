@@ -28,4 +28,5 @@ export { Table, TableHeader, TableBody, TableRow, TableHeaderCell, TableCell, pi
 export { Tabs, TabList, Tab, TabPanel } from './components/Tabs.js';
 export { ToastProvider, useToast } from './components/Toast.js';
 export { Tooltip } from './components/Tooltip.js';
-export { TextField, Checkbox, CheckboxGroup, Switch, Chip, Select, Modal, Radio, RadioGroup, List, ListItem } from './base.js';
+export { TextField, Checkbox, CheckboxGroup, Switch, Chip, Select, Modal, Radio, RadioGroup } from './base.js';
+export { List, ListItem } from './components/List.js';
