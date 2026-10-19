@@ -468,5 +468,5 @@
 .bui-datepicker { display: block; width: 100%; max-width: 360px; }
 .bui-datepicker.bui-popover { display: block; }
 .bui-datepicker .bui-popover__trigger { display: block; width: 100%; }
-.bui-datepicker .bui-popover__panel { max-width: none; width: max-content; padding: var(--baseui-spacing-16); }
+.bui-datepicker .bui-popover__panel { box-sizing: border-box; width: 100%; min-width: 0; max-width: none; padding: var(--baseui-spacing-16); }
 @media (prefers-reduced-motion: reduce) { .bui-calendar__day, .bui-calendar__nav { transition: none; } }

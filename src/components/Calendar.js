@@ -206,7 +206,9 @@ export function DatePicker({
   const cal = { mode, locale, min, max, dateConstraints, weekStartsOn };
 
   const trigger = (extra = {}) => h(TextField, {
-    ...field, label, readOnly: true, value: text, onChange: () => {}, startIcon: h(Icon, { name: 'calendar', size: field.size === 'sm' ? 20 : 24 }),
+    ...field, label, readOnly: true, value: text,
+    // The label stays full size until a date is chosen, then it floats like in Text Input.
+    floatingLabel: field.floatingLabel !== false && !!text, onChange: () => {}, startIcon: h(Icon, { name: 'calendar', size: field.size === 'sm' ? 20 : 24 }),
     onKeyDown: (e) => { if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') { e.preventDefault(); extra.onClick ? extra.onClick() : (setDraft(selected), setOpen(true)); } },
     ...extra, 'aria-haspopup': 'dialog',
   });
@@ -223,7 +225,7 @@ export function DatePicker({
   return h(Popover, {
     className: cx('bui-datepicker', className), open, onOpenChange: setOpen, label, placement: 'bottom-start',
     trigger: (p) => trigger({ onClick: p.onClick, 'aria-expanded': p['aria-expanded'], 'aria-controls': p['aria-controls'] }),
-  }, h(Calendar, { ...cal, value: selected, onValueChange: (v) => { setSelected(v); if (mode === 'single' || (isRange(v) && v.end)) setOpen(false); } }));
+  }, h(Calendar, { ...cal, fluid: true, value: selected, onValueChange: (v) => { setSelected(v); if (mode === 'single' || (isRange(v) && v.end)) setOpen(false); } }));
 }
 describe(DatePicker, 'A date field. It opens the calendar in a popover, and in a Dialog sheet on small screens. The field is a Text Input, so its size, variant, label and status come from Text Input.', {
   value: ['ISODateString | { start, end } | null', null, 'Selected date or range (controlled)'],
