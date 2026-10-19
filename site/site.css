@@ -197,3 +197,10 @@ main[data-viewport="mobile"] .page h1 { font: var(--baseui-Typography-Header-32)
 .page--loading .skel-lead { margin-bottom: var(--baseui-spacing-16); font: var(--baseui-Typography-Text-20-Regular); }
 .page--loading .skel-chips { display: flex; flex-wrap: wrap; gap: var(--baseui-spacing-8); margin-bottom: var(--baseui-spacing-32); }
 .page--loading .skel-title { margin: var(--baseui-spacing-32) 0 var(--baseui-spacing-16); }
+
+/* Theme: floating panels and glass (data-floating, data-glass on <html>) */
+html[data-floating="on"] { --bar-h: calc(var(--baseui-layout-header-height) + var(--baseui-spacing-12)); }
+html[data-floating="on"] .appbar { top: var(--baseui-spacing-12); height: var(--baseui-layout-header-height); margin: var(--baseui-spacing-12) var(--baseui-spacing-12) 0; border: 0; border-radius: var(--baseui-radius-24); background: var(--baseui-Extensions-Background-Surface); box-shadow: var(--baseui-shadow-med); }
+html[data-floating="on"] .side { top: var(--bar-h); height: calc(100vh - var(--bar-h) - var(--baseui-spacing-12)); margin: 0 0 var(--baseui-spacing-12) var(--baseui-spacing-12); border: 0; border-radius: var(--baseui-radius-24); background: var(--baseui-Extensions-Background-Surface); box-shadow: var(--baseui-shadow-med); }
+html[data-floating="on"] .settings { top: var(--bar-h); height: calc(100vh - var(--bar-h) - var(--baseui-spacing-12)); margin: 0 var(--baseui-spacing-12) var(--baseui-spacing-12) 0; border: 0; border-radius: var(--baseui-radius-24); background: var(--baseui-Extensions-Background-Surface); box-shadow: var(--baseui-shadow-med); }
+html[data-glass="on"] :is(.appbar, .side, .settings) { background: color-mix(in srgb, var(--baseui-Extensions-Background-Surface) 62%, transparent); -webkit-backdrop-filter: blur(20px) saturate(160%); backdrop-filter: blur(20px) saturate(160%); }

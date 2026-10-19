@@ -3,10 +3,12 @@ import { Icon } from '../icons.js';
 import { IconButton } from './Button.js';
 import { Badge } from './Badge.js';
 import { describe } from '../doc.js';
+import { useRootAttr } from '../theme-flags.js';
 
 /** The bar at the top of a mobile screen: back, title, up to two actions. */
-export function Navbar({ title, subtitle, showBack = true, onBack, backLabel = 'Back', actions = [], className, ...rest }) {
-  return h('header', { className: cx('bui-navbar', className), ...rest },
+export function Navbar({ title, subtitle, showBack = true, onBack, backLabel = 'Back', actions = [], floating, className, ...rest }) {
+  const themeFloating = useRootAttr('floating') === 'on';
+  return h('header', { className: cx('bui-navbar', (floating ?? themeFloating) && 'bui-navbar--floating', className), ...rest },
     h('div', { className: 'bui-navbar__side' }, showBack && h(IconButton, { variant: 'ghost', size: 'md', label: backLabel, tooltip: false, icon: h(Icon, { name: 'chevronLeft', size: 24 }), onClick: onBack })),
     h('div', { className: 'bui-navbar__heading' },
       h('h1', { className: 'bui-navbar__title' }, title),
@@ -20,12 +22,15 @@ describe(Navbar, 'The bar at the top of a mobile screen: a back button on the le
   showBack: ['boolean', 'true', 'Show the back button'],
   onBack: ['() => void', null, 'Called when the back button is pressed'],
   backLabel: ['string', "'Back'", 'Accessible name of the back button'],
+  floating: ['boolean', 'theme', 'A floating, rounded bar with a shadow, inset from the screen edges; by default it follows the Floating setting of the theme'],
   actions: ['Array<{ icon: ReactNode; label: string; onClick?: () => void; disabled?: boolean }>', '[]', 'Icon buttons on the right; only the first two are shown. `label` is the accessible name'],
 });
 
 /** The tab bar at the bottom of a mobile screen: 2 to 6 top-level destinations. */
-export function BottomBar({ items = [], value, defaultValue, onValueChange, showLabels = true, floating = false, label = 'Main navigation', className, ...rest }) {
+export function BottomBar({ items = [], value, defaultValue, onValueChange, showLabels = true, floating, label = 'Main navigation', className, ...rest }) {
   const [current, setCurrent] = useControllable(value, defaultValue ?? items[0]?.value, onValueChange);
+  const themeFloating = useRootAttr('floating') === 'on';
+  const isFloating = floating ?? themeFloating;
   const ref = useRef(null);
   const [pill, setPill] = useState(null);
   const [ready, setReady] = useState(false);
@@ -35,7 +40,7 @@ export function BottomBar({ items = [], value, defaultValue, onValueChange, show
     const measure = () => {
       const item = nav.querySelector('[aria-current="page"]');
       if (!item) return setPill(null);
-      const box = (floating ? item : item.querySelector('.bui-bottombar__icon')).getBoundingClientRect();
+      const box = (isFloating ? item : item.querySelector('.bui-bottombar__icon')).getBoundingClientRect();
       const base = nav.getBoundingClientRect();
       setPill({ x: box.left - base.left, y: box.top - base.top, w: box.width, h: box.height });
     };
@@ -43,9 +48,9 @@ export function BottomBar({ items = [], value, defaultValue, onValueChange, show
     const ro = new ResizeObserver(measure);
     ro.observe(nav);
     return () => ro.disconnect();
-  }, [current, items.length, showLabels, floating]);
+  }, [current, items.length, showLabels, isFloating]);
   useEffect(() => { const id = requestAnimationFrame(() => setReady(true)); return () => cancelAnimationFrame(id); }, []);
-  return h('nav', { ref, 'aria-label': label, className: cx('bui-bottombar', ready && 'bui-bottombar--ready', !showLabels && 'bui-bottombar--compact', floating && 'bui-bottombar--floating', className), ...rest },
+  return h('nav', { ref, 'aria-label': label, className: cx('bui-bottombar', ready && 'bui-bottombar--ready', !showLabels && 'bui-bottombar--compact', isFloating && 'bui-bottombar--floating', className), ...rest },
     pill && h('span', { className: 'bui-bottombar__pill', 'aria-hidden': 'true', style: { width: pill.w, height: pill.h, transform: `translate(${pill.x}px, ${pill.y}px)` } }),
     items.slice(0, 6).map((it) => {
       const active = it.value === current;
@@ -64,6 +69,6 @@ describe(BottomBar, 'The bar at the bottom of a mobile screen for switching betw
   defaultValue: ['string', null, 'Initially active destination; the first by default'],
   onValueChange: ['(value: string) => void', null, 'Called when a destination is chosen'],
   showLabels: ['boolean', 'true', 'Show the labels under the icons; without them each label stays as the accessible name'],
-  floating: ['boolean', 'false', 'A floating, rounded bar with a shadow, inset from the screen edges'],
+  floating: ['boolean', 'theme', 'A floating, rounded bar with a shadow, inset from the screen edges; by default it follows the Floating setting of the theme'],
   label: ['string', "'Main navigation'", 'Accessible name of the navigation'],
 });

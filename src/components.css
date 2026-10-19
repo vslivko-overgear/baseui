@@ -568,3 +568,26 @@
 [data-shape="circle"] [class*="_chip_"],
 [data-shape="circle"] .bui-segmented, [data-shape="circle"] .bui-segmented__item, [data-shape="circle"] .bui-segmented__thumb,
 .bui-shape-circle, .bui-shape-circle .bui-segmented__item, .bui-shape-circle .bui-segmented__thumb { border-radius: var(--baseui-radius-full); }
+
+/* ---------- Theme: animations (data-motion), floating elements (data-floating), glass (data-glass) ---------- */
+:root { --baseui-ease-slide: var(--baseui-ease-standard); }
+:root:not([data-motion="off"]):not([data-motion="basic"]) { --baseui-ease-slide: var(--baseui-ease-spring); }
+.bui-tablist-wrap--ready .bui-tablist__indicator, .bui-segmented--ready .bui-segmented__thumb, .bui-bottombar--ready .bui-bottombar__pill { transition-timing-function: var(--baseui-ease-slide); }
+/* off: nothing moves; loading indicators keep going */
+[data-motion="off"] *:not(.bui-spinner, .bui-spinner *, .bui-skeleton) { animation-duration: 0.001ms !important; animation-delay: 0s !important; transition-duration: 0.001ms !important; transition-delay: 0s !important; scroll-behavior: auto !important; }
+/* enhanced: presses, lifts and springs on top of the basic transitions */
+:root:not([data-motion="off"]):not([data-motion="basic"]) :is(button, a)[class*="_h5cjz_"],
+:root:not([data-motion="off"]):not([data-motion="basic"]) .bui-segmented__item,
+:root:not([data-motion="off"]):not([data-motion="basic"]) .bui-bottombar__item { transition: transform var(--baseui-duration-fast) var(--baseui-ease-spring), background-color var(--baseui-duration-fast) var(--baseui-ease-standard), color var(--baseui-duration-fast) var(--baseui-ease-standard); }
+:root:not([data-motion="off"]):not([data-motion="basic"]) :is(button, a)[class*="_h5cjz_"]:active:not(:disabled),
+:root:not([data-motion="off"]):not([data-motion="basic"]) .bui-segmented__item:active:not(:disabled),
+:root:not([data-motion="off"]):not([data-motion="basic"]) .bui-bottombar__item:active:not(:disabled) { transform: scale(0.96); }
+:root:not([data-motion="off"]):not([data-motion="basic"]) .bui-card--clickable, :root:not([data-motion="off"]):not([data-motion="basic"]) .bui-card--selectable { transition: transform var(--baseui-duration-medium) var(--baseui-ease-spring), box-shadow var(--baseui-duration-medium) var(--baseui-ease-standard); }
+@media (hover: hover) { :root:not([data-motion="off"]):not([data-motion="basic"]) .bui-card--clickable:hover:not(.bui-card--disabled), :root:not([data-motion="off"]):not([data-motion="basic"]) .bui-card--selectable:hover:not(.bui-card--disabled) { transform: translateY(-3px); box-shadow: var(--baseui-shadow-med); } }
+/* floating navbar (the bottom bar has its own floating rules above) */
+.bui-navbar--floating { margin: var(--baseui-spacing-8) var(--baseui-spacing-12) 0; border-radius: var(--baseui-radius-full); background: var(--baseui-Extensions-Background-Surface); box-shadow: var(--baseui-shadow-med); }
+/* glass: translucent surfaces that blur what is behind them */
+[data-glass="on"] :is(.bui-navbar, .bui-bottombar, .bui-popover__panel, [class*="_popup_vmty2"], [class*="_popup_1nnzw"], .bui-toast:not(.bui-toast--inverse)) {
+  background: color-mix(in srgb, var(--baseui-Extensions-Background-Surface) 62%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(160%); backdrop-filter: blur(20px) saturate(160%);
+}

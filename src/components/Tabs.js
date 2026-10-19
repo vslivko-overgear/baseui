@@ -3,6 +3,7 @@ import { Icon } from '../icons.js';
 import { Badge } from './Badge.js';
 import { IconButton } from './Button.js';
 import { describe } from '../doc.js';
+import { motionLevel } from '../theme-flags.js';
 
 const TabsContext = createContext(null);
 const TabListContext = createContext({ size: 'md', showIcon: true, showCounter: true, showBadge: true });
@@ -68,9 +69,9 @@ export function TabList({ size = 'md', fullWidth = false, showIcon = true, showC
     h('div', { className: cx('bui-tablist-wrap', `bui-tablist-wrap--${size}`, fullWidth && 'bui-tablist-wrap--full', ready && 'bui-tablist-wrap--ready', className) },
       edge.left && h('div', { className: 'bui-tablist__slide bui-tablist__slide--left' }, h(IconButton, { variant: 'ghost', size: 'xsm', label: 'Slide left', tooltip: false, tabIndex: -1, icon: h(Icon, { name: 'chevronLeft', size: 24 }), onClick: () => slide(-1) })),
       h('div', { role: 'tablist', 'aria-label': label, ref, onKeyDown,
-        // Hovering another tab nudges the underline a few pixels toward it.
+        // Hovering another tab nudges the underline a few pixels toward it (enhanced animations only).
         onPointerOver: (e) => {
-          if (e.pointerType !== 'mouse') return;
+          if (e.pointerType !== 'mouse' || motionLevel() !== 'enhanced') return;
           const t = e.target.closest('[role="tab"]:not(:disabled)');
           const sel = ref.current.querySelector('[aria-selected="true"]');
           setNudge(t && sel && t !== sel ? (t.offsetLeft > sel.offsetLeft ? 6 : -6) : 0);

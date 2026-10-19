@@ -4,10 +4,10 @@ import { Button } from '../components/Button.js';
 import { SegmentedControl } from '../components/SegmentedControl.js';
 import { Tabs, TabList, Tab } from '../components/Tabs.js';
 import { Badge } from '../components/Badge.js';
-import { Progress } from './_preview.js';
+import { Progress, PhoneDemo } from './_preview.js';
 import { TextField, Switch, Chip } from '../base.js';
 import { Plus } from '../stories/_ui.js';
-import { applyTheme, saveTheme, loadTheme, DEFAULT, PRESETS, PRESET_OPTIONS, BRAND_OPTIONS, HEADLINE_FONTS, TEXT_FONTS } from '../../site/theme.js';
+import { applyTheme, saveTheme, loadTheme, DEFAULT, PRESETS, PRESET_OPTIONS, MOTION_OPTIONS, BRAND_OPTIONS, HEADLINE_FONTS, TEXT_FONTS } from '../../site/theme.js';
 
 /** Everything the settings change, shown at once. Any change is applied to the whole site and kept in a cookie. */
 export function ThemePreview(theme) {
@@ -24,7 +24,8 @@ export function ThemePreview(theme) {
       h(SegmentedControl, { items, defaultValue: 'week', label: 'Range' })),
     h(Tabs, { defaultValue: 'a' }, h(TabList, { label: 'Sections' }, h(Tab, { value: 'a', counter: 4 }, 'Overview'), h(Tab, { value: 'b' }, 'Activity'), h(Tab, { value: 'c' }, 'Settings'))),
     h('div', { style: row }, h(Chip, { size: 'sm' }, 'Token'), h(Badge, { variant: 'primary', label: 'Primary' }), h(Badge, { label: 'Secondary' }), h(Badge, { variant: 'success', label: 'Success' }), h(Switch, { size: 'sm', label: 'Notifications', defaultChecked: true })),
-    h(Progress, null));
+    h(Progress, null),
+    h(PhoneDemo, null));
 }
 describe(ThemePreview, 'The theme of this site and of your own app: the settings are applied at once and stored in a cookie on this device.', {
   preset: ["'default' | 'ocean' | 'forest' | 'sunset' | 'berry' | 'graphite' | 'custom'", "'default'", 'A ready set of the settings below; changing any of them switches it to custom'],
@@ -34,6 +35,9 @@ describe(ThemePreview, 'The theme of this site and of your own app: the settings
   radius: ['number', '12', 'Base radius in px: every radius token (4 to 32) scales from it; 0 makes square corners'],
   headingFont: ["'Geist' | 'Unbounded' | 'Montserrat Alternates' | …", "'Geist'", 'Font of the headings (`--baseui-Typography-Headline-Font-Family`); Google Fonts with Cyrillic'],
   textFont: ["'Geist' | 'Inter' | 'Manrope' | …", "'Geist'", 'Font of all other text (`--baseui-Typography-Font-Family`); Google Fonts with Cyrillic'],
+  motion: ["'off' | 'basic' | 'enhanced'", "'enhanced'", 'off: nothing moves (loading indicators still run); basic: simple transitions; enhanced: also presses, lifts, springy sliding highlights and the hover nudge of the tab underline (`data-motion` on `<html>`)'],
+  floating: ['boolean', 'false', 'Bars and panels float above the content: rounded, inset, with a shadow (`data-floating` on `<html>`; the Navbar and Bottom Bar follow it)'],
+  glass: ['boolean', 'false', 'Translucent, blurred surfaces for bars, menus, dialogs and toasts (`data-glass` on `<html>`)'],
 });
 
 const custom = { preset: 'custom' };
@@ -48,6 +52,9 @@ const meta = {
     radius: { control: { type: 'range', min: 0, max: 24, step: 2 }, derive: () => custom },
     headingFont: { control: 'select', options: Object.keys(HEADLINE_FONTS), derive: () => custom },
     textFont: { control: 'select', options: Object.keys(TEXT_FONTS), derive: () => custom },
+    motion: { control: 'inline-radio', options: MOTION_OPTIONS, derive: () => custom },
+    floating: { control: 'boolean', derive: () => custom },
+    glass: { control: 'boolean', derive: () => custom },
   },
   // What a click on Reset restores: the default theme, also in the cookie.
   onReset: () => { applyTheme(DEFAULT); saveTheme({ ...DEFAULT, preset: 'default' }); },
