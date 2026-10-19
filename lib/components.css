@@ -211,3 +211,5 @@
 .bui-dropdown__group{padding:var(--baseui-spacing-12) var(--baseui-spacing-8) var(--baseui-spacing-8);font:var(--baseui-Typography-Text-14-Regular);color:var(--baseui-Text-and-Icon-Secondary)}
 .bui-dropdown__divider{padding-block:var(--baseui-spacing-8)}
 .bui-dropdown__divider::before{content:"";display:block;height:1px;background:var(--baseui-Border-Primary)}
+/* The select-all row is not a list item: while it is hovered, the highlight left on the last item goes away so only one row is lit */
+.bui-dropdown:has(.bui-dropdown__select-all:hover) .bui-dropdown__item[data-highlighted]:not(.bui-dropdown__select-all),.bui-dropdown:has(.bui-dropdown__select-all:hover) .bui-dropdown__item:not(.bui-dropdown__select-all):hover{background-color:transparent}

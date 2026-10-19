@@ -33,15 +33,21 @@ const box = (n, ...c) => h('div', { style: { minHeight: n } }, ...c);
 
 export default meta({
   title: 'Components/Dropdown', component: Dropdown,
-  args: { multiple: false, selectAll: false, placement: 'bottom-start' },
+  args: { multiple: false, selectAll: false, icons: 'off', showDetails: true, placement: 'bottom-start' },
   argTypes: {
+    icons: { control: 'inline-radio', options: ['off', 'icon', 'avatar'], description: 'A leading icon or avatar on every item' },
+    showDetails: { control: 'boolean', description: 'Details on the right of every item' },
     multiple: { control: 'boolean' }, selectAll: { control: 'boolean', if: { arg: 'multiple', eq: true } },
     placement: { control: 'inline-radio', options: ['bottom-start', 'bottom-end', 'top-start', 'top-end'] },
   },
 });
+const LEADING = { icon: [h(Heart), h(Star01), h(Bell01), h(Heart)], avatar: ['A', 'I', 'L', 'G'].map((l, i) => demoImage(l, 40 + i * 70)) };
+const playgroundOptions = ({ icons, showDetails }) => OPTIONS.map((o, i) => ({
+  ...o, ...(icons === 'icon' && { icon: LEADING.icon[i] }), ...(icons === 'avatar' && { avatar: LEADING.avatar[i] }), ...(!showDetails && { details: undefined }),
+}));
 export const Playground = {
   ...playground({ source: `<Dropdown options={options} defaultValue="steam" onValueChange={setPlatform} />` }),
-  render: (args) => box(360, h(Dropdown, { key: String(args.multiple), ...args, options: OPTIONS, defaultValue: args.multiple ? ['steam'] : 'steam' })),
+  render: (args) => box(360, h(Dropdown, { key: String(args.multiple), ...args, options: playgroundOptions(args), defaultValue: args.multiple ? ['steam'] : 'steam' })),
 };
 export const Icons = example({
   name: 'Icons and Avatars', render: () => box(260, h('div', { style: { display: 'flex', gap: 16 } }, h(Dropdown, { options: WITH_ICONS, defaultValue: 'fav' }), h(Dropdown, { options: WITH_AVATARS, defaultValue: 'ana' }))),
