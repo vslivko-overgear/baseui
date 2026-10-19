@@ -14,6 +14,7 @@ export { Stack, HStack, VStack, Center, Grid, Section } from './components/Layou
 export { Link } from './components/Link.js';
 export { MetadataList } from './components/MetadataList.js';
 export { NumberInput } from './components/NumberInput.js';
+export { Navbar, BottomBar } from './components/MobileNavigation.js';
 export { Pagination } from './components/Pagination.js';
 export { Popover } from './components/Popover.js';
 export { ProgressBar } from './components/ProgressBar.js';

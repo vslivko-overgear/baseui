@@ -53,6 +53,13 @@ export default [
         { title: 'Typeahead', file: B('Autocomplete.stories-CLnOUoA7'), lead: 'A text field that suggests options as you type.' },
         ],
       },
+      {
+        group: 'Mobile Navigation',
+        items: [
+          { title: 'Navbar', file: N('Navbar'), lead: 'The bar at the top of a mobile screen.' },
+          { title: 'Bottom Bar', file: N('BottomBar'), lead: 'The bar at the bottom of a mobile screen for switching sections.' },
+        ],
+      },
       { title: 'Layout', file: N('Stack'), lead: 'Containers that arrange content with consistent spacing.', children: [{ title: 'Center', file: N('Center') }, { title: 'Grid', file: N('Grid') }, { title: 'Section', file: N('Section') }] },
       { title: 'Link', file: N('Link') },
       { title: 'List', file: B('List.stories-Alo3K1f2'), lead: 'A vertical list of rows with an optional title.', children: [{ title: 'List Item', file: B('ListItem.stories-Dq00OmrP'), lead: 'A row with an icon or avatar, text and an optional control.' }] },
