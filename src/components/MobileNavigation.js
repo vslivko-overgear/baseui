@@ -22,7 +22,7 @@ describe(Navbar, 'The bar at the top of a mobile screen: a back button on the le
   showBack: ['boolean', 'true', 'Show the back button'],
   onBack: ['() => void', null, 'Called when the back button is pressed'],
   backLabel: ['string', "'Back'", 'Accessible name of the back button'],
-  floating: ['boolean', 'theme', 'A floating, rounded bar with a shadow, inset from the screen edges; by default it follows the Floating setting of the theme'],
+  floating: ['boolean', 'theme', 'A floating bar: separate rounded pieces with a shadow over a gradient that fades the content (blurred when glass is on), inset from the screen edges; by default it follows the Floating setting of the theme'],
   glass: ['boolean', 'theme', 'Translucent, blurred bar; true or false overrides the Glass setting of the theme'],
   outline: ['boolean', 'theme', 'A thin rim around the bar (glassy when glass is on); true or false overrides the Outline setting of the theme'],
   actions: ['Array<{ icon: ReactNode; label: string; onClick?: () => void; disabled?: boolean }>', '[]', 'Icon buttons on the right; only the first two are shown. `label` is the accessible name'],
@@ -37,6 +37,7 @@ export function BottomBar({ items = [], value, defaultValue, onValueChange, show
   const [pill, setPill] = useState(null);
   const [ready, setReady] = useState(false);
   const pillRef = useRef(null);
+  const barRef = useRef(null);
   // The highlight is one element that slides to the active item; it is measured again when the bar changes size.
   React.useLayoutEffect(() => {
     const nav = ref.current;
@@ -44,7 +45,7 @@ export function BottomBar({ items = [], value, defaultValue, onValueChange, show
       const item = nav.querySelector('[aria-current="page"]');
       if (!item) return setPill(null);
       const box = (isFloating ? item : item.querySelector('.bui-bottombar__icon')).getBoundingClientRect();
-      const base = nav.getBoundingClientRect();
+      const base = barRef.current.getBoundingClientRect();
       setPill({ x: box.left - base.left, y: box.top - base.top, w: box.width, h: box.height });
     };
     measure();
@@ -55,6 +56,7 @@ export function BottomBar({ items = [], value, defaultValue, onValueChange, show
   useEffect(() => { const id = requestAnimationFrame(() => setReady(true)); return () => cancelAnimationFrame(id); }, []);
   useAppear(pillRef, ref, pill && `${pill.x}/${pill.y}`);
   return h('nav', { ref, 'data-motion': motion, 'aria-label': label, className: cx('bui-bottombar', ready && 'bui-bottombar--ready', !showLabels && 'bui-bottombar--compact', isFloating && 'bui-bottombar--floating', glassClass(glass), outlineClass(outline), className), ...rest },
+    h('div', { ref: barRef, className: 'bui-bottombar__bar' },
     pill && h('span', { ref: pillRef, className: 'bui-bottombar__pill', 'aria-hidden': 'true', style: { width: pill.w, height: pill.h, transform: `translate(${pill.x}px, ${pill.y}px)` } }),
     items.slice(0, 6).map((it) => {
       const active = it.value === current;
@@ -65,7 +67,7 @@ export function BottomBar({ items = [], value, defaultValue, onValueChange, show
       },
       h('span', { className: 'bui-bottombar__icon', 'aria-hidden': 'true' }, active && it.activeIcon ? it.activeIcon : it.icon, badge || null),
       showLabels && h('span', { className: 'bui-bottombar__label' }, it.label));
-    }));
+    })));
 }
 describe(BottomBar, 'The bar at the bottom of a mobile screen for switching between 2 to 6 top-level sections. The active one is highlighted; it can also float above the content, like the tab bar in iOS.', {
   items: ['Array<{ value: string; label: string; icon: ReactNode; activeIcon?: ReactNode; badge?: number | string | true; disabled?: boolean }>', null, 'The destinations (2 to 6); only the first six are shown. `activeIcon` (for example a filled icon) replaces `icon` when selected; `badge: true` shows a dot and a number shows a counter'],
@@ -73,7 +75,7 @@ describe(BottomBar, 'The bar at the bottom of a mobile screen for switching betw
   defaultValue: ['string', null, 'Initially active destination; the first by default'],
   onValueChange: ['(value: string) => void', null, 'Called when a destination is chosen'],
   showLabels: ['boolean', 'true', 'Show the labels under the icons; without them each label stays as the accessible name'],
-  floating: ['boolean', 'theme', 'A floating, rounded bar with a shadow, inset from the screen edges; by default it follows the Floating setting of the theme'],
+  floating: ['boolean', 'theme', 'A floating bar: separate rounded pieces with a shadow over a gradient that fades the content (blurred when glass is on), inset from the screen edges; by default it follows the Floating setting of the theme'],
   glass: ['boolean', 'theme', 'Translucent, blurred bar; true or false overrides the Glass setting of the theme'],
   outline: ['boolean', 'theme', 'A thin rim around the bar (glassy when glass is on); true or false overrides the Outline setting of the theme'],
   motion: ["'off' | 'basic' | 'enhanced'", 'theme', 'Animations of this bar: off, basic, or enhanced (the highlight slides); by default the Animations setting of the theme'],
