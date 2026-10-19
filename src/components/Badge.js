@@ -1,13 +1,13 @@
 import { h, cx } from '../react.js';
 import { describe } from '../doc.js';
 
-export function Badge({ variant = 'neutral', size = 'md', disabled = false, label, icon, className, ...rest }) {
+export function Badge({ variant = 'secondary', size = 'md', disabled = false, label, icon, className, ...rest }) {
   return h('span', { className: cx('bui-badge', `bui-badge--${variant}`, size !== 'md' && `bui-badge--${size}`, disabled && 'bui-badge--disabled', className), title: typeof label === 'string' || typeof label === 'number' ? String(label) : undefined, ...rest },
     icon && h('span', { className: 'bui-badge__icon', 'aria-hidden': 'true' }, icon),
     h('span', { className: 'bui-badge__label' }, label));
 }
 describe(Badge, 'A compact label for a status, category or count.', {
-  variant: ["'neutral' | 'info' | 'success' | 'warning' | 'error' | 'blue' | 'blue-light' | 'green' | 'green-light' | 'orange' | 'pink' | 'red' | 'inverse'", "'neutral'", 'Semantic and accent colors from the palette, all solid'],
+  variant: ["'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | 'blue' | 'blue-light' | 'green' | 'green-light' | 'orange' | 'pink' | 'red'", "'secondary'", 'primary is the inverse of the page, secondary a soft gray; the rest are semantic and accent colors, all solid'],
   size: ["'sm' | 'md' | 'lg'", "'md'", 'Badge height: 18, 22 or 28px'],
   disabled: ['boolean', 'false', 'Muted look that replaces the variant color'],
   label: ['ReactNode', null, 'Badge text'],

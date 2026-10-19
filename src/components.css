@@ -394,7 +394,7 @@
 .bui-badge--green { background: var(--baseui-Accent-Colors-Green); color: var(--baseui-Extensions-Text-and-Icon-AlwaysLight); }
 .bui-badge--green-light { background: var(--baseui-Accent-Colors-Green-Light); color: var(--baseui-Extensions-Text-and-Icon-AlwaysDark); }
 .bui-badge--orange { background: var(--baseui-Accent-Colors-Orange); color: var(--baseui-Extensions-Text-and-Icon-AlwaysDark); }
-.bui-badge--inverse { background: var(--baseui-Extensions-Background-InversePrimary); color: var(--baseui-Text-and-Icon-OnColor); }
+.bui-badge--primary { background: var(--baseui-Extensions-Background-InversePrimary); color: var(--baseui-Text-and-Icon-OnColor); }
 .bui-badge--pink { background: var(--baseui-Accent-Colors-Pink); color: var(--baseui-Extensions-Text-and-Icon-AlwaysLight); }
 .bui-badge--red { background: var(--baseui-Accent-Colors-Red); color: var(--baseui-Extensions-Text-and-Icon-AlwaysLight); }
 .bui-badge--disabled { background: var(--baseui-Background-Disabled); color: var(--baseui-Text-and-Icon-Disabled); }
