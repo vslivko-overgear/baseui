@@ -180,7 +180,7 @@
   --baseui-Extensions-Background-LightSuccess: #114119;
   --baseui-Extensions-Background-LightAccent: #24276a;
   --baseui-Extensions-Background-LightError: #51150a;
-  --baseui-Extensions-Background-LightWarning: #eac57b;
+  --baseui-Extensions-Background-LightWarning: #503806;
 
   /* Extensions / Border */
   --baseui-Extensions-Border-Selected: #ffffff;
@@ -232,7 +232,7 @@
   --baseui-Extensions-Background-AlwaysLight-Hover: #f2f2f2;
   --baseui-Extensions-Background-LightSuccess-Hover: #235129;
   --baseui-Extensions-Background-LightError-Hover: #63261a;
-  --baseui-Extensions-Background-LightWarning-Hover: #d6b268;
+  --baseui-Extensions-Background-LightWarning-Hover: #634508;
   --baseui-Extensions-Border-Selected-Hover: #e8e8e8;
   --baseui-Extensions-Border-SelectedAlwaysDark-Hover: #272727;
   --baseui-Extensions-Border-SelectedAlwaysLight-Hover: #e8e8e8;
