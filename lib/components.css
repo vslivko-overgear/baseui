@@ -224,3 +224,5 @@
 ._title_1f5ju_8 { padding-inline: 0; }
 ._nestedWrap_1xp1v_130 { margin-inline: calc(var(--baseui-spacing-12) * -1); }
 ._nestedWrap_1xp1v_130 ._header_1xp1v_5 { margin-inline: 0; }
+/* List Item: the control slot sizes its own svg to 24px; the Checkbox check mark stays 16px as in the Checkbox itself */
+._control_1xp1v_94 ._indicator_1p6mm_51 svg { width: 16px; height: 16px; }
