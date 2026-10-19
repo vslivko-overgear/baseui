@@ -47,7 +47,7 @@ export default [
         group: 'Inputs',
         items: [
         { title: 'Calendar', file: N('Calendar'), lead: 'A month grid for picking a date or a date range.', children: [{ title: 'Date Picker', file: N('DatePicker'), lead: 'A date field that opens the calendar in a popover, or in a Dialog sheet on small screens.' }] },
-        { title: 'Checkbox', file: B('Checkbox.stories-CjVZ5VOE'), lead: 'A box that turns one option on or off, alone or as a list of options.', examples: [{ title: 'Checkbox List', file: B('CheckboxGroup.stories-DyCBCBrP'), props: true }] },
+        { title: 'Checkbox', file: B('Checkbox.stories-CjVZ5VOE'), lead: 'A box that turns one option on or off.', children: [{ title: 'Checkbox Group', file: B('CheckboxGroup.stories-DyCBCBrP'), lead: 'A list of checkboxes with a title, a caption, an error and nested subgroups with a parent checkbox.' }] },
         { title: 'Number Input', file: N('NumberInput') },
         { title: 'OTP Input', file: B('OtpInput.stories-DMTeWrJE'), lead: 'A field for entering a one-time code.' },
         { title: 'Radio', file: B('RadioGroup.stories-DVXazEy6'), lead: 'Radio buttons for choosing one option from a list.', examples: [{ title: 'Radio List Item', file: B('Radio.stories-ByX4his4'), props: true }] },
