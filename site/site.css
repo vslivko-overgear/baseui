@@ -182,7 +182,7 @@ code.val { background: none; padding: 0; color: var(--baseui-Text-and-Icon-Secon
 
 /* Mobile preview: the whole content block becomes a 360px column */
 main[data-viewport="mobile"] { background: var(--baseui-Background-Secondary); padding-top: var(--baseui-spacing-16); }
-main[data-viewport="mobile"] .page { max-width: var(--baseui-layout-mobile-preview-width); min-height: calc(100vh - var(--bar-h) - var(--baseui-spacing-16)); border-radius: var(--baseui-radius-24) var(--baseui-radius-24) 0 0; background: var(--baseui-Background-Primary); padding: var(--baseui-spacing-24) var(--baseui-spacing-16) var(--baseui-spacing-48); }
+main[data-viewport="mobile"] .page { max-width: var(--baseui-layout-mobile-preview-width); min-height: calc(100vh - var(--bar-h) - var(--baseui-spacing-16)); border-radius: var(--baseui-radius-24) var(--baseui-radius-24) 0 0; background: var(--baseui-Background-Primary); padding: var(--baseui-spacing-24) var(--baseui-layout-margin-mobile) var(--baseui-spacing-48); }
 main[data-viewport="mobile"] .page h1 { font: var(--baseui-Typography-Header-32); }
 
 .tok-pair { display: inline-flex; align-items: center; gap: 4px; }
@@ -213,3 +213,6 @@ html[data-glass="on"] :is(.appbar, .side, .settings) { background: color-mix(in 
 /* floating: the columns keep their width, their 12px margin comes on top of it */
 html[data-floating="on"] .body { grid-template-columns: calc(var(--baseui-layout-sidebar-width) + var(--baseui-spacing-12)) minmax(0, 1fr); }
 html[data-floating="on"] .body--settings { grid-template-columns: calc(var(--baseui-layout-sidebar-width) + var(--baseui-spacing-12)) minmax(0, 1fr) calc(var(--baseui-layout-settings-width) + var(--baseui-spacing-12)); }
+
+/* mobile preview with floating panels: the gray reaches the whole page, behind the header and the columns too */
+html[data-floating="on"] .shell:has(main[data-viewport="mobile"]) { background: var(--baseui-Background-Secondary); }
