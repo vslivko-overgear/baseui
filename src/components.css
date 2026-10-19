@@ -577,9 +577,9 @@
 /* ---------- Outline: a thin rim around surfaces (data-outline on <html>, or the outline prop of one component) ---------- */
 /* the rim is a mask-ring on ::before, so it takes no space and keeps the shadow; with glass it is a lit edge, not a flat line */
 :root {
-  --bui-rim: color-mix(in srgb, var(--baseui-Text-and-Icon-Primary) 12%, transparent);
+  --bui-rim: color-mix(in srgb, var(--baseui-Text-and-Icon-Primary) 6%, transparent);
   /* glass: a lit edge, bright at two corners and faint in between, not a dark line */
-  --bui-rim-glass: linear-gradient(135deg, color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 50%, transparent), color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 6%, transparent) 35%, color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 6%, transparent) 65%, color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 34%, transparent)), color-mix(in srgb, var(--baseui-Text-and-Icon-Primary) 5%, transparent);
+  --bui-rim-glass: linear-gradient(135deg, color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 25%, transparent), color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 3%, transparent) 35%, color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 3%, transparent) 65%, color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 17%, transparent)), color-mix(in srgb, var(--baseui-Text-and-Icon-Primary) 3%, transparent);
 }
 .bui-navbar, .bui-toast { position: relative; }
 .bui-outline::before, [data-outline="on"] :is(.bui-navbar, .bui-bottombar, .bui-popover__panel, .bui-dropdown, [class*="_popup_vmty2"], [class*="_popup_1nnzw"], .bui-toast:not(.bui-toast--inverse), .bui-card):not(.bui-outline-off)::before {
@@ -594,17 +594,21 @@
 [data-outline="on"] { --bui-ol: 1; }
 [data-outline="off"], button.bui-outline-off { --bui-ol: 0; }
 button.bui-outline { --bui-ol: 1; }
-:is(button[class*="_h5cjz_"]:not([class*="_text_h5cjz"]), [class*="_cell_2ah00"], [class*="_chip_"], .bui-segmented, [class*="_track_1epgh"]) {
+:is(button[class*="_h5cjz_"]:not([class*="_text_h5cjz"]), [class*="_chip_"], .bui-segmented, [class*="_track_1epgh"]) {
   box-shadow: inset 0 0 0 calc(1px * var(--bui-ol)) var(--bui-rim);
 }
+/* a field has a transparent 2px border, so its rim is drawn just outside it, on the real edge */
+[class*="_cell_2ah00"] { box-shadow: 0 0 0 calc(1px * var(--bui-ol)) var(--bui-rim); }
 /* with glass the rim of a control is a lit edge: a bright line on top and a faint one around */
-:is([data-glass="on"] :is(button[class*="_h5cjz_"]:not([class*="_text_h5cjz"]), [class*="_cell_2ah00"], [class*="_chip_"], .bui-segmented, [class*="_track_1epgh"]), button.bui-glass) {
-  box-shadow: inset 0 0 0 calc(1px * var(--bui-ol)) color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 16%, transparent), inset 0 calc(1px * var(--bui-ol)) 0 0 color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 40%, transparent);
+:is([data-glass="on"] :is(button[class*="_h5cjz_"]:not([class*="_text_h5cjz"]), [class*="_chip_"], .bui-segmented, [class*="_track_1epgh"]), button.bui-glass) {
+  box-shadow: inset 0 0 0 calc(1px * var(--bui-ol)) color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 8%, transparent), inset 0 calc(1px * var(--bui-ol)) 0 0 color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 20%, transparent);
 }
 
 /* glass + outline: besides the lit hairline the edge has a soft inner glow, like the bevel of a glass pane */
 html[data-glass="on"][data-outline="on"] :is(.bui-navbar, .bui-bottombar, .bui-popover__panel, .bui-dropdown, [class*="_popup_vmty2"], [class*="_popup_1nnzw"], .bui-toast:not(.bui-toast--inverse)):not(.bui-glass-off):not(.bui-outline-off)::after,
 .bui-glass.bui-outline::after {
   content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; pointer-events: none;
-  box-shadow: inset 0 0 14px 0 color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 9%, transparent), inset 2px 2px 3px -1px color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 24%, transparent), inset -2px -2px 3px -1px color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 14%, transparent);
+  box-shadow: inset 0 0 14px 0 color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 4.5%, transparent), inset 2px 2px 3px -1px color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 12%, transparent), inset -2px -2px 3px -1px color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 7%, transparent);
 }
+
+[data-glass="on"] [class*="_cell_2ah00"] { box-shadow: 0 0 0 calc(1px * var(--bui-ol)) color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 8%, transparent), 0 calc(-1px * var(--bui-ol)) 0 0 color-mix(in srgb, var(--baseui-Extensions-Background-AlwaysLight) 20%, transparent); }
