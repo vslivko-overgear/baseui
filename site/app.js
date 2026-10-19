@@ -2,7 +2,7 @@ import { t as requireReact } from '../lib/react-BZJXY1be.js';
 import { documentControls } from './controls-docs.js';
 import { t as initDom, r as renderInto } from '../lib/react-18-D4o7zN8K.js';
 import manifest from './manifest.js';
-import { TextField, Switch, Chip, ChipGroup, List, ListItem, Modal, Autocomplete } from '../src/base.js';
+import { TextField, Switch, Chip, ChipGroup, List, ListItem, Modal } from '../src/base.js';
 import { Button } from '../src/components/Button.js';
 import { LOGO_PATHS } from './logo.js';
 import { SegmentedControl } from '../src/components/SegmentedControl.js';
@@ -66,18 +66,6 @@ const ui = { Button, TextField, Switch, Chip };
 
 /* ---------------------------------------------------------------- controls */
 
-// Every color token of tokens.css, picked through a Typeahead.
-let colorTokens;
-const loadColorTokens = () => (colorTokens ||= fetch(new URL('../tokens.css', import.meta.url)).then((r) => r.text()).then((css) => {
-  const light = css.slice(css.indexOf(':root,'), css.indexOf('[data-theme="dark"]'));
-  return [...light.matchAll(/--baseui-([\w-]+):\s*(#[0-9a-f]{3,8}|rgba?\([^)]*\))\s*;/gi)].map((m) => m[1]).filter((n) => !n.endsWith('-Hover')).map((n) => ({ value: n, label: n }));
-}));
-function TokenPicker({ name, value, onChange }) {
-  const [options, setOptions] = useState([]);
-  useEffect(() => { loadColorTokens().then(setOptions); }, []);
-  return h(Autocomplete, { label: name, size: 'sm', options, value: value ?? null, onValueChange: (v) => onChange(v || undefined), placeholder: 'Any token' });
-}
-
 function Control({ name, spec, value, onChange, args }) {
   if (spec.if && args[spec.if.arg] !== spec.if.eq) return null;
   const { Switch, TextField } = ui;
@@ -104,8 +92,6 @@ function Control({ name, spec, value, onChange, args }) {
     input = h('div', { className: 'color-row' },
       h(TextField, { label: name, size: 'sm', value: value ?? '', onChange: (e) => onChange(e.target.value || undefined) }),
       h('input', { type: 'color', className: 'swatch', 'aria-label': name, value: /^#[0-9a-f]{6}$/i.test(value || '') ? value : '#575df6', onChange: (e) => onChange(e.target.value) }));
-  } else if (type === 'token') {
-    input = h(TokenPicker, { name, value, onChange });
   } else if (type === 'text') {
     input = h(TextField, { label: name, size: 'sm', value: value ?? '', onChange: (e) => onChange(e.target.value) });
   }
