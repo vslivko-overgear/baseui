@@ -3,7 +3,7 @@ import { Icon } from '../icons.js';
 import { Badge } from './Badge.js';
 import { IconButton } from './Button.js';
 import { describe } from '../doc.js';
-import { useAppear } from '../theme-flags.js';
+import { motionOf, useAppear } from '../theme-flags.js';
 
 const TabsContext = createContext(null);
 const TabListContext = createContext({ size: 'md', showIcon: true, showCounter: true, showBadge: true });
@@ -26,6 +26,7 @@ export function TabList({ size = 'md', fullWidth = false, showIcon = true, showC
   const [edge, setEdge] = useState({ left: false, right: false });
   const [bar, setBar] = useState(null);
   const [ready, setReady] = useState(false);
+  const [nudge, setNudge] = useState(0);
   const indicator = useRef(null);
   // Slide buttons appear when the row is wider than its container, like the Figma "slide left / right".
   useEffect(() => {
@@ -70,8 +71,15 @@ export function TabList({ size = 'md', fullWidth = false, showIcon = true, showC
     h('div', { 'data-motion': motion, className: cx('bui-tablist-wrap', `bui-tablist-wrap--${size}`, fullWidth && 'bui-tablist-wrap--full', ready && 'bui-tablist-wrap--ready', className) },
       edge.left && h('div', { className: 'bui-tablist__slide bui-tablist__slide--left' }, h(IconButton, { variant: 'ghost', size: 'xsm', label: 'Slide left', tooltip: false, tabIndex: -1, icon: h(Icon, { name: 'chevronLeft', size: 24 }), onClick: () => slide(-1) })),
       h('div', { role: 'tablist', 'aria-label': label, ref, onKeyDown,
-        className: 'bui-tablist', ...rest }, children,
-        bar && h('span', { ref: indicator, className: 'bui-tablist__indicator', 'aria-hidden': 'true', style: { width: bar.w, transform: `translateX(${bar.x}px)` } })),
+        // Hovering another tab nudges the underline a few pixels toward it (enhanced animations only).
+        onPointerOver: (e) => {
+          if (e.pointerType !== 'mouse' || motionOf(ref.current) !== 'enhanced') return;
+          const t = e.target.closest('[role="tab"]:not(:disabled)');
+          const sel = ref.current.querySelector('[aria-selected="true"]');
+          setNudge(t && sel && t !== sel ? (t.offsetLeft > sel.offsetLeft ? 6 : -6) : 0);
+        },
+        onPointerLeave: () => setNudge(0), className: 'bui-tablist', ...rest }, children,
+        bar && h('span', { ref: indicator, className: 'bui-tablist__indicator', 'aria-hidden': 'true', style: { width: bar.w, transform: `translateX(${bar.x + nudge}px)` } })),
       edge.right && h('div', { className: 'bui-tablist__slide bui-tablist__slide--right' }, h(IconButton, { variant: 'ghost', size: 'xsm', label: 'Slide right', tooltip: false, tabIndex: -1, icon: h(Icon, { name: 'chevronRight', size: 24 }), onClick: () => slide(1) }))));
 }
 describe(TabList, 'The row of tabs. Its settings work like the Segmented Control ones; a row wider than its container scrolls with slide buttons.', {
@@ -80,7 +88,7 @@ describe(TabList, 'The row of tabs. Its settings work like the Segmented Control
   showIcon: ['boolean', 'true', 'Show the tab icons'],
   showCounter: ['boolean', 'true', 'Show the tab counters'],
   showBadge: ['boolean', 'true', 'Show the tab badges'],
-  motion: ["'off' | 'basic' | 'enhanced'", 'theme', 'Animations of this row: off, basic, or enhanced (the underline slides to the selected tab); by default the Animations setting of the theme'],
+  motion: ["'off' | 'basic' | 'enhanced'", 'theme', 'Animations of this row: off, basic, or enhanced (the underline slides to the selected tab and nudges toward the hovered one); by default the Animations setting of the theme'],
   label: ['string', null, 'Accessible name'],
 });
 
