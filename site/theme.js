@@ -16,7 +16,7 @@ export const TEXT_FONTS = {
   Geist: null, Inter: '400;600;700', Manrope: '400;600;700', Roboto: '400;500;700', 'Open Sans': '400;600;700', 'PT Sans': '400;700', Nunito: '400;600;700', 'Golos Text': '400;600;700', Onest: '400;600;700', 'IBM Plex Sans': '400;600;700',
 };
 
-export const DEFAULT = { preset: 'default', brand: 'default', brandColor: '#575df6', shape: 'rounded', radius: 12, headingFont: 'Geist', textFont: 'Geist', motion: 'enhanced', floating: false, glass: false };
+export const DEFAULT = { preset: 'default', brand: 'default', brandColor: '#575df6', shape: 'rounded', radius: 12, headingFont: 'Geist', textFont: 'Geist', motion: 'basic', floating: false, glass: false };
 export const PRESETS = {
   default: { ...DEFAULT },
   ocean: { brand: 'blue', shape: 'rounded', radius: 16, headingFont: 'Montserrat Alternates', textFont: 'Inter', motion: 'enhanced', floating: false, glass: true },

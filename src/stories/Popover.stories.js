@@ -4,8 +4,8 @@ import { Button } from './_ui.js';
 import { meta, playground } from './_helpers.js';
 
 export default meta({
-  title: 'Components/Popover', component: Popover, args: { placement: 'bottom-start', label: 'Share' },
-  argTypes: { placement: { control: 'inline-radio', options: ['bottom-start', 'bottom-end', 'top-start', 'top-end'] } },
+  title: 'Components/Popover', component: Popover, args: { glass: 'theme', placement: 'bottom-start', label: 'Share' },
+  argTypes: { glass: { control: 'inline-radio', options: ['theme', 'on', 'off'], mapping: { theme: undefined, on: true, off: false } }, placement: { control: 'inline-radio', options: ['bottom-start', 'bottom-end', 'top-start', 'top-end'] } },
 });
 export const Playground = {
   ...playground({ source: `<Popover trigger={(p) => <Button {...p}>Share</Button>}>…</Popover>` }),

@@ -12,8 +12,8 @@ const items = [
 const plain = [{ value: 'day', label: 'Day' }, { value: 'week', label: 'Week' }, { value: 'month', label: 'Month' }, { value: 'year', label: 'Year', disabled: true }];
 export default meta({
   title: 'Components/Segmented Control', component: SegmentedControl,
-  args: { items, size: 'md', fullWidth: false, showIcon: true, shape: 'rounded', showLabel: true, showCounter: true, showBadge: true, label: 'View' },
-  argTypes: {
+  args: { motion: 'theme', items, size: 'md', fullWidth: false, showIcon: true, shape: 'rounded', showLabel: true, showCounter: true, showBadge: true, label: 'View' },
+  argTypes: { motion: { control: 'inline-radio', options: ['theme', 'off', 'basic', 'enhanced'], mapping: { theme: undefined } },
     size: { control: 'inline-radio', options: ['sm', 'md'] }, fullWidth: { control: 'boolean' },
     shape: { control: 'inline-radio', options: ['rounded', 'circle'] }, showIcon: { control: 'boolean' }, showLabel: { control: 'boolean' }, showCounter: { control: 'boolean' }, showBadge: { control: 'boolean' },
     items: { control: false },

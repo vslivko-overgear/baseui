@@ -6,8 +6,8 @@ import { meta, playground, example, Phone } from './_helpers.js';
 const actions = { none: [], one: [{ icon: h(Share01, { size: 24 }), label: 'Share' }], two: [{ icon: h(SearchLg, { size: 24 }), label: 'Search' }, { icon: h(DotsHorizontal, { size: 24 }), label: 'More' }] };
 export default meta({
   title: 'Components/Navbar', component: Navbar,
-  args: { title: 'Project Atlas', subtitle: 'Updated today', showBack: true, floating: false, actions: 'two' },
-  argTypes: {
+  args: { glass: 'theme', title: 'Project Atlas', subtitle: 'Updated today', showBack: true, floating: false, actions: 'two' },
+  argTypes: { glass: { control: 'inline-radio', options: ['theme', 'on', 'off'], mapping: { theme: undefined, on: true, off: false } },
     title: { control: 'text' }, subtitle: { control: 'text' }, showBack: { control: 'boolean' }, floating: { control: 'boolean' },
     actions: { control: 'inline-radio', options: ['none', 'one', 'two'], mapping: actions, description: 'How many icon buttons on the right' },
   },
@@ -19,7 +19,7 @@ export const Playground = {
   onBack={goBack}
   actions={[{ icon: <SearchLgIcon />, label: 'Search' }, { icon: <DotsHorizontalIcon />, label: 'More' }]}
 />` }),
-  render: (args) => h(Phone, { top: h(Navbar, args), height: 200 }, 'Screen content'),
+  render: (args) => h(Phone, { overlay: true, top: h(Navbar, args), height: 240 }, 'Screen content'),
 };
 export const Variants = example({
   name: 'Variants', render: () => h('div', { style: { display: 'flex', flexDirection: 'column', gap: 16 } },

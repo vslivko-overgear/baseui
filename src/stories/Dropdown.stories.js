@@ -34,8 +34,8 @@ const box = (n, ...c) => h('div', { style: { minHeight: n } }, ...c);
 
 export default meta({
   title: 'Components/Dropdown', component: Dropdown,
-  args: { multiple: false, selectAll: false, icons: 'off', showDetails: false, placement: 'bottom-start' },
-  argTypes: {
+  args: { glass: 'theme', multiple: false, selectAll: false, icons: 'off', showDetails: false, placement: 'bottom-start' },
+  argTypes: { glass: { control: 'inline-radio', options: ['theme', 'on', 'off'], mapping: { theme: undefined, on: true, off: false } },
     icons: { control: 'inline-radio', options: ['off', 'icon', 'avatar'], description: 'A leading icon or avatar on every item' },
     showDetails: { control: 'boolean', description: 'Details on the right of every item' },
     multiple: { control: 'boolean' }, selectAll: { control: 'boolean', if: { arg: 'multiple', eq: true } },

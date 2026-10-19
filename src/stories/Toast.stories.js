@@ -23,8 +23,8 @@ function Demo(args) {
 }
 export default meta({
   title: 'Components/Toast', component: ToastProvider,
-  args: { message: 'Changes saved', variant: 'base', status: 'success', action: false, actionLabel: 'Undo', autoClose: false, placement: 'bottom-right', limit: 4 },
-  argTypes: {
+  args: { glass: 'theme', message: 'Changes saved', variant: 'base', status: 'success', action: false, actionLabel: 'Undo', autoClose: false, placement: 'bottom-right', limit: 4 },
+  argTypes: { glass: { control: 'inline-radio', options: ['theme', 'on', 'off'], mapping: { theme: undefined, on: true, off: false } },
     message: { control: 'text' },
     variant: { control: 'inline-radio', options: ['base', 'inverse'] },
     status: { control: 'inline-radio', options: ['none', 'success', 'error', 'info', 'custom'], description: 'Icon: none, a status or a custom one' },
@@ -44,6 +44,6 @@ export const Playground = {
 const { toast } = useToast();
 toast({ message: 'Message deleted', status: 'success', action: { label: 'Undo', onClick: restore } });`,
   }),
-  render: (args) => h(ToastProvider, { placement: args.placement, limit: args.limit || 1 }, h(Demo, args)),
+  render: (args) => h(ToastProvider, { placement: args.placement, limit: args.limit || 1, glass: args.glass }, h(Demo, args)),
 };
 export const __namedExportsOrder = ['Playground'];

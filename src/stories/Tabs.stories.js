@@ -14,8 +14,8 @@ const items = [
 Object.assign(Tabs.__docgenInfo.props, TabList.__docgenInfo.props);
 export default meta({
   title: 'Components/Tabs', component: Tabs,
-  args: { defaultValue: 'overview', size: 'md', fullWidth: false, showIcon: true, showCounter: true, showBadge: true },
-  argTypes: {
+  args: { motion: 'theme', defaultValue: 'overview', size: 'md', fullWidth: false, showIcon: true, showCounter: true, showBadge: true },
+  argTypes: { motion: { control: 'inline-radio', options: ['theme', 'off', 'basic', 'enhanced'], mapping: { theme: undefined } },
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg', 'xl'] }, fullWidth: { control: 'boolean' },
     showIcon: { control: 'boolean' }, showCounter: { control: 'boolean' }, showBadge: { control: 'boolean' },
     defaultValue: { control: false },

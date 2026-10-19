@@ -1,6 +1,7 @@
 import { h, cx, createContext, useContext, useState, useRef, useCallback, useEffect, useMemo } from '../react.js';
 import { Icon } from '../icons.js';
 import { describe } from '../doc.js';
+import { glassClass } from '../theme-flags.js';
 import { Button } from './Button.js';
 
 const ToastContext = createContext(null);
@@ -40,7 +41,7 @@ function ToastItem({ item, onDismiss, onGone }) {
     className: 'bui-toast-item', 'data-leaving': item.leaving || undefined,
     onTransitionEnd: (e) => { if (item.leaving && e.target === e.currentTarget && e.propertyName === 'grid-template-rows') onGone(item.id); },
   }, h('div', { className: 'bui-toast-item__clip' }, h('div', {
-    role: status === 'error' ? 'alert' : 'status', className: cx('bui-toast', `bui-toast--${item.variant}`),
+    role: status === 'error' ? 'alert' : 'status', className: cx('bui-toast', `bui-toast--${item.variant}`, glassClass(item.glass)),
     onMouseEnter: pause, onMouseLeave: run, onFocus: pause, onBlur: run,
   },
     (icon || status !== 'neutral') && h('span', { className: 'bui-toast__icon' }, icon || h(Icon, { name: status, size: 24 })),
@@ -50,16 +51,16 @@ function ToastItem({ item, onDismiss, onGone }) {
       h(Icon, { name: 'close', size: 24 })))));
 }
 
-export function ToastProvider({ children, placement = 'bottom-right', limit = 4 }) {
+export function ToastProvider({ children, placement = 'bottom-right', limit = 4, glass }) {
   const [items, setItems] = useState([]);
   const counter = useRef(0);
   const gone = useCallback((id) => setItems((list) => list.filter((t) => t.id !== id)), []);
   const dismiss = useCallback((id) => setItems((list) => list.map((t) => (t.id === id ? { ...t, leaving: true } : t))), []);
   const toast = useCallback((options) => {
     const id = ++counter.current;
-    setItems((list) => [...list, { variant: 'base', status: 'neutral', duration: 5000, ...options, id }]);
+    setItems((list) => [...list, { variant: 'base', status: 'neutral', duration: 5000, glass, ...options, id }]);
     return id;
-  }, [limit]);
+  }, [limit, glass]);
   const update = useCallback((id, options) => setItems((list) => list.map((t) => (t.id === id ? { ...t, ...options } : t))), []);
   const api = useMemo(() => ({ toast, dismiss, update }), [toast, dismiss, update]);
   return h(ToastContext.Provider, { value: api }, children,
@@ -70,6 +71,7 @@ export function ToastProvider({ children, placement = 'bottom-right', limit = 4 
 describe(ToastProvider, 'Shows brief notifications: a message, an optional action and a close button. Call `useToast()` to add one.', {
   placement: ["'bottom-right' | 'bottom-center' | 'top-right' | 'top-center'", "'bottom-right'", 'Where the stack appears'],
   limit: ['number', '4', 'Maximum simultaneous toasts'],
+  glass: ['boolean', 'theme', 'Translucent, blurred base toasts; also a toast() option; true or false overrides the Glass setting of the theme'],
   message: ['ReactNode', null, 'toast() option: the text'],
   variant: ["'base' | 'inverse'", "'base'", 'toast() option: base is a surface with a shadow, inverse is dark (light in a dark theme) without a shadow'],
   status: ["'neutral' | 'success' | 'error' | 'info'", "'neutral'", 'toast() option: the icon; neutral has none. Settings: none, success, error, info, or custom (a custom icon)'],

@@ -2,7 +2,7 @@ import { h, cx, React, useControllable, useRef, useState } from '../react.js';
 import { describe } from '../doc.js';
 import { Badge } from './Badge.js';
 
-export function SegmentedControl({ items, value, defaultValue, onValueChange, size = 'md', fullWidth = false, showIcon = true, showLabel = true, showCounter = true, showBadge = true, shape = 'rounded', label, className, ...rest }) {
+export function SegmentedControl({ items, value, defaultValue, onValueChange, size = 'md', fullWidth = false, showIcon = true, showLabel = true, showCounter = true, showBadge = true, shape = 'rounded', motion, label, className, ...rest }) {
   const [current, setCurrent] = useControllable(value, defaultValue ?? items.find((i) => !i.disabled)?.value, onValueChange);
   const ref = useRef(null);
   const [thumb, setThumb] = useState(null);
@@ -36,7 +36,7 @@ export function SegmentedControl({ items, value, defaultValue, onValueChange, si
     setCurrent(next.value);
     ref.current.querySelector(`[data-value="${CSS.escape(String(next.value))}"]`)?.focus();
   };
-  return h('div', { role: 'radiogroup', 'aria-label': label, ref, onKeyDown, className: cx('bui-segmented', `bui-segmented--${size}`, fullWidth && 'bui-segmented--full', ready && 'bui-segmented--ready', shape === 'circle' && 'bui-shape-circle', className), ...rest },
+  return h('div', { 'data-motion': motion, role: 'radiogroup', 'aria-label': label, ref, onKeyDown, className: cx('bui-segmented', `bui-segmented--${size}`, fullWidth && 'bui-segmented--full', ready && 'bui-segmented--ready', shape === 'circle' && 'bui-shape-circle', className), ...rest },
     thumb && h('span', { className: 'bui-segmented__thumb', 'aria-hidden': 'true', style: { width: thumb.w, height: thumb.h, transform: `translate(${thumb.x}px, ${thumb.y}px)` } }),
     items.map((it) => h('button', {
       key: it.value, type: 'button', role: 'radio', 'data-value': it.value, 'aria-checked': it.value === current, tabIndex: it.value === current ? 0 : -1,
@@ -58,6 +58,7 @@ describe(SegmentedControl, 'A control for switching between a few exclusive opti
   showLabel: ['boolean', 'true', 'Show the item labels; with it off the control is icons only and the label becomes the accessible name'],
   showCounter: ['boolean', 'true', 'Show the item counters'],
   showBadge: ['boolean', 'true', 'Show the item badges'],
+  motion: ["'off' | 'basic' | 'enhanced'", 'theme', 'Animations of this control: off, basic, or enhanced (springy sliding, press feedback); by default the Animations setting of the theme'],
   shape: ["'rounded' | 'circle'", "'rounded'", 'circle makes the control and its items pills; rounded follows the theme radius'],
   label: ['string', null, 'Accessible name'],
 });

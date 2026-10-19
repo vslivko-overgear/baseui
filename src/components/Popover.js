@@ -1,7 +1,8 @@
 import { h, cx, useId, useRef, useEffect, useControllable } from '../react.js';
 import { describe } from '../doc.js';
+import { glassClass } from '../theme-flags.js';
 
-export function Popover({ trigger, children, open, defaultOpen = false, onOpenChange, placement = 'bottom-start', label, className, ...rest }) {
+export function Popover({ trigger, children, open, defaultOpen = false, onOpenChange, placement = 'bottom-start', glass, label, className, ...rest }) {
   const [isOpen, setOpen] = useControllable(open, defaultOpen, onOpenChange);
   const id = useId();
   const root = useRef(null);
@@ -18,7 +19,7 @@ export function Popover({ trigger, children, open, defaultOpen = false, onOpenCh
       typeof trigger === 'function'
         ? trigger({ 'aria-haspopup': 'dialog', 'aria-expanded': isOpen, 'aria-controls': isOpen ? id : undefined, onClick: () => setOpen(!isOpen) })
         : trigger),
-    isOpen && h('div', { id, role: 'dialog', 'aria-label': label, className: 'bui-popover__panel', 'data-placement': placement }, children));
+    isOpen && h('div', { id, role: 'dialog', 'aria-label': label, className: cx('bui-popover__panel', glassClass(glass)), 'data-placement': placement }, children));
 }
 describe(Popover, 'A floating panel anchored to a trigger.', {
   trigger: ['(props) => ReactElement', null, 'Render function that receives the trigger props'],
@@ -28,4 +29,5 @@ describe(Popover, 'A floating panel anchored to a trigger.', {
   onOpenChange: ['(open: boolean) => void', null, 'Called when it opens or closes'],
   placement: ["'bottom-start' | 'bottom-end' | 'top-start' | 'top-end'", "'bottom-start'", 'Where the panel appears'],
   label: ['string', null, 'Accessible name of the panel'],
+  glass: ['boolean', 'theme', 'Translucent, blurred panel; true or false overrides the Glass setting of the theme'],
 });

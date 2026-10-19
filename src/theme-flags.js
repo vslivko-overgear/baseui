@@ -1,8 +1,6 @@
 // The theme settings that components follow: data-motion, data-floating and data-glass on <html>.
 import { useState, useEffect } from './react.js';
 
-/** off | basic | enhanced; enhanced when the page sets nothing. */
-export const motionLevel = () => document.documentElement.dataset.motion || 'enhanced';
 
 /** The value of a data attribute of <html>, kept up to date when the theme changes. */
 export function useRootAttr(name) {
@@ -16,3 +14,8 @@ export function useRootAttr(name) {
   }, [name]);
   return value;
 }
+
+/** off | basic | enhanced of the nearest element that sets data-motion (the page by default); basic when nothing sets it. */
+export const motionOf = (el) => el?.closest?.('[data-motion]')?.dataset.motion || 'basic';
+/** The class that forces glass on or off for one component; nothing follows the theme. */
+export const glassClass = (glass) => (glass === true ? 'bui-glass' : glass === false ? 'bui-glass-off' : undefined);
