@@ -6,7 +6,7 @@
 
 /* ---------- Common ---------- */
 .bui-divider, .bui-spinner, .bui-skeleton, .bui-progress, .bui-banner, .bui-card, .bui-tablist, .bui-collapsible,
-.bui-tooltip, .bui-toast, .bui-breadcrumbs, .bui-status, .bui-meta, .bui-stepper, .bui-table, .bui-pagination, .bui-popover__panel,
+.bui-tooltip, .bui-toast, .bui-breadcrumbs, .bui-status, .bui-table, .bui-pagination, .bui-popover__panel,
 .bui-avatar-group { box-sizing: border-box; }
 .bui-tab:focus-visible, .bui-collapsible__trigger:focus-visible, .bui-banner__close:focus-visible, .bui-toast__close:focus-visible,
 .bui-breadcrumbs__link:focus-visible, .bui-tabpanel:focus-visible, .bui-page:focus-visible { outline: var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color); outline-offset: var(--baseui-focus-outline-offset); }
@@ -261,30 +261,6 @@
 .bui-slider--disabled { opacity: .5; }
 .bui-slider--disabled input { cursor: not-allowed; }
 
-/* ---------- Metadata List ---------- */
-.bui-meta { display: grid; gap: var(--baseui-spacing-16); margin: 0; font: var(--baseui-Typography-Text-14-Regular); }
-.bui-meta--horizontal { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
-.bui-meta__item { display: flex; flex-direction: column; gap: 2px; }
-.bui-meta dt { color: var(--baseui-Text-and-Icon-Secondary); }
-.bui-meta dd { margin: 0; font: var(--baseui-Typography-Text-16-Semi-Bold); color: var(--baseui-Text-and-Icon-Primary); }
-
-/* ---------- Stepper ---------- */
-.bui-stepper { display: flex; gap: var(--baseui-spacing-8); margin: 0; padding: 0; list-style: none; }
-.bui-stepper--horizontal { flex-direction: row; }
-.bui-stepper--vertical { flex-direction: column; gap: var(--baseui-spacing-16); }
-.bui-step { display: flex; align-items: center; gap: var(--baseui-spacing-12); flex: 1; min-width: 0; }
-.bui-stepper--vertical .bui-step { flex: none; align-items: flex-start; }
-.bui-step__marker {
-  display: inline-grid; place-items: center; flex: none; width: 32px; height: 32px; border-radius: var(--baseui-radius-full);
-  font: var(--baseui-Typography-Text-14-Semi-Bold); background: var(--baseui-Background-Secondary); color: var(--baseui-Text-and-Icon-Secondary);
-}
-.bui-step[data-state="current"] .bui-step__marker { background: var(--baseui-Background-Brand); color: var(--baseui-Text-and-Icon-OnBrand); }
-.bui-step[data-state="done"] .bui-step__marker { background: var(--baseui-Extensions-Background-LightSuccess); color: var(--baseui-Extensions-Text-and-Icon-Success); }
-.bui-step__text { display: flex; flex-direction: column; min-width: 0; }
-.bui-step__title { font: var(--baseui-Typography-Text-14-Semi-Bold); }
-.bui-step[data-state="todo"] .bui-step__title { color: var(--baseui-Text-and-Icon-Secondary); }
-.bui-step__desc { font: var(--baseui-Typography-Text-12-Regular); color: var(--baseui-Text-and-Icon-Secondary); }
-
 /* ---------- Table ---------- */
 .bui-table-wrap { overflow-x: auto; border: 1px solid var(--baseui-Border-Primary); border-radius: var(--baseui-radius-16); background: var(--baseui-Background-Primary); }
 .bui-table-wrap--scroll { overflow: auto; }
@@ -377,7 +353,7 @@
 .bui-avatar-dot__icon { display: inline-flex; width: 60%; height: 60%; }
 .bui-avatar-dot__icon > * { width: 100%; height: 100%; }
 
-/* ---------- Badge / Status Dot ---------- */
+/* ---------- Badge ---------- */
 .bui-badge {
   display: inline-flex; align-items: center; gap: 4px; box-sizing: border-box; height: 22px; max-width: 100%; padding: 0 9px; border-radius: var(--baseui-radius-full); white-space: nowrap;
   font: var(--baseui-Typography-Text-12-Regular); color: var(--baseui-Text-and-Icon-Primary); background: var(--baseui-Background-Secondary);
@@ -402,36 +378,12 @@
 .bui-badge--pink { background: var(--baseui-Accent-Colors-Pink); color: var(--baseui-Extensions-Text-and-Icon-AlwaysLight); }
 .bui-badge--red { background: var(--baseui-Accent-Colors-Red); color: var(--baseui-Extensions-Text-and-Icon-AlwaysLight); }
 .bui-badge--disabled { background: var(--baseui-Background-Disabled); color: var(--baseui-Text-and-Icon-Disabled); }
-.bui-status-dot { display: inline-flex; flex: none; align-items: center; justify-content: center; width: 8px; height: 8px; border-radius: 50%; vertical-align: middle; }
-.bui-status-dot--success { background: var(--baseui-Extensions-Background-Success); color: var(--baseui-Extensions-Text-and-Icon-AlwaysDark); }
-.bui-status-dot--warning { background: var(--baseui-Extensions-Background-Warning); color: var(--baseui-Extensions-Text-and-Icon-AlwaysDark); }
-.bui-status-dot--error { background: var(--baseui-Extensions-Background-Error); color: var(--baseui-Extensions-Text-and-Icon-AlwaysDark); }
-.bui-status-dot--accent { background: var(--baseui-Background-Accent); color: var(--baseui-Text-and-Icon-OnColor); }
-.bui-status-dot--neutral { background: var(--baseui-Text-and-Icon-Secondary); color: var(--baseui-Background-Primary); }
-.bui-status-dot--pulsing { animation: bui-pulse 2s ease-in-out infinite; }
-.bui-status-dot__icon { display: inline-flex; width: 100%; height: 100%; }
-@keyframes bui-pulse { 50% { opacity: .5; } }
-@media (prefers-reduced-motion: reduce) { .bui-status-dot--pulsing { animation: none; } }
-
 /* ---------- Button family ---------- */
-.bui-btn-group { display: inline-flex; gap: 2px; }
-.bui-btn-group--horizontal { flex-direction: row; align-items: center; }
-.bui-btn-group--vertical { flex-direction: column; align-items: stretch; }
-.bui-btn-group > * { border-radius: 0 !important; }
-/* outer radius of a group follows the button size */
-.bui-btn-group { --bui-gr: var(--baseui-radius-16); }
-.bui-btn-group--xsm { --bui-gr: var(--baseui-radius-10); }
-.bui-btn-group--sm { --bui-gr: var(--baseui-radius-12); }
-.bui-btn-group--horizontal > :first-child { border-start-start-radius: var(--bui-gr) !important; border-end-start-radius: var(--bui-gr) !important; }
-.bui-btn-group--horizontal > :last-child { border-start-end-radius: var(--bui-gr) !important; border-end-end-radius: var(--bui-gr) !important; }
-.bui-btn-group--vertical > :first-child { border-start-start-radius: var(--bui-gr) !important; border-start-end-radius: var(--bui-gr) !important; }
-.bui-btn-group--vertical > :last-child { border-end-start-radius: var(--bui-gr) !important; border-end-end-radius: var(--bui-gr) !important; }
 .bui-btn-icon { padding-inline: 0 !important; }
 .bui-btn-icon--xsm { width: 32px; }
 .bui-btn-icon--sm { width: 40px; }
 .bui-btn-icon--md { width: 48px; }
 .bui-btn-icon--lg { width: 56px; }
-.bui-toggle--pressed { background-color: var(--baseui-Background-Secondary) !important; }
 
 /* ---------- Card ---------- */
 .bui-card { position: relative; box-sizing: border-box; display: flex; flex-direction: column; border-radius: var(--baseui-radius-20); color: var(--baseui-Text-and-Icon-Primary); font: var(--baseui-Typography-Text-16-Regular); }

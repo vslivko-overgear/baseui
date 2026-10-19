@@ -17,16 +17,3 @@ describe(Badge, 'A compact label for a status, category or count.', {
   label: ['ReactNode', null, 'Badge text or number; with the dot it is the accessible name'],
   icon: ['ReactNode', null, 'Icon before the label'],
 });
-
-export function StatusDot({ variant, label, isPulsing = false, tooltip, icon, className, ...rest }) {
-  return h('span', {
-    role: 'img', 'aria-label': label, title: tooltip, className: cx('bui-status-dot', `bui-status-dot--${variant}`, isPulsing && 'bui-status-dot--pulsing', className), ...rest,
-  }, icon && h('span', { className: 'bui-status-dot__icon', 'aria-hidden': 'true' }, icon));
-}
-describe(StatusDot, 'A small dot that shows a status.', {
-  variant: ["'success' | 'warning' | 'error' | 'accent' | 'neutral'", null, 'Status color'],
-  label: ['string', null, 'Accessible description of the status'],
-  isPulsing: ['boolean', 'false', 'Pulse to show activity; stops under reduced motion'],
-  tooltip: ['string', null, 'Hover text'],
-  icon: ['ReactNode', null, 'Centered inside the dot'],
-});

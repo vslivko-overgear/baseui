@@ -1,7 +1,7 @@
 import { h, useState } from '../react.js';
 import { Table, TableHeader, TableBody, TableRow, TableHeaderCell, TableCell, pixel, proportional } from '../components/Table.js';
 import { Avatar } from '../components/Avatar.js';
-import { Badge, StatusDot } from '../components/Badge.js';
+import { Badge } from '../components/Badge.js';
 import { Button } from '../components/Button.js';
 import { meta, playground, example } from './_helpers.js';
 

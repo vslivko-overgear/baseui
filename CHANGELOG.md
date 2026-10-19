@@ -6,10 +6,10 @@
 - Theming: Theme Settings page (preset themes, brand color, rounded or circle shape, base radius, headline and text fonts from Google Fonts, animations off/basic/enhanced, floating elements, glass), applied at once and stored in a cookie. `shape` prop on Button and Segmented Control, `data-shape` on any container.
 - Foundations: All Tokens, Color, Icons, Motion, Shadow, Shape, Spacing, Typography.
 - Color tokens stay baseui's. Spacing and radius are named by pixels. Motion tokens come from Astryx.
-- Avatar (with Group, Group Overflow, Status Dot), Badge, Status Dot, Button (with Group, Icon Button, Toggle Button, Toggle Button Group) and Card (with Clickable, Selectable) follow the Astryx API with baseui visuals.
-- Added: Banner, Breadcrumbs, Collapsible, Divider, Status (formerly Empty State), Layout, Link, Metadata List, Number Input, Pagination, Popover, Progress Bar, Segmented Control, Skeleton, Slider, Spinner, Stepper, Table, Tabs, Toast, Tooltip, Alert Dialog.
+- Avatar (with Group, Group Overflow, Status Dot), Badge, Button (with Icon Button) and Card (with Clickable, Selectable) follow the Astryx API with baseui visuals.
+- Added: Banner, Breadcrumbs, Collapsible, Divider, Status (formerly Empty State), Layout, Link, Number Input, Pagination, Popover, Progress Bar, Segmented Control, Skeleton, Slider, Spinner, Table, Tabs, Toast, Tooltip, Alert Dialog.
 - Existing compiled components are listed under their Astryx names (Typeahead, Selector, Text Input, Token…).
-- Removed: Aspect Ratio, Blockquote, Code, Code Block, Dropdown Menu, Field, File Input, Heading, Icon, Kbd, React Hook Form wrappers, Text, Visually Hidden.
+- Removed: Button Group, Toggle Button (with Toggle Button Group), Metadata List, Status Dot, Stepper, Aspect Ratio, Blockquote, Code, Code Block, Dropdown Menu, Field, File Input, Heading, Icon, Kbd, React Hook Form wrappers, Text, Visually Hidden.
 - Sizes use one vocabulary: `xsm · sm · md · lg · xl`. Old names (`small`, `medium`, `large`…) are removed everywhere, including the compiled components.
 - Radius follows control height; new tokens `radius-6` and `radius-10`.
 - Cleanup: dead CSS and unused code removed; `src/index.js` also exports the compiled components.

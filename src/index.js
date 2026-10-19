@@ -1,10 +1,10 @@
 // Public entry: baseui components (no external dependencies).
 export { AlertDialog } from './components/AlertDialog.js';
 export { Avatar, AvatarGroup, AvatarGroupOverflow, AvatarStatusDot } from './components/Avatar.js';
-export { Badge, StatusDot } from './components/Badge.js';
+export { Badge } from './components/Badge.js';
 export { Banner } from './components/Banner.js';
 export { Breadcrumbs } from './components/Breadcrumbs.js';
-export { Button, ButtonGroup, IconButton, ToggleButton, ToggleButtonGroup } from './components/Button.js';
+export { Button, IconButton } from './components/Button.js';
 export { Card, ClickableCard, SelectableCard } from './components/Card.js';
 export { Calendar, DatePicker } from './components/Calendar.js';
 export { Collapsible, CollapsibleGroup } from './components/Collapsible.js';
@@ -12,7 +12,6 @@ export { Divider } from './components/Divider.js';
 export { Status } from './components/Status.js';
 export { Stack, HStack, VStack, Center, Grid, Section } from './components/Layout.js';
 export { Link } from './components/Link.js';
-export { MetadataList } from './components/MetadataList.js';
 export { NumberInput } from './components/NumberInput.js';
 export { Navbar, BottomBar } from './components/MobileNavigation.js';
 export { Pagination } from './components/Pagination.js';
@@ -23,7 +22,6 @@ export { Rating, RatingDisplay } from './components/Rating.js';
 export { Skeleton } from './components/Skeleton.js';
 export { Slider } from './components/Slider.js';
 export { Spinner } from './components/Spinner.js';
-export { Stepper } from './components/Stepper.js';
 export { Table, TableHeader, TableBody, TableRow, TableHeaderCell, TableCell, pixel, proportional } from './components/Table.js';
 export { Tabs, TabList, Tab, TabPanel } from './components/Tabs.js';
 export { ToastProvider, useToast } from './components/Toast.js';
