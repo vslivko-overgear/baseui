@@ -245,3 +245,7 @@
 ._large_1epgh_69 ._track_1epgh_17 { width: 52px; height: 32px; padding: 6px; }
 ._large_1epgh_69 ._thumb_1epgh_43 { width: 20px; height: 20px; }
 ._large_1epgh_69 ._track_1epgh_17[data-checked] ._thumb_1epgh_43 { transform: translate(20px); }
+
+/* Checkbox and Radio: a checked control keeps its border on hover */
+._root_1p6mm_9:hover:not(:has([data-disabled])) ._box_1p6mm_18:is([data-checked],[data-indeterminate]),
+._root_e1rix_1:hover:not(:has([data-disabled])) ._button_e1rix_11[data-checked] { border-color: var(--baseui-Text-and-Icon-Primary); }
