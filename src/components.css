@@ -618,3 +618,6 @@ html[data-glass="on"][data-outline="on"] :is(.bui-navbar, .bui-bottombar, .bui-p
 }
 
 [data-glass="on"] [class*="_cell_2ah00"]::before { --bui-rim-bg: var(--bui-rim-glass); }
+
+/* no rim on active, strongly filled elements: primary and custom-colour buttons, switches that are on */
+:is(button[class*="_primary_h5cjz"], button[class*="_custom_h5cjz"], [class*="_track_1epgh"][data-checked]) { box-shadow: none !important; }
