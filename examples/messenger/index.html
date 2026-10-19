@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Messenger · baseui example</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="../../lib/components.css">
+<link rel="stylesheet" href="../../src/components.css">
+<link rel="stylesheet" href="messenger.css">
+<script>
+  // the light or dark theme chosen on the documentation site
+  try { document.documentElement.setAttribute('data-theme', localStorage.getItem('baseui-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')); } catch (e) { document.documentElement.setAttribute('data-theme', 'light'); }
+</script>
+</head>
+<body>
+<div id="root"></div>
+<noscript>JavaScript is required to view this example.</noscript>
+<script type="module" src="app.js"></script>
+</body>
+</html>

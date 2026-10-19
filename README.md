@@ -32,6 +32,7 @@ import { Button, Card, Tabs, TabList, Tab, TabPanel } from './src/index.js';
 | `lib/` | Compiled components: Typeahead, Checkbox, Dialog, List, OTP Input, Radio, Rating, Selector, Switch, Text Input, Token |
 | `src/` | Components as plain ES modules, their docs pages and styles |
 | `site/` | Documentation site and its page tree (`manifest.js`) |
+| `examples/messenger/` | A messenger built from the components with mock data (no backend). Open it from Theming → Theme Settings: it follows the theme you set there |
 
 ## Tokens
 

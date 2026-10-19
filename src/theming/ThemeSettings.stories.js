@@ -7,6 +7,8 @@ import { Badge } from '../components/Badge.js';
 import { Progress, PhoneDemo } from './_preview.js';
 import { TextField, Switch, Chip } from '../base.js';
 import { Plus } from '../stories/_ui.js';
+import { Card } from '../components/Card.js';
+const { MessageChatCircle } = await import('../../lib/line-HpXc8B8J.js');
 import { applyTheme, saveTheme, loadTheme, DEFAULT, PRESETS, PRESET_OPTIONS, MOTION_OPTIONS, BRAND_OPTIONS, HEADLINE_FONTS, TEXT_FONTS } from '../../site/theme.js';
 
 /** Everything the settings change, shown at once. Any change is applied to the whole site and kept in a cookie. */
@@ -15,6 +17,9 @@ export function ThemePreview(theme) {
   const items = [{ value: 'day', label: 'Day' }, { value: 'week', label: 'Week' }, { value: 'month', label: 'Month' }];
   const row = { display: 'flex', flexWrap: 'wrap', gap: 'var(--baseui-spacing-12)', alignItems: 'center' };
   return h('div', { style: { display: 'flex', flexDirection: 'column', gap: 'var(--baseui-spacing-24)', width: '100%' } },
+    h(Card, { padding: 16 }, h('div', { style: { display: 'flex', alignItems: 'center', gap: 'var(--baseui-spacing-16)', flexWrap: 'wrap' } },
+      h('div', { style: { flex: 1, minWidth: 220 } }, h('div', { style: { font: 'var(--baseui-Typography-Text-16-Bold)' } }, 'See it in a real product'), h('div', { style: { color: 'var(--baseui-Text-and-Icon-Secondary)', font: 'var(--baseui-Typography-Text-14-Regular)' } }, 'A messenger built from the components. It opens with the theme you set here, and keeps every setting.')),
+      h(Button, { variant: 'primary', href: 'examples/messenger/', icon: h(MessageChatCircle) }, 'Open the messenger example'))),
     h('div', null,
       h('div', { style: { font: 'var(--baseui-Typography-Header-32)' } }, 'Headline font'),
       h('p', { style: { margin: '8px 0 0', font: 'var(--baseui-Typography-Text-16-Regular)', color: 'var(--baseui-Text-and-Icon-Secondary)' } }, 'The quick brown fox jumps over the lazy dog. Съешь же ещё этих мягких французских булок.')),
