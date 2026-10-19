@@ -9,7 +9,7 @@ export { Card, ClickableCard, SelectableCard } from './components/Card.js';
 export { Calendar, DatePicker } from './components/Calendar.js';
 export { Collapsible, CollapsibleGroup } from './components/Collapsible.js';
 export { Divider } from './components/Divider.js';
-export { EmptyState } from './components/EmptyState.js';
+export { Status } from './components/Status.js';
 export { Stack, HStack, VStack, Center, Grid, Section } from './components/Layout.js';
 export { Link } from './components/Link.js';
 export { MetadataList } from './components/MetadataList.js';

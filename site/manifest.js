@@ -37,7 +37,6 @@ export default [
       { title: 'Dialog', file: B('Modal.stories-BG7Qmigd'), lead: 'A modal window for focused content. On small screens it becomes a bottom sheet.', children: [{ title: 'Alert Dialog', file: N('AlertDialog') }] },
       { title: 'Divider', file: N('Divider') },
       { title: 'Dropdown', file: N('Dropdown'), lead: 'The list that opens under a Selector or a Typeahead.' },
-      { title: 'Empty State', file: N('EmptyState') },
       {
         group: 'Inputs',
         items: [
@@ -65,6 +64,7 @@ export default [
       { title: 'Segmented Control', file: N('SegmentedControl') },
       { title: 'Skeleton', file: N('Skeleton') },
       { title: 'Spinner', file: N('Spinner') },
+      { title: 'Status', file: N('Status') },
       { title: 'Status Dot', file: N('StatusDot') },
       { title: 'Stepper', file: N('Stepper') },
       { title: 'Table', file: N('Table') },
