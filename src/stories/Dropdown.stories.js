@@ -47,7 +47,7 @@ const playgroundOptions = ({ icons, showDetails }) => OPTIONS.map((o, i) => ({
   ...o, ...(icons === 'icon' && { icon: LEADING.icon[i] }), ...(icons === 'avatar' && { avatar: LEADING.avatar[i] }), ...(!showDetails && { details: undefined }),
 }));
 export const Playground = {
-  ...playground({ source: `<Dropdown options={options} defaultValue="design" onValueChange={setPlatform} />` }),
+  ...playground({ source: `<Dropdown options={options} defaultValue="design" onValueChange={setTeam} />` }),
   render: (args) => box(360, h(Dropdown, { key: String(args.multiple), ...args, options: playgroundOptions(args), defaultValue: args.multiple ? ['design'] : 'design' })),
 };
 export const Icons = example({
