@@ -200,8 +200,9 @@ main[data-viewport="mobile"] .page h1 { font: var(--baseui-Typography-Header-32)
 .page--loading .skel-title { margin: var(--baseui-spacing-32) 0 var(--baseui-spacing-16); }
 
 /* Theme: floating panels and glass (data-floating, data-glass on <html>) */
-/* the header floats 12px from the top; the columns start 16px below it */
-html[data-floating="on"] { --bar-h: calc(var(--baseui-layout-header-height) + var(--baseui-spacing-12) + var(--baseui-spacing-16)); }
+/* the header floats 12px from the top; the columns start 12px below it, on the same z-index so their shadows do not cover each other */
+html[data-floating="on"] { --bar-h: calc(var(--baseui-layout-header-height) + var(--baseui-spacing-12) + var(--baseui-spacing-12)); }
+html[data-floating="on"] :is(.appbar, .side, .settings) { z-index: var(--baseui-z-index-100); }
 html[data-floating="on"] .appbar { top: var(--baseui-spacing-12); height: var(--baseui-layout-header-height); margin: var(--baseui-spacing-12) var(--baseui-spacing-12) 0; border: 0; border-radius: var(--baseui-radius-24); background: var(--baseui-Extensions-Background-Surface); box-shadow: var(--baseui-shadow-med); }
 html[data-floating="on"] .side { top: var(--bar-h); height: calc(100vh - var(--bar-h) - var(--baseui-spacing-12)); margin: 0 0 var(--baseui-spacing-12) var(--baseui-spacing-12); border: 0; border-radius: var(--baseui-radius-24); background: var(--baseui-Extensions-Background-Surface); box-shadow: var(--baseui-shadow-med); }
 html[data-floating="on"] .settings { top: var(--bar-h); height: calc(100vh - var(--bar-h) - var(--baseui-spacing-12)); margin: 0 var(--baseui-spacing-12) var(--baseui-spacing-12) 0; border: 0; border-radius: var(--baseui-radius-24); background: var(--baseui-Extensions-Background-Surface); box-shadow: var(--baseui-shadow-med); }
