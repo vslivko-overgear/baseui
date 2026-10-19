@@ -17,7 +17,6 @@
   /* Text and Icon */
   --baseui-Text-and-Icon-Primary: #171717;
   --baseui-Text-and-Icon-Secondary: #5f6877;
-  --baseui-Text-and-Icon-OnColor: #ffffff;
   --baseui-Text-and-Icon-Disabled: #babfca;
   --baseui-Text-and-Icon-Accent: #575df6;
 
@@ -49,6 +48,8 @@
   --baseui-Extensions-Text-and-Icon-Success: #44cf5e;
   --baseui-Extensions-Text-and-Icon-AlwaysDark: #171717;
   --baseui-Extensions-Text-and-Icon-AlwaysLight: #ffffff;
+  --baseui-Extensions-Text-and-Icon-OnColor: #ffffff;
+  --baseui-Extensions-Text-and-Icon-OnBrand: #ffffff;
 
   /* Extensions / Background */
   --baseui-Extensions-Background-Surface: #ffffff;
@@ -88,7 +89,8 @@
   --baseui-Extensions-Background-LightAccent-Hover: #dcdefd;
   --baseui-Text-and-Icon-Primary-Hover: #2c2c2c;
   --baseui-Text-and-Icon-Secondary-Hover: #464f5d;
-  --baseui-Text-and-Icon-OnColor-Hover: #e1e1e1;
+  --baseui-Extensions-Text-and-Icon-OnColor-Hover: #e1e1e1;
+  --baseui-Extensions-Text-and-Icon-OnBrand-Hover: #e1e1e1;
   --baseui-Text-and-Icon-Disabled-Hover: #9ea3ad;
   --baseui-Text-and-Icon-Accent-Hover: #423ed6;
   --baseui-Background-Disabled-Hover: #e3e3e3;
@@ -131,7 +133,6 @@
   /* Text and Icon */
   --baseui-Text-and-Icon-Primary: #ffffff;
   --baseui-Text-and-Icon-Secondary: #999999;
-  --baseui-Text-and-Icon-OnColor: #171717;
   --baseui-Text-and-Icon-Disabled: #7a7a7a;
   --baseui-Text-and-Icon-Accent: #575df6;
 
@@ -163,6 +164,8 @@
   --baseui-Extensions-Text-and-Icon-Success: #44cf5e;
   --baseui-Extensions-Text-and-Icon-AlwaysDark: #171717;
   --baseui-Extensions-Text-and-Icon-AlwaysLight: #ffffff;
+  --baseui-Extensions-Text-and-Icon-OnColor: #171717;
+  --baseui-Extensions-Text-and-Icon-OnBrand: #171717;
 
   /* Extensions / Background */
   --baseui-Extensions-Background-Surface: #222222;
@@ -202,7 +205,8 @@
   --baseui-Extensions-Background-LightAccent-Hover: #2d3180;
   --baseui-Text-and-Icon-Primary-Hover: #e1e1e1;
   --baseui-Text-and-Icon-Secondary-Hover: #b5b5b5;
-  --baseui-Text-and-Icon-OnColor-Hover: #2c2c2c;
+  --baseui-Extensions-Text-and-Icon-OnColor-Hover: #2c2c2c;
+  --baseui-Extensions-Text-and-Icon-OnBrand-Hover: #2c2c2c;
   --baseui-Text-and-Icon-Disabled-Hover: #959595;
   --baseui-Text-and-Icon-Accent-Hover: #7383fc;
   --baseui-Background-Disabled-Hover: #555555;

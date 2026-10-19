@@ -139,7 +139,7 @@
 .bui-tooltip__bubble {
   position: absolute; z-index: var(--baseui-z-index-500); width: max-content; max-width: 280px; pointer-events: none;
   padding: 6px var(--baseui-spacing-12); border-radius: var(--baseui-radius-8);
-  background: var(--baseui-Extensions-Background-InversePrimary); color: var(--baseui-Text-and-Icon-OnColor);
+  background: var(--baseui-Extensions-Background-InversePrimary); color: var(--baseui-Extensions-Text-and-Icon-OnColor);
   font: var(--baseui-Typography-Text-14-Regular); animation: bui-fade var(--baseui-duration-fast) var(--baseui-ease-standard);
 }
 .bui-tooltip__bubble[data-placement="top"] { bottom: calc(100% + 8px); left: 50%; translate: -50% 0; }
@@ -163,9 +163,9 @@
   font: var(--baseui-Typography-Text-16-Regular); box-shadow: var(--baseui-shadow-high); animation: bui-toast-in var(--baseui-duration-medium) var(--baseui-ease-standard);
 }
 .bui-toast__icon { display: inline-flex; flex: none; color: inherit; }
-.bui-toast--inverse { box-shadow: none; background: var(--baseui-Extensions-Background-InversePrimary); color: var(--baseui-Text-and-Icon-OnColor); }
-.bui-toast--inverse .bui-toast__action { color: var(--baseui-Text-and-Icon-OnColor); }
-.bui-toast--inverse .bui-toast__close { color: var(--baseui-Text-and-Icon-OnColor); }
+.bui-toast--inverse { box-shadow: none; background: var(--baseui-Extensions-Background-InversePrimary); color: var(--baseui-Extensions-Text-and-Icon-OnColor); }
+.bui-toast--inverse .bui-toast__action { color: var(--baseui-Extensions-Text-and-Icon-OnColor); }
+.bui-toast--inverse .bui-toast__close { color: var(--baseui-Extensions-Text-and-Icon-OnColor); }
 @media (hover: hover) { .bui-toast--inverse .bui-toast__action:hover:not(:disabled), .bui-toast--inverse .bui-toast__close:hover { background: var(--baseui-Extensions-Background-InversePrimary-Hover); } }
 .bui-toast__text { flex: 1; min-width: 0; }
 .bui-toast .bui-toast__action { flex: none; font: var(--baseui-Typography-Text-16-Semi-Bold); }
@@ -306,7 +306,7 @@
 }
 .bui-page:focus-visible { outline: var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color); outline-offset: var(--baseui-focus-outline-offset); }
 @media (hover: hover) { .bui-page:hover:not(:disabled):not([aria-current]) { background: var(--baseui-Background-Transparent-Hover); } }
-.bui-page[aria-current="page"] { background: var(--baseui-Background-Brand); color: var(--baseui-Text-and-Icon-OnColor); cursor: default; }
+.bui-page[aria-current="page"] { background: var(--baseui-Background-Brand); color: var(--baseui-Extensions-Text-and-Icon-OnBrand); cursor: default; }
 .bui-page:disabled { cursor: not-allowed; color: var(--baseui-Text-and-Icon-Disabled); }
 .bui-page--gap { cursor: default; color: var(--baseui-Text-and-Icon-Secondary); }
 
@@ -365,16 +365,16 @@
 .bui-badge__icon { display: inline-flex; flex: none; width: 12px; height: 12px; }
 .bui-badge__icon > * { width: 100%; height: 100%; }
 .bui-badge__label { overflow: hidden; text-overflow: ellipsis; }
-.bui-badge--info { background: var(--baseui-Background-Accent); color: var(--baseui-Text-and-Icon-OnColor); }
+.bui-badge--info { background: var(--baseui-Background-Accent); color: var(--baseui-Extensions-Text-and-Icon-OnColor); }
 .bui-badge--success { background: var(--baseui-Extensions-Background-Success); color: var(--baseui-Extensions-Text-and-Icon-AlwaysLight); }
 .bui-badge--warning { background: var(--baseui-Extensions-Background-Warning); color: var(--baseui-Extensions-Text-and-Icon-AlwaysDark); }
 .bui-badge--error { background: var(--baseui-Extensions-Background-Error); color: var(--baseui-Extensions-Text-and-Icon-AlwaysLight); }
-.bui-badge--blue { background: var(--baseui-Accent-Colors-Blue); color: var(--baseui-Text-and-Icon-OnColor); }
+.bui-badge--blue { background: var(--baseui-Accent-Colors-Blue); color: var(--baseui-Extensions-Text-and-Icon-OnColor); }
 .bui-badge--blue-light { background: var(--baseui-Accent-Colors-Blue-Light); color: var(--baseui-Extensions-Text-and-Icon-AlwaysLight); }
 .bui-badge--green { background: var(--baseui-Accent-Colors-Green); color: var(--baseui-Extensions-Text-and-Icon-AlwaysLight); }
 .bui-badge--green-light { background: var(--baseui-Accent-Colors-Green-Light); color: var(--baseui-Extensions-Text-and-Icon-AlwaysDark); }
 .bui-badge--orange { background: var(--baseui-Accent-Colors-Orange); color: var(--baseui-Extensions-Text-and-Icon-AlwaysDark); }
-.bui-badge--primary { background: var(--baseui-Extensions-Background-InversePrimary); color: var(--baseui-Text-and-Icon-OnColor); }
+.bui-badge--primary { background: var(--baseui-Extensions-Background-InversePrimary); color: var(--baseui-Extensions-Text-and-Icon-OnColor); }
 .bui-badge--pink { background: var(--baseui-Accent-Colors-Pink); color: var(--baseui-Extensions-Text-and-Icon-AlwaysLight); }
 .bui-badge--red { background: var(--baseui-Accent-Colors-Red); color: var(--baseui-Extensions-Text-and-Icon-AlwaysLight); }
 .bui-badge--disabled { background: var(--baseui-Background-Disabled); color: var(--baseui-Text-and-Icon-Disabled); }
@@ -442,10 +442,10 @@
 }
 .bui-calendar__day--today { background: var(--baseui-Background-Secondary); font: var(--baseui-Typography-Text-16-Semi-Bold); }
 @media (hover: hover) { .bui-calendar__day:hover:not(.bui-calendar__day--selected):not(.bui-calendar__day--disabled) { background: var(--baseui-Background-Transparent-Hover); } }
-.bui-calendar__day--selected { background: var(--baseui-Extensions-Background-InversePrimary); color: var(--baseui-Text-and-Icon-OnColor); font: var(--baseui-Typography-Text-16-Semi-Bold); }
+.bui-calendar__day--selected { background: var(--baseui-Extensions-Background-InversePrimary); color: var(--baseui-Extensions-Text-and-Icon-OnColor); font: var(--baseui-Typography-Text-16-Semi-Bold); }
 .bui-calendar__day--outside { color: var(--baseui-Text-and-Icon-Disabled); }
 .bui-calendar__day--disabled { color: var(--baseui-Text-and-Icon-Disabled); cursor: not-allowed; background: none; }
-.bui-calendar__day--outside.bui-calendar__day--selected { color: var(--baseui-Text-and-Icon-OnColor); }
+.bui-calendar__day--outside.bui-calendar__day--selected { color: var(--baseui-Extensions-Text-and-Icon-OnColor); }
 .bui-datepicker { display: block; width: 100%; max-width: 360px; }
 .bui-datepicker.bui-popover { display: block; }
 .bui-datepicker .bui-popover__trigger { display: block; width: 100%; }

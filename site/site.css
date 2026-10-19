@@ -133,7 +133,7 @@ code.type { white-space: pre-wrap; word-break: break-word; color: var(--baseui-T
 
 
 /* accessibility and in-page navigation */
-.skip { position: absolute; left: var(--baseui-spacing-12); top: -64px; z-index: var(--baseui-z-index-500); padding: var(--baseui-spacing-8) var(--baseui-spacing-16); border-radius: var(--baseui-radius-12); background: var(--baseui-Extensions-Background-InversePrimary); color: var(--baseui-Text-and-Icon-OnColor); font: var(--baseui-Typography-Text-14-Semi-Bold); text-decoration: none; }
+.skip { position: absolute; left: var(--baseui-spacing-12); top: -64px; z-index: var(--baseui-z-index-500); padding: var(--baseui-spacing-8) var(--baseui-spacing-16); border-radius: var(--baseui-radius-12); background: var(--baseui-Extensions-Background-InversePrimary); color: var(--baseui-Extensions-Text-and-Icon-OnColor); font: var(--baseui-Typography-Text-14-Semi-Bold); text-decoration: none; }
 .skip:focus-visible { top: var(--baseui-spacing-12); }
 #main:focus { outline: none; }
 a:focus-visible, .brand:focus-visible {

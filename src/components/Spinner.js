@@ -5,7 +5,7 @@ const SIZES = { xsm: 16, sm: 24, md: 40, lg: 56 };
 const COLORS = {
   primary: 'var(--baseui-Text-and-Icon-Primary)', secondary: 'var(--baseui-Text-and-Icon-Secondary)', accent: 'var(--baseui-Text-and-Icon-Accent)',
   success: 'var(--baseui-Extensions-Text-and-Icon-Success)', warning: 'var(--baseui-Extensions-Text-and-Icon-Warning)', error: 'var(--baseui-Extensions-Text-and-Icon-Error)',
-  'on-color': 'var(--baseui-Text-and-Icon-OnColor)',
+  'on-color': 'var(--baseui-Extensions-Text-and-Icon-OnColor)',
 };
 
 export function Spinner({ size = 'md', color = 'primary', className, style, ...rest }) {
