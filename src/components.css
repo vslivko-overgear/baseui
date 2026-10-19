@@ -192,11 +192,11 @@
 .bui-section { box-sizing: border-box; width: 100%; margin-inline: auto; }
 
 /* ---------- Typography ---------- */
-.bui-link { color: var(--baseui-Text-and-Icon-Accent); border-radius: var(--baseui-radius-6); text-underline-offset: 3px; }
+.bui-link { color: var(--baseui-Text-and-Icon-Primary); border-radius: var(--baseui-radius-6); text-underline-offset: 3px; }
 .bui-link--none { text-decoration: none; }
 .bui-link--hover { text-decoration: none; }
 .bui-link--always { text-decoration: underline; }
-@media (hover: hover) { .bui-link--hover:hover { text-decoration: underline; } }
+@media (hover: hover) { .bui-link:hover { color: var(--baseui-Text-and-Icon-Primary-Hover); } .bui-link--hover:hover { text-decoration: underline; } }
 .bui-link:focus-visible { outline: var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color); outline-offset: var(--baseui-focus-outline-offset); }
 
 /* ---------- Segmented Control ---------- */
