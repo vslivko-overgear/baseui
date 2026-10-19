@@ -197,6 +197,10 @@
   display: grid; place-items: center; width: 64px; height: 64px; margin-bottom: var(--baseui-spacing-8);
   border-radius: var(--baseui-radius-full); background: var(--baseui-Background-Secondary); color: var(--baseui-Text-and-Icon-Primary);
 }
+.bui-status__icon--accent { background: var(--baseui-Extensions-Background-LightAccent); }
+.bui-status__icon--success { background: var(--baseui-Extensions-Background-LightSuccess); }
+.bui-status__icon--warning { background: var(--baseui-Extensions-Background-LightWarning); }
+.bui-status__icon--error { background: var(--baseui-Extensions-Background-LightError); }
 .bui-status__title { font: var(--baseui-Typography-Header-20); color: var(--baseui-Text-and-Icon-Primary); }
 .bui-status__text { margin: 0; max-width: 420px; font: var(--baseui-Typography-Text-16-Regular); color: var(--baseui-Text-and-Icon-Primary); }
 .bui-status__action { margin-top: var(--baseui-spacing-12); }

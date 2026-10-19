@@ -12,11 +12,11 @@ const PRESETS = {
   'no-access': { icon: 'lock', title: 'No access', description: 'Ask the owner to give you access.' },
 };
 
-export function Status({ status = 'empty', icon, title, description, action, actionLabel, actionVariant = 'primary', onAction, className, ...rest }) {
+export function Status({ status = 'empty', icon, title, description, action, actionLabel, actionVariant = 'primary', onAction, color = 'base', className, ...rest }) {
   const p = PRESETS[status];
   const act = action || (actionLabel && h(Button, { label: actionLabel, variant: actionVariant, onClick: onAction }));
   return h('div', { className: cx('bui-status', className), ...rest },
-    h('div', { className: 'bui-status__icon', 'aria-hidden': 'true' }, icon || h(Icon, { name: p.icon, size: 28 })),
+    h('div', { className: cx('bui-status__icon', `bui-status__icon--${color}`), 'aria-hidden': 'true' }, icon || h(Icon, { name: p.icon, size: 28 })),
     h('div', { className: 'bui-status__title' }, title || p.title),
     h('p', { className: 'bui-status__text' }, description || p.description),
     act && h('div', { className: 'bui-status__action' }, act));
@@ -24,6 +24,7 @@ export function Status({ status = 'empty', icon, title, description, action, act
 
 describe(Status, 'Tells the user the state of a view: nothing to show, no results, an error, success, no connection or no access.', {
   status: ["'empty' | 'no-results' | 'error' | 'success' | 'offline' | 'no-access'", "'empty'", 'Which state to show; it sets the icon, title and description'],
+  color: ["'base' | 'accent' | 'success' | 'warning' | 'error'", "'base'", 'Color of the circle behind the icon; the icon stays black'],
   icon: ['ReactNode', null, 'Replaces the icon of the status'],
   title: ['ReactNode', null, 'Replaces the title of the status'],
   description: ['ReactNode', null, 'Replaces the text under the title'],
