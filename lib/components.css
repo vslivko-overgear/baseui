@@ -216,3 +216,9 @@
 
 /* Dialog: the close and back icons are as bold as the Header-20 title */
 ._closeButton_1nnzw_188 svg path, ._iconButton_1nnzw_92 svg path { stroke-width: 2.5; }
+
+/* List: text, titles and dividers line up with the content edge of the container; hover and the active row reach 16px beyond it. */
+._header_1xp1v_5 { margin-inline: calc(var(--baseui-spacing-16) * -1); }
+._title_1f5ju_8 { padding-inline: 0; }
+._nestedWrap_1xp1v_130 { margin-inline: calc(var(--baseui-spacing-16) * -1); }
+._nestedWrap_1xp1v_130 ._header_1xp1v_5 { margin-inline: 0; }
