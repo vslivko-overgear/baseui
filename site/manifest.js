@@ -68,7 +68,7 @@ export default [
       },
       { title: 'Layout', file: N('Stack'), lead: 'Containers that arrange content with consistent spacing.', children: [{ title: 'Center', file: N('Center') }, { title: 'Grid', file: N('Grid') }, { title: 'Section', file: N('Section') }] },
       { title: 'Link', file: N('Link') },
-      { title: 'List', file: B('List.stories-Alo3K1f2'), lead: 'A vertical list of rows with an optional title.', children: [{ title: 'List Item', file: B('ListItem.stories-Dq00OmrP'), lead: 'A row with an icon or avatar, text and an optional control.' }] },
+      { title: 'List', file: N('List'), lead: 'A vertical list of rows with an optional title and divider. Text, titles and dividers line up with the content edge; hover reaches beyond it.', children: [{ title: 'List Item', file: N('ListItem'), lead: 'A row with an icon or avatar, text, details and a control: the Avatar, Switch, Checkbox and Badge of the design system.' }] },
       { title: 'Metadata List', file: N('MetadataList') },
       { title: 'Pagination', file: N('Pagination') },
       { title: 'Popover', file: N('Popover') },
