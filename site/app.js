@@ -177,7 +177,7 @@ const TYPE_CLEAN = (t) => (t ? t.raw || t.name : '');
 const HIDDEN_PROPS = new Set(['ref', 'className', 'style', 'id', 'data-testid', 'contentClassName', 'portalContainer', 'keepMounted', 'initialFocus', 'finalFocus', 'name', 'form', 'labelId', 'captionId', 'focusRef', 'cellRef', 'onBlur']);
 /** One short fragment: first sentence, no @tags, no trailing period. */
 const brief = (text = '', max = 110) => text.replace(/@\w+.*$/s, '').trim().split(/(?<=[.!?])\s/)[0].replace(/\s+/g, ' ').replace(/\.$/, '').slice(0, max);
-function PropsTable({ component }) {
+function PropsTable({ component, title = 'Props', id = 'props' }) {
   const props = component && component.__docgenInfo && component.__docgenInfo.props;
   const rows = props ? Object.entries(props).filter(([n, p]) => !HIDDEN_PROPS.has(n) && !/@internal/.test(p.description || '') && brief(p.description)).map(([name, p]) => ({ name, ...p })) : [];
   if (!rows.length) return null;
@@ -187,9 +187,9 @@ function PropsTable({ component }) {
     { key: 'default', header: 'Default', width: pixel(120), renderCell: (r) => (r.defaultValue ? h('code', null, r.defaultValue.value) : '—') },
     { key: 'description', header: 'Description', width: proportional(4, { minWidth: 200 }), renderCell: (r) => h(Md, { text: brief(r.description), className: 'prose small' }) },
   ];
-  return h('section', { className: 'section', id: 'props', 'data-anchor': 'Props' },
-    h('h2', null, 'Props'),
-    h(Table, { data: rows, columns, rowKey: 'name', caption: 'Props', verticalAlign: 'top' }));
+  return h('section', { className: 'section', id, 'data-anchor': title },
+    h('h2', null, title),
+    h(Table, { data: rows, columns, rowKey: 'name', caption: title, verticalAlign: 'top' }));
 }
 
 /* ------------------------------------------------------------------- pages */
@@ -255,6 +255,7 @@ function Page({ entry }) {
     state.page && h(state.page),
     playground && h(Example, { key: entry.slug + 'pg', meta, story: playground.story, name: playground.name, id: playground.id, controls: true, overlay }),
     !isFoundation && h(PropsTable, { component: meta.component }),
+    entry.examples.map((e, i) => e.props && h(PropsTable, { key: e.title, component: states[i + 1].default.component, title: `${e.title} Props`, id: `props-${kebab(e.title)}` })),
     (rest.length > 0 || extra.length > 0) && h('section', { className: 'section' },
       !isFoundation && h('h2', null, 'Examples'),
       rest.map((s) => h(Example, { key: entry.slug + s.id, meta, story: s.story, name: s.name, id: s.id, controls: false, overlay })),

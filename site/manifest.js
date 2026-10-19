@@ -42,10 +42,10 @@ export default [
         group: 'Inputs',
         items: [
         { title: 'Calendar', file: N('Calendar'), lead: 'A month grid for picking a date or a date range.', children: [{ title: 'Date Picker', file: N('DatePicker'), lead: 'A date field that opens the calendar in a popover, or in a Dialog sheet on small screens.' }] },
-        { title: 'Checkbox', file: B('Checkbox.stories-CjVZ5VOE'), lead: 'A box that turns one option on or off.', children: [{ title: 'Checkbox List', file: B('CheckboxGroup.stories-DyCBCBrP'), lead: 'A group of checkboxes for choosing several options.' }] },
+        { title: 'Checkbox', file: B('Checkbox.stories-CjVZ5VOE'), lead: 'A box that turns one option on or off, alone or as a list of options.', examples: [{ title: 'Checkbox List', file: B('CheckboxGroup.stories-DyCBCBrP'), props: true }] },
         { title: 'Number Input', file: N('NumberInput') },
         { title: 'OTP Input', file: B('OtpInput.stories-DMTeWrJE'), lead: 'A field for entering a one-time code.' },
-        { title: 'Radio', file: B('RadioGroup.stories-DVXazEy6'), lead: 'A group of radio buttons for choosing one option.', children: [{ title: 'Radio List Item', file: B('Radio.stories-ByX4his4'), lead: 'A single radio button inside a Radio.' }] },
+        { title: 'Radio', file: B('RadioGroup.stories-DVXazEy6'), lead: 'Radio buttons for choosing one option from a list.', examples: [{ title: 'Radio List Item', file: B('Radio.stories-ByX4his4'), props: true }] },
         { title: 'Rating', file: B('Rating.stories-B5Vm-Sbj'), lead: 'Shows or collects a rating as stars.' },
         { title: 'Selector', file: B('Select.stories-vOU6jfFc'), lead: 'A field, or any element, that opens a list of options.', examples: [{ title: 'Selector Trigger', file: N('SelectTrigger') }] },
         { title: 'Slider', file: N('Slider') },
