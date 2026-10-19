@@ -468,5 +468,7 @@
 .bui-datepicker { display: block; width: 100%; max-width: 360px; }
 .bui-datepicker.bui-popover { display: block; }
 .bui-datepicker .bui-popover__trigger { display: block; width: 100%; }
-.bui-datepicker .bui-popover__panel { box-sizing: border-box; width: 100%; min-width: 0; max-width: none; padding: var(--baseui-spacing-16); }
+.bui-datepicker__field { display: block; width: 100%; cursor: pointer; }
+/* the same surface as the Selector / Typeahead dropdown */
+.bui-datepicker .bui-popover__panel { box-sizing: border-box; width: 100%; min-width: 0; max-width: none; padding: var(--baseui-spacing-16); border-radius: var(--baseui-radius-20); box-shadow: 0 4px 28px color-mix(in srgb, var(--baseui-Extensions-Text-and-Icon-AlwaysDark) 12%, transparent); }
 @media (prefers-reduced-motion: reduce) { .bui-calendar__day, .bui-calendar__nav { transition: none; } }

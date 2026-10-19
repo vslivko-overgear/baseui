@@ -205,13 +205,16 @@ export function DatePicker({
     : (typeof selected === 'string' ? fmt.format(parse(selected)) : '');
   const cal = { mode, locale, min, max, dateConstraints, weekStartsOn };
 
-  const trigger = (extra = {}) => h(TextField, {
-    ...field, label, readOnly: true, value: text,
+  // The whole field is the trigger: a click on the icon or the padding opens it too, not only a click on the input.
+  const trigger = (extra = {}) => h('div', {
+    className: 'bui-datepicker__field', onClick: extra.onClick,
+    onKeyDown: (e) => { if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') { e.preventDefault(); extra.onClick?.(); } },
+  }, h(TextField, {
+    ...field, label, readOnly: true, value: text, onChange: () => {}, startIcon: h(Icon, { name: 'calendar', size: field.size === 'sm' ? 20 : 24 }),
     // The label stays full size until a date is chosen, then it floats like in Text Input.
-    floatingLabel: field.floatingLabel !== false && !!text, onChange: () => {}, startIcon: h(Icon, { name: 'calendar', size: field.size === 'sm' ? 20 : 24 }),
-    onKeyDown: (e) => { if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') { e.preventDefault(); extra.onClick ? extra.onClick() : (setDraft(selected), setOpen(true)); } },
-    ...extra, 'aria-haspopup': 'dialog',
-  });
+    floatingLabel: field.floatingLabel !== false && !!text,
+    'aria-haspopup': 'dialog', 'aria-expanded': extra['aria-expanded'], 'aria-controls': extra['aria-controls'],
+  }));
 
   if (asDialog) {
     return h('div', { className: cx('bui-datepicker', className) },
