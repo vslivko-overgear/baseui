@@ -4,7 +4,7 @@ export function documentControls(meta) {
   if (!c?.__docgenInfo) return;
   const props = c.__docgenInfo.props || (c.__docgenInfo.props = {});
   for (const [name, spec] of Object.entries(meta.argTypes || {})) {
-    if (!spec.control || props[name]) continue;
+    if (!spec.control || props[name] || spec.docs === false) continue;
     const type = typeof spec.control === 'string' ? spec.control : spec.control.type;
     const tsType = spec.options ? spec.options.map((o) => (typeof o === 'number' ? o : `'${o}'`)).join(' | ') : type === 'text' ? 'string' : type === 'range' ? 'number' : type;
     const def = meta.args?.[name];

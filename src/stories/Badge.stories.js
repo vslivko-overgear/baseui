@@ -5,10 +5,19 @@ import { meta, playground, example, Row } from './_helpers.js';
 
 const VARIANTS = ['primary', 'secondary', 'info', 'success', 'warning', 'error', 'blue', 'blue-light', 'green', 'green-light', 'orange', 'pink', 'red'];
 export default meta({
-  title: 'Components/Badge', component: Badge, args: { type: 'label', variant: 'secondary', size: 'md', disabled: false, label: 'Badge' },
-  argTypes: { type: { control: 'inline-radio', options: ['label', 'counter', 'dot'] }, variant: { control: 'select', options: VARIANTS }, size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] }, disabled: { control: 'boolean' }, label: { control: 'text' } },
+  title: 'Components/Badge', component: Badge, args: { type: 'label', label: 'Badge', count: 7, variant: 'secondary', size: 'md', disabled: false },
+  argTypes: {
+    type: { control: 'inline-radio', options: ['label', 'counter', 'dot'] },
+    label: { control: 'text', if: { arg: 'type', eq: 'label' } },
+    // A counter takes a number instead of the label; the field is a story setting for the `label` prop.
+    count: { control: 'number', docs: false, if: { arg: 'type', eq: 'counter' } },
+    variant: { control: 'select', options: VARIANTS }, size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] }, disabled: { control: 'boolean' },
+  },
 });
-export const Playground = playground({ source: `<Badge variant="success" label="Active" />` });
+export const Playground = {
+  ...playground({ source: `<Badge variant="success" label="Active" />` }),
+  render: ({ count, ...args }) => h(Badge, { ...args, label: args.type === 'counter' ? count ?? 0 : args.type === 'dot' ? 'New' : args.label }),
+};
 export const Variants = example({
   name: 'Variants', render: () => h(Row, null, VARIANTS.map((v) => h(Badge, { key: v, variant: v, label: v }))),
   source: `<Badge variant="info" label="info" />`,

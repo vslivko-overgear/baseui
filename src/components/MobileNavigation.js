@@ -1,4 +1,4 @@
-import { h, cx, useControllable } from '../react.js';
+import { h, cx, React, useRef, useState, useEffect, useControllable } from '../react.js';
 import { Icon } from '../icons.js';
 import { IconButton } from './Button.js';
 import { Badge } from './Badge.js';
@@ -26,7 +26,27 @@ describe(Navbar, 'The bar at the top of a mobile screen: a back button on the le
 /** The tab bar at the bottom of a mobile screen: 2 to 6 top-level destinations. */
 export function BottomBar({ items = [], value, defaultValue, onValueChange, showLabels = true, floating = false, label = 'Main navigation', className, ...rest }) {
   const [current, setCurrent] = useControllable(value, defaultValue ?? items[0]?.value, onValueChange);
-  return h('nav', { 'aria-label': label, className: cx('bui-bottombar', !showLabels && 'bui-bottombar--compact', floating && 'bui-bottombar--floating', className), ...rest },
+  const ref = useRef(null);
+  const [pill, setPill] = useState(null);
+  const [ready, setReady] = useState(false);
+  // The highlight is one element that slides to the active item; it is measured again when the bar changes size.
+  React.useLayoutEffect(() => {
+    const nav = ref.current;
+    const measure = () => {
+      const item = nav.querySelector('[aria-current="page"]');
+      if (!item) return setPill(null);
+      const box = (floating ? item : item.querySelector('.bui-bottombar__icon')).getBoundingClientRect();
+      const base = nav.getBoundingClientRect();
+      setPill({ x: box.left - base.left, y: box.top - base.top, w: box.width, h: box.height });
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(nav);
+    return () => ro.disconnect();
+  }, [current, items.length, showLabels, floating]);
+  useEffect(() => { const id = requestAnimationFrame(() => setReady(true)); return () => cancelAnimationFrame(id); }, []);
+  return h('nav', { ref, 'aria-label': label, className: cx('bui-bottombar', ready && 'bui-bottombar--ready', !showLabels && 'bui-bottombar--compact', floating && 'bui-bottombar--floating', className), ...rest },
+    pill && h('span', { className: 'bui-bottombar__pill', 'aria-hidden': 'true', style: { width: pill.w, height: pill.h, transform: `translate(${pill.x}px, ${pill.y}px)` } }),
     items.slice(0, 6).map((it) => {
       const active = it.value === current;
       const badge = it.badge === true ? h(Badge, { type: 'dot', variant: 'red', size: 'sm', label: 'New', className: 'bui-bottombar__badge' }) : it.badge != null && h(Badge, { type: 'counter', variant: 'red', size: 'sm', label: it.badge, className: 'bui-bottombar__badge' });
