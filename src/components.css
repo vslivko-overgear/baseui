@@ -554,7 +554,7 @@
 .bui-bottombar--floating .bui-bottombar__pill { border-radius: var(--baseui-radius-full); }
 @media (hover: hover) { .bui-bottombar--floating .bui-bottombar__item:hover:not(:disabled):not(.bui-bottombar__item--active) { background: var(--baseui-Background-Transparent-Hover); } }
 .bui-bottombar__badge { top: -2px; left: calc(50% + 2px); }
-.bui-bottombar__badge.bui-badge--dot { top: -1px; left: calc(50% + 6px); }
+.bui-bottombar__badge.bui-badge--dot { top: -1px; left: calc(50% + 5px); }
 .bui-bottombar__pill { position: absolute; left: 0; top: 0; z-index: 0; border-radius: var(--baseui-radius-full); background: var(--baseui-Background-Secondary); pointer-events: none; }
 .bui-bottombar__item { position: relative; z-index: 1; }
 .bui-bottombar--ready .bui-bottombar__pill { transition: transform var(--baseui-duration-medium) var(--baseui-ease-standard), width var(--baseui-duration-medium) var(--baseui-ease-standard), height var(--baseui-duration-medium) var(--baseui-ease-standard); }

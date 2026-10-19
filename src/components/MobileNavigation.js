@@ -49,7 +49,7 @@ export function BottomBar({ items = [], value, defaultValue, onValueChange, show
     pill && h('span', { className: 'bui-bottombar__pill', 'aria-hidden': 'true', style: { width: pill.w, height: pill.h, transform: `translate(${pill.x}px, ${pill.y}px)` } }),
     items.slice(0, 6).map((it) => {
       const active = it.value === current;
-      const badge = it.badge === true ? h(Badge, { type: 'dot', variant: 'red', size: 'sm', label: 'New', className: 'bui-bottombar__badge' }) : it.badge != null && h(Badge, { type: 'counter', variant: 'red', size: 'sm', label: it.badge, className: 'bui-bottombar__badge' });
+      const badge = it.badge === true ? h(Badge, { type: 'dot', variant: 'red', size: 'lg', label: 'New', className: 'bui-bottombar__badge' }) : it.badge != null && h(Badge, { type: 'counter', variant: 'red', size: 'sm', label: it.badge, className: 'bui-bottombar__badge' });
       return h('button', {
         key: it.value, type: 'button', className: cx('bui-bottombar__item', active && 'bui-bottombar__item--active'), 'aria-current': active ? 'page' : undefined,
         'aria-label': showLabels ? undefined : it.label, disabled: it.disabled, onClick: () => setCurrent(it.value),
