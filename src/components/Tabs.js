@@ -91,7 +91,7 @@ describe(TabList, 'The row of tabs. Its settings work like the Segmented Control
 
 export function Tab({ value, icon, counter, badge, disabled = false, children, className, ...rest }) {
   const { current, setCurrent, uid } = useTabs();
-  const { showIcon, showLabel, showCounter, showBadge } = useContext(TabListContext);
+  const { size, showIcon, showLabel, showCounter, showBadge } = useContext(TabListContext);
   const selected = current === value;
   const hasIcon = showIcon && icon;
   const labelShown = showLabel || !hasIcon;
@@ -106,14 +106,14 @@ export function Tab({ value, icon, counter, badge, disabled = false, children, c
     (labelShown || (showCounter && counter != null)) && h('span', { className: 'bui-tab__text' },
       labelShown && h('span', { className: 'bui-tab__label' }, children),
       showCounter && counter != null && h('span', { className: 'bui-tab__counter' }, counter)),
-    showBadge && badge != null && (typeof badge === 'object' ? badge : h(Badge, { label: badge, variant: 'red' }))),
+    showBadge && badge != null && (typeof badge === 'object' ? badge : h(Badge, { label: badge, variant: 'red', size: size === 'sm' || size === 'md' ? 'sm' : 'md', disabled }))),
   h('span', { className: 'bui-tab__line', 'aria-hidden': 'true' }));
 }
 describe(Tab, 'A tab button.', {
   value: ['string', null, 'Identifier matching a `TabPanel`'],
   icon: ['ReactNode', null, 'Icon before the label'],
   counter: ['number | string', null, 'Counter after the label'],
-  badge: ['ReactNode | string', null, 'A Badge after the counter (red by default)'],
+  badge: ['ReactNode | string', null, 'A Badge after the counter (red by default; sm for sm and md tabs, md otherwise)'],
   disabled: ['boolean', 'false', 'Disable the tab'],
 });
 

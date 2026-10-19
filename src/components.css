@@ -93,7 +93,7 @@
 .bui-tablist::-webkit-scrollbar { display: none; }
 .bui-tablist-wrap--full .bui-tab { flex: 1 1 0; }
 .bui-tab {
-  all: unset; box-sizing: border-box; cursor: pointer; flex: none; display: flex; flex-direction: column; align-items: stretch; gap: var(--baseui-spacing-4);
+  all: unset; box-sizing: border-box; cursor: pointer; flex: none; display: flex; flex-direction: column; align-items: stretch; gap: var(--baseui-spacing-8);
   white-space: nowrap; color: var(--baseui-Text-and-Icon-Secondary); transition: color var(--baseui-duration-fast) var(--baseui-ease-standard);
 }
 .bui-tab__block { display: flex; align-items: center; justify-content: flex-start; gap: var(--baseui-spacing-4); height: var(--tab-block); }
@@ -398,6 +398,7 @@
 .bui-badge--inverse { background: var(--baseui-Extensions-Background-InversePrimary); color: var(--baseui-Text-and-Icon-OnColor); }
 .bui-badge--pink { background: var(--baseui-Accent-Colors-Pink); color: var(--baseui-Extensions-Text-and-Icon-AlwaysLight); }
 .bui-badge--red { background: var(--baseui-Accent-Colors-Red); color: var(--baseui-Extensions-Text-and-Icon-AlwaysLight); }
+.bui-badge--disabled { background: var(--baseui-Background-Disabled); color: var(--baseui-Text-and-Icon-Disabled); }
 .bui-status-dot { display: inline-flex; flex: none; align-items: center; justify-content: center; width: 8px; height: 8px; border-radius: 50%; vertical-align: middle; }
 .bui-status-dot--success { background: var(--baseui-Extensions-Background-Success); color: var(--baseui-Extensions-Text-and-Icon-AlwaysDark); }
 .bui-status-dot--warning { background: var(--baseui-Extensions-Background-Warning); color: var(--baseui-Extensions-Text-and-Icon-AlwaysDark); }

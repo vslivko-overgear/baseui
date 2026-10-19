@@ -17,8 +17,12 @@ export const Sizes = example({
   name: 'Sizes', render: () => h(Row, null, ['sm', 'md', 'lg'].map((z) => h(Badge, { key: z, size: z, variant: 'inverse', label: z }))),
   source: `<Badge size="lg" variant="inverse" label="lg" />`,
 });
+export const Disabled = example({
+  name: 'Disabled', render: () => h(Row, null, ['info', 'red', 'inverse'].map((v) => h(Badge, { key: v, variant: v, disabled: true, label: v }))),
+  source: `<Badge variant="red" disabled label="red" />`,
+});
 export const WithIcon = example({
   name: 'With Icon', render: () => h(Row, null, h(Badge, { variant: 'pink', label: 'Favorite', icon: h(Heart, { size: 12 }) })),
   source: `<Badge label="Favorite" icon={<HeartIcon />} />`,
 });
-export const __namedExportsOrder = ['Playground', 'Variants', 'Sizes', 'WithIcon'];
+export const __namedExportsOrder = ['Playground', 'Variants', 'Sizes', 'Disabled', 'WithIcon'];
