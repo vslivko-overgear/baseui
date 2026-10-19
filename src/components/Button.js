@@ -4,7 +4,7 @@ import { Tooltip } from './Tooltip.js';
 import { describe } from '../doc.js';
 
 export function Button({
-  label, children, variant = 'secondary', size, isDisabled, isLoading = false, icon, endContent, isIconOnly = false, shape = 'rounded', motion,
+  label, children, variant = 'secondary', size, isDisabled, isLoading = false, icon, endContent, isIconOnly = false, shape = 'rounded',
   width, tooltip, href, target, rel, type = 'button', onClick, clickAction, className, style, ref, ...rest
 }) {
   const [pending, setPending] = useState(false);
@@ -19,7 +19,7 @@ export function Button({
     if (clickAction) { setPending(true); try { await clickAction(e); } finally { setPending(false); } }
   };
   const node = h(Base, {
-    ref, 'data-motion': motion, ...common, ...variantProps, type: href ? undefined : type, 'aria-label': isIconOnly ? label : undefined, onClick: click,
+    ref, ...common, ...variantProps, type: href ? undefined : type, 'aria-label': isIconOnly ? label : undefined, onClick: click,
     startIcon: isIconOnly ? undefined : icon, endIcon: isIconOnly ? undefined : endContent,
     ...(href && { render: h('a', { href, target, rel }) }), ...rest,
   }, isIconOnly ? icon : children ?? label);
@@ -36,7 +36,6 @@ describe(Button, 'Triggers an action or navigates.', {
   icon: ['ReactNode', null, 'Icon before the label'],
   endContent: ['ReactNode', null, 'Content after the label, e.g. a chevron'],
   shape: ["'rounded' | 'circle'", "'rounded'", 'circle makes a pill (a circle for an icon button); rounded follows the theme radius. `data-shape="circle"` on a parent does it for all buttons inside'],
-  motion: ["'off' | 'basic' | 'enhanced'", 'theme', 'Animations of this button: off, basic, or enhanced (it is pressed in); by default the Animations setting of the theme'],
   isIconOnly: ['boolean', 'false', 'Square icon-only button; `label` becomes `aria-label`'],
   width: ['number | string', null, 'Number is px; `"100%"` fills the container'],
   tooltip: ['string | false', null, 'Hover text; false turns the tooltip off (an icon-only button shows its label by default)'],

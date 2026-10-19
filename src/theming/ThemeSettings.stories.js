@@ -35,7 +35,7 @@ describe(ThemePreview, 'The theme of this site and of your own app: the settings
   radius: ['number', '12', 'Base radius in px: every radius token (4 to 32) scales from it; 0 makes square corners'],
   headingFont: ["'Geist' | 'Unbounded' | 'Montserrat Alternates' | …", "'Geist'", 'Font of the headings (`--baseui-Typography-Headline-Font-Family`); Google Fonts with Cyrillic'],
   textFont: ["'Geist' | 'Inter' | 'Manrope' | …", "'Geist'", 'Font of all other text (`--baseui-Typography-Font-Family`); Google Fonts with Cyrillic'],
-  motion: ["'off' | 'basic' | 'enhanced'", "'basic'", 'off: nothing moves (loading indicators still run); basic (the default): simple transitions, the highlight of a tab, segment or bar item appears in its new place with a fade; enhanced: the highlight slides there, plus presses, lifts and the hover nudge of the tab underline (`data-motion` on `<html>`)'],
+  motion: ["'off' | 'basic' | 'enhanced'", "'basic'", 'off: nothing moves (loading indicators still run); basic (the default): simple transitions, the highlight of a tab, segment or bar item appears in its new place with a fade; enhanced: the highlight slides there (`data-motion` on `<html>`)'],
   floating: ['boolean', 'false', 'Bars and panels float above the content: rounded, inset, with a shadow (`data-floating` on `<html>`; the Navbar and Bottom Bar follow it)'],
   glass: ['boolean', 'false', 'Translucent, blurred surfaces for bars, menus, dialogs and toasts (`data-glass` on `<html>`)'],
 });

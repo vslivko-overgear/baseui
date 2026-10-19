@@ -530,11 +530,6 @@
 /* the sliding highlights move only in enhanced (--bui-fx is 1); in basic they appear in place with a short fade (see useAppear) */
 /* off: nothing moves; loading indicators keep going */
 [data-motion="off"], [data-motion="off"] *:not(.bui-spinner, .bui-spinner *, .bui-skeleton) { animation-duration: 0.001ms !important; animation-delay: 0s !important; transition-duration: 0.001ms !important; transition-delay: 0s !important; scroll-behavior: auto !important; }
-/* enhanced: presses and lifts on top of the basic transitions (they scale to nothing when --bui-fx is 0) */
-:is(button, a)[class*="_h5cjz_"], .bui-segmented__item, .bui-bottombar__item { transition: transform var(--baseui-duration-fast) var(--baseui-ease-spring), background-color var(--baseui-duration-fast) var(--baseui-ease-standard), color var(--baseui-duration-fast) var(--baseui-ease-standard); }
-:is(button, a)[class*="_h5cjz_"]:active:not(:disabled), .bui-segmented__item:active:not(:disabled), .bui-bottombar__item:active:not(:disabled) { transform: scale(calc(1 - 0.04 * var(--bui-fx))); }
-.bui-card--clickable, .bui-card--selectable { transition: transform var(--baseui-duration-medium) var(--baseui-ease-spring), box-shadow var(--baseui-duration-medium) var(--baseui-ease-standard); }
-@media (hover: hover) { .bui-card--clickable:hover:not(.bui-card--disabled), .bui-card--selectable:hover:not(.bui-card--disabled) { transform: translateY(calc(-3px * var(--bui-fx))); box-shadow: 0 calc(6px * var(--bui-fx)) calc(20px * var(--bui-fx)) 0 var(--baseui-Shadow-Color); } }
 /* floating navbar (the bottom bar has its own floating rules above) */
 .bui-navbar--floating { margin: var(--baseui-spacing-8) var(--baseui-spacing-12) 0; border-radius: var(--baseui-radius-full); background: var(--baseui-Extensions-Background-Surface); box-shadow: var(--baseui-shadow-med); }
 /* glass: translucent surfaces that blur what is behind them; .bui-glass forces it, .bui-glass-off prevents it (the glass prop of a component) */
