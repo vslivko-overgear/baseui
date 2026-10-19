@@ -23,13 +23,13 @@ describe(Navbar, 'The bar at the top of a mobile screen: a back button on the le
   actions: ['Array<{ icon: ReactNode; label: string; onClick?: () => void; disabled?: boolean }>', '[]', 'Icon buttons on the right; only the first two are shown. `label` is the accessible name'],
 });
 
-/** The tab bar at the bottom of a mobile screen: 3 to 5 top-level destinations. */
-export function BottomBar({ items = [], value, defaultValue, onValueChange, showLabels = true, label = 'Main navigation', className, ...rest }) {
+/** The tab bar at the bottom of a mobile screen: 2 to 6 top-level destinations. */
+export function BottomBar({ items = [], value, defaultValue, onValueChange, showLabels = true, floating = false, label = 'Main navigation', className, ...rest }) {
   const [current, setCurrent] = useControllable(value, defaultValue ?? items[0]?.value, onValueChange);
-  return h('nav', { 'aria-label': label, className: cx('bui-bottombar', !showLabels && 'bui-bottombar--compact', className), ...rest },
-    items.slice(0, 5).map((it) => {
+  return h('nav', { 'aria-label': label, className: cx('bui-bottombar', !showLabels && 'bui-bottombar--compact', floating && 'bui-bottombar--floating', className), ...rest },
+    items.slice(0, 6).map((it) => {
       const active = it.value === current;
-      const badge = it.badge === true ? h('span', { className: 'bui-bottombar__dot' }) : it.badge != null && h(Badge, { variant: 'red', size: 'sm', label: it.badge, className: 'bui-bottombar__badge' });
+      const badge = it.badge === true ? h(Badge, { type: 'dot', variant: 'red', size: 'sm', label: 'New', className: 'bui-bottombar__badge' }) : it.badge != null && h(Badge, { type: 'counter', variant: 'red', size: 'sm', label: it.badge, className: 'bui-bottombar__badge' });
       return h('button', {
         key: it.value, type: 'button', className: cx('bui-bottombar__item', active && 'bui-bottombar__item--active'), 'aria-current': active ? 'page' : undefined,
         'aria-label': showLabels ? undefined : it.label, disabled: it.disabled, onClick: () => setCurrent(it.value),
@@ -38,11 +38,12 @@ export function BottomBar({ items = [], value, defaultValue, onValueChange, show
       showLabels && h('span', { className: 'bui-bottombar__label' }, it.label));
     }));
 }
-describe(BottomBar, 'The bar at the bottom of a mobile screen for switching between 3 to 5 top-level sections. The active one is highlighted.', {
-  items: ['Array<{ value: string; label: string; icon: ReactNode; activeIcon?: ReactNode; badge?: number | string | true; disabled?: boolean }>', null, 'The destinations; only the first five are shown. `activeIcon` (for example a filled icon) replaces `icon` when selected; `badge: true` shows a dot'],
+describe(BottomBar, 'The bar at the bottom of a mobile screen for switching between 2 to 6 top-level sections. The active one is highlighted; it can also float above the content, like the tab bar in iOS.', {
+  items: ['Array<{ value: string; label: string; icon: ReactNode; activeIcon?: ReactNode; badge?: number | string | true; disabled?: boolean }>', null, 'The destinations (2 to 6); only the first six are shown. `activeIcon` (for example a filled icon) replaces `icon` when selected; `badge: true` shows a dot and a number shows a counter'],
   value: ['string', null, 'Active destination (controlled)'],
   defaultValue: ['string', null, 'Initially active destination; the first by default'],
   onValueChange: ['(value: string) => void', null, 'Called when a destination is chosen'],
   showLabels: ['boolean', 'true', 'Show the labels under the icons; without them each label stays as the accessible name'],
+  floating: ['boolean', 'false', 'A floating, rounded bar with a shadow, inset from the screen edges'],
   label: ['string', "'Main navigation'", 'Accessible name of the navigation'],
 });

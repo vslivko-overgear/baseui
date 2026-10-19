@@ -5,8 +5,8 @@ import { meta, playground, example, Row } from './_helpers.js';
 
 const VARIANTS = ['primary', 'secondary', 'info', 'success', 'warning', 'error', 'blue', 'blue-light', 'green', 'green-light', 'orange', 'pink', 'red'];
 export default meta({
-  title: 'Components/Badge', component: Badge, args: { variant: 'secondary', size: 'md', disabled: false, label: 'Badge' },
-  argTypes: { variant: { control: 'select', options: VARIANTS }, size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] }, disabled: { control: 'boolean' }, label: { control: 'text' } },
+  title: 'Components/Badge', component: Badge, args: { type: 'label', variant: 'secondary', size: 'md', disabled: false, label: 'Badge' },
+  argTypes: { type: { control: 'inline-radio', options: ['label', 'counter', 'dot'] }, variant: { control: 'select', options: VARIANTS }, size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] }, disabled: { control: 'boolean' }, label: { control: 'text' } },
 });
 export const Playground = playground({ source: `<Badge variant="success" label="Active" />` });
 export const Variants = example({
@@ -21,8 +21,14 @@ export const Disabled = example({
   name: 'Disabled', render: () => h(Row, null, ['primary', 'secondary', 'info', 'red'].map((v) => h(Badge, { key: v, variant: v, disabled: true, label: v }))),
   source: `<Badge variant="red" disabled label="red" />`,
 });
+export const Types = example({
+  name: 'Types', render: () => h(Row, null, h(Badge, { variant: 'red', label: 'New' }), h(Badge, { type: 'counter', variant: 'red', label: 3 }), h(Badge, { type: 'counter', variant: 'red', label: 120 }), h(Badge, { type: 'dot', variant: 'red', label: 'New' })),
+  source: `<Badge variant="red" label="New" />
+<Badge type="counter" variant="red" label={3} />
+<Badge type="dot" variant="red" label="New" />`,
+});
 export const WithIcon = example({
   name: 'With Icon', render: () => h(Row, null, h(Badge, { variant: 'pink', label: 'Favorite', icon: h(Heart, { size: 12 }) })),
   source: `<Badge label="Favorite" icon={<HeartIcon />} />`,
 });
-export const __namedExportsOrder = ['Playground', 'Variants', 'Sizes', 'Disabled', 'WithIcon'];
+export const __namedExportsOrder = ['Playground', 'Variants', 'Sizes', 'Disabled', 'Types', 'WithIcon'];
