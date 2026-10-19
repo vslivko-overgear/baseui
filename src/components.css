@@ -278,7 +278,7 @@
   display: inline-grid; place-items: center; flex: none; width: 32px; height: 32px; border-radius: var(--baseui-radius-full);
   font: var(--baseui-Typography-Text-14-Semi-Bold); background: var(--baseui-Background-Secondary); color: var(--baseui-Text-and-Icon-Secondary);
 }
-.bui-step[data-state="current"] .bui-step__marker { background: var(--baseui-Background-Brand); color: var(--baseui-Text-and-Icon-OnColor); }
+.bui-step[data-state="current"] .bui-step__marker { background: var(--baseui-Background-Brand); color: var(--baseui-Text-and-Icon-OnBrand); }
 .bui-step[data-state="done"] .bui-step__marker { background: var(--baseui-Extensions-Background-LightSuccess); color: var(--baseui-Extensions-Text-and-Icon-Success); }
 .bui-step__text { display: flex; flex-direction: column; min-width: 0; }
 .bui-step__title { font: var(--baseui-Typography-Text-14-Semi-Bold); }
@@ -330,7 +330,7 @@
 }
 .bui-page:focus-visible { outline: var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color); outline-offset: var(--baseui-focus-outline-offset); }
 @media (hover: hover) { .bui-page:hover:not(:disabled):not([aria-current]) { background: var(--baseui-Background-Transparent-Hover); } }
-.bui-page[aria-current="page"] { background: var(--baseui-Background-Brand); color: var(--baseui-Text-and-Icon-OnColor); cursor: default; }
+.bui-page[aria-current="page"] { background: var(--baseui-Background-Brand); color: var(--baseui-Text-and-Icon-OnBrand); cursor: default; }
 .bui-page:disabled { cursor: not-allowed; color: var(--baseui-Text-and-Icon-Disabled); }
 .bui-page--gap { cursor: default; color: var(--baseui-Text-and-Icon-Secondary); }
 
@@ -559,3 +559,12 @@
 @media (prefers-reduced-motion: reduce) { .bui-bottombar--ready .bui-bottombar__pill { transition: none; } }
 .bui-bottombar--floating .bui-bottombar__item { height: 56px; }
 .bui-bottombar--floating.bui-bottombar--compact .bui-bottombar__item { height: 44px; }
+
+/* ---------- Shape ---------- */
+/* data-shape="circle" on <html> (or any container) turns buttons, fields, tokens and segmented controls into pills.
+   Button and Segmented Control also take a `shape` prop; the base radius of everything else follows the --baseui-radius-* tokens. */
+[data-shape="circle"] :is(button, a)[class*="_h5cjz_"],
+[data-shape="circle"] [class*="_cell_2ah00"]:not(:has(textarea)),
+[data-shape="circle"] [class*="_chip_"],
+[data-shape="circle"] .bui-segmented, [data-shape="circle"] .bui-segmented__item, [data-shape="circle"] .bui-segmented__thumb,
+.bui-shape-circle, .bui-shape-circle .bui-segmented__item, .bui-shape-circle .bui-segmented__thumb { border-radius: var(--baseui-radius-full); }

@@ -18,6 +18,7 @@
   --baseui-Text-and-Icon-Primary: #171717;
   --baseui-Text-and-Icon-Secondary: #5f6877;
   --baseui-Text-and-Icon-OnColor: #ffffff;
+  --baseui-Text-and-Icon-OnBrand: #ffffff;
   --baseui-Text-and-Icon-Disabled: #babfca;
   --baseui-Text-and-Icon-Accent: #575df6;
 
@@ -132,6 +133,7 @@
   --baseui-Text-and-Icon-Primary: #ffffff;
   --baseui-Text-and-Icon-Secondary: #999999;
   --baseui-Text-and-Icon-OnColor: #171717;
+  --baseui-Text-and-Icon-OnBrand: #171717;
   --baseui-Text-and-Icon-Disabled: #7a7a7a;
   --baseui-Text-and-Icon-Accent: #575df6;
 
@@ -337,12 +339,12 @@
 :root {
   --baseui-Typography-Font-Family:var(--font-geist,"Geist"), system-ui, -apple-system, "Segoe UI", sans-serif;
   --baseui-Typography-Font-Family-Mono:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  --baseui-Typography-Header-48:700 48px / 64px var(--baseui-Typography-Font-Family);
-  --baseui-Typography-Header-40:700 40px / 52px var(--baseui-Typography-Font-Family);
-  --baseui-Typography-Header-32:700 32px / 40px var(--baseui-Typography-Font-Family);
-  --baseui-Typography-Header-28:700 28px / 34px var(--baseui-Typography-Font-Family);
-  --baseui-Typography-Header-24:700 24px / 32px var(--baseui-Typography-Font-Family);
-  --baseui-Typography-Header-20:700 20px / 24px var(--baseui-Typography-Font-Family);
+  --baseui-Typography-Header-48:700 48px / 64px var(--baseui-Typography-Headline-Font-Family, var(--baseui-Typography-Font-Family));
+  --baseui-Typography-Header-40:700 40px / 52px var(--baseui-Typography-Headline-Font-Family, var(--baseui-Typography-Font-Family));
+  --baseui-Typography-Header-32:700 32px / 40px var(--baseui-Typography-Headline-Font-Family, var(--baseui-Typography-Font-Family));
+  --baseui-Typography-Header-28:700 28px / 34px var(--baseui-Typography-Headline-Font-Family, var(--baseui-Typography-Font-Family));
+  --baseui-Typography-Header-24:700 24px / 32px var(--baseui-Typography-Headline-Font-Family, var(--baseui-Typography-Font-Family));
+  --baseui-Typography-Header-20:700 20px / 24px var(--baseui-Typography-Headline-Font-Family, var(--baseui-Typography-Font-Family));
   --baseui-Typography-Text-20-Semi-Bold:600 20px / 26px var(--baseui-Typography-Font-Family);
   --baseui-Typography-Text-20-Regular:400 20px / 26px var(--baseui-Typography-Font-Family);
   --baseui-Typography-Text-16-Bold:700 16px / 22px var(--baseui-Typography-Font-Family);

@@ -3,6 +3,7 @@
 ## Experimental: Astryx alignment
 
 - Documentation in English: Foundations and Components in Astryx order. One page per component, with the same structure everywhere: Playground, Props, Examples, and anchors to each. Important subcomponents are child pages in the menu; minor ones are examples on the parent page.
+- Theming: Theme Settings page (preset themes, brand color, rounded or circle shape, base radius, headline and text fonts from Google Fonts), applied at once and stored in a cookie. `shape` prop on Button and Segmented Control, `data-shape` on any container.
 - Foundations: All Tokens, Color, Icons, Motion, Shadow, Shape, Spacing, Typography.
 - Color tokens stay baseui's. Spacing and radius are named by pixels. Motion tokens come from Astryx.
 - Avatar (with Group, Group Overflow, Status Dot), Badge, Status Dot, Button (with Group, Icon Button, Toggle Button, Toggle Button Group) and Card (with Clickable, Selectable) follow the Astryx API with baseui visuals.

@@ -10,6 +10,12 @@ const B = (file) => `../lib/${file}.js`;
 
 export default [
   {
+    section: 'Theming',
+    items: [
+      { title: 'Theme Settings', file: '../src/theming/ThemeSettings.stories.js', lead: 'Pick a ready theme, the brand color, the shape, the base radius and the fonts. Everything is applied at once to this site and stored in a cookie on your device.' },
+    ],
+  },
+  {
     section: 'Foundations',
     items: [
       { title: 'All Tokens', file: F('AllTokens') },

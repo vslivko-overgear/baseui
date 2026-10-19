@@ -7,14 +7,14 @@ const GroupContext = createContext(null);
 const ToggleGroupContext = createContext(null);
 
 export function Button({
-  label, children, variant = 'secondary', size, isDisabled, isLoading = false, icon, endContent, isIconOnly = false,
+  label, children, variant = 'secondary', size, isDisabled, isLoading = false, icon, endContent, isIconOnly = false, shape = 'rounded',
   width, tooltip, href, target, rel, type = 'button', onClick, clickAction, className, style, ref, ...rest
 }) {
   const group = useContext(GroupContext);
   const [pending, setPending] = useState(false);
   const sz = size || (group && group.size) || 'md';
   const disabled = isDisabled ?? (group && group.isDisabled) ?? false;
-  const common = { size: sz, loading: isLoading || pending, disabled, className: cx(isIconOnly && `bui-btn-icon bui-btn-icon--${sz}`, className), style: { width, ...(variant === 'destructive' && { '--baseui-button-custom-hover': 'var(--baseui-Extensions-Background-Error-Hover)' }), ...style } };
+  const common = { size: sz, loading: isLoading || pending, disabled, className: cx(isIconOnly && `bui-btn-icon bui-btn-icon--${sz}`, shape === 'circle' && 'bui-shape-circle', className), style: { width, ...(variant === 'destructive' && { '--baseui-button-custom-hover': 'var(--baseui-Extensions-Background-Error-Hover)' }), ...style } };
   const variantProps = variant === 'ghost' ? { variant: 'text' }
     : variant === 'destructive' ? { variant: 'custom', customBackground: 'var(--baseui-Extensions-Background-Error)', customColor: 'var(--baseui-Extensions-Text-and-Icon-AlwaysDark)' }
       : { variant };
@@ -39,6 +39,7 @@ describe(Button, 'Triggers an action or navigates.', {
   isLoading: ['boolean', 'false', 'Shows a spinner and blocks interaction'],
   icon: ['ReactNode', null, 'Icon before the label'],
   endContent: ['ReactNode', null, 'Content after the label, e.g. a chevron'],
+  shape: ["'rounded' | 'circle'", "'rounded'", 'circle makes a pill (a circle for an icon button); rounded follows the theme radius. `data-shape="circle"` on a parent does it for all buttons inside'],
   isIconOnly: ['boolean', 'false', 'Square icon-only button; `label` becomes `aria-label`'],
   width: ['number | string', null, 'Number is px; `"100%"` fills the container'],
   tooltip: ['string | false', null, 'Hover text; false turns the tooltip off (an icon-only button shows its label by default)'],

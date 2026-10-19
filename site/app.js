@@ -10,7 +10,9 @@ import { Slider } from '../src/components/Slider.js';
 import { Skeleton } from '../src/components/Skeleton.js';
 import { Table, pixel, proportional } from '../src/components/Table.js';
 import { composeStory, StoryCanvas, Boundary } from './story.js';
+import { startTheme } from './theme.js';
 
+startTheme();
 const icons = await import('../lib/line-HpXc8B8J.js');
 
 const React = requireReact();
@@ -109,12 +111,18 @@ function Controls({ meta, args, setOverride, reset, title = 'Settings' }) {
     const last = groups[groups.length - 1];
     if (last && it[1].row && last[0][1].row === it[1].row) last.push(it); else groups.push([it]);
   }
+  // A control can also set others: a preset sets all the theme settings, any of them turns the preset into custom.
+  const change = (name, spec, v) => {
+    setOverride(name, v);
+    const more = spec.derive && spec.derive(v);
+    if (more) Object.entries(more).forEach(([k, x]) => setOverride(k, x));
+  };
   return h('div', { className: 'controls' },
     title && h('div', { className: 'controls-title' }, title),
     groups.map((g) => g.length === 1 && !g[0][1].row
-      ? h(Control, { key: g[0][0], name: g[0][0], spec: g[0][1], args, value: args[g[0][0]], onChange: (v) => setOverride(g[0][0], v) })
+      ? h(Control, { key: g[0][0], name: g[0][0], spec: g[0][1], args, value: args[g[0][0]], onChange: (v) => change(g[0][0], g[0][1], v) })
       : h('div', { key: g[0][0], className: 'controls-row' }, g.map(([name, spec]) =>
-        h(Control, { key: name, name, spec, args, value: args[name], onChange: (v) => setOverride(name, v) })))),
+        h(Control, { key: name, name, spec, args, value: args[name], onChange: (v) => change(name, spec, v) })))),
     h(ui.Button, { variant: 'secondary', size: 'xsm', onClick: reset }, 'Reset'));
 }
 
@@ -157,7 +165,7 @@ function Example({ meta, story, name, id, controls, overlay }) {
   // The settings of the playground live in the right column (or the sheet on small screens).
   const setSettings = useContext(SettingsContext);
   React.useLayoutEffect(() => {
-    if (showControls) setSettings({ meta, args: { ...base, ...overrides }, setOverride: (k, v) => setOverrides((o) => ({ ...o, [k]: v })), reset: () => setOverrides({}) });
+    if (showControls) setSettings({ meta, args: { ...base, ...overrides }, setOverride: (k, v) => setOverrides((o) => ({ ...o, [k]: v })), reset: () => { meta.onReset && meta.onReset(); setOverrides({}); } });
   }, [showControls, meta, base, overrides]);
   useEffect(() => () => { if (showControls) setSettings(null); }, [showControls]);
   return h('section', { className: 'example', id, 'data-anchor': name },
