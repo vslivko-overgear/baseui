@@ -277,37 +277,34 @@ function Home() {
 /* -------------------------------------------------------------- navigation */
 
 function Nav({ entry, query }) {
-  const [open, setOpen] = useState({});
+  // One folder is open at a time; a folder is a row that opens a list and is not a page itself.
+  const [openKey, setOpenKey] = useState(null);
   const kids = (p) => pages.filter((x) => x.parent === p);
   const match = (p) => p.title.toLowerCase().includes(query);
   const root = (p) => (p && p.parent ? p.parent : p);
-  useEffect(() => {
-    const r = root(entry);
-    if (r) setOpen((o) => ({ ...o, [r.title]: true, ...(r.group ? { [`group:${r.group}`]: true } : {}) }));
-  }, [entry]);
+  const folderOf = (r) => (!r ? null : r.group ? `group:${r.group}` : kids(r).length ? `group:${r.title}` : null);
+  useEffect(() => { setOpenKey(folderOf(root(entry))); }, [entry]);
   const go = (p) => () => { location.hash = routeOf(p); };
-  // A page with sub-pages is an expandable row; a group is an expandable folder whose rows are the pages (sub-pages follow their page).
-  const pageRow = ({ p, sub }) => {
-    const own = entry === p;
-    if (!sub.length) return h(ListItem, { key: p.title, active: own, onClick: go(p) }, p.title);
+  const folder = (name, list) => {
+    const k = `group:${name}`;
+    const toggle = (v) => setOpenKey((cur) => (v === undefined ? (cur === k ? null : k) : v ? k : cur === k ? null : cur));
     return h(ListItem, {
-      key: p.title, active: own, expanded: query ? true : !!open[p.title], onExpandedChange: (v) => setOpen((o) => ({ ...o, [p.title]: v })), onClick: go(p),
-      items: sub.map((c) => h(ListItem, { key: c.title, subitem: true, active: entry === c, onClick: go(c) }, c.title)),
-    }, p.title);
+      key: k, active: false, expanded: query ? true : openKey === k, onExpandedChange: toggle, onClick: () => toggle(),
+      items: list.map((c) => h(ListItem, { key: c.title, subitem: true, active: entry === c, onClick: go(c) }, c.title)),
+    }, name);
   };
   const entries = (section) => {
     const out = [];
     for (const item of manifest.find((m) => m.section === section).items) {
       if (item.group) {
-        const rows = pages.filter((p) => p.section === section && p.group === item.group && !p.parent).map((p) => {
-          const sub = kids(p).filter((c) => match(c) || match(p));
-          return match(p) || sub.length ? { p, sub } : null;
-        }).filter(Boolean);
-        if (rows.length) out.push({ group: item.group, rows });
+        const list = pages.filter((p) => p.section === section && p.group === item.group).filter((p) => match(p) || (p.parent && match(p.parent)));
+        if (list.length) out.push({ name: item.group, list });
       } else {
         const p = pages.find((x) => x.section === section && x.title === item.title);
-        const sub = kids(p).filter((c) => match(c) || match(p));
-        if (match(p) || sub.length) out.push({ p, sub });
+        const sub = kids(p);
+        if (!sub.length) { if (match(p)) out.push({ p }); continue; }
+        const list = [p, ...sub].filter((x) => match(x) || match(p));
+        if (list.length) out.push({ name: item.title, list });
       }
     }
     return out;
@@ -315,15 +312,7 @@ function Nav({ entry, query }) {
   const sections = manifest.map(({ section }) => ({ section, shown: entries(section) })).filter((x) => x.shown.length > 0);
   return h('nav', { 'aria-label': 'Documentation' }, sections.map(({ section, shown }, i) =>
     h(List, { key: section, title: section, size: 'xsm', divider: i < sections.length - 1 },
-      shown.map((e) => {
-        if (!e.group) return pageRow(e);
-        const k = `group:${e.group}`;
-        const pagesIn = e.rows.flatMap(({ p, sub }) => [p, ...sub]);
-        return h(ListItem, {
-          key: k, active: false, expanded: query ? true : !!open[k], onExpandedChange: (v) => setOpen((o) => ({ ...o, [k]: v })), onClick: () => setOpen((o) => ({ ...o, [k]: !o[k] })),
-          items: pagesIn.map((c) => h(ListItem, { key: c.title, subitem: true, active: entry === c, onClick: go(c) }, c.title)),
-        }, e.group);
-      }))));
+      shown.map((e) => (e.p ? h(ListItem, { key: e.p.title, active: entry === e.p, onClick: go(e.p) }, e.p.title) : folder(e.name, e.list))))));
 }
 
 /* --------------------------------------------------------------------- app */
