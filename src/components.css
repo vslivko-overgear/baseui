@@ -512,3 +512,6 @@
 .bui-rating--sm { --bui-star: 16px; }
 .bui-rating--lg { --bui-star: 48px; }
 .bui-rating [class*="_stars_"] { width: calc(var(--baseui-rating-max, 5) * (var(--bui-star) + 4px)); }
+.bui-rating--sm { gap: var(--baseui-spacing-4); }
+.bui-rating--sm [class*="_label_"] { font: var(--baseui-Typography-Text-12-Regular); color: var(--baseui-Text-and-Icon-Primary); }
+.bui-rating--sm [class*="_caption_"] { font: var(--baseui-Typography-Text-12-Regular); color: var(--baseui-Text-and-Icon-Secondary); }
