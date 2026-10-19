@@ -25,7 +25,7 @@ export const Playground = {
 export const Sections = example({
   name: 'Sections', render: () => W(360, h('div', { style: { display: 'flex', flexDirection: 'column', gap: 'var(--baseui-spacing-16)' } },
     h(List, { title: 'Mailbox', divider: true }, rows({ rows: 2, ...ROW_ARGS, leading: 'icon' }, 'md')),
-    h(List, { title: 'People' }, rows({ rows: 2, ...ROW_ARGS, leading: 'avatar', subtitle: true }, 'md')))),
+    h(List, { title: 'People' }, rows({ rows: 2, ...ROW_ARGS, leading: 'avatar', caption: 'below' }, 'md')))),
   source: `<List title="Mailbox" divider>…</List>\n<List title="People">…</List>  // all but the last with divider`,
 });
 export const Sizes = example({
@@ -39,7 +39,7 @@ export const Spacing = example({
   source: `<List spacing="lg">…</List>  // sm compact | md +4px | lg +8px`,
 });
 export const Settings = example({
-  name: 'Switches', render: () => W(360, h(List, { title: 'Notifications' }, rows({ rows: 3, ...ROW_ARGS, control: 'switch', subtitle: true }, 'md'))),
+  name: 'Switches', render: () => W(360, h(List, { title: 'Notifications' }, rows({ rows: 3, ...ROW_ARGS, control: 'switch', caption: 'below' }, 'md'))),
   source: `<ListItem subtitle="Caption" control={<Switch size="md" aria-label="Inbox" />}>Inbox</ListItem>`,
 });
 export const __namedExportsOrder = ['Playground', 'Sections', 'Sizes', 'Spacing', 'Settings'];

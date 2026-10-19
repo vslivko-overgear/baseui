@@ -1,4 +1,4 @@
-import { h, cx } from '../react.js';
+import { h, cx, Fragment } from '../react.js';
 import { BaseList, BaseListItem } from '../base.js';
 import { describe } from '../doc.js';
 
@@ -16,13 +16,16 @@ describe(List, 'A vertical list of rows with an optional title and divider.', {
   children: ['ReactNode', null, '`ListItem` rows'],
 });
 
-export function ListItem({ size, ...rest }) {
-  return h(BaseListItem, { size: size && SIZE[size], ...rest });
+export function ListItem({ size, overline, children, ...rest }) {
+  // The small text above the title lives in the title block, so it moves and wraps with it.
+  const title = overline ? h(Fragment, null, h('span', { className: 'bui-list__overline' }, overline), children) : children;
+  return h(BaseListItem, { size: size && SIZE[size], ...rest }, title);
 }
 describe(ListItem, 'A list row: an icon or an avatar, a title with a caption, details and a control. A row with `onClick` or `items` is a button; otherwise it is plain text.', {
   size: ["'sm' | 'md'", null, 'Row height: `sm` (40px) or `md` (48px); by default the `size` of the `List`'],
   children: ['ReactNode', null, 'Main text of the row'],
-  subtitle: ['ReactNode', null, 'Second text under the title, muted'],
+  subtitle: ['ReactNode', null, 'Small muted text under the title (one size smaller than the title); use it or `overline`'],
+  overline: ['ReactNode', null, 'The same small muted text above the title; use it instead of `subtitle`'],
   details: ['ReactNode', null, 'Text or a `Badge` on the right of the title'],
   icon: ['ReactNode', null, 'Leading icon, 24px (20px in `sm` rows); it follows `currentColor` and dims with the row'],
   avatar: ['ReactNode', null, 'Leading `Avatar`: size `sm` in `sm` rows and `md` in `md` rows; it dims with its own `disabled`'],

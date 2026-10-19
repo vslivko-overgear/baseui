@@ -590,6 +590,12 @@
   -webkit-backdrop-filter: blur(20px) saturate(160%); backdrop-filter: blur(20px) saturate(160%);
 }
 
+/* List: the subtitle is one size smaller than the title; the overline is the same text above the title */
+._subtitle_1xp1v_77, .bui-list__overline { font: var(--baseui-Typography-Text-14-Regular); }
+._xsm_1xp1v_201 ._subtitle_1xp1v_77, ._xsm_1xp1v_201 .bui-list__overline { font: var(--baseui-Typography-Text-12-Regular); }
+.bui-list__overline { display: block; color: var(--baseui-Text-and-Icon-Secondary); }
+._disabled_1xp1v_19 .bui-list__overline { color: inherit; }
+
 /* List: spacing between the rows (the size sets the row height, the spacing adds air: 4px per step) */
 .bui-list--spacing-md ._xsm_1xp1v_201 { min-height: 44px; }
 .bui-list--spacing-md ._small_1xp1v_200 { min-height: 52px; }

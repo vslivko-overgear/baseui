@@ -21,7 +21,7 @@ const sub = (size) => [h(ListItem, { key: 1, subitem: true, size, onClick: () =>
 export const Playground = {
   parameters: { docs: { source: { originalSource: `<ListItem
   icon={<HeartIcon />}
-  subtitle="Caption"
+  subtitle="Caption"  // or overline="Caption" above the title
   details="12 min"
   control={<Switch size="md" aria-label="Inbox" />}
   onClick={open}
@@ -46,6 +46,12 @@ export const Leading = example({
     h(ListItem, { disabled: true, ...rowProps({ ...ROW_ARGS, leading: 'icon' }, 'md'), onClick: () => {} }, 'The icon dims with the row'))),
   source: `<ListItem icon={<HeartIcon />}>Icon</ListItem>\n<ListItem avatar={<Avatar name="Anna Petrova" size="md" />}>Avatar</ListItem>`,
 });
+export const Captions = example({
+  name: 'Captions', render: () => W(360, h(List, null,
+    h(ListItem, { ...rowProps({ ...ROW_ARGS, leading: 'icon', caption: 'below' }, 'md'), onClick: () => {} }, 'Subtitle below the title'),
+    h(ListItem, { ...rowProps({ ...ROW_ARGS, leading: 'icon', caption: 'above' }, 'md', 1), onClick: () => {} }, 'Overline above the title'))),
+  source: `<ListItem subtitle="Caption">Subtitle</ListItem>\n<ListItem overline="Caption">Overline</ListItem>  // use one of the two`,
+});
 export const Trailing = example({
   name: 'Trailing', render: () => W(360, h(List, null,
     h(ListItem, { details: '12 min', onClick: () => {} }, 'Details'),
@@ -60,4 +66,4 @@ function Folders() {
   return W(360, h(List, { size: 'md' }, h(ListItem, { expanded: open, onExpandedChange: setOpen, onClick: () => {}, items: sub('md') }, 'Mailbox'), h(ListItem, { onClick: () => {} }, 'Settings')));
 }
 export const Expandable = example({ name: 'Expandable', render: () => h(Folders), source: `<ListItem expanded={open} onExpandedChange={setOpen} items={[<ListItem subitem>Starred</ListItem>]}>Mailbox</ListItem>` });
-export const __namedExportsOrder = ['Playground', 'States', 'Leading', 'Trailing', 'Expandable'];
+export const __namedExportsOrder = ['Playground', 'States', 'Leading', 'Captions', 'Trailing', 'Expandable'];
