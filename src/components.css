@@ -525,7 +525,7 @@
 /* data-motion goes on <html> or on one component and is inherited: off, basic (default), enhanced. --bui-fx is 1 only for enhanced. */
 :root { --bui-fx: 0; --baseui-ease-slide: var(--baseui-ease-standard); }
 [data-motion="basic"], [data-motion="off"] { --bui-fx: 0; --baseui-ease-slide: var(--baseui-ease-standard); }
-[data-motion="enhanced"] { --bui-fx: 1; --baseui-ease-slide: var(--baseui-ease-spring); }
+[data-motion="enhanced"] { --bui-fx: 1; }
 .bui-tablist-wrap--ready .bui-tablist__indicator, .bui-segmented--ready .bui-segmented__thumb, .bui-bottombar--ready .bui-bottombar__pill { transition-timing-function: var(--baseui-ease-slide); }
 /* the sliding highlights move only in enhanced (--bui-fx is 1); in basic they appear in place with a short fade (see useAppear) */
 /* off: nothing moves; loading indicators keep going */

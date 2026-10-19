@@ -74,6 +74,6 @@ describe(BottomBar, 'The bar at the bottom of a mobile screen for switching betw
   showLabels: ['boolean', 'true', 'Show the labels under the icons; without them each label stays as the accessible name'],
   floating: ['boolean', 'theme', 'A floating, rounded bar with a shadow, inset from the screen edges; by default it follows the Floating setting of the theme'],
   glass: ['boolean', 'theme', 'Translucent, blurred bar; true or false overrides the Glass setting of the theme'],
-  motion: ["'off' | 'basic' | 'enhanced'", 'theme', 'Animations of this bar: off, basic, or enhanced (springy sliding highlight, press feedback); by default the Animations setting of the theme'],
+  motion: ["'off' | 'basic' | 'enhanced'", 'theme', 'Animations of this bar: off, basic, or enhanced (the highlight slides, press feedback); by default the Animations setting of the theme'],
   label: ['string', "'Main navigation'", 'Accessible name of the navigation'],
 });

@@ -61,7 +61,7 @@ describe(SegmentedControl, 'A control for switching between a few exclusive opti
   showLabel: ['boolean', 'true', 'Show the item labels; with it off the control is icons only and the label becomes the accessible name'],
   showCounter: ['boolean', 'true', 'Show the item counters'],
   showBadge: ['boolean', 'true', 'Show the item badges'],
-  motion: ["'off' | 'basic' | 'enhanced'", 'theme', 'Animations of this control: off, basic, or enhanced (springy sliding, press feedback); by default the Animations setting of the theme'],
+  motion: ["'off' | 'basic' | 'enhanced'", 'theme', 'Animations of this control: off, basic, or enhanced (the highlight slides, press feedback); by default the Animations setting of the theme'],
   shape: ["'rounded' | 'circle'", "'rounded'", 'circle makes the control and its items pills; rounded follows the theme radius'],
   label: ['string', null, 'Accessible name'],
 });
