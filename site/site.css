@@ -205,3 +205,5 @@ html[data-floating="on"] .appbar { top: var(--baseui-spacing-12); height: var(--
 html[data-floating="on"] .side { top: var(--bar-h); height: calc(100vh - var(--bar-h) - var(--baseui-spacing-12)); margin: 0 0 var(--baseui-spacing-12) var(--baseui-spacing-12); border: 0; border-radius: var(--baseui-radius-24); background: var(--baseui-Extensions-Background-Surface); box-shadow: var(--baseui-shadow-med); }
 html[data-floating="on"] .settings { top: var(--bar-h); height: calc(100vh - var(--bar-h) - var(--baseui-spacing-12)); margin: 0 var(--baseui-spacing-12) var(--baseui-spacing-12) 0; border: 0; border-radius: var(--baseui-radius-24); background: var(--baseui-Extensions-Background-Surface); box-shadow: var(--baseui-shadow-med); }
 html[data-glass="on"] :is(.appbar, .side, .settings) { background: color-mix(in srgb, var(--baseui-Extensions-Background-Surface) 62%, transparent); -webkit-backdrop-filter: blur(20px) saturate(160%); backdrop-filter: blur(20px) saturate(160%); }
+
+.controls-reset { margin-top: var(--baseui-spacing-16); }

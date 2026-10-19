@@ -124,7 +124,7 @@ function Controls({ meta, args, setOverride, reset, title = 'Settings' }) {
       ? h(Control, { key: g[0][0], name: g[0][0], spec: g[0][1], args, value: args[g[0][0]], onChange: (v) => change(g[0][0], g[0][1], v) })
       : h('div', { key: g[0][0], className: 'controls-row' }, g.map(([name, spec]) =>
         h(Control, { key: name, name, spec, args, value: args[name], onChange: (v) => change(name, spec, v) })))),
-    h(ui.Button, { variant: 'secondary', size: 'xsm', onClick: reset }, 'Reset'));
+    h(ui.Button, { variant: 'secondary', size: 'md', width: '100%', className: 'controls-reset', onClick: reset }, 'Reset'));
 }
 
 /* ------------------------------------------------------------------ blocks */
