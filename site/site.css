@@ -19,7 +19,7 @@ code {
 .shell { min-height: 100vh; }
 .body { display: grid; grid-template-columns: var(--baseui-layout-sidebar-width) minmax(0, 1fr); min-height: calc(100vh - var(--bar-h)); }
 .body--settings { grid-template-columns: var(--baseui-layout-sidebar-width) minmax(0, 1fr) var(--baseui-layout-settings-width); }
-.settings { position: sticky; top: var(--bar-h); height: calc(100vh - var(--bar-h)); overflow-y: auto; box-sizing: border-box; padding: var(--baseui-spacing-24) var(--baseui-spacing-16); border-left: 1px solid var(--baseui-Border-Primary); background: var(--baseui-Background-Primary); }
+.settings { position: sticky; top: var(--bar-h); height: calc(100vh - var(--bar-h)); overflow-y: auto; box-sizing: border-box; padding: var(--baseui-spacing-24); border-left: 1px solid var(--baseui-Border-Primary); background: var(--baseui-Background-Primary); }
 .settings .controls, .settings-sheet .controls { border: 0; border-radius: 0; padding: 0; background: none; }
 .settings-fab { display: none; }
 
@@ -32,7 +32,7 @@ code {
 .side {
   position: sticky; top: var(--bar-h); height: calc(100vh - var(--bar-h)); overflow-y: auto;
   display: flex; flex-direction: column; gap: var(--baseui-spacing-12);
-  padding: var(--baseui-spacing-24) var(--baseui-spacing-16) var(--baseui-spacing-16);
+  padding: var(--baseui-spacing-24);
   background: var(--baseui-Background-Primary);
   border-right: 1px solid var(--baseui-Border-Primary);
 }
@@ -200,7 +200,8 @@ main[data-viewport="mobile"] .page h1 { font: var(--baseui-Typography-Header-32)
 .page--loading .skel-title { margin: var(--baseui-spacing-32) 0 var(--baseui-spacing-16); }
 
 /* Theme: floating panels and glass (data-floating, data-glass on <html>) */
-html[data-floating="on"] { --bar-h: calc(var(--baseui-layout-header-height) + var(--baseui-spacing-12)); }
+/* the header floats 12px from the top; the columns start 24px below it */
+html[data-floating="on"] { --bar-h: calc(var(--baseui-layout-header-height) + var(--baseui-spacing-12) + var(--baseui-spacing-24)); }
 html[data-floating="on"] .appbar { top: var(--baseui-spacing-12); height: var(--baseui-layout-header-height); margin: var(--baseui-spacing-12) var(--baseui-spacing-12) 0; border: 0; border-radius: var(--baseui-radius-24); background: var(--baseui-Extensions-Background-Surface); box-shadow: var(--baseui-shadow-med); }
 html[data-floating="on"] .side { top: var(--bar-h); height: calc(100vh - var(--bar-h) - var(--baseui-spacing-12)); margin: 0 0 var(--baseui-spacing-12) var(--baseui-spacing-12); border: 0; border-radius: var(--baseui-radius-24); background: var(--baseui-Extensions-Background-Surface); box-shadow: var(--baseui-shadow-med); }
 html[data-floating="on"] .settings { top: var(--bar-h); height: calc(100vh - var(--bar-h) - var(--baseui-spacing-12)); margin: 0 var(--baseui-spacing-12) var(--baseui-spacing-12) 0; border: 0; border-radius: var(--baseui-radius-24); background: var(--baseui-Extensions-Background-Surface); box-shadow: var(--baseui-shadow-med); }
