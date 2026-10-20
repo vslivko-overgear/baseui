@@ -33,6 +33,7 @@ import { Button, Card, Tabs, TabList, Tab, TabPanel } from './src/index.js';
 | `src/` | Components as plain ES modules, their docs pages and styles |
 | `site/` | Documentation site and its page tree (`manifest.js`) |
 | `examples/messenger/` | A messenger built from the components with mock data (no backend). Open it from Theming → Theme Settings: it follows the theme you set there |
+| `tools/` | Scripts that look after the system: the radius check (`radius-check.js` in the browser, `check-radii.mjs` over every page); described in the Tools section of the docs |
 
 ## Tokens
 

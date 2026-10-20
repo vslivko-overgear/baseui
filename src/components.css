@@ -235,8 +235,8 @@
   transition: background-color var(--baseui-duration-fast) var(--baseui-ease-standard);
 }
 .bui-segmented--sm { --seg-item: 32px; border-radius: var(--baseui-radius-14); }
-.bui-segmented--sm .bui-segmented__item { height: var(--seg-item); border-radius: var(--baseui-radius-12); }
-.bui-segmented--sm .bui-segmented__thumb { border-radius: var(--baseui-radius-12); }
+.bui-segmented--sm .bui-segmented__item { height: var(--seg-item); border-radius: var(--baseui-radius-10); }
+.bui-segmented--sm .bui-segmented__thumb { border-radius: var(--baseui-radius-10); }
 .bui-segmented--md .bui-segmented__item { height: var(--seg-item); font: var(--baseui-Typography-Text-16-Semi-Bold); }
 .bui-segmented__icon { display: inline-flex; flex: none; width: 20px; height: 20px; }
 .bui-segmented__icon > * { width: 100%; height: 100%; }

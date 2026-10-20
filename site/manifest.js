@@ -84,4 +84,10 @@ export default [
       { title: 'Tooltip', file: N('Tooltip') },
     ],
   },
+  {
+    section: 'Tools',
+    items: [
+      { title: 'Radius Check', file: '../src/tools/RadiusCheck.stories.js', icon: 'Tool01', lead: 'Checks that nested rounded corners are concentric: the inner radius is the outer radius minus the inset.' },
+    ],
+  },
 ];
