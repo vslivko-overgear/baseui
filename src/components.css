@@ -687,3 +687,10 @@ html[data-glass="on"][data-outline="on"] :is(.bui-navbar:not(.bui-navbar--floati
 [class*="_labelHidden_h5cjz"] { opacity: 1; }
 [class*="_labelHidden_h5cjz"] > .bui-btn__label { opacity: 0; }
 .bui-btn__spinner { position: absolute; top: 50%; left: 50%; translate: -50% -50%; }
+
+/* Dialog, floating option: on a small screen the sheet floats, with margins at the bottom and the sides and rounded on every side */
+@media (width <= 1200px) {
+  .bui-dialog--floating { width: calc(100% - 2 * var(--baseui-spacing-12)); margin: 0 var(--baseui-spacing-12) calc(var(--baseui-spacing-12) + env(safe-area-inset-bottom, 0px)); border-radius: var(--baseui-radius-28); max-height: calc(var(--modal-visual-viewport-height, 100dvh) - var(--baseui-spacing-32)); }
+  .bui-dialog--floating[data-height="viewport"] { height: calc(var(--modal-visual-viewport-height, 100dvh) - var(--baseui-spacing-32)); }
+  .bui-dialog--floating[data-ending-style] { transform: translateY(calc(100% + var(--baseui-spacing-24))); }
+}

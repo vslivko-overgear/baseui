@@ -64,6 +64,17 @@ const store = {
 // The compiled Checkbox, Radio and their groups get the size and animation settings of the design system.
 const CHECK_PAGES = { 'Checkbox.stories': Checkbox, 'CheckboxGroup.stories': CheckboxGroup, 'RadioGroup.stories': RadioGroup, 'Radio.stories': Radio };
 function enhanceChecks(file, m) {
+  if (file.includes('/Modal.stories-')) {
+    const mm = m.default;
+    if (!mm.__floating) {
+      mm.__floating = true; mm.component = Modal;
+      // the stories draw the compiled Modal themselves: draw the design system one instead, so it gets `floating`
+      mm.render = (args) => h(ModalDemo, args);
+      mm.args = { floating: 'theme', ...mm.args };
+      mm.argTypes = { ...mm.argTypes, floating: { control: 'inline-radio', options: ['theme', 'on', 'off'], mapping: { theme: undefined, on: true, off: false } } };
+    }
+    return;
+  }
   const key = Object.keys(CHECK_PAGES).find((k) => file.includes(`/${k}-`));
   const meta = m.default;
   if (!key || meta.__checks) return;
@@ -75,6 +86,10 @@ function enhanceChecks(file, m) {
     size: { control: 'inline-radio', options: ['sm', 'md'] },
     motion: { control: 'inline-radio', options: ['theme', 'off', 'basic', 'enhanced'], mapping: { theme: undefined } },
   };
+}
+function ModalDemo({ initialOpen = true, ...props }) {
+  const [open, setOpen] = useState(initialOpen);
+  return h(Fragment, null, !open && h(Button, { onClick: () => setOpen(true) }, 'Open Modal'), h(Modal, { ...props, open, onOpenChange: setOpen }));
 }
 const modules = new Map();
 const loadModule = (file) => {
