@@ -236,15 +236,15 @@
 ._track_1epgh_17[data-checked]:not([data-disabled]) ._thumb_1epgh_43 { background-color: var(--baseui-Extensions-Text-and-Icon-OnColor); }
 
 /* Switch: the thumb sits at the same distance from the edges in both states (sides and top/bottom); sm and md are a bit taller */
-._small_1epgh_45 ._track_1epgh_17 { width: 40px; height: 24px; padding: 3px; }
-._small_1epgh_45 ._thumb_1epgh_43 { width: 18px; height: 18px; }
+._small_1epgh_45 ._track_1epgh_17 { width: 40px; height: 24px; padding: 4px; }
+._small_1epgh_45 ._thumb_1epgh_43 { width: 16px; height: 16px; }
 ._small_1epgh_45 ._track_1epgh_17[data-checked] ._thumb_1epgh_43 { transform: translate(16px); }
-._medium_1epgh_53 ._track_1epgh_17 { width: 50px; height: 30px; padding: 4px; }
-._medium_1epgh_53 ._thumb_1epgh_43 { width: 22px; height: 22px; }
+._medium_1epgh_53 ._track_1epgh_17 { width: 48px; height: 28px; padding: 4px; }
+._medium_1epgh_53 ._thumb_1epgh_43 { width: 20px; height: 20px; }
 ._medium_1epgh_53 ._track_1epgh_17[data-checked] ._thumb_1epgh_43 { transform: translate(20px); }
-._large_1epgh_69 ._track_1epgh_17 { width: 57px; height: 34px; padding: 5px; }
+._large_1epgh_69 ._track_1epgh_17 { width: 56px; height: 32px; padding: 4px; }
 ._large_1epgh_69 ._thumb_1epgh_43 { width: 24px; height: 24px; }
-._large_1epgh_69 ._track_1epgh_17[data-checked] ._thumb_1epgh_43 { transform: translate(23px); }
+._large_1epgh_69 ._track_1epgh_17[data-checked] ._thumb_1epgh_43 { transform: translate(24px); }
 
 /* Checkbox and Radio: a checked control keeps its border on hover */
 ._root_1p6mm_9:hover:not(:has([data-disabled])) ._box_1p6mm_18:is([data-checked],[data-indeterminate]),
