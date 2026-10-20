@@ -694,14 +694,3 @@ html[data-glass="on"][data-outline="on"] :is(.bui-navbar:not(.bui-navbar--floati
   .bui-dialog--floating[data-height="viewport"] { height: calc(var(--modal-visual-viewport-height, 100dvh) - var(--baseui-spacing-32)); }
   .bui-dialog--floating[data-ending-style] { transform: translateY(calc(100% + var(--baseui-spacing-24))); }
 }
-
-/* the gradient under a floating dialog (small screens): the page fades out behind the sheet; with glass it is a blur that fades out */
-.bui-dialog-scrim { display: none; }
-@media (width <= 1200px) {
-  .bui-dialog-scrim { display: block; position: fixed; left: 0; right: 0; bottom: 0; height: 200px; z-index: calc(var(--baseui-z-index-300) + 1); pointer-events: none;
-    background: linear-gradient(to top, var(--baseui-Background-Primary) 30%, transparent); animation: bui-fade var(--baseui-duration-medium) var(--baseui-ease-standard); }
-  .bui-dialog-scrim[data-closing] { opacity: 0; transition: opacity var(--baseui-duration-fast) var(--baseui-ease-standard); animation: none; }
-  html[data-glass="on"] .bui-dialog-scrim { background: color-mix(in srgb, var(--baseui-Background-Primary) 35%, transparent); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); -webkit-mask-image: linear-gradient(to top, #000 40%, transparent); mask-image: linear-gradient(to top, #000 40%, transparent); }
-  /* the sheet itself stays above its gradient */
-  body:has(.bui-dialog--floating) [class*="_viewport_1nnzw"] { z-index: calc(var(--baseui-z-index-300) + 2); }
-}

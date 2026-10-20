@@ -1,8 +1,7 @@
 // The compiled baseui components (lib/), exposed by name for use in composite components and docs.
 // A component is taken from its own stories' metadata, so we do not depend on names inside the bundle.
-import { h, cx, Fragment } from './react.js';
-import { useRootAttr, usePresence } from './theme-flags.js';
-import { Floating } from './floating.js';
+import { h, cx } from './react.js';
+import { useRootAttr } from './theme-flags.js';
 
 const component = async (file) => (await import(`../lib/${file}`)).default.component;
 
@@ -29,12 +28,7 @@ export const [Button, TextField, Checkbox, CheckboxGroup, Switch, Chip, Select, 
  */
 export function Modal({ floating, className, ...rest }) {
   const themeFloating = useRootAttr('floating') === 'on';
-  const on = floating ?? themeFloating;
-  // the gradient under a floating sheet, like the one under the floating bars of Mobile Navigation (a blur with glass)
-  const [scrim, leaving] = usePresence(!!rest.open && on, 220);
-  return h(Fragment, null,
-    scrim && h(Floating, null, h('div', { className: 'bui-dialog-scrim', 'data-closing': leaving || undefined, 'aria-hidden': 'true' })),
-    h(CompiledModal, { className: cx(on && 'bui-dialog--floating', className), ...rest }));
+  return h(CompiledModal, { className: cx((floating ?? themeFloating) && 'bui-dialog--floating', className), ...rest });
 }
 Modal.displayName = 'Modal';
 const compiledDoc = CompiledModal.__docgenInfo || { description: '', props: {} };
