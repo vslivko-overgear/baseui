@@ -645,9 +645,9 @@
   .bui-dialog--floating[data-ending-style] { transform: translateY(calc(100% + var(--baseui-spacing-24))); }
 }
 
-/* Corner smoothing on every rounded corner: 60% (--baseui-corner-smoothing), a superellipse instead of a circular arc.
+/* Corner smoothing on every rounded corner: 60% (--baseui-corner-smoothing), a superellipse instead of a circular arc. The exponent of corner-shape grows fast (1 is a circle, 2 a full squircle), so the percentage is scaled by 0.4: 60% is superellipse(1.24), close to the smoothing of Figma.
    Circles and pills use the full radius token, and wherever it is used the smoothing is the one of --baseui-corner-smoothing-full (0):
    a smoothed circle would turn into a squircle. Browsers without corner-shape ignore all of this and keep the plain arcs. */
 @supports (corner-shape: squircle) {
-  *, ::before, ::after { corner-shape: superellipse(calc(1 + var(--baseui-corner-smoothing, 0.6))); }
+  *, ::before, ::after { corner-shape: superellipse(calc(1 + var(--baseui-corner-smoothing, 0.6) * 0.4)); }
 }

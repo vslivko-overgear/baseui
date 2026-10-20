@@ -294,10 +294,10 @@
   --baseui-radius-28: 28px;
   --baseui-radius-32: 32px;
   --baseui-radius-full: 9999px;
-  /* corner smoothing: 0 is a plain arc, 1 a full squircle; it works where the browser supports corner-shape and is ignored elsewhere */
+  /* corner smoothing: 0 is a plain arc, 1 the strongest smoothing (superellipse 1.4); it works where the browser supports corner-shape and is ignored elsewhere */
   --baseui-corner-smoothing: 0.6;
   --baseui-corner-smoothing-full: 0;
-  --baseui-corner-full: superellipse(calc(1 + var(--baseui-corner-smoothing-full)));
+  --baseui-corner-full: superellipse(calc(1 + var(--baseui-corner-smoothing-full) * 0.4));
 }
 
 /* ---------- Shadow ---------- */
