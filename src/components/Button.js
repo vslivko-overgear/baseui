@@ -23,7 +23,7 @@ export function Button({
   };
   const loading = isLoading || pending;
   // the loading indicator is the Spinner of the design system; the compiled one is hidden in CSS
-  const spinner = loading && h(Spinner, { key: 's', customSize: SPINNER_PX[sz], color: 'inherit', className: 'bui-btn__spinner', role: 'presentation', 'aria-label': undefined, 'aria-hidden': 'true' });
+  const spinner = loading && h(Spinner, { key: 's', size: 'custom', customSize: SPINNER_PX[sz], color: 'inherit', className: 'bui-btn__spinner', role: 'presentation', 'aria-label': undefined, 'aria-hidden': 'true' });
   const node = h(Base, {
     ref, ...common, ...variantProps, type: href ? undefined : type, 'aria-label': isIconOnly ? label : undefined, onClick: click,
     startIcon: isIconOnly ? undefined : icon, endIcon: isIconOnly ? undefined : endContent,

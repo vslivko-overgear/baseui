@@ -9,7 +9,7 @@ const COLORS = {
 };
 
 export function Spinner({ size = 'md', customSize, color = 'primary', className, style, ...rest }) {
-  const px = customSize ?? (typeof size === 'number' ? size : SIZES[size]);
+  const px = size === 'custom' ? (customSize ?? SIZES.md) : (typeof size === 'number' ? size : SIZES[size]);
   return h('span', {
     role: 'status', 'aria-label': 'Loading', className: cx('bui-spinner', className),
     style: { width: px, height: px, color: COLORS[color], ...style }, ...rest,
@@ -19,7 +19,7 @@ export function Spinner({ size = 'md', customSize, color = 'primary', className,
 }
 
 describe(Spinner, 'A loading indicator.', {
-  size: ["'xsm' | 'sm' | 'md' | 'lg' | number", "'md'", 'Size: 16 / 24 / 40 / 56 px, or a number in px'],
-  customSize: ['number | string', null, 'Any other size instead of the ready ones: a number in px or a CSS length (`1.5rem`); it wins over `size`'],
+  size: ["'xsm' | 'sm' | 'md' | 'lg' | 'custom' | number", "'md'", 'Size: 16 / 24 / 40 / 56 px; custom takes the size from `customSize`; a number is px'],
+  customSize: ['number | string', null, 'Any size: a number in px or a CSS length (`1.5rem`); used only with `size="custom"`'],
   color: ["'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'error' | 'on-color' | 'inherit'", "'primary'", 'Color preset; on-color is for use on filled backgrounds, inherit takes the color of the surrounding text'],
 });
