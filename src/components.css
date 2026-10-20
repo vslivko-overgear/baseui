@@ -638,13 +638,14 @@
 [class*="_labelHidden_h5cjz"] > .bui-btn__label { opacity: 0; }
 .bui-btn__spinner { position: absolute; top: 50%; left: 50%; translate: -50% -50%; }
 
-/* Dialog (sheet on small screens): 16px above a full-height sheet; the floating one has 16px on every side.
-   The viewport of the dialog already has 16px of padding on top, so the sheet takes all the room inside it. */
+/* Dialog (sheet on small screens): 12px above a full-height sheet; the floating one has 12px on every side.
+   The viewport of the dialog has the padding on top, so the sheet takes all the room inside it. */
 @media (width <= 1200px) {
+  [class*="_viewport_1nnzw"] { padding-top: var(--baseui-spacing-12); }
   [class*="_popup_1nnzw"] { max-height: 100%; }
   [class*="_popup_1nnzw"][data-height="viewport"] { height: 100%; }
-  .bui-dialog--floating { width: calc(100% - 2 * var(--baseui-spacing-16)); margin: 0 var(--baseui-spacing-16) calc(var(--baseui-spacing-16) + env(safe-area-inset-bottom, 0px)); border-radius: var(--baseui-radius-28); max-height: calc(100% - var(--baseui-spacing-16)); }
-  .bui-dialog--floating[data-height="viewport"] { height: calc(100% - var(--baseui-spacing-16)); }
+  .bui-dialog--floating { width: calc(100% - 2 * var(--baseui-spacing-12)); margin: 0 var(--baseui-spacing-12) calc(var(--baseui-spacing-12) + env(safe-area-inset-bottom, 0px)); border-radius: var(--baseui-radius-28); max-height: calc(100% - var(--baseui-spacing-12)); }
+  .bui-dialog--floating[data-height="viewport"] { height: calc(100% - var(--baseui-spacing-12)); }
   .bui-dialog--floating[data-ending-style] { transform: translateY(calc(100% + var(--baseui-spacing-24))); }
 }
 
