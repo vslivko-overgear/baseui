@@ -354,7 +354,7 @@
 
 /* ---------- Badge ---------- */
 .bui-badge {
-  display: inline-flex; align-items: center; gap: 4px; box-sizing: border-box; height: 22px; max-width: 100%; padding: 0 9px; border-radius: var(--baseui-radius-full); white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 4px; box-sizing: border-box; height: 22px; width: fit-content; max-width: 100%; flex: none; padding: 0 9px; border-radius: var(--baseui-radius-full); white-space: nowrap;
   font: var(--baseui-Typography-Text-12-Regular); color: var(--baseui-Text-and-Icon-Primary); background: var(--baseui-Background-Secondary);
 }
 .bui-badge--sm { height: 18px; padding: 0 7px; gap: 3px; font-size: 11px; line-height: 14px; }
