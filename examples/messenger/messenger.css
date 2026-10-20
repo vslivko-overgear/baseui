@@ -64,13 +64,13 @@ html[data-floating="on"] .mm-side { border-inline-end-color: transparent; }
 .mm-voice { display: flex; align-items: center; gap: var(--baseui-spacing-8); min-width: 220px; }
 .mm-voice .bui-progress { flex: 1; }
 .mm-reactions { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px; clear: both; }
-.mm-reactions button { all: unset; cursor: pointer; display: inline-flex; gap: 4px; align-items: center; padding: 1px 8px; border-radius: var(--baseui-radius-full); corner-shape: var(--baseui-corner-full); background: color-mix(in srgb, currentColor 14%, transparent); font: var(--baseui-Typography-Text-12-Regular); }
+.mm-reactions button { all: unset; cursor: pointer; display: inline-flex; gap: 4px; align-items: center; padding: 1px 8px; border-radius: var(--baseui-radius-full); background: color-mix(in srgb, currentColor 14%, transparent); font: var(--baseui-Typography-Text-12-Regular); }
 .mm-reactions button[data-mine] { background: color-mix(in srgb, currentColor 28%, transparent); }
 .mm-msg__more { opacity: 0; transition: opacity var(--baseui-duration-fast) var(--baseui-ease-standard); flex: none; }
 .mm-msg:hover .mm-msg__more, .mm-msg:focus-within .mm-msg__more { opacity: 1; }
 @media (hover: none) { .mm-msg__more { opacity: 1; } }
 .mm-typing { display: inline-flex; gap: 4px; align-items: center; padding: 4px 0; }
-.mm-typing i { width: 6px; height: 6px; border-radius: 50%; corner-shape: var(--baseui-corner-full); background: currentColor; opacity: .4; animation: mm-dot 1s infinite ease-in-out; }
+.mm-typing i { width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: .4; animation: mm-dot 1s infinite ease-in-out; }
 .mm-typing i:nth-child(2) { animation-delay: .15s; } .mm-typing i:nth-child(3) { animation-delay: .3s; }
 @keyframes mm-dot { 40% { opacity: 1; transform: translateY(-3px); } }
 [data-motion="off"] .mm-typing i { animation: none; opacity: .6; }
