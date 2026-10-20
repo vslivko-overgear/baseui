@@ -2,13 +2,17 @@ import { h, cx, useEffect, useRef, useState } from '../react.js';
 import { Icon } from '../icons.js';
 import { describe } from '../doc.js';
 
+/**
+ * The items of the control: the first and the last page, the current one with `siblings` on each side and a gap on each side.
+ * The number of items is always the same (2 * siblings + 5), so nothing jumps when the page changes; a gap stands in for the hidden pages.
+ */
 function range(page, total, siblings) {
-  const set = new Set([1, total, page]);
-  for (let i = 1; i <= siblings; i++) { set.add(page - i); set.add(page + i); }
-  const nums = [...set].filter((n) => n >= 1 && n <= total).sort((a, b) => a - b);
-  const out = [];
-  nums.forEach((n, i) => { if (i && n - nums[i - 1] > 1) out.push(n - nums[i - 1] === 2 ? n - 1 : '…'); out.push(n); });
-  return out;
+  const slots = 2 * siblings + 5;
+  if (total <= slots) return Array.from({ length: total }, (_, i) => i + 1);
+  const edge = 2 * siblings + 3;
+  if (page <= siblings + 3) return [...Array.from({ length: edge }, (_, i) => i + 1), '…', total];
+  if (page >= total - siblings - 2) return [1, '…', ...Array.from({ length: edge }, (_, i) => total - edge + 1 + i)];
+  return [1, '…', ...Array.from({ length: 2 * siblings + 1 }, (_, i) => page - siblings + i), '…', total];
 }
 
 export function Pagination({ page, total, onPageChange, siblings = 1, autoScroll = false, autoScrollInterval = 3000, loop = true, label = 'Pagination', className, ...rest }) {
@@ -32,13 +36,13 @@ export function Pagination({ page, total, onPageChange, siblings = 1, autoScroll
     'aria-label': label, className: cx('bui-pagination', className), 'data-auto-scroll': autoScroll && !atEnd ? '' : undefined,
     onPointerEnter: () => setPaused(true), onPointerLeave: () => setPaused(false), onFocus: () => setPaused(true), onBlur: () => setPaused(false), ...rest,
   },
-    page > 1 && h('button', { type: 'button', className: 'bui-page', 'aria-label': 'Previous page', onClick: () => go(page - 1) }, h(Icon, { name: 'chevronDown', size: 18, style: { transform: 'rotate(90deg)' } })),
+    h('button', { type: 'button', className: 'bui-page', 'aria-label': 'Previous page', disabled: page <= 1, onClick: () => go(page - 1) }, h(Icon, { name: 'chevronDown', size: 18, style: { transform: 'rotate(90deg)' } })),
     range(page, total, siblings).map((p, i) => p === '…'
       ? h('span', { key: 'e' + i, className: 'bui-page bui-page--gap', 'aria-hidden': 'true' }, '…')
       : h('button', { key: p, type: 'button', className: 'bui-page', 'aria-current': p === page ? 'page' : undefined, 'aria-label': `Page ${p}`, onClick: () => go(p) }, p)),
-    page < total && h('button', { type: 'button', className: 'bui-page', 'aria-label': 'Next page', onClick: () => go(page + 1) }, h(Icon, { name: 'chevronRight', size: 18 })));
+    h('button', { type: 'button', className: 'bui-page', 'aria-label': 'Next page', disabled: page >= total, onClick: () => go(page + 1) }, h(Icon, { name: 'chevronRight', size: 18 })));
 }
-describe(Pagination, 'Navigation between pages. The arrows appear only where there is a page to go to. It can also move through the pages by itself.', {
+describe(Pagination, 'Navigation between pages. The number of items is always the same (the first and the last page, the current one with its neighbours, and a gap on each side), so nothing jumps when the page changes; the arrows stay and are disabled at the ends. It can also move through the pages by itself.', {
   page: ['number', null, 'Current page (1-based)'],
   total: ['number', null, 'Number of pages'],
   onPageChange: ['(page: number) => void', null, 'Called with the new page'],
