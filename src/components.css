@@ -682,10 +682,8 @@ html[data-glass="on"][data-outline="on"] :is(.bui-navbar:not(.bui-navbar--floati
 /* fields fill the width of their frame by default */
 .bui-datepicker, .bui-numberinput, .bui-number-input { width: 100%; }
 
-/* the loading indicator of a button is the Spinner of the design system: the same track and arc, drawn with a mask so it takes the color of the label */
-[class*="_spinner_h5cjz"] {
-  border: 0; border-radius: 0; background: currentColor;
-  --bui-spin-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3'%3E%3Ccircle cx='12' cy='12' r='9' opacity='.2'/%3E%3Ccircle cx='12' cy='12' r='9' stroke-linecap='round' stroke-dasharray='22 100'/%3E%3C/svg%3E");
-  -webkit-mask: var(--bui-spin-svg) center / 100% 100% no-repeat; mask: var(--bui-spin-svg) center / 100% 100% no-repeat;
-  animation-duration: 0.8s;
-}
+/* the loading indicator of a button is the Spinner of the design system (the compiled one is hidden): it sits in the middle, the label stays in place and is hidden */
+[class*="_spinner_h5cjz"] { display: none; }
+[class*="_labelHidden_h5cjz"] { opacity: 1; }
+[class*="_labelHidden_h5cjz"] > .bui-btn__label { opacity: 0; }
+.bui-btn__spinner { position: absolute; top: 50%; left: 50%; translate: -50% -50%; }

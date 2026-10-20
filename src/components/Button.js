@@ -1,6 +1,8 @@
 import { h, cx, useState } from '../react.js';
 import { Button as Base } from '../base.js';
 import { Tooltip } from './Tooltip.js';
+import { Spinner } from './Spinner.js';
+const SPINNER_PX = { xsm: 16, sm: 20, md: 24, lg: 24 };
 import { describe } from '../doc.js';
 import { outlineClass } from '../theme-flags.js';
 
@@ -19,11 +21,14 @@ export function Button({
     onClick && onClick(e);
     if (clickAction) { setPending(true); try { await clickAction(e); } finally { setPending(false); } }
   };
+  const loading = isLoading || pending;
+  // the loading indicator is the Spinner of the design system; the compiled one is hidden in CSS
+  const spinner = loading && h(Spinner, { key: 's', customSize: SPINNER_PX[sz], color: 'inherit', className: 'bui-btn__spinner', role: 'presentation', 'aria-label': undefined, 'aria-hidden': 'true' });
   const node = h(Base, {
     ref, ...common, ...variantProps, type: href ? undefined : type, 'aria-label': isIconOnly ? label : undefined, onClick: click,
     startIcon: isIconOnly ? undefined : icon, endIcon: isIconOnly ? undefined : endContent,
     ...(href && { render: h('a', { href, target, rel }) }), ...rest,
-  }, isIconOnly ? icon : h('span', { className: 'bui-btn__label' }, children ?? label));
+  }, isIconOnly ? [icon, loading && spinner] : [h('span', { key: 'l', className: 'bui-btn__label' }, children ?? label), loading && spinner]);
   const tip = tooltip === false ? undefined : tooltip || (isIconOnly ? label : undefined);
   return tip ? h(Tooltip, { content: tip }, node) : node;
 }
