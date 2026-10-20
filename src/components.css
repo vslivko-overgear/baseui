@@ -250,8 +250,9 @@
 .bui-segmented__item:focus-visible { outline: var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color); outline-offset: calc(var(--baseui-focus-outline-width) * -1); }
 
 /* ---------- Slider ---------- */
-.bui-slider { display: flex; flex-direction: column; gap: var(--baseui-spacing-8); font: var(--baseui-Typography-Text-14-Regular); }
+.bui-slider { display: flex; flex-direction: column; gap: 0; font: var(--baseui-Typography-Text-14-Regular); }
 .bui-slider__head { display: flex; justify-content: space-between; }
+.bui-slider__head label { font: var(--baseui-Typography-Text-14-Semi-Bold); }
 .bui-slider__head output { color: var(--baseui-Text-and-Icon-Secondary); font-variant-numeric: tabular-nums; }
 .bui-slider input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 24px; margin: 0; background: transparent; cursor: pointer; }
 .bui-slider input[type="range"]::-webkit-slider-runnable-track { height: 6px; border-radius: var(--baseui-radius-full); background: linear-gradient(to right, var(--baseui-Background-Brand) var(--bui-slider-pct), var(--baseui-Background-Tertiary) var(--bui-slider-pct)); }
