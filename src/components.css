@@ -310,7 +310,7 @@
 @media (hover: hover) { .bui-page:hover:not(:disabled):not([aria-current]) { background: var(--baseui-Background-Transparent-Hover); } }
 .bui-page[aria-current="page"] { background: var(--baseui-Background-Brand); color: var(--baseui-Extensions-Text-and-Icon-OnBrand); cursor: default; }
 .bui-page:disabled { cursor: not-allowed; color: var(--baseui-Text-and-Icon-Disabled); }
-.bui-page--gap { cursor: default; color: var(--baseui-Text-and-Icon-Secondary); }
+.bui-page--gap { color: var(--baseui-Text-and-Icon-Secondary); }
 
 /* ---------- Popover ---------- */
 .bui-popover { position: relative; display: inline-flex; }
