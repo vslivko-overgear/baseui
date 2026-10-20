@@ -134,7 +134,7 @@ function Control({ name, spec, value, onChange, args }) {
     input);
 }
 
-function Controls({ meta, args, setOverride, reset, title = 'Settings' }) {
+function Controls({ meta, args, setOverride, reset, title = 'Settings', showReset = true }) {
   const items = Object.entries(meta.argTypes || {}).filter(([, s]) => s.control);
   if (!items.length) return null;
   // Controls with the same `row` sit side by side.
@@ -155,7 +155,7 @@ function Controls({ meta, args, setOverride, reset, title = 'Settings' }) {
       ? h(Control, { key: g[0][0], name: g[0][0], spec: g[0][1], args, value: args[g[0][0]], onChange: (v) => change(g[0][0], g[0][1], v) })
       : h('div', { key: g[0][0], className: 'controls-row' }, g.map(([name, spec]) =>
         h(Control, { key: name, name, spec, args, value: args[name], onChange: (v) => change(name, spec, v) })))),
-    h(ui.Button, { variant: 'secondary', size: 'md', width: '100%', className: 'controls-reset', onClick: reset }, 'Reset'));
+    showReset && h(ui.Button, { variant: 'secondary', size: 'md', width: '100%', className: 'controls-reset', onClick: reset }, 'Reset'));
 }
 
 /* ------------------------------------------------------------------ blocks */
@@ -412,7 +412,7 @@ function App() {
           settings && h('aside', { className: 'settings', 'aria-label': 'Settings' }, h('div', { className: 'panel-scroll' }, h(Controls, settings)))),
         settings && h(Button, { variant: 'primary', size: 'md', className: 'settings-fab', icon: h(icons.Sliders01), onClick: () => setSheet(true) }, 'Settings'),
         h(Modal, { open: menu, onOpenChange: _setMenu, title: 'Catalog', height: 'viewport' }, h('div', { className: 'catalog-sheet' }, catalog)),
-        h(Modal, { open: sheet && !!settings, onOpenChange: setSheet, title: 'Settings', primaryAction: h(Button, { onClick: () => setSheet(false) }, 'Done') }, settings && h('div', { className: 'settings-sheet' }, h(Controls, { ...settings, title: null })))));
+        h(Modal, { open: sheet && !!settings, onOpenChange: setSheet, title: 'Settings', primaryAction: h(Button, { variant: 'primary', onClick: () => setSheet(false) }, 'Done'), secondaryAction: settings && h(Button, { variant: 'secondary', onClick: settings.reset }, 'Reset') }, settings && h('div', { className: 'settings-sheet' }, h(Controls, { ...settings, title: null, showReset: false })))));
 }
 
 await initDom();
