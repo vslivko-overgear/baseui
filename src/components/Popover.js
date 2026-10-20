@@ -1,16 +1,19 @@
 import { h, cx, useId, useRef, useEffect, useControllable } from '../react.js';
 import { describe } from '../doc.js';
 import { glassClass, outlineClass, usePresence, useMotion } from '../theme-flags.js';
+import { Floating, useAnchoredPosition, panelStyle } from '../floating.js';
 
-export function Popover({ trigger, children, open, defaultOpen = false, onOpenChange, placement = 'bottom-start', glass, outline, motion, label, className, ...rest }) {
+export function Popover({ trigger, children, open, defaultOpen = false, onOpenChange, placement = 'bottom-start', glass, outline, motion, label, className, panelClassName, matchWidth = false, ...rest }) {
   const [isOpen, setOpen] = useControllable(open, defaultOpen, onOpenChange);
   const id = useId();
   const root = useRef(null);
+  const panel = useRef(null);
   const level = useMotion(motion);
   const [shown, closing] = usePresence(isOpen, level === 'enhanced' ? 160 : 0);
+  const pos = useAnchoredPosition(shown, root, panel, placement, matchWidth);
   useEffect(() => {
     if (!isOpen) return undefined;
-    const onDoc = (e) => { if (!root.current.contains(e.target)) setOpen(false); };
+    const onDoc = (e) => { if (!root.current.contains(e.target) && !panel.current?.contains(e.target)) setOpen(false); };
     const onKey = (e) => { if (e.key === 'Escape') { setOpen(false); root.current.querySelector('[aria-haspopup]')?.focus(); } };
     document.addEventListener('pointerdown', onDoc);
     document.addEventListener('keydown', onKey);
@@ -21,9 +24,9 @@ export function Popover({ trigger, children, open, defaultOpen = false, onOpenCh
       typeof trigger === 'function'
         ? trigger({ 'aria-haspopup': 'dialog', 'aria-expanded': isOpen, 'aria-controls': isOpen ? id : undefined, onClick: () => setOpen(!isOpen) })
         : trigger),
-    shown && h('div', { id, role: 'dialog', 'aria-label': label, className: cx('bui-popover__panel', glassClass(glass), outlineClass(outline), motion && `bui-motion--${motion}`), 'data-placement': placement, 'data-closing': closing || undefined }, children));
+    shown && h(Floating, null, h('div', { ref: panel, style: panelStyle(pos), id, role: 'dialog', 'aria-label': label, className: cx('bui-popover__panel', panelClassName, glassClass(glass), outlineClass(outline), motion && `bui-motion--${motion}`), 'data-placement': pos?.placement ?? placement, 'data-closing': closing || undefined }, children)));
 }
-describe(Popover, 'A floating panel anchored to a trigger.', {
+describe(Popover, 'A floating panel anchored to a trigger. It opens over the page (drawn in the body, flipped and kept on screen), so it never pushes the content or gets clipped by a scrolling container.', {
   trigger: ['(props) => ReactElement', null, 'Render function that receives the trigger props'],
   children: ['ReactNode', null, 'Panel content'],
   open: ['boolean', null, 'Open state'],

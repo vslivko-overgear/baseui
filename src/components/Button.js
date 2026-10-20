@@ -23,11 +23,11 @@ export function Button({
     ref, ...common, ...variantProps, type: href ? undefined : type, 'aria-label': isIconOnly ? label : undefined, onClick: click,
     startIcon: isIconOnly ? undefined : icon, endIcon: isIconOnly ? undefined : endContent,
     ...(href && { render: h('a', { href, target, rel }) }), ...rest,
-  }, isIconOnly ? icon : children ?? label);
+  }, isIconOnly ? icon : h('span', { className: 'bui-btn__label' }, children ?? label));
   const tip = tooltip === false ? undefined : tooltip || (isIconOnly ? label : undefined);
   return tip ? h(Tooltip, { content: tip }, node) : node;
 }
-describe(Button, 'Triggers an action or navigates.', {
+describe(Button, 'Triggers an action or navigates. A label that does not fit in the width of the button is cut with an ellipsis, never wrapped.', {
   label: ['string', null, 'Visible text and accessible name'],
   children: ['ReactNode', null, 'Visible content in place of `label`'],
   variant: ["'primary' | 'secondary' | 'ghost' | 'destructive'", "'secondary'", 'Visual style'],

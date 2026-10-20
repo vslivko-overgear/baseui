@@ -2,6 +2,7 @@ import { h, cx, useEffect, useId, useMemo, useRef, useState, useControllable } f
 import { Button } from './Button.js';
 import { describe } from '../doc.js';
 import { glassClass, outlineClass, usePresence, useMotion } from '../theme-flags.js';
+import { Floating, useAnchoredPosition, panelStyle } from '../floating.js';
 import { DropdownItemContent, DropdownGroup, DropdownDivider, DropdownSelectAll, CheckMark, trackSelection, itemClass, isOption } from '../../lib/Dropdown.js';
 
 /**
@@ -19,6 +20,7 @@ export function Dropdown({
   const level = useMotion(motion);
   const [shown, closing] = usePresence(isOpen, level === 'enhanced' ? 160 : 0);
   const panel = useRef(null);
+  const pos = useAnchoredPosition(shown, root, panel, placement);
   const id = useId();
   const real = useMemo(() => options.filter(isOption), [options]);
   const enabled = real.filter((o) => !o.disabled);
@@ -30,7 +32,7 @@ export function Dropdown({
     const first = enabled.findIndex(isOn);
     setActive(first >= 0 ? first : 0);
     panel.current?.focus();
-    const onDoc = (e) => { if (!root.current.contains(e.target)) setOpen(false); };
+    const onDoc = (e) => { if (!root.current.contains(e.target) && !panel.current?.contains(e.target)) setOpen(false); };
     document.addEventListener('pointerdown', onDoc);
     return () => document.removeEventListener('pointerdown', onDoc);
   }, [isOpen]);
@@ -56,7 +58,7 @@ export function Dropdown({
   let n = -1;
   return h('span', { ref: root, className: cx('bui-dropdown-root', className), ...rest },
     typeof trigger === 'function' ? trigger(triggerProps) : (trigger ?? h(Button, { variant: 'secondary', ...triggerProps }, 'Open')),
-    shown && h('div', { ref: (el) => { panel.current = el; trackSelection(el); }, id, role: 'listbox', tabIndex: -1, 'aria-label': label, 'aria-multiselectable': multiple || undefined, className: cx('bui-dropdown bui-dropdown--standalone', glassClass(glass), outlineClass(outline), motion && `bui-motion--${motion}`), 'data-placement': placement, 'data-closing': closing || undefined, onKeyDown },
+    shown && h(Floating, null, h('div', { ref: (el) => { panel.current = el; trackSelection(el); }, style: panelStyle(pos), id, role: 'listbox', tabIndex: -1, 'aria-label': label, 'aria-multiselectable': multiple || undefined, className: cx('bui-dropdown bui-dropdown--standalone', glassClass(glass), outlineClass(outline), motion && `bui-motion--${motion}`), 'data-placement': pos?.placement ?? placement, 'data-closing': closing || undefined, onKeyDown },
       multiple && selectAll && h(DropdownSelectAll, { label: allOn ? 'Remove all' : 'Select all', onClick: () => setSelected(allOn ? [] : enabled.map((o) => o.value)) }),
       options.map((o, i) => {
         if (o.type === 'group') return h(DropdownGroup, { key: `g${i}`, label: o.label });
@@ -66,9 +68,9 @@ export function Dropdown({
           key: o.value, role: 'option', 'aria-selected': isOn(o), 'aria-disabled': o.disabled || undefined, 'data-highlighted': index === active && index >= 0 ? '' : undefined, tabIndex: -1,
           className: itemClass(o), onClick: () => choose(o), onPointerMove: () => index >= 0 && setActive(index),
         }, h(DropdownItemContent, { option: o, check: h('span', { className: 'bui-dropdown__check' }, h(CheckMark)) }));
-      })));
+      }))));
 }
-describe(Dropdown, 'A menu of options that opens from any trigger. It stands alone: Selector and Typeahead draw their lists with the same items, groups and dividers.', {
+describe(Dropdown, 'A menu of options that opens from any trigger. It opens over the page (drawn in the body, flipped and kept on screen), so it never pushes the content or gets clipped by a scrolling container. It stands alone: Selector and Typeahead draw their lists with the same items, groups and dividers.', {
   trigger: ['ReactNode | (props) => ReactElement', null, 'What opens the menu; a render function receives the trigger props. Default: an Open button'],
   options: ['Array<{ value; label; details?; icon?; avatar?; subitem?; disabled? } | { type: \'group\'; label } | { type: \'divider\' }>', null, 'Items, group titles and dividers'],
   value: ['string | string[] | null', null, 'Selected value, or the values when `multiple` (controlled)'],

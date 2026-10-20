@@ -7,8 +7,8 @@ body { margin: 0; font: var(--baseui-Typography-Text-16-Regular); background: va
 html[data-floating="on"] { --mm-top: 76px; --mm-bottom: 96px; }
 
 /* shell: the list on the left, the open pane on the right */
-.mm { display: grid; grid-template-columns: 380px minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); height: 100%; max-width: 1480px; margin: 0 auto; background: var(--baseui-Background-Primary); }
-.mm > .mm-banner { grid-column: 1 / -1; }
+.mm { display: grid; grid-template-columns: 380px minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); height: 100%; max-width: 1480px; margin: 0 auto; background: var(--baseui-Background-Primary); }
+.mm > .mm-banner { position: absolute; top: 0; left: 0; right: 0; z-index: 10; }
 .mm-side { position: relative; min-height: 0; background: var(--baseui-Background-Primary); border-inline-end: 1px solid var(--baseui-Border-Primary); }
 .mm-main { position: relative; min-width: 0; min-height: 0; display: flex; }
 html[data-floating="on"] .mm-side { border-inline-end-color: transparent; }
@@ -121,3 +121,4 @@ html[data-floating="on"] .mm-side { border-inline-end-color: transparent; }
   .mm-info { display: none; }
 }
 .mm-badge-gap { margin-left: 8px; }
+.mm { position: relative; }

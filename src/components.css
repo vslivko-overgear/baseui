@@ -316,14 +316,10 @@
 .bui-popover { position: relative; display: inline-flex; }
 .bui-popover__trigger { display: inline-flex; }
 .bui-popover__panel {
-  position: absolute; z-index: var(--baseui-z-index-300); min-width: 240px; max-width: 360px; padding: var(--baseui-spacing-16);
+  position: fixed; z-index: var(--baseui-z-index-400); box-sizing: border-box; min-width: 240px; max-width: min(360px, calc(100vw - 16px)); padding: var(--baseui-spacing-16); overflow-y: auto;
   border-radius: var(--baseui-radius-16); background: var(--baseui-Extensions-Background-Surface); box-shadow: var(--baseui-shadow-med);
   font: var(--baseui-Typography-Text-14-Regular); color: var(--baseui-Text-and-Icon-Primary); animation: bui-fade var(--baseui-duration-fast) var(--baseui-ease-standard);
 }
-.bui-popover__panel[data-placement="bottom-start"] { top: calc(100% + 8px); left: 0; }
-.bui-popover__panel[data-placement="bottom-end"] { top: calc(100% + 8px); right: 0; }
-.bui-popover__panel[data-placement="top-start"] { bottom: calc(100% + 8px); left: 0; }
-.bui-popover__panel[data-placement="top-end"] { bottom: calc(100% + 8px); right: 0; }
 
 
 /* internal helper */
@@ -448,21 +444,17 @@
 .bui-calendar__day--outside { color: var(--baseui-Text-and-Icon-Disabled); }
 .bui-calendar__day--disabled { color: var(--baseui-Text-and-Icon-Disabled); cursor: not-allowed; background: none; }
 .bui-calendar__day--outside.bui-calendar__day--selected { color: var(--baseui-Extensions-Text-and-Icon-OnColor); }
-.bui-datepicker { display: block; width: 100%; max-width: 360px; }
+.bui-datepicker { display: block; width: 100%; }
 .bui-datepicker.bui-popover { display: block; }
 .bui-datepicker .bui-popover__trigger { display: block; width: 100%; }
 .bui-datepicker__field { display: block; width: 100%; cursor: pointer; }
 /* the same surface as the Selector / Typeahead dropdown */
-.bui-datepicker .bui-popover__panel { box-sizing: border-box; width: 100%; min-width: 0; max-width: none; padding: var(--baseui-spacing-16); border-radius: var(--baseui-radius-20); box-shadow: 0 4px 28px color-mix(in srgb, var(--baseui-Extensions-Text-and-Icon-AlwaysDark) 12%, transparent); }
+.bui-datepicker__panel.bui-popover__panel { box-sizing: border-box; width: 100%; min-width: 0; max-width: none; padding: var(--baseui-spacing-16); border-radius: var(--baseui-radius-20); box-shadow: 0 4px 28px color-mix(in srgb, var(--baseui-Extensions-Text-and-Icon-AlwaysDark) 12%, transparent); }
 @media (prefers-reduced-motion: reduce) { .bui-calendar__day, .bui-calendar__nav { transition: none; } }
 
 /* ---------- Dropdown (standalone; the item styles live in lib/components.css as .bui-dropdown*) ---------- */
 .bui-dropdown-root { position: relative; display: inline-flex; }
-.bui-dropdown--standalone { position: absolute; z-index: var(--baseui-z-index-300); min-width: 240px; max-height: 360px; overflow-y: auto; animation: bui-fade var(--baseui-duration-fast) var(--baseui-ease-standard); }
-.bui-dropdown--standalone[data-placement="bottom-start"] { top: calc(100% + 8px); left: 0; }
-.bui-dropdown--standalone[data-placement="bottom-end"] { top: calc(100% + 8px); right: 0; }
-.bui-dropdown--standalone[data-placement="top-start"] { bottom: calc(100% + 8px); left: 0; }
-.bui-dropdown--standalone[data-placement="top-end"] { bottom: calc(100% + 8px); right: 0; }
+.bui-dropdown--standalone { position: fixed; z-index: var(--baseui-z-index-400); min-width: 240px; max-width: calc(100vw - 16px); max-height: 360px; overflow-y: auto; animation: bui-fade var(--baseui-duration-fast) var(--baseui-ease-standard); }
 @media (prefers-reduced-motion: reduce) { .bui-dropdown--standalone { animation: none; } }
 
 /* ---------- Rating: the row is as wide as its stars, not the container ---------- */
@@ -681,3 +673,11 @@ html[data-glass="on"][data-outline="on"] :is(.bui-navbar:not(.bui-navbar--floati
 }
 :is([data-glass="on"] .bui-navbar--floating:not(.bui-glass-off), .bui-navbar--floating.bui-glass)::before { -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent); mask-image: linear-gradient(to bottom, #000 40%, transparent); }
 :is([data-glass="on"] .bui-bottombar--floating:not(.bui-glass-off), .bui-bottombar--floating.bui-glass)::before { -webkit-mask-image: linear-gradient(to top, #000 40%, transparent); mask-image: linear-gradient(to top, #000 40%, transparent); }
+
+/* a label that does not fit is cut with an ellipsis, not wrapped to a second line */
+[class*="_button_h5cjz"] { max-width: 100%; min-width: 0; }
+.bui-btn__label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* the bottom bar sticks to the bottom of its screen: in a column it is pushed down, in a scroller it stays in view */
+.bui-bottombar { position: sticky; bottom: 0; margin-top: auto; z-index: 2; }
+/* fields fill the width of their frame by default */
+.bui-datepicker, .bui-numberinput, .bui-number-input { width: 100%; }

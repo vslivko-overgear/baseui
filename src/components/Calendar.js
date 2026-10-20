@@ -230,7 +230,7 @@ export function DatePicker({
       }, h(Calendar, { ...cal, fluid: true, value: draft, onValueChange: setDraft })));
   }
   return h(Popover, {
-    className: cx('bui-datepicker', className), open, onOpenChange: setOpen, label, placement: 'bottom-start',
+    className: cx('bui-datepicker', className), panelClassName: 'bui-datepicker__panel', matchWidth: true, open, onOpenChange: setOpen, label, placement: 'bottom-start',
     trigger: (p) => trigger({ onClick: p.onClick, 'aria-expanded': p['aria-expanded'], 'aria-controls': p['aria-controls'] }),
   }, h(Calendar, { ...cal, fluid: true, value: selected, onValueChange: (v) => { setSelected(v); if (mode === 'single' || (isRange(v) && v.end)) setOpen(false); } }));
 }
