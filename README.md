@@ -34,6 +34,7 @@ import { Button, Card, Tabs, TabList, Tab, TabPanel } from './src/index.js';
 | `site/` | Documentation site and its page tree (`manifest.js`) |
 | `examples/messenger/` | A messenger built from the components with mock data (no backend). Open it from Theming → Theme Settings: it follows the theme you set there |
 | `examples/overgear/` | A boost-service product page rebuilt from the components (sidebar, order form with live price, reviews, FAQ, footer). Not in the catalog: open `/examples/overgear/` |
+| `examples/overgear-v2/` | The same page with the information in order of priority (title, main benefits, order form, the rest; the price and safety on the right) and a denser scale: 16px base on a desktop, 14px on a phone. Open `/examples/overgear-v2/` |
 | `tools/` | Scripts that look after the system: the radius check (`radius-check.js` in the browser, `check-radii.mjs` over every page); described in the Tools section of the docs |
 
 ## Tokens
