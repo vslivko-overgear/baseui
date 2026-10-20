@@ -644,3 +644,20 @@
   .bui-dialog--floating[data-height="viewport"] { height: calc(var(--modal-visual-viewport-height, 100dvh) - var(--baseui-spacing-32)); }
   .bui-dialog--floating[data-ending-style] { transform: translateY(calc(100% + var(--baseui-spacing-24))); }
 }
+
+/* Corner smoothing on every rounded corner (60% by default, --baseui-corner-smoothing): a superellipse instead of a circular arc.
+   Browsers without corner-shape ignore it and keep the plain arcs. Circles and pills stay round: smoothing would turn them into squircles. */
+@supports (corner-shape: squircle) {
+  *, ::before, ::after { corner-shape: superellipse(calc(1 + var(--baseui-corner-smoothing, 0.6))); }
+  /* @round-start */
+  [class*="_chipRemove_"], [class*="_circle_b9eb7"] [class*="_surface_b9eb7"], [class*="_badge_b9eb7"], [class*="_spinner_h5cjz"], [class*="_iconButton_1nnzw"], [class*="_button_e1rix"], [class*="_indicator_e1rix"],
+  [class*="_track_1epgh"], [class*="_thumb_1epgh"], .bui-dropdown__avatar, .bui-skeleton--circle, .bui-avatar__img, .bui-progress__fill, .bui-progress__track, .bui-status__icon,
+  .bui-avatar-dot, .bui-avatar-dot::before, .bui-avatar-dot__bar, .bui-badge, .bui-bottombar__icon, .bui-bottombar__pill, .bui-bottombar--floating .bui-bottombar__bar, .bui-bottombar--floating .bui-bottombar__item,
+  .bui-navbar--floating :is(.bui-navbar__side, .bui-navbar__heading),
+  [data-shape="circle"] :is(button, a)[class*="_h5cjz_"], [data-shape="circle"] [class*="_cell_2ah00"]:not(:has(textarea)), [data-shape="circle"] [class*="_chip_"], [data-shape="circle"] .bui-segmented, [data-shape="circle"] .bui-segmented__item, [data-shape="circle"] .bui-segmented__thumb,
+  .bui-shape-circle, .bui-shape-circle .bui-segmented__item, .bui-shape-circle .bui-segmented__thumb { corner-shape: round; }
+  /* each engine-specific pseudo-element in its own rule: an unknown one would drop the whole selector list */
+  .bui-slider input[type="range"]::-webkit-slider-runnable-track, .bui-slider input[type="range"]::-webkit-slider-thumb { corner-shape: round; }
+  .bui-slider input[type="range"]::-moz-range-track, .bui-slider input[type="range"]::-moz-range-thumb, .bui-slider input[type="range"]::-moz-range-progress { corner-shape: round; }
+  /* @round-end */
+}

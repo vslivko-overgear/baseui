@@ -122,3 +122,4 @@ html[data-floating="on"] .mm-side { border-inline-end-color: transparent; }
 }
 .mm-badge-gap { margin-left: 8px; }
 .mm { position: relative; }
+.mm-reactions button, .mm-typing i, .mm-emoji button { corner-shape: round; }
