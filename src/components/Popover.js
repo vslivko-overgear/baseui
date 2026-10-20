@@ -1,9 +1,9 @@
 import { h, cx, useId, useRef, useEffect, useControllable } from '../react.js';
 import { describe } from '../doc.js';
-import { glassClass, outlineClass, usePresence, useMotion } from '../theme-flags.js';
+import { glassClass, usePresence, useMotion } from '../theme-flags.js';
 import { Floating, useAnchoredPosition, panelStyle } from '../floating.js';
 
-export function Popover({ trigger, children, open, defaultOpen = false, onOpenChange, placement = 'bottom-start', glass, outline, motion, label, className, panelClassName, matchWidth = false, ...rest }) {
+export function Popover({ trigger, children, open, defaultOpen = false, onOpenChange, placement = 'bottom-start', glass, motion, label, className, panelClassName, matchWidth = false, ...rest }) {
   const [isOpen, setOpen] = useControllable(open, defaultOpen, onOpenChange);
   const id = useId();
   const root = useRef(null);
@@ -24,7 +24,7 @@ export function Popover({ trigger, children, open, defaultOpen = false, onOpenCh
       typeof trigger === 'function'
         ? trigger({ 'aria-haspopup': 'dialog', 'aria-expanded': isOpen, 'aria-controls': isOpen ? id : undefined, onClick: () => setOpen(!isOpen) })
         : trigger),
-    shown && h(Floating, null, h('div', { ref: panel, style: panelStyle(pos), id, role: 'dialog', 'aria-label': label, className: cx('bui-popover__panel', panelClassName, glassClass(glass), outlineClass(outline), motion && `bui-motion--${motion}`), 'data-placement': pos?.placement ?? placement, 'data-closing': closing || undefined }, children)));
+    shown && h(Floating, null, h('div', { ref: panel, style: panelStyle(pos), id, role: 'dialog', 'aria-label': label, className: cx('bui-popover__panel', panelClassName, glassClass(glass), motion && `bui-motion--${motion}`), 'data-placement': pos?.placement ?? placement, 'data-closing': closing || undefined }, children)));
 }
 describe(Popover, 'A floating panel anchored to a trigger. It opens over the page (drawn in the body, flipped and kept on screen), so it never pushes the content or gets clipped by a scrolling container.', {
   trigger: ['(props) => ReactElement', null, 'Render function that receives the trigger props'],
@@ -36,5 +36,4 @@ describe(Popover, 'A floating panel anchored to a trigger. It opens over the pag
   label: ['string', null, 'Accessible name of the panel'],
   motion: ["'off' | 'basic' | 'enhanced'", 'theme', 'Animation of opening and closing: off, basic (a quick fade), or enhanced (the panel grows from its trigger and plays out when it closes); by default the Animations setting of the theme'],
   glass: ['boolean', 'theme', 'Translucent, blurred panel; true or false overrides the Glass setting of the theme'],
-  outline: ['boolean', 'theme', 'A thin rim around the panel (glassy when glass is on); true or false overrides the Outline setting of the theme'],
 });

@@ -43,7 +43,6 @@ describe(ThemePreview, 'The theme of this site and of your own app: the settings
   motion: ["'off' | 'basic' | 'enhanced'", "'basic'", 'off: nothing moves (loading indicators still run); basic (the default): simple transitions, the highlight of a tab, segment or bar item appears in its new place with a fade; enhanced: the highlight slides there, and the underline of the tabs also nudges toward the hovered tab; menus and panels (Dropdown, Popover, the lists of Selector and Typeahead) grow from their trigger and play out when they close (`data-motion` on `<html>`)'],
   floating: ['boolean', 'false', 'Bars and panels float above the content: rounded, inset, with a shadow (`data-floating` on `<html>`; the Navbar and Bottom Bar follow it)'],
   glass: ['boolean', 'false', 'Translucent, blurred surfaces for bars, menus, dialogs and toasts (`data-glass` on `<html>`)'],
-  outline: ['boolean', 'false', 'A thin rim around bars, menus, dialogs, toasts, cards and the floating panels, and inside buttons, fields, tokens, segmented controls and switches; with glass on it is a lit glass edge (`data-outline` on `<html>`)'],
 });
 
 const custom = { preset: 'custom' };
@@ -61,7 +60,6 @@ const meta = {
     motion: { control: 'inline-radio', options: MOTION_OPTIONS, derive: () => custom },
     floating: { control: 'boolean', derive: () => custom },
     glass: { control: 'boolean', derive: () => custom },
-    outline: { control: 'boolean', derive: () => custom },
   },
   // What a click on Reset restores: the default theme, also in the cookie.
   onReset: () => { applyTheme(DEFAULT); saveTheme({ ...DEFAULT, preset: 'default' }); },

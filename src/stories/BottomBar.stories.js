@@ -13,8 +13,8 @@ const items = (extra = {}) => [
 ];
 export default meta({
   title: 'Components/Bottom Bar', component: BottomBar,
-  args: { glass: 'theme', outline: 'theme', motion: 'theme', tabs: 4, floating: false, showLabels: true, badge: 'none' },
-  argTypes: { glass: { control: 'inline-radio', options: ['theme', 'on', 'off'], mapping: { theme: undefined, on: true, off: false } }, outline: { control: 'inline-radio', options: ['theme', 'on', 'off'], mapping: { theme: undefined, on: true, off: false } }, motion: { control: 'inline-radio', options: ['theme', 'off', 'basic', 'enhanced'], mapping: { theme: undefined } },
+  args: { glass: 'theme', motion: 'theme', tabs: 4, floating: false, showLabels: true, badge: 'none' },
+  argTypes: { glass: { control: 'inline-radio', options: ['theme', 'on', 'off'], mapping: { theme: undefined, on: true, off: false } }, motion: { control: 'inline-radio', options: ['theme', 'off', 'basic', 'enhanced'], mapping: { theme: undefined } },
     tabs: { control: { type: 'range', min: 2, max: 6, step: 1 }, description: 'How many items the bar has (a story setting)' },
     floating: { control: 'boolean' }, showLabels: { control: 'boolean' },
     badge: { control: 'inline-radio', options: ['none', 'dot', 'count'], description: 'A badge on the Saved item (a story setting)' },

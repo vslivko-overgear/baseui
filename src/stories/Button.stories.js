@@ -4,11 +4,10 @@ import { Plus } from './_ui.js';
 import { meta, playground, example, Row, W } from './_helpers.js';
 
 export default meta({
-  title: 'Components/Button', component: Button, args: { label: 'Button', variant: 'secondary', size: 'md', outline: 'theme', shape: 'rounded', isDisabled: false, isLoading: false },
+  title: 'Components/Button', component: Button, args: { label: 'Button', variant: 'secondary', size: 'md', shape: 'rounded', isDisabled: false, isLoading: false },
   argTypes: { label: { control: 'text' },
     variant: { control: 'inline-radio', options: ['primary', 'secondary', 'ghost', 'destructive'] },
     size: { control: 'inline-radio', options: ['xsm', 'sm', 'md', 'lg'] },
-    outline: { control: 'inline-radio', options: ['theme', 'on', 'off'], mapping: { theme: undefined, on: true, off: false } },
     shape: { control: 'inline-radio', options: ['rounded', 'circle'] },
     isDisabled: { control: 'boolean' },
     isLoading: { control: 'boolean' },

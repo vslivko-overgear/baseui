@@ -126,7 +126,7 @@ export function SettingsSection({ page, onOpen, profile }) {
         h(Divider),
         h('div', { className: 'mm-stack' },
           h(Button, { variant: 'secondary', href: '../../#/theming/theme-settings', icon: h(I.Palette), width: '100%' }, 'Design system theme'),
-          h('span', { className: 'mm-muted', style: { font: 'var(--baseui-Typography-Text-14-Regular)' } }, 'The brand color, shape, fonts, animations, floating bars, glass and outline apply to this app as well. ', h(Link, { href: '../../#/' }, 'Back to the documentation'), '.')))));
+          h('span', { className: 'mm-muted', style: { font: 'var(--baseui-Typography-Text-14-Regular)' } }, 'The brand color, shape, fonts, animations, floating bars and glass apply to this app as well. ', h(Link, { href: '../../#/' }, 'Back to the documentation'), '.')))));
 }
 
 export function Sidebar({ section, setSection, unread, missed, children }) {

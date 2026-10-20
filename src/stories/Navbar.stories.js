@@ -6,8 +6,8 @@ import { meta, playground, example, Phone } from './_helpers.js';
 const actions = { none: [], one: [{ icon: h(Share01, { size: 24 }), label: 'Share' }], two: [{ icon: h(SearchLg, { size: 24 }), label: 'Search' }, { icon: h(DotsHorizontal, { size: 24 }), label: 'More' }] };
 export default meta({
   title: 'Components/Navbar', component: Navbar,
-  args: { glass: 'theme', outline: 'theme', title: 'Project Atlas', subtitle: 'Updated today', showBack: true, floating: false, actions: 'two' },
-  argTypes: { glass: { control: 'inline-radio', options: ['theme', 'on', 'off'], mapping: { theme: undefined, on: true, off: false } }, outline: { control: 'inline-radio', options: ['theme', 'on', 'off'], mapping: { theme: undefined, on: true, off: false } },
+  args: { glass: 'theme', title: 'Project Atlas', subtitle: 'Updated today', showBack: true, floating: false, actions: 'two' },
+  argTypes: { glass: { control: 'inline-radio', options: ['theme', 'on', 'off'], mapping: { theme: undefined, on: true, off: false } },
     title: { control: 'text' }, subtitle: { control: 'text' }, showBack: { control: 'boolean' }, floating: { control: 'boolean' },
     actions: { control: 'inline-radio', options: ['none', 'one', 'two'], mapping: actions, description: 'How many icon buttons on the right' },
   },

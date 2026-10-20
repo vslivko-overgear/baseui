@@ -89,7 +89,7 @@ function Appearance({ settings, update }) {
   const [scheme, setScheme] = useColorScheme();
   return h('div', { className: 'mm-stack', style: { gap: 24 } },
     h(Group, { title: 'Color scheme' }, h(SegmentedControl, { label: 'Color scheme', value: scheme, onValueChange: setScheme, items: [{ value: 'light', label: 'Light', icon: h(I.Sun) }, { value: 'dark', label: 'Dark', icon: h(I.Moon01) }] })),
-    h(Group, { title: 'Design system theme', caption: 'Brand color, shape, fonts, animations, floating bars, glass and outline' },
+    h(Group, { title: 'Design system theme', caption: 'Brand color, shape, fonts, animations, floating bars and glass' },
       h(Card, { padding: 16 }, h('div', { className: 'mm-row' }, h(I.Palette, { size: 24 }), h('div', { className: 'mm-grow' }, 'Open Theme settings to restyle this app. Your choices are kept on this device.'), h(Button, { variant: 'primary', size: 'sm', href: '../../#/theming/theme-settings' }, 'Open')))),
     h(Group, { title: 'Chat wallpaper' }, h('div', { className: 'mm-grid2' }, WALLPAPERS.map((w) => h(SelectableCard, { key: w.value, label: w.label, isSelected: settings.wallpaper === w.value, onChange: () => update({ wallpaper: w.value }), padding: 12 },
       h('div', { className: 'mm-wall', style: { background: WALL[w.value] } }), w.label)))),
