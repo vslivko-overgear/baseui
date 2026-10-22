@@ -162,6 +162,12 @@ export function ChatView({ chat, typing, isMobile, onBack, onSend, onReact, onDe
     rows.push({ msg: m, first, key: m.id });
     prev = m;
   });
+  // one container per run of messages (same sender, close in time) and per day mark: the gap between runs is bigger than inside a run
+  const blocks = [];
+  rows.forEach((r) => {
+    if (r.day || r.first || !blocks.length) blocks.push(r.day ? r : { key: `run${r.key}`, run: [r] });
+    else blocks[blocks.length - 1].run.push(r);
+  });
 
   const act = (what, msg) => {
     if (what === 'reply') setReplyTo(msg);
@@ -189,10 +195,10 @@ export function ChatView({ chat, typing, isMobile, onBack, onSend, onReact, onDe
         ],
       })),
       h('div', { className: 'mm-messages', ref: scroller, style: { '--mm-composer-h': `${composerH + 8}px` }, role: 'log', 'aria-label': `Messages with ${chatTitle(chat)}` },
-        rows.map((r) => r.day
-          ? h('div', { key: r.key, className: 'mm-day' }, h(Divider, { label: dayLabel(r.day) }))
-          : h(Bubble, { key: r.key, msg: r.msg, own: r.msg.from === 'me', first: r.first, group, showAvatars: settings.groupAvatars, chat, onAction: act, onReact, replied: r.msg.replyTo ? byId[r.msg.replyTo] : null })),
-        typing && h('div', { className: 'mm-msg', 'data-first': true }, h('div', { className: 'mm-bubble' }, h('span', { className: 'mm-typing', 'aria-label': 'typing' }, h('i'), h('i'), h('i'))))),
+        blocks.map((b) => b.day
+          ? h('div', { key: b.key, className: 'mm-day' }, h(Divider, { label: dayLabel(b.day) }))
+          : h('div', { key: b.key, className: 'mm-run' }, b.run.map((r) => h(Bubble, { key: r.key, msg: r.msg, own: r.msg.from === 'me', first: r.first, group, showAvatars: settings.groupAvatars, chat, onAction: act, onReact, replied: r.msg.replyTo ? byId[r.msg.replyTo] : null })))),
+        typing && h('div', { className: 'mm-run' }, h('div', { className: 'mm-msg', 'data-first': true }, h('div', { className: 'mm-bubble' }, h('span', { className: 'mm-typing', 'aria-label': 'typing' }, h('i'), h('i'), h('i')))))),
       h('div', { ref: composerRef },
         h(Composer, { chat, draft, setDraft, replyTo, setReplyTo, onSend: send, onAttach: attach, onSchedule: () => setSchedule(true), lastIncoming: last && last.from !== 'me' })),
       h(ScheduleModal, { open: schedule, onClose: () => setSchedule(false), draft, onConfirm: (date, time) => {

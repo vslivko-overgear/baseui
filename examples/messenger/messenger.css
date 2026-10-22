@@ -31,7 +31,7 @@ html[data-floating="on"] .mm-side { border-inline-end-color: transparent; }
 /* the chat */
 .mm-chat { display: flex; min-width: 0; height: 100%; flex: 1; }
 .mm-chat__col { position: relative; flex: 1; min-width: 0; height: 100%; }
-.mm-messages { height: 100%; overflow-y: auto; padding: var(--mm-top) var(--baseui-spacing-16) var(--mm-composer-h, 88px); display: flex; flex-direction: column; gap: 2px; overscroll-behavior: contain; font-size: calc(1em * var(--mm-scale)); }
+.mm-messages { height: 100%; overflow-y: auto; padding: var(--mm-top) var(--baseui-spacing-16) var(--mm-composer-h, 88px); display: flex; flex-direction: column; gap: var(--baseui-spacing-12); overscroll-behavior: contain; font-size: calc(1em * var(--mm-scale)); }
 .mm-wallpaper { background: var(--baseui-Background-Primary); }
 [data-wallpaper="dawn"] .mm-wallpaper { background: radial-gradient(circle at 12% 8%, color-mix(in srgb, var(--baseui-Accent-Colors-Orange) 16%, transparent), transparent 45%), radial-gradient(circle at 90% 30%, color-mix(in srgb, var(--baseui-Accent-Colors-Pink) 14%, transparent), transparent 50%), var(--baseui-Background-Primary); }
 [data-wallpaper="ocean"] .mm-wallpaper { background: radial-gradient(circle at 10% 15%, color-mix(in srgb, var(--baseui-Accent-Colors-Blue) 18%, transparent), transparent 50%), radial-gradient(circle at 85% 80%, color-mix(in srgb, var(--baseui-Accent-Colors-Blue-Light) 22%, transparent), transparent 50%), var(--baseui-Background-Primary); }
@@ -40,7 +40,7 @@ html[data-floating="on"] .mm-side { border-inline-end-color: transparent; }
 .mm-day .bui-divider { min-width: 220px; }
 
 .mm-msg { position: relative; display: flex; align-items: flex-end; gap: var(--baseui-spacing-8); max-width: min(78%, 560px); margin-top: 0; }
-.mm-msg[data-first] { margin-top: var(--baseui-spacing-8); }
+.mm-run { display: flex; flex-direction: column; gap: 2px; }
 .mm-msg[data-own] { align-self: flex-end; flex-direction: row-reverse; }
 .mm-msg__avatar { width: 28px; flex: none; }
 .mm-bubble { position: relative; min-width: 56px; padding: var(--baseui-spacing-8) var(--baseui-spacing-12); border-radius: var(--baseui-radius-16); background: var(--baseui-Extensions-Background-Surface); box-shadow: 0 1px 2px color-mix(in srgb, var(--baseui-Extensions-Text-and-Icon-AlwaysDark) 8%, transparent); overflow-wrap: anywhere; }
@@ -48,7 +48,7 @@ html[data-floating="on"] .mm-side { border-inline-end-color: transparent; }
 .mm-msg:not([data-own]):not([data-first]) .mm-bubble { border-top-left-radius: var(--baseui-radius-6, 6px); }
 .mm-msg[data-own]:not([data-first]) .mm-bubble { border-top-right-radius: var(--baseui-radius-6, 6px); }
 [data-density="compact"] .mm-bubble { padding: 6px 10px; }
-[data-density="compact"] .mm-msg[data-first] { margin-top: var(--baseui-spacing-4); }
+[data-density="compact"] .mm-messages { gap: var(--baseui-spacing-8); }
 .mm-author { font: var(--baseui-Typography-Text-14-Bold); color: var(--baseui-Background-Brand); margin-bottom: 2px; }
 .mm-text { white-space: pre-wrap; }
 .mm-meta { display: inline-flex; align-items: center; gap: 4px; float: right; margin: 6px 0 -2px 12px; font: var(--baseui-Typography-Text-12-Regular); opacity: .7; }
@@ -90,8 +90,9 @@ html[data-floating="on"] .mm-side { border-inline-end-color: transparent; }
 
 /* info panel */
 .mm-info { width: 340px; flex: none; height: 100%; border-inline-start: 1px solid var(--baseui-Border-Primary); background: var(--baseui-Background-Primary); }
-.mm-info__scroll { height: 100%; overflow-y: auto; padding: var(--baseui-spacing-24) var(--baseui-spacing-16); display: flex; flex-direction: column; gap: var(--baseui-spacing-16); }
-.mm-center { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--baseui-spacing-8); }
+.mm-info__scroll { height: 100%; overflow-y: auto; padding: var(--baseui-spacing-24) var(--baseui-spacing-16); display: flex; flex-direction: column; gap: var(--baseui-spacing-24); }
+.mm-center { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--baseui-spacing-12); }
+.mm-info .bui-tabpanel { padding-top: var(--baseui-spacing-8); }
 .mm-center__name { display: flex; flex-direction: column; align-items: center; gap: 2px; }
 .mm-center h2 { margin: 0; font: var(--baseui-Typography-Header-24); font-family: var(--baseui-Typography-Headline-Font-Family); }
 .mm-media { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
