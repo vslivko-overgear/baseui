@@ -103,18 +103,18 @@ function Composer({ chat, draft, setDraft, replyTo, setReplyTo, onSend, onAttach
       h(IconButton, { variant: 'ghost', size: 'sm', label: 'Cancel reply', icon: h(I.XClose), onClick: () => setReplyTo(null) })),
     lastIncoming && empty && !replyTo && h('div', { className: 'mm-quick' }, QUICK.map((q) => h(Button, { key: q, size: 'sm', variant: 'secondary', shape: 'circle', onClick: () => onSend({ text: q }) }, q))),
     h('div', { className: 'mm-composer__row' },
-      h(Popover, { open: attach, onOpenChange: setAttach, placement: 'top-start', label: 'Attach', trigger: (p) => h(IconButton, { ...p, variant: 'secondary', size: 'lg', label: 'Attach', icon: h(I.Plus) }) },
+      h(Popover, { open: attach, onOpenChange: setAttach, placement: 'top-start', label: 'Attach', trigger: (p) => h(IconButton, { ...p, variant: 'secondary', size: 'md', label: 'Attach', icon: h(I.Plus) }) },
         h(List, { size: 'sm', 'aria-label': 'Attach' },
           h(ListItem, { icon: h(I.Image01), onClick: () => { setAttach(false); onAttach('photo'); } }, 'Photo'),
           h(ListItem, { icon: h(I.File06), onClick: () => { setAttach(false); onAttach('file'); } }, 'Document'),
           h(ListItem, { icon: h(I.MarkerPin01), onClick: () => { setAttach(false); onAttach('location'); } }, 'Location'))),
       h('div', { className: 'mm-composer__field' }, h(TextField, {
-        label: 'Message', floatingLabel: false, multiline: true, minRows: 1, maxRows: 5, size: 'md', value: draft, onChange: (e) => setDraft(e.target.value),
+        label: 'Message', floatingLabel: false, multiline: true, minRows: 1, maxRows: 5, size: 'sm', value: draft, onChange: (e) => setDraft(e.target.value),
         startIcon: undefined, trailing: h(Popover, { open: emoji, onOpenChange: setEmoji, placement: 'top-end', label: 'Emoji', trigger: (p) => h(IconButton, { ...p, variant: 'ghost', size: 'sm', label: 'Emoji', icon: h(I.FaceSmile), tooltip: false }) },
           h('div', { className: 'mm-emoji' }, EMOJI.map((e) => h('button', { key: e, type: 'button', 'aria-label': e, onClick: () => { setDraft(draft + e); setEmoji(false); } }, e)))),
       })),
-      !empty && h(IconButton, { variant: 'secondary', size: 'lg', label: 'Schedule message', icon: h(I.Clock), onClick: onSchedule }),
-      h(IconButton, { variant: 'primary', size: 'lg', label: empty ? 'Record voice message' : 'Send', icon: empty ? h(I.Microphone01) : h(I.Send01), onClick: () => (empty ? onAttach('voice') : submit()) })));
+      !empty && h(IconButton, { variant: 'secondary', size: 'md', label: 'Schedule message', icon: h(I.Clock), onClick: onSchedule }),
+      h(IconButton, { variant: 'primary', size: 'md', label: empty ? 'Record voice message' : 'Send', icon: empty ? h(I.Microphone01) : h(I.Send01), onClick: () => (empty ? onAttach('voice') : submit()) })));
 }
 
 function ScheduleModal({ open, onClose, draft, onConfirm }) {

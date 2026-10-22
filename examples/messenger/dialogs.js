@@ -38,7 +38,7 @@ export function InfoContent({ chat, onToggle, onDelete, onCall, toast }) {
       h(Button, { variant: 'secondary', icon: chat.muted ? h(I.BellOff01) : h(I.Bell01), onClick: () => onToggle('muted'), width: '100%' }, chat.muted ? 'Unmute' : 'Mute'),
       h(Button, { variant: 'secondary', icon: h(I.Pin01), onClick: () => onToggle('pinned'), width: '100%' }, chat.pinned ? 'Unpin' : 'Pin')),
     h(Tabs, { defaultValue: 'files' },
-      h(TabList, { label: 'Shared content', fullWidth: true, showBadge: false },
+      h(TabList, { size: 'sm', label: 'Shared content', fullWidth: true, showBadge: false },
         h(Tab, { value: 'media', icon: h(I.Image01) }, 'Media'),
         h(Tab, { value: 'files', icon: h(I.File06), counter: files.length }, 'Files'),
         group && h(Tab, { value: 'members', icon: h(I.Users01), counter: members.length }, 'People')),
@@ -88,10 +88,10 @@ export function CallModal({ call, onClose, toast }) {
     phase === 'live' && h('div', { className: 'mm-call__timer', role: 'timer' }, mm),
     phase === 'done' && h('div', { className: 'mm-stack', style: { alignItems: 'center' } },
       h('span', { className: 'mm-muted' }, `Duration ${mm}`),
-      h(Rating, { label: 'How was the call quality?', value: stars, onValueChange: setStars, size: 'lg' })),
+      h(Rating, { label: 'How was the call quality?', value: stars, onValueChange: setStars, size: 'md' })),
     phase !== 'done' && h('div', { className: 'mm-call__row' },
-      h(IconButton, { variant: muted ? 'primary' : 'secondary', size: 'lg', label: muted ? 'Unmute microphone' : 'Mute microphone', icon: muted ? h(I.MicrophoneOff01) : h(I.Microphone01), onClick: () => setMuted(!muted) }),
-      h(IconButton, { variant: 'destructive', size: 'lg', label: 'End call', icon: h(I.PhoneHangUp), onClick: () => setPhase('done') }))));
+      h(IconButton, { variant: muted ? 'primary' : 'secondary', size: 'md', label: muted ? 'Unmute microphone' : 'Mute microphone', icon: muted ? h(I.MicrophoneOff01) : h(I.Microphone01), onClick: () => setMuted(!muted) }),
+      h(IconButton, { variant: 'destructive', size: 'md', label: 'End call', icon: h(I.PhoneHangUp), onClick: () => setPhase('done') }))));
 }
 
 /** A new chat or group: pick the people from the contacts. */
@@ -107,10 +107,10 @@ export function NewChatModal({ open, onClose, onCreate }) {
     primaryAction: h(Button, { variant: 'primary', isDisabled: !picked.length || (picked.length > 1 && !name.trim()), onClick: () => onCreate(picked, name.trim()) }, picked.length > 1 ? 'Create group' : 'Start chat'),
     secondaryAction: h(Button, { variant: 'secondary', onClick: onClose }, 'Cancel'),
   }, h('div', { className: 'mm-stack' },
-    h(TextField, { label: 'Search contacts', startIcon: h(I.SearchLg), value: query, onChange: (e) => setQuery(e.target.value), clearable: true, actionLabel: 'Clear' }),
-    picked.length > 0 && h('div', { className: 'mm-chips' }, picked.map((id) => h(Badge, { key: id, variant: 'primary', size: 'lg', label: contactOf(id).name }))),
-    picked.length > 1 && h(TextField, { label: 'Group name', value: name, onChange: (e) => setName(e.target.value) }),
+    h(TextField, { size: 'sm', label: 'Search contacts', startIcon: h(I.SearchLg), value: query, onChange: (e) => setQuery(e.target.value), clearable: true, actionLabel: 'Clear' }),
+    picked.length > 0 && h('div', { className: 'mm-chips' }, picked.map((id) => h(Badge, { key: id, variant: 'primary', size: 'md', label: contactOf(id).name }))),
+    picked.length > 1 && h(TextField, { size: 'sm', label: 'Group name', value: name, onChange: (e) => setName(e.target.value) }),
     h('div', { className: 'mm-modal-list' }, list.length
-      ? h(List, { size: 'sm', 'aria-label': 'Contacts' }, list.map((c) => h(ListItem, { key: c.id, avatar: h(PersonAvatar, { id: c.id, size: 'sm' }), subtitle: c.bio, onClick: () => toggle(c.id), control: h(Checkbox, { checked: picked.includes(c.id), onCheckedChange: () => toggle(c.id), 'aria-label': `Select ${c.name}` }) }, c.name)))
+      ? h(List, { size: 'sm', 'aria-label': 'Contacts' }, list.map((c) => h(ListItem, { key: c.id, avatar: h(PersonAvatar, { id: c.id, size: 'md' }), subtitle: c.bio, onClick: () => toggle(c.id), control: h(Checkbox, { checked: picked.includes(c.id), onCheckedChange: () => toggle(c.id), 'aria-label': `Select ${c.name}` }) }, c.name)))
       : h(Status, { status: 'neutral', title: 'No contacts found', description: 'Try a different name.' }))));
 }

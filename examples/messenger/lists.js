@@ -48,11 +48,11 @@ export function ChatsSection({ chats, typing, activeId, onOpen, onNew, onReadAll
     const isTyping = typing[c.id];
     return h(ListItem, {
       key: c.id, active: c.id === activeId, onClick: () => onOpen(c.id),
-      avatar: h(PersonAvatar, { id: c.with, group: c.type === 'group', name: c.type === 'group' ? c.name : undefined, size: 'md' }),
+      avatar: h(PersonAvatar, { id: c.with, group: c.type === 'group', name: c.type === 'group' ? c.name : undefined, size: 'lg' }),
       subtitle: isTyping ? 'typing…' : `${last.from === 'me' ? 'You: ' : c.type === 'group' ? `${contactOf(last.from)?.name.split(' ')[0]}: ` : ''}${previewOf(last)}`,
       details: h('div', { className: 'mm-details' },
         h('span', { className: 'mm-time' }, listTime(last.time)),
-        c.unread > 0 ? h(Badge, { type: 'counter', size: 'sm', variant: c.muted ? 'secondary' : 'primary', label: c.unread }) : c.pinned ? h(I.Pin01, { size: 16, 'aria-label': 'Pinned' }) : null),
+        c.unread > 0 ? h(Badge, { type: 'counter', size: 'md', variant: c.muted ? 'secondary' : 'primary', label: c.unread }) : c.pinned ? h(I.Pin01, { size: 16, 'aria-label': 'Pinned' }) : null),
     }, chatTitle(c));
   };
   return h('div', { className: 'mm-pane' },
@@ -62,8 +62,8 @@ export function ChatsSection({ chats, typing, activeId, onOpen, onNew, onReadAll
     })),
     h('div', { className: 'mm-scroll' },
       h('div', { className: 'mm-tools' },
-        h(TextField, { label: 'Search', startIcon: h(I.SearchLg), value: query, onChange: (e) => setQuery(e.target.value), clearable: true, actionLabel: 'Clear search' }),
-        h(SegmentedControl, { label: 'Filter chats', fullWidth: true, size: 'sm', value: filter, onValueChange: setFilter, items: [
+        h(TextField, { size: 'sm', label: 'Search', startIcon: h(I.SearchLg), value: query, onChange: (e) => setQuery(e.target.value), clearable: true, actionLabel: 'Clear search' }),
+        h(SegmentedControl, { label: 'Filter chats', fullWidth: true, size: 'md', value: filter, onValueChange: setFilter, items: [
           { value: 'all', label: 'All' }, { value: 'unread', label: 'Unread', counter: unread || undefined }, { value: 'groups', label: 'Groups' }] })),
       loading ? h(ChatSkeleton)
         : shown.length === 0 ? h('div', { className: 'mm-pad' }, h(Status, { status: 'neutral', title: 'Nothing found', description: q ? `No chats match “${query}”.` : 'No chats in this filter.', actionLabel: q ? 'Clear search' : 'New chat', actionVariant: 'secondary', onAction: q ? () => setQuery('') : onNew }))
@@ -80,12 +80,12 @@ export function CallsSection({ onCall }) {
   return h('div', { className: 'mm-pane' },
     h('div', top(), h(Navbar, { title: 'Calls', subtitle: missed ? `${missed} missed` : undefined, showBack: false, actions: [{ icon: h(I.PhonePlus, { size: 24 }), label: 'New call', onClick: () => onCall({ id: 'maya', name: 'Maya Chen' }) }] })),
     h('div', { className: 'mm-scroll' },
-      h('div', { className: 'mm-tools' }, h(SegmentedControl, { label: 'Filter calls', fullWidth: true, size: 'sm', value: filter, onValueChange: setFilter, items: [{ value: 'all', label: 'All' }, { value: 'missed', label: 'Missed', counter: missed }] })),
+      h('div', { className: 'mm-tools' }, h(SegmentedControl, { label: 'Filter calls', fullWidth: true, size: 'md', value: filter, onValueChange: setFilter, items: [{ value: 'all', label: 'All' }, { value: 'missed', label: 'Missed', counter: missed }] })),
       h('div', { className: 'mm-pad' }, list.length
         ? h(List, { 'aria-label': 'Call history' }, list.map((c) => {
           const person = contactOf(c.who);
           return h(ListItem, {
-            key: c.id, avatar: h(PersonAvatar, { id: c.who, size: 'md' }), onClick: () => onCall({ id: c.who, name: person.name }),
+            key: c.id, avatar: h(PersonAvatar, { id: c.who, size: 'lg' }), onClick: () => onCall({ id: c.who, name: person.name }),
             subtitle: h('span', { style: { display: 'inline-flex', alignItems: 'center', gap: 4, color: c.kind === 'missed' ? 'var(--baseui-Extensions-Text-and-Icon-Error)' : undefined } }, h(icon[c.kind], { size: 16 }), c.kind === 'missed' ? 'Missed' : `${c.kind === 'incoming' ? 'Incoming' : 'Outgoing'} · ${c.length}`),
             details: h('span', { className: 'mm-time' }, listTime(Date.now() - c.minutes * 60000)),
             control: h(IconButton, { variant: 'ghost', size: 'sm', label: `Call ${person.name}`, icon: h(I.Phone), onClick: (e) => { e.stopPropagation(); onCall({ id: c.who, name: person.name }); } }),
@@ -104,10 +104,10 @@ export function ContactsSection({ onOpenContact, onMessage, onNew }) {
   return h('div', { className: 'mm-pane' },
     h('div', top(), h(Navbar, { title: 'Contacts', subtitle: `${CONTACTS.length} people`, showBack: false, actions: [{ icon: h(I.UserPlus01, { size: 24 }), label: 'Add contact', onClick: onNew }] })),
     h('div', { className: 'mm-scroll' },
-      h('div', { className: 'mm-tools' }, h(TextField, { label: 'Search contacts', startIcon: h(I.SearchLg), value: query, onChange: (e) => { setQuery(e.target.value); setPage(1); }, clearable: true, actionLabel: 'Clear search' })),
+      h('div', { className: 'mm-tools' }, h(TextField, { size: 'sm', label: 'Search contacts', startIcon: h(I.SearchLg), value: query, onChange: (e) => { setQuery(e.target.value); setPage(1); }, clearable: true, actionLabel: 'Clear search' })),
       h('div', { className: 'mm-pad' },
         list.length ? h(List, { 'aria-label': 'Contacts' }, list.slice((cur - 1) * PAGE, cur * PAGE).map((c) => h(ListItem, {
-          key: c.id, avatar: h(PersonAvatar, { id: c.id, size: 'md' }), subtitle: c.bio, onClick: () => onOpenContact(c.id),
+          key: c.id, avatar: h(PersonAvatar, { id: c.id, size: 'lg' }), subtitle: c.bio, onClick: () => onOpenContact(c.id),
           control: h(IconButton, { variant: 'ghost', size: 'sm', label: `Message ${c.name}`, icon: h(I.MessageChatCircle), onClick: (e) => { e.stopPropagation(); onMessage(c.id); } }),
         }, c.name)))
           : h(Status, { status: 'neutral', title: 'No contacts found', description: `Nobody is called “${query}”.` }),

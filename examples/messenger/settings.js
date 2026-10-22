@@ -38,8 +38,8 @@ function Profile({ settings, update, toast }) {
       h(Avatar, { name: p.name || 'A', size: 'xl', tooltip: false }),
       h('div', { className: 'mm-stack', style: { gap: 8 } }, h(Button, { variant: 'secondary', size: 'sm', icon: h(I.Camera01), onClick: () => toast({ message: 'Photo upload is not part of this demo', status: 'info' }) }, 'Change photo'),
         h(Badge, { variant: 'success', label: 'Online', size: 'md' }))),
-    h(TextField, { label: 'Name', value: p.name, onChange: (e) => setP({ ...p, name: e.target.value }) }),
-    h(TextField, { label: 'Bio', multiline: true, minRows: 2, maxRows: 4, value: p.bio, onChange: (e) => setP({ ...p, bio: e.target.value }) }),
+    h(TextField, { size: 'sm', label: 'Name', value: p.name, onChange: (e) => setP({ ...p, name: e.target.value }) }),
+    h(TextField, { size: 'sm', label: 'Bio', multiline: true, minRows: 2, maxRows: 4, value: p.bio, onChange: (e) => setP({ ...p, bio: e.target.value }) }),
     h(DatePicker, { label: 'Birthday', value: p.birthday, onValueChange: (v) => setP({ ...p, birthday: v }), max: new Date().toISOString().slice(0, 10), weekStartsOn: 1, locale: 'en-US' }),
     h(Select, { label: 'Status', value: p.status, onValueChange: (v) => setP({ ...p, status: v }), options: [{ value: 'online', label: 'Online' }, { value: 'away', label: 'Away' }, { value: 'busy', label: 'Do not disturb' }] }),
     h('div', { className: 'mm-row' },
@@ -58,14 +58,14 @@ function Notifications({ settings, update, toast }) {
       h(CheckboxGroup, { title: 'Events', value: settings.notifyAbout, onValueChange: (v) => update({ notifyAbout: v }), options: [{ value: 'mentions', label: 'Mentions' }, { value: 'replies', label: 'Replies to my messages' }, { value: 'reactions', label: 'Reactions' }] })),
     h(Group, { title: 'Quiet hours', caption: 'Mute every chat for a number of hours' },
       h('div', { style: { display: 'flex', gap: 12, alignItems: 'flex-start', flexWrap: 'wrap' } }, h('div', { style: { width: 160 } }, h(NumberInput, { label: 'Hours', defaultValue: 8, min: 1, max: 24 })),
-        h(Button, { variant: 'secondary', size: 'lg', icon: h(I.BellOff01), onClick: () => toast({ message: 'Notifications are muted for 8 hours', status: 'success', action: { label: 'Undo' } }) }, 'Mute'))));
+        h(Button, { variant: 'secondary', size: 'md', icon: h(I.BellOff01), onClick: () => toast({ message: 'Notifications are muted for 8 hours', status: 'success', action: { label: 'Undo' } }) }, 'Mute'))));
 }
 
 function Privacy({ settings, update, toast }) {
   const [sessions, setSessions] = useState(SESSIONS);
   const [ending, setEnding] = useState(null);
   const columns = [
-    { key: 'device', header: 'Device', width: proportional(3), renderCell: (s) => h('span', null, s.device, s.current && h(Badge, { variant: 'success', size: 'sm', label: 'This device', className: 'mm-badge-gap' })) },
+    { key: 'device', header: 'Device', width: proportional(3), renderCell: (s) => h('span', null, s.device, s.current && h(Badge, { variant: 'success', size: 'md', label: 'This device', className: 'mm-badge-gap' })) },
     { key: 'active', header: 'Active', width: proportional(2) },
     { key: 'act', header: '', width: pixel(48), align: 'end', renderCell: (s) => !s.current && h(IconButton, { variant: 'ghost', size: 'sm', label: `End session on ${s.device}`, icon: h(I.LogOut01), onClick: () => setEnding(s) }) },
   ];
@@ -135,7 +135,7 @@ function Help({ toast }) {
     h(Group, { title: 'Rate Messenger' }, h(Rating, { label: 'Your rating', value: stars, onValueChange: (v) => { setStars(v); toast({ message: `Thanks! ${v} of 5`, status: 'success', duration: 2500 }); } })),
     h('div', { className: 'mm-row' }, h(Button, { variant: 'secondary', icon: h(I.MessageSquare01), onClick: () => setFeedback(true) }, 'Send feedback'), h(Tooltip, { content: 'Opens the baseui documentation' }, h(Button, { variant: 'ghost', href: '../../#/', icon: h(I.File06) }, 'Documentation'))),
     h(Modal, { open: feedback, onOpenChange: setFeedback, title: 'Send feedback', primaryAction: h(Button, { variant: 'primary', isDisabled: !text.trim(), onClick: () => { setFeedback(false); setText(''); toast({ message: 'Thank you for the feedback', status: 'success' }); } }, 'Send'), secondaryAction: h(Button, { variant: 'secondary', onClick: () => setFeedback(false) }, 'Cancel') },
-      h(TextField, { label: 'What can we improve?', multiline: true, minRows: 4, maxRows: 8, value: text, onChange: (e) => setText(e.target.value) })));
+      h(TextField, { size: 'sm', label: 'What can we improve?', multiline: true, minRows: 4, maxRows: 8, value: text, onChange: (e) => setText(e.target.value) })));
 }
 
 const PAGES = { profile: Profile, notifications: Notifications, privacy: Privacy, appearance: Appearance, storage: Storage, help: Help };
