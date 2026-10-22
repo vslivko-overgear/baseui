@@ -19,6 +19,7 @@ The list that opens under a Selector or a Typeahead.
 | `defaultOpen` | `boolean` | `false` | Initially open |
 | `onOpenChange` | `(open: boolean) => void` | — | Called when it opens or closes |
 | `placement` | `'bottom-start' \| 'bottom-end' \| 'top-start' \| 'top-end'` | `'bottom-start'` | Where the menu appears |
+| `size` | `'sm' \| 'md'` | `'md'` | Item size: sm (40px items) or md (48px). Set it to the size of the field or button the menu opens from; Selector and Typeahead do it by themselves |
 | `label` | `string` | — | Accessible name of the menu |
 | `motion` | `'off' \| 'basic' \| 'enhanced'` | `theme` | Animation of opening and closing: off, basic (a quick fade), or enhanced (the menu grows from its trigger, and it plays out when it closes); by default the Animations setting of the theme |
 | `glass` | `boolean` | `theme` | Translucent, blurred menu; true or false overrides the Glass setting of the theme |

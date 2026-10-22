@@ -11,7 +11,7 @@ import { DropdownItemContent, DropdownGroup, DropdownDivider, DropdownSelectAll,
  */
 export function Dropdown({
   trigger, options, value, defaultValue, onValueChange, multiple = false, selectAll = false, open, defaultOpen = false, onOpenChange,
-  placement = 'bottom-start', glass, motion, label, className, ...rest
+  placement = 'bottom-start', size = 'md', glass, motion, label, className, ...rest
 }) {
   const [isOpen, setOpen] = useControllable(open, defaultOpen, onOpenChange);
   const [selected, setSelected] = useControllable(value, defaultValue ?? (multiple ? [] : null), onValueChange);
@@ -57,8 +57,8 @@ export function Dropdown({
   const triggerProps = { 'aria-haspopup': 'listbox', 'aria-expanded': isOpen, 'aria-controls': isOpen ? id : undefined, onClick: () => setOpen(!isOpen) };
   let n = -1;
   return h('span', { ref: root, 'data-slot': 'dropdown-root', className: cx('bui-dropdown-root', className), ...rest },
-    typeof trigger === 'function' ? trigger(triggerProps) : (trigger ?? h(Button, { variant: 'secondary', ...triggerProps }, 'Open')),
-    shown && h(Floating, null, h('div', { ref: (el) => { panel.current = el; trackSelection(el); }, style: panelStyle(pos), id, role: 'listbox', 'data-slot': 'dropdown', tabIndex: -1, 'aria-label': label, 'aria-multiselectable': multiple || undefined, className: cx('bui-dropdown bui-dropdown--standalone', glassClass(glass), motion && `bui-motion--${motion}`), 'data-placement': pos?.placement ?? placement, 'data-closing': closing || undefined, onKeyDown },
+    typeof trigger === 'function' ? trigger(triggerProps) : (trigger ?? h(Button, { variant: 'secondary', size: size === 'sm' ? 'sm' : 'md', ...triggerProps }, 'Open')),
+    shown && h(Floating, null, h('div', { ref: (el) => { panel.current = el; trackSelection(el); }, style: panelStyle(pos), id, role: 'listbox', 'data-slot': 'dropdown', 'data-size': size, tabIndex: -1, 'aria-label': label, 'aria-multiselectable': multiple || undefined, className: cx('bui-dropdown bui-dropdown--standalone', glassClass(glass), motion && `bui-motion--${motion}`), 'data-placement': pos?.placement ?? placement, 'data-closing': closing || undefined, onKeyDown },
       multiple && selectAll && h(DropdownSelectAll, { label: allOn ? 'Remove all' : 'Select all', onClick: () => setSelected(allOn ? [] : enabled.map((o) => o.value)) }),
       options.map((o, i) => {
         if (o.type === 'group') return h(DropdownGroup, { key: `g${i}`, label: o.label });
@@ -82,6 +82,7 @@ describe(Dropdown, 'A menu of options that opens from any trigger. It opens over
   defaultOpen: ['boolean', 'false', 'Initially open'],
   onOpenChange: ['(open: boolean) => void', null, 'Called when it opens or closes'],
   placement: ["'bottom-start' | 'bottom-end' | 'top-start' | 'top-end'", "'bottom-start'", 'Where the menu appears'],
+  size: ["'sm' | 'md'", "'md'", 'Item size: sm (40px items) or md (48px). Set it to the size of the field or button the menu opens from; Selector and Typeahead do it by themselves'],
   label: ['string', null, 'Accessible name of the menu'],
   motion: ["'off' | 'basic' | 'enhanced'", 'theme', 'Animation of opening and closing: off, basic (a quick fade), or enhanced (the menu grows from its trigger, and it plays out when it closes); by default the Animations setting of the theme'],
   glass: ['boolean', 'theme', 'Translucent, blurred menu; true or false overrides the Glass setting of the theme'],

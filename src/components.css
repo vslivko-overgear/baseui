@@ -453,6 +453,15 @@
 .bui-datepicker__panel.bui-popover__panel { box-sizing: border-box; width: 100%; min-width: 0; max-width: none; padding: var(--baseui-spacing-16); border-radius: var(--baseui-radius-20); box-shadow: 0 4px 28px color-mix(in srgb, var(--baseui-Extensions-Text-and-Icon-AlwaysDark) 12%, transparent); }
 @media (prefers-reduced-motion: reduce) { .bui-calendar__day, .bui-calendar__nav { transition: none; } }
 
+/* Dropdown size: the list follows the size of the field it opens from (Selector, Typeahead and Dropdown set data-size). sm = 40px items, 20px icons,
+   radius 12 inside the 16 of the list (concentric: 16 - 4px padding) */
+.bui-dropdown[data-size="sm"] { border-radius: var(--baseui-radius-16); }
+.bui-dropdown[data-size="sm"] .bui-dropdown__item { height: 40px; border-radius: var(--baseui-radius-12); }
+.bui-dropdown[data-size="sm"] :is(.bui-dropdown__icon, .bui-dropdown__avatar, .bui-dropdown__check) { width: 20px; height: 20px; }
+.bui-dropdown[data-size="sm"] .bui-dropdown__check svg { width: 20px; height: 20px; }
+.bui-dropdown[data-size="sm"] .bui-dropdown__item--subitem { padding-left: calc(var(--baseui-spacing-12) + 20px); }
+.bui-dropdown[data-size="sm"] .bui-dropdown__group { padding: var(--baseui-spacing-8) var(--baseui-spacing-12) var(--baseui-spacing-4); }
+
 /* ---------- Dropdown (standalone; the item styles live in lib/components.css as .bui-dropdown*) ---------- */
 .bui-dropdown-root { position: relative; display: inline-flex; }
 .bui-dropdown--standalone { position: fixed; z-index: var(--baseui-z-index-400); min-width: 240px; max-width: calc(100vw - 16px); max-height: 360px; overflow-y: auto; animation: bui-fade var(--baseui-duration-fast) var(--baseui-ease-standard); }
