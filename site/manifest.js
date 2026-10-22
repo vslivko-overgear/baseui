@@ -89,6 +89,7 @@ export default [
     items: [
       { title: 'Radius Check', file: '../src/tools/RadiusCheck.stories.js', icon: 'Tool01', lead: 'Checks that nested rounded corners are concentric: the inner radius is the outer radius minus the inset.' },
       { title: 'Size Balance', file: '../src/tools/SizeBalance.stories.js', icon: 'Tool01', lead: 'Measures a screen from the 16px body text: one ladder of text sizes and one of control heights, so nothing is small here and too big there.' },
+      { title: 'Spacing Balance', file: '../src/tools/SpacingBalance.stories.js', icon: 'Tool01', lead: 'Checks proximity: things that belong together sit closer than things that do not.' },
     ],
   },
 ];

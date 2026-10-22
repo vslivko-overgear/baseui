@@ -30,8 +30,7 @@ export function InfoContent({ chat, onToggle, onDelete, onCall, toast }) {
   return h('div', { className: 'mm-info__scroll' },
     h('div', { className: 'mm-center' },
       h(PersonAvatar, { id: chat.with, group, size: 'xl' }),
-      h('h2', null, chatTitle(chat)),
-      h('span', { className: 'mm-muted' }, chatSubtitle(chat, false)),
+      h('div', { className: 'mm-center__name' }, h('h2', null, chatTitle(chat)), h('span', { className: 'mm-muted' }, chatSubtitle(chat, false))),
       group && h(AvatarGroup, { size: 'sm' }, members.slice(0, 3).map((m) => h(Avatar, { key: m, name: contactOf(m).name, tooltip: true })), members.length > 3 && h(AvatarGroupOverflow, { count: members.length - 3 }))),
     h(Grid, { columns: 3, gap: 8 },
       h(Button, { variant: 'secondary', icon: h(I.Phone), onClick: () => onCall(chat), width: '100%' }, 'Call'),
@@ -43,7 +42,7 @@ export function InfoContent({ chat, onToggle, onDelete, onCall, toast }) {
         h(Tab, { value: 'files', icon: h(I.File06), counter: files.length }, 'Files'),
         group && h(Tab, { value: 'members', icon: h(I.Users01), counter: members.length }, 'People')),
       h(TabPanel, { value: 'media' }, h('div', { className: 'mm-media', style: { marginTop: 12 } }, Array.from({ length: 9 }, (_, i) => h('i', { key: i, style: { background: `linear-gradient(135deg, hsl(${(i * 47 + 20) % 360} 75% 62%), hsl(${(i * 47 + 80) % 360} 70% 50%))` } })))),
-      h(TabPanel, { value: 'files' }, h('div', { style: { marginTop: 8 } }, h(Table, { data: files, columns, density: 'compact', caption: 'Shared files', hasHover: true, onRowClick: (f) => toast({ message: `Opening ${f.name}…`, status: 'info', duration: 2500 }) }))),
+      h(TabPanel, { value: 'files' }, h('div', null, h(Table, { data: files, columns, density: 'compact', caption: 'Shared files', hasHover: true, onRowClick: (f) => toast({ message: `Opening ${f.name}…`, status: 'info', duration: 2500 }) }))),
       group && h(TabPanel, { value: 'members' }, h(List, { size: 'sm', spacing: 'sm', 'aria-label': 'Members' }, members.map((id) => h(ListItem, { key: id, avatar: h(PersonAvatar, { id, size: 'sm' }), subtitle: contactOf(id).bio }, contactOf(id).name))))),
     h(CollapsibleGroup, { multiple: true, defaultValue: ['notify'], items: [
       { value: 'notify', title: 'Notifications', content: h('div', { className: 'mm-stack' },

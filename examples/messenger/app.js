@@ -26,7 +26,7 @@ function ContactPane({ id, isMobile, onBack, onMessage, onCall }) {
     h('div', { className: 'mm-pane__top' }, h(Navbar, { title: c.name, subtitle: c.seen, showBack: isMobile, onBack, backLabel: 'Contacts' })),
     h('div', { className: 'mm-scroll' }, h('div', { className: 'mm-page' },
       h(Card, { padding: 24 }, h('div', { className: 'mm-center' },
-        h(PersonAvatar, { id, size: 'xl' }), h('h2', null, c.name), h('span', { className: 'mm-muted' }, c.bio),
+        h(PersonAvatar, { id, size: 'xl' }), h('div', { className: 'mm-center__name' }, h('h2', null, c.name), h('span', { className: 'mm-muted' }, c.bio)),
         h(Badge, { variant: c.status === 'success' ? 'success' : c.status === 'error' ? 'error' : 'secondary', label: c.status === 'success' ? 'Online' : c.status === 'error' ? 'Busy' : 'Offline' }),
         h('div', { className: 'mm-row', style: { marginTop: 8 } },
           h(Button, { variant: 'primary', icon: h(I.MessageChatCircle), onClick: () => onMessage(id) }, 'Message'),
