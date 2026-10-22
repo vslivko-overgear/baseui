@@ -128,8 +128,8 @@ function ScheduleModal({ open, onClose, draft, onConfirm }) {
     secondaryAction: h(Button, { variant: 'secondary', onClick: onClose }, 'Cancel'),
   }, h('div', { className: 'mm-stack' },
     h(Card, { padding: 12 }, draft || 'Your message'),
-    h(DatePicker, { label: 'Date', value: date, onValueChange: setDate, min: new Date().toISOString().slice(0, 10), weekStartsOn: 1, locale: 'en-US' }),
-    h(Select, { label: 'Time', options: times, value: time, onValueChange: setTime })));
+    h(DatePicker, { size: 'sm', label: 'Date', value: date, onValueChange: setDate, min: new Date().toISOString().slice(0, 10), weekStartsOn: 1, locale: 'en-US' }),
+    h(Select, { size: 'sm', label: 'Time', options: times, value: time, onValueChange: setTime })));
 }
 
 /** The open chat: a navbar, the messages and the composer. */

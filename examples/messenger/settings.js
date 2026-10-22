@@ -40,8 +40,8 @@ function Profile({ settings, update, toast }) {
         h(Badge, { variant: 'success', label: 'Online', size: 'md' }))),
     h(TextField, { size: 'sm', label: 'Name', value: p.name, onChange: (e) => setP({ ...p, name: e.target.value }) }),
     h(TextField, { size: 'sm', label: 'Bio', multiline: true, minRows: 2, maxRows: 4, value: p.bio, onChange: (e) => setP({ ...p, bio: e.target.value }) }),
-    h(DatePicker, { label: 'Birthday', value: p.birthday, onValueChange: (v) => setP({ ...p, birthday: v }), max: new Date().toISOString().slice(0, 10), weekStartsOn: 1, locale: 'en-US' }),
-    h(Select, { label: 'Status', value: p.status, onValueChange: (v) => setP({ ...p, status: v }), options: [{ value: 'online', label: 'Online' }, { value: 'away', label: 'Away' }, { value: 'busy', label: 'Do not disturb' }] }),
+    h(DatePicker, { size: 'sm', label: 'Birthday', value: p.birthday, onValueChange: (v) => setP({ ...p, birthday: v }), max: new Date().toISOString().slice(0, 10), weekStartsOn: 1, locale: 'en-US' }),
+    h(Select, { size: 'sm', label: 'Status', value: p.status, onValueChange: (v) => setP({ ...p, status: v }), options: [{ value: 'online', label: 'Online' }, { value: 'away', label: 'Away' }, { value: 'busy', label: 'Do not disturb' }] }),
     h('div', { className: 'mm-row' },
       h(Button, { variant: 'primary', isDisabled: !dirty, clickAction: async () => { await new Promise((r) => setTimeout(r, 700)); update({ profile: p }); toast({ message: 'Profile saved', status: 'success' }); } }, 'Save changes'),
       h(Button, { variant: 'ghost', isDisabled: !dirty, onClick: () => setP(settings.profile) }, 'Discard')));
@@ -57,7 +57,7 @@ function Notifications({ settings, update, toast }) {
     h(Group, { title: 'Notify me about', caption: 'Only for chats that are not muted' },
       h(CheckboxGroup, { title: 'Events', value: settings.notifyAbout, onValueChange: (v) => update({ notifyAbout: v }), options: [{ value: 'mentions', label: 'Mentions' }, { value: 'replies', label: 'Replies to my messages' }, { value: 'reactions', label: 'Reactions' }] })),
     h(Group, { title: 'Quiet hours', caption: 'Mute every chat for a number of hours' },
-      h('div', { style: { display: 'flex', gap: 12, alignItems: 'flex-start', flexWrap: 'wrap' } }, h('div', { style: { width: 160 } }, h(NumberInput, { label: 'Hours', defaultValue: 8, min: 1, max: 24 })),
+      h('div', { style: { display: 'flex', gap: 12, alignItems: 'flex-start', flexWrap: 'wrap' } }, h('div', { style: { width: 160 } }, h(NumberInput, { size: 'sm', label: 'Hours', defaultValue: 8, min: 1, max: 24 })),
         h(Button, { variant: 'secondary', size: 'md', icon: h(I.BellOff01), onClick: () => toast({ message: 'Notifications are muted for 8 hours', status: 'success', action: { label: 'Undo' } }) }, 'Mute'))));
 }
 
@@ -72,7 +72,7 @@ function Privacy({ settings, update, toast }) {
   return h('div', { className: 'mm-stack', style: { gap: 24 } },
     h(Banner, { status: 'info', title: 'End-to-end encryption' }, 'Messages here never leave your browser. Read how the real thing works in the ', h(Link, { href: '../../#/' }, 'documentation'), '.'),
     h(Group, { title: 'Who can see my last seen' },
-      h(Select, { label: 'Last seen', value: settings.lastSeen, onValueChange: (v) => update({ lastSeen: v }), options: [{ value: 'everyone', label: 'Everyone' }, { value: 'contacts', label: 'My contacts' }, { value: 'nobody', label: 'Nobody' }] }),
+      h(Select, { size: 'sm', label: 'Last seen', value: settings.lastSeen, onValueChange: (v) => update({ lastSeen: v }), options: [{ value: 'everyone', label: 'Everyone' }, { value: 'contacts', label: 'My contacts' }, { value: 'nobody', label: 'Nobody' }] }),
       h(List, { 'aria-label': 'Privacy' },
         h(ListItem, { subtitle: 'Others see when you have read their messages', control: h(Switch, { size: 'md', 'aria-label': 'Read receipts', checked: settings.readReceipts, onCheckedChange: (v) => update({ readReceipts: v }) }) }, 'Read receipts'),
         h(ListItem, { subtitle: 'Ask for a password when you sign in', control: h(Switch, { size: 'md', 'aria-label': 'Two-step verification', checked: settings.twoStep, onCheckedChange: (v) => { update({ twoStep: v }); toast({ message: v ? 'Two-step verification is on' : 'Two-step verification is off', status: v ? 'success' : 'neutral' }); } }) }, 'Two-step verification'))),

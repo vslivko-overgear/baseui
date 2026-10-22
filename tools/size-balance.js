@@ -6,10 +6,11 @@
 //   console.table(sizeBalance(document.body));
 //
 // The ladder (anchored at 16 = md):   text 12 · 14 · 16 · 20 · 24 · 32     control tier xsm 32 · sm 40 · md 48 · lg 56
-// It reports five kinds of finding, each with a suggestion:
+// It reports six kinds of finding, each with a suggestion:
 //   small-text   text under 12px
 //   off-ladder   a text size that is not on the ladder (initials of an avatar and the like are skipped)
 //   row          controls in one row whose heights differ (a row is the controls with the same parent that overlap vertically)
+//   field-size   text fields (inputs, selects, date pickers…) of one form or dialog with different sizes
 //   anchor       a control whose label is bigger than the 16px body (a lg button, a md tab): one tier down keeps 16 the center
 //   hierarchy    a secondary text (subtitle, caption, meta) not smaller than the title next to it
 // An element inside [data-size-ignore] is skipped.
@@ -69,12 +70,27 @@ export function sizeBalance(root = document.body) {
   const controls = all.filter((el) => CONTROL.test(el.dataset.slot || '') && !el.closest('[data-slot=segmented], [data-slot=textfield]:not(:scope)') || el.matches('[data-slot=segmented], [data-slot=textfield]'));
   // rows: the same parent, overlapping vertically, different heights
   const byParent = new Map();
-  for (const el of controls) (byParent.get(el.parentElement) || byParent.set(el.parentElement, []).get(el.parentElement)).push(el);
+  for (const el of controls) if (!el.querySelector('textarea')) (byParent.get(el.parentElement) || byParent.set(el.parentElement, []).get(el.parentElement)).push(el);
   for (const group of byParent.values()) {
     if (group.length < 2) continue;
     const hs = group.map((e) => Math.round(e.getBoundingClientRect().height));
     const want = median(hs);
     group.forEach((e, i) => { if (Math.abs(hs[i] - want) >= 8 && group.length >= 2 && hs[i] !== want) add('row', e, `${hs[i]}px in a row of ${hs.join(' / ')}px`, `${nearestTier(want)} (${TIER_HEIGHT[nearestTier(want)]}px)`); });
+  }
+  // fields: every text-field-like control of one form, dialog or page shares one size
+  const fieldGroups = new Map();
+  for (const el of all) {
+    if (el.dataset.slot !== 'textfield') continue;
+    const scope = el.closest('[role=dialog], [data-slot=modal], form, main, aside, section') || root;
+    (fieldGroups.get(scope) || fieldGroups.set(scope, []).get(scope)).push(el);
+  }
+  for (const group of fieldGroups.values()) {
+    const counts = {};
+    group.forEach((e) => { counts[e.dataset.size] = (counts[e.dataset.size] || 0) + 1; });
+    const sizes = Object.keys(counts);
+    if (sizes.length < 2) continue;
+    const common = sizes.sort((x, y) => counts[y] - counts[x])[0];
+    for (const e of group) if (e.dataset.size !== common) add('field-size', e, `${e.dataset.size} among ${common} fields`, common);
   }
   // anchor: a label bigger than the body text pulls the eye away from the content
   for (const el of controls) {
