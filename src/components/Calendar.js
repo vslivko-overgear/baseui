@@ -133,37 +133,37 @@ export function Calendar({
     const total = hasVariableRowCount ? Math.ceil(cells.length / 7) * 7 : 42;
     while (cells.length < total) cells.push(addDays(cells[cells.length - 1], 1));
     const weeks = Array.from({ length: total / 7 }, (_, i) => cells.slice(i * 7, i * 7 + 7));
-    return h('div', { key: iso(mo), role: 'grid', 'aria-label': fmt.monthYear.format(mo), 'aria-multiselectable': mode === 'range' || undefined, className: cx('bui-calendar__grid', hasWeekNumbers && 'bui-calendar__grid--weeks'), ref: mo === months[0] ? grid : undefined, onKeyDown },
-      h('div', { role: 'row', className: 'bui-calendar__row' },
+    return h('div', { key: iso(mo), role: 'grid', 'aria-label': fmt.monthYear.format(mo), 'aria-multiselectable': mode === 'range' || undefined, 'data-slot': 'calendar-grid', className: cx('bui-calendar__grid', hasWeekNumbers && 'bui-calendar__grid--weeks'), ref: mo === months[0] ? grid : undefined, onKeyDown },
+      h('div', { role: 'row', 'data-slot': 'calendar-row', className: 'bui-calendar__row' },
         hasWeekNumbers && h('div', { role: 'columnheader', className: 'bui-calendar__weekday bui-calendar__week-number', 'aria-label': 'Week' }),
-        weekdays.map((w) => h('div', { key: w.long, role: 'columnheader', 'aria-label': w.long, className: 'bui-calendar__weekday' }, w.short))),
-      weeks.map((week, i) => h('div', { key: i, role: 'row', className: 'bui-calendar__row' },
-        hasWeekNumbers && h('div', { role: 'rowheader', className: 'bui-calendar__week-number' }, fmt.number.format(isoWeek(addDays(week[0], 3)))),
+        weekdays.map((w) => h('div', { key: w.long, role: 'columnheader', 'aria-label': w.long, 'data-slot': 'calendar-weekday', className: 'bui-calendar__weekday' }, w.short))),
+      weeks.map((week, i) => h('div', { key: i, role: 'row', 'data-slot': 'calendar-row', className: 'bui-calendar__row' },
+        hasWeekNumbers && h('div', { role: 'rowheader', 'data-slot': 'calendar-week-number', className: 'bui-calendar__week-number' }, fmt.number.format(isoWeek(addDays(week[0], 3)))),
         week.map((d, j) => {
           const outside = d.getMonth() !== m;
-          if (outside && (!hasOutsideDays || numberOfMonths > 1 && inView(d))) return h('div', { key: j, role: 'gridcell', className: 'bui-calendar__cell' });
+          if (outside && (!hasOutsideDays || numberOfMonths > 1 && inView(d))) return h('div', { key: j, role: 'gridcell', 'data-slot': 'calendar-cell', className: 'bui-calendar__cell' });
           const rs = sel && mode === 'range' && sel.start && cmp(d, sel.start) === 0;
           const re = sel && mode === 'range' && sel.end && cmp(d, sel.end) === 0;
           const on = mode === 'single' ? !!sel && cmp(d, sel) === 0 : !!(rs || re);
           const off = disabled(d);
           const isToday = cmp(d, today) === 0;
           const ranged = inRange(d);
-          return h('div', { key: j, role: 'gridcell', 'aria-selected': on || (ranged || undefined), className: cx('bui-calendar__cell', ranged && 'bui-calendar__cell--range', inPreview(d) && 'bui-calendar__cell--preview', previewEnd && rs && 'bui-calendar__cell--preview-start', previewEnd && cmp(d, previewEnd) === 0 && 'bui-calendar__cell--preview-end', rs && sel.end && cmp(sel.start, sel.end) !== 0 && 'bui-calendar__cell--start', re && cmp(sel.start, sel.end) !== 0 && 'bui-calendar__cell--end') },
+          return h('div', { key: j, role: 'gridcell', 'aria-selected': on || (ranged || undefined), 'data-slot': 'calendar-cell', className: cx('bui-calendar__cell', ranged && 'bui-calendar__cell--range', inPreview(d) && 'bui-calendar__cell--preview', previewEnd && rs && 'bui-calendar__cell--preview-start', previewEnd && cmp(d, previewEnd) === 0 && 'bui-calendar__cell--preview-end', rs && sel.end && cmp(sel.start, sel.end) !== 0 && 'bui-calendar__cell--start', re && cmp(sel.start, sel.end) !== 0 && 'bui-calendar__cell--end') },
             h('button', {
               type: 'button', 'data-date': iso(d), tabIndex: cmp(d, tabStop) === 0 && !outside ? 0 : -1, 'aria-label': fmt.long.format(d), 'aria-disabled': off || undefined,
               'aria-current': isToday ? 'date' : undefined, 'aria-pressed': on,
-              className: cx('bui-calendar__day', on && 'bui-calendar__day--selected', isToday && 'bui-calendar__day--today', outside && 'bui-calendar__day--outside', off && 'bui-calendar__day--disabled'),
+              'data-slot': 'calendar-day', className: cx('bui-calendar__day', on && 'bui-calendar__day--selected', isToday && 'bui-calendar__day--today', outside && 'bui-calendar__day--outside', off && 'bui-calendar__day--disabled'),
               onClick: () => pick(d), onFocus: () => { setFocus(d); setHover(d); }, onBlur: () => setHover(null), onPointerEnter: (e) => { if (e.pointerType === 'mouse') setHover(d); }, onPointerLeave: () => setHover(null),
             }, fmt.number.format(d.getDate())));
         }))));
   };
 
-  return h('div', { className: cx('bui-calendar', fluid && 'bui-calendar--fluid', className), ...rest },
-    h('div', { className: 'bui-calendar__header' },
-      h('button', { type: 'button', className: 'bui-calendar__nav', 'aria-label': 'Previous month', disabled: !canPrev, onClick: () => goMonth(-1) }, h(Icon, { name: 'chevronLeft', size: 24 })),
-      h('div', { id: titleId, className: 'bui-calendar__title', 'aria-live': 'polite' }, title),
-      h('button', { type: 'button', className: 'bui-calendar__nav', 'aria-label': 'Next month', disabled: !canNext, onClick: () => goMonth(1) }, h(Icon, { name: 'chevronRight', size: 24 }))),
-    h('div', { className: 'bui-calendar__months' }, months.map(renderMonth)));
+  return h('div', { 'data-slot': 'calendar', className: cx('bui-calendar', fluid && 'bui-calendar--fluid', className), ...rest },
+    h('div', { 'data-slot': 'calendar-header', className: 'bui-calendar__header' },
+      h('button', { type: 'button', 'data-slot': 'calendar-nav', className: 'bui-calendar__nav', 'aria-label': 'Previous month', disabled: !canPrev, onClick: () => goMonth(-1) }, h(Icon, { name: 'chevronLeft', size: 24 })),
+      h('div', { id: titleId, 'data-slot': 'calendar-title', className: 'bui-calendar__title', 'aria-live': 'polite' }, title),
+      h('button', { type: 'button', 'data-slot': 'calendar-nav', className: 'bui-calendar__nav', 'aria-label': 'Next month', disabled: !canNext, onClick: () => goMonth(1) }, h(Icon, { name: 'chevronRight', size: 24 }))),
+    h('div', { 'data-slot': 'calendar-months', className: 'bui-calendar__months' }, months.map(renderMonth)));
 }
 describe(Calendar, 'A month grid for picking a date or a date range.', {
   value: ['ISODateString | { start: ISODateString | null; end: ISODateString | null } | null', null, 'Selected date (`YYYY-MM-DD`), or the range when `mode="range"` (controlled)'],
@@ -211,7 +211,7 @@ export function DatePicker({
 
   // The whole field is the trigger: a click on the icon or the padding opens it too, not only a click on the input.
   const trigger = (extra = {}) => h('div', {
-    className: 'bui-datepicker__field', onClick: extra.onClick,
+    'data-slot': 'datepicker-field', className: 'bui-datepicker__field', onClick: extra.onClick,
     onKeyDown: (e) => { if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') { e.preventDefault(); extra.onClick?.(); } },
   }, h(TextField, {
     ...field, label, readOnly: true, value: text, onChange: () => {}, startIcon: h(Icon, { name: 'calendar', size: field.size === 'sm' ? 20 : 24 }),
@@ -221,7 +221,7 @@ export function DatePicker({
   }));
 
   if (asDialog) {
-    return h('div', { className: cx('bui-datepicker', className) },
+    return h('div', { 'data-slot': 'datepicker', className: cx('bui-datepicker', className) },
       trigger({ onClick: () => { setDraft(selected); setOpen(true); }, 'aria-expanded': open }),
       h(Modal, {
         open, onOpenChange: setOpen, title: label, height: 'content',

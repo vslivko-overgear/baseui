@@ -39,15 +39,15 @@ export function SegmentedControl({ items, value, defaultValue, onValueChange, si
     ref.current.querySelector(`[data-value="${CSS.escape(String(next.value))}"]`)?.focus();
   };
   useAppear(thumbRef, ref, thumb && `${thumb.x}/${thumb.y}/${thumb.w}`);
-  return h('div', { 'data-motion': motion, role: 'radiogroup', 'aria-label': label, ref, onKeyDown, className: cx('bui-segmented', `bui-segmented--${size}`, fullWidth && 'bui-segmented--full', ready && 'bui-segmented--ready', shape === 'circle' && 'bui-shape-circle', className), ...rest },
-    thumb && h('span', { ref: thumbRef, className: 'bui-segmented__thumb', 'aria-hidden': 'true', style: { width: thumb.w, height: thumb.h, transform: `translate(${thumb.x}px, ${thumb.y}px)` } }),
+  return h('div', { 'data-motion': motion, role: 'radiogroup', 'aria-label': label, ref, onKeyDown, 'data-slot': 'segmented', 'data-size': size, className: cx('bui-segmented', `bui-segmented--${size}`, fullWidth && 'bui-segmented--full', ready && 'bui-segmented--ready', shape === 'circle' && 'bui-shape-circle', className), ...rest },
+    thumb && h('span', { ref: thumbRef, 'data-slot': 'segmented-thumb', className: 'bui-segmented__thumb', 'aria-hidden': 'true', style: { width: thumb.w, height: thumb.h, transform: `translate(${thumb.x}px, ${thumb.y}px)` } }),
     items.map((it) => h('button', {
       key: it.value, type: 'button', role: 'radio', 'data-value': it.value, 'aria-checked': it.value === current, tabIndex: it.value === current ? 0 : -1,
-      disabled: it.disabled, title: labelShown(it) ? undefined : it.label, 'aria-label': labelShown(it) ? undefined : it.label, className: cx('bui-segmented__item', iconOnlyItem(it) && 'bui-segmented__item--icon'), onClick: () => setCurrent(it.value),
+      disabled: it.disabled, title: labelShown(it) ? undefined : it.label, 'aria-label': labelShown(it) ? undefined : it.label, 'data-slot': 'segmented-item', className: cx('bui-segmented__item', iconOnlyItem(it) && 'bui-segmented__item--icon'), onClick: () => setCurrent(it.value),
     },
-    showIcon && it.icon && h('span', { className: 'bui-segmented__icon', 'aria-hidden': 'true' }, it.icon),
-    labelShown(it) && h('span', { className: 'bui-segmented__label' }, it.label),
-    showCounter && it.counter != null && h('span', { className: 'bui-segmented__counter' }, it.counter),
+    showIcon && it.icon && h('span', { 'data-slot': 'segmented-icon', className: 'bui-segmented__icon', 'aria-hidden': 'true' }, it.icon),
+    labelShown(it) && h('span', { 'data-slot': 'segmented-label', className: 'bui-segmented__label' }, it.label),
+    showCounter && it.counter != null && h('span', { 'data-slot': 'segmented-counter', className: 'bui-segmented__counter' }, it.counter),
     showBadge && it.badge != null && (typeof it.badge === 'object' ? it.badge : h(Badge, { label: it.badge, variant: 'red' })))));
 }
 describe(SegmentedControl, 'A control for switching between a few exclusive options.', {

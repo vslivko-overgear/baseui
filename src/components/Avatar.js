@@ -31,14 +31,14 @@ export function Avatar({ name, src, fallbackSrc, alt, size = 'md', shape = 'circ
 
   const content = h(Fragment, null,
     image
-      ? h('img', { className: 'bui-avatar__img', src: image, alt: '', onError: () => setFailed((n) => n + 1) })
-      : name ? h('span', { className: 'bui-avatar__initials', style: { fontSize: Math.max(10, Math.round(px * 0.4)) } }, initialsOf(name)) : h(Person),
-    status && h('span', { className: 'bui-avatar__status' }, status));
+      ? h('img', { 'data-slot': 'avatar-img', className: 'bui-avatar__img', src: image, alt: '', onError: () => setFailed((n) => n + 1) })
+      : name ? h('span', { 'data-slot': 'avatar-initials', className: 'bui-avatar__initials', style: { fontSize: Math.max(10, Math.round(px * 0.4)) } }, initialsOf(name)) : h(Person),
+    status && h('span', { 'data-slot': 'avatar-status', className: 'bui-avatar__status' }, status));
 
   const interactive = href || onClick;
   const Tag = href ? 'a' : onClick ? 'button' : 'div';
   const props = {
-    className: cx('bui-avatar', interactive && 'bui-avatar--interactive', className),
+    'data-slot': 'avatar', 'data-size': typeof size === 'number' ? 'custom' : size, 'data-shape': shape, className: cx('bui-avatar', interactive && 'bui-avatar--interactive', className),
     style: { width: px, height: px, borderRadius: radiusOf(shp, px), ...(group && { marginInlineStart: -group.overlap }), ...style },
     ...(href ? { href, target, rel } : onClick ? { type: 'button', onClick } : label ? { role: 'img' } : { 'aria-hidden': 'true' }),
     ...(label && interactive && { 'aria-label': label }),
@@ -66,7 +66,7 @@ export function AvatarGroup({ children, size = 'md', shape = 'circle', className
   const px = resolveSize(size);
   const overlap = Math.round(px * 0.25);
   return h(AvatarGroupContext.Provider, { value: { size, shape, overlap, px } },
-    h('div', { role: 'group', className: cx('bui-avatar-group', className), style: { paddingInlineStart: overlap }, ...rest }, children));
+    h('div', { role: 'group', 'data-slot': 'avatar-group', className: cx('bui-avatar-group', className), style: { paddingInlineStart: overlap }, ...rest }, children));
 }
 describe(AvatarGroup, 'A row of overlapping avatars.', {
   children: ['ReactNode', null, 'Avatars, optionally followed by one `AvatarGroupOverflow`'],
@@ -96,10 +96,10 @@ export function AvatarStatusDot({ variant = 'success', label, icon, className, s
   const tier = parent == null ? 'small' : parent <= 36 ? 'small' : parent <= 72 ? 'medium' : 'large';
   const { size, border } = DOT[tier];
   return h('span', {
-    className: cx('bui-avatar-dot', `bui-avatar-dot--${variant}`, className),
+    'data-slot': 'avatar-dot', className: cx('bui-avatar-dot', `bui-avatar-dot--${variant}`, className),
     role: parent == null ? 'img' : undefined, 'aria-label': parent == null ? label : undefined, title: label,
     style: { width: size, height: size, boxShadow: `0 0 0 ${border}px var(--baseui-Background-Primary)`, ...style }, ...rest,
-  }, icon && tier !== 'small' ? h('span', { className: 'bui-avatar-dot__icon', 'aria-hidden': 'true' }, icon) : variant === 'error' && tier !== 'small' ? h('span', { className: 'bui-avatar-dot__bar', 'aria-hidden': 'true' }) : null);
+  }, icon && tier !== 'small' ? h('span', { 'data-slot': 'avatar-dot-icon', className: 'bui-avatar-dot__icon', 'aria-hidden': 'true' }, icon) : variant === 'error' && tier !== 'small' ? h('span', { 'data-slot': 'avatar-dot-bar', className: 'bui-avatar-dot__bar', 'aria-hidden': 'true' }) : null);
 }
 describe(AvatarStatusDot, 'A presence indicator on an avatar.', {
   variant: ["'success' | 'neutral' | 'error'", "'success'", 'Online, away, busy'],

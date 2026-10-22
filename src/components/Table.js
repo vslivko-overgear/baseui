@@ -15,7 +15,7 @@ const alignOf = (a) => (a === 'end' ? 'end' : a === 'center' ? 'center' : 'start
 const compare = (a, b) => (typeof a === 'number' && typeof b === 'number' ? a - b : String(a ?? '').localeCompare(String(b ?? ''), undefined, { numeric: true }));
 
 function SortIcon({ direction }) {
-  return h('svg', { className: 'bui-table__sort', viewBox: '0 0 16 16', width: 16, height: 16, fill: 'none', stroke: 'currentColor', strokeWidth: 1.6, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
+  return h('svg', { 'data-slot': 'table-sort', className: 'bui-table__sort', viewBox: '0 0 16 16', width: 16, height: 16, fill: 'none', stroke: 'currentColor', strokeWidth: 1.6, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
     h('path', { d: 'm5 6.5 3-3 3 3', opacity: direction === 'desc' ? 0.3 : 1 }),
     h('path', { d: 'm5 9.5 3 3 3-3', opacity: direction === 'asc' ? 0.3 : 1 }));
 }
@@ -67,7 +67,7 @@ export function Table({
 
   // Children mode: TableHeader, TableBody, TableRow, TableHeaderCell, TableCell.
   if (!data) {
-    return h(TableContext.Provider, { value: ctx }, h('div', { className: wrapCls, style: wrapStyle }, h('table', { className: cls, ...rest }, caption && h('caption', { className: 'bui-visually-hidden' }, caption), children)));
+    return h(TableContext.Provider, { value: ctx }, h('div', { className: wrapCls, style: wrapStyle }, h('table', { className: cls, ...rest }, caption && h('caption', { 'data-slot': 'visually-hidden', className: 'bui-visually-hidden' }, caption), children)));
   }
 
   const cell = (c, item) => {
@@ -79,21 +79,21 @@ export function Table({
   return h(TableContext.Provider, { value: ctx },
     h('div', { className: wrapCls, style: wrapStyle },
       h('table', { className: cls, style: { minWidth: floor }, ...rest },
-        caption && h('caption', { className: 'bui-visually-hidden' }, caption),
+        caption && h('caption', { 'data-slot': 'visually-hidden', className: 'bui-visually-hidden' }, caption),
         h('colgroup', null, select && h('col', { style: { width: SELECT_WIDTH } }), columns.map((c) => h('col', { key: c.key, style: { width: colWidth(c) } }))),
         h('thead', null, h('tr', null,
-          select && h('th', { scope: 'col', className: 'bui-table__select' }, selectionMode === 'multiple' && h(Checkbox, { 'aria-label': 'Select all rows', checked: allKeys.length > 0 && allKeys.every((k) => keys.has(k)), indeterminate: allKeys.some((k) => keys.has(k)) && !allKeys.every((k) => keys.has(k)), onCheckedChange: toggleAll })),
+          select && h('th', { scope: 'col', 'data-slot': 'table-select', className: 'bui-table__select' }, selectionMode === 'multiple' && h(Checkbox, { 'aria-label': 'Select all rows', checked: allKeys.length > 0 && allKeys.every((k) => keys.has(k)), indeterminate: allKeys.some((k) => keys.has(k)) && !allKeys.every((k) => keys.has(k)), onCheckedChange: toggleAll })),
           columns.map((c) => {
             const key = (c.sortable && c.sortable.sortKey) || c.key;
             const dir = sortState && sortState.key === key ? sortState.direction : null;
             return h('th', { key: c.key, scope: 'col', 'aria-sort': c.sortable ? (dir === 'asc' ? 'ascending' : dir === 'desc' ? 'descending' : 'none') : undefined, style: { textAlign: alignOf(c.align) } },
               c.sortable
-                ? h('button', { type: 'button', className: cx('bui-table__sortbtn', dir && 'is-sorted'), onClick: () => cycle(c) }, c.header ?? c.key, h(SortIcon, { direction: dir }))
+                ? h('button', { type: 'button', 'data-slot': 'table-sortbtn', className: cx('bui-table__sortbtn', dir && 'is-sorted'), onClick: () => cycle(c) }, c.header ?? c.key, h(SortIcon, { direction: dir }))
                 : c.header ?? c.key);
           }))),
         h('tbody', null,
           isLoading && Array.from({ length: 4 }, (_, i) => h('tr', { key: `s${i}` }, Array.from({ length: colCount }, (__, j) => h('td', { key: j }, h(Skeleton, { width: j === 0 && select ? 16 : '70%' }))))),
-          !isLoading && rows.length === 0 && h('tr', null, h('td', { colSpan: colCount, className: 'bui-table__empty' }, emptyState)),
+          !isLoading && rows.length === 0 && h('tr', null, h('td', { colSpan: colCount, 'data-slot': 'table-empty', className: 'bui-table__empty' }, emptyState)),
           !isLoading && rows.map((item, i) => {
             const k = keyOf(item, i);
             const on = keys.has(k);
@@ -102,7 +102,7 @@ export function Table({
               tabIndex: clickable ? 0 : undefined, onClick: clickable ? () => onRowClick(item) : undefined,
               onKeyDown: clickable ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onRowClick(item); } } : undefined,
             },
-            select && h('td', { className: 'bui-table__select', onClick: (e) => e.stopPropagation() }, h(Checkbox, { 'aria-label': 'Select row', checked: on, onCheckedChange: () => toggle(k) })),
+            select && h('td', { 'data-slot': 'table-select', className: 'bui-table__select', onClick: (e) => e.stopPropagation() }, h(Checkbox, { 'aria-label': 'Select row', checked: on, onCheckedChange: () => toggle(k) })),
             columns.map((c) => cell(c, item)));
           })))));
 }

@@ -7,7 +7,7 @@ const JUSTIFY = { start: 'flex-start', end: 'flex-end', center: 'center', betwee
 
 export function Stack({ direction = 'column', gap = 16, align, justify, wrap = false, as = 'div', className, style, children, ...rest }) {
   return h(as, {
-    className: cx('bui-stack', className),
+    'data-slot': 'stack', className: cx('bui-stack', className),
     style: { flexDirection: direction, gap: sp(gap), alignItems: ALIGN[align], justifyContent: JUSTIFY[justify], flexWrap: wrap ? 'wrap' : undefined, ...style }, ...rest,
   }, children);
 }
@@ -15,16 +15,16 @@ export const HStack = (props) => h(Stack, { direction: 'row', align: 'center', .
 export const VStack = (props) => h(Stack, { direction: 'column', ...props });
 
 export function Center({ as = 'div', className, children, ...rest }) {
-  return h(as, { className: cx('bui-center', className), ...rest }, children);
+  return h(as, { 'data-slot': 'center', className: cx('bui-center', className), ...rest }, children);
 }
 
 export function Grid({ columns = 2, gap = 16, as = 'div', className, style, children, ...rest }) {
   const template = typeof columns === 'number' ? `repeat(${columns}, minmax(0, 1fr))` : columns;
-  return h(as, { className: cx('bui-grid', className), style: { gridTemplateColumns: template, gap: sp(gap), ...style }, ...rest }, children);
+  return h(as, { 'data-slot': 'grid', className: cx('bui-grid', className), style: { gridTemplateColumns: template, gap: sp(gap), ...style }, ...rest }, children);
 }
 
 export function Section({ as = 'section', padding = 24, maxWidth, className, style, children, ...rest }) {
-  return h(as, { className: cx('bui-section', className), style: { padding: sp(padding), maxWidth, ...style }, ...rest }, children);
+  return h(as, { 'data-slot': 'section', className: cx('bui-section', className), style: { padding: sp(padding), maxWidth, ...style }, ...rest }, children);
 }
 
 describe(Stack, 'A flex container with a consistent gap.', {

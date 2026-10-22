@@ -5,9 +5,9 @@ export function Divider({ orientation = 'horizontal', label, className, ...rest 
   return h('div', {
     role: 'separator',
     'aria-orientation': orientation,
-    className: cx('bui-divider', `bui-divider--${orientation}`, label && 'bui-divider--labeled', className),
+    'data-slot': 'divider', className: cx('bui-divider', `bui-divider--${orientation}`, label && 'bui-divider--labeled', className),
     ...rest,
-  }, label && orientation === 'horizontal' ? h('span', { className: 'bui-divider__label' }, label) : null);
+  }, label && orientation === 'horizontal' ? h('span', { 'data-slot': 'divider-label', className: 'bui-divider__label' }, label) : null);
 }
 
 describe(Divider, 'A line that separates content.', {

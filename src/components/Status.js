@@ -14,11 +14,11 @@ const PRESETS = {
 export function Status({ status = 'neutral', icon, title, description, action, actionLabel, actionVariant = 'primary', onAction, className, ...rest }) {
   const p = PRESETS[status];
   const act = action || (actionLabel && h(Button, { label: actionLabel, variant: actionVariant, onClick: onAction }));
-  return h('div', { className: cx('bui-status', className), ...rest },
-    h('div', { className: cx('bui-status__icon', `bui-status__icon--${status}`), 'aria-hidden': 'true' }, icon || h(Icon, { name: p.icon, size: 28 })),
-    h('div', { className: 'bui-status__title' }, title || p.title),
-    h('p', { className: 'bui-status__text' }, description || p.description),
-    act && h('div', { className: 'bui-status__action' }, act));
+  return h('div', { 'data-slot': 'status', 'data-status': status, className: cx('bui-status', className), ...rest },
+    h('div', { 'data-slot': 'status-icon', className: cx('bui-status__icon', `bui-status__icon--${status}`), 'aria-hidden': 'true' }, icon || h(Icon, { name: p.icon, size: 28 })),
+    h('div', { 'data-slot': 'status-title', className: 'bui-status__title' }, title || p.title),
+    h('p', { 'data-slot': 'status-text', className: 'bui-status__text' }, description || p.description),
+    act && h('div', { 'data-slot': 'status-action', className: 'bui-status__action' }, act));
 }
 
 describe(Status, 'Tells the user the state of a view: nothing to show, information, success, a warning or an error.', {

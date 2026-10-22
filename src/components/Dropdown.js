@@ -56,9 +56,9 @@ export function Dropdown({
 
   const triggerProps = { 'aria-haspopup': 'listbox', 'aria-expanded': isOpen, 'aria-controls': isOpen ? id : undefined, onClick: () => setOpen(!isOpen) };
   let n = -1;
-  return h('span', { ref: root, className: cx('bui-dropdown-root', className), ...rest },
+  return h('span', { ref: root, 'data-slot': 'dropdown-root', className: cx('bui-dropdown-root', className), ...rest },
     typeof trigger === 'function' ? trigger(triggerProps) : (trigger ?? h(Button, { variant: 'secondary', ...triggerProps }, 'Open')),
-    shown && h(Floating, null, h('div', { ref: (el) => { panel.current = el; trackSelection(el); }, style: panelStyle(pos), id, role: 'listbox', tabIndex: -1, 'aria-label': label, 'aria-multiselectable': multiple || undefined, className: cx('bui-dropdown bui-dropdown--standalone', glassClass(glass), motion && `bui-motion--${motion}`), 'data-placement': pos?.placement ?? placement, 'data-closing': closing || undefined, onKeyDown },
+    shown && h(Floating, null, h('div', { ref: (el) => { panel.current = el; trackSelection(el); }, style: panelStyle(pos), id, role: 'listbox', 'data-slot': 'dropdown', tabIndex: -1, 'aria-label': label, 'aria-multiselectable': multiple || undefined, className: cx('bui-dropdown bui-dropdown--standalone', glassClass(glass), motion && `bui-motion--${motion}`), 'data-placement': pos?.placement ?? placement, 'data-closing': closing || undefined, onKeyDown },
       multiple && selectAll && h(DropdownSelectAll, { label: allOn ? 'Remove all' : 'Select all', onClick: () => setSelected(allOn ? [] : enabled.map((o) => o.value)) }),
       options.map((o, i) => {
         if (o.type === 'group') return h(DropdownGroup, { key: `g${i}`, label: o.label });
@@ -67,7 +67,7 @@ export function Dropdown({
         return h('div', {
           key: o.value, role: 'option', 'aria-selected': isOn(o), 'aria-disabled': o.disabled || undefined, 'data-highlighted': index === active && index >= 0 ? '' : undefined, tabIndex: -1,
           className: itemClass(o), onClick: () => choose(o), onPointerMove: () => index >= 0 && setActive(index),
-        }, h(DropdownItemContent, { option: o, check: h('span', { className: 'bui-dropdown__check' }, h(CheckMark)) }));
+        }, h(DropdownItemContent, { option: o, check: h('span', { 'data-slot': 'dropdown-check', className: 'bui-dropdown__check' }, h(CheckMark)) }));
       }))));
 }
 describe(Dropdown, 'A menu of options that opens from any trigger. It opens over the page (drawn in the body, flipped and kept on screen), so it never pushes the content or gets clipped by a scrolling container. It stands alone: Selector and Typeahead draw their lists with the same items, groups and dividers.', {

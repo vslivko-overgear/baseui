@@ -15,6 +15,7 @@ const CARD_DOC = {
 
 function cardProps({ variant = 'default', padding = 16, elevation = 'none', width, height, maxWidth, minHeight, className, style }, extra) {
   return {
+    'data-slot': 'card', 'data-variant': variant,
     className: cx('bui-card', `bui-card--${variant}`, className, extra),
     style: { padding: `var(--baseui-spacing-${padding})`, boxShadow: SHADOW[elevation], width: px(width), height: px(height), maxWidth: px(maxWidth), minHeight: px(minHeight), ...style },
   };
@@ -32,7 +33,7 @@ export function ClickableCard({ label, onClick, href, target, isDisabled = false
     ...(href ? { href: isDisabled ? undefined : href, target, role: isDisabled ? 'link' : undefined, 'aria-disabled': isDisabled || undefined, tabIndex: isDisabled ? -1 : undefined } : { type: 'button', disabled: isDisabled }),
     onClick: isDisabled ? (e) => e.preventDefault() : onClick,
   });
-  return h('div', { ...cardProps({ variant, padding, elevation, width, height, maxWidth, minHeight, className, style }, cx('bui-card--clickable', isDisabled && 'bui-card--disabled')), ...rest }, hit, h('div', { className: 'bui-card__content' }, children));
+  return h('div', { ...cardProps({ variant, padding, elevation, width, height, maxWidth, minHeight, className, style }, cx('bui-card--clickable', isDisabled && 'bui-card--disabled')), ...rest }, hit, h('div', { 'data-slot': 'card-content', className: 'bui-card__content' }, children));
 }
 describe(ClickableCard, 'A card that acts as one link or button.', {
   label: ['string', null, 'Accessible name'],
@@ -44,8 +45,8 @@ describe(ClickableCard, 'A card that acts as one link or button.', {
 
 export function SelectableCard({ label, isSelected, onChange, isDisabled = false, variant, padding, elevation, width, height, maxWidth, minHeight, className, style, children, ...rest }) {
   return h('div', { ...cardProps({ variant, padding, elevation, width, height, maxWidth, minHeight, className, style }, cx('bui-card--selectable', isSelected && 'bui-card--selected', isDisabled && 'bui-card--disabled')), ...rest },
-    h('input', { type: 'checkbox', className: 'bui-card__hit', 'aria-label': label, checked: isSelected, disabled: isDisabled, onChange: () => onChange(!isSelected) }),
-    h('div', { className: 'bui-card__content' }, children));
+    h('input', { type: 'checkbox', 'data-slot': 'card-hit', className: 'bui-card__hit', 'aria-label': label, checked: isSelected, disabled: isDisabled, onChange: () => onChange(!isSelected) }),
+    h('div', { 'data-slot': 'card-content', className: 'bui-card__content' }, children));
 }
 describe(SelectableCard, 'A card that can be selected.', {
   label: ['string', null, 'Accessible name'],

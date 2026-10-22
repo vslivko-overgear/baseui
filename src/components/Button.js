@@ -12,7 +12,7 @@ export function Button({
   const [pending, setPending] = useState(false);
   const sz = size || 'md';
   const disabled = isDisabled ?? false;
-  const common = { size: sz, loading: isLoading || pending, disabled, className: cx(isIconOnly && `bui-btn-icon bui-btn-icon--${sz}`, shape === 'circle' && 'bui-shape-circle', className), style: { width, ...(variant === 'destructive' && { '--baseui-button-custom-hover': 'var(--baseui-Extensions-Background-Error-Hover)' }), ...style } };
+  const common = { 'data-slot': isIconOnly ? 'icon-button' : 'button', 'data-variant': variant, 'data-size': sz, size: sz, loading: isLoading || pending, disabled, className: cx(isIconOnly && `bui-btn-icon bui-btn-icon--${sz}`, shape === 'circle' && 'bui-shape-circle', className), style: { width, ...(variant === 'destructive' && { '--baseui-button-custom-hover': 'var(--baseui-Extensions-Background-Error-Hover)' }), ...style } };
   const variantProps = variant === 'ghost' ? { variant: 'text' }
     : variant === 'destructive' ? { variant: 'custom', customBackground: 'var(--baseui-Extensions-Background-Error)', customColor: 'var(--baseui-Extensions-Text-and-Icon-AlwaysDark)' }
       : { variant };
@@ -27,7 +27,7 @@ export function Button({
     ref, ...common, ...variantProps, type: href ? undefined : type, 'aria-label': isIconOnly ? label : undefined, onClick: click,
     startIcon: isIconOnly ? undefined : icon, endIcon: isIconOnly ? undefined : endContent,
     ...(href && { render: h('a', { href, target, rel }) }), ...rest,
-  }, isIconOnly ? [icon, loading && spinner] : [h('span', { key: 'l', className: 'bui-btn__label' }, children ?? label), loading && spinner]);
+  }, isIconOnly ? [icon, loading && spinner] : [h('span', { key: 'l', 'data-slot': 'btn-label', className: 'bui-btn__label' }, children ?? label), loading && spinner]);
   const tip = tooltip === false ? undefined : tooltip || (isIconOnly ? label : undefined);
   return tip ? h(Tooltip, { content: tip }, node) : node;
 }

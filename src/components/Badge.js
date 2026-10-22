@@ -2,11 +2,11 @@ import { h, cx } from '../react.js';
 import { describe } from '../doc.js';
 
 export function Badge({ variant = 'secondary', size = 'md', type = 'label', max = 99, disabled = false, label, icon, className, ...rest }) {
-  if (type === 'dot') return h('span', { role: 'img', 'aria-label': label, className: cx('bui-badge', 'bui-badge--dot', `bui-badge--${variant}`, size !== 'md' && `bui-badge--${size}`, disabled && 'bui-badge--disabled', className), ...rest });
+  if (type === 'dot') return h('span', { role: 'img', 'aria-label': label, 'data-slot': 'badge', 'data-type': 'dot', 'data-variant': variant, 'data-size': size, className: cx('bui-badge', 'bui-badge--dot', `bui-badge--${variant}`, size !== 'md' && `bui-badge--${size}`, disabled && 'bui-badge--disabled', className), ...rest });
   if (type === 'counter' && typeof label === 'number' && label > max) label = `${max}+`;
-  return h('span', { className: cx('bui-badge', type === 'counter' && 'bui-badge--counter', `bui-badge--${variant}`, size !== 'md' && `bui-badge--${size}`, disabled && 'bui-badge--disabled', className), title: typeof label === 'string' || typeof label === 'number' ? String(label) : undefined, ...rest },
-    icon && h('span', { className: 'bui-badge__icon', 'aria-hidden': 'true' }, icon),
-    h('span', { className: 'bui-badge__label' }, label));
+  return h('span', { 'data-slot': 'badge', 'data-type': type, 'data-variant': variant, 'data-size': size, className: cx('bui-badge', type === 'counter' && 'bui-badge--counter', `bui-badge--${variant}`, size !== 'md' && `bui-badge--${size}`, disabled && 'bui-badge--disabled', className), title: typeof label === 'string' || typeof label === 'number' ? String(label) : undefined, ...rest },
+    icon && h('span', { 'data-slot': 'badge-icon', className: 'bui-badge__icon', 'aria-hidden': 'true' }, icon),
+    h('span', { 'data-slot': 'badge-label', className: 'bui-badge__label' }, label));
 }
 describe(Badge, 'A compact label for a status, category or count.', {
   variant: ["'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | 'blue' | 'blue-light' | 'green' | 'green-light' | 'orange' | 'pink' | 'red'", "'secondary'", 'primary is the inverse of the page, secondary a soft gray; the rest are semantic and accent colors, all solid'],

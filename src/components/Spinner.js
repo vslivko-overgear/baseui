@@ -11,11 +11,11 @@ const COLORS = {
 export function Spinner({ size = 'md', customSize, color = 'primary', className, style, ...rest }) {
   const px = size === 'custom' ? (customSize ?? SIZES.md) : (typeof size === 'number' ? size : SIZES[size]);
   return h('span', {
-    role: 'status', 'aria-label': 'Loading', className: cx('bui-spinner', className),
+    role: 'status', 'aria-label': 'Loading', 'data-slot': 'spinner', 'data-size': typeof size === 'number' ? 'custom' : size, className: cx('bui-spinner', className),
     style: { width: px, height: px, color: COLORS[color], ...style }, ...rest,
   }, h('svg', { viewBox: '0 0 24 24', fill: 'none', 'aria-hidden': 'true' },
-    h('circle', { className: 'bui-spinner__track', cx: 12, cy: 12, r: 9, strokeWidth: 3 }),
-    h('circle', { className: 'bui-spinner__arc', cx: 12, cy: 12, r: 9, strokeWidth: 3, strokeLinecap: 'round' })));
+    h('circle', { 'data-slot': 'spinner-track', className: 'bui-spinner__track', cx: 12, cy: 12, r: 9, strokeWidth: 3 }),
+    h('circle', { 'data-slot': 'spinner-arc', className: 'bui-spinner__arc', cx: 12, cy: 12, r: 9, strokeWidth: 3, strokeLinecap: 'round' })));
 }
 
 describe(Spinner, 'A loading indicator.', {

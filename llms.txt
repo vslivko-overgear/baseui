@@ -1,0 +1,85 @@
+# baseui
+
+> A design system on Base UI: foundations, components and a documentation site built from its own components. Zero build, ES modules, tokens in CSS variables.
+
+## Use
+
+- Load `tokens.css`, `lib/components.css` and `src/components.css`; set `data-theme="light|dark"` on `<html>`.
+- Import components from `src/index.js`.
+- Every component documents its props with `describe()`; the pages below are generated from it.
+
+
+## Theming
+
+- [Theme Settings](docs/theming/theme-settings.md): The theme of this site and of your own app: the settings are applied at once and stored in a cookie on this device.
+
+## Foundations
+
+- [All Tokens](docs/foundations/all-tokens.md)
+- [Color](docs/foundations/color.md)
+- [Focus](docs/foundations/focus.md)
+- [Icons](docs/foundations/icons.md): The icon catalog. Choose outline or filled, and the stroke width for outline.
+- [Layout](docs/foundations/layout.md)
+- [Motion](docs/foundations/motion.md)
+- [Shadow](docs/foundations/shadow.md)
+- [Shape](docs/foundations/shape.md)
+- [Spacing](docs/foundations/spacing.md)
+- [Typography](docs/foundations/typography.md): Type styles for headings and text.
+
+## Components
+
+- [Avatar](docs/components/avatar.md): A person or entity shown as an image, initials or a placeholder.
+- [Avatar Group](docs/components/avatar-group.md): A row of overlapping avatars.
+- [Badge](docs/components/badge.md): A compact label for a status, category or count.
+- [Banner](docs/components/banner.md): An inline message with a status.
+- [Breadcrumbs](docs/components/breadcrumbs.md): Links that show where the user is in a hierarchy.
+- [Button](docs/components/button.md): Triggers an action or navigates. A label that does not fit in the width of the button is cut with an ellipsis, never wrapped.
+- [Icon Button](docs/components/icon-button.md): A button with only an icon.
+- [Card](docs/components/card.md): A container that groups related content.
+- [Clickable Card](docs/components/clickable-card.md): A card that acts as one link or button.
+- [Selectable Card](docs/components/selectable-card.md): A card that can be selected.
+- [Collapsible](docs/components/collapsible.md): A section that expands and collapses.
+- [Dialog](docs/components/dialog.md): A universal modal window on top of Base UI Dialog. On mobile it sticks to the bottom, on desktop it centers automatically.
+- [Alert Dialog](docs/components/alert-dialog.md): A dialog that asks the user to confirm or cancel.
+- [Divider](docs/components/divider.md): A line that separates content.
+- [Dropdown](docs/components/dropdown.md): A menu of options that opens from any trigger. It opens over the page (drawn in the body, flipped and kept on screen), so it never pushes the content or gets cl
+- [Calendar](docs/components/calendar.md): A month grid for picking a date or a date range.
+- [Date Picker](docs/components/date-picker.md): A date field. It opens the calendar in a popover, and in a Dialog sheet on small screens. The field is a Text Input, so its size, variant, label and status come
+- [Checkbox](docs/components/checkbox.md): A checkbox on top of the headless Base UI Checkbox. A box plus an optional label; checked/disabled/indeterminate states come from Base UI data attributes. Style
+- [Checkbox Group](docs/components/checkbox-group.md): A group of checkboxes on top of the Base UI CheckboxGroup: the value is an array of checked `value`s. The error is a message under the group (the boxes do not t
+- [Number Input](docs/components/number-input.md): A text input for numbers.
+- [OTP Input](docs/components/otp-input.md): A one-time code field on the Base UI OTP Field primitives. Base UI manages focus movement, paste, character filtering, autofill and native form integration.
+- [Radio](docs/components/radio.md): A group of radio buttons on top of Base UI RadioGroup: the value is the `value` of the selected option. The error is a message under the group (the circles do n
+- [Rating](docs/components/rating.md): Collects a rating as stars. Only whole values can be chosen.
+- [Selector](docs/components/selector.md): Select: Base UI Select on the shared field shell `FieldShell`. Supports single and multiple selection. The shell (Field.Root) sits outside Select.Root so that S
+- [Slider](docs/components/slider.md): Selects a number in a range.
+- [Switch](docs/components/switch.md): A switch on top of the headless Base UI Switch: an instant on/off of an independent setting. A track + a thumb + an optional label; checked/disabled states come
+- [Text Input](docs/components/text-input.md): A text field on the shared shell `FieldShell` (Base UI Field): the shell gives the box, floating label, caption and a11y wiring, TextField is the input/textarea
+- [Typeahead](docs/components/typeahead.md): Autocomplete: Base UI Combobox on the shared field shell `FieldShell`. The search text and the selected value have independent states (`inputValue`/`value`). Th
+- [Navbar](docs/components/navbar.md): The bar at the top of a mobile screen: a back button on the left, the title in the middle and up to two icon actions on the right.
+- [Bottom Bar](docs/components/bottom-bar.md): The bar at the bottom of a mobile screen for switching between 2 to 6 top-level sections. The active one is highlighted; it can also float above the content, li
+- [Layout](docs/components/layout.md): A flex container with a consistent gap.
+- [Center](docs/components/center.md): Centers its content.
+- [Grid](docs/components/grid.md): A CSS grid with equal columns.
+- [Section](docs/components/section.md): A padded block with an optional maximum width.
+- [Link](docs/components/link.md): A hyperlink.
+- [List](docs/components/list.md): A vertical list of rows with an optional title and divider.
+- [List Item](docs/components/list-item.md): A list row: an icon or an avatar, a title with a caption, details and a control. A row with `onClick` or `items` is a button; otherwise it is plain text.
+- [Pagination](docs/components/pagination.md): Navigation between pages. The number of items is always the same (the first and the last page, the current one with its neighbours, and a gap on each side), so 
+- [Popover](docs/components/popover.md): A floating panel anchored to a trigger. It opens over the page (drawn in the body, flipped and kept on screen), so it never pushes the content or gets clipped b
+- [Progress Bar](docs/components/progress-bar.md): A linear progress indicator.
+- [Rating Display](docs/components/rating-display.md): Shows a rating as stars, for example an average score. It cannot be changed.
+- [Segmented Control](docs/components/segmented-control.md): A control for switching between a few exclusive options.
+- [Skeleton](docs/components/skeleton.md): A placeholder shown while content loads.
+- [Spinner](docs/components/spinner.md): A loading indicator.
+- [Status](docs/components/status.md): Tells the user the state of a view: nothing to show, information, success, a warning or an error.
+- [Table](docs/components/table.md): Tabular data with sorting, selection and several looks.
+- [Tabs](docs/components/tabs.md): Switches between related views.
+- [Toast](docs/components/toast.md): Shows brief notifications: a message, an optional action and a close button. Call `useToast()` to add one.
+- [Token](docs/components/token.md): A chip on top of the headless Base UI Toggle: an interactive element “for selection or indication”. `size` (`md` / `sm`), the selected state comes from Base UI 
+- [Token Group](docs/components/token-group.md): A group of chips: a title, a wrapping container and a caption/error. With `options`, a managed set on Base UI ToggleGroup (the value is an array of selected `va
+- [Tooltip](docs/components/tooltip.md): A short hint on hover or focus.
+
+## Tools
+
+- [Radius Check](docs/tools/radius-check.md): Checks that nested rounded corners are concentric: the inner radius is the outer radius minus the inset.

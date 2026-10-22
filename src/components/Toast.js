@@ -38,16 +38,16 @@ function ToastItem({ item, onDismiss, onGone }) {
 
   const { status, icon, action } = item;
   return h('div', {
-    className: 'bui-toast-item', 'data-leaving': item.leaving || undefined,
+    'data-slot': 'toast-item', className: 'bui-toast-item', 'data-leaving': item.leaving || undefined,
     onTransitionEnd: (e) => { if (item.leaving && e.target === e.currentTarget && e.propertyName === 'grid-template-rows') onGone(item.id); },
-  }, h('div', { className: 'bui-toast-item__clip' }, h('div', {
-    role: status === 'error' ? 'alert' : 'status', className: cx('bui-toast', `bui-toast--${item.variant}`, glassClass(item.glass)),
+  }, h('div', { 'data-slot': 'toast-item-clip', className: 'bui-toast-item__clip' }, h('div', {
+    role: status === 'error' ? 'alert' : 'status', 'data-slot': 'toast', 'data-variant': item.variant, 'data-status': status, className: cx('bui-toast', `bui-toast--${item.variant}`, glassClass(item.glass)),
     onMouseEnter: pause, onMouseLeave: run, onFocus: pause, onBlur: run,
   },
-    (icon || status !== 'neutral') && h('span', { className: 'bui-toast__icon' }, icon || h(Icon, { name: status, size: 24 })),
-    h('div', { className: 'bui-toast__text' }, item.message),
+    (icon || status !== 'neutral') && h('span', { 'data-slot': 'toast-icon', className: 'bui-toast__icon' }, icon || h(Icon, { name: status, size: 24 })),
+    h('div', { 'data-slot': 'toast-text', className: 'bui-toast__text' }, item.message),
     action && h(Button, { variant: 'ghost', size: 'xsm', className: 'bui-toast__action', onClick: () => { action.onClick?.(); onDismiss(item.id); } }, action.label),
-    h('button', { type: 'button', className: 'bui-toast__close', 'aria-label': 'Dismiss notification', onClick: () => onDismiss(item.id) },
+    h('button', { type: 'button', 'data-slot': 'toast-close', className: 'bui-toast__close', 'aria-label': 'Dismiss notification', onClick: () => onDismiss(item.id) },
       h(Icon, { name: 'close', size: 24 })))));
 }
 
@@ -64,7 +64,7 @@ export function ToastProvider({ children, placement = 'bottom-right', limit = 4,
   const update = useCallback((id, options) => setItems((list) => list.map((t) => (t.id === id ? { ...t, ...options } : t))), []);
   const api = useMemo(() => ({ toast, dismiss, update }), [toast, dismiss, update]);
   return h(ToastContext.Provider, { value: api }, children,
-    h('div', { className: cx('bui-toast-region', `bui-toast-region--${placement}`), role: 'region', 'aria-label': 'Notifications' },
+    h('div', { 'data-slot': 'toast-region', className: cx('bui-toast-region', `bui-toast-region--${placement}`), role: 'region', 'aria-label': 'Notifications' },
       items.filter((t) => !t.leaving).slice(-limit).concat(items.filter((t) => t.leaving)).sort((x, y) => x.id - y.id).map((item) => h(ToastItem, { key: item.id, item, onDismiss: dismiss, onGone: gone }))));
 }
 

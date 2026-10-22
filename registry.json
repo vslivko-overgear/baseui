@@ -1,0 +1,833 @@
+{
+  "name": "baseui",
+  "homepage": "https://baseuikit.vercel.app",
+  "items": [
+    {
+      "name": "alert-dialog",
+      "type": "registry:component",
+      "title": "AlertDialog",
+      "description": "A dialog that asks the user to confirm or cancel.",
+      "exports": [
+        "AlertDialog"
+      ],
+      "files": [
+        {
+          "path": "src/components/AlertDialog.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/base.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:component",
+      "title": "Avatar",
+      "description": "A person or entity shown as an image, initials or a placeholder.",
+      "exports": [
+        "AvatarGroupContext",
+        "Avatar",
+        "AvatarGroup",
+        "AvatarGroupOverflow",
+        "AvatarStatusDot"
+      ],
+      "files": [
+        {
+          "path": "src/components/Avatar.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [
+        "tooltip"
+      ],
+      "sharedFiles": [
+        "src/react.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:component",
+      "title": "Badge",
+      "description": "A compact label for a status, category or count.",
+      "exports": [
+        "Badge"
+      ],
+      "files": [
+        {
+          "path": "src/components/Badge.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "banner",
+      "type": "registry:component",
+      "title": "Banner",
+      "description": "An inline message with a status.",
+      "exports": [
+        "Banner"
+      ],
+      "files": [
+        {
+          "path": "src/components/Banner.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/icons.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "breadcrumbs",
+      "type": "registry:component",
+      "title": "Breadcrumbs",
+      "description": "Links that show where the user is in a hierarchy.",
+      "exports": [
+        "Breadcrumbs"
+      ],
+      "files": [
+        {
+          "path": "src/components/Breadcrumbs.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/icons.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:component",
+      "title": "Button",
+      "description": "Triggers an action or navigates. A label that does not fit in the width of the button is cut with an ellipsis, never wrapped.",
+      "exports": [
+        "Button",
+        "IconButton"
+      ],
+      "files": [
+        {
+          "path": "src/components/Button.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [
+        "tooltip",
+        "spinner"
+      ],
+      "sharedFiles": [
+        "src/react.js",
+        "src/base.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "calendar",
+      "type": "registry:component",
+      "title": "Calendar",
+      "description": "A month grid for picking a date or a date range.",
+      "exports": [
+        "Calendar",
+        "DatePicker"
+      ],
+      "files": [
+        {
+          "path": "src/components/Calendar.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [
+        "button",
+        "popover"
+      ],
+      "sharedFiles": [
+        "src/react.js",
+        "src/icons.js",
+        "src/base.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:component",
+      "title": "Card",
+      "description": "A container that groups related content.",
+      "exports": [
+        "Card",
+        "ClickableCard",
+        "SelectableCard"
+      ],
+      "files": [
+        {
+          "path": "src/components/Card.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "checks",
+      "type": "registry:component",
+      "title": "Checkbox",
+      "description": "",
+      "exports": [
+        "Checkbox",
+        "CheckboxGroup",
+        "Radio",
+        "RadioGroup"
+      ],
+      "files": [
+        {
+          "path": "src/components/Checks.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/base.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "collapsible",
+      "type": "registry:component",
+      "title": "Collapsible",
+      "description": "A section that expands and collapses.",
+      "exports": [
+        "Collapsible",
+        "CollapsibleGroup"
+      ],
+      "files": [
+        {
+          "path": "src/components/Collapsible.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/icons.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "divider",
+      "type": "registry:component",
+      "title": "Divider",
+      "description": "A line that separates content.",
+      "exports": [
+        "Divider"
+      ],
+      "files": [
+        {
+          "path": "src/components/Divider.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "dropdown",
+      "type": "registry:component",
+      "title": "Dropdown",
+      "description": "A menu of options that opens from any trigger. It opens over the page (drawn in the body, flipped and kept on screen), so it never pushes the content or gets clipped by a scrolling container. It stands alone: Selector and Typeahead draw their lists with the same items, groups and dividers.",
+      "exports": [
+        "Dropdown"
+      ],
+      "files": [
+        {
+          "path": "src/components/Dropdown.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [
+        "button"
+      ],
+      "sharedFiles": [
+        "src/react.js",
+        "src/doc.js",
+        "src/theme-flags.js",
+        "src/floating.js",
+        "src/../lib/Dropdown.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "layout",
+      "type": "registry:component",
+      "title": "Stack",
+      "description": "A flex container with a consistent gap.",
+      "exports": [
+        "Stack",
+        "HStack",
+        "VStack",
+        "Center",
+        "Grid",
+        "Section"
+      ],
+      "files": [
+        {
+          "path": "src/components/Layout.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "link",
+      "type": "registry:component",
+      "title": "Link",
+      "description": "A hyperlink.",
+      "exports": [
+        "Link"
+      ],
+      "files": [
+        {
+          "path": "src/components/Link.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "list",
+      "type": "registry:component",
+      "title": "List",
+      "description": "A vertical list of rows with an optional title and divider.",
+      "exports": [
+        "List",
+        "ListItem"
+      ],
+      "files": [
+        {
+          "path": "src/components/List.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/base.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "mobile-navigation",
+      "type": "registry:component",
+      "title": "Navbar",
+      "description": "The bar at the top of a mobile screen: a back button on the left, the title in the middle and up to two icon actions on the right.",
+      "exports": [
+        "Navbar",
+        "BottomBar"
+      ],
+      "files": [
+        {
+          "path": "src/components/MobileNavigation.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [
+        "button",
+        "badge"
+      ],
+      "sharedFiles": [
+        "src/react.js",
+        "src/icons.js",
+        "src/doc.js",
+        "src/theme-flags.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "number-input",
+      "type": "registry:component",
+      "title": "NumberInput",
+      "description": "A text input for numbers.",
+      "exports": [
+        "NumberInput"
+      ],
+      "files": [
+        {
+          "path": "src/components/NumberInput.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/base.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "pagination",
+      "type": "registry:component",
+      "title": "Pagination",
+      "description": "Navigation between pages. The number of items is always the same (the first and the last page, the current one with its neighbours, and a gap on each side), so nothing jumps; a gap is a button that jumps to the middle of the pages it hides, when the page changes; the arrows stay and are disabled at the ends. It can also move through the pages by itself.",
+      "exports": [
+        "Pagination"
+      ],
+      "files": [
+        {
+          "path": "src/components/Pagination.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/icons.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "popover",
+      "type": "registry:component",
+      "title": "Popover",
+      "description": "A floating panel anchored to a trigger. It opens over the page (drawn in the body, flipped and kept on screen), so it never pushes the content or gets clipped by a scrolling container.",
+      "exports": [
+        "Popover"
+      ],
+      "files": [
+        {
+          "path": "src/components/Popover.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/doc.js",
+        "src/theme-flags.js",
+        "src/floating.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "progress-bar",
+      "type": "registry:component",
+      "title": "ProgressBar",
+      "description": "A linear progress indicator.",
+      "exports": [
+        "ProgressBar"
+      ],
+      "files": [
+        {
+          "path": "src/components/ProgressBar.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "rating",
+      "type": "registry:component",
+      "title": "Rating",
+      "description": "Collects a rating as stars. Only whole values can be chosen.",
+      "exports": [
+        "Rating",
+        "RatingDisplay"
+      ],
+      "files": [
+        {
+          "path": "src/components/Rating.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/base.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "segmented-control",
+      "type": "registry:component",
+      "title": "SegmentedControl",
+      "description": "A control for switching between a few exclusive options.",
+      "exports": [
+        "SegmentedControl"
+      ],
+      "files": [
+        {
+          "path": "src/components/SegmentedControl.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [
+        "badge"
+      ],
+      "sharedFiles": [
+        "src/react.js",
+        "src/theme-flags.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:component",
+      "title": "Skeleton",
+      "description": "A placeholder shown while content loads.",
+      "exports": [
+        "Skeleton"
+      ],
+      "files": [
+        {
+          "path": "src/components/Skeleton.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "slider",
+      "type": "registry:component",
+      "title": "Slider",
+      "description": "Selects a number in a range.",
+      "exports": [
+        "Slider"
+      ],
+      "files": [
+        {
+          "path": "src/components/Slider.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "spinner",
+      "type": "registry:component",
+      "title": "Spinner",
+      "description": "A loading indicator.",
+      "exports": [
+        "Spinner"
+      ],
+      "files": [
+        {
+          "path": "src/components/Spinner.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "status",
+      "type": "registry:component",
+      "title": "Status",
+      "description": "Tells the user the state of a view: nothing to show, information, success, a warning or an error.",
+      "exports": [
+        "Status"
+      ],
+      "files": [
+        {
+          "path": "src/components/Status.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [
+        "button"
+      ],
+      "sharedFiles": [
+        "src/react.js",
+        "src/icons.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "table",
+      "type": "registry:component",
+      "title": "Table",
+      "description": "Tabular data with sorting, selection and several looks.",
+      "exports": [
+        "Table",
+        "TableHeader",
+        "TableBody",
+        "TableRow",
+        "TableHeaderCell",
+        "TableCell"
+      ],
+      "files": [
+        {
+          "path": "src/components/Table.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [
+        "skeleton"
+      ],
+      "sharedFiles": [
+        "src/react.js",
+        "src/base.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:component",
+      "title": "Tabs",
+      "description": "Switches between related views.",
+      "exports": [
+        "Tabs",
+        "TabList",
+        "Tab",
+        "TabPanel"
+      ],
+      "files": [
+        {
+          "path": "src/components/Tabs.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [
+        "badge",
+        "button"
+      ],
+      "sharedFiles": [
+        "src/react.js",
+        "src/icons.js",
+        "src/doc.js",
+        "src/theme-flags.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "toast",
+      "type": "registry:component",
+      "title": "ToastProvider",
+      "description": "Shows brief notifications: a message, an optional action and a close button. Call `useToast()` to add one.",
+      "exports": [
+        "ToastProvider"
+      ],
+      "files": [
+        {
+          "path": "src/components/Toast.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [
+        "button"
+      ],
+      "sharedFiles": [
+        "src/react.js",
+        "src/icons.js",
+        "src/doc.js",
+        "src/theme-flags.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:component",
+      "title": "Tooltip",
+      "description": "A short hint on hover or focus.",
+      "exports": [
+        "Tooltip"
+      ],
+      "files": [
+        {
+          "path": "src/components/Tooltip.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    }
+  ]
+}

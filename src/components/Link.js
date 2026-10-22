@@ -3,7 +3,7 @@ import { describe } from '../doc.js';
 
 export function Link({ href, external = false, underline = 'hover', className, children, ...rest }) {
   return h('a', {
-    href, className: cx('bui-link', `bui-link--${underline}`, className),
+    href, 'data-slot': 'link', className: cx('bui-link', `bui-link--${underline}`, className),
     ...(external && { target: '_blank', rel: 'noopener noreferrer' }), ...rest,
   }, children);
 }

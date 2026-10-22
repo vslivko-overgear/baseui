@@ -7,7 +7,7 @@ const clamp = (n, min, max) => Math.min(max, Math.max(min, n));
 export function NumberInput({ value, defaultValue, onValueChange, min = -Infinity, max = Infinity, step = 1, label, size, ...rest }) {
   const [v, setV] = useControllable(value, defaultValue ?? '', onValueChange);
   const bump = (d) => setV(clamp((Number(v) || 0) + d * step, min, max));
-  const stepper = h('span', { className: 'bui-stepper-btns' },
+  const stepper = h('span', { 'data-slot': 'stepper-btns', className: 'bui-stepper-btns' },
     h('button', { type: 'button', 'aria-label': 'Decrease', tabIndex: -1, onClick: () => bump(-1), disabled: Number(v) <= min }, '−'),
     h('button', { type: 'button', 'aria-label': 'Increase', tabIndex: -1, onClick: () => bump(1), disabled: Number(v) >= max }, '+'));
   return h(TextField, {

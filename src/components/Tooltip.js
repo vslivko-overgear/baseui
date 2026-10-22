@@ -19,9 +19,9 @@ export function Tooltip({ content, placement = 'top', delay = 300, children, cla
     ? React.cloneElement(children, { 'aria-describedby': open ? id : undefined })
     : children;
   return h('span', {
-    className: cx('bui-tooltip', className), onMouseEnter: show, onMouseLeave: hide, onFocus: show, onBlur: hide, ...rest,
+    'data-slot': 'tooltip', className: cx('bui-tooltip', className), onMouseEnter: show, onMouseLeave: hide, onFocus: show, onBlur: hide, ...rest,
   }, child,
-    open && h('span', { role: 'tooltip', id, className: 'bui-tooltip__bubble', 'data-placement': placement }, content));
+    open && h('span', { role: 'tooltip', id, 'data-slot': 'tooltip-bubble', className: 'bui-tooltip__bubble', 'data-placement': placement }, content));
 }
 
 describe(Tooltip, 'A short hint on hover or focus.', {

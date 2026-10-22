@@ -18,7 +18,7 @@ describe(List, 'A vertical list of rows with an optional title and divider.', {
 
 export function ListItem({ size, overline, children, ...rest }) {
   // The small text above the title lives in the title block, so it moves and wraps with it.
-  const title = overline ? h(Fragment, null, h('span', { className: 'bui-list__overline' }, overline), children) : children;
+  const title = overline ? h(Fragment, null, h('span', { 'data-slot': 'list-overline', className: 'bui-list__overline' }, overline), children) : children;
   return h(BaseListItem, { size: size && SIZE[size], ...rest }, title);
 }
 describe(ListItem, 'A list row: an icon or an avatar, a title with a caption, details and a control. A row with `onClick` or `items` is a button; otherwise it is plain text.', {

@@ -12,7 +12,7 @@ const useTabs = () => useContext(TabsContext);
 export function Tabs({ value, defaultValue, onValueChange, children, className, ...rest }) {
   const [current, setCurrent] = useControllable(value, defaultValue, onValueChange);
   const uid = useId();
-  return h(TabsContext.Provider, { value: { current, setCurrent, uid } }, h('div', { className: cx('bui-tabs', className), ...rest }, children));
+  return h(TabsContext.Provider, { value: { current, setCurrent, uid } }, h('div', { 'data-slot': 'tabs', className: cx('bui-tabs', className), ...rest }, children));
 }
 describe(Tabs, 'Switches between related views.', {
   value: ['string', null, 'Selected tab'],
@@ -68,7 +68,7 @@ export function TabList({ size = 'md', fullWidth = false, showIcon = true, showC
     setCurrent(next.dataset.value);
   };
   return h(TabListContext.Provider, { value: { size, showIcon, showCounter, showBadge } },
-    h('div', { 'data-motion': motion, className: cx('bui-tablist-wrap', `bui-tablist-wrap--${size}`, fullWidth && 'bui-tablist-wrap--full', ready && 'bui-tablist-wrap--ready', className) },
+    h('div', { 'data-motion': motion, 'data-slot': 'tablist-wrap', className: cx('bui-tablist-wrap', `bui-tablist-wrap--${size}`, fullWidth && 'bui-tablist-wrap--full', ready && 'bui-tablist-wrap--ready', className) },
       edge.left && h('div', { className: 'bui-tablist__slide bui-tablist__slide--left' }, h(IconButton, { variant: 'ghost', size: 'xsm', label: 'Slide left', tooltip: false, tabIndex: -1, icon: h(Icon, { name: 'chevronLeft', size: 24 }), onClick: () => slide(-1) })),
       h('div', { role: 'tablist', 'aria-label': label, ref, onKeyDown,
         // Hovering another tab nudges the underline a few pixels toward it (enhanced animations only).
@@ -79,7 +79,7 @@ export function TabList({ size = 'md', fullWidth = false, showIcon = true, showC
           setNudge(t && sel && t !== sel ? (t.offsetLeft > sel.offsetLeft ? 6 : -6) : 0);
         },
         onPointerLeave: () => setNudge(0), className: 'bui-tablist', ...rest }, children,
-        bar && h('span', { ref: indicator, className: 'bui-tablist__indicator', 'aria-hidden': 'true', style: { width: bar.w, transform: `translateX(${bar.x + nudge}px)` } })),
+        bar && h('span', { ref: indicator, 'data-slot': 'tablist-indicator', className: 'bui-tablist__indicator', 'aria-hidden': 'true', style: { width: bar.w, transform: `translateX(${bar.x + nudge}px)` } })),
       edge.right && h('div', { className: 'bui-tablist__slide bui-tablist__slide--right' }, h(IconButton, { variant: 'ghost', size: 'xsm', label: 'Slide right', tooltip: false, tabIndex: -1, icon: h(Icon, { name: 'chevronRight', size: 24 }), onClick: () => slide(1) }))));
 }
 describe(TabList, 'The row of tabs. Its settings work like the Segmented Control ones; a row wider than its container scrolls with slide buttons.', {
@@ -100,15 +100,15 @@ export function Tab({ value, icon, counter, badge, disabled = false, children, c
   return h('button', {
     type: 'button', role: 'tab', id: `${uid}-t-${value}`, 'data-value': value, 'aria-selected': selected, 'aria-controls': `${uid}-p-${value}`,
     tabIndex: selected ? 0 : -1, disabled,
-    className: cx('bui-tab', className), onClick: () => setCurrent(value), ...rest,
+    'data-slot': 'tab', className: cx('bui-tab', className), onClick: () => setCurrent(value), ...rest,
   },
-  h('span', { className: 'bui-tab__block' },
-    hasIcon && h('span', { className: 'bui-tab__icon', 'aria-hidden': 'true' }, icon),
-    h('span', { className: 'bui-tab__text' },
-      h('span', { className: 'bui-tab__label' }, children),
-      showCounter && counter != null && h('span', { className: 'bui-tab__counter' }, counter)),
+  h('span', { 'data-slot': 'tab-block', className: 'bui-tab__block' },
+    hasIcon && h('span', { 'data-slot': 'tab-icon', className: 'bui-tab__icon', 'aria-hidden': 'true' }, icon),
+    h('span', { 'data-slot': 'tab-text', className: 'bui-tab__text' },
+      h('span', { 'data-slot': 'tab-label', className: 'bui-tab__label' }, children),
+      showCounter && counter != null && h('span', { 'data-slot': 'tab-counter', className: 'bui-tab__counter' }, counter)),
     showBadge && badge != null && (typeof badge === 'object' ? badge : h(Badge, { label: badge, variant: 'red', size: size === 'sm' || size === 'md' ? 'sm' : 'md', disabled }))),
-  h('span', { className: 'bui-tab__line', 'aria-hidden': 'true' }));
+  h('span', { 'data-slot': 'tab-line', className: 'bui-tab__line', 'aria-hidden': 'true' }));
 }
 describe(Tab, 'A tab button.', {
   value: ['string', null, 'Identifier matching a `TabPanel`'],
@@ -121,6 +121,6 @@ describe(Tab, 'A tab button.', {
 export function TabPanel({ value, children, className, ...rest }) {
   const { current, uid } = useTabs();
   if (current !== value) return null;
-  return h('div', { role: 'tabpanel', id: `${uid}-p-${value}`, 'aria-labelledby': `${uid}-t-${value}`, tabIndex: 0, className: cx('bui-tabpanel', className), ...rest }, children);
+  return h('div', { role: 'tabpanel', id: `${uid}-p-${value}`, 'aria-labelledby': `${uid}-t-${value}`, tabIndex: 0, 'data-slot': 'tabpanel', className: cx('bui-tabpanel', className), ...rest }, children);
 }
 describe(TabPanel, 'The content of a tab.', { value: ['string', null, 'Identifier of its `Tab`.'] });

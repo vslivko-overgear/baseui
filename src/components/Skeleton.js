@@ -3,13 +3,13 @@ import { describe } from '../doc.js';
 
 export function Skeleton({ variant = 'text', width, height, lines = 1, className, style, ...rest }) {
   if (variant === 'text' && lines > 1) {
-    return h('div', { className: cx('bui-skeleton-lines', className), 'aria-hidden': 'true', style, ...rest },
+    return h('div', { 'data-slot': 'skeleton-lines', className: cx('bui-skeleton-lines', className), 'aria-hidden': 'true', style, ...rest },
       Array.from({ length: lines }, (_, i) => h('span', {
         key: i, className: 'bui-skeleton bui-skeleton--text', style: { width: i === lines - 1 ? '60%' : width },
       })));
   }
   return h('span', {
-    'aria-hidden': 'true', className: cx('bui-skeleton', `bui-skeleton--${variant}`, className),
+    'aria-hidden': 'true', 'data-slot': 'skeleton', className: cx('bui-skeleton', `bui-skeleton--${variant}`, className),
     style: { width, height, ...style }, ...rest,
   });
 }

@@ -9,7 +9,7 @@ const DOC = {
 /** Adds `size` and `motion` to a compiled checkbox or radio component; the classes drive the CSS. */
 function withSizeAndMotion(Base, name) {
   const C = ({ size = 'md', motion, className, ...rest }) =>
-    h(Base, { className: cx(size === 'sm' && 'bui-check--sm', motion && `bui-motion--${motion}`, className), ...rest });
+    h(Base, { 'data-slot': name.replace(/^./, (x) => x.toLowerCase()).replace(/[A-Z]/g, (x) => `-${x.toLowerCase()}`), 'data-size': size, className: cx(size === 'sm' && 'bui-check--sm', motion && `bui-motion--${motion}`, className), ...rest });
   C.displayName = name;
   const doc = Base.__docgenInfo || { description: '', props: {} };
   C.__docgenInfo = { ...doc, props: { ...doc.props, ...DOC } };

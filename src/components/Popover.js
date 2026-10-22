@@ -19,12 +19,12 @@ export function Popover({ trigger, children, open, defaultOpen = false, onOpenCh
     document.addEventListener('keydown', onKey);
     return () => { document.removeEventListener('pointerdown', onDoc); document.removeEventListener('keydown', onKey); };
   }, [isOpen, setOpen]);
-  return h('span', { ref: root, className: cx('bui-popover', className), ...rest },
-    h('span', { className: 'bui-popover__trigger' },
+  return h('span', { ref: root, 'data-slot': 'popover', className: cx('bui-popover', className), ...rest },
+    h('span', { 'data-slot': 'popover-trigger', className: 'bui-popover__trigger' },
       typeof trigger === 'function'
         ? trigger({ 'aria-haspopup': 'dialog', 'aria-expanded': isOpen, 'aria-controls': isOpen ? id : undefined, onClick: () => setOpen(!isOpen) })
         : trigger),
-    shown && h(Floating, null, h('div', { ref: panel, style: panelStyle(pos), id, role: 'dialog', 'aria-label': label, className: cx('bui-popover__panel', panelClassName, glassClass(glass), motion && `bui-motion--${motion}`), 'data-placement': pos?.placement ?? placement, 'data-closing': closing || undefined }, children)));
+    shown && h(Floating, null, h('div', { ref: panel, style: panelStyle(pos), id, role: 'dialog', 'aria-label': label, 'data-slot': 'popover-panel', className: cx('bui-popover__panel', panelClassName, glassClass(glass), motion && `bui-motion--${motion}`), 'data-placement': pos?.placement ?? placement, 'data-closing': closing || undefined }, children)));
 }
 describe(Popover, 'A floating panel anchored to a trigger. It opens over the page (drawn in the body, flipped and kept on screen), so it never pushes the content or gets clipped by a scrolling container.', {
   trigger: ['(props) => ReactElement', null, 'Render function that receives the trigger props'],

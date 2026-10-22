@@ -34,17 +34,17 @@ export function Pagination({ page, total, onPageChange, siblings = 1, autoScroll
   const items = range(page, total, siblings);
   const atEnd = autoScroll && !loop && page >= total;
   return h('nav', {
-    'aria-label': label, className: cx('bui-pagination', className), 'data-auto-scroll': autoScroll && !atEnd ? '' : undefined,
+    'aria-label': label, 'data-slot': 'pagination', className: cx('bui-pagination', className), 'data-auto-scroll': autoScroll && !atEnd ? '' : undefined,
     onPointerEnter: () => setPaused(true), onPointerLeave: () => setPaused(false), onFocus: () => setPaused(true), onBlur: () => setPaused(false), ...rest,
   },
-    h('button', { type: 'button', className: 'bui-page', 'aria-label': 'Previous page', disabled: page <= 1, onClick: () => go(page - 1) }, h(Icon, { name: 'chevronDown', size: 18, style: { transform: 'rotate(90deg)' } })),
+    h('button', { type: 'button', 'data-slot': 'page', className: 'bui-page', 'aria-label': 'Previous page', disabled: page <= 1, onClick: () => go(page - 1) }, h(Icon, { name: 'chevronDown', size: 18, style: { transform: 'rotate(90deg)' } })),
     items.map((p, i) => {
-      if (p !== '…') return h('button', { key: p, type: 'button', className: 'bui-page', 'aria-current': p === page ? 'page' : undefined, 'aria-label': `Page ${p}`, onClick: () => go(p) }, p);
+      if (p !== '…') return h('button', { key: p, type: 'button', 'data-slot': 'page', className: 'bui-page', 'aria-current': p === page ? 'page' : undefined, 'aria-label': `Page ${p}`, onClick: () => go(p) }, p);
       // a gap is a button too: it jumps to the middle of the pages it hides
       const target = Math.round((items[i - 1] + items[i + 1]) / 2);
       return h('button', { key: 'e' + i, type: 'button', className: 'bui-page bui-page--gap', 'aria-label': `Jump to page ${target}`, onClick: () => go(target) }, '…');
     }),
-    h('button', { type: 'button', className: 'bui-page', 'aria-label': 'Next page', disabled: page >= total, onClick: () => go(page + 1) }, h(Icon, { name: 'chevronRight', size: 18 })));
+    h('button', { type: 'button', 'data-slot': 'page', className: 'bui-page', 'aria-label': 'Next page', disabled: page >= total, onClick: () => go(page + 1) }, h(Icon, { name: 'chevronRight', size: 18 })));
 }
 describe(Pagination, 'Navigation between pages. The number of items is always the same (the first and the last page, the current one with its neighbours, and a gap on each side), so nothing jumps; a gap is a button that jumps to the middle of the pages it hides, when the page changes; the arrows stay and are disabled at the ends. It can also move through the pages by itself.', {
   page: ['number', null, 'Current page (1-based)'],

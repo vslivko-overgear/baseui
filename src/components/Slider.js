@@ -5,8 +5,8 @@ export function Slider({ value, defaultValue = 0, onValueChange, min = 0, max = 
   const [v, setV] = useControllable(value, defaultValue, onValueChange);
   const id = useId();
   const pct = ((v - min) / (max - min)) * 100;
-  return h('div', { className: cx('bui-slider', disabled && 'bui-slider--disabled', className) },
-    (label || showValue) && h('div', { className: 'bui-slider__head' }, h('label', { htmlFor: id }, label), showValue && h('output', { htmlFor: id }, v)),
+  return h('div', { 'data-slot': 'slider', className: cx('bui-slider', disabled && 'bui-slider--disabled', className) },
+    (label || showValue) && h('div', { 'data-slot': 'slider-head', className: 'bui-slider__head' }, h('label', { htmlFor: id }, label), showValue && h('output', { htmlFor: id }, v)),
     h('input', {
       id, type: 'range', min, max, step, value: v, disabled, style: { '--bui-slider-pct': `${pct}%` },
       onChange: (e) => setV(Number(e.target.value)), ...rest,
