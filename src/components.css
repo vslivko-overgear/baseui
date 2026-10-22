@@ -357,7 +357,7 @@
   display: inline-flex; align-items: center; gap: 4px; box-sizing: border-box; height: 22px; width: fit-content; max-width: 100%; flex: none; padding: 0 9px; border-radius: var(--baseui-radius-full); white-space: nowrap;
   font: var(--baseui-Typography-Text-12-Regular); color: var(--baseui-Text-and-Icon-Primary); background: var(--baseui-Background-Secondary);
 }
-.bui-badge--sm { height: 18px; padding: 0 7px; gap: 3px; font-size: 11px; line-height: 14px; }
+.bui-badge--sm { height: 18px; padding: 0 7px; gap: 3px; font: var(--baseui-Typography-Text-12-Regular); }
 .bui-badge--lg { height: 28px; padding: 0 12px; gap: 6px; font: var(--baseui-Typography-Text-14-Regular); }
 .bui-badge--sm .bui-badge__icon { width: 10px; height: 10px; }
 .bui-badge--lg .bui-badge__icon { width: 14px; height: 14px; }
