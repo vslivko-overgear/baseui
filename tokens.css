@@ -243,6 +243,30 @@
 
 }
 
+/* ---------- Semantic aliases ----------
+ * Surface / on-surface pairs, so a component names its role, not a palette entry:
+ * background: var(--baseui-popover); color: var(--baseui-on-popover).
+ * They only point at the colors above, so they follow the theme (also a nested [data-theme]). */
+:root,
+[data-theme] {
+  --baseui-surface: var(--baseui-Background-Primary);
+  --baseui-on-surface: var(--baseui-Text-and-Icon-Primary);
+  --baseui-on-surface-muted: var(--baseui-Text-and-Icon-Secondary);
+  --baseui-muted: var(--baseui-Background-Secondary);
+  --baseui-on-muted: var(--baseui-Text-and-Icon-Primary);
+  --baseui-popover: var(--baseui-Extensions-Background-Surface);
+  --baseui-on-popover: var(--baseui-Text-and-Icon-Primary);
+  --baseui-accent: var(--baseui-Background-Accent);
+  --baseui-on-accent: var(--baseui-Extensions-Text-and-Icon-OnColor);
+  --baseui-brand: var(--baseui-Background-Brand);
+  --baseui-on-brand: var(--baseui-Extensions-Text-and-Icon-OnBrand);
+  --baseui-destructive: var(--baseui-Extensions-Background-Error);
+  --baseui-on-destructive: var(--baseui-Extensions-Text-and-Icon-OnColor);
+  --baseui-border: var(--baseui-Border-Primary);
+  --baseui-disabled: var(--baseui-Background-Disabled);
+  --baseui-on-disabled: var(--baseui-Text-and-Icon-Disabled);
+}
+
 /* ---------- Spacing ---------- */
 :root {
   --baseui-spacing-0: 0;

@@ -42,7 +42,11 @@ export const Playground = {
 
 // Anywhere below
 const { toast } = useToast();
-toast({ message: 'Message deleted', status: 'success', action: { label: 'Undo', onClick: restore } });`,
+toast({ message: 'Message deleted', status: 'success', action: { label: 'Undo', onClick: restore } });
+
+// A toast that follows a promise: a spinner while it runs, then success or error
+const { promise } = useToast();
+promise(save(), { loading: 'Saving…', success: 'Saved', error: (e) => e.message });`,
   }),
   render: (args) => h(ToastProvider, { placement: args.placement, limit: args.limit || 1, glass: args.glass }, h(Demo, args)),
 };

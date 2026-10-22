@@ -33,8 +33,8 @@ body { background: #0a0b2b; -webkit-font-smoothing: antialiased; }
 .og-sticky { position: sticky; top: 108px; }
 .og-caption { padding: 18px 20px 10px; font: var(--baseui-Typography-Text-12-Semi-Bold); letter-spacing: .06em; text-transform: uppercase; color: var(--baseui-Text-and-Icon-Secondary); }
 .og-cats { background: var(--og-deep); --baseui-Background-Primary: var(--og-deep); }
-[class*="_popup_1nnzw"] .og-cats { background: transparent; margin: 0 -16px; }
-[class*="_popup_1nnzw"] .og-caption { display: none; }
+[data-slot="modal"] .og-cats { background: transparent; margin: 0 -16px; }
+[data-slot="modal"] .og-caption { display: none; }
 .og-cats .bui-list, .og-cats [class*="_list_"] { width: 100%; }
 
 /* intro */

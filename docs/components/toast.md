@@ -15,5 +15,6 @@ Shows brief notifications: a message, an optional action and a close button. Cal
 | `icon` | `ReactNode` | — | toast() option: a custom icon instead of the status one |
 | `action` | `{ label: string; onClick?: () => void }` | — | toast() option: an optional button; it closes the toast |
 | `duration` | `number` | `5000` | toast() option: milliseconds before it closes; 0 keeps it open |
+| `promise` | `(promise, { loading, success?, error? }) => Promise` | — | useToast() method: a toast that follows a promise. It shows a spinner and `loading` while the promise runs, then switches to success or error (a message or a function of the result / error) and closes by `duration`. Returns the promise |
 
 Live page: http://localhost:8765/#/components/toast

@@ -28,7 +28,7 @@ function parse(css) {
         const c = line.match(/^\s*\/\*\s*(.+?)\s*\*\/\s*$/);
         const t = line.match(/^\s*--baseui-([\w-]+):\s*(.+?);\s*$/);
         if (c) { if (current.tokens.length) groups.push(current); current = { title: c[1], tokens: [] }; }
-        else if (t && !/-scale$|^corner-/.test(t[1])) current.tokens.push({ name: t[1], value: t[2] });   // helper variables (scales) are not tokens of the table
+        else if (t && !/-scale$|^corner-|^(on-)?(surface|muted|popover|accent|brand|destructive|disabled)(-|$)|^border$/.test(t[1])) current.tokens.push({ name: t[1], value: t[2] });   // helper variables (scales) are not tokens of the table
       }
       if (current.tokens.length) groups.push(current);
       return groups;

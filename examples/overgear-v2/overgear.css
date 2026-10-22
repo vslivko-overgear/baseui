@@ -18,7 +18,7 @@ body { background: #0a0b2b; -webkit-font-smoothing: antialiased; }
 .og2 h1, .og2 h2, .og2 h3, .og2 h4 { margin: 0; font-family: var(--og-head); letter-spacing: -.01em; }
 .og2 p { margin: 0; }
 /* compact fields: 44px instead of 48px */
-.og2 [class*="_small_2ah00"] { --fs-height: 44px; --fs-float-top: 0px; }
+.og2 [data-slot="textfield"][data-size="sm"] { --fs-height: 44px; --fs-float-top: 0px; }
 
 /* header */
 .og2-header { display: flex; align-items: center; gap: 12px; height: 60px; padding: 0 16px; background: var(--og-deep); position: sticky; top: 0; z-index: 20; }
@@ -39,15 +39,15 @@ body { background: #0a0b2b; -webkit-font-smoothing: antialiased; }
 .og2-col { min-width: 0; display: grid; gap: 20px; align-content: start; max-width: 1240px; }
 .og2-right { position: sticky; top: 76px; display: grid; gap: 12px; align-content: start; max-height: calc(100vh - 92px); overflow-y: auto; scrollbar-width: none; }
 .og2-caption { padding: 14px 16px 8px; font: var(--baseui-Typography-Text-12-Semi-Bold); letter-spacing: .06em; text-transform: uppercase; color: var(--baseui-Text-and-Icon-Secondary); }
-.og2-cats [class*="_item_1xp1v"] { border-bottom: 1px solid #14163c; }
-.og2-cats [class*="_header_1xp1v"] { min-height: 40px; padding-inline: 16px; border-radius: 0; }
-.og2-cats [class*="_title_1xp1v"] { font: var(--baseui-Typography-Text-14-Semi-Bold); }
+.og2-cats [data-slot="list-item"] { border-bottom: 1px solid #14163c; }
+.og2-cats [data-slot="list-item-header"] { min-height: 40px; padding-inline: 16px; border-radius: 0; }
+.og2-cats [data-slot="list-item-title"] { font: var(--baseui-Typography-Text-14-Semi-Bold); }
 .og2-cats li ul { background: #1b1e45; margin: 0; padding: 0; }
-.og2-cats li ul [class*="_title_1xp1v"] { font: var(--baseui-Typography-Text-14-Regular); color: var(--baseui-Text-and-Icon-Secondary); }
+.og2-cats li ul [data-slot="list-item-title"] { font: var(--baseui-Typography-Text-14-Regular); color: var(--baseui-Text-and-Icon-Secondary); }
 .og2-cats li ul [aria-current] { background: #2b2e63; }
-.og2-cats li ul [aria-current] [class*="_title_1xp1v"] { color: #fff; }
-[class*="_popup_1nnzw"] .og2-caption { display: none; }
-[class*="_popup_1nnzw"] .og2-cats { margin: 0 -16px; }
+.og2-cats li ul [aria-current] [data-slot="list-item-title"] { color: #fff; }
+[data-slot="modal"] .og2-caption { display: none; }
+[data-slot="modal"] .og2-cats { margin: 0 -16px; }
 
 /* 1. title and 2. USPs */
 .og2-title { display: grid; gap: 8px; }

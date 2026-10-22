@@ -3,10 +3,11 @@ import { Icon } from '../icons.js';
 import { describe } from '../doc.js';
 import { glassClass } from '../theme-flags.js';
 import { Button } from './Button.js';
+import { Spinner } from './Spinner.js';
 
 const ToastContext = createContext(null);
 
-/** Hook: const { toast, dismiss, update } = useToast(); toast({ message, variant, status, icon, action, duration }) */
+/** Hook: const { toast, dismiss, update, promise } = useToast(); toast({ message, variant, status, icon, action, duration }); promise(p, { loading, success, error }) */
 export function useToast() {
   const ctx = useContext(ToastContext);
   if (!ctx) throw new Error('useToast: wrap your app in <ToastProvider>');
@@ -62,7 +63,17 @@ export function ToastProvider({ children, placement = 'bottom-right', limit = 4,
     return id;
   }, [limit, glass]);
   const update = useCallback((id, options) => setItems((list) => list.map((t) => (t.id === id ? { ...t, ...options } : t))), []);
-  const api = useMemo(() => ({ toast, dismiss, update }), [toast, dismiss, update]);
+  // toast.promise: a toast that follows a promise: loading (with a spinner, stays open), then success or error (closes by `duration`).
+  // `success` and `error` may be a message or a function of the result / the error. Returns the promise, so it can be awaited.
+  const promise = useCallback((p, { loading, success, error, ...options }) => {
+    const id = toast({ ...options, message: loading, icon: h(Spinner, { size: 'md' }), duration: 0 });
+    const settle = (status, message) => update(id, { status, icon: undefined, message, duration: options.duration ?? 5000 });
+    const text = (m, v) => (typeof m === 'function' ? m(v) : m);
+    return Promise.resolve(p).then(
+      (value) => { settle('success', text(success, value) ?? 'Done'); return value; },
+      (err) => { settle('error', text(error, err) ?? 'Something went wrong'); throw err; });
+  }, [toast, update]);
+  const api = useMemo(() => ({ toast, dismiss, update, promise }), [toast, dismiss, update, promise]);
   return h(ToastContext.Provider, { value: api }, children,
     h('div', { 'data-slot': 'toast-region', className: cx('bui-toast-region', `bui-toast-region--${placement}`), role: 'region', 'aria-label': 'Notifications' },
       items.filter((t) => !t.leaving).slice(-limit).concat(items.filter((t) => t.leaving)).sort((x, y) => x.id - y.id).map((item) => h(ToastItem, { key: item.id, item, onDismiss: dismiss, onGone: gone }))));
@@ -78,4 +89,5 @@ describe(ToastProvider, 'Shows brief notifications: a message, an optional actio
   icon: ['ReactNode', null, 'toast() option: a custom icon instead of the status one'],
   action: ['{ label: string; onClick?: () => void }', null, 'toast() option: an optional button; it closes the toast'],
   duration: ['number', '5000', 'toast() option: milliseconds before it closes; 0 keeps it open'],
+  promise: ['(promise, { loading, success?, error? }) => Promise', null, 'useToast() method: a toast that follows a promise. It shows a spinner and `loading` while the promise runs, then switches to success or error (a message or a function of the result / error) and closes by `duration`. Returns the promise'],
 });

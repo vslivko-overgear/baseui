@@ -790,7 +790,8 @@
         }
       ],
       "registryDependencies": [
-        "button"
+        "button",
+        "spinner"
       ],
       "sharedFiles": [
         "src/react.js",

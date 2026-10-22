@@ -66,7 +66,7 @@ export function Dropdown({
         const index = o.disabled ? -1 : enabled.indexOf(o);
         return h('div', {
           key: o.value, role: 'option', 'aria-selected': isOn(o), 'aria-disabled': o.disabled || undefined, 'data-highlighted': index === active && index >= 0 ? '' : undefined, tabIndex: -1,
-          className: itemClass(o), onClick: () => choose(o), onPointerMove: () => index >= 0 && setActive(index),
+          "data-slot": "dropdown-item", className: itemClass(o), onClick: () => choose(o), onPointerMove: () => index >= 0 && setActive(index),
         }, h(DropdownItemContent, { option: o, check: h('span', { 'data-slot': 'dropdown-check', className: 'bui-dropdown__check' }, h(CheckMark)) }));
       }))));
 }
