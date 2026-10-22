@@ -294,6 +294,23 @@
   --baseui-radius-28: 28px;
   --baseui-radius-32: 32px;
   --baseui-radius-full: 9999px;
+  /* the whole radius scale follows one number: 1 is the scale above, 0.5 halves every radius, 0 makes square corners */
+  --baseui-radius-scale: 1;
+}
+@supports (width: round(1px, 1px)) {
+  :root {
+    --baseui-radius-4: round(calc(4px * var(--baseui-radius-scale)), 0.5px);
+    --baseui-radius-6: round(calc(6px * var(--baseui-radius-scale)), 0.5px);
+    --baseui-radius-8: round(calc(8px * var(--baseui-radius-scale)), 0.5px);
+    --baseui-radius-10: round(calc(10px * var(--baseui-radius-scale)), 0.5px);
+    --baseui-radius-12: round(calc(12px * var(--baseui-radius-scale)), 0.5px);
+    --baseui-radius-14: round(calc(14px * var(--baseui-radius-scale)), 0.5px);
+    --baseui-radius-16: round(calc(16px * var(--baseui-radius-scale)), 0.5px);
+    --baseui-radius-20: round(calc(20px * var(--baseui-radius-scale)), 0.5px);
+    --baseui-radius-24: round(calc(24px * var(--baseui-radius-scale)), 0.5px);
+    --baseui-radius-28: round(calc(28px * var(--baseui-radius-scale)), 0.5px);
+    --baseui-radius-32: round(calc(32px * var(--baseui-radius-scale)), 0.5px);
+  }
 }
 
 /* ---------- Shadow ---------- */

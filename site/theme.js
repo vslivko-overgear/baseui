@@ -70,7 +70,10 @@ export function applyTheme(t) {
   set('--baseui-Extensions-Text-and-Icon-OnBrand', brand && onColor(brand));
   root.dataset.shape = t.shape;
   const k = t.radius / DEFAULT.radius;
-  for (const n of RADII) set(`--baseui-radius-${n}`, k === 1 ? null : `${Math.round(n * k * 2) / 2}px`);
+  // the radius tokens follow --baseui-radius-scale in CSS; a browser without round() gets every value set here
+  const scaled = CSS.supports('width', 'round(1px, 1px)');
+  set('--baseui-radius-scale', k === 1 ? null : String(k));
+  for (const n of RADII) set(`--baseui-radius-${n}`, scaled || k === 1 ? null : `${Math.round(n * k * 2) / 2}px`);
   const head = HEADLINE_FONTS[t.headingFont], text = TEXT_FONTS[t.textFont];
   loadFont(t.headingFont, head); loadFont(t.textFont, text);
   set('--baseui-Typography-Headline-Font-Family', family(t.headingFont, head));

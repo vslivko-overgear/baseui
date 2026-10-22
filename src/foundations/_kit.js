@@ -11,7 +11,7 @@ export function loadTokens() {
 }
 
 function parse(css) {
-  css = css.replace(/@font-face\{[^}]*\}/g, '').replace(/@media[^{]*\{[^{}]*\{[^}]*\}\s*\}/g, '');
+  css = css.replace(/@font-face\{[^}]*\}/g, '').replace(/@(?:media|supports)[^{]*\{[^{}]*\{[^}]*\}\s*\}/g, '');
   const parts = css.split(/\/\*\s*-{5,}\s*(.+?)\s*-{5,}\s*\*\/|\/\*\s*(Typography)\s*\*\//);
   const sections = [];
   for (let i = 1; i < parts.length; i += 3) {
@@ -28,7 +28,7 @@ function parse(css) {
         const c = line.match(/^\s*\/\*\s*(.+?)\s*\*\/\s*$/);
         const t = line.match(/^\s*--baseui-([\w-]+):\s*(.+?);\s*$/);
         if (c) { if (current.tokens.length) groups.push(current); current = { title: c[1], tokens: [] }; }
-        else if (t) current.tokens.push({ name: t[1], value: t[2] });
+        else if (t && !/-scale$|^corner-/.test(t[1])) current.tokens.push({ name: t[1], value: t[2] });   // helper variables (scales) are not tokens of the table
       }
       if (current.tokens.length) groups.push(current);
       return groups;
