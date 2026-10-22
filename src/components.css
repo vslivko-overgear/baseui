@@ -627,6 +627,11 @@
 
 /* a label that does not fit is cut with an ellipsis, not wrapped to a second line */
 [data-slot="button"], [data-slot="icon-button"] { max-width: 100%; min-width: 0; }
+/* the height of a button is fixed; only the width is flexible (in a column or a scrolling container a button is never squeezed below its height) */
+:is([data-slot="button"], [data-slot="icon-button"])[data-size="xsm"] { min-height: 32px; }
+:is([data-slot="button"], [data-slot="icon-button"])[data-size="sm"] { min-height: 40px; }
+:is([data-slot="button"], [data-slot="icon-button"])[data-size="md"] { min-height: 48px; }
+:is([data-slot="button"], [data-slot="icon-button"])[data-size="lg"] { min-height: 56px; }
 .bui-btn__label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 /* the bottom bar sticks to the bottom of its screen: in a column it is pushed down, in a scroller it stays in view */
 .bui-bottombar { position: sticky; bottom: 0; margin-top: auto; z-index: 2; }
