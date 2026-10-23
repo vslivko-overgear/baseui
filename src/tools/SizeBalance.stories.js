@@ -33,7 +33,7 @@ export function page() {
   return h(Fragment, null,
     h('p', { className: 'doc-p' }, 'Small scripts that look after the system. They are not components: you run them while you work on one.'),
     h(Block, { title: 'The ladder' },
-      h('p', { className: 'doc-p' }, 'Everything is measured from ', h('b', null, '16px'), ', the body text, which is ', h('b', null, 'md'), '. Text goes ', TEXT_LADDER.join(' · '), '; controls go ', TIERS.map((t, i) => `${t} ${[32, 40, 48, 56][i]}`).join(' · '), ' px high. Use md by default, sm for a row inside a list, xsm inside a message; lg and a bigger label are for a single call to action.'),
+      h('p', { className: 'doc-p' }, 'Everything is measured from ', h('b', null, '16px'), ', the body text, which is ', h('b', null, 'md'), '. Text goes ', TEXT_LADDER.join(' · '), '; controls go ', TIERS.map((t, i) => `${t} ${[32, 40, 48, 56][i]}`).join(' · '), ' px high. Use md by default, sm for a row inside a list, xsm inside a message; lg is for a single call to action.'),
       h('div', { ref: examples, 'data-size-ignore': '', style: { display: 'grid', gap: 12 } },
         h('div', { style: card }, h(Button, { variant: 'primary', size: 'md' }, 'Send'), h(Button, { variant: 'secondary', size: 'md' }, 'Cancel'), h('span', { className: 'doc-p' }, 'md and md: calm')),
         h('div', { style: card }, h(Button, { variant: 'primary', size: 'lg' }, 'Send'), h(Button, { variant: 'secondary', size: 'xsm' }, 'Cancel'), h('span', { className: 'doc-p' }, 'lg beside xsm: a row that jumps')),
