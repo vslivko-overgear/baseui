@@ -78,7 +78,7 @@
 - [Toast](docs/components/toast.md): Shows brief notifications: a message, an optional action and a close button. Call `useToast()` to add one.
 - [Token](docs/components/token.md): A chip on top of the headless Base UI Toggle: an interactive element “for selection or indication”. `size` (`md` / `sm`), the selected state comes from Base UI 
 - [Token Group](docs/components/token-group.md): A group of chips: a title, a wrapping container and a caption/error. With `options`, a managed set on Base UI ToggleGroup (the value is an array of selected `va
-- [Tooltip](docs/components/tooltip.md): A short hint on hover or focus.
+- [Tooltip](docs/components/tooltip.md): A short hint on hover or focus. It is never shown on a touch screen (no hover there), so keep the information available some other way.
 
 ## Tools
 

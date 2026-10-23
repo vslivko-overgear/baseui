@@ -462,6 +462,13 @@
 .bui-dropdown[data-size="sm"] .bui-dropdown__item--subitem { padding-left: calc(var(--baseui-spacing-12) + 20px); }
 .bui-dropdown[data-size="sm"] .bui-dropdown__group { padding: var(--baseui-spacing-8) var(--baseui-spacing-12) var(--baseui-spacing-4); }
 
+/* Navbar and bottom bar: no hover, only the pressed (active) state. These bars are used on touch screens, where a hover would stick after a tap. */
+.bui-navbar :is([data-slot="icon-button"], [data-slot="button"])[data-variant="ghost"]:hover:not(:disabled):not([data-disabled]) { background-color: transparent; }
+.bui-navbar :is([data-slot="icon-button"], [data-slot="button"])[data-variant="ghost"]:active:not(:disabled):not([data-disabled]) { background-color: var(--baseui-Background-Transparent-Hover); }
+.bui-bottombar__item:hover { background: none; }
+.bui-bottombar__item:active:not(:disabled) .bui-bottombar__icon { background-color: var(--baseui-Background-Transparent-Hover); }
+.bui-bottombar__item--active:active:not(:disabled) .bui-bottombar__icon { background-color: transparent; }
+
 /* ---------- Dropdown (standalone; the item styles live in lib/components.css as .bui-dropdown*) ---------- */
 .bui-dropdown-root { position: relative; display: inline-flex; }
 .bui-dropdown--standalone { position: fixed; z-index: var(--baseui-z-index-400); min-width: 240px; max-width: calc(100vw - 16px); max-height: 360px; overflow-y: auto; animation: bui-fade var(--baseui-duration-fast) var(--baseui-ease-standard); }

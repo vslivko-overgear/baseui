@@ -809,7 +809,7 @@
       "name": "tooltip",
       "type": "registry:component",
       "title": "Tooltip",
-      "description": "A short hint on hover or focus.",
+      "description": "A short hint on hover or focus. It is never shown on a touch screen (no hover there), so keep the information available some other way.",
       "exports": [
         "Tooltip"
       ],

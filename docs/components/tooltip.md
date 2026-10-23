@@ -1,6 +1,6 @@
 # Tooltip
 
-A short hint on hover or focus.
+A short hint on hover or focus. It is never shown on a touch screen (no hover there), so keep the information available some other way.
 
 ## Props
 
