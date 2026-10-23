@@ -539,9 +539,26 @@
 [data-motion="off"], [data-motion="off"] *:not(.bui-spinner, .bui-spinner *, .bui-skeleton) { animation-duration: 0.001ms !important; animation-delay: 0s !important; transition-duration: 0.001ms !important; transition-delay: 0s !important; scroll-behavior: auto !important; }
 /* glass: translucent surfaces that blur what is behind them; .bui-glass forces it, .bui-glass-off prevents it (the glass prop of a component) */
 .bui-glass:not(.bui-navbar--floating, .bui-bottombar--floating), [data-glass="on"] :is(.bui-navbar:not(.bui-navbar--floating), .bui-bottombar:not(.bui-bottombar--floating), .bui-popover__panel, .bui-dropdown, [data-slot="dropdown-popup"], [data-slot="modal"], .bui-toast:not(.bui-toast--inverse)):not(.bui-glass-off) {
-  background: color-mix(in srgb, var(--baseui-Extensions-Background-Surface) 62%, transparent);
-  -webkit-backdrop-filter: blur(20px) saturate(160%); backdrop-filter: blur(20px) saturate(160%);
+  background-color: color-mix(in srgb, var(--baseui-Extensions-Background-Surface) var(--bui-glass-fill), transparent);
+  background-image: var(--bui-glass-light);
+  -webkit-backdrop-filter: var(--bui-glass-filter); backdrop-filter: var(--bui-glass-filter);
+  box-shadow: var(--bui-glass-rim), var(--bui-glass-drop, var(--baseui-shadow-high));
 }
+/* the glass material: a lit edge (rim), light falling from the top left, a slightly brighter and more saturated backdrop.
+   Light and dark themes differ only in the strength of the highlights; the other pieces below use the same variables. */
+:root {
+  --bui-glass-fill: 56%;
+  --bui-glass-filter: blur(20px) saturate(180%) brightness(1.05);
+  --bui-glass-light: linear-gradient(155deg, rgb(255 255 255 / 0.38) 0%, rgb(255 255 255 / 0.08) 38%, rgb(255 255 255 / 0) 62%);
+  --bui-glass-rim: inset 0 1px 0 rgb(255 255 255 / 0.85), inset 0 0 0 1px rgb(255 255 255 / 0.3), inset 0 -1px 0 rgb(0 0 0 / 0.06), inset 0 0 14px rgb(255 255 255 / 0.2), 0 0 0 0.5px rgb(0 0 0 / 0.06);
+}
+[data-theme="dark"] {
+  --bui-glass-fill: 62%;
+  --bui-glass-light: linear-gradient(155deg, rgb(255 255 255 / 0.12) 0%, rgb(255 255 255 / 0.03) 38%, rgb(255 255 255 / 0) 62%);
+  --bui-glass-rim: inset 0 1px 0 rgb(255 255 255 / 0.22), inset 0 0 0 1px rgb(255 255 255 / 0.08), inset 0 -1px 0 rgb(0 0 0 / 0.35), inset 0 0 14px rgb(255 255 255 / 0.05), 0 0 0 0.5px rgb(0 0 0 / 0.4);
+}
+/* flat bars have no drop shadow */
+:is(.bui-navbar, .bui-bottombar):not(.bui-navbar--floating, .bui-bottombar--floating) { --bui-glass-drop: 0 0 0 0 transparent; }
 
 /* List: the subtitle is one size smaller than the title; the overline is the same text above the title */
 [data-slot="list-item-subtitle"], .bui-list__overline { font: var(--baseui-Typography-Text-14-Regular); }
@@ -632,9 +649,10 @@
 /* glass: the pieces are translucent and the gradient is a blur that fades out */
 :is([data-glass="on"] :is(.bui-navbar--floating, .bui-bottombar--floating):not(.bui-glass-off), .bui-navbar--floating.bui-glass, .bui-bottombar--floating.bui-glass) {
   & :is(.bui-navbar__side:not(:empty), .bui-navbar__heading, .bui-bottombar__bar) {
-    background: color-mix(in srgb, var(--baseui-Extensions-Background-Surface) 62%, transparent);
-    -webkit-backdrop-filter: blur(20px) saturate(160%); backdrop-filter: blur(20px) saturate(160%);
-    box-shadow: var(--baseui-shadow-med);
+    background-color: color-mix(in srgb, var(--baseui-Extensions-Background-Surface) var(--bui-glass-fill), transparent);
+    background-image: var(--bui-glass-light);
+    -webkit-backdrop-filter: var(--bui-glass-filter); backdrop-filter: var(--bui-glass-filter);
+    box-shadow: var(--bui-glass-rim), var(--baseui-shadow-med);
   }
   &::before { background: color-mix(in srgb, var(--baseui-Background-Primary) 35%, transparent); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
 }
