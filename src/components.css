@@ -537,24 +537,37 @@
 /* the sliding highlights move only in enhanced (--bui-fx is 1); in basic they appear in place with a short fade (see useAppear) */
 /* off: nothing moves; loading indicators keep going */
 [data-motion="off"], [data-motion="off"] *:not(.bui-spinner, .bui-spinner *, .bui-skeleton) { animation-duration: 0.001ms !important; animation-delay: 0s !important; transition-duration: 0.001ms !important; transition-delay: 0s !important; scroll-behavior: auto !important; }
-/* glass: translucent surfaces that blur what is behind them; .bui-glass forces it, .bui-glass-off prevents it (the glass prop of a component) */
-.bui-glass:not(.bui-navbar--floating, .bui-bottombar--floating), [data-glass="on"] :is(.bui-navbar:not(.bui-navbar--floating), .bui-bottombar:not(.bui-bottombar--floating), .bui-popover__panel, .bui-dropdown, [data-slot="dropdown-popup"], [data-slot="modal"], .bui-toast:not(.bui-toast--inverse)):not(.bui-glass-off) {
-  background: color-mix(in srgb, var(--baseui-Extensions-Background-Surface) 62%, transparent);
-  -webkit-backdrop-filter: blur(20px) saturate(160%); backdrop-filter: blur(20px) saturate(160%);
-}
-/* the glass material of the floating bars (the other glass surfaces are a plain blur): a soft lit edge (rim), light falling from the top left, a slightly brighter and more saturated backdrop; no dark outline.
-   Light and dark themes differ only in the strength of the highlights; the other pieces below use the same variables. */
+/* ---------- Glass ----------
+   Translucent surfaces that blur what is behind them. [data-glass="on"] on <html> turns it on for the theme; .bui-glass forces it on one component,
+   .bui-glass-off prevents it (the glass prop). Three kinds, all with the same blur:
+   - bars that sit in the flow (navbar, bottom bar): filled with the PAGE color, so while nothing is under them they look exactly like no glass,
+     and the page shows through only when content scrolls beneath;
+   - floating panels (popover, dropdown, dialog, toast): filled with the SURFACE color, which is lighter than the page on purpose;
+   - the pieces of the floating bars (below, next to the floating rules): the glass material with a lit edge.
+   The inverse toast is never glass: its text is light on dark. */
 :root {
-  --bui-glass-fill: 56%;
+  --bui-glass-blur: blur(20px) saturate(160%);
+  --bui-glass-fill: 62%;
+  /* the material of the floating bars: a soft lit edge (rim), light from the top left, a slightly brighter and more saturated backdrop */
   --bui-glass-filter: blur(20px) saturate(165%) brightness(1.03);
   --bui-glass-light: linear-gradient(155deg, rgb(255 255 255 / 0.22) 0%, rgb(255 255 255 / 0.05) 38%, rgb(255 255 255 / 0) 62%);
   --bui-glass-rim: inset 0 1px 0 rgb(255 255 255 / 0.5), inset 0 0 0 1px rgb(255 255 255 / 0.16), inset 0 0 14px rgb(255 255 255 / 0.1);
 }
 [data-theme="dark"] {
-  --bui-glass-fill: 62%;
   --bui-glass-light: linear-gradient(155deg, rgb(255 255 255 / 0.07) 0%, rgb(255 255 255 / 0.02) 38%, rgb(255 255 255 / 0) 62%);
   --bui-glass-rim: inset 0 1px 0 rgb(255 255 255 / 0.14), inset 0 0 0 1px rgb(255 255 255 / 0.05), inset 0 0 14px rgb(255 255 255 / 0.03);
 }
+:is([data-glass="on"] :is(.bui-navbar, .bui-bottombar):not(.bui-navbar--floating, .bui-bottombar--floating, .bui-glass-off), :is(.bui-navbar, .bui-bottombar).bui-glass:not(.bui-navbar--floating, .bui-bottombar--floating)) {
+  background: color-mix(in srgb, var(--baseui-Background-Primary) var(--bui-glass-fill), transparent);
+  -webkit-backdrop-filter: var(--bui-glass-blur); backdrop-filter: var(--bui-glass-blur);
+}
+:is([data-glass="on"] :is(.bui-popover__panel, .bui-dropdown, [data-slot="dropdown-popup"], [data-slot="modal"], .bui-toast:not(.bui-toast--inverse)):not(.bui-glass-off), :is(.bui-popover__panel, .bui-dropdown, [data-slot="dropdown-popup"], [data-slot="modal"], .bui-toast:not(.bui-toast--inverse)).bui-glass) {
+  background: color-mix(in srgb, var(--baseui-Extensions-Background-Surface) var(--bui-glass-fill), transparent);
+  -webkit-backdrop-filter: var(--bui-glass-blur); backdrop-filter: var(--bui-glass-blur);
+}
+/* no blur available, or the user asked for less transparency: a solid fill, so the text stays readable */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { :root { --bui-glass-fill: 96%; } }
+@media (prefers-reduced-transparency: reduce) { :root { --bui-glass-fill: 100%; --bui-glass-light: none; } }
 
 /* List: the subtitle is one size smaller than the title; the overline is the same text above the title */
 [data-slot="list-item-subtitle"], .bui-list__overline { font: var(--baseui-Typography-Text-14-Regular); }
