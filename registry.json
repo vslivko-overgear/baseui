@@ -490,6 +490,7 @@
       "registryDependencies": [],
       "sharedFiles": [
         "src/react.js",
+        "src/base.js",
         "src/doc.js",
         "src/theme-flags.js"
       ],

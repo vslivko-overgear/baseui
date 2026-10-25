@@ -1,4 +1,5 @@
 import { h, cx, useId, useState, useRef, useEffect, useLayoutEffect, useCallback, useControllable } from '../react.js';
+import { OtpRoot, OtpCell } from '../base.js';
 import { describe } from '../doc.js';
 import { useMotion } from '../theme-flags.js';
 
@@ -11,8 +12,9 @@ const GROUPS = { 4: [2, 2], 5: [2, 3], 6: [3, 3] };
 const isIOS = () => typeof CSS !== 'undefined' && CSS.supports('-webkit-touch-callout', 'none');
 
 /**
- * A one-time code field made of single-character cells. It checks the code through onComplete and shows the states of that check
- * (verifying, error, success); the motion follows the Animations setting.
+ * A one-time code field built from the Base UI OTP field parts (Root and Input): Base UI moves the focus, filters and pastes the characters,
+ * takes the autofill and joins a native form. The DS adds what a verification needs: onComplete with the states verifying, error and success,
+ * groups, a live region, typing from anywhere on the page and motion that follows the Animations setting.
  */
 export function OtpInput({
   length = 6, grouped = false, value, defaultValue = '', onValueChange, onComplete, status, autoReset = true, captureTyping = false, motion,
@@ -72,53 +74,11 @@ export function OtpInput({
     if (locked) return;
     setCode(next);
     if (phase !== 'idle') setPhase('idle');
-    if (next.length === size && next !== code) complete(next);
   };
-  const clean = (text) => [...text].filter((c) => re.test(c)).join('');
-
-  const onChange = (i) => (e) => {
-    let raw = e.target.value;
-    // a character typed into a filled cell without a selection: the new one wins
-    if (code[i] && raw.length === 2) raw = raw[0] === code[i] ? raw[1] : raw[0];
-    const typed = clean(raw.slice(0, size));
-    if (typed.length === 0 && raw.length > 0) { doShake(); return; }
-    if (typed.length === 0) return;
-    // one character replaces the cell; several (autofill, a paste into one cell) fill from this cell
-    const at = Math.min(i, code.length);
-    const next = (code.slice(0, at) + typed + code.slice(at + typed.length)).slice(0, size);
-    commit(next);
-    queueFocus(Math.min(at + typed.length, size - 1));
-  };
-  const onKeyDown = (i) => (e) => {
-    if (e.defaultPrevented) return;
-    if (e.key === 'Backspace') {
-      e.preventDefault();
-      const at = i < code.length ? i : code.length - 1;
-      if (at < 0) return;
-      commit(code.slice(0, at) + code.slice(at + 1));
-      queueFocus(at);
-    } else if (e.key === 'Delete') {
-      e.preventDefault();
-      if (i < code.length) commit(code.slice(0, i) + code.slice(i + 1));
-    } else if (e.key === 'ArrowLeft') { e.preventDefault(); focusCell(i - 1); }
-    else if (e.key === 'ArrowRight') { e.preventDefault(); focusCell(Math.min(i + 1, code.length)); }
-    else if (e.key === 'Home') { e.preventDefault(); focusCell(0); }
-    else if (e.key === 'End') { e.preventDefault(); focusCell(code.length); }
-    else if (e.key.length === 1 && !e.metaKey && !e.ctrlKey && !e.altKey && !re.test(e.key)) { e.preventDefault(); doShake(); }
-  };
-  const onPaste = (i) => (e) => {
-    e.preventDefault();
-    const typed = clean(e.clipboardData.getData('text'));
-    if (!typed) { doShake(); return; }
-    const at = Math.min(i, code.length);
-    const next = (code.slice(0, at) + typed).slice(0, size);
-    commit(next);
-    queueFocus(Math.min(next.length, size - 1));
-  };
-  // the cursor is always at the end of the code: a cell beyond it hands the focus to the first empty one
-  const onFocus = (i) => (e) => {
-    if (i > code.length) { focusCell(code.length); return; }
-    e.target.select();
+  // Base UI filters the characters; a key it would drop shakes the row instead of being ignored
+  const onKeyDown = (e) => {
+    if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey || e.key.length !== 1) return;
+    if (!re.test(e.key)) doShake();
   };
 
   // typing from anywhere on the page goes into the field (never into another editable control)
@@ -134,6 +94,7 @@ export function OtpInput({
       const next = code + e.key;
       commit(next);
       queueFocus(Math.min(next.length, size - 1));
+      if (next.length === size) complete(next);
     };
     document.addEventListener('keydown', onDoc);
     return () => document.removeEventListener('keydown', onDoc);
@@ -162,14 +123,11 @@ export function OtpInput({
   const cells = [];
   for (let i = 0; i < size; i++) {
     if (starts.has(i)) cells.push(h('span', { key: `s${i}`, 'data-slot': 'otp-separator', 'aria-hidden': 'true', className: 'bui-otp__separator' }));
-    cells.push(h('input', {
+    cells.push(h(OtpCell, {
       key: i, ref: (el) => { cellRefs.current[i] = el; if (i === 0 && inputRef) { typeof inputRef === 'function' ? inputRef(el) : (inputRef.current = el); } },
       'data-slot': 'otp-cell', 'data-index': i, 'data-filled': code[i] ? '' : undefined, style: { '--otp-i': i }, className: 'bui-otp__cell',
-      type: mask ? 'password' : 'text', value: code[i] ?? '', inputMode: validationType === 'numeric' ? 'numeric' : 'text',
-      autoComplete: i === 0 ? 'one-time-code' : 'off', autoCapitalize: 'off', autoCorrect: 'off', spellCheck: false, enterKeyHint: 'done',
-      'aria-label': `${label || ariaLabel || 'Code'}, ${i + 1} of ${size}`, 'aria-invalid': visibleError ? 'true' : undefined, 'aria-describedby': visibleError ? errorId : undefined,
-      disabled, readOnly: locked, 'data-1p-ignore': true, 'data-lpignore': 'true', 'data-bwignore': true, 'data-form-type': 'other',
-      onChange: onChange(i), onKeyDown: onKeyDown(i), onPaste: onPaste(i), onFocus: onFocus(i),
+      'aria-label': `${label || ariaLabel || 'Code'}, ${i + 1} of ${size}`, 'aria-invalid': visibleError ? 'true' : undefined,
+      'data-1p-ignore': true, 'data-lpignore': 'true', 'data-bwignore': true, 'data-form-type': 'other',
     }));
   }
   return h('div', {
@@ -177,11 +135,13 @@ export function OtpInput({
     'data-slide': ring ? '' : undefined, 'aria-busy': locked || undefined, ...rest,
   },
   label && h('span', { 'data-slot': 'otp-label', className: 'bui-otp__label' }, label),
-  h('div', { ref: cellsEl, 'data-slot': 'otp-cells', role: 'group', 'aria-label': label || ariaLabel || 'Verification code', className: 'bui-otp__cells' },
-    cells,
-    ring && h('span', { 'data-slot': 'otp-ring', 'aria-hidden': 'true', className: 'bui-otp__ring', style: { transform: `translate(${ring.x}px, ${ring.y}px)`, width: ring.w, height: ring.h, borderRadius: ring.r } })),
+  h(OtpRoot, {
+    ref: cellsEl, 'data-slot': 'otp-cells', className: 'bui-otp__cells', 'aria-label': label || ariaLabel || 'Verification code', 'aria-describedby': visibleError ? errorId : undefined,
+    length: size, value: code, onValueChange: commit, onValueComplete: (v) => complete(v), validationType, mask, disabled, readOnly: locked, name, onKeyDown,
+  },
+  cells,
+  ring && h('span', { 'data-slot': 'otp-ring', 'aria-hidden': 'true', className: 'bui-otp__ring', style: { transform: `translate(${ring.x}px, ${ring.y}px)`, width: ring.w, height: ring.h, borderRadius: ring.r } })),
   visibleError && h('div', { id: errorId, 'data-slot': 'otp-error', className: 'bui-otp__error' }, visibleError),
-  name && h('input', { type: 'hidden', name, value: code }),
   h('span', { role: 'status', 'aria-live': 'polite', 'aria-atomic': 'true', className: 'bui-visually-hidden' }, message));
 }
 

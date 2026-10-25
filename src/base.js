@@ -2,6 +2,11 @@
 // A component is taken from its own stories' metadata, so we do not depend on names inside the bundle.
 import { h, cx } from './react.js';
 import { useRootAttr } from './theme-flags.js';
+import { n as initOtpField, OtpRoot, OtpCell } from '../lib/OtpInput-DVq9tE7o.js';
+
+// The Base UI OTP field parts (root and cell) of the compiled bundle; the DS OtpInput is built from them directly.
+initOtpField();
+export { OtpRoot, OtpCell };
 
 const component = async (file) => (await import(`../lib/${file}`)).default.component;
 
