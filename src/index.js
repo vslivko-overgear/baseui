@@ -13,6 +13,7 @@ export { Status } from './components/Status.js';
 export { Stack, HStack, VStack, Center, Grid, Section } from './components/Layout.js';
 export { Link } from './components/Link.js';
 export { NumberInput } from './components/NumberInput.js';
+export { OtpInput } from './components/OtpInput.js';
 export { Navbar, BottomBar } from './components/MobileNavigation.js';
 export { Pagination } from './components/Pagination.js';
 export { Popover } from './components/Popover.js';

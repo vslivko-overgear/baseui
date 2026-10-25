@@ -4,7 +4,7 @@ import { t as requireReact } from '../lib/react-BZJXY1be.js';
 export const React = requireReact();
 export const h = React.createElement;
 export const {
-  Fragment, createContext, useCallback, useContext, useEffect, useId, useMemo, useRef, useState,
+  Fragment, createContext, useCallback, useContext, useEffect, useId, useLayoutEffect, useMemo, useRef, useState,
 } = React;
 
 /** Join class names: cx('a', cond && 'b') */

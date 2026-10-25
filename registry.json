@@ -474,6 +474,33 @@
       ]
     },
     {
+      "name": "otp-input",
+      "type": "registry:component",
+      "title": "OtpInput",
+      "description": "A one-time code field. It checks the code through onComplete and shows the states of that check: verifying, error (the row shakes) and success. Digits arrive with a short animation and the focus ring slides between the cells; both follow the Animations setting.",
+      "exports": [
+        "OtpInput"
+      ],
+      "files": [
+        {
+          "path": "src/components/OtpInput.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/base.js",
+        "src/doc.js",
+        "src/theme-flags.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
       "name": "pagination",
       "type": "registry:component",
       "title": "Pagination",
