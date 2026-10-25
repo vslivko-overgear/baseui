@@ -5,7 +5,7 @@ export function Skeleton({ variant = 'text', width, height, lines = 1, className
   if (variant === 'text' && lines > 1) {
     return h('div', { 'data-slot': 'skeleton-lines', className: cx('bui-skeleton-lines', className), 'aria-hidden': 'true', style, ...rest },
       Array.from({ length: lines }, (_, i) => h('span', {
-        key: i, className: 'bui-skeleton bui-skeleton--text', style: { width: i === lines - 1 ? '60%' : width },
+        key: i, 'data-slot': 'skeleton', className: 'bui-skeleton bui-skeleton--text', style: { width: i === lines - 1 ? '60%' : width },
       })));
   }
   return h('span', {

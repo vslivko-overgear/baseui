@@ -1,6 +1,6 @@
 import { h, useEffect } from '../react.js';
 import { describe } from '../doc.js';
-import { Button } from '../components/Button.js';
+import { Button, IconButton } from '../components/Button.js';
 import { SegmentedControl } from '../components/SegmentedControl.js';
 import { Tabs, TabList, Tab } from '../components/Tabs.js';
 import { Badge } from '../components/Badge.js';
@@ -23,7 +23,7 @@ export function ThemePreview(theme) {
     h('div', null,
       h('div', { style: { font: 'var(--baseui-Typography-Header-32)' } }, 'Headline font'),
       h('p', { style: { margin: '8px 0 0', font: 'var(--baseui-Typography-Text-16-Regular)', color: 'var(--baseui-Text-and-Icon-Secondary)' } }, 'The quick brown fox jumps over the lazy dog. Съешь же ещё этих мягких французских булок.')),
-    h('div', { style: row }, h(Button, { variant: 'primary', label: 'Primary' }), h(Button, { label: 'Secondary' }), h(Button, { variant: 'ghost', label: 'Ghost' }), h(Button, { isIconOnly: true, label: 'Add', icon: h(Plus, { size: 24 }) })),
+    h('div', { style: row }, h(Button, { variant: 'primary', label: 'Primary' }), h(Button, { label: 'Secondary' }), h(Button, { variant: 'ghost', label: 'Ghost' }), h(IconButton, { label: 'Add', icon: h(Plus, { size: 24 }) })),
     h('div', { style: { display: 'flex', flexWrap: 'wrap', gap: 'var(--baseui-spacing-16)', alignItems: 'flex-start' } },
       h('div', { style: { width: 240 } }, h(TextField, { label: 'Email', defaultValue: 'name@example.com' })),
       h(SegmentedControl, { items, defaultValue: 'week', label: 'Range' })),

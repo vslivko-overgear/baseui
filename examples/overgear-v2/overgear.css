@@ -129,10 +129,11 @@ body { background: #0a0b2b; -webkit-font-smoothing: antialiased; }
 .og2-prod__foot b { font: 700 14px var(--og-head); }
 .og2-custom { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px; border-radius: 8px; background: linear-gradient(90deg, #0d0f33, #1b1e4c); font: var(--baseui-Typography-Text-14-Regular); }
 .og2-custom > div > span { color: var(--baseui-Text-and-Icon-Secondary); }
-.og2-acc { display: grid; gap: 6px; }
-.og2-acc > * { background: var(--og-panel); border-radius: 8px; }
-.og2 .bui-collapsible button, .og2-acc button { padding: 12px 14px; width: 100%; text-align: left; font: var(--baseui-Typography-Text-16-Semi-Bold); }
-.og2-acc [role="region"], .og2-acc [class*="content"] { padding: 0 14px 12px; color: var(--baseui-Text-and-Icon-Secondary); font: var(--baseui-Typography-Text-14-Regular); }
+/* cards, not a list: no divider lines of the Collapsible */
+.og2-acc { display: grid; gap: 6px; box-shadow: none; }
+.og2-acc > [data-slot="collapsible"] { background: var(--og-panel); border-radius: 8px; box-shadow: none; }
+.og2 [data-slot="collapsible-trigger"] { padding: 12px 14px; width: 100%; text-align: left; font: var(--baseui-Typography-Text-16-Semi-Bold); }
+.og2-acc [data-slot="collapsible-content"] { padding: 0 14px 12px; color: var(--baseui-Text-and-Icon-Secondary); font: var(--baseui-Typography-Text-14-Regular); }
 .og2-text p { margin-bottom: 8px; }
 .og2-text ul { margin: 0 0 8px; padding-left: 18px; }
 .og2-faqh { margin-top: 8px; }
@@ -187,4 +188,4 @@ body { background: #0a0b2b; -webkit-font-smoothing: antialiased; }
   .og2-custom { flex-direction: column; align-items: stretch; }
 }
 
-.og2-acc button, .og2 .bui-collapsible button { min-height: 44px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.og2 [data-slot="collapsible-trigger"] { min-height: 44px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }

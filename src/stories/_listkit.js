@@ -1,7 +1,8 @@
 // Shared by the List and List Item pages: the same row content settings, built from the design system itself
 // (Avatar, Switch, Checkbox, Badge and the icons), so the lists are shown the way they are used.
 import { h } from '../react.js';
-import { Switch, Checkbox } from '../base.js';
+import { Switch } from '../base.js';
+import { Checkbox } from '../components/Checks.js';
 import { List, ListItem } from '../components/List.js';
 import { Avatar } from '../components/Avatar.js';
 import { Badge } from '../components/Badge.js';

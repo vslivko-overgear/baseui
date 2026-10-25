@@ -42,7 +42,7 @@ export function InfoContent({ chat, onToggle, onDelete, onCall, toast }) {
         h(Tab, { value: 'files', icon: h(I.File06), counter: files.length }, 'Files'),
         group && h(Tab, { value: 'members', icon: h(I.Users01), counter: members.length }, 'People')),
       h(TabPanel, { value: 'media' }, h('div', { className: 'mm-media', style: { marginTop: 12 } }, Array.from({ length: 9 }, (_, i) => h('i', { key: i, style: { background: `linear-gradient(135deg, hsl(${(i * 47 + 20) % 360} 75% 62%), hsl(${(i * 47 + 80) % 360} 70% 50%))` } })))),
-      h(TabPanel, { value: 'files' }, h('div', null, h(Table, { data: files, columns, density: 'compact', caption: 'Shared files', hasHover: true, onRowClick: (f) => toast({ message: `Opening ${f.name}…`, status: 'info', duration: 2500 }) }))),
+      h(TabPanel, { value: 'files' }, h('div', null, h(Table, { data: files, columns, density: 'compact', caption: 'Shared files', hoverable: true, onRowClick: (f) => toast({ message: `Opening ${f.name}…`, status: 'info', duration: 2500 }) }))),
       group && h(TabPanel, { value: 'members' }, h(List, { size: 'sm', spacing: 'sm', 'aria-label': 'Members' }, members.map((id) => h(ListItem, { key: id, avatar: h(PersonAvatar, { id, size: 'sm' }), subtitle: contactOf(id).bio }, contactOf(id).name))))),
     h(CollapsibleGroup, { multiple: true, defaultValue: ['notify'], items: [
       { value: 'notify', title: 'Notifications', content: h('div', { className: 'mm-stack' },
@@ -103,7 +103,7 @@ export function NewChatModal({ open, onClose, onCreate }) {
   const toggle = (id) => setPicked((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]));
   return h(Modal, {
     open, onOpenChange: (o) => !o && onClose(), title: 'New chat', subtitle: picked.length > 1 ? 'A group needs a name' : 'Pick one person, or several for a group',
-    primaryAction: h(Button, { variant: 'primary', isDisabled: !picked.length || (picked.length > 1 && !name.trim()), onClick: () => onCreate(picked, name.trim()) }, picked.length > 1 ? 'Create group' : 'Start chat'),
+    primaryAction: h(Button, { variant: 'primary', disabled: !picked.length || (picked.length > 1 && !name.trim()), onClick: () => onCreate(picked, name.trim()) }, picked.length > 1 ? 'Create group' : 'Start chat'),
     secondaryAction: h(Button, { variant: 'secondary', onClick: onClose }, 'Cancel'),
   }, h('div', { className: 'mm-stack' },
     h(TextField, { size: 'sm', label: 'Search contacts', startIcon: h(I.SearchLg), value: query, onChange: (e) => setQuery(e.target.value), clearable: true, actionLabel: 'Clear' }),

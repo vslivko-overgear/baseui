@@ -146,8 +146,8 @@ function Reviews() {
   const [page, setPage] = useState(0);
   return h('section', null,
     h('div', { className: 'og-head' }, h('h2', { className: 'og-h2' }, 'What players say about Overgear'),
-      h('div', { className: 'og-arrows' }, h(IconButton, { variant: 'secondary', shape: 'circle', size: 'md', label: 'Previous reviews', icon: h(I.ChevronLeft), isDisabled: page === 0, onClick: () => setPage(0) }),
-        h(IconButton, { variant: 'secondary', shape: 'circle', size: 'md', label: 'Next reviews', icon: h(I.ChevronRight), isDisabled: page === 1, onClick: () => setPage(1) }))),
+      h('div', { className: 'og-arrows' }, h(IconButton, { variant: 'secondary', shape: 'circle', size: 'md', label: 'Previous reviews', icon: h(I.ChevronLeft), disabled: page === 0, onClick: () => setPage(0) }),
+        h(IconButton, { variant: 'secondary', shape: 'circle', size: 'md', label: 'Next reviews', icon: h(I.ChevronRight), disabled: page === 1, onClick: () => setPage(1) }))),
     h('div', { className: 'og-reviews' }, (page ? [...REVIEWS].reverse() : REVIEWS).map(([text, by]) => h(Card, { key: by, padding: 16, className: 'og-review' },
       h(RatingDisplay, { value: 5, size: 'sm', color: 'accent' }), h('p', null, text), h('small', null, 'by ', by)))));
 }

@@ -9,7 +9,7 @@ A card that acts as one link or button.
 | `label` | `string` | — | Accessible name |
 | `onClick` | `(event) => void` | — | Click handler |
 | `href` | `string` | — | Renders a link |
-| `isDisabled` | `boolean` | `false` | Disables the card |
+| `disabled` | `boolean` | `false` | Disables the card |
 | `variant` | `'default' \| 'transparent' \| 'muted' \| 'blue' \| 'green' \| 'orange' \| 'pink' \| 'red'` | `'default'` | Background |
 | `padding` | `number` | `16` | Inner padding in px (spacing token) |
 | `elevation` | `'none' \| 'low' \| 'med' \| 'high'` | `'none'` | Shadow depth |

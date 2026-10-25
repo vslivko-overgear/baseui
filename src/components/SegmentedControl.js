@@ -1,33 +1,22 @@
-import { h, cx, React, useControllable, useRef, useState } from '../react.js';
-import { useAppear } from '../theme-flags.js';
+import { h, cx, useControllable, useRef } from '../react.js';
+import { useAppear, useReady, themeAttrs } from '../theme-flags.js';
+import { useHighlight } from '../highlight.js';
 import { describe } from '../doc.js';
 import { Badge } from './Badge.js';
 
 export function SegmentedControl({ items, value, defaultValue, onValueChange, size = 'md', fullWidth = false, showIcon = true, showLabel = true, showCounter = true, showBadge = true, shape = 'rounded', motion, label, className, ...rest }) {
   const [current, setCurrent] = useControllable(value, defaultValue ?? items.find((i) => !i.disabled)?.value, onValueChange);
   const ref = useRef(null);
-  const [thumb, setThumb] = useState(null);
   const thumbRef = useRef(null);
-  const [ready, setReady] = useState(false);
+  const ready = useReady();
   const enabled = items.filter((i) => !i.disabled);
   // Icon-only is just the label switched off; an item with nothing else to show keeps its label.
   const labelShown = (it) => showLabel || !(showIcon && it.icon);
   // An item that shows only its icon is a square of the control's item height, whatever the other items show.
   const iconOnlyItem = (it) => showIcon && !!it.icon && !labelShown(it) && !(showCounter && it.counter != null) && !(showBadge && it.badge != null);
 
-  // The thumb slides to the selected item; it is measured again when the control is resized.
-  React.useLayoutEffect(() => {
-    const root = ref.current;
-    const measure = () => {
-      const el = root.querySelector('[aria-checked="true"]');
-      setThumb(el ? { x: el.offsetLeft, y: el.offsetTop, w: el.offsetWidth, h: el.offsetHeight } : null);
-    };
-    measure();
-    const ro = new ResizeObserver(measure);
-    ro.observe(root);
-    return () => ro.disconnect();
-  }, [current, items, size, fullWidth, showIcon, showLabel, showCounter, showBadge]);
-  React.useEffect(() => { const id = requestAnimationFrame(() => setReady(true)); return () => cancelAnimationFrame(id); }, []);
+  // The thumb slides to the selected item.
+  const [thumb] = useHighlight(ref, (root) => root.querySelector('[aria-checked="true"]'), [current, items, size, fullWidth, showIcon, showLabel, showCounter, showBadge]);
 
   const onKeyDown = (e) => {
     const i = enabled.findIndex((x) => x.value === current);
@@ -39,7 +28,7 @@ export function SegmentedControl({ items, value, defaultValue, onValueChange, si
     ref.current.querySelector(`[data-value="${CSS.escape(String(next.value))}"]`)?.focus();
   };
   useAppear(thumbRef, ref, thumb && `${thumb.x}/${thumb.y}/${thumb.w}`);
-  return h('div', { 'data-motion': motion, role: 'radiogroup', 'aria-label': label, ref, onKeyDown, 'data-slot': 'segmented', 'data-size': size, className: cx('bui-segmented', `bui-segmented--${size}`, fullWidth && 'bui-segmented--full', ready && 'bui-segmented--ready', shape === 'circle' && 'bui-shape-circle', className), ...rest },
+  return h('div', { ...themeAttrs({ motion }), role: 'radiogroup', 'aria-label': label, ref, onKeyDown, 'data-slot': 'segmented', 'data-size': size, className: cx('bui-segmented', `bui-segmented--${size}`, fullWidth && 'bui-segmented--full', ready && 'bui-segmented--ready', shape === 'circle' && 'bui-shape-circle', className), ...rest },
     thumb && h('span', { ref: thumbRef, 'data-slot': 'segmented-thumb', className: 'bui-segmented__thumb', 'aria-hidden': 'true', style: { width: thumb.w, height: thumb.h, transform: `translate(${thumb.x}px, ${thumb.y}px)` } }),
     items.map((it) => h('button', {
       key: it.value, type: 'button', role: 'radio', 'data-value': it.value, 'aria-checked': it.value === current, tabIndex: it.value === current ? 0 : -1,

@@ -27,14 +27,14 @@ const rich = [
 
 export default meta({
   title: 'Components/Table', component: Table,
-  args: { data, columns, caption: 'Team members', density: 'balanced', dividers: 'rows', isStriped: false, hasHover: false, verticalAlign: 'middle', textOverflow: 'wrap', selectionMode: 'none', isStickyHeader: false, isLoading: false },
+  args: { data, columns, caption: 'Team members', density: 'balanced', dividers: 'rows', striped: false, hoverable: false, verticalAlign: 'middle', textOverflow: 'wrap', selectionMode: 'none', stickyHeader: false, loading: false },
   argTypes: {
     density: { control: 'inline-radio', options: ['compact', 'balanced', 'spacious'] },
     dividers: { control: 'inline-radio', options: ['rows', 'columns', 'grid', 'none'] },
     verticalAlign: { control: 'inline-radio', options: ['middle', 'top', 'bottom'] },
     textOverflow: { control: 'inline-radio', options: ['wrap', 'truncate'] },
     selectionMode: { control: 'inline-radio', options: ['none', 'single', 'multiple'] },
-    isStriped: { control: 'boolean' }, hasHover: { control: 'boolean' }, isStickyHeader: { control: 'boolean' }, isLoading: { control: 'boolean' },
+    striped: { control: 'boolean' }, hoverable: { control: 'boolean' }, stickyHeader: { control: 'boolean' }, loading: { control: 'boolean' },
   },
 });
 export const Playground = playground({ source: `<Table data={data} columns={columns} caption="Team members" />` });
@@ -46,9 +46,9 @@ export const Dividers = example({
   name: 'Dividers', render: () => h('div', { style: { display: 'grid', gap: 24 } }, ['rows', 'columns', 'grid', 'none'].map((d) => h(Table, { key: d, data: data.slice(0, 3), columns, dividers: d, caption: d }))),
   source: `<Table dividers="grid" … />  // rows · columns · grid · none`,
 });
-export const Striped = example({ name: 'Striped and Hover', render: () => h(Table, { data, columns, isStriped: true, hasHover: true, caption: 'Striped' }), source: `<Table isStriped hasHover … />` });
+export const Striped = example({ name: 'Striped and Hover', render: () => h(Table, { data, columns, striped: true, hoverable: true, caption: 'Striped' }), source: `<Table striped hoverable … />` });
 export const RichCells = example({
-  name: 'Rich Cells', render: () => h(Table, { data, columns: rich, hasHover: true, caption: 'Members' }),
+  name: 'Rich Cells', render: () => h(Table, { data, columns: rich, hoverable: true, caption: 'Members' }),
   source: `columns={[{ key: 'status', header: 'Status', renderCell: (u) => <Badge variant="success" label={u.status} /> }]}`,
 });
 export const Sorting = example({
@@ -78,12 +78,12 @@ export const Overflow = example({
   source: `<Table textOverflow="truncate" … />  // wrap · truncate`,
 });
 export const StickyHeader = example({
-  name: 'Sticky Header', render: () => h(Table, { data: Array.from({ length: 14 }, (_, i) => ({ id: i, name: `Member ${i + 1}`, role: 'Engineer', status: 'Active', seats: i })), columns, isStickyHeader: true, maxHeight: 240, hasHover: true, caption: 'Scrolling' }),
-  source: `<Table isStickyHeader maxHeight={240} … />`,
+  name: 'Sticky Header', render: () => h(Table, { data: Array.from({ length: 14 }, (_, i) => ({ id: i, name: `Member ${i + 1}`, role: 'Engineer', status: 'Active', seats: i })), columns, stickyHeader: true, maxHeight: 240, hoverable: true, caption: 'Scrolling' }),
+  source: `<Table stickyHeader maxHeight={240} … />`,
 });
 export const States = example({
-  name: 'Empty and Loading', render: () => h('div', { style: { display: 'grid', gap: 24 } }, h(Table, { data: [], columns, caption: 'Empty', emptyState: 'No members yet' }), h(Table, { data, columns, isLoading: true, caption: 'Loading' })),
-  source: `<Table data={[]} emptyState="No members yet" />  <Table isLoading … />`,
+  name: 'Empty and Loading', render: () => h('div', { style: { display: 'grid', gap: 24 } }, h(Table, { data: [], columns, caption: 'Empty', emptyState: 'No members yet' }), h(Table, { data, columns, loading: true, caption: 'Loading' })),
+  source: `<Table data={[]} emptyState="No members yet" />  <Table loading … />`,
 });
 export const Composition = example({
   name: 'Children Mode', render: () => h(Table, { caption: 'Plan' },

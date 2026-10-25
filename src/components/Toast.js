@@ -1,7 +1,7 @@
 import { h, cx, createContext, useContext, useState, useRef, useCallback, useEffect, useMemo } from '../react.js';
 import { Icon } from '../icons.js';
 import { describe } from '../doc.js';
-import { glassClass } from '../theme-flags.js';
+import { themeAttrs } from '../theme-flags.js';
 import { Button } from './Button.js';
 import { Spinner } from './Spinner.js';
 
@@ -42,7 +42,7 @@ function ToastItem({ item, onDismiss, onGone }) {
     'data-slot': 'toast-item', className: 'bui-toast-item', 'data-leaving': item.leaving || undefined,
     onTransitionEnd: (e) => { if (item.leaving && e.target === e.currentTarget && e.propertyName === 'grid-template-rows') onGone(item.id); },
   }, h('div', { 'data-slot': 'toast-item-clip', className: 'bui-toast-item__clip' }, h('div', {
-    role: status === 'error' ? 'alert' : 'status', 'data-slot': 'toast', 'data-variant': item.variant, 'data-status': status, className: cx('bui-toast', `bui-toast--${item.variant}`, glassClass(item.glass)),
+    role: status === 'error' ? 'alert' : 'status', 'data-slot': 'toast', 'data-variant': item.variant, 'data-status': status, className: cx('bui-toast', `bui-toast--${item.variant}`), ...themeAttrs({ glass: item.glass }),
     onMouseEnter: pause, onMouseLeave: run, onFocus: pause, onBlur: run,
   },
     (icon || status !== 'neutral') && h('span', { 'data-slot': 'toast-icon', className: 'bui-toast__icon' }, icon || h(Icon, { name: status, size: 24 })),

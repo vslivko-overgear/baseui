@@ -16,7 +16,9 @@
           "type": "registry:component"
         }
       ],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button"
+      ],
       "sharedFiles": [
         "src/react.js",
         "src/base.js",
@@ -189,7 +191,8 @@
         "src/react.js",
         "src/icons.js",
         "src/base.js",
-        "src/doc.js"
+        "src/doc.js",
+        "src/theme-flags.js"
       ],
       "css": [
         "tokens.css",
@@ -244,6 +247,7 @@
       "registryDependencies": [],
       "sharedFiles": [
         "src/react.js",
+        "src/doc.js",
         "src/base.js"
       ],
       "css": [
@@ -439,7 +443,8 @@
         "src/react.js",
         "src/icons.js",
         "src/doc.js",
-        "src/theme-flags.js"
+        "src/theme-flags.js",
+        "src/highlight.js"
       ],
       "css": [
         "tokens.css",
@@ -492,7 +497,8 @@
         "src/react.js",
         "src/base.js",
         "src/doc.js",
-        "src/theme-flags.js"
+        "src/theme-flags.js",
+        "src/highlight.js"
       ],
       "css": [
         "tokens.css",
@@ -625,6 +631,7 @@
       "sharedFiles": [
         "src/react.js",
         "src/theme-flags.js",
+        "src/highlight.js",
         "src/doc.js"
       ],
       "css": [
@@ -756,11 +763,11 @@
         }
       ],
       "registryDependencies": [
+        "checks",
         "skeleton"
       ],
       "sharedFiles": [
         "src/react.js",
-        "src/base.js",
         "src/doc.js"
       ],
       "css": [
@@ -794,7 +801,8 @@
         "src/react.js",
         "src/icons.js",
         "src/doc.js",
-        "src/theme-flags.js"
+        "src/theme-flags.js",
+        "src/highlight.js"
       ],
       "css": [
         "tokens.css",
@@ -849,7 +857,8 @@
       "registryDependencies": [],
       "sharedFiles": [
         "src/react.js",
-        "src/doc.js"
+        "src/doc.js",
+        "src/theme-flags.js"
       ],
       "css": [
         "tokens.css",

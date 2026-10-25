@@ -1,7 +1,8 @@
 import { h, cx, useId, useState, useRef, useEffect, useLayoutEffect, useCallback, useControllable } from '../react.js';
 import { OtpRoot, OtpCell } from '../base.js';
 import { describe } from '../doc.js';
-import { useMotion } from '../theme-flags.js';
+import { useMotion, themeAttrs } from '../theme-flags.js';
+import { useHighlight } from '../highlight.js';
 
 // The characters each validationType lets in.
 const KEY = { numeric: /^\d$/, alpha: /^[a-z]$/i, alphanumeric: /^[a-z0-9]$/i, none: /^.$/s };
@@ -26,7 +27,6 @@ export function OtpInput({
   const [code, setCode] = useControllable(value, defaultValue, onValueChange);
   const [phase, setPhase] = useState('idle');
   const [shake, setShake] = useState(false);
-  const [ring, setRing] = useState(null);
   const [entering, setEntering] = useState(true);
   const root = useRef(null);
   const cellsEl = useRef(null);
@@ -108,21 +108,14 @@ export function OtpInput({
   });
 
   // enhanced: the focus ring is one element that slides to the active cell (inside the row, so it shakes with it)
-  // layout offsets, not bounding boxes: a running animation (the shake, the entrance of a cell) must not move the ring
-  const measure = useCallback(() => {
-    const active = cellRefs.current.find((c) => c === document.activeElement);
-    if (!active || active.offsetParent !== cellsEl.current) { setRing(null); return; }
-    setRing({ x: active.offsetLeft, y: active.offsetTop, w: active.offsetWidth, h: active.offsetHeight, r: getComputedStyle(active).borderTopLeftRadius });
-  }, []);
-  useLayoutEffect(() => { if (level === 'enhanced') measure(); }, [code, size, grouped, level, measure]);
+  const enhanced = level === 'enhanced';
+  const [ring, remeasure] = useHighlight(cellsEl, () => (enhanced ? cellRefs.current.find((c) => c === document.activeElement) : null), [code, size, grouped, enhanced], { withRadius: true });
   useEffect(() => {
     const el = root.current;
-    if (!el || level !== 'enhanced') { setRing(null); return undefined; }
-    const on = () => requestAnimationFrame(measure);
+    const on = () => requestAnimationFrame(remeasure);
     el.addEventListener('focusin', on); el.addEventListener('focusout', on);
-    const ro = new ResizeObserver(on); ro.observe(el);
-    return () => { el.removeEventListener('focusin', on); el.removeEventListener('focusout', on); ro.disconnect(); };
-  }, [level, measure]);
+    return () => { el.removeEventListener('focusin', on); el.removeEventListener('focusout', on); };
+  }, []);
 
   const message = state === 'verifying' ? verifyingText : state === 'success' ? successText : state === 'error' ? (typeof visibleError === 'string' ? visibleError : errorText) : '';
   const errorId = `${uid}-error`;
@@ -137,7 +130,7 @@ export function OtpInput({
     }));
   }
   return h('div', {
-    ref: root, 'data-slot': 'otp', className: cx('bui-otp', className), 'data-status': state, 'data-motion-level': level, 'data-shake': shake || undefined, 'data-entering': entering || undefined,
+    ref: root, 'data-slot': 'otp', className: cx('bui-otp', className), 'data-status': state, ...themeAttrs({ motion }), 'data-shake': shake || undefined, 'data-entering': entering || undefined,
     'data-slide': ring ? '' : undefined, 'aria-busy': locked || undefined, ...rest,
   },
   label && h('span', { 'data-slot': 'otp-label', className: 'bui-otp__label' }, label),
@@ -148,7 +141,7 @@ export function OtpInput({
   cells,
   ring && h('span', { 'data-slot': 'otp-ring', 'aria-hidden': 'true', className: 'bui-otp__ring', style: { transform: `translate(${ring.x}px, ${ring.y}px)`, width: ring.w, height: ring.h, borderRadius: ring.r } })),
   visibleError && h('div', { id: errorId, 'data-slot': 'otp-error', className: 'bui-otp__error' }, visibleError),
-  h('span', { role: 'status', 'aria-live': 'polite', 'aria-atomic': 'true', className: 'bui-visually-hidden' }, message));
+  h('span', { role: 'status', 'aria-live': 'polite', 'aria-atomic': 'true', 'data-slot': 'otp-status', className: 'bui-visually-hidden' }, message));
 }
 
 describe(OtpInput, 'A one-time code field. It checks the code through onComplete and shows the states of that check: verifying, error (the row shakes) and success. On enhanced animations the digits arrive with a short animation and the focus ring slides between the cells.', {

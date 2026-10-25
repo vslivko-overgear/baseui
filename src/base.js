@@ -1,7 +1,8 @@
 // The compiled baseui components (lib/), exposed by name for use in composite components and docs.
 // A component is taken from its own stories' metadata, so we do not depend on names inside the bundle.
 import { h, cx } from './react.js';
-import { useRootAttr } from './theme-flags.js';
+import { useFloating } from './theme-flags.js';
+import { describeWrapper } from './doc.js';
 import { n as initOtpField, OtpRoot, OtpCell } from '../lib/OtpInput-DVq9tE7o.js';
 
 // The Base UI OTP field parts (root and cell) of the compiled bundle; the DS OtpInput is built from them directly.
@@ -32,12 +33,9 @@ export const [Button, TextField, Checkbox, CheckboxGroup, Switch, Chip, Select, 
  * On a small screen the sheet then floats: margins at the bottom and the sides, rounded on every side.
  */
 export function Modal({ floating, className, ...rest }) {
-  const themeFloating = useRootAttr('floating') === 'on';
-  return h(CompiledModal, { className: cx((floating ?? themeFloating) && 'bui-dialog--floating', className), ...rest });
+  return h(CompiledModal, { className: cx(useFloating(floating) && 'bui-dialog--floating', className), ...rest });
 }
 Modal.displayName = 'Modal';
-const compiledDoc = CompiledModal.__docgenInfo || { description: '', props: {} };
-Modal.__docgenInfo = { ...compiledDoc, props: { ...compiledDoc.props, floating: {
-  required: false, tsType: { name: 'boolean', raw: 'boolean' }, defaultValue: { value: 'theme', computed: false },
-  description: 'A floating sheet on small screens: margins at the bottom and the sides, rounded on every side; by default it follows the Floating setting of the theme. On a wide screen the dialog already floats in the middle',
-} } };
+describeWrapper(Modal, CompiledModal, {
+  floating: ['boolean', 'theme', 'A floating sheet on small screens: margins at the bottom and the sides, rounded on every side; by default it follows the Floating setting of the theme. On a wide screen the dialog already floats in the middle'],
+});

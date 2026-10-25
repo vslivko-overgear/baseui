@@ -1,15 +1,16 @@
 # Selectable Card
 
-A card that can be selected.
+A card that can be selected, like a checkbox.
 
 ## Props
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `label` | `string` | — | Accessible name |
-| `isSelected` | `boolean` | — | Selection state |
-| `onChange` | `(isSelected: boolean) => void` | — | Called with the next state |
-| `isDisabled` | `boolean` | `false` | Disables the card |
+| `checked` | `boolean` | — | Selected (controlled) |
+| `defaultChecked` | `boolean` | `false` | Initially selected (uncontrolled) |
+| `onCheckedChange` | `(checked: boolean) => void` | — | Called with the next state |
+| `disabled` | `boolean` | `false` | Disables the card |
 | `variant` | `'default' \| 'transparent' \| 'muted' \| 'blue' \| 'green' \| 'orange' \| 'pink' \| 'red'` | `'default'` | Background |
 | `padding` | `number` | `16` | Inner padding in px (spacing token) |
 | `elevation` | `'none' \| 'low' \| 'med' \| 'high'` | `'none'` | Shadow depth |

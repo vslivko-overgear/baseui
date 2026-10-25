@@ -7,7 +7,7 @@ export function Banner({ status = 'info', title, children, onClose, closeLabel =
     role: status === 'error' || status === 'warning' ? 'alert' : 'status',
     'data-slot': 'banner', 'data-status': status, className: cx('bui-banner', `bui-banner--${status}`, className), ...rest,
   },
-    h(Icon, { name: status, size: 24, className: 'bui-banner__icon' }),
+    h(Icon, { name: status, size: 24, 'data-slot': 'banner-icon', className: 'bui-banner__icon' }),
     h('div', { 'data-slot': 'banner-body', className: 'bui-banner__body' },
       title && h('div', { 'data-slot': 'banner-title', className: 'bui-banner__title' }, title),
       children && h('div', { 'data-slot': 'banner-text', className: 'bui-banner__text' }, children)),

@@ -1,4 +1,4 @@
-import { h, cx } from '../react.js';
+import { h, cx, useControllable } from '../react.js';
 import { describe } from '../doc.js';
 
 const px = (v) => (typeof v === 'number' ? `${v}px` : v);
@@ -26,32 +26,34 @@ export function Card({ variant, padding, elevation, width, height, maxWidth, min
 }
 describe(Card, 'A container that groups related content.', CARD_DOC);
 
-export function ClickableCard({ label, onClick, href, target, isDisabled = false, variant, padding, elevation, width, height, maxWidth, minHeight, className, style, children, ...rest }) {
+export function ClickableCard({ label, onClick, href, target, disabled = false, variant, padding, elevation, width, height, maxWidth, minHeight, className, style, children, ...rest }) {
   const Hit = href ? 'a' : 'button';
   const hit = h(Hit, {
-    className: 'bui-card__hit', 'aria-label': label,
-    ...(href ? { href: isDisabled ? undefined : href, target, role: isDisabled ? 'link' : undefined, 'aria-disabled': isDisabled || undefined, tabIndex: isDisabled ? -1 : undefined } : { type: 'button', disabled: isDisabled }),
-    onClick: isDisabled ? (e) => e.preventDefault() : onClick,
+    'data-slot': 'card-hit', className: 'bui-card__hit', 'aria-label': label,
+    ...(href ? { href: disabled ? undefined : href, target, role: disabled ? 'link' : undefined, 'aria-disabled': disabled || undefined, tabIndex: disabled ? -1 : undefined } : { type: 'button', disabled }),
+    onClick: disabled ? (e) => e.preventDefault() : onClick,
   });
-  return h('div', { ...cardProps({ variant, padding, elevation, width, height, maxWidth, minHeight, className, style }, cx('bui-card--clickable', isDisabled && 'bui-card--disabled')), ...rest }, hit, h('div', { 'data-slot': 'card-content', className: 'bui-card__content' }, children));
+  return h('div', { ...cardProps({ variant, padding, elevation, width, height, maxWidth, minHeight, className, style }, cx('bui-card--clickable', disabled && 'bui-card--disabled')), ...rest }, hit, h('div', { 'data-slot': 'card-content', className: 'bui-card__content' }, children));
 }
 describe(ClickableCard, 'A card that acts as one link or button.', {
   label: ['string', null, 'Accessible name'],
   onClick: ['(event) => void', null, 'Click handler'],
   href: ['string', null, 'Renders a link'],
-  isDisabled: ['boolean', 'false', 'Disables the card'],
+  disabled: ['boolean', 'false', 'Disables the card'],
   ...CARD_DOC,
 });
 
-export function SelectableCard({ label, isSelected, onChange, isDisabled = false, variant, padding, elevation, width, height, maxWidth, minHeight, className, style, children, ...rest }) {
-  return h('div', { ...cardProps({ variant, padding, elevation, width, height, maxWidth, minHeight, className, style }, cx('bui-card--selectable', isSelected && 'bui-card--selected', isDisabled && 'bui-card--disabled')), ...rest },
-    h('input', { type: 'checkbox', 'data-slot': 'card-hit', className: 'bui-card__hit', 'aria-label': label, checked: isSelected, disabled: isDisabled, onChange: () => onChange(!isSelected) }),
+export function SelectableCard({ label, checked, defaultChecked = false, onCheckedChange, disabled = false, variant, padding, elevation, width, height, maxWidth, minHeight, className, style, children, ...rest }) {
+  const [selected, setSelected] = useControllable(checked, defaultChecked, onCheckedChange);
+  return h('div', { ...cardProps({ variant, padding, elevation, width, height, maxWidth, minHeight, className, style }, cx('bui-card--selectable', selected && 'bui-card--selected', disabled && 'bui-card--disabled')), 'data-checked': selected || undefined, ...rest },
+    h('input', { type: 'checkbox', 'data-slot': 'card-hit', className: 'bui-card__hit', 'aria-label': label, checked: !!selected, disabled, onChange: () => setSelected(!selected) }),
     h('div', { 'data-slot': 'card-content', className: 'bui-card__content' }, children));
 }
-describe(SelectableCard, 'A card that can be selected.', {
+describe(SelectableCard, 'A card that can be selected, like a checkbox.', {
   label: ['string', null, 'Accessible name'],
-  isSelected: ['boolean', null, 'Selection state'],
-  onChange: ['(isSelected: boolean) => void', null, 'Called with the next state'],
-  isDisabled: ['boolean', 'false', 'Disables the card'],
+  checked: ['boolean', null, 'Selected (controlled)'],
+  defaultChecked: ['boolean', 'false', 'Initially selected (uncontrolled)'],
+  onCheckedChange: ['(checked: boolean) => void', null, 'Called with the next state'],
+  disabled: ['boolean', 'false', 'Disables the card'],
   ...CARD_DOC,
 });

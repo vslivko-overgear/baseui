@@ -1,9 +1,10 @@
-import { h, cx, React, useCallback, useEffect, useId, useMemo, useRef, useState, useControllable } from '../react.js';
+import { h, cx, React, useEffect, useId, useMemo, useRef, useState, useControllable } from '../react.js';
 import { Icon } from '../icons.js';
 import { TextField, Modal } from '../base.js';
 import { Button } from './Button.js';
 import { Popover } from './Popover.js';
 import { describe } from '../doc.js';
+import { useMediaQuery } from '../theme-flags.js';
 
 /* ------------------------------------------------------------------ dates */
 
@@ -135,7 +136,7 @@ export function Calendar({
     const weeks = Array.from({ length: total / 7 }, (_, i) => cells.slice(i * 7, i * 7 + 7));
     return h('div', { key: iso(mo), role: 'grid', 'aria-label': fmt.monthYear.format(mo), 'aria-multiselectable': mode === 'range' || undefined, 'data-slot': 'calendar-grid', className: cx('bui-calendar__grid', hasWeekNumbers && 'bui-calendar__grid--weeks'), ref: mo === months[0] ? grid : undefined, onKeyDown },
       h('div', { role: 'row', 'data-slot': 'calendar-row', className: 'bui-calendar__row' },
-        hasWeekNumbers && h('div', { role: 'columnheader', className: 'bui-calendar__weekday bui-calendar__week-number', 'aria-label': 'Week' }),
+        hasWeekNumbers && h('div', { role: 'columnheader', 'data-slot': 'calendar-week-number', className: 'bui-calendar__weekday bui-calendar__week-number', 'aria-label': 'Week' }),
         weekdays.map((w) => h('div', { key: w.long, role: 'columnheader', 'aria-label': w.long, 'data-slot': 'calendar-weekday', className: 'bui-calendar__weekday' }, w.short))),
       weeks.map((week, i) => h('div', { key: i, role: 'row', 'data-slot': 'calendar-row', className: 'bui-calendar__row' },
         hasWeekNumbers && h('div', { role: 'rowheader', 'data-slot': 'calendar-week-number', className: 'bui-calendar__week-number' }, fmt.number.format(isoWeek(addDays(week[0], 3)))),
@@ -189,11 +190,6 @@ describe(Calendar, 'A month grid for picking a date or a date range.', {
 
 /* ------------------------------------------------------------- DatePicker */
 
-function useNarrow(query) {
-  const sub = useCallback((cb) => { const q = window.matchMedia(query); q.addEventListener('change', cb); return () => q.removeEventListener('change', cb); }, [query]);
-  return React.useSyncExternalStore(sub, () => window.matchMedia(query).matches, () => false);
-}
-
 export function DatePicker({
   value, defaultValue, onValueChange, mode = 'single', label = 'Date', presentation = 'auto', locale, min, max, dateConstraints, weekStartsOn,
   confirmLabel = 'Apply', cancelLabel = 'Cancel', className, ...field
@@ -201,7 +197,7 @@ export function DatePicker({
   const [selected, setSelected] = useControllable(value, defaultValue ?? null, onValueChange);
   const [open, setOpen] = useState(false);
   const [draft, setDraft] = useState(selected);
-  const sheet = useNarrow('(max-width: 1200px)');
+  const sheet = useMediaQuery('(max-width: 1200px)');
   const asDialog = presentation === 'dialog' || (presentation === 'auto' && sheet);
   const fmt = useMemo(() => new Intl.DateTimeFormat(locale, { dateStyle: 'medium' }), [locale]);
   const text = mode === 'range'

@@ -37,7 +37,7 @@
 - [Icon Button](docs/components/icon-button.md): A button with only an icon.
 - [Card](docs/components/card.md): A container that groups related content.
 - [Clickable Card](docs/components/clickable-card.md): A card that acts as one link or button.
-- [Selectable Card](docs/components/selectable-card.md): A card that can be selected.
+- [Selectable Card](docs/components/selectable-card.md): A card that can be selected, like a checkbox.
 - [Collapsible](docs/components/collapsible.md): A section that expands and collapses.
 - [Dialog](docs/components/dialog.md): A universal modal window on top of Base UI Dialog. On mobile it sticks to the bottom, on desktop it centers automatically.
 - [Alert Dialog](docs/components/alert-dialog.md): A dialog that asks the user to confirm or cancel.

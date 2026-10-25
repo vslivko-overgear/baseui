@@ -10,7 +10,7 @@ export function Collapsible({ title, open, defaultOpen = false, onOpenChange, di
       h('button', {
         type: 'button', 'data-slot': 'collapsible-trigger', className: 'bui-collapsible__trigger', id: `${uid}-t`, 'aria-expanded': isOpen, 'aria-controls': `${uid}-p`,
         disabled, onClick: () => setOpen(!isOpen),
-      }, h('span', null, title), h(Icon, { name: 'chevronDown', size: 20, className: 'bui-collapsible__chevron' }))),
+      }, h('span', null, title), h(Icon, { name: 'chevronDown', size: 20, 'data-slot': 'collapsible-chevron', className: 'bui-collapsible__chevron' }))),
     h('div', { 'data-slot': 'collapsible-panel', className: 'bui-collapsible__panel', 'data-open': isOpen || undefined },
       h('div', { role: 'region', id: `${uid}-p`, 'aria-labelledby': `${uid}-t`, inert: !isOpen, 'data-slot': 'collapsible-content', className: 'bui-collapsible__content' },
         h('div', { 'data-slot': 'collapsible-inner', className: 'bui-collapsible__inner' }, children))));

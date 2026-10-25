@@ -1,7 +1,7 @@
 // Panels (Dropdown, Popover) open over the page: they are drawn in <body> with fixed coordinates taken from their trigger,
 // so no scrolling or clipping container around the trigger can cut them or push the layout. They flip to the other side
 // when there is no room and stay inside the screen.
-import { React, useState, useCallback, useEffect } from './react.js';
+import { useState, useCallback, useEffect, useLayoutEffect, useRef } from './react.js';
 import { t as requireReactDom } from '../lib/react-dom-BzEl8usk.js';
 
 const { createPortal } = requireReactDom();
@@ -45,7 +45,7 @@ export function useAnchoredPosition(open, anchorRef, panelRef, placement, matchW
     });
   }, [anchorRef, panelRef, placement, matchWidth]);
 
-  (React.useLayoutEffect)(() => {
+  useLayoutEffect(() => {
     if (!open) { setPos(null); return undefined; }
     update();
     window.addEventListener('resize', update);
@@ -61,3 +61,25 @@ export function useAnchoredPosition(open, anchorRef, panelRef, placement, matchW
 export const panelStyle = (pos) => (pos
   ? { position: 'fixed', top: pos.top, left: pos.left, width: pos.width, maxHeight: pos.maxHeight }
   : { position: 'fixed', top: 0, left: 0, visibility: 'hidden' });
+
+/**
+ * Closes an open panel the way every panel of the system closes: a press outside the trigger and the panel, or Escape
+ * (focus then goes back to the trigger, the element with aria-haspopup inside the root).
+ */
+export function useDismiss(open, close, rootRef, panelRef) {
+  const latest = useRef(close);
+  latest.current = close;
+  useEffect(() => {
+    if (!open) return undefined;
+    const outside = (e) => { if (!rootRef.current?.contains(e.target) && !panelRef.current?.contains(e.target)) latest.current(); };
+    const escape = (e) => {
+      if (e.key !== 'Escape' || e.defaultPrevented) return;
+      e.preventDefault();
+      latest.current();
+      rootRef.current?.querySelector('[aria-haspopup]')?.focus();
+    };
+    document.addEventListener('pointerdown', outside);
+    document.addEventListener('keydown', escape);
+    return () => { document.removeEventListener('pointerdown', outside); document.removeEventListener('keydown', escape); };
+  }, [open]);
+}

@@ -41,8 +41,7 @@ export function Avatar({ name, src, fallbackSrc, alt, size = 'md', shape = 'circ
     'data-slot': 'avatar', 'data-size': typeof size === 'number' ? 'custom' : size, 'data-shape': shape, className: cx('bui-avatar', interactive && 'bui-avatar--interactive', className),
     style: { width: px, height: px, borderRadius: radiusOf(shp, px), ...(group && { marginInlineStart: -group.overlap }), ...style },
     ...(href ? { href, target, rel } : onClick ? { type: 'button', onClick } : label ? { role: 'img' } : { 'aria-hidden': 'true' }),
-    ...(label && interactive && { 'aria-label': label }),
-    ...(label && !interactive && { 'aria-label': label }),
+    ...(label && { 'aria-label': label }),
     ...rest,
   };
   const node = h(AvatarSizeContext.Provider, { value: px }, h(Tag, props, content));
@@ -90,16 +89,17 @@ describe(AvatarGroupOverflow, 'The “+N” indicator at the end of an Avatar Gr
   children: ['ReactNode', null, 'Replaces the default “+N”'],
 });
 
-const DOT = { small: { size: 10, border: 1 }, medium: { size: 20, border: 2 }, large: { size: 32, border: 4 } };
+// The dot follows the size of its avatar: sm up to 36px, md up to 72px, lg above.
+const DOT = { sm: { size: 10, border: 1 }, md: { size: 20, border: 2 }, lg: { size: 32, border: 4 } };
 export function AvatarStatusDot({ variant = 'success', label, icon, className, style, ...rest }) {
   const parent = useAvatarSize();
-  const tier = parent == null ? 'small' : parent <= 36 ? 'small' : parent <= 72 ? 'medium' : 'large';
+  const tier = parent == null || parent <= 36 ? 'sm' : parent <= 72 ? 'md' : 'lg';
   const { size, border } = DOT[tier];
   return h('span', {
     'data-slot': 'avatar-dot', className: cx('bui-avatar-dot', `bui-avatar-dot--${variant}`, className),
     role: parent == null ? 'img' : undefined, 'aria-label': parent == null ? label : undefined, title: label,
     style: { width: size, height: size, boxShadow: `0 0 0 ${border}px var(--baseui-Background-Primary)`, ...style }, ...rest,
-  }, icon && tier !== 'small' ? h('span', { 'data-slot': 'avatar-dot-icon', className: 'bui-avatar-dot__icon', 'aria-hidden': 'true' }, icon) : variant === 'error' && tier !== 'small' ? h('span', { 'data-slot': 'avatar-dot-bar', className: 'bui-avatar-dot__bar', 'aria-hidden': 'true' }) : null);
+  }, icon && tier !== 'sm' ? h('span', { 'data-slot': 'avatar-dot-icon', className: 'bui-avatar-dot__icon', 'aria-hidden': 'true' }, icon) : variant === 'error' && tier !== 'sm' ? h('span', { 'data-slot': 'avatar-dot-bar', className: 'bui-avatar-dot__bar', 'aria-hidden': 'true' }) : null);
 }
 describe(AvatarStatusDot, 'A presence indicator on an avatar.', {
   variant: ["'success' | 'neutral' | 'error'", "'success'", 'Online, away, busy'],

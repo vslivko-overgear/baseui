@@ -43,8 +43,8 @@ function Profile({ settings, update, toast }) {
     h(DatePicker, { size: 'sm', label: 'Birthday', value: p.birthday, onValueChange: (v) => setP({ ...p, birthday: v }), max: new Date().toISOString().slice(0, 10), weekStartsOn: 1, locale: 'en-US' }),
     h(Select, { size: 'sm', label: 'Status', value: p.status, onValueChange: (v) => setP({ ...p, status: v }), options: [{ value: 'online', label: 'Online' }, { value: 'away', label: 'Away' }, { value: 'busy', label: 'Do not disturb' }] }),
     h('div', { className: 'mm-row' },
-      h(Button, { variant: 'primary', isDisabled: !dirty, clickAction: async () => { await new Promise((r) => setTimeout(r, 700)); update({ profile: p }); toast({ message: 'Profile saved', status: 'success' }); } }, 'Save changes'),
-      h(Button, { variant: 'ghost', isDisabled: !dirty, onClick: () => setP(settings.profile) }, 'Discard')));
+      h(Button, { variant: 'primary', disabled: !dirty, clickAction: async () => { await new Promise((r) => setTimeout(r, 700)); update({ profile: p }); toast({ message: 'Profile saved', status: 'success' }); } }, 'Save changes'),
+      h(Button, { variant: 'ghost', disabled: !dirty, onClick: () => setP(settings.profile) }, 'Discard')));
 }
 
 function Notifications({ settings, update, toast }) {
@@ -91,7 +91,7 @@ function Appearance({ settings, update }) {
     h(Group, { title: 'Color scheme' }, h(SegmentedControl, { label: 'Color scheme', value: scheme, onValueChange: setScheme, items: [{ value: 'light', label: 'Light', icon: h(I.Sun) }, { value: 'dark', label: 'Dark', icon: h(I.Moon01) }] })),
     h(Group, { title: 'Design system theme', caption: 'Brand color, shape, fonts, animations, floating bars and glass' },
       h(Card, { padding: 16 }, h('div', { className: 'mm-row' }, h(I.Palette, { size: 24 }), h('div', { className: 'mm-grow' }, 'Open Theme settings to restyle this app. Your choices are kept on this device.'), h(Button, { variant: 'primary', size: 'sm', href: '../../#/theming/theme-settings' }, 'Open')))),
-    h(Group, { title: 'Chat wallpaper' }, h('div', { className: 'mm-grid2' }, WALLPAPERS.map((w) => h(SelectableCard, { key: w.value, label: w.label, isSelected: settings.wallpaper === w.value, onChange: () => update({ wallpaper: w.value }), padding: 12 },
+    h(Group, { title: 'Chat wallpaper' }, h('div', { className: 'mm-grid2' }, WALLPAPERS.map((w) => h(SelectableCard, { key: w.value, label: w.label, checked: settings.wallpaper === w.value, onCheckedChange: () => update({ wallpaper: w.value }), padding: 12 },
       h('div', { className: 'mm-wall', style: { background: WALL[w.value] } }), w.label)))),
     h(Group, { title: 'Text' },
       h(Slider, { label: 'Text size', showValue: true, min: 80, max: 130, value: settings.textSize, onValueChange: (v) => update({ textSize: v }) }),
@@ -114,7 +114,7 @@ function Storage({ toast }) {
     h(Group, { title: `${used} MB of 5 GB used` }, h(ProgressBar, { value: (used / 5120) * 100, label: 'Storage used', size: 'md' })),
     h(Table, { data: rows, columns, caption: 'Storage by category', selectionMode: 'multiple', selectedKeys: selected, onSelectionChange: (k) => setSelected([...k]) }),
     h('div', { className: 'mm-row' },
-      h(Button, { variant: 'destructive', icon: h(I.Trash01), isDisabled: !clearSel || busy, isLoading: busy, onClick: () => setConfirm(true) }, `Clear ${clearSel} MB`),
+      h(Button, { variant: 'destructive', icon: h(I.Trash01), disabled: !clearSel || busy, loading: busy, onClick: () => setConfirm(true) }, `Clear ${clearSel} MB`),
       busy && h('span', { className: 'mm-row mm-muted' }, h(Spinner, { size: 'sm' }), 'Clearing…')),
     h(AlertDialog, { open: confirm, onOpenChange: setConfirm, destructive: true, title: 'Clear selected data?', description: 'Cached files will be downloaded again when needed.', confirmLabel: 'Clear', onConfirm: () => {
       setConfirm(false); setBusy(true);
@@ -134,7 +134,7 @@ function Help({ toast }) {
     ] }),
     h(Group, { title: 'Rate Messenger' }, h(Rating, { label: 'Your rating', value: stars, onValueChange: (v) => { setStars(v); toast({ message: `Thanks! ${v} of 5`, status: 'success', duration: 2500 }); } })),
     h('div', { className: 'mm-row' }, h(Button, { variant: 'secondary', icon: h(I.MessageSquare01), onClick: () => setFeedback(true) }, 'Send feedback'), h(Tooltip, { content: 'Opens the baseui documentation' }, h(Button, { variant: 'ghost', href: '../../#/', icon: h(I.File06) }, 'Documentation'))),
-    h(Modal, { open: feedback, onOpenChange: setFeedback, title: 'Send feedback', primaryAction: h(Button, { variant: 'primary', isDisabled: !text.trim(), onClick: () => { setFeedback(false); setText(''); toast({ message: 'Thank you for the feedback', status: 'success' }); } }, 'Send'), secondaryAction: h(Button, { variant: 'secondary', onClick: () => setFeedback(false) }, 'Cancel') },
+    h(Modal, { open: feedback, onOpenChange: setFeedback, title: 'Send feedback', primaryAction: h(Button, { variant: 'primary', disabled: !text.trim(), onClick: () => { setFeedback(false); setText(''); toast({ message: 'Thank you for the feedback', status: 'success' }); } }, 'Send'), secondaryAction: h(Button, { variant: 'secondary', onClick: () => setFeedback(false) }, 'Cancel') },
       h(TextField, { size: 'sm', label: 'What can we improve?', multiline: true, minRows: 4, maxRows: 8, value: text, onChange: (e) => setText(e.target.value) })));
 }
 

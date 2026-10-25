@@ -1,8 +1,8 @@
 import { h, cx, useEffect, useId, useMemo, useRef, useState, useControllable } from '../react.js';
 import { Button } from './Button.js';
 import { describe } from '../doc.js';
-import { glassClass, usePresence, useMotion } from '../theme-flags.js';
-import { Floating, useAnchoredPosition, panelStyle } from '../floating.js';
+import { themeAttrs, usePresence, useMotion } from '../theme-flags.js';
+import { Floating, useAnchoredPosition, panelStyle, useDismiss } from '../floating.js';
 import { DropdownItemContent, DropdownGroup, DropdownDivider, DropdownSelectAll, CheckMark, trackSelection, itemClass, isOption } from '../../lib/Dropdown.js';
 
 /**
@@ -32,10 +32,9 @@ export function Dropdown({
     const first = enabled.findIndex(isOn);
     setActive(first >= 0 ? first : 0);
     panel.current?.focus();
-    const onDoc = (e) => { if (!root.current.contains(e.target) && !panel.current?.contains(e.target)) setOpen(false); };
-    document.addEventListener('pointerdown', onDoc);
-    return () => document.removeEventListener('pointerdown', onDoc);
+    return undefined;
   }, [isOpen]);
+  useDismiss(isOpen, () => setOpen(false), root, panel);
 
   const choose = (o) => {
     if (!o || o.disabled) return;
@@ -49,7 +48,6 @@ export function Dropdown({
     else if (e.key === 'Home') { e.preventDefault(); setActive(0); }
     else if (e.key === 'End') { e.preventDefault(); setActive(last); }
     else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(enabled[active]); }
-    else if (e.key === 'Escape') { e.preventDefault(); setOpen(false); root.current.querySelector('[aria-haspopup]')?.focus(); }
     else if (e.key === 'Tab') setOpen(false);
   };
   useEffect(() => { panel.current?.querySelector('[data-highlighted]')?.scrollIntoView({ block: 'nearest' }); }, [active]);
@@ -57,8 +55,8 @@ export function Dropdown({
   const triggerProps = { 'aria-haspopup': 'listbox', 'aria-expanded': isOpen, 'aria-controls': isOpen ? id : undefined, onClick: () => setOpen(!isOpen) };
   let n = -1;
   return h('span', { ref: root, 'data-slot': 'dropdown-root', className: cx('bui-dropdown-root', className), ...rest },
-    typeof trigger === 'function' ? trigger(triggerProps) : (trigger ?? h(Button, { variant: 'secondary', size: size === 'sm' ? 'sm' : 'md', ...triggerProps }, 'Open')),
-    shown && h(Floating, null, h('div', { ref: (el) => { panel.current = el; trackSelection(el); }, style: panelStyle(pos), id, role: 'listbox', 'data-slot': 'dropdown', 'data-size': size, tabIndex: -1, 'aria-label': label, 'aria-multiselectable': multiple || undefined, className: cx('bui-dropdown bui-dropdown--standalone', glassClass(glass), motion && `bui-motion--${motion}`), 'data-placement': pos?.placement ?? placement, 'data-closing': closing || undefined, onKeyDown },
+    typeof trigger === 'function' ? trigger(triggerProps) : (trigger ?? h(Button, { variant: 'secondary', size, ...triggerProps }, 'Open')),
+    shown && h(Floating, null, h('div', { ref: (el) => { panel.current = el; trackSelection(el); }, style: panelStyle(pos), id, role: 'listbox', 'data-slot': 'dropdown', 'data-size': size, tabIndex: -1, 'aria-label': label, 'aria-multiselectable': multiple || undefined, className: 'bui-dropdown bui-dropdown--standalone', ...themeAttrs({ motion, glass }), 'data-placement': pos?.placement ?? placement, 'data-closing': closing || undefined, onKeyDown },
       multiple && selectAll && h(DropdownSelectAll, { label: allOn ? 'Remove all' : 'Select all', onClick: () => setSelected(allOn ? [] : enabled.map((o) => o.value)) }),
       options.map((o, i) => {
         if (o.type === 'group') return h(DropdownGroup, { key: `g${i}`, label: o.label });

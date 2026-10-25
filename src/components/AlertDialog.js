@@ -1,12 +1,13 @@
 import { h } from '../react.js';
-import { Modal, Button } from '../base.js';
+import { Modal } from '../base.js';
+import { Button } from './Button.js';
 import { describe } from '../doc.js';
 
 export function AlertDialog({ open, onOpenChange, title, description, confirmLabel = 'Confirm', cancelLabel = 'Cancel', onConfirm, destructive = false, floating }) {
   const close = () => onOpenChange(false);
   return h(Modal, {
     open, onOpenChange, title, floating, header: 'title-only',
-    primaryAction: h(Button, { onClick: () => { onConfirm && onConfirm(); close(); }, customBackground: destructive ? 'var(--baseui-Extensions-Background-Error)' : undefined, variant: destructive ? 'custom' : 'primary', customColor: destructive ? '#ffffff' : undefined }, confirmLabel),
+    primaryAction: h(Button, { variant: destructive ? 'destructive' : 'primary', onClick: () => { onConfirm && onConfirm(); close(); } }, confirmLabel),
     secondaryAction: h(Button, { variant: 'secondary', onClick: close }, cancelLabel),
   }, description);
 }

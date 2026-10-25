@@ -5,7 +5,7 @@ import { t as initDom, r as renderInto } from '../lib/react-18-D4o7zN8K.js';
 import manifest from './manifest.js';
 import { TextField, Switch, Chip, ChipGroup, Modal } from '../src/base.js';
 import { List, ListItem } from '../src/components/List.js';
-import { Button } from '../src/components/Button.js';
+import { Button, IconButton } from '../src/components/Button.js';
 import { LOGO_PATHS } from './logo.js';
 import { SegmentedControl } from '../src/components/SegmentedControl.js';
 import { Slider } from '../src/components/Slider.js';
@@ -61,9 +61,10 @@ const store = {
 
 /* ------------------------------------------------- component registry (UI) */
 
-// The compiled Checkbox, Radio and their groups get the size and animation settings of the design system.
+// The pages of compiled components that the design system wraps show the wrapper: Checkbox, Radio and their groups get the size and
+// animation settings, the Dialog gets `floating`.
 const CHECK_PAGES = { 'Checkbox.stories': Checkbox, 'CheckboxGroup.stories': CheckboxGroup, 'RadioGroup.stories': RadioGroup, 'Radio.stories': Radio };
-function enhanceChecks(file, m) {
+function adoptCompiledStory(file, m) {
   if (file.includes('/Modal.stories-')) {
     const mm = m.default;
     if (!mm.__floating) {
@@ -93,7 +94,7 @@ function ModalDemo({ initialOpen = true, ...props }) {
 }
 const modules = new Map();
 const loadModule = (file) => {
-  if (!modules.has(file)) modules.set(file, import(file).then((m) => { enhanceChecks(file, m); documentControls(m.default); return m; }));
+  if (!modules.has(file)) modules.set(file, import(file).then((m) => { adoptCompiledStory(file, m); documentControls(m.default); return m; }));
   return modules.get(file);
 };
 const ui = { Button, TextField, Switch, Chip };
@@ -401,7 +402,7 @@ function App() {
       h('div', { className: 'shell' },
         h('a', { className: 'skip', href: '#main', onClick: skip }, 'Skip to content'),
         h('header', { className: 'appbar' },
-          h(Button, { variant: 'ghost', size: 'sm', isIconOnly: true, label: 'Open catalog', icon: h(icons.Menu01), className: 'menu-btn', tooltip: false, onClick: () => _setMenu(true) }),
+          h(IconButton, { variant: 'ghost', size: 'sm', label: 'Open catalog', icon: h(icons.Menu01), className: 'menu-btn', tooltip: false, onClick: () => _setMenu(true) }),
           h('a', { className: 'brand', href: '#/', 'aria-label': 'baseui' },
             h('svg', { className: 'brand-logo', viewBox: '0 0 64 14', width: 128, height: 28, fill: 'currentColor', 'aria-hidden': 'true', focusable: 'false' }, LOGO_PATHS.map((d) => h('path', { key: d.slice(0, 24), d })))),
           h('div', { className: 'appbar-end' }, h('div', { className: 'view-control' }, viewControl), themeControl)),

@@ -12,8 +12,8 @@ Tabular data with sorting, selection and several looks.
 | `caption` | `string` | — | Accessible caption |
 | `density` | `'compact' \| 'balanced' \| 'spacious'` | `'balanced'` | Row height |
 | `dividers` | `'rows' \| 'columns' \| 'grid' \| 'none'` | `'rows'` | Which divider lines to draw |
-| `isStriped` | `boolean` | `false` | Tint every second row |
-| `hasHover` | `boolean` | `false` | Highlight the row under the pointer |
+| `striped` | `boolean` | `false` | Tint every second row |
+| `hoverable` | `boolean` | `false` | Highlight the row under the pointer |
 | `verticalAlign` | `'middle' \| 'top' \| 'bottom'` | `'middle'` | Vertical alignment of cells |
 | `textOverflow` | `'wrap' \| 'truncate'` | `'wrap'` | Wrap long text or cut it with an ellipsis |
 | `sort` | `{ key: string; direction: 'asc' \| 'desc' } \| null` | — | Sort state (controlled) |
@@ -25,9 +25,9 @@ Tabular data with sorting, selection and several looks.
 | `defaultSelectedKeys` | `string[]` | `[]` | Initially selected row keys |
 | `onSelectionChange` | `(keys) => void` | — | Called when the selection changes |
 | `onRowClick` | `(row) => void` | — | Makes rows clickable |
-| `isStickyHeader` | `boolean` | `false` | Keep the header visible while scrolling |
+| `stickyHeader` | `boolean` | `false` | Keep the header visible while scrolling |
 | `maxHeight` | `number \| string` | — | Scroll the rows inside this height |
-| `isLoading` | `boolean` | `false` | Show skeleton rows |
+| `loading` | `boolean` | `false` | Show skeleton rows |
 | `emptyState` | `ReactNode` | `'No data'` | Shown when there are no rows |
 
 ## Examples

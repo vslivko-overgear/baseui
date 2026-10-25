@@ -35,7 +35,7 @@ body { background: #0a0b2b; -webkit-font-smoothing: antialiased; }
 .og-cats { background: var(--og-deep); --baseui-Background-Primary: var(--og-deep); }
 [data-slot="modal"] .og-cats { background: transparent; margin: 0 -16px; }
 [data-slot="modal"] .og-caption { display: none; }
-.og-cats .bui-list, .og-cats [class*="_list_"] { width: 100%; }
+.og-cats [data-slot="list"] { width: 100%; }
 
 /* intro */
 .og-h1 { margin: 20px 0 16px; font: 700 52px/1.1 var(--og-head); letter-spacing: -.02em; }
@@ -67,9 +67,10 @@ body { background: #0a0b2b; -webkit-font-smoothing: antialiased; }
 
 /* accordions */
 .og-acc, .og-faq { margin-top: 24px; }
-.og-acc, .og-faq .bui-collapsible, .og-faq [class*="collapsible"] { background: var(--og-panel); border-radius: 4px; }
-.og-faq { display: grid; gap: 12px; }
-.og .bui-collapsible__trigger, .og .bui-collapsible button { font: 700 22px/1.25 var(--og-head); }
+/* cards, not a list: no divider lines of the Collapsible */
+.og-acc, .og-faq [data-slot="collapsible"] { background: var(--og-panel); border-radius: 4px; box-shadow: none; }
+.og-faq { display: grid; gap: 12px; box-shadow: none; }
+.og [data-slot="collapsible-trigger"] { font: 700 22px/1.25 var(--og-head); }
 
 /* reviews */
 .og-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 40px; }
@@ -180,19 +181,19 @@ body { background: #0a0b2b; -webkit-font-smoothing: antialiased; }
 }
 
 /* the category list: full-width rows with lines between them, the opened branch lighter */
-.og-cats [class*="_item_1xp1v"] { border-bottom: 1px solid #14163c; }
-.og-cats [class*="_header_1xp1v"] { min-height: 56px; padding-inline: 20px; border-radius: 0; }
-.og-cats [class*="_title_1xp1v"] { font: var(--baseui-Typography-Text-16-Semi-Bold); }
-.og-cats [class*="_header_1xp1v"][class*="_small_"] { min-height: 56px; }
+.og-cats [data-slot="list-item"] { border-bottom: 1px solid #14163c; }
+.og-cats [data-slot="list-item-header"] { min-height: 56px; padding-inline: 20px; border-radius: 0; }
+.og-cats [data-slot="list-item-title"] { font: var(--baseui-Typography-Text-16-Semi-Bold); }
+.og-cats [data-slot="list-item-header"][data-size="sm"] { min-height: 56px; }
 .og-cats ul { padding: 0; margin: 0; }
 .og-cats [data-subitem], .og-cats li ul { background: #1b1e45; }
-.og-cats li ul [class*="_title_1xp1v"] { font: var(--baseui-Typography-Text-14-Regular); color: var(--baseui-Text-and-Icon-Secondary); }
+.og-cats li ul [data-slot="list-item-title"] { font: var(--baseui-Typography-Text-14-Regular); color: var(--baseui-Text-and-Icon-Secondary); }
 .og-cats li ul [aria-current] { background: #2b2e63; }
-.og-cats li ul [aria-current] [class*="_title_1xp1v"] { color: #fff; }
+.og-cats li ul [aria-current] [data-slot="list-item-title"] { color: #fff; }
 
 .og-review { --baseui-rating-star-filled: #5b4cff; }
 .og-trust { --baseui-rating-star-filled: #00b67a; }
-.og-acc, .og-faq [class*="_item_"], .og-faq > * { border-radius: 4px; }
-.og .bui-collapsible__trigger, .og .bui-collapsible button, .og-acc button, .og-faq button { padding: 16px; width: 100%; text-align: left; }
-.og-acc > div:not(:first-child), .og-faq [class*="content"], .og-faq [role="region"] { padding: 0 16px 16px; color: var(--baseui-Text-and-Icon-Secondary); }
+.og-acc, .og-faq > * { border-radius: 4px; }
+.og [data-slot="collapsible-trigger"] { padding: 16px; width: 100%; text-align: left; }
+.og-acc > div:not(:first-child), .og-faq [data-slot="collapsible-content"] { padding: 0 16px 16px; color: var(--baseui-Text-and-Icon-Secondary); }
 @media (max-width: 640px) { .og-custom { flex-wrap: wrap; } }

@@ -1,9 +1,10 @@
-import { h, cx, React, useId, useRef, useState, useEffect, createContext, useContext, useControllable } from '../react.js';
+import { h, cx, useId, useRef, useState, useEffect, createContext, useContext, useControllable } from '../react.js';
 import { Icon } from '../icons.js';
 import { Badge } from './Badge.js';
 import { IconButton } from './Button.js';
 import { describe } from '../doc.js';
-import { motionOf, useAppear } from '../theme-flags.js';
+import { motionOf, useAppear, useReady, themeAttrs } from '../theme-flags.js';
+import { useHighlight } from '../highlight.js';
 
 const TabsContext = createContext(null);
 const TabListContext = createContext({ size: 'md', showIcon: true, showCounter: true, showBadge: true });
@@ -24,8 +25,7 @@ export function TabList({ size = 'md', fullWidth = false, showIcon = true, showC
   const { current, setCurrent } = useTabs();
   const ref = useRef(null);
   const [edge, setEdge] = useState({ left: false, right: false });
-  const [bar, setBar] = useState(null);
-  const [ready, setReady] = useState(false);
+  const ready = useReady();
   const [nudge, setNudge] = useState(0);
   const indicator = useRef(null);
   // Slide buttons appear when the row is wider than its container, like the Figma "slide left / right".
@@ -39,19 +39,8 @@ export function TabList({ size = 'md', fullWidth = false, showIcon = true, showC
     return () => { el.removeEventListener('scroll', measure); ro.disconnect(); };
   }, [children, size, showIcon, showCounter, showBadge]);
   useEffect(() => { ref.current?.querySelector('[aria-selected="true"]')?.scrollIntoView({ block: 'nearest', inline: 'nearest' }); }, [current]);
-  // The underline is one element that slides to the selected tab; it is measured again when the row changes size.
-  React.useLayoutEffect(() => {
-    const el = ref.current;
-    const measure = () => {
-      const t = el.querySelector('[aria-selected="true"]');
-      setBar(t ? { x: t.offsetLeft, w: t.offsetWidth } : null);
-    };
-    measure();
-    const ro = new ResizeObserver(measure);
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, [current, children, size, fullWidth, showIcon, showCounter, showBadge]);
-  useEffect(() => { const id = requestAnimationFrame(() => setReady(true)); return () => cancelAnimationFrame(id); }, []);
+  // The underline is one element that slides to the selected tab.
+  const [bar] = useHighlight(ref, (row) => row.querySelector('[aria-selected="true"]'), [current, children, size, fullWidth, showIcon, showCounter, showBadge]);
   useAppear(indicator, ref, bar && `${bar.x}/${bar.w}`);
   const slide = (dir) => ref.current.scrollBy({ left: dir * ref.current.clientWidth * 0.6, behavior: 'smooth' });
   const onKeyDown = (e) => {
@@ -68,9 +57,9 @@ export function TabList({ size = 'md', fullWidth = false, showIcon = true, showC
     setCurrent(next.dataset.value);
   };
   return h(TabListContext.Provider, { value: { size, showIcon, showCounter, showBadge } },
-    h('div', { 'data-motion': motion, 'data-slot': 'tablist-wrap', className: cx('bui-tablist-wrap', `bui-tablist-wrap--${size}`, fullWidth && 'bui-tablist-wrap--full', ready && 'bui-tablist-wrap--ready', className) },
-      edge.left && h('div', { className: 'bui-tablist__slide bui-tablist__slide--left' }, h(IconButton, { variant: 'ghost', size: 'xsm', label: 'Slide left', tooltip: false, tabIndex: -1, icon: h(Icon, { name: 'chevronLeft', size: 24 }), onClick: () => slide(-1) })),
-      h('div', { role: 'tablist', 'aria-label': label, ref, onKeyDown,
+    h('div', { ...themeAttrs({ motion }), 'data-slot': 'tablist-wrap', 'data-size': size, className: cx('bui-tablist-wrap', `bui-tablist-wrap--${size}`, fullWidth && 'bui-tablist-wrap--full', ready && 'bui-tablist-wrap--ready', className) },
+      edge.left && h('div', { 'data-slot': 'tablist-slide', className: 'bui-tablist__slide bui-tablist__slide--left' }, h(IconButton, { variant: 'ghost', size: 'xsm', label: 'Slide left', tooltip: false, tabIndex: -1, icon: h(Icon, { name: 'chevronLeft', size: 24 }), onClick: () => slide(-1) })),
+      h('div', { role: 'tablist', 'aria-label': label, 'data-slot': 'tablist', ref, onKeyDown,
         // Hovering another tab nudges the underline a few pixels toward it (enhanced animations only).
         onPointerOver: (e) => {
           if (e.pointerType !== 'mouse' || motionOf(ref.current) !== 'enhanced') return;
@@ -80,7 +69,7 @@ export function TabList({ size = 'md', fullWidth = false, showIcon = true, showC
         },
         onPointerLeave: () => setNudge(0), className: 'bui-tablist', ...rest }, children,
         bar && h('span', { ref: indicator, 'data-slot': 'tablist-indicator', className: 'bui-tablist__indicator', 'aria-hidden': 'true', style: { width: bar.w, transform: `translateX(${bar.x + nudge}px)` } })),
-      edge.right && h('div', { className: 'bui-tablist__slide bui-tablist__slide--right' }, h(IconButton, { variant: 'ghost', size: 'xsm', label: 'Slide right', tooltip: false, tabIndex: -1, icon: h(Icon, { name: 'chevronRight', size: 24 }), onClick: () => slide(1) }))));
+      edge.right && h('div', { 'data-slot': 'tablist-slide', className: 'bui-tablist__slide bui-tablist__slide--right' }, h(IconButton, { variant: 'ghost', size: 'xsm', label: 'Slide right', tooltip: false, tabIndex: -1, icon: h(Icon, { name: 'chevronRight', size: 24 }), onClick: () => slide(1) }))));
 }
 describe(TabList, 'The row of tabs. Its settings work like the Segmented Control ones; a row wider than its container scrolls with slide buttons.', {
   size: ["'sm' | 'md' | 'lg' | 'xl'", "'md'", 'Tab size: the label goes from 16 to 28px (Figma Small to Extra Large)'],

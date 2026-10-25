@@ -1,23 +1,10 @@
 import { h, cx, useId, useState, useRef, useEffect, React } from '../react.js';
 import { describe } from '../doc.js';
-
-/** A touch screen has no hover: a tooltip would only appear stuck after a tap. */
-const useTouch = () => {
-  const query = '(hover: none), (pointer: coarse)';
-  const [touch, setTouch] = useState(() => typeof matchMedia === 'function' && matchMedia(query).matches);
-  useEffect(() => {
-    if (typeof matchMedia !== 'function') return undefined;
-    const mq = matchMedia(query);
-    const on = () => setTouch(mq.matches);
-    on(); mq.addEventListener('change', on);
-    return () => mq.removeEventListener('change', on);
-  }, []);
-  return touch;
-};
+import { useTouchScreen } from '../theme-flags.js';
 
 export function Tooltip({ content, placement = 'top', delay = 300, children, className, ...rest }) {
   const [open, setOpen] = useState(false);
-  const touch = useTouch();
+  const touch = useTouchScreen();
   const id = useId();
   const timer = useRef();
   const show = () => { clearTimeout(timer.current); if (!touch) timer.current = setTimeout(() => setOpen(true), delay); };

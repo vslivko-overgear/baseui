@@ -1,5 +1,16 @@
 # Changelog
 
+## Refactor: one system
+
+- Props renamed to the Base UI conventions. Button and Icon Button: `isDisabled` → `disabled`, `isLoading` → `loading`. Clickable Card: `isDisabled` → `disabled`. Selectable Card: `isSelected` / `onChange` / `isDisabled` → `checked` (or `defaultChecked`) / `onCheckedChange` / `disabled`. Table: `isStriped` → `striped`, `hasHover` → `hoverable`, `isStickyHeader` → `stickyHeader`, `isLoading` → `loading`.
+- Theme settings: one convention. `motion` and `glass` props write `data-motion` and `data-glass` on the component, the same attributes the theme writes on `<html>`; the old `bui-glass-*` and `bui-motion-*` classes are gone. Floating is read with one hook.
+- Shared behaviour in one place: closing on an outside click or Escape (Dropdown, Popover), the sliding highlight (Tabs, Segmented Control, Bottom Bar, OTP Input), media queries (Tooltip, Calendar).
+- `data-slot` and `data-size` on every element of the DS components; the example products select them instead of hashed classes.
+- Focus: one list per placement (around, inside, flush). Tabs get the radius of their focus ring.
+- Alert Dialog uses the DS Button (the destructive action takes the destructive variant).
+- Tabs `sm`: 8px between the tab list and the panel, like the other small controls.
+- CSS regrouped by component; duplicates merged; unused rules removed.
+
 ## Experimental: Astryx alignment
 
 - Documentation in English: Foundations and Components in Astryx order. One page per component, with the same structure everywhere: Playground, Props, Examples, and anchors to each. Important subcomponents are child pages in the menu; minor ones are examples on the parent page.

@@ -4,13 +4,13 @@ import { Plus } from './_ui.js';
 import { meta, playground, example, Row, W } from './_helpers.js';
 
 export default meta({
-  title: 'Components/Button', component: Button, args: { label: 'Button', variant: 'secondary', size: 'md', shape: 'rounded', isDisabled: false, isLoading: false },
+  title: 'Components/Button', component: Button, args: { label: 'Button', variant: 'secondary', size: 'md', shape: 'rounded', disabled: false, loading: false },
   argTypes: { label: { control: 'text' },
     variant: { control: 'inline-radio', options: ['primary', 'secondary', 'ghost', 'destructive'] },
     size: { control: 'inline-radio', options: ['xsm', 'sm', 'md', 'lg'] },
     shape: { control: 'inline-radio', options: ['rounded', 'circle'] },
-    isDisabled: { control: 'boolean' },
-    isLoading: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    loading: { control: 'boolean' },
   },
 });
 export const Playground = playground({ source: '{}' });
@@ -27,7 +27,7 @@ export const Icons = example({
   source: `<Button label="New" icon={<PlusIcon />} />`,
 });
 export const Loading = example({
-  name: 'Loading', render: () => h(Row, null, h(Button, { variant: 'primary', label: 'Saving', isLoading: true }), h(Button, { label: 'Async', clickAction: () => new Promise((r) => setTimeout(r, 1200)) })),
+  name: 'Loading', render: () => h(Row, null, h(Button, { variant: 'primary', label: 'Saving', loading: true }), h(Button, { label: 'Async', clickAction: () => new Promise((r) => setTimeout(r, 1200)) })),
   source: `<Button label="Async" clickAction={save} />`,
 });
 export const Width = example({

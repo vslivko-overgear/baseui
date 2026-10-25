@@ -1,5 +1,5 @@
 import { h, cx, createContext, useContext, useMemo, useState, useControllable } from '../react.js';
-import { Checkbox } from '../base.js';
+import { Checkbox } from './Checks.js';
 import { Skeleton } from './Skeleton.js';
 import { describe } from '../doc.js';
 
@@ -21,10 +21,10 @@ function SortIcon({ direction }) {
 }
 
 export function Table({
-  data, columns = [], rowKey = 'id', caption, density = 'balanced', dividers = 'rows', isStriped = false, hasHover = false,
+  data, columns = [], rowKey = 'id', caption, density = 'balanced', dividers = 'rows', striped = false, hoverable = false,
   verticalAlign = 'middle', textOverflow = 'wrap', sort, defaultSort = null, onSortChange, manualSort = false,
   selectionMode = 'none', selectedKeys, defaultSelectedKeys = [], onSelectionChange, onRowClick,
-  isStickyHeader = false, maxHeight, isLoading = false, emptyState = 'No data', children, className, ...rest
+  stickyHeader = false, maxHeight, loading = false, emptyState = 'No data', children, className, ...rest
 }) {
   const [sortState, setSort] = useControllable(sort, defaultSort, onSortChange);
   const [selected, setSelected] = useControllable(selectedKeys, defaultSelectedKeys, onSelectionChange);
@@ -59,15 +59,15 @@ export function Table({
   const floor = columns.reduce((n, c) => { const w = widthOf(c.width); return n + (w.type === 'pixel' ? w.value : w.minWidth ?? 120); }, select ? SELECT_WIDTH : 0);
   const colWidth = (c) => { const w = widthOf(c.width); return w.type === 'pixel' ? w.value : `calc((100% - ${fixed}px) * ${w.value / weights})`; };
 
-  const ctx = { density, dividers, isStriped, hasHover, verticalAlign, textOverflow };
+  const ctx = { density, dividers, striped, hoverable, verticalAlign, textOverflow };
   const clickable = !!onRowClick;
-  const cls = cx('bui-table', `bui-table--${density}`, `bui-table--div-${dividers}`, isStriped && 'bui-table--striped', (hasHover || clickable) && 'bui-table--hover', `bui-table--v-${verticalAlign}`, textOverflow === 'truncate' && 'bui-table--truncate', className);
+  const cls = cx('bui-table', `bui-table--${density}`, `bui-table--div-${dividers}`, striped && 'bui-table--striped', (hoverable || clickable) && 'bui-table--hover', `bui-table--v-${verticalAlign}`, textOverflow === 'truncate' && 'bui-table--truncate', className);
   const wrapStyle = maxHeight ? { maxHeight } : undefined;
-  const wrapCls = cx('bui-table-wrap', (isStickyHeader || maxHeight) && 'bui-table-wrap--scroll', isStickyHeader && 'bui-table-wrap--sticky');
+  const wrapCls = cx('bui-table-wrap', (stickyHeader || maxHeight) && 'bui-table-wrap--scroll', stickyHeader && 'bui-table-wrap--sticky');
 
   // Children mode: TableHeader, TableBody, TableRow, TableHeaderCell, TableCell.
   if (!data) {
-    return h(TableContext.Provider, { value: ctx }, h('div', { className: wrapCls, style: wrapStyle }, h('table', { className: cls, ...rest }, caption && h('caption', { 'data-slot': 'visually-hidden', className: 'bui-visually-hidden' }, caption), children)));
+    return h(TableContext.Provider, { value: ctx }, h('div', { 'data-slot': 'table-wrap', className: wrapCls, style: wrapStyle }, h('table', { 'data-slot': 'table', className: cls, ...rest }, caption && h('caption', { 'data-slot': 'visually-hidden', className: 'bui-visually-hidden' }, caption), children)));
   }
 
   const cell = (c, item) => {
@@ -77,8 +77,8 @@ export function Table({
   const colCount = columns.length + (select ? 1 : 0);
 
   return h(TableContext.Provider, { value: ctx },
-    h('div', { className: wrapCls, style: wrapStyle },
-      h('table', { className: cls, style: { minWidth: floor }, ...rest },
+    h('div', { 'data-slot': 'table-wrap', className: wrapCls, style: wrapStyle },
+      h('table', { 'data-slot': 'table', className: cls, style: { minWidth: floor }, ...rest },
         caption && h('caption', { 'data-slot': 'visually-hidden', className: 'bui-visually-hidden' }, caption),
         h('colgroup', null, select && h('col', { style: { width: SELECT_WIDTH } }), columns.map((c) => h('col', { key: c.key, style: { width: colWidth(c) } }))),
         h('thead', null, h('tr', null,
@@ -92,9 +92,9 @@ export function Table({
                 : c.header ?? c.key);
           }))),
         h('tbody', null,
-          isLoading && Array.from({ length: 4 }, (_, i) => h('tr', { key: `s${i}` }, Array.from({ length: colCount }, (__, j) => h('td', { key: j }, h(Skeleton, { width: j === 0 && select ? 16 : '70%' }))))),
-          !isLoading && rows.length === 0 && h('tr', null, h('td', { colSpan: colCount, 'data-slot': 'table-empty', className: 'bui-table__empty' }, emptyState)),
-          !isLoading && rows.map((item, i) => {
+          loading && Array.from({ length: 4 }, (_, i) => h('tr', { key: `s${i}` }, Array.from({ length: colCount }, (__, j) => h('td', { key: j }, h(Skeleton, { width: j === 0 && select ? 16 : '70%' }))))),
+          !loading && rows.length === 0 && h('tr', null, h('td', { colSpan: colCount, 'data-slot': 'table-empty', className: 'bui-table__empty' }, emptyState)),
+          !loading && rows.map((item, i) => {
             const k = keyOf(item, i);
             const on = keys.has(k);
             return h('tr', {
@@ -120,8 +120,8 @@ describe(Table, 'Tabular data with sorting, selection and several looks.', {
   caption: ['string', null, 'Accessible caption'],
   density: ["'compact' | 'balanced' | 'spacious'", "'balanced'", 'Row height'],
   dividers: ["'rows' | 'columns' | 'grid' | 'none'", "'rows'", 'Which divider lines to draw'],
-  isStriped: ['boolean', 'false', 'Tint every second row'],
-  hasHover: ['boolean', 'false', 'Highlight the row under the pointer'],
+  striped: ['boolean', 'false', 'Tint every second row'],
+  hoverable: ['boolean', 'false', 'Highlight the row under the pointer'],
   verticalAlign: ["'middle' | 'top' | 'bottom'", "'middle'", 'Vertical alignment of cells'],
   textOverflow: ["'wrap' | 'truncate'", "'wrap'", 'Wrap long text or cut it with an ellipsis'],
   sort: ['{ key: string; direction: \'asc\' | \'desc\' } | null', null, 'Sort state (controlled)'],
@@ -133,8 +133,8 @@ describe(Table, 'Tabular data with sorting, selection and several looks.', {
   defaultSelectedKeys: ['string[]', '[]', 'Initially selected row keys'],
   onSelectionChange: ['(keys) => void', null, 'Called when the selection changes'],
   onRowClick: ['(row) => void', null, 'Makes rows clickable'],
-  isStickyHeader: ['boolean', 'false', 'Keep the header visible while scrolling'],
+  stickyHeader: ['boolean', 'false', 'Keep the header visible while scrolling'],
   maxHeight: ['number | string', null, 'Scroll the rows inside this height'],
-  isLoading: ['boolean', 'false', 'Show skeleton rows'],
+  loading: ['boolean', 'false', 'Show skeleton rows'],
   emptyState: ['ReactNode', "'No data'", 'Shown when there are no rows'],
 });
