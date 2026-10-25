@@ -717,7 +717,8 @@
   font: var(--baseui-Typography-Header-20); color: var(--baseui-Text-and-Icon-Primary); caret-color: var(--baseui-Text-and-Icon-Primary); background-color: var(--baseui-Background-Secondary);
 }
 .bui-otp__cell::selection { background: transparent; }
-.bui-otp__cell:focus-visible { outline: var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color); outline-offset: var(--baseui-focus-outline-offset); }
+/* the focus ring is the one of the Text Input: the standard outline hugging the cell (offset 0), over the error border */
+.bui-otp__cell:focus-visible { outline: var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color); outline-offset: 0; }
 .bui-otp__cell:disabled { cursor: not-allowed; background-color: var(--baseui-Background-Disabled); color: var(--baseui-Text-and-Icon-Disabled); }
 .bui-otp__cell[aria-invalid="true"] { box-shadow: 0 0 0 2px var(--baseui-Extensions-Border-Error); }
 .bui-otp__separator { flex: none; width: 8px; height: 2px; border-radius: var(--baseui-radius-full); background: var(--baseui-Text-and-Icon-Disabled); }
@@ -735,6 +736,6 @@
 .bui-otp[data-motion-level="enhanced"] .bui-otp__cell { animation: bui-otp-cell var(--baseui-duration-medium) var(--baseui-ease-standard) backwards; }
 .bui-otp[data-motion-level="enhanced"][data-status="idle"] .bui-otp__cell[data-filled] { animation: bui-otp-digit var(--baseui-duration-medium) cubic-bezier(0.34, 1.4, 0.64, 1); }
 .bui-otp[data-motion-level="enhanced"][data-shake] .bui-otp__cells { animation: bui-otp-shake 0.5s ease-in-out; }
-.bui-otp__ring { position: absolute; left: 0; top: 0; z-index: 1; box-sizing: border-box; pointer-events: none; outline: var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color); outline-offset: var(--baseui-focus-outline-offset); transition: transform var(--baseui-duration-fast) var(--baseui-ease-standard), width var(--baseui-duration-fast), height var(--baseui-duration-fast); }
+.bui-otp__ring { position: absolute; left: 0; top: 0; z-index: 1; box-sizing: border-box; pointer-events: none; outline: var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color); outline-offset: 0; transition: transform var(--baseui-duration-fast) var(--baseui-ease-standard), width var(--baseui-duration-fast), height var(--baseui-duration-fast); }
 .bui-otp[data-slide] .bui-otp__cell:focus-visible { outline: none; }
 @media (prefers-reduced-motion: reduce) { .bui-otp__cell, .bui-otp__cells { animation: none !important; } .bui-otp__ring { transition: none; } }
