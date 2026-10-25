@@ -731,4 +731,3 @@
 .bui-otp[data-motion-level="enhanced"][data-shake] [data-slot="otp-cells"] { animation: bui-otp-shake 0.5s ease-in-out; }
 @media (prefers-reduced-motion: reduce) { .bui-otp [data-slot="otp-cell"], .bui-otp [data-slot="otp-cells"] { animation: none !important; } .bui-otp__ring { transition: none; } }
 .bui-otp [data-slot="otp-cell"]::selection { background: transparent; }
-.bui-otp[data-status="verifying"] [data-slot="otp-cell"]:focus-visible { outline: none; }
