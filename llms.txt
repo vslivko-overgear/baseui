@@ -48,7 +48,7 @@
 - [Checkbox](docs/components/checkbox.md): A checkbox on top of the headless Base UI Checkbox. A box plus an optional label; checked/disabled/indeterminate states come from Base UI data attributes. Style
 - [Checkbox Group](docs/components/checkbox-group.md): A group of checkboxes on top of the Base UI CheckboxGroup: the value is an array of checked `value`s. The error is a message under the group (the boxes do not t
 - [Number Input](docs/components/number-input.md): A text input for numbers.
-- [OTP Input](docs/components/otp-input.md): A one-time code field. It checks the code through onComplete and shows the states of that check: verifying, error (the row shakes) and success. Digits arrive wi
+- [OTP Input](docs/components/otp-input.md): A one-time code field. It checks the code through onComplete and shows the states of that check: verifying, error (the row shakes) and success. On enhanced anim
 - [Radio](docs/components/radio.md): A group of radio buttons on top of Base UI RadioGroup: the value is the `value` of the selected option. The error is a message under the group (the circles do n
 - [Rating](docs/components/rating.md): Collects a rating as stars. Only whole values can be chosen.
 - [Selector](docs/components/selector.md): Select: Base UI Select on the shared field shell `FieldShell`. Supports single and multiple selection. The shell (Field.Root) sits outside Select.Root so that S

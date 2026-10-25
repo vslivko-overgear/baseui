@@ -708,26 +708,33 @@
 [data-slot="modal-header"][data-scrolled] [data-slot="modal-title"] { height: 1lh; white-space: normal; overflow: hidden; animation: bui-title-clamp 1ms steps(1, end) var(--baseui-duration-medium) both; }
 @media (prefers-reduced-motion: reduce) { [data-slot="modal-title"] { transition: none; } }
 
-/* ---------- OTP input: states, motion, groups ---------- */
-.bui-otp { position: relative; display: inline-block; }
-.bui-otp [data-slot="otp-cell"][data-group-start] { margin-inline-start: var(--baseui-spacing-16); }
-.bui-otp__separator { position: absolute; width: 8px; height: 2px; translate: -50% -50%; border-radius: var(--baseui-radius-full); background: var(--baseui-Text-and-Icon-Disabled); pointer-events: none; }
-/* the focus ring is one element that slides between the cells (the cell's own ring is hidden then) */
-.bui-otp__ring { position: absolute; left: 0; top: 0; z-index: 1; box-sizing: border-box; pointer-events: none; outline: var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color); outline-offset: var(--baseui-focus-outline-offset); transition: transform var(--baseui-duration-fast) var(--baseui-ease-standard), width var(--baseui-duration-fast), height var(--baseui-duration-fast); }
-.bui-otp[data-status="error"] .bui-otp__ring { outline-color: var(--baseui-Extensions-Border-Error); }
-.bui-otp[data-slide] [data-slot="otp-cell"]:focus-visible { outline: none; }
-.bui-otp[data-shake] .bui-otp__ring { visibility: hidden; }
-/* verifying: the cells pulse as a wave; success: the code turns green */
-.bui-otp[data-status="verifying"] [data-slot="otp-cell"] { opacity: 0.6; }
-.bui-otp[data-status="success"] [data-slot="otp-cell"] { color: var(--baseui-Extensions-Text-and-Icon-Success); }
+/* ---------- OTP input: cells, states, motion ---------- */
+.bui-otp { display: inline-flex; flex-direction: column; }
+.bui-otp__label { margin-bottom: var(--baseui-spacing-8); font: var(--baseui-Typography-Text-14-Regular); color: var(--baseui-Text-and-Icon-Secondary); }
+.bui-otp__cells { position: relative; display: flex; align-items: center; gap: var(--baseui-spacing-8); }
+.bui-otp__cell {
+  all: unset; box-sizing: border-box; width: 100%; max-width: 48px; height: 56px; text-align: center; border-radius: var(--baseui-radius-16);
+  font: var(--baseui-Typography-Header-20); color: var(--baseui-Text-and-Icon-Primary); caret-color: var(--baseui-Text-and-Icon-Primary); background-color: var(--baseui-Background-Secondary);
+}
+.bui-otp__cell::selection { background: transparent; }
+.bui-otp__cell:focus-visible { outline: var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color); outline-offset: var(--baseui-focus-outline-offset); }
+.bui-otp__cell:disabled { cursor: not-allowed; background-color: var(--baseui-Background-Disabled); color: var(--baseui-Text-and-Icon-Disabled); }
+.bui-otp__cell[aria-invalid="true"] { box-shadow: 0 0 0 2px var(--baseui-Extensions-Border-Error); }
+.bui-otp__separator { flex: none; width: 8px; height: 2px; border-radius: var(--baseui-radius-full); background: var(--baseui-Text-and-Icon-Disabled); }
+.bui-otp__error { margin-top: var(--baseui-spacing-8); font: var(--baseui-Typography-Text-14-Regular); color: var(--baseui-Extensions-Text-and-Icon-Error); }
+/* verifying: the cells pulse as a wave (a dimmed row when animations are off); success: the code turns green */
+.bui-otp[data-status="verifying"] .bui-otp__cell { opacity: 0.6; }
+.bui-otp[data-status="success"] .bui-otp__cell { color: var(--baseui-Extensions-Text-and-Icon-Success); }
 @keyframes bui-otp-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 @keyframes bui-otp-digit { from { padding-top: 30px; color: color-mix(in srgb, var(--baseui-Text-and-Icon-Primary) 25%, transparent); } }
 @keyframes bui-otp-cell { from { opacity: 0; translate: 0 8px; } }
 @keyframes bui-otp-shake { 20% { translate: -5px 0; } 40% { translate: 5px 0; } 60% { translate: -2.5px 0; } 80% { translate: 2.5px 0; } }
-.bui-otp:not([data-motion-level="off"])[data-status="verifying"] [data-slot="otp-cell"] { animation: bui-otp-pulse 0.6s ease-in-out infinite; animation-delay: calc(var(--otp-i) * 100ms); }
-/* enhanced: a digit arrives from below (a light spring), new cells fade in, a wrong code or key shakes the row */
-.bui-otp[data-motion-level="enhanced"] [data-slot="otp-cell"] { animation: bui-otp-cell var(--baseui-duration-medium) var(--baseui-ease-standard) backwards; }
-.bui-otp[data-motion-level="enhanced"][data-status="idle"] [data-slot="otp-cell"][data-filled] { animation: bui-otp-digit var(--baseui-duration-medium) cubic-bezier(0.34, 1.4, 0.64, 1); }
-.bui-otp[data-motion-level="enhanced"][data-shake] [data-slot="otp-cells"] { animation: bui-otp-shake 0.5s ease-in-out; }
-@media (prefers-reduced-motion: reduce) { .bui-otp [data-slot="otp-cell"], .bui-otp [data-slot="otp-cells"] { animation: none !important; } .bui-otp__ring { transition: none; } }
-.bui-otp [data-slot="otp-cell"]::selection { background: transparent; }
+.bui-otp:not([data-motion-level="off"])[data-status="verifying"] .bui-otp__cell { animation: bui-otp-pulse 0.6s ease-in-out infinite; animation-delay: calc(var(--otp-i) * 100ms); }
+/* enhanced: a digit arrives from below (a light spring), new cells fade in, a wrong code or key shakes the row, and the focus ring slides
+   between the cells (it lives in the row, so it shakes along; the cell's own standard ring is hidden while it is there) */
+.bui-otp[data-motion-level="enhanced"] .bui-otp__cell { animation: bui-otp-cell var(--baseui-duration-medium) var(--baseui-ease-standard) backwards; }
+.bui-otp[data-motion-level="enhanced"][data-status="idle"] .bui-otp__cell[data-filled] { animation: bui-otp-digit var(--baseui-duration-medium) cubic-bezier(0.34, 1.4, 0.64, 1); }
+.bui-otp[data-motion-level="enhanced"][data-shake] .bui-otp__cells { animation: bui-otp-shake 0.5s ease-in-out; }
+.bui-otp__ring { position: absolute; left: 0; top: 0; z-index: 1; box-sizing: border-box; pointer-events: none; outline: var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color); outline-offset: var(--baseui-focus-outline-offset); transition: transform var(--baseui-duration-fast) var(--baseui-ease-standard), width var(--baseui-duration-fast), height var(--baseui-duration-fast); }
+.bui-otp[data-slide] .bui-otp__cell:focus-visible { outline: none; }
+@media (prefers-reduced-motion: reduce) { .bui-otp__cell, .bui-otp__cells { animation: none !important; } .bui-otp__ring { transition: none; } }
