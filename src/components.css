@@ -733,7 +733,7 @@
 .bui-otp:not([data-motion-level="off"])[data-status="verifying"] .bui-otp__cell { animation: bui-otp-pulse 0.6s ease-in-out infinite; animation-delay: calc(var(--otp-i) * 100ms); }
 /* enhanced: a digit arrives from below (a light spring), new cells fade in, a wrong code or key shakes the row, and the focus ring slides
    between the cells (it lives in the row, so it shakes along; the cell's own standard ring is hidden while it is there) */
-.bui-otp[data-motion-level="enhanced"] .bui-otp__cell { animation: bui-otp-cell var(--baseui-duration-medium) var(--baseui-ease-standard) backwards; }
+.bui-otp[data-motion-level="enhanced"][data-entering] .bui-otp__cell { animation: bui-otp-cell var(--baseui-duration-medium) var(--baseui-ease-standard) backwards; }
 .bui-otp[data-motion-level="enhanced"][data-status="idle"] .bui-otp__cell[data-filled] { animation: bui-otp-digit var(--baseui-duration-medium) cubic-bezier(0.34, 1.4, 0.64, 1); }
 .bui-otp[data-motion-level="enhanced"][data-shake] .bui-otp__cells { animation: bui-otp-shake 0.5s ease-in-out; }
 .bui-otp__ring { position: absolute; left: 0; top: 0; z-index: 1; box-sizing: border-box; pointer-events: none; outline: var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color); outline-offset: 0; transition: transform var(--baseui-duration-fast) var(--baseui-ease-standard), width var(--baseui-duration-fast), height var(--baseui-duration-fast); }

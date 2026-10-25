@@ -27,6 +27,7 @@ export function OtpInput({
   const [phase, setPhase] = useState('idle');
   const [shake, setShake] = useState(false);
   const [ring, setRing] = useState(null);
+  const [entering, setEntering] = useState(true);
   const root = useRef(null);
   const cellsEl = useRef(null);
   const cellRefs = useRef([]);
@@ -49,6 +50,12 @@ export function OtpInput({
   const focusCell = useCallback((i) => { const el = cellRefs.current[Math.max(0, Math.min(i, size - 1))]; el?.focus({ preventScroll: true }); }, [size]);
   const doShake = useCallback(() => { if (level === 'enhanced') setShake(true); }, [level]);
   useEffect(() => { if (code.length > size) setCode(code.slice(0, size)); }, [size]);
+  // the cells fade in when the field mounts or its length changes (enhanced), and only then
+  useEffect(() => {
+    setEntering(true);
+    const t = setTimeout(() => setEntering(false), 450);
+    return () => clearTimeout(t);
+  }, [size]);
   useEffect(() => {
     if (!shake) return undefined;
     const t = setTimeout(() => setShake(false), 520);
@@ -101,12 +108,11 @@ export function OtpInput({
   });
 
   // enhanced: the focus ring is one element that slides to the active cell (inside the row, so it shakes with it)
+  // layout offsets, not bounding boxes: a running animation (the shake, the entrance of a cell) must not move the ring
   const measure = useCallback(() => {
-    const row = cellsEl.current;
     const active = cellRefs.current.find((c) => c === document.activeElement);
-    if (!row || !active) { setRing(null); return; }
-    const box = row.getBoundingClientRect(); const r = active.getBoundingClientRect();
-    setRing({ x: r.left - box.left, y: r.top - box.top, w: r.width, h: r.height, r: getComputedStyle(active).borderTopLeftRadius });
+    if (!active || active.offsetParent !== cellsEl.current) { setRing(null); return; }
+    setRing({ x: active.offsetLeft, y: active.offsetTop, w: active.offsetWidth, h: active.offsetHeight, r: getComputedStyle(active).borderTopLeftRadius });
   }, []);
   useLayoutEffect(() => { if (level === 'enhanced') measure(); }, [code, size, grouped, level, measure]);
   useEffect(() => {
@@ -131,7 +137,7 @@ export function OtpInput({
     }));
   }
   return h('div', {
-    ref: root, 'data-slot': 'otp', className: cx('bui-otp', className), 'data-status': state, 'data-motion-level': level, 'data-shake': shake || undefined,
+    ref: root, 'data-slot': 'otp', className: cx('bui-otp', className), 'data-status': state, 'data-motion-level': level, 'data-shake': shake || undefined, 'data-entering': entering || undefined,
     'data-slide': ring ? '' : undefined, 'aria-busy': locked || undefined, ...rest,
   },
   label && h('span', { 'data-slot': 'otp-label', className: 'bui-otp__label' }, label),
