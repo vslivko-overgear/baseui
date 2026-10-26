@@ -1,6 +1,6 @@
 # Status
 
-Tells the user the state of a view: nothing to show, information, success, a warning or an error.
+Tells the user the state of a view: nothing to show, information, success, a warning or an error. It fills the container it is in, in width and height, and centers its content.
 
 ## Props
 

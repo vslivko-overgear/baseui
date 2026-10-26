@@ -72,7 +72,7 @@
 - [Segmented Control](docs/components/segmented-control.md): A control for switching between a few exclusive options.
 - [Skeleton](docs/components/skeleton.md): A placeholder shown while content loads.
 - [Spinner](docs/components/spinner.md): A loading indicator.
-- [Status](docs/components/status.md): Tells the user the state of a view: nothing to show, information, success, a warning or an error.
+- [Status](docs/components/status.md): Tells the user the state of a view: nothing to show, information, success, a warning or an error. It fills the container it is in, in width and height, and cent
 - [Table](docs/components/table.md): Tabular data with sorting, selection and several looks.
 - [Tabs](docs/components/tabs.md): Switches between related views.
 - [Toast](docs/components/toast.md): Shows brief notifications: a message, an optional action and a close button. Call `useToast()` to add one.

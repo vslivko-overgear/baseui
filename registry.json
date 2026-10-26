@@ -719,7 +719,7 @@
       "name": "status",
       "type": "registry:component",
       "title": "Status",
-      "description": "Tells the user the state of a view: nothing to show, information, success, a warning or an error.",
+      "description": "Tells the user the state of a view: nothing to show, information, success, a warning or an error. It fills the container it is in, in width and height, and centers its content.",
       "exports": [
         "Status"
       ],

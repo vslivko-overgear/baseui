@@ -550,7 +550,7 @@
 @media (prefers-reduced-motion: reduce) { .bui-spinner svg { animation-duration: 2.4s; } }
 
 /* ---------- Status ---------- */
-.bui-status { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--baseui-spacing-8); padding: var(--baseui-spacing-40) var(--baseui-spacing-16); }
+.bui-status { box-sizing: border-box; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: var(--baseui-spacing-8); padding: var(--baseui-spacing-40) var(--baseui-spacing-16); }
 .bui-status__icon {
   display: grid; place-items: center; width: 64px; height: 64px; margin-bottom: var(--baseui-spacing-8);
   border-radius: var(--baseui-radius-full); background: var(--baseui-Background-Secondary); color: var(--baseui-Text-and-Icon-Primary);

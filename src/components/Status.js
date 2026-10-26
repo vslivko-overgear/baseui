@@ -21,7 +21,7 @@ export function Status({ status = 'neutral', icon, title, description, action, a
     act && h('div', { 'data-slot': 'status-action', className: 'bui-status__action' }, act));
 }
 
-describe(Status, 'Tells the user the state of a view: nothing to show, information, success, a warning or an error.', {
+describe(Status, 'Tells the user the state of a view: nothing to show, information, success, a warning or an error. It fills the container it is in, in width and height, and centers its content.', {
   status: ["'neutral' | 'accent' | 'success' | 'warning' | 'error'", "'neutral'", 'The state; it sets the color of the circle, the icon, the title and the description'],
   icon: ['ReactNode', null, 'Replaces the icon (the circle keeps the color of the status)'],
   title: ['ReactNode', null, 'Replaces the title of the status'],
