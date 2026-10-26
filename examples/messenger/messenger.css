@@ -103,7 +103,7 @@ html[data-floating="on"] .mm-side { border-inline-end-color: transparent; }
 .mm-group { display: flex; flex-direction: column; gap: var(--baseui-spacing-12); }
 .mm-grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--baseui-spacing-12); }
 .mm-wall { height: 72px; border-radius: var(--baseui-radius-12); margin-bottom: 8px; }
-.mm-empty { height: 100%; display: grid; place-items: center; padding: var(--baseui-spacing-24); }
+.mm-empty { flex: 1; min-width: 0; height: 100%; padding: var(--baseui-spacing-24); }
 .mm-call { display: flex; flex-direction: column; align-items: center; gap: var(--baseui-spacing-12); padding: var(--baseui-spacing-16) 0; text-align: center; }
 .mm-call__timer { font: var(--baseui-Typography-Header-32); font-variant-numeric: tabular-nums; }
 .mm-call__row { display: flex; gap: var(--baseui-spacing-16); margin-top: var(--baseui-spacing-8); }
