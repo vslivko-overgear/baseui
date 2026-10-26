@@ -339,6 +339,33 @@
       ]
     },
     {
+      "name": "icon",
+      "type": "registry:component",
+      "title": "Icon",
+      "description": "An icon of the catalog. Its stroke follows the text it stands next to; a text that is bolder than the thickest stroke gets the filled icon.",
+      "exports": [
+        "ICON_NAMES",
+        "Icon"
+      ],
+      "files": [
+        {
+          "path": "src/components/Icon.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/doc.js",
+        "src/icon-weight.js"
+      ],
+      "css": [
+        "tokens.css",
+        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
       "name": "layout",
       "type": "registry:component",
       "title": "Stack",

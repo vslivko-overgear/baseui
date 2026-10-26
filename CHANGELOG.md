@@ -1,5 +1,10 @@
 # Changelog
 
+## Icons
+
+- The stroke of outline icons goes from 1 to 2.5 (the catalog control too).
+- `Icon` component (`weight="auto"`): the stroke follows the thickness of the text beside the icon; a text bolder than 2.5 can match gets the filled icon. `src/icon-weight.js` holds the rule; `tools/icon-weight.js` applies it to any page and `tools/check-icons.mjs` audits the pages.
+
 ## Examples
 
 - The Overgear examples are removed. New example: Probe, a UX research service with mock data (`examples/probe/`): dashboard, templates, a study builder with a live preview, a participant runner (prototype tasks, five-second test, scales, choices), results with click maps and responses, a panel with recruiting, settings; reachable through a Demo scenarios menu.

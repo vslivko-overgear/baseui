@@ -35,7 +35,7 @@ import { Button, Card, Tabs, TabList, Tab, TabPanel } from './src/index.js';
 | `examples/messenger/` | A messenger built from the components with mock data (no backend). Open it from Theming → Theme Settings: it follows the theme you set there |
 | `examples/probe/` | Probe, a UX research service (in the spirit of Maze) built from the components with mock data kept in the browser. Open `/examples/probe/` and use **Demo scenarios**: build a study from a template, take a test as a participant (your response lands in the results), analyze a finished study (click maps, scores, responses), recruit from the panel, start from an empty workspace. Works on a desktop and a phone |
 | `registry.json`, `llms.txt`, `docs/` | The component registry (files and dependencies of every component) and the markdown version of the documentation for people and AI assistants, both generated: `node tools/build-registry.mjs`, `node tools/build-docs.mjs <url>` |
-| `tools/` | Scripts that look after the system: the radius check (`radius-check.js` in the browser, `check-radii.mjs` over every page) and the size balance (`size-balance.js`, `check-sizes.mjs` over the example products) and the spacing balance (`spacing-balance.js`, `check-spacing.mjs`); described in the Tools section of the docs |
+| `tools/` | Scripts that look after the system: the radius check (`radius-check.js` in the browser, `check-radii.mjs` over every page) and the size balance (`size-balance.js`, `check-sizes.mjs` over the example products), the spacing balance (`spacing-balance.js`, `check-spacing.mjs`) and the icon weight (`icon-weight.js`, `check-icons.mjs`); described in the Tools section of the docs |
 
 ## Tokens
 
@@ -59,6 +59,7 @@ import { Button, Card, Tabs, TabList, Tab, TabPanel } from './src/index.js';
 - **Shared behaviour lives in one place:** `useDismiss` (outside click, Escape, focus back to the trigger) in `src/floating.js`, `useHighlight` (the sliding underline, thumb, pill and OTP ring, measured by layout offsets) in `src/highlight.js`, `useReady`, `usePresence`, `useMediaQuery`, `useTouchScreen` in `src/theme-flags.js`.
 - **Focus has three placements,** all from the focus tokens: around (`outline-offset: var(--baseui-focus-outline-offset)`), inside (offset minus the width, for items in a container: segments, calendar days, table rows, bar items) and flush (offset 0, fields: Text Input, OTP cells).
 - **Fixed heights, flexible widths.** Buttons and fields take their height from `size`; a menu opened from a field or a button takes the same size.
+- **Icon weight follows the text.** Outline icons take a stroke from 1 to 2.5. The `Icon` component (`weight="auto"`) matches the stroke to the thickness of the text beside it, and takes the filled icon when the text is bolder than 2.5 can match; `tools/icon-weight.js` does the same for icons drawn by other means and `tools/check-icons.mjs` audits the pages.
 - **No outlines.** Fills, spacing and shadows separate elements. Rings appear for focus and selection.
 - **Accessible by default.** Text contrast ≥ 4.5:1, visible focus, reduced motion, no tooltips on touch screens.
 - **`src/components.css` order:** base, focus, theme motion, components A–Z, glass, theme shape last (shape and glass override the component rules at the same specificity).

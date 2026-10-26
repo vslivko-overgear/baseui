@@ -11,6 +11,7 @@ export { Collapsible, CollapsibleGroup } from './components/Collapsible.js';
 export { Divider } from './components/Divider.js';
 export { Status } from './components/Status.js';
 export { Stack, HStack, VStack, Center, Grid, Section } from './components/Layout.js';
+export { Icon } from './components/Icon.js';
 export { Link } from './components/Link.js';
 export { NumberInput } from './components/NumberInput.js';
 export { OtpInput } from './components/OtpInput.js';
