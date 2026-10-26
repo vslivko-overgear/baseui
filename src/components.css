@@ -565,12 +565,12 @@
 
 /* ---------- Switch ---------- */
 /* Switch: the radius of the track and of the thumb (2px inside it) follows the size; the circle shape is in the Theme: shape section */
-[data-slot="switch"][data-size="sm"] :is([data-slot="switch-track"], [data-slot="switch-thumb"]) { border-radius: var(--baseui-radius-6); }
-[data-slot="switch"][data-size="sm"] [data-slot="switch-thumb"] { border-radius: var(--baseui-radius-4); }
-[data-slot="switch"][data-size="md"] [data-slot="switch-track"] { border-radius: var(--baseui-radius-8); }
-[data-slot="switch"][data-size="md"] [data-slot="switch-thumb"] { border-radius: var(--baseui-radius-6); }
-[data-slot="switch"][data-size="lg"] [data-slot="switch-track"] { border-radius: var(--baseui-radius-10); }
-[data-slot="switch"][data-size="lg"] [data-slot="switch-thumb"] { border-radius: var(--baseui-radius-8); }
+[data-slot="switch"][data-size="sm"] [data-slot="switch-track"] { border-radius: var(--baseui-radius-8); }
+[data-slot="switch"][data-size="sm"] [data-slot="switch-thumb"] { border-radius: var(--baseui-radius-6); }
+[data-slot="switch"][data-size="md"] [data-slot="switch-track"] { border-radius: var(--baseui-radius-10); }
+[data-slot="switch"][data-size="md"] [data-slot="switch-thumb"] { border-radius: var(--baseui-radius-8); }
+[data-slot="switch"][data-size="lg"] [data-slot="switch-track"] { border-radius: var(--baseui-radius-12); }
+[data-slot="switch"][data-size="lg"] [data-slot="switch-thumb"] { border-radius: var(--baseui-radius-10); }
 
 /* ---------- Table ---------- */
 .bui-table-wrap { overflow-x: auto; border: 1px solid var(--baseui-Border-Primary); border-radius: var(--baseui-radius-16); background: var(--baseui-Background-Primary); }
@@ -731,9 +731,9 @@
 .bui-shape-circle, .bui-shape-circle .bui-segmented__item, .bui-shape-circle .bui-segmented__thumb { border-radius: var(--baseui-radius-full); }
 /* Switch: the theme shape, or the shape prop on the switch itself (a rounded prop wins over a circle theme) */
 :is([data-shape="circle"] [data-slot="switch"], [data-slot="switch"].bui-shape-circle) :is([data-slot="switch-track"], [data-slot="switch-thumb"]) { border-radius: var(--baseui-radius-full); }
-[data-slot="switch"].bui-shape-rounded[data-size="sm"] [data-slot="switch-track"] { border-radius: var(--baseui-radius-6); }
-[data-slot="switch"].bui-shape-rounded[data-size="sm"] [data-slot="switch-thumb"] { border-radius: var(--baseui-radius-4); }
-[data-slot="switch"].bui-shape-rounded[data-size="md"] [data-slot="switch-track"] { border-radius: var(--baseui-radius-8); }
-[data-slot="switch"].bui-shape-rounded[data-size="md"] [data-slot="switch-thumb"] { border-radius: var(--baseui-radius-6); }
-[data-slot="switch"].bui-shape-rounded[data-size="lg"] [data-slot="switch-track"] { border-radius: var(--baseui-radius-10); }
-[data-slot="switch"].bui-shape-rounded[data-size="lg"] [data-slot="switch-thumb"] { border-radius: var(--baseui-radius-8); }
+[data-slot="switch"].bui-shape-rounded[data-size="sm"] [data-slot="switch-track"] { border-radius: var(--baseui-radius-8); }
+[data-slot="switch"].bui-shape-rounded[data-size="sm"] [data-slot="switch-thumb"] { border-radius: var(--baseui-radius-6); }
+[data-slot="switch"].bui-shape-rounded[data-size="md"] [data-slot="switch-track"] { border-radius: var(--baseui-radius-10); }
+[data-slot="switch"].bui-shape-rounded[data-size="md"] [data-slot="switch-thumb"] { border-radius: var(--baseui-radius-8); }
+[data-slot="switch"].bui-shape-rounded[data-size="lg"] [data-slot="switch-track"] { border-radius: var(--baseui-radius-12); }
+[data-slot="switch"].bui-shape-rounded[data-size="lg"] [data-slot="switch-thumb"] { border-radius: var(--baseui-radius-10); }
