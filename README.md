@@ -33,8 +33,7 @@ import { Button, Card, Tabs, TabList, Tab, TabPanel } from './src/index.js';
 | `src/` | Components as plain ES modules, their docs pages and styles |
 | `site/` | Documentation site and its page tree (`manifest.js`) |
 | `examples/messenger/` | A messenger built from the components with mock data (no backend). Open it from Theming → Theme Settings: it follows the theme you set there |
-| `examples/overgear/` | A boost-service product page rebuilt from the components (sidebar, order form with live price, reviews, FAQ, footer). Not in the catalog: open `/examples/overgear/` |
-| `examples/overgear-v2/` | The same page with the information in order of priority (title, main benefits, order form, the rest; the price and safety on the right) and a denser scale: 16px base on a desktop, 14px on a phone. Open `/examples/overgear-v2/` |
+| `examples/probe/` | Probe, a UX research service (in the spirit of Maze) built from the components with mock data kept in the browser. Open `/examples/probe/` and use **Demo scenarios**: build a study from a template, take a test as a participant (your response lands in the results), analyze a finished study (click maps, scores, responses), recruit from the panel, start from an empty workspace. Works on a desktop and a phone |
 | `registry.json`, `llms.txt`, `docs/` | The component registry (files and dependencies of every component) and the markdown version of the documentation for people and AI assistants, both generated: `node tools/build-registry.mjs`, `node tools/build-docs.mjs <url>` |
 | `tools/` | Scripts that look after the system: the radius check (`radius-check.js` in the browser, `check-radii.mjs` over every page) and the size balance (`size-balance.js`, `check-sizes.mjs` over the example products) and the spacing balance (`spacing-balance.js`, `check-spacing.mjs`); described in the Tools section of the docs |
 

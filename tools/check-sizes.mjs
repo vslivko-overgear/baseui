@@ -3,7 +3,7 @@
 // Needs Playwright (npm i -D playwright) and the repository served over HTTP:
 //
 //   python3 -m http.server 8000 &
-//   node tools/check-sizes.mjs http://localhost:8000 [path …]      # default: examples/messenger/ examples/overgear/ examples/overgear-v2/
+//   node tools/check-sizes.mjs http://localhost:8000 [path …]      # default: examples/messenger/ examples/probe/
 //
 // The pages of the documentation are galleries that show every size on purpose, so they are not swept; check a product, or any page you pass.
 // Each page is checked on a wide and a narrow screen; the first row of a list is opened, so a chat or a detail view is checked too.
@@ -12,7 +12,7 @@ import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
 const base = (process.argv[2] || 'http://localhost:8000').replace(/\/$/, '');
-const paths = process.argv.slice(3).length ? process.argv.slice(3) : ['examples/messenger/', 'examples/overgear/', 'examples/overgear-v2/'];
+const paths = process.argv.slice(3).length ? process.argv.slice(3) : ['examples/messenger/', 'examples/probe/'];
 let chromium;
 try { ({ chromium } = await import('playwright')); } catch { console.error('Playwright is not installed: npm i -D playwright'); process.exit(2); }
 const source = await readFile(fileURLToPath(new URL('./size-balance.js', import.meta.url)), 'utf8');
