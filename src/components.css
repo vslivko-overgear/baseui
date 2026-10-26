@@ -563,6 +563,15 @@
 .bui-status__text { margin: 0; max-width: 420px; font: var(--baseui-Typography-Text-16-Regular); color: var(--baseui-Text-and-Icon-Primary); }
 .bui-status__action { margin-top: var(--baseui-spacing-12); }
 
+/* ---------- Switch ---------- */
+/* Switch: the radius of the track and of the thumb (2px inside it) follows the size; the circle shape is in the Theme: shape section */
+[data-slot="switch"][data-size="sm"] :is([data-slot="switch-track"], [data-slot="switch-thumb"]) { border-radius: var(--baseui-radius-6); }
+[data-slot="switch"][data-size="sm"] [data-slot="switch-thumb"] { border-radius: var(--baseui-radius-4); }
+[data-slot="switch"][data-size="md"] [data-slot="switch-track"] { border-radius: var(--baseui-radius-8); }
+[data-slot="switch"][data-size="md"] [data-slot="switch-thumb"] { border-radius: var(--baseui-radius-6); }
+[data-slot="switch"][data-size="lg"] [data-slot="switch-track"] { border-radius: var(--baseui-radius-10); }
+[data-slot="switch"][data-size="lg"] [data-slot="switch-thumb"] { border-radius: var(--baseui-radius-8); }
+
 /* ---------- Table ---------- */
 .bui-table-wrap { overflow-x: auto; border: 1px solid var(--baseui-Border-Primary); border-radius: var(--baseui-radius-16); background: var(--baseui-Background-Primary); }
 .bui-table-wrap--scroll { overflow: auto; }
@@ -713,10 +722,18 @@
 :is([data-glass="on"] .bui-bottombar--floating:not([data-glass="off"]), .bui-bottombar--floating[data-glass="on"])::before { -webkit-mask-image: linear-gradient(to top, #000 40%, transparent); mask-image: linear-gradient(to top, #000 40%, transparent); }
 
 /* ---------- Theme: shape (last: it overrides the radius of the components) ---------- */
-/* data-shape="circle" on <html> (or any container) turns buttons, fields, tokens and segmented controls into pills.
+/* data-shape="circle" on <html> (or any container) turns buttons, fields, tokens, switches and segmented controls into pills.
    Button and Segmented Control also take a `shape` prop; the base radius of everything else follows the --baseui-radius-* tokens. */
 [data-shape="circle"] :is(button, a):is([data-slot="button"], [data-slot="icon-button"]),
 [data-shape="circle"] [data-slot="textfield-cell"]:not(:has(textarea)),
 [data-shape="circle"] :is([data-slot="chip"], [data-slot="autocomplete-chip"]),
 [data-shape="circle"] .bui-segmented, [data-shape="circle"] .bui-segmented__item, [data-shape="circle"] .bui-segmented__thumb,
 .bui-shape-circle, .bui-shape-circle .bui-segmented__item, .bui-shape-circle .bui-segmented__thumb { border-radius: var(--baseui-radius-full); }
+/* Switch: the theme shape, or the shape prop on the switch itself (a rounded prop wins over a circle theme) */
+:is([data-shape="circle"] [data-slot="switch"], [data-slot="switch"].bui-shape-circle) :is([data-slot="switch-track"], [data-slot="switch-thumb"]) { border-radius: var(--baseui-radius-full); }
+[data-slot="switch"].bui-shape-rounded[data-size="sm"] [data-slot="switch-track"] { border-radius: var(--baseui-radius-6); }
+[data-slot="switch"].bui-shape-rounded[data-size="sm"] [data-slot="switch-thumb"] { border-radius: var(--baseui-radius-4); }
+[data-slot="switch"].bui-shape-rounded[data-size="md"] [data-slot="switch-track"] { border-radius: var(--baseui-radius-8); }
+[data-slot="switch"].bui-shape-rounded[data-size="md"] [data-slot="switch-thumb"] { border-radius: var(--baseui-radius-6); }
+[data-slot="switch"].bui-shape-rounded[data-size="lg"] [data-slot="switch-track"] { border-radius: var(--baseui-radius-10); }
+[data-slot="switch"].bui-shape-rounded[data-size="lg"] [data-slot="switch-thumb"] { border-radius: var(--baseui-radius-8); }
