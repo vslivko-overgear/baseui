@@ -15,115 +15,115 @@
   color-scheme: light;
 
   /* Text and Icon */
-  --baseui-Text-and-Icon-Primary: #171717;
-  --baseui-Text-and-Icon-Secondary: #5f6877;
-  --baseui-Text-and-Icon-Disabled: #babfca;
-  --baseui-Text-and-Icon-Accent: #575df6;
+  --baseui-Text-and-Icon-Primary: #050622;
+  --baseui-Text-and-Icon-Secondary: #676b8b;
+  --baseui-Text-and-Icon-Disabled: #a7a7c8;
+  --baseui-Text-and-Icon-Accent: #564fff;
 
   /* Background */
   --baseui-Background-Primary: #ffffff;
-  --baseui-Background-Secondary: #eff2f6;
-  --baseui-Background-Tertiary: #d4dae2;
-  --baseui-Background-Disabled: #f0f0f0;
-  --baseui-Background-Accent: #575df6;
-  --baseui-Background-Brand: #171717;
+  --baseui-Background-Secondary: #ededf5;
+  --baseui-Background-Tertiary: #dbdbe9;
+  --baseui-Background-Disabled: #f4f4f9;
+  --baseui-Background-Accent: #564fff;
+  --baseui-Background-Brand: #564fff;
 
   /* Border */
-  --baseui-Border-Primary: #e0e2e6;
-  --baseui-Border-Accent: #ccd4e1;
-  --baseui-Border-Disabled: #dfe0e2;
+  --baseui-Border-Primary: #dbdbe9;
+  --baseui-Border-Accent: #c0c0d6;
+  --baseui-Border-Disabled: #ededf5;
 
   /* Accent Colors */
-  --baseui-Accent-Colors-Green-Light: #bbfb60;
-  --baseui-Accent-Colors-Pink: #ef9ffa;
-  --baseui-Accent-Colors-Blue: #575df6;
-  --baseui-Accent-Colors-Green: #53b67d;
-  --baseui-Accent-Colors-Orange: #f5ba44;
-  --baseui-Accent-Colors-Blue-Light: #8abafa;
-  --baseui-Accent-Colors-Red: #e8634c;
+  --baseui-Accent-Colors-Green-Light: #96d473;
+  --baseui-Accent-Colors-Pink: #e07af4;
+  --baseui-Accent-Colors-Blue: #564fff;
+  --baseui-Accent-Colors-Green: #5a903c;
+  --baseui-Accent-Colors-Orange: #ff9548;
+  --baseui-Accent-Colors-Blue-Light: #3cb9ff;
+  --baseui-Accent-Colors-Red: #ff4661;
 
   /* Extensions / Text and Icon */
-  --baseui-Extensions-Text-and-Icon-Error: #e8634c;
-  --baseui-Extensions-Text-and-Icon-Warning: #f5ba44;
-  --baseui-Extensions-Text-and-Icon-Success: #44cf5e;
-  --baseui-Extensions-Text-and-Icon-AlwaysDark: #171717;
+  --baseui-Extensions-Text-and-Icon-Error: #e63e57;
+  --baseui-Extensions-Text-and-Icon-Warning: #cd750f;
+  --baseui-Extensions-Text-and-Icon-Success: #5a903c;
+  --baseui-Extensions-Text-and-Icon-AlwaysDark: #050622;
   --baseui-Extensions-Text-and-Icon-AlwaysLight: #ffffff;
   --baseui-Extensions-Text-and-Icon-OnColor: #ffffff;
   --baseui-Extensions-Text-and-Icon-OnBrand: #ffffff;
 
   /* Extensions / Background */
   --baseui-Extensions-Background-Surface: #ffffff;
-  --baseui-Extensions-Background-InversePrimary: #171717;
-  --baseui-Extensions-Background-OverlayDark: rgba(0, 0, 0, 0.5);
+  --baseui-Extensions-Background-InversePrimary: #050622;
+  --baseui-Extensions-Background-OverlayDark: rgba(5, 6, 34, 0.5);
   --baseui-Extensions-Background-OverlayLight: rgba(255, 255, 255, 0.7);
-  --baseui-Extensions-Background-AlwaysDark: #171717;
+  --baseui-Extensions-Background-AlwaysDark: #050622;
   --baseui-Extensions-Background-AlwaysLight: #ffffff;
-  --baseui-Extensions-Background-Error: #e8634c;
-  --baseui-Extensions-Background-Warning: #f5ba44;
-  --baseui-Extensions-Background-Success: #44cf5e;
-  --baseui-Extensions-Background-LightSuccess: #dff7e3;
-  --baseui-Extensions-Background-LightAccent: #e7e8fe;
-  --baseui-Extensions-Background-LightError: #f9d8d2;
-  --baseui-Extensions-Background-LightWarning: #fbe2b2;
+  --baseui-Extensions-Background-Error: #ff4661;
+  --baseui-Extensions-Background-Warning: #ff9548;
+  --baseui-Extensions-Background-Success: #5a903c;
+  --baseui-Extensions-Background-LightSuccess: #e4f4da;
+  --baseui-Extensions-Background-LightAccent: #e4e3ff;
+  --baseui-Extensions-Background-LightError: #ffe0e5;
+  --baseui-Extensions-Background-LightWarning: #ffeedd;
 
   /* Extensions / Border */
-  --baseui-Extensions-Border-Selected: #171717;
-  --baseui-Extensions-Border-SelectedAlwaysDark: #171717;
+  --baseui-Extensions-Border-Selected: #564fff;
+  --baseui-Extensions-Border-SelectedAlwaysDark: #050622;
   --baseui-Extensions-Border-SelectedAlwaysLight: #ffffff;
-  --baseui-Extensions-Border-Accent: #575df6;
-  --baseui-Extensions-Border-Error: #e8634c;
-  --baseui-Extensions-Border-Warning: #f5ba44;
-  --baseui-Extensions-Border-Success: #44cf5e;
+  --baseui-Extensions-Border-Accent: #564fff;
+  --baseui-Extensions-Border-Error: #ff4661;
+  --baseui-Extensions-Border-Warning: #ff9548;
+  --baseui-Extensions-Border-Success: #5a903c;
 
   /* Hover */
-  --baseui-Background-Primary-Hover: #f5f7fa;
-  --baseui-Background-Secondary-Hover: #e5e9ef;
-  --baseui-Background-Tertiary-Hover: #c8cfd9;
-  --baseui-Background-Accent-Hover: #4b51ec;
-  --baseui-Background-Brand-Hover: #3b3b3b;
-  --baseui-Background-Transparent-Hover: rgba(88, 122, 172, 0.06);
-  --baseui-Extensions-Background-Surface-Hover: #f5f7fa;
-  --baseui-Extensions-Background-Error-Hover: #d9523b;
-  --baseui-Extensions-Background-Warning-Hover: #e7a92c;
-  --baseui-Extensions-Background-Success-Hover: #37bd51;
-  --baseui-Extensions-Background-LightAccent-Hover: #dcdefd;
-  --baseui-Text-and-Icon-Primary-Hover: #2c2c2c;
-  --baseui-Text-and-Icon-Secondary-Hover: #464f5d;
-  --baseui-Extensions-Text-and-Icon-OnColor-Hover: #e1e1e1;
-  --baseui-Extensions-Text-and-Icon-OnBrand-Hover: #e1e1e1;
-  --baseui-Text-and-Icon-Disabled-Hover: #9ea3ad;
-  --baseui-Text-and-Icon-Accent-Hover: #423ed6;
-  --baseui-Background-Disabled-Hover: #e3e3e3;
-  --baseui-Border-Primary-Hover: #c9cbcf;
-  --baseui-Border-Accent-Hover: #b6bdca;
-  --baseui-Border-Disabled-Hover: #c8c9cb;
-  --baseui-Accent-Colors-Green-Light-Hover: #aeed51;
-  --baseui-Accent-Colors-Pink-Hover: #db8ce6;
-  --baseui-Accent-Colors-Blue-Hover: #4949e1;
-  --baseui-Accent-Colors-Green-Hover: #3ea36b;
-  --baseui-Accent-Colors-Orange-Hover: #e1a72a;
-  --baseui-Accent-Colors-Blue-Light-Hover: #78a7e6;
-  --baseui-Accent-Colors-Red-Hover: #d3503a;
-  --baseui-Extensions-Text-and-Icon-Error-Hover: #c84630;
-  --baseui-Extensions-Text-and-Icon-Warning-Hover: #d79d19;
-  --baseui-Extensions-Text-and-Icon-Success-Hover: #15b241;
-  --baseui-Extensions-Text-and-Icon-AlwaysDark-Hover: #2c2c2c;
+  --baseui-Background-Primary-Hover: #ebebeb;
+  --baseui-Background-Secondary-Hover: #dadae1;
+  --baseui-Background-Tertiary-Hover: #c9c9d6;
+  --baseui-Background-Accent-Hover: #6951f9;
+  --baseui-Background-Brand-Hover: #6951f9;
+  --baseui-Background-Transparent-Hover: rgba(103, 107, 139, 0.08);
+  --baseui-Extensions-Background-Surface-Hover: #ebebeb;
+  --baseui-Extensions-Background-Error-Hover: #eb4059;
+  --baseui-Extensions-Background-Warning-Hover: #eb8942;
+  --baseui-Extensions-Background-Success-Hover: #538437;
+  --baseui-Extensions-Background-LightAccent-Hover: #d2d1eb;
+  --baseui-Text-and-Icon-Primary-Hover: #05061f;
+  --baseui-Text-and-Icon-Secondary-Hover: #5f6280;
+  --baseui-Extensions-Text-and-Icon-OnColor-Hover: #ebebeb;
+  --baseui-Extensions-Text-and-Icon-OnBrand-Hover: #ebebeb;
+  --baseui-Text-and-Icon-Disabled-Hover: #9a9ab8;
+  --baseui-Text-and-Icon-Accent-Hover: #4f49eb;
+  --baseui-Background-Disabled-Hover: #e0e0e5;
+  --baseui-Border-Primary-Hover: #c9c9d6;
+  --baseui-Border-Accent-Hover: #b1b1c5;
+  --baseui-Border-Disabled-Hover: #dadae1;
+  --baseui-Accent-Colors-Green-Light-Hover: #8ac36a;
+  --baseui-Accent-Colors-Pink-Hover: #ce70e0;
+  --baseui-Accent-Colors-Blue-Hover: #4f49eb;
+  --baseui-Accent-Colors-Green-Hover: #538437;
+  --baseui-Accent-Colors-Orange-Hover: #eb8942;
+  --baseui-Accent-Colors-Blue-Light-Hover: #37aaeb;
+  --baseui-Accent-Colors-Red-Hover: #eb4059;
+  --baseui-Extensions-Text-and-Icon-Error-Hover: #d43950;
+  --baseui-Extensions-Text-and-Icon-Warning-Hover: #bd6c0e;
+  --baseui-Extensions-Text-and-Icon-Success-Hover: #538437;
+  --baseui-Extensions-Text-and-Icon-AlwaysDark-Hover: #05061f;
   --baseui-Extensions-Text-and-Icon-AlwaysLight-Hover: #e1e1e1;
-  --baseui-Extensions-Background-InversePrimary-Hover: #252525;
+  --baseui-Extensions-Background-InversePrimary-Hover: #05061f;
   --baseui-Extensions-Background-OverlayDark-Hover: rgba(0, 0, 0, 0.6);
   --baseui-Extensions-Background-OverlayLight-Hover: rgba(255, 255, 255, 0.8);
-  --baseui-Extensions-Background-AlwaysDark-Hover: #252525;
+  --baseui-Extensions-Background-AlwaysDark-Hover: #05061f;
   --baseui-Extensions-Background-AlwaysLight-Hover: #f2f2f2;
-  --baseui-Extensions-Background-LightSuccess-Hover: #d2ead6;
-  --baseui-Extensions-Background-LightError-Hover: #eccbc5;
-  --baseui-Extensions-Background-LightWarning-Hover: #eed5a5;
-  --baseui-Extensions-Border-Selected-Hover: #272727;
-  --baseui-Extensions-Border-SelectedAlwaysDark-Hover: #272727;
+  --baseui-Extensions-Background-LightSuccess-Hover: #d2e0c9;
+  --baseui-Extensions-Background-LightError-Hover: #ebced3;
+  --baseui-Extensions-Background-LightWarning-Hover: #ebdbcb;
+  --baseui-Extensions-Border-Selected-Hover: #4f49eb;
+  --baseui-Extensions-Border-SelectedAlwaysDark-Hover: #05061f;
   --baseui-Extensions-Border-SelectedAlwaysLight-Hover: #e8e8e8;
-  --baseui-Extensions-Border-Accent-Hover: #4645dd;
-  --baseui-Extensions-Border-Error-Hover: #cf4c37;
-  --baseui-Extensions-Border-Warning-Hover: #dea425;
-  --baseui-Extensions-Border-Success-Hover: #23b847;
+  --baseui-Extensions-Border-Accent-Hover: #6951f9;
+  --baseui-Extensions-Border-Error-Hover: #eb4059;
+  --baseui-Extensions-Border-Warning-Hover: #eb8942;
+  --baseui-Extensions-Border-Success-Hover: #538437;
 
 }
 
@@ -132,114 +132,114 @@
 
   /* Text and Icon */
   --baseui-Text-and-Icon-Primary: #ffffff;
-  --baseui-Text-and-Icon-Secondary: #999999;
-  --baseui-Text-and-Icon-Disabled: #7a7a7a;
-  --baseui-Text-and-Icon-Accent: #575df6;
+  --baseui-Text-and-Icon-Secondary: #a7a7c8;
+  --baseui-Text-and-Icon-Disabled: #676b8b;
+  --baseui-Text-and-Icon-Accent: #7a77ff;
 
   /* Background */
-  --baseui-Background-Primary: #171717;
-  --baseui-Background-Secondary: #2e2e2e;
-  --baseui-Background-Tertiary: #373737;
-  --baseui-Background-Disabled: #454545;
-  --baseui-Background-Accent: #575df6;
-  --baseui-Background-Brand: #ffffff;
+  --baseui-Background-Primary: #050622;
+  --baseui-Background-Secondary: #1e2242;
+  --baseui-Background-Tertiary: #293054;
+  --baseui-Background-Disabled: #171a38;
+  --baseui-Background-Accent: #564fff;
+  --baseui-Background-Brand: #564fff;
 
   /* Border */
-  --baseui-Border-Primary: #383838;
-  --baseui-Border-Accent: #5a5a5a;
-  --baseui-Border-Disabled: #404040;
+  --baseui-Border-Primary: #293054;
+  --baseui-Border-Accent: #3b4268;
+  --baseui-Border-Disabled: #1e2242;
 
   /* Accent Colors */
-  --baseui-Accent-Colors-Green-Light: #bbfb60;
-  --baseui-Accent-Colors-Pink: #ef9ffa;
-  --baseui-Accent-Colors-Blue: #575df6;
-  --baseui-Accent-Colors-Green: #53b67d;
-  --baseui-Accent-Colors-Orange: #f5ba44;
-  --baseui-Accent-Colors-Blue-Light: #8abafa;
-  --baseui-Accent-Colors-Red: #e8634c;
+  --baseui-Accent-Colors-Green-Light: #96d473;
+  --baseui-Accent-Colors-Pink: #e07af4;
+  --baseui-Accent-Colors-Blue: #7a77ff;
+  --baseui-Accent-Colors-Green: #96d473;
+  --baseui-Accent-Colors-Orange: #ff9548;
+  --baseui-Accent-Colors-Blue-Light: #3cb9ff;
+  --baseui-Accent-Colors-Red: #ff4661;
 
   /* Extensions / Text and Icon */
-  --baseui-Extensions-Text-and-Icon-Error: #e8634c;
-  --baseui-Extensions-Text-and-Icon-Warning: #f5ba44;
-  --baseui-Extensions-Text-and-Icon-Success: #44cf5e;
-  --baseui-Extensions-Text-and-Icon-AlwaysDark: #171717;
+  --baseui-Extensions-Text-and-Icon-Error: #ff5a72;
+  --baseui-Extensions-Text-and-Icon-Warning: #ff9548;
+  --baseui-Extensions-Text-and-Icon-Success: #96d473;
+  --baseui-Extensions-Text-and-Icon-AlwaysDark: #050622;
   --baseui-Extensions-Text-and-Icon-AlwaysLight: #ffffff;
-  --baseui-Extensions-Text-and-Icon-OnColor: #171717;
-  --baseui-Extensions-Text-and-Icon-OnBrand: #171717;
+  --baseui-Extensions-Text-and-Icon-OnColor: #050622;
+  --baseui-Extensions-Text-and-Icon-OnBrand: #ffffff;
 
   /* Extensions / Background */
-  --baseui-Extensions-Background-Surface: #222222;
+  --baseui-Extensions-Background-Surface: #1e2242;
   --baseui-Extensions-Background-InversePrimary: #ffffff;
-  --baseui-Extensions-Background-OverlayDark: rgba(0, 0, 0, 0.7);
-  --baseui-Extensions-Background-OverlayLight: rgba(23, 23, 23, 0.7);
-  --baseui-Extensions-Background-AlwaysDark: #171717;
+  --baseui-Extensions-Background-OverlayDark: rgba(1, 0, 18, 0.7);
+  --baseui-Extensions-Background-OverlayLight: rgba(5, 6, 34, 0.7);
+  --baseui-Extensions-Background-AlwaysDark: #050622;
   --baseui-Extensions-Background-AlwaysLight: #ffffff;
-  --baseui-Extensions-Background-Error: #e8634c;
-  --baseui-Extensions-Background-Warning: #f5ba44;
-  --baseui-Extensions-Background-Success: #44cf5e;
-  --baseui-Extensions-Background-LightSuccess: #114119;
-  --baseui-Extensions-Background-LightAccent: #24276a;
-  --baseui-Extensions-Background-LightError: #51150a;
-  --baseui-Extensions-Background-LightWarning: #503806;
+  --baseui-Extensions-Background-Error: #ff4661;
+  --baseui-Extensions-Background-Warning: #ff9548;
+  --baseui-Extensions-Background-Success: #96d473;
+  --baseui-Extensions-Background-LightSuccess: #1f3a14;
+  --baseui-Extensions-Background-LightAccent: #2a2670;
+  --baseui-Extensions-Background-LightError: #4a1520;
+  --baseui-Extensions-Background-LightWarning: #4a2d10;
 
   /* Extensions / Border */
-  --baseui-Extensions-Border-Selected: #ffffff;
-  --baseui-Extensions-Border-SelectedAlwaysDark: #171717;
+  --baseui-Extensions-Border-Selected: #7a77ff;
+  --baseui-Extensions-Border-SelectedAlwaysDark: #050622;
   --baseui-Extensions-Border-SelectedAlwaysLight: #ffffff;
-  --baseui-Extensions-Border-Accent: #575df6;
-  --baseui-Extensions-Border-Error: #e8634c;
-  --baseui-Extensions-Border-Warning: #f5ba44;
-  --baseui-Extensions-Border-Success: #44cf5e;
+  --baseui-Extensions-Border-Accent: #7a77ff;
+  --baseui-Extensions-Border-Error: #ff4661;
+  --baseui-Extensions-Border-Warning: #ff9548;
+  --baseui-Extensions-Border-Success: #96d473;
 
   /* Hover */
-  --baseui-Background-Primary-Hover: #232323;
-  --baseui-Background-Secondary-Hover: #3a3a3a;
-  --baseui-Background-Tertiary-Hover: #444444;
-  --baseui-Background-Accent-Hover: #6a6ff8;
-  --baseui-Background-Brand-Hover: #e0e0e0;
-  --baseui-Background-Transparent-Hover: rgba(255, 255, 255, 0.05);
-  --baseui-Extensions-Background-Surface-Hover: #2b2b2b;
-  --baseui-Extensions-Background-Error-Hover: #ee7561;
-  --baseui-Extensions-Background-Warning-Hover: #f8c866;
-  --baseui-Extensions-Background-Success-Hover: #5bda73;
-  --baseui-Extensions-Background-LightAccent-Hover: #2d3180;
-  --baseui-Text-and-Icon-Primary-Hover: #e1e1e1;
-  --baseui-Text-and-Icon-Secondary-Hover: #b5b5b5;
-  --baseui-Extensions-Text-and-Icon-OnColor-Hover: #2c2c2c;
-  --baseui-Extensions-Text-and-Icon-OnBrand-Hover: #2c2c2c;
-  --baseui-Text-and-Icon-Disabled-Hover: #959595;
-  --baseui-Text-and-Icon-Accent-Hover: #7383fc;
-  --baseui-Background-Disabled-Hover: #555555;
-  --baseui-Border-Primary-Hover: #4a4a4a;
-  --baseui-Border-Accent-Hover: #6a6a6a;
-  --baseui-Border-Disabled-Hover: #505050;
-  --baseui-Accent-Colors-Green-Light-Hover: #aeed51;
-  --baseui-Accent-Colors-Pink-Hover: #db8ce6;
-  --baseui-Accent-Colors-Blue-Hover: #4949e1;
-  --baseui-Accent-Colors-Green-Hover: #3ea36b;
-  --baseui-Accent-Colors-Orange-Hover: #e1a72a;
-  --baseui-Accent-Colors-Blue-Light-Hover: #78a7e6;
-  --baseui-Accent-Colors-Red-Hover: #d3503a;
-  --baseui-Extensions-Text-and-Icon-Error-Hover: #fe8871;
-  --baseui-Extensions-Text-and-Icon-Warning-Hover: #d79d19;
-  --baseui-Extensions-Text-and-Icon-Success-Hover: #15b241;
-  --baseui-Extensions-Text-and-Icon-AlwaysDark-Hover: #2c2c2c;
+  --baseui-Background-Primary-Hover: #191a34;
+  --baseui-Background-Secondary-Hover: #303451;
+  --baseui-Background-Tertiary-Hover: #3a4162;
+  --baseui-Background-Accent-Hover: #6a67ff;
+  --baseui-Background-Brand-Hover: #6a67ff;
+  --baseui-Background-Transparent-Hover: rgba(167, 167, 200, 0.1);
+  --baseui-Extensions-Background-Surface-Hover: #303451;
+  --baseui-Extensions-Background-Error-Hover: #ff556e;
+  --baseui-Extensions-Background-Warning-Hover: #ff9d57;
+  --baseui-Extensions-Background-Success-Hover: #9ed77e;
+  --baseui-Extensions-Background-LightAccent-Hover: #3b377b;
+  --baseui-Text-and-Icon-Primary-Hover: #ffffff;
+  --baseui-Text-and-Icon-Secondary-Hover: #aeaecc;
+  --baseui-Extensions-Text-and-Icon-OnColor-Hover: #191a34;
+  --baseui-Extensions-Text-and-Icon-OnBrand-Hover: #ffffff;
+  --baseui-Text-and-Icon-Disabled-Hover: #737794;
+  --baseui-Text-and-Icon-Accent-Hover: #8582ff;
+  --baseui-Background-Disabled-Hover: #2a2c48;
+  --baseui-Border-Primary-Hover: #3a4162;
+  --baseui-Border-Accent-Hover: #4b5174;
+  --baseui-Border-Disabled-Hover: #303451;
+  --baseui-Accent-Colors-Green-Light-Hover: #9ed77e;
+  --baseui-Accent-Colors-Pink-Hover: #e285f5;
+  --baseui-Accent-Colors-Blue-Hover: #8582ff;
+  --baseui-Accent-Colors-Green-Hover: #9ed77e;
+  --baseui-Accent-Colors-Orange-Hover: #ff9d57;
+  --baseui-Accent-Colors-Blue-Light-Hover: #4cbfff;
+  --baseui-Accent-Colors-Red-Hover: #ff556e;
+  --baseui-Extensions-Text-and-Icon-Error-Hover: #ff677d;
+  --baseui-Extensions-Text-and-Icon-Warning-Hover: #ff9d57;
+  --baseui-Extensions-Text-and-Icon-Success-Hover: #9ed77e;
+  --baseui-Extensions-Text-and-Icon-AlwaysDark-Hover: #191a34;
   --baseui-Extensions-Text-and-Icon-AlwaysLight-Hover: #e1e1e1;
-  --baseui-Extensions-Background-InversePrimary-Hover: #f2f2f2;
+  --baseui-Extensions-Background-InversePrimary-Hover: #ffffff;
   --baseui-Extensions-Background-OverlayDark-Hover: rgba(0, 0, 0, 0.8);
   --baseui-Extensions-Background-OverlayLight-Hover: rgba(23, 23, 23, 0.8);
-  --baseui-Extensions-Background-AlwaysDark-Hover: #252525;
+  --baseui-Extensions-Background-AlwaysDark-Hover: #191a34;
   --baseui-Extensions-Background-AlwaysLight-Hover: #f2f2f2;
-  --baseui-Extensions-Background-LightSuccess-Hover: #235129;
-  --baseui-Extensions-Background-LightError-Hover: #63261a;
-  --baseui-Extensions-Background-LightWarning-Hover: #634508;
-  --baseui-Extensions-Border-Selected-Hover: #e8e8e8;
-  --baseui-Extensions-Border-SelectedAlwaysDark-Hover: #272727;
+  --baseui-Extensions-Background-LightSuccess-Hover: #314a27;
+  --baseui-Extensions-Background-LightError-Hover: #582832;
+  --baseui-Extensions-Background-LightWarning-Hover: #583e23;
+  --baseui-Extensions-Border-Selected-Hover: #8582ff;
+  --baseui-Extensions-Border-SelectedAlwaysDark-Hover: #191a34;
   --baseui-Extensions-Border-SelectedAlwaysLight-Hover: #e8e8e8;
-  --baseui-Extensions-Border-Accent-Hover: #6c7aff;
-  --baseui-Extensions-Border-Error-Hover: #fd7d65;
-  --baseui-Extensions-Border-Warning-Hover: #dea425;
-  --baseui-Extensions-Border-Success-Hover: #23b847;
+  --baseui-Extensions-Border-Accent-Hover: #6a67ff;
+  --baseui-Extensions-Border-Error-Hover: #ff556e;
+  --baseui-Extensions-Border-Warning-Hover: #ff9d57;
+  --baseui-Extensions-Border-Success-Hover: #9ed77e;
 
 }
 

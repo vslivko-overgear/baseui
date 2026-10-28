@@ -34,8 +34,8 @@ export function ThemePreview(theme) {
 }
 describe(ThemePreview, 'The theme of this site and of your own app: the settings are applied at once and stored in a cookie on this device.', {
   preset: ["'default' | 'ocean' | 'forest' | 'sunset' | 'berry' | 'graphite' | 'custom'", "'default'", 'A ready set of the settings below; changing any of them switches it to custom'],
-  brand: ["'default' | 'blue' | 'green' | 'pink' | 'orange' | 'red' | 'blue-light' | 'green-light' | 'custom'", "'default'", 'Brand color: primary buttons, the slider, the current step and page. default is black in the light theme and white in the dark one'],
-  brandColor: ['string', "'#575df6'", 'Your own brand color, any CSS color (with brand: custom)'],
+  brand: ["'default' | 'blue' | 'green' | 'pink' | 'orange' | 'red' | 'blue-light' | 'green-light' | 'custom'", "'default'", 'Brand color: primary buttons, the slider, the current step and page. default is the Overgear violet'],
+  brandColor: ['string', "'#564fff'", 'Your own brand color, any CSS color (with brand: custom)'],
   shape: ["'rounded' | 'circle'", "'rounded'", 'rounded follows the base radius; circle makes buttons, fields, tokens and segmented controls pills (`data-shape` on `<html>`)'],
   radius: ['number', '12', 'Base radius in px: every radius token (4 to 32) scales from it; 0 makes square corners'],
   headingFont: ["'Geist' | 'Unbounded' | 'Montserrat Alternates' | …", "'Geist'", 'Font of the headings (`--baseui-Typography-Headline-Font-Family`); Google Fonts with Cyrillic'],
@@ -68,6 +68,6 @@ const meta = {
 Object.defineProperty(meta, 'args', { get: () => loadTheme(), enumerable: true });
 export default meta;
 export const Playground = { parameters: { docs: { source: { originalSource: `// Set the tokens on <html>, or pick the settings on this page
-document.documentElement.style.setProperty('--baseui-Background-Brand', '#575df6');
+document.documentElement.style.setProperty('--baseui-Background-Brand', '#564fff');
 document.documentElement.dataset.shape = 'circle';` } } }, render: (args) => h(ThemePreview, args) };
 export const __namedExportsOrder = ['Playground'];

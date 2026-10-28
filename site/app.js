@@ -93,7 +93,7 @@ function Control({ name, spec, value, onChange, args }) {
   } else if (type === 'color') {
     input = h('div', { className: 'color-row' },
       h(TextField, { label: name, size: 'sm', value: value ?? '', onChange: (e) => onChange(e.target.value || undefined) }),
-      h('input', { type: 'color', className: 'swatch', 'aria-label': name, value: /^#[0-9a-f]{6}$/i.test(value || '') ? value : '#575df6', onChange: (e) => onChange(e.target.value) }));
+      h('input', { type: 'color', className: 'swatch', 'aria-label': name, value: /^#[0-9a-f]{6}$/i.test(value || '') ? value : '#564fff', onChange: (e) => onChange(e.target.value) }));
   } else if (type === 'text') {
     input = h(TextField, { label: name, size: 'sm', value: value ?? '', onChange: (e) => onChange(e.target.value) });
   }
