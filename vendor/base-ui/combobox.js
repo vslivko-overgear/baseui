@@ -1,0 +1,2 @@
+import { combobox as M } from '../base-ui.js';
+export const { Combobox, ComboboxArrowDataAttributes, ComboboxBackdropDataAttributes, ComboboxClearDataAttributes, ComboboxInputDataAttributes, ComboboxInputGroupDataAttributes, ComboboxItemDataAttributes, ComboboxItemIndicatorDataAttributes, ComboboxPopupDataAttributes, ComboboxPositionerCssVariables, ComboboxPositionerDataAttributes, ComboboxSeparatorDataAttributes, ComboboxTriggerDataAttributes } = M;

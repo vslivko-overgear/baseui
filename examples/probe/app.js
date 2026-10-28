@@ -1,4 +1,4 @@
-import { t as initDom, r as renderInto } from '../../lib/react-18-D4o7zN8K.js';
+import { createRoot } from 'react-dom/client';
 import { h, cx, useState, useEffect } from '../../src/react.js';
 import { ToastProvider } from '../../src/components/Toast.js';
 import { Navbar, BottomBar } from '../../src/components/MobileNavigation.js';
@@ -106,5 +106,4 @@ function Probe() {
   return h(Shell, { route });
 }
 
-await initDom();
-renderInto(h(ToastProvider, { placement: 'top-center' }, h(StoreProvider, null, h(Probe))), document.getElementById('root'));
+createRoot(document.getElementById('root')).render(h(ToastProvider, { placement: 'top-center' }, h(StoreProvider, null, h(Probe))));

@@ -1,7 +1,8 @@
 // Single access point for React and shared helpers of baseui components.
-import { t as requireReact } from '../lib/react-BZJXY1be.js';
+import * as ReactModule from 'react';
 
-export const React = requireReact();
+// react comes from the page: an import map in the documentation site, node_modules in an application (never a second copy)
+export const React = ReactModule.default && ReactModule.default.createElement ? ReactModule.default : ReactModule;
 export const h = React.createElement;
 export const {
   Fragment, createContext, useCallback, useContext, useEffect, useId, useLayoutEffect, useMemo, useRef, useState,

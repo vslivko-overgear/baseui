@@ -2,9 +2,8 @@
 // so no scrolling or clipping container around the trigger can cut them or push the layout. They flip to the other side
 // when there is no room and stay inside the screen.
 import { useState, useCallback, useEffect, useLayoutEffect, useRef } from './react.js';
-import { t as requireReactDom } from '../lib/react-dom-BzEl8usk.js';
+import { createPortal } from 'react-dom';
 
-const { createPortal } = requireReactDom();
 const GAP = 8;
 const EDGE = 8;
 

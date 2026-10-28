@@ -1,4 +1,4 @@
-import { t as initDom, r as renderInto } from '../../lib/react-18-D4o7zN8K.js';
+import { createRoot } from 'react-dom/client';
 import { h, cx, useState, useEffect, useRef, useCallback } from '../../src/react.js';
 import { ToastProvider, useToast } from '../../src/components/Toast.js';
 import { Banner } from '../../src/components/Banner.js';
@@ -176,5 +176,4 @@ function App() {
   return h(ToastProvider, { placement: 'top-center' }, h(Messenger));
 }
 
-await initDom();
-renderInto(h(App), document.getElementById('root'));
+createRoot(document.getElementById('root')).render(h(App));

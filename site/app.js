@@ -1,7 +1,7 @@
-import { t as requireReact } from '../lib/react-BZJXY1be.js';
 import { documentControls } from './controls-docs.js';
 import { Checkbox, CheckboxGroup, Radio, RadioGroup } from '../src/components/Checks.js';
-import { t as initDom, r as renderInto } from '../lib/react-18-D4o7zN8K.js';
+import { createRoot } from 'react-dom/client';
+import { React } from '../src/react.js';
 import manifest from './manifest.js';
 import { TextField, Switch, Chip, ChipGroup, Modal } from '../src/base.js';
 import { List, ListItem } from '../src/components/List.js';
@@ -17,7 +17,6 @@ import { startTheme } from './theme.js';
 startTheme();
 const icons = await import('../lib/line-HpXc8B8J.js');
 
-const React = requireReact();
 const { createElement: h, useState, useEffect, useMemo, useContext, createContext, Fragment } = React;
 const SettingsContext = createContext(() => {});
 
@@ -425,5 +424,4 @@ function App() {
         h(Modal, { open: sheet && !!settings, onOpenChange: setSheet, title: 'Settings', primaryAction: h(Button, { variant: 'primary', onClick: () => setSheet(false) }, 'Done'), secondaryAction: settings && h(Button, { variant: 'secondary', onClick: settings.reset }, 'Reset') }, settings && h('div', { className: 'settings-sheet' }, h(Controls, { ...settings, title: null, showReset: false })))));
 }
 
-await initDom();
-renderInto(h(App), document.getElementById('root'));
+createRoot(document.getElementById('root')).render(h(App));

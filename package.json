@@ -1,0 +1,14 @@
+{
+  "name": "baseui-kit",
+  "version": "0.1.0",
+  "description": "A design system on Base UI: tokens, components and a documentation site built from them.",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@base-ui/react": "^1.9.0",
+    "esbuild": "^0.28.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  }
+}

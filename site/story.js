@@ -1,7 +1,7 @@
 // Rendering of a story: used by the documentation site.
-import { t as requireReact } from '../lib/react-BZJXY1be.js';
 
-export const React = requireReact();
+import { React } from '../src/react.js';
+export { React };
 export const h = React.createElement;
 const { useMemo, useRef } = React;
 
