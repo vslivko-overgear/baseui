@@ -4,6 +4,13 @@
 
 
 /* ---------- Base ---------- */
+:root {
+  -webkit-tap-highlight-color: transparent;
+}
+:where(a, button, input, select, textarea, label, summary, [role="button"], [role="radio"], [role="option"], [role="tab"], [role="combobox"], [role="switch"], [role="checkbox"]) {
+  touch-action: manipulation;
+}
+
 /* No blue tap flash on touch screens (the pressed state is drawn by the components themselves); no double-tap zoom delay on controls */
 :root { -webkit-tap-highlight-color: transparent; }
 :where(a, button, input, select, textarea, label, summary, [role=button], [role=radio], [role=option], [role=tab], [role=combobox], [role=switch], [role=checkbox]) { touch-action: manipulation; }
@@ -943,6 +950,22 @@
 @keyframes bui-title-clamp { from { display: block; } to { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; } }
 [data-slot="modal-header"][data-scrolled] [data-slot="modal-title"] { height: 1lh; white-space: normal; overflow: hidden; animation: bui-title-clamp 1ms steps(1, end) var(--baseui-duration-medium) both; }
 @media (prefers-reduced-motion: reduce) { [data-slot="modal-title"] { transition: none; } }
+@keyframes baseui-dialog-fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes baseui-dialog-sheet {
+  from {
+    transform: translateY(100%);
+  }
+}
+@keyframes baseui-dialog-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
 
 /* ---------- Divider ---------- */
 .bui-divider--horizontal { width: 100%; height: 1px; background: var(--baseui-Border-Primary); border: 0; }
@@ -952,6 +975,126 @@
 .bui-divider__label { font: var(--baseui-Typography-Text-14-Regular); color: var(--baseui-Text-and-Icon-Secondary); }
 
 /* ---------- Dropdown and menus (also the Popover panel motion) ---------- */
+.bui-dropdown {
+  box-sizing: border-box;
+  padding: var(--baseui-spacing-4);
+  background-color: var(--baseui-Extensions-Background-Surface);
+  color: var(--baseui-Text-and-Icon-Primary);
+  border-radius: var(--baseui-radius-20);
+  box-shadow: 0 4px 28px color-mix(in srgb, var(--baseui-Extensions-Text-and-Icon-AlwaysDark) 12%, transparent);
+  font: var(--baseui-Typography-Text-16-Regular);
+  outline: none;
+}
+.bui-dropdown__list {
+  outline: none;
+  overflow-y: auto;
+  max-height: min(var(--available-height, 320px) - 16px, 304px);
+}
+.bui-dropdown__item {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--baseui-spacing-12);
+  width: 100%;
+  height: 48px;
+  padding-inline: var(--baseui-spacing-12);
+  border-radius: var(--baseui-radius-16);
+  color: var(--baseui-Text-and-Icon-Primary);
+  font: var(--baseui-Typography-Text-16-Regular);
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  outline: none;
+  transition: background-color var(--baseui-duration-fast) var(--baseui-ease-standard);
+}
+.bui-dropdown__item--subitem {
+  padding-left: calc(var(--baseui-spacing-12) + 20px);
+}
+.bui-dropdown__item[data-highlighted] {
+  background-color: var(--baseui-Background-Transparent-Hover);
+}
+@media (hover: hover) {
+  .bui-dropdown__item:hover:not([data-disabled]):not([aria-disabled="true"]) {
+    background-color: var(--baseui-Background-Transparent-Hover);
+  }
+}
+.bui-dropdown__item[data-disabled],
+.bui-dropdown__item[aria-disabled="true"] {
+  color: var(--baseui-Text-and-Icon-Disabled);
+  cursor: not-allowed;
+}
+.bui-dropdown__icon {
+  display: inline-flex;
+  flex: none;
+  width: 24px;
+  height: 24px;
+}
+.bui-dropdown__icon > * {
+  width: 100%;
+  height: 100%;
+}
+.bui-dropdown__avatar {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--baseui-radius-full);
+  object-fit: cover;
+}
+.bui-dropdown__item[data-disabled] .bui-dropdown__avatar,
+.bui-dropdown__item[aria-disabled="true"] .bui-dropdown__avatar {
+  opacity: 0.4;
+}
+.bui-dropdown__label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bui-dropdown__details {
+  flex: none;
+  white-space: nowrap;
+  color: var(--baseui-Text-and-Icon-Secondary);
+}
+.bui-dropdown__item[data-disabled] .bui-dropdown__details,
+.bui-dropdown__item[aria-disabled="true"] .bui-dropdown__details {
+  color: var(--baseui-Text-and-Icon-Disabled);
+}
+.bui-dropdown__check {
+  flex: none;
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  visibility: hidden;
+}
+.bui-dropdown__check svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+.bui-dropdown__item[data-selected] .bui-dropdown__check,
+.bui-dropdown__item[aria-selected="true"] .bui-dropdown__check {
+  visibility: visible;
+}
+.bui-dropdown__group {
+  padding: var(--baseui-spacing-12) var(--baseui-spacing-12) var(--baseui-spacing-8);
+  font: var(--baseui-Typography-Text-14-Regular);
+  color: var(--baseui-Text-and-Icon-Secondary);
+}
+.bui-dropdown__divider {
+  padding: var(--baseui-spacing-8) var(--baseui-spacing-8);
+}
+.bui-dropdown__divider::before {
+  content: "";
+  display: block;
+  height: 1px;
+  background: var(--baseui-Border-Primary);
+}
+.bui-dropdown:has(.bui-dropdown__select-all:hover) .bui-dropdown__item[data-highlighted]:not(.bui-dropdown__select-all),
+.bui-dropdown:has(.bui-dropdown__select-all:hover) .bui-dropdown__item:not(.bui-dropdown__select-all):hover {
+  background-color: transparent;
+}
+
 /* Dropdown size: the list follows the size of the field it opens from (Selector, Typeahead and Dropdown set data-size). sm = 40px items, 20px icons,
    radius 12 inside the 16 of the list (concentric: 16 - 4px padding) */
 .bui-dropdown[data-size="sm"] { border-radius: var(--baseui-radius-16); }
@@ -2484,7 +2627,35 @@ textarea.bui-input {
     background-color: var(--baseui-Background-Primary-Hover);
   }
 }
-
+.bui-field__small .bui-input,
+.bui-field__small .bui-input__affix,
+.bui-field__small .bui-select__trigger,
+.bui-field__small .bui-select__affix,
+.bui-field__small .bui-autocomplete__input,
+.bui-field__small .bui-autocomplete__affix,
+.bui-field__small .bui-autocomplete__chip,
+.bui-field__small .bui-autocomplete__counter-chip {
+  font: var(--baseui-Typography-Text-14-Regular);
+}
+.bui-field__small .bui-autocomplete__input {
+  height: 20px;
+}
+.bui-field__small[data-float="floating"][data-control]:not([data-multiple]) .bui-autocomplete__control:focus-within .bui-autocomplete__input,
+.bui-field__small[data-float="floating"][data-control]:not([data-multiple])[data-filled] .bui-autocomplete__input {
+  transform: translateY(8px);
+}
+.bui-field__small[data-float="floating"][data-filled] .bui-select__value:not([data-placeholder]) {
+  transform: translateY(8px);
+}
+.bui-field__small .bui-autocomplete__clear {
+  width: 28px;
+  height: 28px;
+  flex-basis: 28px;
+}
+.bui-field__small .bui-autocomplete__clear svg {
+  width: 20px;
+  height: 20px;
+}
 
 /* ---------- Toast ---------- */
 .bui-toast-region {

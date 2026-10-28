@@ -1,6 +1,6 @@
 import { h } from '../react.js';
 import { DatePicker } from '../components/Calendar.js';
-import TextFieldStory from '../../lib/TextField.stories-JboKGoC9.js';
+import TextFieldStory from './TextField.stories.js';
 import { meta, playground, example } from './_helpers.js';
 
 // The field is a Text Input: its settings and their docs come from Text Input.

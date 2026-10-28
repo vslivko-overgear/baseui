@@ -1,5 +1,5 @@
 import { h, cx, useId, useState, useRef, useEffect, useLayoutEffect, useCallback, useControllable } from '../react.js';
-import { OtpRoot, OtpCell } from '../base.js';
+import { OTPField } from '@base-ui/react/otp-field';
 import { describe } from '../doc.js';
 import { useMotion, themeAttrs } from '../theme-flags.js';
 import { useHighlight } from '../highlight.js';
@@ -122,7 +122,7 @@ export function OtpInput({
   const cells = [];
   for (let i = 0; i < size; i++) {
     if (starts.has(i)) cells.push(h('span', { key: `s${i}`, 'data-slot': 'otp-separator', 'aria-hidden': 'true', className: 'bui-otp__separator' }));
-    cells.push(h(OtpCell, {
+    cells.push(h(OTPField.Input, {
       key: i, ref: (el) => { cellRefs.current[i] = el; if (i === 0 && inputRef) { typeof inputRef === 'function' ? inputRef(el) : (inputRef.current = el); } },
       'data-slot': 'otp-cell', 'data-index': i, 'data-filled': code[i] ? '' : undefined, style: { '--otp-i': i }, className: 'bui-otp__cell',
       'aria-label': `${label || ariaLabel || 'Code'}, ${i + 1} of ${size}`, 'aria-invalid': visibleError ? 'true' : undefined,
@@ -134,7 +134,7 @@ export function OtpInput({
     'data-slide': ring ? '' : undefined, 'aria-busy': locked || undefined, ...rest,
   },
   label && h('span', { 'data-slot': 'otp-label', className: 'bui-otp__label' }, label),
-  h(OtpRoot, {
+  h(OTPField.Root, {
     ref: cellsEl, 'data-slot': 'otp-cells', className: 'bui-otp__cells', 'aria-label': label || ariaLabel || 'Verification code', 'aria-describedby': visibleError ? errorId : undefined,
     length: size, value: code, onValueChange: commit, onValueComplete: (v) => complete(v), validationType, mask, disabled, readOnly: locked, name, onKeyDown,
   },

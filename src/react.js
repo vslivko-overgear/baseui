@@ -5,7 +5,7 @@ import * as ReactModule from 'react';
 export const React = ReactModule.default && ReactModule.default.createElement ? ReactModule.default : ReactModule;
 export const h = React.createElement;
 export const {
-  Children, Fragment, cloneElement, createContext, isValidElement, useCallback, useContext, useEffect, useId, useLayoutEffect, useMemo, useReducer, useRef, useState,
+  Children, Fragment, cloneElement, createContext, forwardRef, isValidElement, memo, useCallback, useDeferredValue, useContext, useEffect, useId, useLayoutEffect, useMemo, useReducer, useRef, useState, useSyncExternalStore,
 } = React;
 
 /** Join class names: cx('a', cond && 'b') */
