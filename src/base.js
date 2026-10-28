@@ -8,11 +8,9 @@ export { OtpRoot, OtpCell };
 
 const component = async (file) => (await import(`../lib/${file}`)).default.component;
 
-export const [Select] = await Promise.all([
-  component('Select.stories-vOU6jfFc.js'),
-]);
-
 export { Button } from './components/Button.js';
+export { Select } from './components/Select.js';
+export { Autocomplete } from './components/Autocomplete.js';
 export { Modal } from './components/Modal.js';
 export { TextField } from './components/TextField.js';
 export { Switch } from './components/Switch.js';

@@ -52,11 +52,11 @@ export default [
         { title: 'OTP Input', file: N('OtpInput'), lead: 'A field for entering a one-time code.' },
         { title: 'Radio', file: N('RadioGroup'), lead: 'Radio buttons for choosing one option from a list.', examples: [{ title: 'Radio List Item', file: N('Radio'), props: true }] },
         { title: 'Rating', file: N('Rating'), lead: 'Stars the user picks to leave a rating.' },
-        { title: 'Selector', file: B('Select.stories-vOU6jfFc'), lead: 'A field, or any element, that opens a list of options.', examples: [{ title: 'Selector Trigger', file: N('SelectTrigger') }] },
+        { title: 'Selector', file: N('Select'), lead: 'A field, or any element, that opens a list of options.', examples: [{ title: 'Selector Trigger', file: N('SelectTrigger') }] },
         { title: 'Slider', file: N('Slider') },
         { title: 'Switch', file: N('Switch'), lead: 'A control that turns a setting on or off immediately.' },
         { title: 'Text Input', file: N('TextField'), lead: 'A single-line or multi-line text field with a floating label.' },
-        { title: 'Typeahead', file: B('Autocomplete.stories-CLnOUoA7'), lead: 'A text field that suggests options as you type.' },
+        { title: 'Typeahead', file: N('Autocomplete'), lead: 'A text field that suggests options as you type.' },
         ],
       },
       {

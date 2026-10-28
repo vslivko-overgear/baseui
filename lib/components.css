@@ -2,43 +2,6 @@
 :root { -webkit-tap-highlight-color: transparent; }
 :where(a, button, input, select, textarea, label, summary, [role=button], [role=radio], [role=option], [role=tab], [role=combobox], [role=switch], [role=checkbox]) { touch-action: manipulation; }
 /* Autocomplete */
-.bui-autocomplete__control{box-sizing:border-box;align-items:center;width:100%;min-width:0;height:100%;display:flex}
-.bui-autocomplete__input{all:unset;box-sizing:border-box;width:100%;min-width:0;height:22px;color:var(--baseui-Text-and-Icon-Primary);font:var(--baseui-Typography-Text-16-Regular);text-overflow:ellipsis;flex:auto;transition:transform var(--baseui-duration-fast) var(--baseui-ease-standard)}
-.bui-autocomplete__input::placeholder{color:var(--baseui-Text-and-Icon-Secondary);opacity:1}
-.bui-autocomplete__input[data-disabled]{color:var(--baseui-Text-and-Icon-Disabled);-webkit-text-fill-color:var(--baseui-Text-and-Icon-Disabled);cursor:not-allowed}
-.bui-autocomplete__input[data-disabled]::placeholder{color:var(--baseui-Text-and-Icon-Disabled)}
-@media (prefers-reduced-motion:reduce){
-.bui-autocomplete__input{transition:none}
-}
-[data-float=floating][data-control]:not([data-multiple]) .bui-autocomplete__control:focus-within .bui-autocomplete__input,[data-float=floating][data-control]:not([data-multiple])[data-filled] .bui-autocomplete__input{transform:translateY(10px)}
-[data-multiple] .bui-autocomplete__input{flex:1 0 72px;width:auto}
-[data-float=floating] .bui-autocomplete__input::placeholder{color:#0000}
-[data-float=floating] .bui-autocomplete__control:focus-within .bui-autocomplete__input::placeholder{color:var(--baseui-Text-and-Icon-Secondary)}
-.bui-autocomplete__affix{white-space:nowrap;visibility:hidden;color:var(--baseui-Text-and-Icon-Secondary);font:var(--baseui-Typography-Text-16-Regular);flex-shrink:0;transition:transform var(--baseui-duration-fast) var(--baseui-ease-standard)}
-[data-control]:not([data-multiple]) .bui-autocomplete__control:focus-within .bui-autocomplete__affix,[data-control]:not([data-multiple])[data-filled] .bui-autocomplete__affix{visibility:visible}
-[data-float=floating][data-control]:not([data-multiple]) .bui-autocomplete__control:focus-within .bui-autocomplete__affix,[data-float=floating][data-control]:not([data-multiple])[data-filled] .bui-autocomplete__affix{transform:translateY(10px)}
-.bui-autocomplete__affix:first-child{margin-right:var(--baseui-spacing-4)}
-.bui-autocomplete__input+.bui-autocomplete__affix{margin-left:var(--baseui-spacing-4)}
-[data-disabled] .bui-autocomplete__affix{color:var(--baseui-Text-and-Icon-Disabled)}
-@supports (field-sizing:content){
-:not([data-multiple]) .bui-autocomplete__has-suffix .bui-autocomplete__input{field-sizing:content;flex:0 auto;width:auto;min-width:1ch;max-width:100%}
-:not([data-multiple]) .bui-autocomplete__has-suffix .bui-autocomplete__clear{margin-left:auto}
-}
-.bui-autocomplete__clear{all:unset;box-sizing:border-box;width:24px;height:24px;margin-left:var(--baseui-spacing-12);color:var(--baseui-Text-and-Icon-Primary);cursor:pointer;flex:0 0 24px;justify-content:center;align-items:center;display:flex}
-.bui-autocomplete__clear:focus-visible{border-radius:var(--baseui-radius-8);outline:var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color);outline-offset:var(--baseui-focus-outline-offset)}
-.bui-autocomplete__clear svg{width:24px;height:24px;display:block}
-.bui-autocomplete__chips{align-items:center;gap:var(--baseui-spacing-8);min-width:0;padding:var(--baseui-spacing-8) 0;flex-wrap:wrap;flex:auto;display:flex}
-.bui-autocomplete__counter-chip{all:unset;cursor:pointer}
-.bui-autocomplete__chip,.bui-autocomplete__counter-chip{box-sizing:border-box;align-items:center;gap:var(--baseui-spacing-4);border-radius:var(--baseui-radius-12);background-color:var(--baseui-Extensions-Background-InversePrimary);max-width:100%;height:36px;color:var(--baseui-Extensions-Text-and-Icon-OnColor);font:var(--baseui-Typography-Text-16-Regular);outline:none;flex:none;padding:7px 12px;display:flex}
-.bui-autocomplete__chip:focus-visible,.bui-autocomplete__counter-chip:focus-visible{outline:var(--baseui-focus-outline-width) solid var(--baseui-focus-outline-color);outline-offset:var(--baseui-focus-outline-offset)}
-.bui-autocomplete__counter-count{color:var(--baseui-Text-and-Icon-Secondary)}
-.bui-autocomplete__counter-remove{flex:0 0 20px;justify-content:center;align-items:center;width:20px;height:20px;display:flex}
-.bui-autocomplete__counter-remove svg{width:20px;height:20px;display:block}
-.bui-autocomplete__chip-text{text-overflow:ellipsis;white-space:nowrap;min-width:0;overflow:hidden}
-.bui-autocomplete__chip-remove{all:unset;box-sizing:border-box;color:currentColor;cursor:pointer;flex:0 0 20px;justify-content:center;align-items:center;width:20px;height:20px;display:flex}
-.bui-autocomplete__chip-remove:focus-visible{border-radius:50%;outline:var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color);outline-offset:var(--baseui-focus-outline-offset)}
-.bui-autocomplete__chip-remove svg{width:20px;height:20px;display:block}
-.bui-autocomplete__chip-remove[data-disabled]{cursor:not-allowed}
 /* Avatar */
 .bui-avatar-base{vertical-align:middle;flex-shrink:0;display:inline-flex;position:relative}
 .bui-avatar-base__surface{background-color:var(--baseui-Extensions-Background-LightAccent);color:var(--baseui-Text-and-Icon-Accent);justify-content:center;align-items:center;display:flex;position:absolute;inset:0;overflow:hidden}
@@ -141,22 +104,6 @@
 /* RadioGroup */
 /* Rating */
 /* Select */
-.bui-select__trigger{all:unset;box-sizing:border-box;width:100%;min-width:0;height:100%;color:var(--baseui-Text-and-Icon-Primary);font:var(--baseui-Typography-Text-16-Regular);cursor:pointer;align-items:center;display:flex}
-.bui-select__trigger[data-disabled]{color:var(--baseui-Text-and-Icon-Disabled);cursor:not-allowed}
-.bui-select__value{text-overflow:ellipsis;white-space:nowrap;flex:auto;min-width:0;overflow:hidden}
-.bui-select__value[data-placeholder]{color:var(--baseui-Text-and-Icon-Secondary)}
-[data-float=floating][data-filled] .bui-select__value:not([data-placeholder]){transform:translateY(10px)}
-.bui-select__affix{white-space:nowrap;visibility:hidden;color:var(--baseui-Text-and-Icon-Secondary);font:var(--baseui-Typography-Text-16-Regular);flex-shrink:0}
-.bui-select__affix:first-child{margin-right:var(--baseui-spacing-4)}
-.bui-select__value+.bui-select__affix{margin-left:var(--baseui-spacing-4)}
-[data-filled] .bui-select__affix{visibility:visible}
-[data-float=floating][data-filled] .bui-select__affix{transform:translateY(10px)}
-[data-disabled] .bui-select__affix{color:var(--baseui-Text-and-Icon-Disabled)}
-.bui-select__has-suffix .bui-select__value{flex:0 auto}
-.bui-select__has-suffix .bui-select__chevron{margin-left:auto}
-.bui-select__chevron{width:24px;height:24px;margin-left:var(--baseui-spacing-12);color:var(--baseui-Text-and-Icon-Primary);flex:0 0 24px;justify-content:center;align-items:center;display:flex}
-.bui-select__chevron svg{width:24px;height:24px;display:block}
-[data-disabled] .bui-select__chevron{color:var(--baseui-Text-and-Icon-Disabled)}
 /* Switch */
 /* TextField */
 /* Typography */
@@ -175,33 +122,7 @@
 .bui-typography__value-copied{color:var(--baseui-Extensions-Text-and-Icon-Success)}
 .bui-typography__sr-only{clip:rect(0 0 0 0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}
 /* useMediaLg */
-.bui-choice-popup__positioner{z-index:var(--baseui-z-index-400);width:var(--anchor-width);max-width:calc(100vw - 16px)}
-.bui-choice-popup__popup{box-sizing:border-box;width:var(--anchor-width);background-color:var(--baseui-Extensions-Background-Surface);max-width:calc(100vw - 16px);color:var(--baseui-Text-and-Icon-Primary);box-shadow:0 4px 28px color-mix(in srgb, var(--baseui-Extensions-Text-and-Icon-AlwaysDark) 12%, transparent);transform-origin:var(--transform-origin);border-radius:var(--baseui-radius-20);outline:none;padding:8px;transition:opacity var(--baseui-duration-fast) var(--baseui-ease-standard),transform var(--baseui-duration-fast) var(--baseui-ease-standard)}
-.bui-choice-popup__popup[data-starting-style],.bui-choice-popup__popup[data-ending-style]{opacity:0;transform:scale(.98)}
-.bui-choice-popup__list{max-height:min(var(--available-height) - 16px, 304px);outline:none;overflow-y:auto}
-.bui-choice-popup__item{box-sizing:border-box;height:48px;color:var(--baseui-Text-and-Icon-Primary);font:var(--baseui-Typography-Text-16-Regular);cursor:pointer;-webkit-user-select:none;user-select:none;border-radius:var(--baseui-radius-12);outline:none;align-items:center;gap:12px;padding:0 8px;display:flex}
-@media (hover),(-ms-high-contrast:none),(-ms-high-contrast:active){
-.bui-choice-popup__item:hover{background-color:var(--baseui-Background-Transparent-Hover)}
-}
-.bui-choice-popup__item[data-highlighted]{background-color:var(--baseui-Background-Transparent-Hover)}
-.bui-choice-popup__item[data-disabled]{color:var(--baseui-Text-and-Icon-Disabled);cursor:not-allowed}
-.bui-choice-popup__item-text{text-overflow:ellipsis;white-space:nowrap;flex:auto;min-width:0;overflow:hidden}
-.bui-choice-popup__details{color:var(--baseui-Text-and-Icon-Secondary);white-space:nowrap;flex:none}
-.bui-choice-popup__item[data-disabled] .bui-choice-popup__details{color:var(--baseui-Text-and-Icon-Disabled)}
-.bui-choice-popup__indicator{flex:0 0 24px;justify-content:center;align-items:center;width:24px;height:24px;display:flex}
-.bui-choice-popup__indicator svg{width:24px;height:24px;display:block}
-.bui-choice-popup__item:not([data-selected]) .bui-choice-popup__indicator{visibility:hidden}
-.bui-choice-popup__empty:not(:empty){box-sizing:border-box;height:48px;color:var(--baseui-Text-and-Icon-Secondary);font:var(--baseui-Typography-Text-16-Regular);align-items:center;padding:0 8px;display:flex}
-.bui-choice-sheet__body{gap:var(--baseui-spacing-12);flex-direction:column;display:flex}
-.bui-choice-sheet__search{flex:none}
-.bui-choice-sheet__list{max-height:none;overflow:visible}
-.bui-choice-sheet__option{appearance:none;text-align:left;background-color:#0000;border:0;width:calc(100% + 16px);margin-inline:-8px}
-.bui-choice-sheet__option:focus-visible{outline:var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color);outline-offset:calc(var(--baseui-focus-outline-width) * -1)}
 /* Select with its own trigger (icon, button, text): the list is as wide as its content */
-.bui-choice-popup__positioner.bui-select-menu { width: auto; min-width: 220px; }
-.bui-choice-popup__popup.bui-select-menu__popup { width: auto; min-width: 220px; }
-.bui-select-trigger { all: unset; box-sizing: border-box; cursor: pointer; font: inherit; color: inherit; border-radius: var(--baseui-radius-6); }
-.bui-select-trigger:focus-visible { outline: var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color); outline-offset: var(--baseui-focus-outline-offset); }
 /* Small fields: 14px text for the value and the label, 12px for the floated label */
 .bui-field__small .bui-input, .bui-field__small .bui-input__affix, .bui-field__small .bui-select__trigger, .bui-field__small .bui-select__affix, .bui-field__small .bui-autocomplete__input, .bui-field__small .bui-autocomplete__affix, .bui-field__small .bui-autocomplete__chip, .bui-field__small .bui-autocomplete__counter-chip { font: var(--baseui-Typography-Text-14-Regular); }
 /* Small fields: tighter label-to-value gap and a 20px icon */
@@ -229,11 +150,6 @@
 @keyframes baseui-dialog-pop{from{opacity:0;transform:scale(.96)}}
 /* Mobile sheet: the icon sits on the page margin; the sheet is anchored to the layout viewport so no gap shows below it */
 /* Typeahead clear: the same small transparent-button hover as Text Input actions (32px box around the 24px icon, 28px around 20px in sm) */
-.bui-autocomplete__clear{width:32px;height:32px;flex:0 0 32px;margin-left:calc(var(--baseui-spacing-12) - var(--baseui-spacing-4));margin-right:calc(var(--baseui-spacing-4) * -1);border-radius:var(--baseui-radius-10);transition:background-color var(--baseui-duration-fast) var(--baseui-ease-standard)}
-@media (hover:hover){
-.bui-autocomplete__clear:hover{background-color:var(--baseui-Background-Transparent-Hover)}
-}
-.bui-autocomplete__clear:focus-visible{outline-offset:var(--baseui-focus-outline-offset)}
 .bui-field__small .bui-autocomplete__clear{width:28px;height:28px;flex-basis:28px}
 .bui-field__small .bui-autocomplete__clear svg{width:20px;height:20px}
 /* Standard hover: each control moves to the "-Hover" token paired with its own color token */

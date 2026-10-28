@@ -2,11 +2,13 @@
 import { h } from '../react.js';
 
 /** Page metadata; the description comes from describe() on the component. */
-export const meta = ({ title, component, args, argTypes, description }) => ({
+export const meta = ({ title, component, args, argTypes, description, decorators, render }) => ({
   title,
   component,
   args,
   argTypes,
+  decorators,
+  render,
   parameters: { docs: { description: { component: description || component.__docgenInfo.description } } },
 });
 

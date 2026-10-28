@@ -3,7 +3,7 @@ import { Button } from './Button.js';
 import { describe } from '../doc.js';
 import { themeAttrs, usePresence, useMotion } from '../theme-flags.js';
 import { Floating, useAnchoredPosition, panelStyle, useDismiss } from '../floating.js';
-import { DropdownItemContent, DropdownGroup, DropdownDivider, DropdownSelectAll, CheckMark, trackSelection, itemClass, isOption } from '../../lib/Dropdown.js';
+import { DropdownItemContent, DropdownGroup, DropdownDivider, DropdownSelectAll, CheckMark, trackSelection, itemClass, isOption } from './dropdown-parts.js';
 
 /**
  * A menu of options that opens from any trigger. It is standalone: no field, no Selector. Selector and Typeahead draw
