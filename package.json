@@ -61,6 +61,7 @@
     "vendor": "node tools/build-vendor.mjs",
     "registry": "node tools/build-registry.mjs",
     "types": "node tools/build-types.mjs",
-    "build": "npm run registry && npm run types"
+    "build": "npm run registry && npm run types",
+    "build:site": "node tools/build-site.mjs"
   }
 }

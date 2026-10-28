@@ -1,3 +1,5 @@
 {
-  "trailingSlash": true
+  "trailingSlash": true,
+  "buildCommand": "node tools/build-site.mjs",
+  "outputDirectory": "public"
 }
