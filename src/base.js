@@ -11,8 +11,7 @@ export { OtpRoot, OtpCell };
 
 const component = async (file) => (await import(`../lib/${file}`)).default.component;
 
-export const [Button, TextField, Select, CompiledModal] = await Promise.all([
-  component('Button.stories-BIZ8i_Er.js'),
+export const [TextField, Select, CompiledModal] = await Promise.all([
   component('TextField.stories-JboKGoC9.js'),
   component('Select.stories-vOU6jfFc.js'),
   component('Modal.stories-BG7Qmigd.js'),
@@ -30,6 +29,7 @@ describeWrapper(Modal, CompiledModal, {
   floating: ['boolean', 'theme', 'A floating sheet on small screens: margins at the bottom and the sides, rounded on every side; by default it follows the Floating setting of the theme. On a wide screen the dialog already floats in the middle'],
 });
 
+export { Button } from './components/Button.js';
 export { Switch } from './components/Switch.js';
 export { Chip } from './components/Chip.js';
 export { ChipGroup } from './components/ChipGroup.js';

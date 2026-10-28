@@ -131,24 +131,40 @@
 .bui-breadcrumbs__current { color: var(--baseui-Text-and-Icon-Primary); font-weight: 600; }
 
 /* ---------- Button ---------- */
-.bui-btn-icon { padding-inline: 0 !important; }
-.bui-btn-icon--xsm { width: 32px; }
-.bui-btn-icon--sm { width: 40px; }
-.bui-btn-icon--md { width: 48px; }
-.bui-btn-icon--lg { width: 56px; }
-/* a label that does not fit is cut with an ellipsis, not wrapped to a second line */
-[data-slot="button"], [data-slot="icon-button"] { max-width: 100%; min-width: 0; }
-/* the height of a button is fixed; only the width is flexible (in a column or a scrolling container a button is never squeezed below its height) */
-:is([data-slot="button"], [data-slot="icon-button"])[data-size="xsm"] { min-height: 32px; }
-:is([data-slot="button"], [data-slot="icon-button"])[data-size="sm"] { min-height: 40px; }
-:is([data-slot="button"], [data-slot="icon-button"])[data-size="md"] { min-height: 48px; }
-:is([data-slot="button"], [data-slot="icon-button"])[data-size="lg"] { min-height: 56px; }
-.bui-btn__label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-/* the loading indicator of a button is the Spinner of the design system (the compiled one is hidden): it sits in the middle, the label stays in place and is hidden */
-[data-slot="button-spinner"] { display: none; }
-[data-slot="button-content"][data-hidden] { opacity: 1; }
-[data-slot="button-content"][data-hidden] > .bui-btn__label { opacity: 0; }
-.bui-btn__spinner { position: absolute; top: 50%; left: 50%; translate: -50% -50%; }
+/* the height is fixed by the size; only the width is flexible (a button is never squeezed below its height); a label that does not fit is cut with an ellipsis */
+.bui-button {
+  --btn-h: 48px; --btn-px: var(--baseui-spacing-20); --btn-radius: var(--baseui-radius-16); --btn-icon: 20px; --btn-gap: var(--baseui-spacing-8);
+  all: unset; box-sizing: border-box; position: relative; display: inline-flex; align-items: center; justify-content: center; max-width: 100%; min-width: 0;
+  height: var(--btn-h); min-height: var(--btn-h); padding-inline: var(--btn-px); border-radius: var(--btn-radius);
+  font: var(--baseui-Typography-Text-16-Semi-Bold); cursor: pointer; background-color: var(--baseui-Background-Secondary); color: var(--baseui-Text-and-Icon-Primary);
+}
+.bui-button[data-size="xsm"] { --btn-h: 32px; --btn-px: var(--baseui-spacing-12); --btn-radius: var(--baseui-radius-10); --btn-icon: 16px; font: var(--baseui-Typography-Text-14-Semi-Bold); }
+.bui-button[data-size="sm"] { --btn-h: 40px; --btn-px: var(--baseui-spacing-16); --btn-radius: var(--baseui-radius-12); }
+.bui-button[data-size="lg"] { --btn-h: 56px; --btn-px: var(--baseui-spacing-24); --btn-icon: 24px; --btn-gap: var(--baseui-spacing-12); }
+.bui-button[data-slot="icon-button"] { width: var(--btn-h); padding-inline: 0; }
+.bui-button:focus-visible { outline: var(--baseui-focus-outline-width) solid var(--baseui-focus-outline-color); outline-offset: var(--baseui-focus-outline-offset); }
+.bui-button__content { display: inline-flex; align-items: center; gap: var(--btn-gap); }
+.bui-button__label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bui-button__icon { flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; width: var(--btn-icon); height: var(--btn-icon); }
+.bui-button__icon svg, .bui-button__icon img { display: block; width: 100%; height: 100%; }
+/* variants */
+.bui-button[data-variant="primary"] { background-color: var(--baseui-Background-Brand); color: var(--baseui-Extensions-Text-and-Icon-OnBrand); }
+.bui-button[data-variant="ghost"] { background-color: transparent; }
+.bui-button[data-variant="destructive"] { background-color: var(--baseui-Extensions-Background-Error); color: var(--baseui-Extensions-Text-and-Icon-AlwaysDark); }
+@media (hover) {
+  .bui-button[data-variant="primary"]:hover:not(:disabled):not([data-disabled]) { background-color: var(--baseui-Background-Brand-Hover); }
+  .bui-button[data-variant="secondary"]:hover:not(:disabled):not([data-disabled]) { background-color: var(--baseui-Background-Secondary-Hover); }
+  .bui-button[data-variant="ghost"]:hover:not(:disabled):not([data-disabled]) { background-color: var(--baseui-Background-Transparent-Hover); }
+  .bui-button[data-variant="destructive"]:hover:not(:disabled):not([data-disabled]) { background-color: var(--baseui-Extensions-Background-Error-Hover); }
+}
+/* disabled; a loading button keeps its look and shows the progress cursor */
+.bui-button:disabled:not([data-loading]), .bui-button[data-disabled]:not([data-loading]), .bui-button[data-loading-disabled] { background-color: var(--baseui-Background-Disabled); color: var(--baseui-Text-and-Icon-Disabled); cursor: not-allowed; background-image: none; }
+.bui-button[data-variant="ghost"]:disabled:not([data-loading]), .bui-button[data-variant="ghost"][data-disabled]:not([data-loading]), .bui-button[data-variant="ghost"][data-loading-disabled] { background-color: transparent; }
+.bui-button[data-loading] { cursor: progress; }
+/* the loading indicator sits in the middle, the label stays in place and is hidden */
+.bui-button__spinner { position: absolute; top: 50%; left: 50%; translate: -50% -50%; }
+.bui-button__content[data-hidden] > .bui-button__label { opacity: 0; }
+.bui-button[data-slot="icon-button"] .bui-button__content[data-hidden] { opacity: 0; }
 
 /* ---------- Calendar ---------- */
 .bui-calendar { --cal-day: 36px; display: inline-flex; flex-direction: column; gap: var(--baseui-spacing-8); box-sizing: border-box; color: var(--baseui-Text-and-Icon-Primary); font: var(--baseui-Typography-Text-16-Regular); }

@@ -1,38 +1,37 @@
 import { h, cx, useState } from '../react.js';
-import { Button as Base } from '../base.js';
+import { Button as BaseButton } from '@base-ui/react/button';
 import { Tooltip } from './Tooltip.js';
 import { Spinner } from './Spinner.js';
 import { describe } from '../doc.js';
 
 // The spinner of a loading button follows its size.
 const SPINNER_PX = { xsm: 16, sm: 20, md: 24, lg: 24 };
-// The variants of the design system on the variants of the compiled button: ghost is its text button, destructive a custom one.
-const VARIANT = {
-  ghost: { variant: 'text' },
-  destructive: { variant: 'custom', customBackground: 'var(--baseui-Extensions-Background-Error)', customColor: 'var(--baseui-Extensions-Text-and-Icon-AlwaysDark)' },
-};
 
+/**
+ * A button on top of the Base UI Button, which brings the keyboard, focus and the disabled state (a loading button stays focusable).
+ * The height is fixed by `size`; only the width is flexible. With `href` it renders a link; with `iconOnly` (see IconButton) a square.
+ */
 export function Button({
-  label, children, variant = 'secondary', size = 'md', disabled = false, loading = false, icon, endContent, iconOnly: isIconOnly = false, shape = 'rounded',
+  label, children, variant = 'secondary', size = 'md', disabled = false, loading = false, icon, endContent, iconOnly = false, shape = 'rounded',
   width, tooltip, href, target, rel, type = 'button', onClick, clickAction, className, style, ref, ...rest
 }) {
   const [pending, setPending] = useState(false);
-  const sz = size;
-  const common = { 'data-slot': isIconOnly ? 'icon-button' : 'button', 'data-variant': variant, 'data-size': sz, size: sz, loading: loading || pending, disabled, className: cx(isIconOnly && `bui-btn-icon bui-btn-icon--${sz}`, shape === 'circle' && 'bui-shape-circle', className), style: { width, ...(variant === 'destructive' && { '--baseui-button-custom-hover': 'var(--baseui-Extensions-Background-Error-Hover)' }), ...style } };
-  const variantProps = VARIANT[variant] || { variant };
+  const busy = loading || pending;
   const click = async (e) => {
     onClick && onClick(e);
     if (clickAction) { setPending(true); try { await clickAction(e); } finally { setPending(false); } }
   };
-  const busy = loading || pending;
-  // the loading indicator is the Spinner of the design system; the compiled one is hidden in CSS
-  const spinner = busy && h(Spinner, { key: 's', size: 'custom', customSize: SPINNER_PX[sz], color: 'inherit', className: 'bui-btn__spinner', role: 'presentation', 'aria-label': undefined, 'aria-hidden': 'true' });
-  const node = h(Base, {
-    ref, ...common, ...variantProps, type: href ? undefined : type, 'aria-label': isIconOnly ? label : undefined, onClick: click,
-    startIcon: isIconOnly ? undefined : icon, endIcon: isIconOnly ? undefined : endContent,
-    ...(href && { render: h('a', { href, target, rel }) }), ...rest,
-  }, isIconOnly ? [icon, spinner] : [h('span', { key: 'l', 'data-slot': 'btn-label', className: 'bui-btn__label' }, children ?? label), spinner]);
-  const tip = tooltip === false ? undefined : tooltip || (isIconOnly ? label : undefined);
+  const node = h(BaseButton, {
+    ref, 'data-slot': iconOnly ? 'icon-button' : 'button', 'data-variant': variant, 'data-size': size, className: cx('bui-button', shape === 'circle' && 'bui-shape-circle', className), style: { width, ...style },
+    disabled: disabled || busy, focusableWhenDisabled: busy, nativeButton: !href, type: href ? undefined : type, 'aria-label': iconOnly ? label : undefined, 'aria-busy': busy || undefined,
+    'data-loading': busy || undefined, 'data-loading-disabled': (disabled && busy) || undefined, onClick: click, ...(href && { render: h('a', { href, target, rel }) }), ...rest,
+  },
+  h('span', { 'data-slot': 'button-content', 'data-hidden': busy || undefined, className: 'bui-button__content' },
+    !iconOnly && icon != null && h('span', { 'data-slot': 'button-icon', className: 'bui-button__icon' }, icon),
+    iconOnly ? icon : h('span', { 'data-slot': 'btn-label', className: 'bui-button__label' }, children ?? label),
+    !iconOnly && endContent != null && h('span', { 'data-slot': 'button-icon', className: 'bui-button__icon' }, endContent)),
+  busy && h(Spinner, { size: 'custom', customSize: SPINNER_PX[size], color: 'inherit', className: 'bui-button__spinner', role: 'presentation', 'aria-label': undefined, 'aria-hidden': 'true' }));
+  const tip = tooltip === false ? undefined : tooltip || (iconOnly ? label : undefined);
   return tip ? h(Tooltip, { content: tip }, node) : node;
 }
 describe(Button, 'Triggers an action or navigates. A label that does not fit in the width of the button is cut with an ellipsis, never wrapped.', {

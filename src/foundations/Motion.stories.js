@@ -1,6 +1,6 @@
 import { h, Fragment, useState } from '../react.js';
 import { useTokens, section, Block, TokenTable, Loading } from './_kit.js';
-import { Button } from '../base.js';
+import { Button } from '../components/Button.js';
 
 export default {
   title: 'Foundations/Motion',

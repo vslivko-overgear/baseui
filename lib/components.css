@@ -76,46 +76,46 @@
 .bui-avatar-base[data-disabled] .bui-avatar-base__picture{opacity:.32}
 .bui-avatar-base[data-disabled] .bui-avatar-base__badge{background-color:var(--baseui-Background-Disabled)}
 /* Button */
-.bui-button{all:unset;box-sizing:border-box;cursor:pointer;justify-content:center;align-items:center;display:inline-flex;position:relative}
-.bui-button:focus-visible{outline:var(--baseui-focus-outline-width) solid var(--baseui-focus-outline-color);outline-offset:var(--baseui-focus-outline-offset)}
-.bui-button:disabled:not([data-loading]),.bui-button[data-disabled]:not([data-loading]){background-color:var(--baseui-Background-Disabled);color:var(--baseui-Text-and-Icon-Disabled);cursor:not-allowed;background-image:none}
-.bui-button[data-loading]{cursor:progress}
-.bui-button[data-loading-disabled]{background-color:var(--baseui-Background-Disabled);color:var(--baseui-Text-and-Icon-Disabled);cursor:not-allowed;background-image:none}
-.bui-button__full-width{width:100%}
-.bui-button__large{font:var(--baseui-Typography-Text-16-Semi-Bold);height:56px;padding-inline:var(--baseui-spacing-24);border-radius:var(--baseui-radius-16)}
-.bui-button__large .bui-button__label{gap:var(--baseui-spacing-12)}
-.bui-button__large .bui-button__icon,.bui-button__large .bui-button__spinner{width:24px;height:24px}
-.bui-button__medium{font:var(--baseui-Typography-Text-16-Semi-Bold);height:48px;padding-inline:var(--baseui-spacing-20);border-radius:var(--baseui-radius-16)}
-.bui-button__small{font:var(--baseui-Typography-Text-16-Semi-Bold);height:40px;padding-inline:var(--baseui-spacing-16);border-radius:var(--baseui-radius-12)}
-.bui-button__xsmall{font:var(--baseui-Typography-Text-14-Semi-Bold);height:32px;padding-inline:var(--baseui-spacing-12);border-radius:var(--baseui-radius-10)}
-.bui-button__xsmall .bui-button__icon,.bui-button__xsmall .bui-button__spinner{width:16px;height:16px}
-.bui-button__primary{background-color:var(--baseui-Background-Brand);color:var(--baseui-Extensions-Text-and-Icon-OnBrand)}
+.bui-legacy-button{all:unset;box-sizing:border-box;cursor:pointer;justify-content:center;align-items:center;display:inline-flex;position:relative}
+.bui-legacy-button:focus-visible{outline:var(--baseui-focus-outline-width) solid var(--baseui-focus-outline-color);outline-offset:var(--baseui-focus-outline-offset)}
+.bui-legacy-button:disabled:not([data-loading]),.bui-legacy-button[data-disabled]:not([data-loading]){background-color:var(--baseui-Background-Disabled);color:var(--baseui-Text-and-Icon-Disabled);cursor:not-allowed;background-image:none}
+.bui-legacy-button[data-loading]{cursor:progress}
+.bui-legacy-button[data-loading-disabled]{background-color:var(--baseui-Background-Disabled);color:var(--baseui-Text-and-Icon-Disabled);cursor:not-allowed;background-image:none}
+.bui-legacy-button__full-width{width:100%}
+.bui-legacy-button__large{font:var(--baseui-Typography-Text-16-Semi-Bold);height:56px;padding-inline:var(--baseui-spacing-24);border-radius:var(--baseui-radius-16)}
+.bui-legacy-button__large .bui-legacy-button__label{gap:var(--baseui-spacing-12)}
+.bui-legacy-button__large .bui-legacy-button__icon,.bui-legacy-button__large .bui-legacy-button__spinner{width:24px;height:24px}
+.bui-legacy-button__medium{font:var(--baseui-Typography-Text-16-Semi-Bold);height:48px;padding-inline:var(--baseui-spacing-20);border-radius:var(--baseui-radius-16)}
+.bui-legacy-button__small{font:var(--baseui-Typography-Text-16-Semi-Bold);height:40px;padding-inline:var(--baseui-spacing-16);border-radius:var(--baseui-radius-12)}
+.bui-legacy-button__xsmall{font:var(--baseui-Typography-Text-14-Semi-Bold);height:32px;padding-inline:var(--baseui-spacing-12);border-radius:var(--baseui-radius-10)}
+.bui-legacy-button__xsmall .bui-legacy-button__icon,.bui-legacy-button__xsmall .bui-legacy-button__spinner{width:16px;height:16px}
+.bui-legacy-button__primary{background-color:var(--baseui-Background-Brand);color:var(--baseui-Extensions-Text-and-Icon-OnBrand)}
 @media (hover),(-ms-high-contrast:none),(-ms-high-contrast:active){
-.bui-button__primary:hover:not(:disabled):not([data-disabled]):not(.bui-button__text){background-color:var(--baseui-Background-Brand-Hover)}
+.bui-legacy-button__primary:hover:not(:disabled):not([data-disabled]):not(.bui-legacy-button__text){background-color:var(--baseui-Background-Brand-Hover)}
 }
-.bui-button__secondary{background-color:var(--baseui-Background-Secondary);color:var(--baseui-Text-and-Icon-Primary)}
+.bui-legacy-button__secondary{background-color:var(--baseui-Background-Secondary);color:var(--baseui-Text-and-Icon-Primary)}
 @media (hover),(-ms-high-contrast:none),(-ms-high-contrast:active){
-.bui-button__secondary:hover:not(:disabled):not([data-disabled]):not(.bui-button__text){background-color:var(--baseui-Background-Secondary-Hover)}
+.bui-legacy-button__secondary:hover:not(:disabled):not([data-disabled]):not(.bui-legacy-button__text){background-color:var(--baseui-Background-Secondary-Hover)}
 }
-.bui-button__custom{background-color:var(--baseui-button-custom-background,var(--baseui-Background-Accent));color:var(--baseui-button-custom-color,var(--baseui-Extensions-Text-and-Icon-OnColor))}
+.bui-legacy-button__custom{background-color:var(--baseui-button-custom-background,var(--baseui-Background-Accent));color:var(--baseui-button-custom-color,var(--baseui-Extensions-Text-and-Icon-OnColor))}
 @media (hover),(-ms-high-contrast:none),(-ms-high-contrast:active){
-.bui-button__custom:hover:not(:disabled):not([data-disabled]):not(.bui-button__text){background-color:var(--baseui-button-custom-hover,var(--baseui-Background-Accent-Hover))}
-.bui-button__custom[style*="--baseui-button-custom-background"]:hover:not(:disabled):not([data-disabled]):not(.bui-button__text){background-color:var(--baseui-button-custom-hover,color-mix(in oklab, var(--baseui-button-custom-background), var(--baseui-Text-and-Icon-Primary) 14%))}
+.bui-legacy-button__custom:hover:not(:disabled):not([data-disabled]):not(.bui-legacy-button__text){background-color:var(--baseui-button-custom-hover,var(--baseui-Background-Accent-Hover))}
+.bui-legacy-button__custom[style*="--baseui-button-custom-background"]:hover:not(:disabled):not([data-disabled]):not(.bui-legacy-button__text){background-color:var(--baseui-button-custom-hover,color-mix(in oklab, var(--baseui-button-custom-background), var(--baseui-Text-and-Icon-Primary) 14%))}
 }
-.bui-button__text{color:var(--baseui-Text-and-Icon-Primary);background-color:#0000}
+.bui-legacy-button__text{color:var(--baseui-Text-and-Icon-Primary);background-color:#0000}
 @media (hover),(-ms-high-contrast:none),(-ms-high-contrast:active){
-.bui-button__text:hover:not(:disabled):not([data-disabled]){background-color:var(--baseui-Background-Transparent-Hover)}
+.bui-legacy-button__text:hover:not(:disabled):not([data-disabled]){background-color:var(--baseui-Background-Transparent-Hover)}
 }
-.bui-button__text:disabled:not([data-loading]),.bui-button__text[data-disabled]:not([data-loading]),.bui-button__text[data-loading-disabled]{background-color:#0000}
-.bui-button__label{align-items:center;gap:var(--baseui-spacing-8);display:inline-flex}
-.bui-button__label-hidden{opacity:0}
-.bui-button__icon{flex-shrink:0;justify-content:center;align-items:center;width:20px;height:20px;display:inline-flex}
-.bui-button__icon svg,.bui-button__icon img{width:100%;height:100%;display:block}
-.bui-button__spinner{border:2px solid;border-right-color:#0000;border-radius:50%;width:20px;height:20px;margin:0;animation:.6s linear infinite bui-button__baseui-button-spin;position:absolute;top:50%;left:50%;translate:-50% -50%}
+.bui-legacy-button__text:disabled:not([data-loading]),.bui-legacy-button__text[data-disabled]:not([data-loading]),.bui-legacy-button__text[data-loading-disabled]{background-color:#0000}
+.bui-legacy-button__label{align-items:center;gap:var(--baseui-spacing-8);display:inline-flex}
+.bui-legacy-button__label-hidden{opacity:0}
+.bui-legacy-button__icon{flex-shrink:0;justify-content:center;align-items:center;width:20px;height:20px;display:inline-flex}
+.bui-legacy-button__icon svg,.bui-legacy-button__icon img{width:100%;height:100%;display:block}
+.bui-legacy-button__spinner{border:2px solid;border-right-color:#0000;border-radius:50%;width:20px;height:20px;margin:0;animation:.6s linear infinite bui-legacy-button__baseui-button-spin;position:absolute;top:50%;left:50%;translate:-50% -50%}
 @media (prefers-reduced-motion:reduce){
-.bui-button__spinner{animation-duration:1.2s}
+.bui-legacy-button__spinner{animation-duration:1.2s}
 }
-@keyframes bui-button__baseui-button-spin{to{transform:rotate(360deg)}}
+@keyframes bui-legacy-button__baseui-button-spin{to{transform:rotate(360deg)}}
 /* Checkbox */
 /* CheckboxGroup */
 /* Chip */
