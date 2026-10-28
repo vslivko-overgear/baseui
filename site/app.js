@@ -1,5 +1,4 @@
 import { documentControls } from './controls-docs.js';
-import { Checkbox, CheckboxGroup, Radio, RadioGroup } from '../src/components/Checks.js';
 import { createRoot } from 'react-dom/client';
 import { React } from '../src/react.js';
 import manifest from './manifest.js';
@@ -60,9 +59,7 @@ const store = {
 
 /* ------------------------------------------------- component registry (UI) */
 
-// The pages of compiled components that the design system wraps show the wrapper: Checkbox, Radio and their groups get the size and
-// animation settings, the Dialog gets `floating`.
-const CHECK_PAGES = { 'Checkbox.stories': Checkbox, 'CheckboxGroup.stories': CheckboxGroup, 'RadioGroup.stories': RadioGroup, 'Radio.stories': Radio };
+// The page of the Dialog shows the design system wrapper, so it gets `floating`.
 function adoptCompiledStory(file, m) {
   if (file.includes('/Modal.stories-')) {
     const mm = m.default;
@@ -75,17 +72,6 @@ function adoptCompiledStory(file, m) {
     }
     return;
   }
-  const key = Object.keys(CHECK_PAGES).find((k) => file.includes(`/${k}-`));
-  const meta = m.default;
-  if (!key || meta.__checks) return;
-  meta.__checks = true;
-  meta.component = CHECK_PAGES[key];
-  meta.args = { size: 'md', motion: 'theme', ...meta.args };
-  meta.argTypes = {
-    ...meta.argTypes,
-    size: { control: 'inline-radio', options: ['sm', 'md'] },
-    motion: { control: 'inline-radio', options: ['theme', 'off', 'basic', 'enhanced'], mapping: { theme: undefined } },
-  };
 }
 function ModalDemo({ initialOpen = true, ...props }) {
   const [open, setOpen] = useState(initialOpen);
