@@ -59,27 +59,9 @@ const store = {
 
 /* ------------------------------------------------- component registry (UI) */
 
-// The page of the Dialog shows the design system wrapper, so it gets `floating`.
-function adoptCompiledStory(file, m) {
-  if (file.includes('/Modal.stories-')) {
-    const mm = m.default;
-    if (!mm.__floating) {
-      mm.__floating = true; mm.component = Modal;
-      // the stories draw the compiled Modal themselves: draw the design system one instead, so it gets `floating`
-      mm.render = (args) => h(ModalDemo, args);
-      mm.args = { floating: 'theme', ...mm.args };
-      mm.argTypes = { ...mm.argTypes, floating: { control: 'inline-radio', options: ['theme', 'on', 'off'], mapping: { theme: undefined, on: true, off: false } } };
-    }
-    return;
-  }
-}
-function ModalDemo({ initialOpen = true, ...props }) {
-  const [open, setOpen] = useState(initialOpen);
-  return h(Fragment, null, !open && h(Button, { onClick: () => setOpen(true) }, 'Open Modal'), h(Modal, { ...props, open, onOpenChange: setOpen }));
-}
 const modules = new Map();
 const loadModule = (file) => {
-  if (!modules.has(file)) modules.set(file, import(file).then((m) => { adoptCompiledStory(file, m); documentControls(m.default); return m; }));
+  if (!modules.has(file)) modules.set(file, import(file).then((m) => { documentControls(m.default); return m; }));
   return modules.get(file);
 };
 const ui = { Button, TextField, Switch, Chip };

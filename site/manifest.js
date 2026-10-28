@@ -40,7 +40,7 @@ export default [
       { title: 'Button', file: N('Button'), children: [{ title: 'Icon Button', file: N('IconButton') }] },
       { title: 'Card', file: N('Card'), children: [{ title: 'Clickable Card', file: N('ClickableCard') }, { title: 'Selectable Card', file: N('SelectableCard') }] },
       { title: 'Collapsible', file: N('Collapsible'), examples: [{ title: 'Collapsible Group', file: N('CollapsibleGroup') }] },
-      { title: 'Dialog', file: B('Modal.stories-BG7Qmigd'), lead: 'A modal window for focused content. On small screens it becomes a bottom sheet.', children: [{ title: 'Alert Dialog', file: N('AlertDialog') }] },
+      { title: 'Dialog', file: N('Modal'), lead: 'A modal window for focused content. On small screens it becomes a bottom sheet.', children: [{ title: 'Alert Dialog', file: N('AlertDialog') }] },
       { title: 'Divider', file: N('Divider') },
       { title: 'Dropdown', file: N('Dropdown'), lead: 'The list that opens under a Selector or a Typeahead.' },
       {

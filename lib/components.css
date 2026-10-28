@@ -137,39 +137,6 @@
 .bui-icons-page__sr-only{clip:rect(0 0 0 0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}
 /* List */
 /* Modal */
-.bui-modal__backdrop{z-index:var(--baseui-z-index-300);background-color:var(--baseui-Extensions-Background-OverlayDark);position:fixed;inset:0}
-.bui-modal__viewport{z-index:var(--baseui-z-index-300);top:var(--modal-visual-viewport-offset-top,0);box-sizing:border-box;height:100vh;height:var(--modal-visual-viewport-height,100dvh);padding-top:var(--baseui-spacing-16);justify-content:center;align-items:flex-end;display:flex;position:fixed;bottom:auto;left:0;right:0}
-.bui-modal__popup{width:100%;max-width:var(--baseui-layout-dialog-width);max-height:calc(100vh - var(--baseui-spacing-16));max-height:calc(var(--modal-visual-viewport-height,100dvh) - var(--baseui-spacing-16));border-radius:var(--baseui-radius-28) var(--baseui-radius-28) 0 0;background-color:var(--baseui-Background-Primary);min-height:0;box-shadow:var(--baseui-shadow-high);color:var(--baseui-Text-and-Icon-Primary);flex-direction:column;display:flex;overflow:hidden}
-.bui-modal__popup[data-height=viewport]{height:calc(100vh - var(--baseui-spacing-16));height:calc(var(--modal-visual-viewport-height,100dvh) - var(--baseui-spacing-16))}
-.bui-modal__header{box-sizing:border-box;width:100%;padding-block:var(--baseui-spacing-4);background-color:var(--baseui-Background-Primary);flex:none;justify-content:space-between;align-items:flex-start;display:flex}
-.bui-modal__header[data-header=close]{padding-left:var(--baseui-layout-margin-mobile)}
-.bui-modal__header[data-header=title-only]{padding-inline:var(--baseui-layout-margin-mobile)}
-.bui-modal__title-block{min-width:0;padding:var(--baseui-spacing-16) 0 var(--baseui-spacing-8);justify-content:center;gap:var(--baseui-spacing-4);word-break:break-word;flex-direction:column;flex:auto;display:flex}
-.bui-modal__title{font:var(--baseui-Typography-Header-20);color:var(--baseui-Text-and-Icon-Primary);margin:0}
-.bui-modal__subtitle{color:var(--baseui-Text-and-Icon-Secondary);font:var(--baseui-Typography-Text-14-Regular);text-overflow:ellipsis;white-space:nowrap;margin:0;overflow:hidden}
-.bui-modal__header[data-scrolled] .bui-modal__title{text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
-.bui-modal__icon-button{all:unset;box-sizing:border-box;border-radius:var(--baseui-radius-full);width:56px;height:56px;color:var(--baseui-Text-and-Icon-Primary);cursor:pointer;flex:none;justify-content:center;align-items:center;display:inline-flex}
-.bui-modal__icon-button svg,.bui-modal__icon-button img{width:24px;height:24px;display:block}
-@media (hover),(-ms-high-contrast:none),(-ms-high-contrast:active){
-.bui-modal__icon-button:hover:not(:disabled){background-color:var(--baseui-Background-Transparent-Hover)}
-}
-.bui-modal__icon-button:focus-visible{outline:var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color);outline-offset:calc(var(--baseui-focus-outline-width) * -1)}
-.bui-modal__icon-button:disabled{color:var(--baseui-Text-and-Icon-Disabled);cursor:not-allowed}
-.bui-modal__content{box-sizing:border-box;overscroll-behavior:contain;width:100%;min-height:0;padding:0 var(--baseui-layout-margin-mobile) var(--baseui-layout-margin-mobile);background-color:var(--baseui-Background-Primary);color:var(--baseui-Text-and-Icon-Primary);font:var(--baseui-Typography-Text-16-Regular);flex:0 auto;overflow-y:auto}
-.bui-modal__content[data-without-header]{padding-top:var(--baseui-layout-margin-mobile)}
-.bui-modal__popup[data-height=viewport] .bui-modal__content{flex:auto}
-.bui-modal__actions{box-sizing:border-box;width:100%;padding:0 var(--baseui-layout-margin-mobile) var(--baseui-layout-margin-mobile);gap:var(--baseui-spacing-12);background-color:var(--baseui-Background-Primary);flex-direction:column;flex:none;display:flex}
-.bui-modal__action,.bui-modal__action>*{box-sizing:border-box;width:100%}
-.bui-modal__visually-hidden{clip:rect(0 0 0 0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}
-@media (width<=1200px){
-.bui-modal__viewport:after{background-color:var(--baseui-Background-Primary);content:"";pointer-events:none;width:100%;max-width:var(--baseui-layout-dialog-width);height:100vh;position:absolute;top:100%;left:50%;transform:translate(-50%)}
-}
-@media (width>1200px){
-.bui-modal__close-button:hover:not(:disabled){background-color:#0000}
-.bui-modal__viewport{padding:var(--baseui-spacing-16);align-items:center}
-.bui-modal__popup{width:var(--baseui-layout-dialog-width);max-height:min(640px, 100vh - var(--baseui-spacing-32));max-height:min(640px, var(--modal-visual-viewport-height,100dvh) - var(--baseui-spacing-32));border-radius:var(--baseui-radius-28)}
-.bui-modal__popup[data-height=viewport]{height:min(640px, 100vh - var(--baseui-spacing-32));height:min(640px, var(--modal-visual-viewport-height,100dvh) - var(--baseui-spacing-32))}
-}
 /* Radio */
 /* RadioGroup */
 /* Rating */
@@ -247,27 +214,9 @@
 .bui-icons-page__toolbar{position:sticky;top:var(--bar-h,0px);z-index:var(--baseui-z-index-100);padding:var(--baseui-spacing-12) var(--baseui-spacing-24);margin-inline:calc(var(--baseui-spacing-24) * -1);background:var(--baseui-Background-Primary)}
 /* Focus rings are never clipped by a scrolling container: the Modal content keeps a 4px gutter around its edge
    (the extra padding is pulled back with a negative margin, so the layout does not change). */
-.bui-modal__content{padding-top:var(--baseui-spacing-4);margin-top:calc(var(--baseui-spacing-4) * -1);position:relative}
-.bui-modal__content[data-without-header]{margin-top:0}
 /* Dialog close/back: same 56px box and place, a transparent button with a stable hover background on every viewport */
-.bui-modal__icon-button{border-radius:var(--baseui-radius-16);transition:background-color var(--baseui-duration-fast) var(--baseui-ease-standard)}
-@media (hover:hover){
-.bui-modal__icon-button:hover:not(:disabled),.bui-modal__close-button:hover:not(:disabled){background-color:var(--baseui-Background-Transparent-Hover)}
-}
-.bui-modal__icon-button:active:not(:disabled){background-color:var(--baseui-Background-Transparent-Hover)}
 /* 40px box (icon stays 24px); margins keep the icon exactly where it was, so the hover does not touch the sheet edge */
-.bui-modal__icon-button{width:40px;height:40px;margin:var(--baseui-spacing-8);border-radius:var(--baseui-radius-12)}
 /* Desktop dialog: 24px padding on every side (the mobile sheet keeps 16px) */
-@media (width>1200px){
-.bui-modal__header[data-header=close]{padding-left:var(--baseui-layout-margin-desktop)}
-.bui-modal__header[data-header=title-only]{padding-inline:var(--baseui-layout-margin-desktop)}
-.bui-modal__title-block{padding-top:var(--baseui-spacing-20,20px)}
-.bui-modal__content{padding-inline:var(--baseui-layout-margin-desktop);padding-bottom:var(--baseui-layout-margin-desktop)}
-.bui-modal__content[data-without-header]{padding-top:var(--baseui-layout-margin-desktop);margin-top:0}
-.bui-modal__actions{padding:0 var(--baseui-layout-margin-desktop) var(--baseui-layout-margin-desktop)}
-.bui-modal__close-button{margin-right:calc(var(--baseui-layout-margin-desktop) - var(--baseui-spacing-8))}
-.bui-modal__icon-button:first-child:not(.bui-modal__close-button){margin-left:calc(var(--baseui-layout-margin-desktop) - var(--baseui-spacing-8))}
-}
 /* Small fields: Selector and Typeahead put the value exactly where Text Input does (20px line, 8px lift under the label) */
 .bui-field__small .bui-autocomplete__input{height:20px}
 .bui-field__small[data-float=floating][data-control]:not([data-multiple]) .bui-autocomplete__control:focus-within .bui-autocomplete__input,.bui-field__small[data-float=floating][data-control]:not([data-multiple])[data-filled] .bui-autocomplete__input{transform:translateY(8px)}
@@ -278,34 +227,7 @@
 @keyframes baseui-dialog-fade{from{opacity:0}}
 @keyframes baseui-dialog-sheet{from{transform:translateY(100%)}}
 @keyframes baseui-dialog-pop{from{opacity:0;transform:scale(.96)}}
-.bui-modal__backdrop{transition:opacity var(--baseui-duration-medium) var(--baseui-ease-standard)}
-.bui-modal__backdrop[data-open]{animation:baseui-dialog-fade var(--baseui-duration-medium) var(--baseui-ease-standard)}
-.bui-modal__backdrop[data-ending-style]{opacity:0}
-.bui-modal__popup{transition:transform var(--baseui-duration-medium) var(--baseui-ease-standard),opacity var(--baseui-duration-medium) var(--baseui-ease-standard)}
-@media (width<=1200px){
-.bui-modal__popup[data-open]{animation:baseui-dialog-sheet var(--baseui-duration-medium) var(--baseui-ease-emphasized)}
-.bui-modal__popup[data-ending-style]{transform:translateY(100%)}
-.bui-modal__header[data-swipe]{touch-action:none;cursor:grab}
-.bui-modal__header[data-swipe]:active{cursor:grabbing}
-}
-@media (width>1200px){
-.bui-modal__popup[data-open]{animation:baseui-dialog-pop var(--baseui-duration-medium) var(--baseui-ease-emphasized)}
-.bui-modal__popup[data-ending-style]{opacity:0;transform:scale(.96)}
-}
-@media (prefers-reduced-motion:reduce){
-.bui-modal__backdrop[data-open],.bui-modal__popup[data-open]{animation:none}
-}
 /* Mobile sheet: the icon sits on the page margin; the sheet is anchored to the layout viewport so no gap shows below it */
-.bui-modal__close-button{margin-right:calc(var(--baseui-layout-margin-mobile) - var(--baseui-spacing-8))}
-.bui-modal__icon-button:first-child:not(.bui-modal__close-button){margin-left:calc(var(--baseui-layout-margin-mobile) - var(--baseui-spacing-8))}
-.bui-modal__viewport{height:var(--modal-visual-viewport-height,100%)}
-.bui-modal__popup{max-height:calc(var(--modal-visual-viewport-height,100%) - var(--baseui-spacing-16))}
-.bui-modal__popup[data-height=viewport]{height:calc(var(--modal-visual-viewport-height,100%) - var(--baseui-spacing-16))}
-@media (width>1200px){
-.bui-modal__close-button{margin-right:calc(var(--baseui-layout-margin-desktop) - var(--baseui-spacing-8))}
-.bui-modal__popup{width:var(--baseui-layout-dialog-width);max-height:min(640px,calc(var(--modal-visual-viewport-height,100%) - var(--baseui-spacing-32)))}
-.bui-modal__popup[data-height=viewport]{height:min(640px,calc(var(--modal-visual-viewport-height,100%) - var(--baseui-spacing-32)))}
-}
 /* Typeahead clear: the same small transparent-button hover as Text Input actions (32px box around the 24px icon, 28px around 20px in sm) */
 .bui-autocomplete__clear{width:32px;height:32px;flex:0 0 32px;margin-left:calc(var(--baseui-spacing-12) - var(--baseui-spacing-4));margin-right:calc(var(--baseui-spacing-4) * -1);border-radius:var(--baseui-radius-10);transition:background-color var(--baseui-duration-fast) var(--baseui-ease-standard)}
 @media (hover:hover){
@@ -316,9 +238,6 @@
 .bui-field__small .bui-autocomplete__clear svg{width:20px;height:20px}
 /* Standard hover: each control moves to the "-Hover" token paired with its own color token */
 /* Desktop dialog: the close/back hover box sits 16px from the top and 16px from the side (the header keeps its height) */
-@media (width>1200px){
-.bui-modal__icon-button{margin-block:calc(var(--baseui-layout-margin-desktop) - var(--baseui-spacing-4) - var(--baseui-spacing-8)) var(--baseui-spacing-4)}
-}
 /* ---------- Dropdown (specs from the Figma Menu and Menu Item) ---------- */
 .bui-dropdown{box-sizing:border-box;padding:var(--baseui-spacing-4);background-color:var(--baseui-Extensions-Background-Surface);color:var(--baseui-Text-and-Icon-Primary);border-radius:var(--baseui-radius-20);box-shadow:0 4px 28px color-mix(in srgb,var(--baseui-Extensions-Text-and-Icon-AlwaysDark) 12%,transparent);font:var(--baseui-Typography-Text-16-Regular);outline:none}
 .bui-dropdown__list{outline:none;overflow-y:auto;max-height:min(var(--available-height,320px) - 16px,304px)}
@@ -345,12 +264,9 @@
 /* The select-all row is not a list item: while it is hovered, the highlight left on the last item goes away so only one row is lit */
 .bui-dropdown:has(.bui-dropdown__select-all:hover) .bui-dropdown__item[data-highlighted]:not(.bui-dropdown__select-all),.bui-dropdown:has(.bui-dropdown__select-all:hover) .bui-dropdown__item:not(.bui-dropdown__select-all):hover{background-color:transparent}
 /* Dialog: the close and back icons are as bold as the Header-20 title */
-.bui-modal__close-button svg path, .bui-modal__icon-button svg path { stroke-width: 2.5; }
 /* List: text, titles and dividers line up with the content edge of the container; hover and the active row reach 12px beyond it. */
 /* List Item: the control slot sizes its own svg to 24px; the Checkbox check mark stays 16px as in the Checkbox itself */
 /* Dialog: the buttons keep 16px of air above them, also when the content scrolls under them */
-.bui-modal__actions { padding-top: var(--baseui-spacing-16); }
-.bui-modal__content:has(+ .bui-modal__actions) { padding-bottom: var(--baseui-spacing-8); }
 /* Switch: the thumb is always white when off; when on it is white in the light theme and black in the dark one */
 /* Switch: the thumb is an oval 2px from the edges in both states (sides, top and bottom): tracks 44x20, 52x24, 60x28, thumbs 24x16, 28x20, 32x24 */
 /* Checkbox and Radio: a checked control keeps its border on hover */
