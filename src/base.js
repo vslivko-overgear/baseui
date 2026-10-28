@@ -11,16 +11,11 @@ export { OtpRoot, OtpCell };
 
 const component = async (file) => (await import(`../lib/${file}`)).default.component;
 
-export const [Button, TextField, Chip, Select, CompiledModal, BaseList, BaseListItem, ChipGroup, BaseRating] = await Promise.all([
+export const [Button, TextField, Select, CompiledModal] = await Promise.all([
   component('Button.stories-BIZ8i_Er.js'),
   component('TextField.stories-JboKGoC9.js'),
-  component('Chip.stories-BFj78RSq.js'),
   component('Select.stories-vOU6jfFc.js'),
   component('Modal.stories-BG7Qmigd.js'),
-  component('List.stories-Alo3K1f2.js'),
-  component('ListItem.stories-Dq00OmrP.js'),
-  component('ChipGroup.stories-DmXtmuTG.js'),
-  component('Rating.stories-B5Vm-Sbj.js'),
 ]);
 
 /**
@@ -36,4 +31,6 @@ describeWrapper(Modal, CompiledModal, {
 });
 
 export { Switch } from './components/Switch.js';
+export { Chip } from './components/Chip.js';
+export { ChipGroup } from './components/ChipGroup.js';
 export { Checkbox, CheckboxGroup, Radio, RadioGroup } from './components/Checks.js';

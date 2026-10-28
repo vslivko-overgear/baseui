@@ -80,7 +80,7 @@ export default [
       { title: 'Table', file: N('Table') },
       { title: 'Tabs', file: N('Tabs') },
       { title: 'Toast', file: N('Toast') },
-      { title: 'Token', file: B('Chip.stories-BFj78RSq'), lead: 'A small chip that can be selected or removed.', children: [{ title: 'Token Group', file: B('ChipGroup.stories-DmXtmuTG'), lead: 'A group of tokens with single or multiple selection.' }] },
+      { title: 'Token', file: N('Chip'), lead: 'A small chip that can be selected or removed.', children: [{ title: 'Token Group', file: N('ChipGroup'), lead: 'A group of tokens with single or multiple selection.' }] },
       { title: 'Tooltip', file: N('Tooltip') },
     ],
   },
