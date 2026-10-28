@@ -58,7 +58,7 @@ function onColor(css) {
   const [r, g, b] = getComputedStyle(probe).color.match(/[\d.]+/g).map(Number);
   probe.remove();
   const lin = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
-  return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b) > 0.4 ? '#050622' : '#ffffff';
+  return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b) > 0.4 ? '#0c0d17' : '#ffffff';
 }
 
 export function applyTheme(t) {
