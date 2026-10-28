@@ -11,8 +11,7 @@ export { OtpRoot, OtpCell };
 
 const component = async (file) => (await import(`../lib/${file}`)).default.component;
 
-export const [TextField, Select, CompiledModal] = await Promise.all([
-  component('TextField.stories-JboKGoC9.js'),
+export const [Select, CompiledModal] = await Promise.all([
   component('Select.stories-vOU6jfFc.js'),
   component('Modal.stories-BG7Qmigd.js'),
 ]);
@@ -30,6 +29,7 @@ describeWrapper(Modal, CompiledModal, {
 });
 
 export { Button } from './components/Button.js';
+export { TextField } from './components/TextField.js';
 export { Switch } from './components/Switch.js';
 export { Chip } from './components/Chip.js';
 export { ChipGroup } from './components/ChipGroup.js';

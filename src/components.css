@@ -1337,6 +1337,395 @@
 /* the panel follows the size of its tabs: closer to small ones */
 .bui-tabs:has(> .bui-tablist-wrap--sm) > .bui-tabpanel { padding-top: var(--baseui-spacing-8); }
 
+/* ---------- Text Input, Selector and Typeahead: the field shell and the input ---------- */
+.bui-field {
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  display: flex;
+}
+.bui-field__medium {
+  --fs-height: 56px;
+  --fs-float-top: 4px;
+  --fs-float-pad: 18px;
+}
+.bui-field__small {
+  --fs-height: 48px;
+  --fs-float-top: 3px;
+  --fs-float-pad: 14px;
+}
+.bui-field__cell {
+  box-sizing: border-box;
+  height: var(--fs-height);
+  border-radius: var(--baseui-radius-16);
+  cursor: text;
+  border: 2px solid #0000;
+  align-items: center;
+  padding-inline: 14px;
+  transition:
+    border-color var(--baseui-duration-fast) var(--baseui-ease-standard),
+    background-color var(--baseui-duration-fast) var(--baseui-ease-standard);
+  display: flex;
+  position: relative;
+}
+.bui-field:not([data-control="select"]) .bui-field__cell:has(:is(input, textarea):focus),
+[data-control="select"] .bui-field__cell:has([data-popup-open]),
+[data-control="select"] .bui-field__cell:has(:focus-visible) {
+  outline: var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color);
+  outline-offset: 0;
+}
+.bui-field__filled .bui-field__cell {
+  background-color: var(--baseui-Background-Secondary);
+}
+.bui-field__multiline .bui-field__cell,
+[data-control="autocomplete"][data-multiple] .bui-field__cell {
+  height: auto;
+  min-height: var(--fs-height);
+  align-items: stretch;
+}
+[data-control="autocomplete"][data-multiple] .bui-field__inner {
+  align-items: center;
+  height: auto;
+}
+.bui-field[data-status="error"] .bui-field__cell {
+  box-shadow: 0 0 0 2px var(--baseui-Extensions-Border-Error);
+}
+.bui-field[data-status="success"] .bui-field__cell {
+  box-shadow: 0 0 0 2px var(--baseui-Extensions-Border-Success);
+}
+.bui-field[data-status="warning"] .bui-field__cell {
+  box-shadow: 0 0 0 2px var(--baseui-Extensions-Border-Warning);
+}
+.bui-field__icon {
+  margin-right: var(--baseui-spacing-12);
+  color: var(--baseui-Text-and-Icon-Primary);
+  flex-shrink: 0;
+  align-items: center;
+  display: flex;
+}
+.bui-field__multiline .bui-field__icon {
+  padding-top: calc((var(--fs-height) - 24px) / 2 - 2px);
+  align-self: flex-start;
+}
+.bui-field__inner {
+  box-sizing: border-box;
+  align-items: center;
+  gap: var(--baseui-spacing-4);
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  position: relative;
+}
+[data-float="floating"][data-control="text"] .bui-field__inner {
+  padding-top: var(--fs-float-pad);
+}
+.bui-field__multiline .bui-field__inner {
+  height: auto;
+  padding-block: calc(var(--fs-float-top) + 12px);
+  align-items: flex-start;
+}
+.bui-field__multiline[data-float="floating"] .bui-field__inner {
+  padding-top: calc(var(--fs-float-top) + 22px);
+  padding-bottom: calc(var(--fs-float-top) + 2px);
+}
+.bui-field__label {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: var(--baseui-Typography-Text-16-Regular);
+  color: var(--baseui-Text-and-Icon-Secondary);
+  pointer-events: none;
+  transition:
+    top var(--baseui-duration-fast) var(--baseui-ease-standard),
+    translate var(--baseui-duration-fast) var(--baseui-ease-standard),
+    font-size var(--baseui-duration-fast) var(--baseui-ease-standard),
+    line-height var(--baseui-duration-fast) var(--baseui-ease-standard),
+    opacity var(--baseui-duration-fast) var(--baseui-ease-standard);
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  translate: 0 -50%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .bui-field__label {
+    transition: none;
+  }
+}
+.bui-field__multiline .bui-field__label {
+  top: calc(var(--fs-float-top) + 12px);
+  translate: 0;
+}
+[data-float="floating"][data-filled] .bui-field__label,
+[data-float="floating"]:not([data-control="select"]) .bui-field__cell:focus-within .bui-field__label {
+  top: var(--fs-float-top);
+  font: var(--baseui-Typography-Text-14-Regular);
+  translate: 0;
+}
+[data-float="placeholder"] .bui-field__label {
+  transition: none;
+}
+[data-float="placeholder"][data-filled] .bui-field__label {
+  opacity: 0;
+}
+[data-control="select"] .bui-field__label {
+  top: var(--fs-float-top);
+  font: var(--baseui-Typography-Text-14-Regular);
+  translate: 0;
+}
+[data-control="select"]:not([data-filled]) .bui-field__label,
+[data-control="select"][data-float="placeholder"] .bui-field__label {
+  visibility: hidden;
+}
+.bui-field__action {
+  margin-left: var(--baseui-spacing-12);
+  color: var(--baseui-Text-and-Icon-Primary);
+  flex-shrink: 0;
+  align-items: center;
+  display: flex;
+}
+.bui-field__multiline .bui-field__action {
+  padding-top: calc((var(--fs-height) - 24px) / 2 - 2px);
+  align-self: flex-start;
+}
+.bui-field__caption {
+  font: var(--baseui-Typography-Text-14-Regular);
+  color: var(--baseui-Text-and-Icon-Secondary);
+  margin: 0;
+}
+.bui-field[data-status="error"] .bui-field__caption {
+  color: var(--baseui-Extensions-Text-and-Icon-Error);
+}
+.bui-field[data-status="warning"] .bui-field__caption {
+  color: var(--baseui-Extensions-Text-and-Icon-Warning);
+}
+.bui-field[data-status="success"] .bui-field__caption {
+  color: var(--baseui-Extensions-Text-and-Icon-Success);
+}
+.bui-field__disabled .bui-field__cell {
+  cursor: not-allowed;
+}
+.bui-field__disabled.bui-field__filled .bui-field__cell {
+  background-color: var(--baseui-Background-Disabled);
+}
+.bui-field__disabled .bui-field__label,
+.bui-field__disabled .bui-field__icon,
+.bui-field__disabled .bui-field__action {
+  color: var(--baseui-Text-and-Icon-Disabled);
+}
+.bui-field.bui-field__loading .bui-field__cell {
+  pointer-events: none;
+  cursor: default;
+  box-shadow: none;
+}
+.bui-field.bui-field__loading .bui-field__cell > * {
+  visibility: hidden;
+}
+.bui-input {
+  appearance: none;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  font: var(--baseui-Typography-Text-16-Regular);
+  color: var(--baseui-Text-and-Icon-Primary);
+  background: 0 0;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+}
+.bui-input::placeholder {
+  color: var(--baseui-Text-and-Icon-Secondary);
+  opacity: 1;
+}
+.bui-input:disabled {
+  color: var(--baseui-Text-and-Icon-Disabled);
+  -webkit-text-fill-color: var(--baseui-Text-and-Icon-Disabled);
+  cursor: not-allowed;
+}
+textarea.bui-input {
+  resize: none;
+  field-sizing: content;
+  min-height: calc(var(--tf-min-rows, 1) * 22px);
+  max-height: calc(var(--tf-max-rows, 9999) * 22px);
+  line-height: 22px;
+  display: block;
+  overflow-y: auto;
+}
+[data-float="floating"] .bui-input::placeholder {
+  color: #0000;
+}
+[data-float="floating"][data-focused] .bui-input::placeholder {
+  color: var(--baseui-Text-and-Icon-Secondary);
+}
+@supports (field-sizing: content) {
+  .bui-input__has-suffix .bui-input:not(textarea) {
+    field-sizing: content;
+    flex: 0 auto;
+    width: auto;
+    min-width: 1ch;
+    max-width: 100%;
+  }
+}
+.bui-input__affix {
+  white-space: nowrap;
+  visibility: hidden;
+  font: var(--baseui-Typography-Text-16-Regular);
+  color: var(--baseui-Text-and-Icon-Secondary);
+  flex-shrink: 0;
+}
+[data-focused] .bui-input__affix,
+[data-filled] .bui-input__affix {
+  visibility: visible;
+}
+[data-float="placeholder"]:not([data-filled]) .bui-input__affix {
+  visibility: hidden;
+}
+[data-disabled] .bui-input__affix {
+  color: var(--baseui-Text-and-Icon-Disabled);
+}
+.bui-input__icon-button {
+  all: unset;
+  box-sizing: border-box;
+  border-radius: var(--baseui-radius-8);
+  cursor: pointer;
+  color: inherit;
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+}
+.bui-input__icon-button:focus-visible {
+  outline: var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color);
+  outline-offset: var(--baseui-focus-outline-offset);
+}
+.bui-input__icon-button svg {
+  display: block;
+}
+.bui-input__clear-btn {
+  visibility: hidden;
+}
+[data-filled] .bui-input__clear-btn {
+  visibility: visible;
+}
+.bui-input__revealable {
+  visibility: hidden;
+}
+[data-focused] .bui-input__revealable,
+[data-filled] .bui-input__revealable {
+  visibility: visible;
+}
+.bui-field__small .bui-field__label {
+  font: var(--baseui-Typography-Text-14-Regular);
+}
+.bui-field__small[data-float="floating"][data-filled] .bui-field__label,
+.bui-field__small[data-float="floating"]:not([data-control="select"]) .bui-field__cell:focus-within .bui-field__label,
+.bui-field__small[data-control="select"] .bui-field__label {
+  font: var(--baseui-Typography-Text-12-Regular);
+}
+.bui-field__small[data-float="floating"][data-control="text"] .bui-field__inner {
+  padding-top: var(--fs-float-pad);
+}
+.bui-field__small .bui-field__icon svg,
+.bui-field__small .bui-field__action svg,
+.bui-field__small .bui-input__icon-button svg {
+  width: 20px;
+  height: 20px;
+}
+.bui-field__small .bui-field__icon {
+  margin-right: var(--baseui-spacing-8);
+}
+.bui-field__small[data-float="floating"][data-filled] .bui-field__label:not([data-x]),
+.bui-field__small[data-float="floating"]:not([data-control="select"]) .bui-field__cell:focus-within .bui-field__label,
+.bui-field__small[data-float="floating"][data-control="select"] .bui-field__label {
+  top: var(--fs-float-top);
+}
+.bui-field {
+  --tf-line: 22px;
+  --tf-pt: 25px;
+  --tf-pb: 5px;
+}
+.bui-field__small {
+  --tf-line: 20px;
+  --tf-pt: 20px;
+  --tf-pb: 4px;
+}
+.bui-field__multiline .bui-field__inner {
+  padding-block: calc((var(--fs-height) - var(--tf-line)) / 2 - 2px);
+}
+.bui-field__multiline[data-float="floating"][data-control="text"] .bui-field__inner {
+  padding-top: var(--tf-pt);
+  padding-bottom: var(--tf-pb);
+}
+.bui-field__multiline .bui-field__label {
+  top: calc((var(--fs-height) - var(--tf-line)) / 2 - 2px);
+}
+.bui-field__multiline textarea.bui-input {
+  line-height: var(--tf-line);
+  min-height: calc(var(--tf-min-rows, 1) * var(--tf-line));
+  max-height: calc(var(--tf-max-rows, 9999) * var(--tf-line));
+}
+.bui-field.bui-field__loading .bui-field__cell * {
+  visibility: hidden;
+}
+.bui-field.bui-field__loading .bui-field__cell {
+  background-image: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--baseui-Background-Tertiary) 70%, transparent) 50%, transparent 100%);
+  background-size: 200% 100%;
+  background-origin: border-box;
+  background-clip: border-box;
+  animation: bui-shimmer-x 2.4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .bui-field.bui-field__loading .bui-field__cell {
+    animation: none;
+  }
+}
+.bui-field-action {
+  all: unset;
+}
+.bui-input__icon-button,
+.bui-field-action {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: inherit;
+  padding: 4px;
+  margin: -4px;
+  border-radius: var(--baseui-radius-10);
+  transition: background-color var(--baseui-duration-fast) var(--baseui-ease-standard);
+}
+.bui-field-action svg {
+  display: block;
+}
+.bui-field-action:focus-visible {
+  outline: var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color);
+  outline-offset: var(--baseui-focus-outline-offset);
+}
+@media (hover) {
+  .bui-input__icon-button:hover,
+  .bui-field-action:hover {
+    background-color: var(--baseui-Background-Transparent-Hover);
+  }
+}
+.bui-field-action--text {
+  padding: 4px 8px;
+  margin: -4px -8px -4px 0;
+  font: var(--baseui-Typography-Text-14-Semi-Bold);
+}
+@media (hover: hover) {
+  .bui-field__filled:not(.bui-field__disabled):not(.bui-field__loading) .bui-field__cell:hover:not(:focus-within):not(:has([data-popup-open])) {
+    background-color: var(--baseui-Background-Secondary-Hover);
+  }
+  .bui-field:not(.bui-field__filled):not(.bui-field__disabled):not(.bui-field__loading) .bui-field__cell:hover:not(:focus-within):not(:has([data-popup-open])) {
+    background-color: var(--baseui-Background-Primary-Hover);
+  }
+}
+
+
 /* ---------- Toast ---------- */
 .bui-toast-region {
   position: fixed; z-index: var(--baseui-z-index-400); display: flex; flex-direction: column;

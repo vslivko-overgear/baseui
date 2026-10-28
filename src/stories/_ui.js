@@ -4,7 +4,7 @@ export { TextField, Switch, Chip } from '../base.js';
 export { Checkbox } from '../components/Checks.js';
 
 const icons = await import('../../lib/line-HpXc8B8J.js');
-export const { Home01, User01, Share01, DotsHorizontal, Heart, Settings02, SearchLg, Star01, Plus, Bell01, Menu01, Grid01, Map01, Table } = icons;
+export const { Home01, User01, Share01, DotsHorizontal, Heart, InfoCircle, Settings02, SearchLg, Star01, Plus, Bell01, Menu01, Grid01, Map01, Table } = icons;
 
 // Filled icons (the solid set), used where an example shows icons next to bold text.
 const solid = await import('../../lib/solid-BKvSM0yD.js');

@@ -55,7 +55,7 @@ export default [
         { title: 'Selector', file: B('Select.stories-vOU6jfFc'), lead: 'A field, or any element, that opens a list of options.', examples: [{ title: 'Selector Trigger', file: N('SelectTrigger') }] },
         { title: 'Slider', file: N('Slider') },
         { title: 'Switch', file: N('Switch'), lead: 'A control that turns a setting on or off immediately.' },
-        { title: 'Text Input', file: B('TextField.stories-JboKGoC9'), lead: 'A single-line or multi-line text field with a floating label.' },
+        { title: 'Text Input', file: N('TextField'), lead: 'A single-line or multi-line text field with a floating label.' },
         { title: 'Typeahead', file: B('Autocomplete.stories-CLnOUoA7'), lead: 'A text field that suggests options as you type.' },
         ],
       },
