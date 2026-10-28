@@ -5,6 +5,7 @@
 // `examples` are the stories of minor subcomponents shown as examples on the page.
 const F = (name) => `../src/foundations/${name}.stories.js`;
 const N = (name) => `../src/stories/${name}.stories.js`;
+const O = (name) => `../src/overgear/stories/${name}.stories.js`;
 const B = (file) => `../lib/${file}.js`;
 
 
@@ -82,6 +83,30 @@ export default [
       { title: 'Toast', file: N('Toast') },
       { title: 'Token', file: N('Chip'), lead: 'A small chip that can be selected or removed.', children: [{ title: 'Token Group', file: N('ChipGroup'), lead: 'A group of tokens with single or multiple selection.' }] },
       { title: 'Tooltip', file: N('Tooltip') },
+    ],
+  },
+  {
+    section: 'Overgear',
+    items: [
+      {
+        group: 'Molecules',
+        items: [
+          { title: 'Countdown Timer', file: O('CountdownTimer'), lead: 'A countdown to the end of an offer.' },
+          { title: 'Footer Menu List', file: O('FooterMenuList'), lead: 'A titled column of footer links.' },
+          { title: 'Hint', file: O('Hint'), lead: 'A hint that opens on hover or focus, and as a bottom sheet on small screens.' },
+          { title: 'Hover Card', file: O('HoverCard'), lead: 'A card that opens when the pointer rests on its trigger.' },
+          { title: 'Multi Range Slider', file: O('MultiRangeSlider'), lead: 'A slider with two thumbs for choosing a range.' },
+          { title: 'Multiselect', file: O('Multiselect'), lead: 'A field that opens a searchable list and keeps several chosen options as tokens.' },
+          { title: 'Next Raid Badge', file: O('NextRaidBadge'), lead: 'The time of the next raid.' },
+          { title: 'Offer Card', file: O('OfferCard'), lead: 'An offer of a seller: attributes, price and a purchase action.' },
+          { title: 'Orders Limits Bar', file: O('OrdersLimitsBar'), lead: 'How many orders a seller takes, with a view toggle.' },
+          { title: 'Payment Methods', file: O('PaymentMethods'), lead: 'A row of accepted payment methods.' },
+          { title: 'Product Badge', file: O('ProductBadge'), lead: 'A badge on a product: hot, sale, sold out, with an optional timer.' },
+          { title: 'Purchase Widget Timer', file: O('PurchaseWidgetTimer'), lead: 'The time left to buy an item at the offered price.' },
+          { title: 'Social Button', file: O('SocialButton'), lead: 'A round button that opens a social network.' },
+          { title: 'Step Progress Bar', file: O('StepProgressBar'), lead: 'Progress through the steps of a flow.' },
+        ],
+      },
     ],
   },
   {
