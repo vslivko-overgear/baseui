@@ -107,6 +107,19 @@ export default [
           { title: 'Step Progress Bar', file: O('StepProgressBar'), lead: 'Progress through the steps of a flow.' },
         ],
       },
+      {
+        group: 'Organisms',
+        items: [
+          { title: 'Calendar Event Date', file: O('CalendarEventDate'), lead: 'Dates of an event as a segmented choice, with a dropdown for more.' },
+          { title: 'Cart Product Card', file: O('CartProductCard'), lead: 'A line of the cart: product, quantity, price, notes and removal; with a failed state.' },
+          { title: 'Footer', file: O('Footer'), lead: 'The site footer: link columns, games, social buttons, payment methods and legal text.' },
+          { title: 'Header', file: O('Header'), lead: 'The site header on desktop and mobile, with logged-out and logged-in states.' },
+          { title: 'Offer Selling Points', file: O('OfferSellingPoints'), lead: 'Pills with the selling points of an offer; each opens its explanation.' },
+          { title: 'Product Card', file: O('ProductCard'), lead: 'A product tile: picture, badges, title, price and the next raid.' },
+          { title: 'Purchase Bottom Block', file: O('PurchaseBottomBlock'), lead: 'The bottom block of a product page: price, delivery time, cashback and the buy button.' },
+          { title: 'Warning Banner', file: O('WarningBanner'), lead: 'A full-width notice with an optional action.' },
+        ],
+      },
     ],
   },
   {
