@@ -75,15 +75,6 @@ function adoptCompiledStory(file, m) {
     }
     return;
   }
-  if (file.includes('/Switch.stories-')) {
-    const sm = m.default;
-    if (!sm.__shape) {
-      sm.__shape = true; sm.component = Switch;
-      sm.args = { shape: 'theme', ...sm.args };
-      sm.argTypes = { ...sm.argTypes, shape: { control: 'inline-radio', options: ['theme', 'rounded', 'circle'], mapping: { theme: undefined }, description: 'Shape of the track and the thumb; by default the Shape setting of the theme' } };
-    }
-    return;
-  }
   const key = Object.keys(CHECK_PAGES).find((k) => file.includes(`/${k}-`));
   const meta = m.default;
   if (!key || meta.__checks) return;

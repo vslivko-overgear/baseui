@@ -11,12 +11,11 @@ export { OtpRoot, OtpCell };
 
 const component = async (file) => (await import(`../lib/${file}`)).default.component;
 
-export const [Button, TextField, Checkbox, CheckboxGroup, CompiledSwitch, Chip, Select, CompiledModal, Radio, RadioGroup, BaseList, BaseListItem, ChipGroup, BaseRating] = await Promise.all([
+export const [Button, TextField, Checkbox, CheckboxGroup, Chip, Select, CompiledModal, Radio, RadioGroup, BaseList, BaseListItem, ChipGroup, BaseRating] = await Promise.all([
   component('Button.stories-BIZ8i_Er.js'),
   component('TextField.stories-JboKGoC9.js'),
   component('Checkbox.stories-CjVZ5VOE.js'),
   component('CheckboxGroup.stories-DyCBCBrP.js'),
-  component('Switch.stories-UfYPEzH7.js'),
   component('Chip.stories-BFj78RSq.js'),
   component('Select.stories-vOU6jfFc.js'),
   component('Modal.stories-BG7Qmigd.js'),
@@ -40,14 +39,4 @@ describeWrapper(Modal, CompiledModal, {
   floating: ['boolean', 'theme', 'A floating sheet on small screens: margins at the bottom and the sides, rounded on every side; by default it follows the Floating setting of the theme. On a wide screen the dialog already floats in the middle'],
 });
 
-/**
- * The switch of the design system: the compiled Switch with a `shape`.
- * The theme shape (data-shape on <html> or any container) and the local `shape` prop (a class, like the other components) are read by the CSS.
- */
-export function Switch({ shape, className, ...rest }) {
-  return h(CompiledSwitch, { className: cx(shape && `bui-shape-${shape}`, className), ...rest });
-}
-Switch.displayName = 'Switch';
-describeWrapper(Switch, CompiledSwitch, {
-  shape: ["'rounded' | 'circle'", 'theme', 'rounded gives the track and the thumb a radius that follows the size; circle makes them pills. By default the Shape setting of the theme'],
-});
+export { Switch } from './components/Switch.js';

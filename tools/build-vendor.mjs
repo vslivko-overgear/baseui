@@ -43,9 +43,18 @@ await writeFile(join(out, 'react-jsx-runtime.js'), proxy('J', 'react/jsx-runtime
 // ---- Base UI: the parts the design system uses, bundled with React left out (it comes from the import map) ----
 const baseUi = JSON.parse(await readFile(join(root, 'node_modules/@base-ui/react/package.json'), 'utf8'));
 const parts = Object.keys(baseUi.exports).filter((k) => /^\.\/[a-z-]+$/.test(k)).map((k) => k.slice(2));
+// a CommonJS dependency of Base UI that calls require('react') must get the same react as the ES imports: through a tiny virtual module
+const keepReactOut = {
+  name: 'react-from-the-page',
+  setup(b) {
+    b.onResolve({ filter: /^(react|react-dom|react\/jsx-runtime|react-dom\/client)$/ }, (a) => (a.kind === 'require-call' ? { path: a.path, namespace: 'react-require' } : { path: a.path, external: true }));
+    b.onLoad({ filter: /.*/, namespace: 'react-require' }, (a) => ({ contents: `import * as R from '${a.path}'; module.exports = R;`, loader: 'js' }));
+  },
+};
 await build({
+  plugins: [keepReactOut],
   stdin: { contents: parts.map((p) => `export * as ${p.replace(/-([a-z])/g, (_, c) => c.toUpperCase())} from '@base-ui/react/${p}';`).join('\n'), resolveDir: root, loader: 'js' },
-  bundle: true, format: 'esm', minify: true, target: 'es2022', external: ['react', 'react-dom', 'react/jsx-runtime', 'react-dom/client'],
+  bundle: true, format: 'esm', minify: true, target: 'es2022',
   define: { 'process.env.NODE_ENV': '"production"' }, outfile: join(out, 'base-ui.js'), legalComments: 'none',
 });
 // one small module per Base UI part, named like the package export: @base-ui/react/switch → vendor/base-ui/switch.js
