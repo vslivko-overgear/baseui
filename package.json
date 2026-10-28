@@ -1,14 +1,66 @@
 {
   "name": "baseui-kit",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A design system on Base UI: tokens, components and a documentation site built from them.",
-  "private": true,
   "type": "module",
   "license": "UNLICENSED",
   "devDependencies": {
-    "@base-ui/react": "^1.9.0",
+    "@types/react": "^19.3.0",
     "esbuild": "^0.28.2",
     "react": "^19.3.1",
-    "react-dom": "^19.3.1"
+    "react-dom": "^19.3.1",
+    "typescript": "^5.9.3"
+  },
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "types": "./types/index.d.ts",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "bin": {
+    "baseui": "./bin/baseui.mjs"
+  },
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./components/*": "./src/components/*.js",
+    "./icons/line": "./lib/line-HpXc8B8J.js",
+    "./icons/solid": "./lib/solid-BKvSM0yD.js",
+    "./tokens.css": "./tokens.css",
+    "./components.css": "./src/components.css",
+    "./styles.css": "./styles.css",
+    "./registry.json": "./registry.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "bin",
+    "src",
+    "!src/stories",
+    "!src/foundations",
+    "!src/theming/*.stories.js",
+    "!src/tools",
+    "lib",
+    "types",
+    "fonts",
+    "tokens.css",
+    "styles.css",
+    "registry.json",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "dependencies": {
+    "@base-ui/react": "^1.9.0"
+  },
+  "scripts": {
+    "vendor": "node tools/build-vendor.mjs",
+    "registry": "node tools/build-registry.mjs",
+    "types": "node tools/build-types.mjs",
+    "build": "npm run registry && npm run types"
   }
 }

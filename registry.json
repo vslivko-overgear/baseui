@@ -26,7 +26,36 @@
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "autocomplete",
+      "type": "registry:component",
+      "title": "Autocomplete",
+      "description": "A text field that suggests options as you type: the Base UI Combobox in the shared field shell. The typed text and the selected value are separate states. Up to 1200px the list is a bottom sheet with a search.",
+      "exports": [
+        "Autocomplete"
+      ],
+      "files": [
+        {
+          "path": "src/components/Autocomplete.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [
+        "field-shell",
+        "choice-sheet",
+        "select"
+      ],
+      "sharedFiles": [
+        "src/react.js",
+        "src/icons.js",
+        "src/theme-flags.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
         "src/components.css"
       ]
     },
@@ -57,7 +86,6 @@
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
         "src/components.css"
       ]
     },
@@ -82,7 +110,6 @@
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
         "src/components.css"
       ]
     },
@@ -108,7 +135,6 @@
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
         "src/components.css"
       ]
     },
@@ -134,7 +160,6 @@
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
         "src/components.css"
       ]
     },
@@ -159,12 +184,10 @@
       ],
       "sharedFiles": [
         "src/react.js",
-        "src/base.js",
         "src/doc.js"
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
         "src/components.css"
       ]
     },
@@ -196,7 +219,6 @@
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
         "src/components.css"
       ]
     },
@@ -223,36 +245,162 @@
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
         "src/components.css"
       ]
     },
     {
-      "name": "checks",
+      "name": "checkbox",
       "type": "registry:component",
       "title": "Checkbox",
-      "description": "",
+      "description": "A box that turns one option on or off, with an optional label. The error is text under the box: it has no outline.",
       "exports": [
-        "Checkbox",
-        "CheckboxGroup",
-        "Radio",
-        "RadioGroup"
+        "SIZE_DOC",
+        "MOTION_DOC",
+        "Checkbox"
       ],
       "files": [
         {
-          "path": "src/components/Checks.js",
+          "path": "src/components/Checkbox.js",
           "type": "registry:component"
         }
       ],
       "registryDependencies": [],
       "sharedFiles": [
         "src/react.js",
-        "src/doc.js",
-        "src/base.js"
+        "src/icons.js",
+        "src/doc.js"
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "checkbox-group",
+      "type": "registry:component",
+      "title": "CheckboxGroup",
+      "description": "A group of checkboxes: the value is an array of the checked `value`s. The error is a message under the group; the boxes do not turn red.",
+      "exports": [
+        "CheckboxGroup"
+      ],
+      "files": [
+        {
+          "path": "src/components/CheckboxGroup.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [
+        "checkbox"
+      ],
+      "sharedFiles": [
+        "src/react.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "checks",
+      "type": "registry:component",
+      "title": "Checks",
+      "description": "",
+      "exports": [],
+      "files": [
+        {
+          "path": "src/components/Checks.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [
+        "checkbox",
+        "checkbox-group",
+        "radio",
+        "radio-group"
+      ],
+      "sharedFiles": [],
+      "css": [
+        "tokens.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "chip",
+      "type": "registry:component",
+      "title": "Chip",
+      "description": "A chip for selection or indication: a Base UI Toggle with a size, a status and slots. With `action` it is a button, removable or plain.",
+      "exports": [
+        "Chip"
+      ],
+      "files": [
+        {
+          "path": "src/components/Chip.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/icons.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "chip-group",
+      "type": "registry:component",
+      "title": "ChipGroup",
+      "description": "A group of chips: a title, a wrapping container and a caption or an error. With `options` a managed set (the value is an array of the selected values), with `children` a free layout.",
+      "exports": [
+        "ChipGroup"
+      ],
+      "files": [
+        {
+          "path": "src/components/ChipGroup.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [
+        "chip"
+      ],
+      "sharedFiles": [
+        "src/react.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "choice-sheet",
+      "type": "registry:component",
+      "title": "ChoiceSheet",
+      "description": "",
+      "exports": [
+        "ChoiceSheet"
+      ],
+      "files": [
+        {
+          "path": "src/components/ChoiceSheet.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [
+        "modal",
+        "text-field",
+        "button"
+      ],
+      "sharedFiles": [
+        "src/react.js",
+        "src/icons.js"
+      ],
+      "css": [
+        "tokens.css",
         "src/components.css"
       ]
     },
@@ -279,7 +427,6 @@
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
         "src/components.css"
       ]
     },
@@ -304,7 +451,6 @@
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
         "src/components.css"
       ]
     },
@@ -329,12 +475,33 @@
         "src/react.js",
         "src/doc.js",
         "src/theme-flags.js",
-        "src/floating.js",
-        "src/../lib/Dropdown.js"
+        "src/floating.js"
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "field-shell",
+      "type": "registry:component",
+      "title": "FieldShell",
+      "description": "",
+      "exports": [
+        "FieldShell"
+      ],
+      "files": [
+        {
+          "path": "src/components/FieldShell.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js"
+      ],
+      "css": [
+        "tokens.css",
         "src/components.css"
       ]
     },
@@ -357,11 +524,12 @@
       "sharedFiles": [
         "src/react.js",
         "src/doc.js",
+        "src/../lib/line-HpXc8B8J.js",
+        "src/../lib/solid-BKvSM0yD.js",
         "src/icon-weight.js"
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
         "src/components.css"
       ]
     },
@@ -391,7 +559,6 @@
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
         "src/components.css"
       ]
     },
@@ -416,7 +583,6 @@
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
         "src/components.css"
       ]
     },
@@ -438,12 +604,11 @@
       "registryDependencies": [],
       "sharedFiles": [
         "src/react.js",
-        "src/base.js",
+        "src/icons.js",
         "src/doc.js"
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
         "src/components.css"
       ]
     },
@@ -475,7 +640,33 @@
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "modal",
+      "type": "registry:component",
+      "title": "Modal",
+      "description": "The dialog: a centered window on a wide screen and a bottom sheet on small ones, built on the Base UI Dialog. The sheet can be dragged down by its header to close.",
+      "exports": [
+        "MODAL_HEADER",
+        "Modal"
+      ],
+      "files": [
+        {
+          "path": "src/components/Modal.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/icons.js",
+        "src/theme-flags.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
         "src/components.css"
       ]
     },
@@ -501,7 +692,6 @@
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
         "src/components.css"
       ]
     },
@@ -522,14 +712,12 @@
       "registryDependencies": [],
       "sharedFiles": [
         "src/react.js",
-        "src/base.js",
         "src/doc.js",
         "src/theme-flags.js",
         "src/highlight.js"
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
         "src/components.css"
       ]
     },
@@ -555,7 +743,6 @@
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
         "src/components.css"
       ]
     },
@@ -582,7 +769,6 @@
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
         "src/components.css"
       ]
     },
@@ -607,7 +793,59 @@
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "radio",
+      "type": "registry:component",
+      "title": "Radio",
+      "description": "A radio button for a RadioGroup: it is checked by the group value, it has no `checked` of its own.",
+      "exports": [
+        "Radio"
+      ],
+      "files": [
+        {
+          "path": "src/components/Radio.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [
+        "checkbox"
+      ],
+      "sharedFiles": [
+        "src/react.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:component",
+      "title": "RadioGroup",
+      "description": "A group of radio buttons: the value is the `value` of the selected option. The error is a message under the group; the circles do not turn red.",
+      "exports": [
+        "RadioGroup"
+      ],
+      "files": [
+        {
+          "path": "src/components/RadioGroup.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [
+        "radio",
+        "checkbox"
+      ],
+      "sharedFiles": [
+        "src/react.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
         "src/components.css"
       ]
     },
@@ -629,12 +867,10 @@
       "registryDependencies": [],
       "sharedFiles": [
         "src/react.js",
-        "src/base.js",
         "src/doc.js"
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
         "src/components.css"
       ]
     },
@@ -663,7 +899,36 @@
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:component",
+      "title": "Select",
+      "description": "A field, or any element, that opens a list of options: the Base UI Select in the shared field shell. Single and multiple selection; up to 1200px the list is a bottom sheet.",
+      "exports": [
+        "SHEET_QUERY",
+        "Select"
+      ],
+      "files": [
+        {
+          "path": "src/components/Select.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [
+        "field-shell",
+        "choice-sheet"
+      ],
+      "sharedFiles": [
+        "src/react.js",
+        "src/icons.js",
+        "src/theme-flags.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
         "src/components.css"
       ]
     },
@@ -688,7 +953,6 @@
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
         "src/components.css"
       ]
     },
@@ -713,7 +977,6 @@
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
         "src/components.css"
       ]
     },
@@ -738,7 +1001,6 @@
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
         "src/components.css"
       ]
     },
@@ -766,7 +1028,30 @@
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "switch",
+      "type": "registry:component",
+      "title": "Switch",
+      "description": "An instant on/off of an independent setting: a track, a thumb and an optional label. Several switches are independent boolean fields; to choose N of M use a Checkbox Group.",
+      "exports": [
+        "Switch"
+      ],
+      "files": [
+        {
+          "path": "src/components/Switch.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
         "src/components.css"
       ]
     },
@@ -799,7 +1084,6 @@
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
         "src/components.css"
       ]
     },
@@ -833,7 +1117,33 @@
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "text-field",
+      "type": "registry:component",
+      "title": "TextField",
+      "description": "A single-line or multi-line text field with a floating label, built on the Base UI Input.",
+      "exports": [
+        "TextField"
+      ],
+      "files": [
+        {
+          "path": "src/components/TextField.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [
+        "field-shell"
+      ],
+      "sharedFiles": [
+        "src/react.js",
+        "src/icons.js",
+        "src/doc.js"
+      ],
+      "css": [
+        "tokens.css",
         "src/components.css"
       ]
     },
@@ -863,7 +1173,6 @@
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
         "src/components.css"
       ]
     },
@@ -889,7 +1198,35 @@
       ],
       "css": [
         "tokens.css",
-        "lib/components.css",
+        "src/components.css"
+      ]
+    },
+    {
+      "name": "dropdown-parts",
+      "type": "registry:component",
+      "title": "CheckMark",
+      "description": "",
+      "exports": [
+        "CheckMark",
+        "DropdownItemContent",
+        "DropdownGroup",
+        "DropdownDivider",
+        "DropdownSelectAll",
+        "DropdownList"
+      ],
+      "files": [
+        {
+          "path": "src/components/dropdown-parts.js",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": [],
+      "sharedFiles": [
+        "src/react.js",
+        "src/icons.js"
+      ],
+      "css": [
+        "tokens.css",
         "src/components.css"
       ]
     }

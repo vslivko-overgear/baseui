@@ -69,7 +69,7 @@ for (const r of data) {
 }
 
 const index = ['# baseui', '', '> A design system on Base UI: foundations, components and a documentation site built from its own components. Zero build, ES modules, tokens in CSS variables.', '',
-  '## Use', '', '- Load `tokens.css`, `lib/components.css` and `src/components.css`; set `data-theme="light|dark"` on `<html>`.', '- Import components from `src/index.js`.', '- Every component documents its props with `describe()`; the pages below are generated from it.', ''];
+  '## Use', '', '- Load `tokens.css` and `src/components.css`; set `data-theme="light|dark"` on `<html>`.', '- Import components from `src/index.js`.', '- Every component documents its props with `describe()`; the pages below are generated from it.', ''];
 let section = '';
 for (const r of data) {
   if (r.section !== section) { section = r.section; index.push('', `## ${section}`, ''); }

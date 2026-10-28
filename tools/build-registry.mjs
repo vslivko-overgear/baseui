@@ -29,7 +29,7 @@ for (const f of files) {
     files: [{ path: `src/components/${f}`, type: 'registry:component' }],
     registryDependencies,
     sharedFiles: shared,
-    css: ['tokens.css', 'lib/components.css', 'src/components.css'],
+    css: ['tokens.css', 'src/components.css'],
   });
 }
 await writeFile(join(root, 'registry.json'), `${JSON.stringify({ name: 'baseui', homepage: 'https://baseuikit.vercel.app', items }, null, 2)}\n`);

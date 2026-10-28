@@ -1,8 +1,9 @@
 import { h } from '../react.js';
 import { describe } from '../doc.js';
+import * as line from '../../lib/line-HpXc8B8J.js';
+import * as solid from '../../lib/solid-BKvSM0yD.js';
 import { useIconWeight, DEFAULT_STROKE, MIN_STROKE, MAX_STROKE } from '../icon-weight.js';
 
-const [line, solid] = await Promise.all([import('../../lib/line-HpXc8B8J.js'), import('../../lib/solid-BKvSM0yD.js')]);
 export const ICON_NAMES = Object.keys(line).filter((k) => typeof line[k] === 'function');
 
 /**

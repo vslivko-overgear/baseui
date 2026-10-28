@@ -14,7 +14,6 @@ python3 -m http.server 8000   # any static server
 
 ```html
 <link rel="stylesheet" href="tokens.css">
-<link rel="stylesheet" href="lib/components.css">
 <link rel="stylesheet" href="src/components.css">
 ```
 
@@ -24,12 +23,35 @@ Theme: `data-theme="light|dark"` on `<html>`.
 import { Button, Card, Tabs, TabList, Tab, TabPanel } from './src/index.js';
 ```
 
+## Install
+
+As a package (React ≥ 18 and `@base-ui/react` are not bundled: the app brings its own React, so hooks and context are shared):
+
+```sh
+npm i baseui-kit react react-dom
+```
+
+```js
+import { Button, Switch, Select } from 'baseui-kit';
+import 'baseui-kit/styles.css';              // tokens + components
+```
+
+TypeScript types ship in `types/index.d.ts`; they are generated from `describe()` (`npm run types`), so the props are documented once.
+
+Or copy sources into your project, shadcn style (a component with everything it imports):
+
+```sh
+npx baseui list
+npx baseui init
+npx baseui add button text-field select      # --dir baseui, --force
+```
+
 ## Structure
 
 | Path | Contents |
 |---|---|
 | `tokens.css` | Design tokens and fonts |
-| `lib/` | Compiled components: Typeahead, Checkbox, Dialog, List, OTP Input, Radio, Rating, Selector, Switch, Text Input, Token |
+| `lib/` | Icon bundles (line, solid) and the React shim for the import map |
 | `src/` | Components as plain ES modules, their docs pages and styles |
 | `site/` | Documentation site and its page tree (`manifest.js`) |
 | `examples/messenger/` | A messenger built from the components with mock data (no backend). Open it from Theming → Theme Settings: it follows the theme you set there |
@@ -54,7 +76,7 @@ import { Button, Card, Tabs, TabList, Tab, TabPanel } from './src/index.js';
 
 - **Props follow Base UI:** `disabled`, `loading`, `open` / `onOpenChange`, `value` / `defaultValue` / `onValueChange`, `checked` / `defaultChecked` / `onCheckedChange`; plain adjectives for flags (`striped`, `hoverable`, `grouped`). `label`, `variant` and `size` (`xsm · sm · md · lg · xl`) as before.
 - **Base UI first.** A component is built from the Base UI parts (`src/base.js`) when Base UI has them; the DS adds the look and what a product needs on top. Wrappers of compiled components keep their docs with `describeWrapper()`.
-- **Hooks for styles and tests.** Every element a DS component renders has `data-slot` (its name: `button`, `tablist`, `otp-cell`…). Size, variant and state go to `data-size`, `data-variant`, `data-status`, `data-checked`. Product CSS selects these, never the hashed classes of `lib/`.
+- **Hooks for styles and tests.** Every element a DS component renders has `data-slot` (its name: `button`, `tablist`, `otp-cell`…). Size, variant and state go to `data-size`, `data-variant`, `data-status`, `data-checked`. Product CSS selects these or the readable `bui-<component>__<part>` classes.
 - **Theme settings are data attributes.** The theme writes `data-motion` (`off · basic · enhanced`), `data-glass` (`on · off`) and `data-floating` on `<html>`; a `motion` or `glass` prop writes the same attribute on the component (`themeAttrs()` in `src/theme-flags.js`). CSS reads the nearest one; `--bui-fx` is 1 only on enhanced. Floating is read with `useFloating()`.
 - **Shared behaviour lives in one place:** `useDismiss` (outside click, Escape, focus back to the trigger) in `src/floating.js`, `useHighlight` (the sliding underline, thumb, pill and OTP ring, measured by layout offsets) in `src/highlight.js`, `useReady`, `usePresence`, `useMediaQuery`, `useTouchScreen` in `src/theme-flags.js`.
 - **Focus has three placements,** all from the focus tokens: around (`outline-offset: var(--baseui-focus-outline-offset)`), inside (offset minus the width, for items in a container: segments, calendar days, table rows, bar items) and flush (offset 0, fields: Text Input, OTP cells).

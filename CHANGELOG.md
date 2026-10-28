@@ -1,5 +1,13 @@
 # Changelog
 
+## Package, types, sources
+
+- No compiled core: Button, Text Input, Select, Typeahead, Dialog, Switch, Checkbox, Radio, Token, Rating, List and OTP Input are readable `h()` sources on `@base-ui/react`; classes are `bui-<component>__<part>`. `lib/components.css` and the compiled chunks are gone (`lib/` keeps the icon bundles).
+- React is no longer bundled: the site and examples resolve `react`, `react-dom`, `@base-ui/react/*` through an import map (`vendor/`, `npm run vendor`); an app uses its own React.
+- `types/index.d.ts` generated from `describe()` by `tools/build-types.mjs`.
+- `package.json` is a package: `exports`, `peerDependencies` react/react-dom, `dependencies` `@base-ui/react`, no top-level `await` in the components.
+- `bin/baseui.mjs`: `baseui list | init | add <component…>` copies sources with their imports.
+
 ## Icons
 
 - The stroke of outline icons goes from 1 to 2.5 (the catalog control too).
