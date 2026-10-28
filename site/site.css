@@ -187,7 +187,7 @@ main[data-viewport="mobile"] .page { max-width: var(--baseui-layout-mobile-previ
 main[data-viewport="mobile"] .page > h1 { font: var(--baseui-Typography-Header-32); }
 
 .tok-pair { display: inline-flex; align-items: center; gap: 4px; }
-.canvas:has([class*=_gallery_a6xxx]){overflow:visible}
+.canvas:has(.bui-icons-page__gallery){overflow:visible}
 
 /* Foundations / Layout */
 .layout-frames { display: flex; flex-wrap: wrap; gap: var(--baseui-spacing-24); align-items: flex-start; margin-bottom: var(--baseui-spacing-24); }
