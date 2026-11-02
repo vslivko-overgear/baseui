@@ -10,25 +10,35 @@ export const AUDIENCES = [
 ];
 export const AUDIENCE_DEFAULT = 'all';
 
-/** More tiles an audience gets after its own: the games of the same family (World of Warcraft has its versions). [slug, width] each; the games are those of the example. */
-export const AUDIENCE_TILES = { wow: [['wow-forever', 176], ['wow-20th-anniversary', 196], ['wow-classic-era', 176]] };
+/** The games of the family of an audience (World of Warcraft has its versions): they stand with its own tile as a group of their own. The games are those of the example. */
+export const AUDIENCE_FAMILY = { wow: ['wow-forever', 'wow-20th-anniversary', 'wow-classic-era'] };
 
 /** The audience of a theme: a known one, or all players. */
 export const audienceOf = (theme) => (AUDIENCES.some(([slug]) => slug === theme?.audience) ? theme.audience : AUDIENCE_DEFAULT);
 
 /**
- * The rows of tiles for an audience: its game moves to the first place of the first row, the tiles of its family (AUDIENCE_TILES) follow it, then the others in their order,
- * each with the width it was drawn for (a tile with a tag or a long name needs its own). The rows keep their number of tiles, the first one grows by the family: a row scrolls sideways.
- * [[slug, width], …] in, the same shape out.
+ * The rows of tiles for an audience: its game moves to the first place of the first row and the others follow in their order, each with the width it was drawn for
+ * (a tile with a tag or a long name needs its own). The rows keep their number of tiles. [[slug, width], …] in, the same shape out.
  */
 export function tileRows(rows, audience) {
   if (audience === AUDIENCE_DEFAULT || !rows.some((row) => row.some(([slug]) => slug === audience))) return rows;
   const tiles = rows.flat();
-  const family = (AUDIENCE_TILES[audience] || []).filter(([slug]) => !tiles.some(([s]) => s === slug));
-  const lead = [tiles.find(([slug]) => slug === audience), ...family];
-  const ordered = [...lead, ...tiles.filter(([slug]) => slug !== audience)];
+  const ordered = [tiles.find(([slug]) => slug === audience), ...tiles.filter(([slug]) => slug !== audience)];
   let i = 0;
-  return rows.map((row, r) => row.concat(r === 0 ? family : []).map(() => ordered[i++]));
+  return rows.map((row) => row.map(() => ordered[i++]));
+}
+
+/**
+ * What the tiles of the home page show for an audience: `group`, the tiles of an audience with a family (its own and its versions: the page stands them two by two, apart
+ * from the rest), and `rows`, the other tiles in the rows they were in. An audience without a family has no group and the rows of tileRows.
+ */
+export function tileLayout(rows, audience) {
+  const family = AUDIENCE_FAMILY[audience];
+  if (!family) return { group: [], rows: tileRows(rows, audience) };
+  const slugs = new Set([audience, ...family]);
+  const widthOf = Object.fromEntries(rows.flat());
+  const group = [audience, ...family].map((slug) => [slug, widthOf[slug] ?? 190]);
+  return { group, rows: rows.map((row) => row.filter(([slug]) => !slugs.has(slug))) };
 }
 
 /** The offers split for an audience: [those of its game, the rest]. The page lists the first part first and mixes the games of the second. */

@@ -1,6 +1,6 @@
 // The audiences of the store: the order of the tiles and of the offers for who the home page is made for, and the setting that holds it.
 import { describe, expect, test } from 'vitest';
-import { AUDIENCES, AUDIENCE_DEFAULT, AUDIENCE_TILES, audienceOf, tileRows, splitOffers } from '../audience.js';
+import { AUDIENCES, AUDIENCE_DEFAULT, AUDIENCE_FAMILY, audienceOf, tileRows, tileLayout, splitOffers } from '../audience.js';
 import { GAMES, OFFERS, TILE_ROWS, gameOf } from '../example/data.js';
 
 describe('audiences', () => {
@@ -36,16 +36,22 @@ describe('audiences', () => {
     expect(rows[1].map(([s]) => s)).toEqual(TILE_ROWS[1].map(([s]) => s));
   });
 
-  test('World of Warcraft brings its versions: they follow its tile, and the first row is longer by them', () => {
-    const rows = tileRows(TILE_ROWS, 'wow');
-    expect(rows[0].slice(0, 4).map(([s]) => s)).toEqual(['wow', 'wow-forever', 'wow-20th-anniversary', 'wow-classic-era']);
-    expect(rows[0].length).toBe(TILE_ROWS[0].length + AUDIENCE_TILES.wow.length);
-    expect(rows[1].length).toBe(TILE_ROWS[1].length);
-    expect(rows[0][0][1]).toBe(200);
-    for (const [slug] of AUDIENCE_TILES.wow) expect(gameOf(slug)?.cover, `${slug} has a cover`).toBeTruthy();
-    const all = rows.flat().map(([s]) => s);
-    expect(new Set(all).size).toBe(all.length);
-    for (const [slug] of TILE_ROWS.flat()) expect(all).toContain(slug);
+  test('World of Warcraft stands with its versions as a group of four, and the rest stays in its rows', () => {
+    const { group, rows } = tileLayout(TILE_ROWS, 'wow');
+    expect(group.map(([s]) => s)).toEqual(['wow', 'wow-forever', 'wow-20th-anniversary', 'wow-classic-era']);
+    for (const slug of AUDIENCE_FAMILY.wow) expect(gameOf(slug)?.cover, `${slug} has a cover`).toBeTruthy();
+    const left = rows.flat().map(([s]) => s);
+    for (const [slug] of group) expect(left).not.toContain(slug);
+    // every other tile is still there, in its row and order
+    expect(rows[0].map(([s]) => s)).toEqual(TILE_ROWS[0].map(([s]) => s).filter((s) => s !== 'wow'));
+    expect(rows[1]).toEqual(TILE_ROWS[1]);
+    expect(group.length + left.length).toBe(TILE_ROWS.flat().length + AUDIENCE_FAMILY.wow.length);
+  });
+
+  test('an audience without a family has no group; all players keep the rows', () => {
+    expect(tileLayout(TILE_ROWS, 'diablo-4').group).toEqual([]);
+    expect(tileLayout(TILE_ROWS, 'diablo-4').rows).toEqual(tileRows(TILE_ROWS, 'diablo-4'));
+    expect(tileLayout(TILE_ROWS, 'all')).toEqual({ group: [], rows: TILE_ROWS });
   });
 
   test('an audience from the second row comes to the front of the first, and a game without a tile changes nothing', () => {
