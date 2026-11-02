@@ -238,6 +238,28 @@ export function auditConstitution(root = typeof document === 'undefined' ? null 
     }
   }
 
+  // D15: buttons side by side in one row have one icon size (a button with a label and an icon button next to it, outside a ControlRow)
+  {
+    const seen = new Set();
+    for (const btn of /** @type {any[]} */ ([...root.querySelectorAll('.bui-button')])) {
+      if (!visible(btn, win) || btn.closest('.bui-field') || btn.closest('[data-constitution-example]') || seen.has(btn)) continue;
+      const icon = btn.querySelector('svg')?.getBoundingClientRect().width;
+      if (!icon) continue;
+      const b = btn.getBoundingClientRect();
+      for (const other of /** @type {any[]} */ ([...(btn.parentElement?.children || [])])) {
+        if (other === btn || !other.matches?.('.bui-button') || !visible(other, win)) continue;
+        const o = other.getBoundingClientRect();
+        const otherIcon = other.querySelector('svg')?.getBoundingClientRect().width;
+        const overlap = Math.min(b.bottom, o.bottom) - Math.max(b.top, o.top);
+        const gap = b.left >= o.right ? b.left - o.right : o.left >= b.right ? o.left - b.right : -1;
+        if (!otherIcon || overlap < Math.min(b.height, o.height) * 0.6 || gap < 0 || gap > 48 || Math.abs(icon - otherIcon) <= 1) continue;
+        seen.add(btn); seen.add(other);
+        add('D15', other, `${describeEl(other)} has a ${Math.round(otherIcon)}px icon beside a button with a ${Math.round(icon)}px icon; put them in a ControlRow`);
+        break;
+      }
+    }
+  }
+
   // U11: a disabled button next to empty fields (in the same form, dialog or card): the button should be active and the form should show the errors
   for (const btn of /** @type {any[]} */ ([...root.querySelectorAll('.bui-button')])) {
     if (!visible(btn, win) || btn.hasAttribute('data-loading') || btn.hasAttribute('data-loading-disabled') || !(btn.disabled || btn.hasAttribute('data-disabled')) || btn.getAttribute('data-variant') !== 'primary') continue;

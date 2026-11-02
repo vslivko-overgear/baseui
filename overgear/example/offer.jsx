@@ -16,6 +16,7 @@ import { useToast } from '../../src/components/Toast.jsx';
 import { Bleed } from '../../src/components/Layout.jsx';
 import { go } from './util.js';
 import { OFFERS, REVIEWS, SERVICES, money, offerOf, gameOf, sold } from './data.js';
+import { ControlRow } from '../../src/components/Layout.jsx';
 import { Page, PageHead, Section, OfferListing, Stars, WishButton, CashbackMark, CASHBACK } from './ui.jsx';
 import { useStore } from './store.jsx';
 import { Faq } from './games.jsx';
@@ -97,10 +98,10 @@ export function Offer({ id }) {
               </div>
               <div className="og-stack">
                 <Button variant="primary" size="lg" width="100%" label="Buy now" icon={<Icon name="ShieldTick" size={24} />} onClick={() => add(true)} />
-                <div className="og-buyrow">
+                <ControlRow size="md" className="og-buyrow">
                   <Button variant="secondary" width="100%" label="Add to cart" icon={<Icon name="ShoppingCart01" size={24} />} onClick={() => add(false)} />
                   <WishButton id={offer.id} variant="secondary" />
-                </div>
+                </ControlRow>
               </div>
             </div>
           </Card>
