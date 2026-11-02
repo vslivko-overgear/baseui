@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // The search of the header, in a real browser. A desktop: typing opens a dropdown of suggestions under the field, the arrows move along them, Enter opens the one they are on, Escape closes the
-// dropdown and leaves the text; the suggestions are one list, with no group titles; the page behind is dimmed and the dropdown has no outline. A phone: the field opens a screen of its own that covers the bottom bar, with the field in focus and no outline round it; typing fills it with suggestions, Enter runs the search and closes it.
+// dropdown and leaves the text; the suggestions are one list, with no group titles; the page behind is dimmed and the dropdown has no outline. A phone: the field opens a screen of its own that covers the bottom bar, with the field in focus and no ring round it, as rule OG4 says; typing fills it with suggestions, Enter runs the search and closes it.
 //
 //   node overgear/tools/check/search.mjs http://localhost:8000
 import { launch } from '../../../tools/lib/sweep.mjs';
@@ -61,6 +61,7 @@ const expectThat = (ok, what) => { if (!ok) problems.push(what); };
   await page.goto(url);
   await page.waitForTimeout(1500);
   const rect = (selector) => page.evaluate((q) => { const r = document.querySelector(q).getBoundingClientRect(); return [r.x, r.y, r.width, r.height].map((v) => Math.round(v * 10) / 10); }, selector);
+  const headerLook = await page.evaluate(() => { const cell = document.querySelector('.og-header .og-search .bui-field__cell'); return { background: getComputedStyle(cell).backgroundColor, text: getComputedStyle(document.querySelector('.og-header .og-search input')).fontSize }; });
   const logo = await rect('.og-brand__mark');
   const headerField = await rect('.og-header .og-search .bui-field');
   await page.locator('.og-search input').first().click();
@@ -73,7 +74,12 @@ const expectThat = (ok, what) => { if (!ok) problems.push(what); };
   expectThat(JSON.stringify(await rect('.og-searchscreen__back')) === JSON.stringify(logo), `phone: the back button is not in the rectangle of the logo (${await rect('.og-searchscreen__back')} against ${logo})`);
   const screenField = await rect('.og-searchscreen .bui-field');
   expectThat(screenField[0] === headerField[0] && screenField[1] === headerField[1] && screenField[3] === headerField[3], `phone: the field is not at the place and of the height of the one of the header (${screenField} against ${headerField})`);
-  expectThat((await page.locator('.og-searchscreen .bui-field .bui-field__cell').evaluate((el) => getComputedStyle(el).outlineStyle)) === 'none', 'phone: the field of the search screen has an outline');
+  // OG4: no ring on the field of the search screen, and focus changes nothing else in it: the size of its text and its background are those of the field of the header
+  const look = (selector) => page.evaluate((q) => { const cell = document.querySelector(`${q} .bui-field__cell`); const input = document.querySelector(`${q} input`); return { outline: getComputedStyle(cell).outlineStyle, background: getComputedStyle(cell).backgroundColor, text: getComputedStyle(input).fontSize }; }, selector);
+  const onScreen = await look('.og-searchscreen');
+  expectThat(onScreen.outline === 'none', 'phone: the field of the search screen has an outline (OG4)');
+  expectThat(onScreen.text === headerLook.text, `phone: the text of the field jumps from ${headerLook.text} to ${onScreen.text} when the screen opens (OG4)`);
+  expectThat(onScreen.background === headerLook.background, 'phone: the background of the field changes when the screen opens or the field has focus (OG4)');
   expectThat(await oneList(page), 'phone: the suggestions have group titles');
   await page.keyboard.type('path');
   await page.waitForTimeout(300);

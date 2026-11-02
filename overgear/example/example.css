@@ -31,8 +31,8 @@ a { color: inherit; }
 .og-sg__sub { font: var(--baseui-typography-text-12-regular); color: var(--baseui-text-and-icon-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .og-sg__row[data-kind="query"] .og-sg__name { font: var(--baseui-typography-text-14-regular); }
 .og-searchscreen { position: fixed; inset: 0; z-index: calc(var(--baseui-z-index-30) + 2); display: flex; flex-direction: column; background: var(--baseui-background-primary); }
-.og-searchscreen .bui-field:not([data-control="select"]) .bui-field__cell:has(:is(input, textarea):focus) { outline: none; background-color: var(--baseui-background-tertiary); }   /* no outline round the field of the search screen: focus is a step lighter background and the caret */
-.og-searchscreen__bar { padding-inline: var(--baseui-spacing-4); }   /* the bar of the header (og-top, a ControlRow: one height and one icon size), with the margin of a phone */
+.og-searchscreen .bui-field:not([data-control="select"]) .bui-field__cell:has(:is(input, textarea):focus) { outline: none; }   /* no ring round the field of the search screen: rule OG4 (the keyboard is open and the field is the only one) */
+.og-searchscreen .og-searchscreen__bar { --row-text: 14px; padding-inline: var(--baseui-spacing-4); }   /* the text of the field is as in the header (14 px), the row would make it 16 */   /* the bar of the header (og-top, a ControlRow: one height and one icon size), with the margin of a phone */
 .og-searchscreen .og-searchscreen__back.bui-button { flex: none; width: 48px; height: 48px; border-radius: var(--baseui-radius-2xl); background: var(--baseui-background-secondary); color: var(--baseui-text-and-icon-primary); }   /* the rectangle of the logo */
 .og-searchscreen__body { flex: 1; min-height: 0; overflow-y: auto; padding: 0 var(--baseui-spacing-4) var(--baseui-spacing-6); }
 .og-searchscreen .og-sg__row { padding-inline: var(--baseui-spacing-1); }

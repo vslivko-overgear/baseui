@@ -28,6 +28,14 @@ export const RULES = [
     source: 'E-commerce navigation: category pages and product listing pages', check: 'review',
     signals: ['catalog page', 'classifier of the pages', 'category page', 'open the catalog'],
   },
+  {
+    id: 'OG4', category: 'A', level: 'should', title: 'The search screen of a phone has no focus ring',
+    do: 'Leave the field of the search screen of a phone (the screen that the search field of the header opens) without the focus ring: the keyboard is open, the field is the only one on the screen and the caret shows where the focus is. This is an exception to A5 (visible focus), for that field only. Focus changes nothing else in it: not its background, not its size, not the size of its text, which is the size of the field of the header (14px)',
+    dont: 'Do not take the exception to any other field, button or link of a phone, to the search of a desktop or to a screen with more than one field, and do not mark the focus of that field another way (a lighter background, a bigger text)',
+    why: 'A ring round a field that is already in focus, with the keyboard open, adds nothing and moves the eye; every other control keeps its ring, so a person who works with a keyboard or a switch can see where they are',
+    source: 'Mobile search screens (the search bars of iOS and Android); an exception to A5 that the product chose', check: 'tool', tool: 'overgear/tools/check/search.mjs',
+    signals: ['remove the focus ring', 'no outline on the search field', 'the search on a phone', 'the field of the search screen', 'the text of the search jumps'],
+  },
 ];
 
 // Explicit opt-in: the shared library never imports this module.
