@@ -53,14 +53,22 @@ for (const [width, phone] of [[1440, false], [390, true]]) {
     const probe = (name) => { const p = document.createElement('span'); p.style.color = `var(${name})`; document.body.append(p); const c = getComputedStyle(p).color; p.remove(); return c; };
     const on = tiles.find((t) => t.dataset.checked !== undefined); const off = tiles.find((t) => t.dataset.checked === undefined);
     return {
-      count: tiles.length, radios: tiles.every((t) => t.querySelector('input[type=radio]')) && document.querySelector('[role=radiogroup]')?.getAttribute('aria-label') === 'Payment method',
+      count: tiles.length, rows: new Set(tiles.map((t) => Math.round(t.getBoundingClientRect().top))).size, button: document.querySelector('.og-co__pay > .bui-button')?.dataset.variant,
+      gapIn: heading ? tiles[0].getBoundingClientRect().top - heading.getBoundingClientRect().bottom : 0,
+      gapOut: heading && items.length ? heading.getBoundingClientRect().top - items.at(-1).getBoundingClientRect().bottom : 0,
+      radios: tiles.every((t) => t.querySelector('input[type=radio]')) && document.querySelector('[role=radiogroup]')?.getAttribute('aria-label') === 'Payment method',
       headed: !!heading && heading.getBoundingClientRect().top >= items.at(-1).getBoundingClientRect().bottom && heading.getBoundingClientRect().bottom <= tiles[0].getBoundingClientRect().top,
       on: look(on), off: look(off), selected: probe('--baseui-extensions-border-selected'), standard: probe('--baseui-border-primary'),
       items: items.map((l) => { const r = l.getBoundingClientRect(); return { top: r.top, bottom: r.bottom, radius: parseFloat(getComputedStyle(l).borderTopLeftRadius), background: getComputedStyle(l).backgroundColor }; }),
     };
   });
   const sum = (m) => m.width + (/\s(\d+)px\s+inset$/.exec(m.shadow)?.[1] ? +/\s(\d+)px\s+inset$/.exec(m.shadow)[1] : 0);
-  expectThat(strip.count === 5 && strip.radios, `${where}: the payment methods are not five radio tiles with the others behind a button (${strip.count} tiles)`);
+  expectThat(strip.count === 6 && strip.radios, `${where}: the payment methods are not six radio tiles with the others behind a button (${strip.count} tiles)`);
+  expectThat(strip.button === 'secondary', `${where}: the button for the other methods is not secondary (${strip.button})`);
+  if (where === 'desktop') {
+    expectThat(strip.rows === 2, `desktop: six methods do not stand in two rows (${strip.rows})`);
+    expectThat(strip.gapOut >= 40 && strip.gapIn >= 20, `desktop: the heading is not spaced from the items (${strip.gapOut}px) and from the methods (${strip.gapIn}px)`);
+  }
   expectThat(strip.headed, `${where}: the payment methods have no heading "Payment method" of their own after the items`);
   await page.getByRole('button', { name: 'Show other payment methods' }).click();
   await page.waitForTimeout(200);

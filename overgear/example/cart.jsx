@@ -184,9 +184,9 @@ const METHODS = [
   { id: 'google', name: 'Google Pay', fee: 0.95, tile: TILE(<img src="./assets/payments/google-pay.svg" alt="" />) },
   { id: 'klarna', name: 'Klarna', fee: 1.4, tile: TILE(<b>K</b>) },
   { id: 'neteller', name: 'Neteller', fee: 2.65, tile: TILE(<b>N</b>) },
+  { id: 'paypal', name: 'PayPal', fee: 2.1, tile: TILE(<img src="./assets/payments/paypal.svg" alt="" />) },
 ];
 const MORE_METHODS = [
-  { id: 'paypal', name: 'PayPal', fee: 2.1, tile: TILE(<img src="./assets/payments/paypal.svg" alt="" />) },
   { id: 'crypto', name: 'Cryptocurrency', fee: 0, tile: TILE(<Icon name="Coins01" size={24} />) },
   { id: 'balance', name: 'Account balance', fee: 0, tile: TILE(<Icon name="Wallet01" size={24} />) },
 ];
@@ -249,15 +249,15 @@ export function Checkout() {
           <Page><Status status="neutral" title="Nothing to pay for" description="Your cart is empty" actionLabel="Browse games" onAction={() => go('/catalog')} /></Page>
         ) : (
           <div className="og-co">
-            <div className="og-stack og-stack--xl">
+            <div className="og-stack og-stack--xl og-co__main">
               <div className="og-stack">
                 <ul className="og-lines og-lines--cards og-lines--surface" aria-label="Order items">{store.cart.map((i) => <CartLine key={i.key} item={i} onRemove={() => store.remove(i.key)} />)}</ul>
                 {!store.user && <TextInput label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} status={tried && badEmail ? 'error' : undefined} caption={tried && badEmail ? 'Enter an email we can send the receipt to' : 'The receipt and the order chat link come here'} />}
               </div>
-              <div className="og-stack">
+              <div className="og-stack og-co__pay">
                 <h2 className="og-h2">Payment method</h2>
                 <MethodTiles value={method} onChange={setMethod} methods={more ? [...METHODS, ...MORE_METHODS] : METHODS} />
-                <Button variant="ghost" width="100%" label={more ? 'Show fewer payment methods' : 'Show other payment methods'} icon={<Icon name={more ? 'ArrowUp' : 'ArrowDown'} size={20} />} onClick={() => setMore((v) => !v)} />
+                <Button variant="secondary" width="100%" label={more ? 'Show fewer payment methods' : 'Show other payment methods'} icon={<Icon name={more ? 'ArrowUp' : 'ArrowDown'} size={20} />} onClick={() => setMore((v) => !v)} />
               </div>
               <Card variant="surface" padding={2}><Promo /></Card>
             </div>

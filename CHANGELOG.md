@@ -2,6 +2,7 @@
 
 ## Overgear: the checkout, payment methods as outlined tiles, the items apart
 
+- **Spacing on the desktop checkout:** the title stands lower, 24px from the items; the sections are 48px apart (the last item from "Payment method"), the heading is 24px from the methods; six methods show as two rows of three, the rest (crypto, balance) are behind a secondary (not ghost) button "Show other payment methods". The class of the section is `og-co__pay` (`og-pay` is the payment logos of the footer).
 - **The payment methods are outlined tiles** under their own heading "Payment method", after the items: each a radio (a native one, so the arrows and the focus work) in an outline, the chosen one with a 2px outline in the selected color (white in the dark theme) and the others with the standard 1px one. Five are shown and "Show other payment methods" opens the other three. (For a while they were one strip of tiles after the title; they are back after the items.)
 - **The items are cards of their own**, apart from each other, not lines in one card.
 - **The summary sticks 24px from the top** (it was 120px, the room for a header that sticks on the other pages: the checkout has none).

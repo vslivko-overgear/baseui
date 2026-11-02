@@ -386,8 +386,11 @@ a { color: inherit; }
 .og-checkout__logo { display: inline-flex; }
 /* the top of the checkout of a desktop: the button back and the logo in a row, a divider under it; the title is plain under the divider */
 .og-checkout__top { display: flex; align-items: center; gap: var(--baseui-spacing-4); padding-block: var(--baseui-spacing-4); }
-.og-checkout__title { padding-top: var(--baseui-spacing-8); padding-bottom: var(--baseui-spacing-4); }
-.og-co { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: var(--baseui-spacing-12); align-items: start; padding-block: var(--baseui-spacing-8) var(--baseui-spacing-16); }
+.og-checkout__title { padding-top: var(--baseui-spacing-12); }   /* lower than it was, and close to the blocks under it (the padding of .og-co is the rest) */
+.og-co__main { gap: var(--baseui-spacing-12); }   /* the sections of the left column (the items, the payment method, the promo code) are further apart than the items are from each other */
+.og--mobile .og-co__main { gap: var(--baseui-spacing-8); }
+.og-co__pay > .og-h2 { margin-bottom: var(--baseui-spacing-2); }   /* the heading of the methods stands 24px from them */
+.og-co { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: var(--baseui-spacing-12); align-items: start; padding-block: var(--baseui-spacing-6) var(--baseui-spacing-16); }
 .og-checkout__main { flex: 1; }
 .og-checkout .og-sticky { top: var(--baseui-spacing-6); }   /* the checkout has no header that sticks: the summary stays 24px from the top, not under a header that is not there */
 .og-checkout__foot { padding-block: var(--baseui-spacing-6); background: var(--baseui-background-secondary); }
