@@ -49,7 +49,7 @@ export function Theme() {
           <p className="ov-note">They apply at once to this showcase and to the example, and are kept on this device. The documentation site has its own theme</p>
         </div>
         <div className="ov-settings">
-          <Row title="Font" hint="The heading font and the text font together. TT Interphases Pro is the font of the live site (linked from the overgear repository) and Apfel Grotezk the font of this showcase; the rest are the sans-serif fonts of the catalogue uncut.wtf that are free to link (SIL OFL), loaded from Fontsource when chosen">
+          <Row title="Font" hint="The heading font and the text font together. TT Interphases Pro is the font of the live site (linked from the overgear repository) and comes first; the rest are in alphabetical order: Apfel Grotezk, the font of this showcase, and the sans-serif fonts of the catalogue uncut.wtf that are under the SIL OFL (some are in this repository, some are loaded from Fontsource when chosen)">
             <Selector label="Font" options={FONTS.map(([value, label]) => ({ value, label }))} value={FONTS.some(([key]) => key === theme.fonts) ? theme.fonts : FONTS_DEFAULT} onValueChange={(fonts) => set({ fonts })} />
           </Row>
           <Row title="Shape" hint="Buttons, fields and tags: rounded by the radius, or pills">

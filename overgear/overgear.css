@@ -1,3 +1,4 @@
+@import url("fonts/catalogue/catalogue.css");   /* the fonts of the catalogue uncut.wtf that are in this repository: a file is fetched only when its family is used */
 /* The font of Overgear: Apfel Grotezk by Collletttivo (SIL Open Font License 1.1, see fonts/LICENSE.txt). It is the heading font and the text font of the pages that load this file. */
 /* The three weights of the family: Regular 400, Mittel 500 (Semi-Bold, 500 to 600), Fett 700 (Bold). Satt is not used. */
 @font-face { font-family: "Apfel Grotezk"; font-weight: 400; font-style: normal; font-display: swap; src: url("fonts/ApfelGrotezk-Regular.woff2") format("woff2"); }
