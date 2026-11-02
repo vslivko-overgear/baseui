@@ -219,6 +219,7 @@ export function Checkout() {
   const [method, setMethod] = useState('card');
   const [more, setMore] = useState(false)
   const titleRef = useRef(null)
+  const count = store.cart.reduce((n, i) => n + (i.qty || 1), 0)
   const [scrolled, setScrolled] = useState(false)
   // the bar shows the title only once the heading of the page has scrolled under it
   useEffect(() => {
@@ -253,7 +254,10 @@ export function Checkout() {
         </>
       )}
       <div className="og-wrap og-checkout__main">
-        <h1 ref={titleRef} className="og-title og-checkout__title">Secure Checkout</h1>
+        <div className="og-stack og-stack--close og-checkout__head">
+          <h1 ref={titleRef} className="og-title og-checkout__title">Secure Checkout</h1>
+          {!!store.cart.length && <p className="og-caption">{`${count} ${count === 1 ? 'item' : 'items'}`}</p>}
+        </div>
         {!store.cart.length ? (
           <Page><Status status="neutral" title="Nothing to pay for" description="Your cart is empty" actionLabel="Browse games" onAction={() => go('/catalog')} /></Page>
         ) : (
@@ -268,7 +272,6 @@ export function Checkout() {
                 <MethodTiles value={method} onChange={setMethod} methods={more ? [...METHODS, ...MORE_METHODS] : METHODS} />
                 <Button variant="secondary" width="100%" label={more ? 'Show fewer payment methods' : 'Show other payment methods'} icon={<Icon name={more ? 'ArrowUp' : 'ArrowDown'} size={20} />} onClick={() => setMore((v) => !v)} />
               </div>
-              <Card variant="surface" padding={2}><Promo /></Card>
             </div>
             <div className="og-stack og-sticky">
               <Card variant="surface" padding={5}>
@@ -283,12 +286,13 @@ export function Checkout() {
                     <div className="og-sum__row og-sum__row--big"><span>Amount to pay</span><span>{money(amount)}</span></div>
                     <CashbackRow amount={amount} />
                   </div>
-                  <div className="og-stack og-stack--close">
+                  <div className="og-stack">
                     {!mobile && <Button variant="primary" size="lg" width="100%" label="Pay" onClick={pay} />}
                     <p className="og-caption og-caption--legal">By placing an order at overgear.com, you agree to our <Link href={href('/info/terms')}>Terms of Use</Link> and <Link href={href('/info/privacy')}>Privacy Policy</Link>. After your purchase, we may email you offers about products and services similar to your order.</p>
                   </div>
                 </div>
               </Card>
+              <div className="og-promo"><Promo /></div>
             </div>
           </div>
         )}

@@ -2,6 +2,7 @@
 
 ## Overgear: the checkout, payment methods as outlined tiles, the items apart
 
+- **Checkout:** the count of the items ("5 items", secondary) under "Secure Checkout"; the terms 16px from the pay button; the promo code row is secondary, with no card around it, under the summary in the right column.
 - **Bonus tags are light yellow:** `Badge` gets a `warning-light` variant (the light warning background, primary text); the cashback tags in the pay bar and on the offer page use it.
 - **Checkout terms** under the pay button: 12px and 8px from the button (was 14px and 24px).
 - **Phone checkout and cart:** the title stands 4px under the bar; the pay bar has no gradient over the content now and holds the price with the bonus (cashback) in a `Badge` next to it, then the button (`--og-paybar-h` 128px).

@@ -243,6 +243,7 @@ a { color: inherit; }
 .og--mobile .og-footer__games { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .og-caps { margin: 0; font: 700 12px / 16px var(--baseui-typography-font-family); letter-spacing: 0.12em; text-transform: uppercase; color: var(--baseui-text-and-icon-secondary); }
 .og-caption { margin: 0; font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-secondary); }
+.og-promo, .og-promo :is([data-slot=list-item-header], [data-slot=list-item-title]) { color: var(--baseui-text-and-icon-secondary); }   /* the promo code row: secondary, no card around it, under the summary */
 .og-caption--legal { font: var(--baseui-typography-text-12-regular); }   /* the terms under the pay button: 12px, 8px from the button */
 .og-caption--dim { color: var(--baseui-text-and-icon-secondary); }
 .og-footer__logo { display: block; height: 36px; width: auto; filter: url(#og-tint); }
@@ -387,8 +388,10 @@ a { color: inherit; }
 .og-checkout__logo { display: inline-flex; }
 /* the top of the checkout of a desktop: the button back and the logo in a row, a divider under it; the title is plain under the divider */
 .og-checkout__top { display: flex; align-items: center; gap: var(--baseui-spacing-4); padding-block: var(--baseui-spacing-4); }
-.og-checkout__title { padding-top: var(--baseui-spacing-12); }   /* lower than it was, and close to the blocks under it (the padding of .og-co is the rest) */
-.og--mobile .og-checkout__title { padding-top: var(--baseui-spacing-1); }   /* 4px under the bar of the phone */
+.og-checkout__head { padding-top: var(--baseui-spacing-12); }
+.og--mobile .og-checkout__head { padding-top: var(--baseui-spacing-1); }
+.og-checkout__title { padding: 0; }   /* lower than it was, and close to the blocks under it (the padding of .og-co is the rest) */
+   /* 4px under the bar of the phone */
 .og-co__main { gap: var(--baseui-spacing-12); }   /* the sections of the left column (the items, the payment method, the promo code) are further apart than the items are from each other */
 .og--mobile .og-co__main { gap: var(--baseui-spacing-8); }
 .og-co__pay > .og-h2 { margin-bottom: var(--baseui-spacing-2); }   /* the heading of the methods stands 24px from them */

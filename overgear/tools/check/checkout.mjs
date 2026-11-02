@@ -53,6 +53,8 @@ for (const [width, phone] of [[1440, false], [390, true]]) {
     expectThat(down.op === 1 && down.text === 'Secure Checkout', `phone: scrolled, the bar does not show "Secure Checkout" (${JSON.stringify(down)})`);
     await page.evaluate(() => window.scrollTo(0, 0)); await page.waitForTimeout(300);
   }
+  const head = await page.evaluate(() => { const h = document.querySelector('.og-checkout__title'); const c = h?.nextElementSibling; const probe = document.createElement('span'); probe.style.color = 'var(--baseui-text-and-icon-secondary)'; document.body.append(probe); const sec = getComputedStyle(probe).color; probe.remove(); return c ? { text: c.textContent, below: c.getBoundingClientRect().top >= h.getBoundingClientRect().bottom, secondary: getComputedStyle(c).color === sec } : null; });
+  expectThat(head && head.text === '5 items' && head.below && head.secondary, `${where}: under "Secure Checkout" there is no secondary count of the items (${JSON.stringify(head)})`);
   const strip = await page.evaluate(() => {
     const tiles = [...document.querySelectorAll('.og-methodcard')];
     const items = [...document.querySelectorAll('.og-lines--surface > .og-line')];
@@ -72,7 +74,7 @@ for (const [width, phone] of [[1440, false], [390, true]]) {
   });
   if (!phone) {
     const terms = await page.evaluate(() => { const c = document.querySelector('.og-caption--legal'); const b = c?.parentElement.querySelector('.bui-button'); return c && b ? { size: parseFloat(getComputedStyle(c).fontSize), gap: c.getBoundingClientRect().top - b.getBoundingClientRect().bottom } : null; });
-    expectThat(terms && terms.size === 12 && terms.gap <= 12, `desktop: the terms are not 12px and close to the pay button (${JSON.stringify(terms)})`);
+    expectThat(terms && terms.size === 12 && terms.gap >= 15 && terms.gap <= 17, `desktop: the terms are not 12px and 16px from the pay button (${JSON.stringify(terms)})`);
   }
   const sum = (m) => m.width + (/\s(\d+)px\s+inset$/.exec(m.shadow)?.[1] ? +/\s(\d+)px\s+inset$/.exec(m.shadow)[1] : 0);
   expectThat(strip.count === 6 && strip.radios, `${where}: the payment methods are not six radio tiles with the others behind a button (${strip.count} tiles)`);
@@ -104,6 +106,15 @@ for (const [width, phone] of [[1440, false], [390, true]]) {
   expectThat((await row.count()) === 1, `${where}: the promo code is not a row of a list`);
   const shape = await row.evaluate((el) => { const icons = el.querySelectorAll('svg').length; const text = el.querySelector('span'); const chevron = el.querySelector('svg:last-of-type'); return { icons, chevronRight: !!chevron && !!text && chevron.getBoundingClientRect().left > text.getBoundingClientRect().right }; }).catch(() => ({ icons: -1, chevronRight: false }));
   expectThat(shape.icons === 1 && shape.chevronRight, `${where}: the promo row is not a text on the left and a chevron on the right and nothing else (${JSON.stringify(shape)})`);
+  const pr = await page.evaluate(() => {
+    const row = [...document.querySelectorAll('[data-slot="list-item"]')].find((e) => e.textContent.includes('Apply promo code'));
+    const probe = document.createElement('span'); probe.style.color = 'var(--baseui-text-and-icon-secondary)'; document.body.append(probe); const sec = getComputedStyle(probe).color; probe.remove();
+    const sum = document.querySelector('.og-sticky .bui-card, .og-sticky [data-slot=card]');
+    const carded = !!row.closest('.bui-card, [data-slot=card]');
+    return { color: getComputedStyle(row.querySelector('[data-slot="list-item-title"]')).color, sec, carded, under: row.getBoundingClientRect().top >= sum.getBoundingClientRect().bottom, right: row.getBoundingClientRect().left >= sum.getBoundingClientRect().left - 1 };
+  });
+  expectThat(pr.color === pr.sec && !pr.carded, `${where}: the promo row is not secondary without a card (${JSON.stringify(pr)})`);
+  expectThat(pr.under && pr.right, `${where}: the promo row is not under the summary, in its column (${JSON.stringify(pr)})`);
   expectThat((await page.locator('.bui-collapsible').count()) === 0, `${where}: the promo code is a collapsible section`);
   const promo = row.getByRole('button');
   await promo.click();
