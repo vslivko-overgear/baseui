@@ -1475,7 +1475,11 @@
 
 /* ---------- Number Input ---------- */
 /* the buttons are 36px in a 56px field (32px in 48px), so the gap to the right edge of the field equals the gap above and below them: the border (2) and the padding (14) are pulled back to that (measured from the outer edge of the field) */
-.bui-stepper-btns { --stp: 36px; display: inline-flex; gap: var(--baseui-spacing-1); margin-inline-end: calc((var(--fs-height) - var(--stp)) / 2 - 16px); }
+.bui-stepper-btns { --stp: 36px; display: inline-flex; }
+.bui-stepper-btns--end { margin-inline-end: calc((var(--fs-height) - var(--stp)) / 2 - 16px); }
+.bui-stepper-btns--start { margin-inline-start: calc((var(--fs-height) - var(--stp)) / 2 - 16px); }
+.bui-number .bui-field__icon { margin-right: 0; }   /* the minus is the first part of the field: the number is centered between the two buttons */
+.bui-number input { text-align: center; }
 .bui-field__small .bui-stepper-btns { --stp: 32px; }
 .bui-stepper-btns button {
   all: unset; box-sizing: border-box; cursor: pointer; width: var(--stp); height: var(--stp); display: inline-grid; place-items: center; border-radius: var(--baseui-radius-xl);

@@ -2,6 +2,7 @@
 
 ## Overgear: the checkout, payment methods as outlined tiles, the items apart
 
+- **`NumberInput`: the minus first, the number in the middle (centered), the plus last** (it was the number, then both buttons at the end). In the Overgear lines on a phone the price, the quantity and the bin are a row of their own under the text, so the text is not squeezed into a narrow column.
 - **Checkout lines:** the price on top and the bin at the bottom right of each line; a line of several units has a quantity stepper left of the bin. The promo code is on a card again (as the summary above, 20px at the sides) and the whole card is the button.
 - **Checkout:** the count of the items ("5 items", secondary) under "Secure Checkout"; the terms 16px from the pay button; the promo code row is secondary, with no card around it, under the summary in the right column.
 - **Bonus tags are light yellow:** `Badge` gets a `warning-light` variant (the light warning background, primary text); the cashback tags in the pay bar and on the offer page use it.

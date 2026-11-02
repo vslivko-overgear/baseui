@@ -1648,7 +1648,7 @@ export interface NumberInputProps {
   [dataAttribute: `data-${string}`]: string | number | boolean | undefined;
   [ariaAttribute: `aria-${string}`]: string | number | boolean | undefined;
 }
-/** A text input for numbers with a minus and a plus button. It takes the props of the Text Input (variant, status, caption, prefix, suffix, floatingLabel) */
+/** A text input for numbers: a minus button first, the number in the middle, a plus button last. It takes the props of the Text Input (variant, status, caption, prefix, suffix, floatingLabel) */
 export function NumberInput(props: NumberInputProps): ReactElement | null;
 
 export interface OtpInputProps {

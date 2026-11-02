@@ -730,7 +730,7 @@
       "name": "number-input",
       "type": "registry:ui",
       "title": "NumberInput",
-      "description": "A text input for numbers with a minus and a plus button. It takes the props of the Text Input (variant, status, caption, prefix, suffix, floatingLabel)",
+      "description": "A text input for numbers: a minus button first, the number in the middle, a plus button last. It takes the props of the Text Input (variant, status, caption, prefix, suffix, floatingLabel)",
       "dependencies": [],
       "registryDependencies": [
         "https://baseuikit.vercel.app/r/baseui-core.json",
