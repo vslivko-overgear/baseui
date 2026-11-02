@@ -13,7 +13,7 @@ import { Switch } from '../../src/components/Switch.jsx';
 import { Selector } from '../../src/components/Selector.jsx';
 import { saveTheme, loadTheme, DEFAULT, MOTION_OPTIONS, BRAND_OPTIONS } from '../../site/theme.js';
 import { AUDIENCES, AUDIENCE_DEFAULT, audienceOf } from '../audience.js';
-import { COOKIE, LOCAL_DEFAULT, TINT_DEFAULT, FONT_SETS, FONTS_DEFAULT, applyOvergearTheme } from '../theme.js';
+import { COOKIE, LOCAL_DEFAULT, TINT_DEFAULT, FONTS, FONTS_DEFAULT, applyOvergearTheme } from '../theme.js';
 
 // Overgear starts from the default of the system with the enhanced animations; the brand stays the default one (white in the dark theme)
 const START = { ...DEFAULT, motion: 'enhanced', tint: TINT_DEFAULT, fonts: FONTS_DEFAULT, audience: AUDIENCE_DEFAULT, local: { ...LOCAL_DEFAULT } };
@@ -49,8 +49,8 @@ export function Theme() {
           <p className="ov-note">They apply at once to this showcase and to the example, and are kept on this device. The documentation site has its own theme</p>
         </div>
         <div className="ov-settings">
-          <Row title="Fonts" hint="A font set is the heading font, the text font and their tracking together. Apfel Grotezk is the font of this showcase; Overgear.com is the set of the live site: TT Interphases Pro, linked from the overgear repository">
-            <SegmentedControl label="Fonts" items={FONT_SETS.map(([value, label]) => ({ value, label }))} value={theme.fonts === 'site' ? 'site' : FONTS_DEFAULT} onValueChange={(fonts) => set({ fonts })} />
+          <Row title="Font" hint="The heading font and the text font together. TT Interphases Pro is the font of the live site (linked from the overgear repository) and Apfel Grotezk the font of this showcase; the rest are the sans-serif fonts of the catalogue uncut.wtf that are free to link (SIL OFL), loaded from Fontsource when chosen">
+            <Selector label="Font" options={FONTS.map(([value, label]) => ({ value, label }))} value={FONTS.some(([key]) => key === theme.fonts) ? theme.fonts : FONTS_DEFAULT} onValueChange={(fonts) => set({ fonts })} />
           </Row>
           <Row title="Shape" hint="Buttons, fields and tags: rounded by the radius, or pills">
             <SegmentedControl label="Shape" items={seg(['rounded', 'circle'])} value={theme.shape} onValueChange={(shape) => set({ shape })} />

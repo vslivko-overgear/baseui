@@ -65,5 +65,10 @@ html[data-og-fonts="site"] {
   --baseui-typography-font-family: "TT Interphases Pro", Inter, Arial, Helvetica, sans-serif !important;
   --baseui-typography-headline-font-family: "TT Interphases Pro", Inter, Arial, Helvetica, sans-serif !important;
 }
+/* a font of the catalogue uncut.wtf (the Theme page sets data-og-fonts to its key and --og-font to its name; the font files come from Fontsource when it is chosen) */
+html[data-og-fonts]:not([data-og-fonts="apfel"], [data-og-fonts="site"]) {
+  --baseui-typography-font-family: var(--og-font), system-ui, -apple-system, "Segoe UI", sans-serif !important;
+  --baseui-typography-headline-font-family: var(--og-font), system-ui, -apple-system, "Segoe UI", sans-serif !important;
+}
 html[data-og-fonts="site"] body { letter-spacing: -0.2px; }
 html[data-og-fonts="site"] :is(h1, h2, h3, h4, h5, h6) { letter-spacing: -0.4px; }

@@ -8,9 +8,27 @@ export const LOCAL_DEFAULT = { bottombar: true, dropdowns: true, header: true };
 /** The five steps of the blue cast of the dark theme: the share of the chroma of its grays that stays. The last one is the full cast of Overgear. */
 export const TINT_STEPS = [0, 0.25, 0.5, 0.75, 1];
 export const TINT_DEFAULT = TINT_STEPS.length - 1;
-/** The font sets: the one of Overgear (Apfel Grotezk, bundled) and the one of the live site (TT Interphases Pro, linked from the overgear repository; Inter stands in until it loads). */
-export const FONT_SETS = [['apfel', 'Apfel Grotezk'], ['site', 'Overgear.com']];
+/**
+ * The sans-serif fonts of the catalogue uncut.wtf (a free typeface catalogue) that are served from a CDN under an open license (SIL OFL 1.1): the fonts of Fontsource, linked from jsdelivr,
+ * loaded when chosen and not before. The rest of the 66 sans-serif fonts of the catalogue are files on the sites of their authors: none of them can be linked. [key (the id at Fontsource), name, weights].
+ */
+export const UNCUT_FONTS = [
+  ['geist', 'Geist', [400, 500, 600, 700]], ['instrument-sans', 'Instrument Sans', [400, 500, 600, 700]], ['pretendard', 'Pretendard', [400, 500, 600, 700]],
+  ['uncut-sans', 'Uncut Sans', [400, 500, 600, 700]], ['inclusive-sans', 'Inclusive Sans', [400, 500, 600, 700]], ['tasa-orbiter', 'TASA Orbiter', [400, 500, 600, 700]],
+  ['hauora-sans', 'Hauora Sans', [400, 500, 600, 700]], ['kulim-park', 'Kulim Park', [400, 600, 700]], ['zen-kaku-gothic-new', 'Zen Kaku Gothic New', [400, 500, 700]],
+  ['hedvig-letters-sans', 'Hedvig Letters Sans', [400]],
+];
+/** The fonts of the Theme page, in the order of its list: TT Interphases Pro, the font of the live site (linked from the overgear repository; Inter stands in until it loads) comes first,
+ *  then Apfel Grotezk (bundled, the font of this showcase), then the fonts of the catalogue. The key of the live site's font is `site` (it was the name of its set). [key, name] */
+export const FONTS = [['site', 'TT Interphases Pro'], ['apfel', 'Apfel Grotezk'], ...UNCUT_FONTS.map(([key, name]) => [key, name])];
 export const FONTS_DEFAULT = 'apfel';
+const fontOf = (t) => (FONTS.some(([key]) => key === t.fonts) ? t.fonts : FONTS_DEFAULT);
+const stylesheet = (id, href) => {
+  if (document.querySelector(`link[data-font="${id}"]`)) return;
+  const link = document.createElement('link');
+  link.rel = 'stylesheet'; link.dataset.font = id; link.href = href;
+  document.head.append(link);
+};
 
 /** The theme as the page applies it: the glass of the dropdown menus alone is written when only their local setting asks for it. */
 export function resolveTheme(t) {
@@ -22,14 +40,15 @@ export function resolveTheme(t) {
 /** Writes the settings on <html>; `data-og-bottombar` tells the bottom bar whether it keeps its own floating and glass, `data-og-header` whether the header has its own blur. */
 export function applyOvergearTheme(t) {
   applyTheme(resolveTheme(t));
-  const fonts = t.fonts === 'site' ? 'site' : FONTS_DEFAULT;
+  const fonts = fontOf(t);
   document.documentElement.dataset.ogFonts = fonts;
-  if (fonts === 'site' && !document.querySelector('link[data-font="Inter"]')) {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet'; link.dataset.font = 'Inter';
-    link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap';
-    document.head.append(link);
-  }
+  if (fonts === 'site') stylesheet('Inter', 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+  // a font of the catalogue: its weights from Fontsource, and the name for overgear.css to put in the font variables
+  const uncut = UNCUT_FONTS.find(([key]) => key === fonts);
+  if (uncut) {
+    for (const weight of uncut[2]) stylesheet(`${uncut[0]}-${weight}`, `https://cdn.jsdelivr.net/npm/@fontsource/${uncut[0]}@5/${weight}.css`);
+    document.documentElement.style.setProperty('--og-font', `"${uncut[1]}"`);
+  } else document.documentElement.style.removeProperty('--og-font');
   document.documentElement.style.setProperty('--og-tint', String(TINT_STEPS[t.tint ?? TINT_DEFAULT] ?? 1));
   const local = { ...LOCAL_DEFAULT, ...t.local };
   document.documentElement.dataset.ogBottombar = local.bottombar ? 'own' : 'theme';

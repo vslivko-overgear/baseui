@@ -1,5 +1,9 @@
 # Changelog
 
+## Overgear: the fonts of the Theme page are a dropdown, with the sans-serif fonts of uncut.wtf
+
+- The font setting of the Theme page is a dropdown, not a segmented control. TT Interphases Pro (the font of the live site) comes first, then Apfel Grotezk (the font of the showcase, still the default), then the sans-serif fonts of the catalogue [uncut.wtf](https://uncut.wtf/) that can be linked under an open license (SIL OFL 1.1) from Fontsource through jsdelivr: Geist, Instrument Sans, Pretendard, Uncut Sans, Inclusive Sans, TASA Orbiter, Hauora Sans, Kulim Park, Zen Kaku Gothic New and Hedvig Letters Sans. A font is loaded when it is chosen, not before (`UNCUT_FONTS`, `FONTS` in `overgear/theme.js`); the choice sets `data-og-fonts` and `--og-font` on `<html>`, and `overgear.css` puts the name in the font variables. The other 55 sans-serif fonts of the catalogue are files on the sites of their authors (GitHub repositories, zips, shops), so none of them can be linked, and they are not in the list. Tests: `overgear/tests/fonts.test.mjs`.
+
 ## Overgear: the games of the catalog panel scroll
 
 - The column of games in the panel that the Catalog button of the desktop header opens was cut off (`overflow: hidden`) and did not scroll: with the long list of games the lower ones could not be reached. It scrolls in its own column now, as it does on the catalog page. `overgear/tools/check/catalog.mjs` (part of `npm run check`) turns the wheel over the list in both places and fails when it does not move.
