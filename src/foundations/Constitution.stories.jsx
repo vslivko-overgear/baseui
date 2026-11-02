@@ -18,7 +18,7 @@ export default {
   },
 };
 
-const CHECK = { auto: 'Found by the audit', tool: 'Found by a script', review: 'Needs a review' };
+const CHECK = { auto: 'Found by the audit', partial: 'The audit finds the clear cases, the rest needs a review', tool: 'Found by a script', review: 'Needs a review' };
 
 function Rule({ rule }) {
   return (

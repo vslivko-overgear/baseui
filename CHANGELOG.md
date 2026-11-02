@@ -4,6 +4,7 @@
 
 - `describe()` used to attach the usage guidance of `src/usage.js` (Do and Don't lines, 19 KB minified) to every component, and because it runs when a module loads, a bundler could not drop it: an app that imported only `Button` carried all of it (35.7 KB of which 19.1 KB was guidance; 16.5 KB now). The guidance is read from `usageOf(component)` in `src/usage.js` instead, by the documentation site, the docs build and the tests; `__docgenInfo` keeps the description and the props.
 - `tests/boundary.test.js` holds what must be true of baseui itself about its sublibraries; `overgear/tests` keeps only what is Overgear's, and `npm test` runs both on vitest. `tests/checks.test.js` keeps the rules, the scripts that find them and the agent defaults in step. `tools/check/fixtures.mjs` runs the audit on pages that break a rule on purpose (D12, D15, D18, M2).
+- **A new kind of check, `partial`**: the audit finds the clear cases of A4 (a custom control the keyboard cannot reach, a positive tabindex), A10 (a dialog without a name), A11 (an invalid field with no message pointing to it), U7 (a link to `#` or `javascript:`) and U10 (something to press inside a tooltip); the rest of those rules still needs a review. Of the 20 musts that were review-only, 15 are left: they are a matter of judgment (copy, states, consistency), not of markup.
 
 ## .gitignore no longer grows on every build
 

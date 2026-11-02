@@ -308,6 +308,26 @@ export function auditConstitution(root = typeof document === 'undefined' ? null 
   }
   for (const [, buttons] of groups) if (buttons.length > 1) add('U1', buttons[1], `${buttons.length} primary buttons in one place`);
 
+  // The rules marked check: partial: only the clear cases are found here (the markup that cannot be right); everything else about them still needs a review
+  const live = [...root.querySelectorAll('*')].filter((el) => !el.closest('[data-constitution-banner], [data-constitution-example], script, style') && visible(el, win) && !isDisabled(el));
+  for (const el of live) {
+    const role = el.getAttribute('role');
+    // A4 keyboard: a control that is not a real one has to be reached with a key, and nothing jumps the order
+    if (/^(button|link|tab|menuitem|checkbox|switch|radio|option)$/.test(role || '') && !/^(BUTTON|A|INPUT|SELECT|TEXTAREA|SUMMARY)$/.test(el.tagName) && !el.hasAttribute('tabindex') && !el.closest('[role="listbox"], [role="menu"], [role="tablist"], [role="radiogroup"]')) add('A4', el, `${describeEl(el)} is a ${role} that the keyboard cannot reach (no tabindex); use a real button or link`);
+    if (el.hasAttribute('tabindex') && Number(el.getAttribute('tabindex')) > 0) add('A4', el, `${describeEl(el)} has tabindex ${el.getAttribute('tabindex')}, which breaks the reading order`);
+    // A10 dialogs: a dialog has a name
+    if ((role === 'dialog' || role === 'alertdialog') && !nameOf(el)) add('A10', el, `${describeEl(el)} is a dialog without a name (aria-labelledby or aria-label)`);
+    // A11 errors are described: a field marked invalid points to its message
+    if (el.getAttribute('aria-invalid') === 'true' && (/^(INPUT|SELECT|TEXTAREA)$/.test(el.tagName) || /^(combobox|textbox)$/.test(role || ''))) {
+      const ids = `${el.getAttribute('aria-describedby') || ''} ${el.getAttribute('aria-errormessage') || ''}`.split(/\s+/).filter(Boolean);
+      if (!ids.some((id) => doc.getElementById(id)?.textContent.trim())) add('A11', el, `${describeEl(el)} is invalid but no message describes it (aria-describedby)`);
+    }
+    // U7 links navigate: a link that goes nowhere is a button
+    if (el.tagName === 'A' && !role && (!el.hasAttribute('href') || el.getAttribute('href') === '#' || /^javascript:/i.test(el.getAttribute('href')))) add('U7', el, `${describeEl(el)} is a link that goes nowhere; use a button for an action`);
+    // U10 tooltips are hints: nothing to press inside
+    if (role === 'tooltip' && el.querySelector('a, button, input, select, textarea, [tabindex]')) add('U10', el, `${describeEl(el)} is a tooltip with something to press inside it; a tooltip is a hint, put the control in the interface`);
+  }
+
   // M2 horizontal scroll
   const scroller = doc.documentElement;
   if (root === doc.body && scroller.scrollWidth > scroller.clientWidth + 1) add('M2', scroller, `the page scrolls sideways (${scroller.scrollWidth}px in ${scroller.clientWidth}px)`);

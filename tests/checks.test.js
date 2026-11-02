@@ -9,9 +9,9 @@ const idsFound = (path) => new Set([...read(path).matchAll(/\badd\('([A-Z]+\d+)'
 const runners = [...read('tools/check/all.mjs').matchAll(/\['[\w-]+', '(tools\/check\/[\w.-]+)'\]/g)].map((m) => m[1]);
 
 describe('rules and their checks', () => {
-  test('a rule marked auto is found by the audit, and the audit finds nothing else', () => {
+  test('a rule marked auto or partial is found by the audit, and the audit finds nothing else', () => {
     const found = new Set([...idsFound('src/constitution/audit.js'), ...idsFound('src/constitution/audit-tabs.js')]);
-    const auto = new Set(RULES.filter((r) => r.check === 'auto').map((r) => r.id));
+    const auto = new Set(RULES.filter((r) => r.check === 'auto' || r.check === 'partial').map((r) => r.id));
     // D17 is marked tool: its script is the one that presses the tabs (audit-tabs.js)
     const viaTool = new Set(RULES.filter((r) => r.check === 'tool' && found.has(r.id)).map((r) => r.id));
     expect([...auto].filter((id) => !found.has(id)), 'auto rules the audit never reports').toEqual([]);

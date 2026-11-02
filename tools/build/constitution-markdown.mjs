@@ -1,7 +1,7 @@
 // Formatting shared by the baseui and product-specific documentation generators.
 // This module knows no product rules.
 import { dontBody } from '../../src/constitution/rules.js';
-const CHECK = { auto: 'found by `auditConstitution()`', tool: 'found by a script', review: 'needs a review' };
+const CHECK = { auto: 'found by `auditConstitution()`', partial: 'the clear cases are found by `auditConstitution()`, the rest needs a review', tool: 'found by a script', review: 'needs a review' };
 
 export function ruleMarkdown(r) {
   return [

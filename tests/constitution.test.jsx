@@ -17,7 +17,7 @@ describe('rules', () => {
   test('every rule says what to do and what not to do, and why', () => {
     for (const r of RULES) {
       expect(['must', 'should']).toContain(r.level);
-      expect(['auto', 'tool', 'review']).toContain(r.check);
+      expect(['auto', 'partial', 'tool', 'review']).toContain(r.check);
       for (const key of ['title', 'do', 'dont', 'why', 'source']) expect(r[key], `${r.id}.${key}`).toBeTruthy();
       expect(r.dont.startsWith('Do not ') || r.dont.startsWith('Do not'), `${r.id} dont starts with "Do not"`).toBe(true);
       expect(r.signals.length, `${r.id} signals`).toBeGreaterThan(0);
@@ -106,6 +106,53 @@ describe('auditConstitution', () => {
     );
     const found = auditConstitution(container, { touch: false });
     expect(found.map((f) => f.id)).toEqual([]);
+  });
+});
+
+describe('the rules the audit finds in part (check: partial)', () => {
+  const audit = (html) => {
+    const host = document.createElement('div');
+    host.innerHTML = html;
+    document.body.append(host);
+    const found = auditConstitution(host, { touch: false });
+    host.remove();
+    return Object.fromEntries(found.map((f) => [f.id, f]));
+  };
+  test('A4: a custom control with no tabindex, and a positive tabindex', () => {
+    expect(audit('<div role="button">Open</div>').A4).toBeTruthy();
+    expect(audit('<button tabindex="3">Open</button>').A4).toBeTruthy();
+    expect(audit('<div role="button" tabindex="0">Open</div><button>Open</button><a href="/x">Go</a>').A4).toBeUndefined();
+  });
+  test('A10: a dialog needs a name', () => {
+    expect(audit('<div role="dialog"><p>Hello</p></div>').A10).toBeTruthy();
+    expect(audit('<div role="dialog" aria-labelledby="t"><h2 id="t">Delete 3 files?</h2></div>').A10).toBeUndefined();
+  });
+  test('A11: an invalid field points to its message', () => {
+    expect(audit('<label>Email <input aria-invalid="true"></label>').A11).toBeTruthy();
+    expect(audit('<label>Email <input aria-invalid="true" aria-describedby="e"></label><p id="e">Enter an address like name@site.com</p>').A11).toBeUndefined();
+  });
+  test('U7: a link that goes nowhere is a button', () => {
+    expect(audit('<a href="#">Delete</a>').U7).toBeTruthy();
+    expect(audit('<a href="javascript:void(0)">Delete</a>').U7).toBeTruthy();
+    expect(audit('<a href="/orders">Orders</a><a href="#section">Jump</a>').U7).toBeUndefined();
+  });
+  test('U10: nothing to press inside a tooltip', () => {
+    expect(audit('<div role="tooltip">Pay now <button>Pay</button></div>').U10).toBeTruthy();
+    expect(audit('<div role="tooltip">Copies the link</div>').U10).toBeUndefined();
+  });
+  test('the system fields, dialogs and links pass them', async () => {
+    const { TextInput, Dialog, Link } = await import('../src/index.jsx');
+    const { container } = render(
+      <main>
+        <h1>Page</h1>
+        <TextInput label="Email" status="error" caption="Enter an address like name@site.com" defaultValue="x" />
+        <Dialog open title="Delete 3 files?" onOpenChange={() => {}}><p>This cannot be undone</p></Dialog>
+        <Link href="/orders">Orders</Link>
+      </main>,
+    );
+    const found = auditConstitution(document.body, { touch: false }).map((f) => f.id).filter((id) => ['A4', 'A10', 'A11', 'U7', 'U10'].includes(id));
+    expect(found).toEqual([]);
+    expect(container).toBeTruthy();
   });
 });
 

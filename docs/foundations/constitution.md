@@ -95,7 +95,7 @@ Everyone can see, reach and operate the interface. Based on WCAG 2.1 AA
 - **Do:** Make everything that works with a pointer work with the keyboard, in an order that follows the reading order. Use real buttons, links and inputs
 - **Don't:** build clickable divs or spans, positive tabindex, or hover-only actions
 - **Why:** Keyboard and screen reader users, and switch users, depend on it
-- **Source:** WCAG 2.1.1, 2.4.3; needs a review
+- **Source:** WCAG 2.1.1, 2.4.3; the clear cases are found by `auditConstitution()`, the rest needs a review
 - **Requests that lead here:** clickable div; hover-only menu; actions that appear only on hover; custom control without keyboard support
 
 ### A5 Visible focus (must)
@@ -143,7 +143,7 @@ Everyone can see, reach and operate the interface. Based on WCAG 2.1 AA
 - **Do:** Use the system Dialog: it moves focus in, keeps it inside, closes on Escape and gives focus back
 - **Don't:** build a modal from a positioned div, or open one on page load
 - **Why:** A hand-made modal traps keyboard users or lets them fall behind it
-- **Source:** WCAG 2.4.3, 3.2.1; needs a review
+- **Source:** WCAG 2.4.3, 3.2.1; the clear cases are found by `auditConstitution()`, the rest needs a review
 - **Requests that lead here:** custom modal; popup on page load; modal that cannot be closed; fullscreen overlay with no close
 
 ### A11 Errors are described (must)
@@ -151,7 +151,7 @@ Everyone can see, reach and operate the interface. Based on WCAG 2.1 AA
 - **Do:** Say in words which field failed and why, next to the field, and mark it invalid for assistive technology (status="error" on the field)
 - **Don't:** show only a red border, or one generic "Something went wrong" at the top
 - **Why:** A person has to know what to fix
-- **Source:** WCAG 3.3.1; needs a review
+- **Source:** WCAG 3.3.1; the clear cases are found by `auditConstitution()`, the rest needs a review
 - **Requests that lead here:** only a red outline for errors; generic error banner for a form; no error text
 
 ### A12 Media and time (should)
@@ -227,7 +227,7 @@ A person can finish what they came for, without guessing
 - **Do:** Use a link (Link, or Button with `href`) to go to another place, and a button to do something: save, delete, submit, open a dialog
 - **Don't:** make a button that only navigates, a link that performs an action, or a clickable div for either
 - **Why:** People and assistive technology expect a link to take them somewhere and a button to change something
-- **Source:** WCAG 4.1.2; Astryx guidelines (adapted); needs a review
+- **Source:** WCAG 4.1.2; Astryx guidelines (adapted); the clear cases are found by `auditConstitution()`, the rest needs a review
 - **Requests that lead here:** a button that goes to another page; a link that deletes; clickable text that submits
 
 ### U8 The right control for the choice (should)
@@ -251,7 +251,7 @@ A person can finish what they came for, without guessing
 - **Do:** Use a tooltip for a short hint, such as the name of an icon-only button. Anything a person needs to finish the task goes in the interface
 - **Don't:** put links, buttons or required information in a tooltip, or explain a disabled control only in a tooltip
 - **Why:** A tooltip needs a hover, which touch screens do not have, and disabled controls ignore it
-- **Source:** WCAG 1.4.13; Astryx guidelines (adapted); needs a review
+- **Source:** WCAG 1.4.13; Astryx guidelines (adapted); the clear cases are found by `auditConstitution()`, the rest needs a review
 - **Requests that lead here:** explain it in a tooltip; a link in a tooltip; hide the instructions in a tooltip; tooltip on a disabled button as the explanation
 
 ### U11 Do not disable a button for empty fields (must)

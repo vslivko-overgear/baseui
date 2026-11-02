@@ -4,6 +4,7 @@
 // level   'must'   a violation makes the interface worse for people: it is always reported.
 //         'should' a strong default: a violation is reported, a reason to keep it is welcome.
 // check   'auto'   found by auditConstitution() in the browser (src/constitution/audit.js)
+//         'partial' the audit finds the clear cases (markup that cannot be right); the rest needs a review
 //         'tool'   found by a script in tools/ (named in `tool`)
 //         'review' needs a person or an agent to look at the screen
 // tools   extra scripts that also look at the rule (the row heights of D15 are measured by tools/check/sizes.mjs); `tool` and `tools` are run by tools/check/all.mjs
@@ -44,7 +45,7 @@ export const RULES = [
     do: 'Make everything that works with a pointer work with the keyboard, in an order that follows the reading order. Use real buttons, links and inputs',
     dont: 'Do not build clickable divs or spans, positive tabindex, or hover-only actions',
     why: 'Keyboard and screen reader users, and switch users, depend on it',
-    source: 'WCAG 2.1.1, 2.4.3', check: 'review',
+    source: 'WCAG 2.1.1, 2.4.3', check: 'partial',
     signals: ['clickable div', 'hover-only menu', 'actions that appear only on hover', 'custom control without keyboard support'],
   },
   {
@@ -92,7 +93,7 @@ export const RULES = [
     do: 'Use the system Dialog: it moves focus in, keeps it inside, closes on Escape and gives focus back',
     dont: 'Do not build a modal from a positioned div, or open one on page load',
     why: 'A hand-made modal traps keyboard users or lets them fall behind it',
-    source: 'WCAG 2.4.3, 3.2.1', check: 'review',
+    source: 'WCAG 2.4.3, 3.2.1', check: 'partial',
     signals: ['custom modal', 'popup on page load', 'modal that cannot be closed', 'fullscreen overlay with no close'],
   },
   {
@@ -100,7 +101,7 @@ export const RULES = [
     do: 'Say in words which field failed and why, next to the field, and mark it invalid for assistive technology (status="error" on the field)',
     dont: 'Do not show only a red border, or one generic "Something went wrong" at the top',
     why: 'A person has to know what to fix',
-    source: 'WCAG 3.3.1', check: 'review',
+    source: 'WCAG 3.3.1', check: 'partial',
     signals: ['only a red outline for errors', 'generic error banner for a form', 'no error text'],
   },
   {
@@ -175,7 +176,7 @@ export const RULES = [
     do: 'Use a link (Link, or Button with `href`) to go to another place, and a button to do something: save, delete, submit, open a dialog',
     dont: 'Do not make a button that only navigates, a link that performs an action, or a clickable div for either',
     why: 'People and assistive technology expect a link to take them somewhere and a button to change something',
-    source: 'WCAG 4.1.2; Astryx guidelines (adapted)', check: 'review',
+    source: 'WCAG 4.1.2; Astryx guidelines (adapted)', check: 'partial',
     signals: ['a button that goes to another page', 'a link that deletes', 'clickable text that submits'],
   },
   {
@@ -199,7 +200,7 @@ export const RULES = [
     do: 'Use a tooltip for a short hint, such as the name of an icon-only button. Anything a person needs to finish the task goes in the interface',
     dont: 'Do not put links, buttons or required information in a tooltip, or explain a disabled control only in a tooltip',
     why: 'A tooltip needs a hover, which touch screens do not have, and disabled controls ignore it',
-    source: 'WCAG 1.4.13; Astryx guidelines (adapted)', check: 'review',
+    source: 'WCAG 1.4.13; Astryx guidelines (adapted)', check: 'partial',
     signals: ['explain it in a tooltip', 'a link in a tooltip', 'hide the instructions in a tooltip', 'tooltip on a disabled button as the explanation'],
   },
 
