@@ -2,6 +2,7 @@
 
 ## Overgear: the checkout, payment methods as outlined tiles, the items apart
 
+- **Mini-cart on a phone is the standard `Dialog`** (a sheet): the lines and the promo code card scroll, the pay bar (the price, the bonus, the button) is its footer. On a desktop it stays the side panel. `PayBarContent` is shared by the bar, the panel and the dialog.
 - **The promo code row is 56px high** (as the large button of the page; it was 48px), in the checkout, the cart and the mini-cart.
 - **Mini-cart:** the pay bar of the phone (the price, the bonus tag, the button) is pinned at the bottom of the panel, on a desktop and on a phone; the promo code card is in the list that scrolls; the summary block is gone.
 - **Overgear: the checkout, the cart and the mini-cart share their parts** (`overgear/example/order.jsx`: the lines, the summary, the promo code card, the pay bar, the title with the count); the checkout is the base. The cart page and the mini-cart now look like it (each item a card, the summary on a card with the promo code row under it). "Add to cart" opens the mini-cart on a phone too (it was a toast); the mini-cart is mounted in the shell. `overgear/tools/check/order.mjs` compares the look of the shared parts across the three.

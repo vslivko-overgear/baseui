@@ -10,7 +10,8 @@ import { Navbar } from '../../src/components/MobileNavigation.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
 import { useToast } from '../../src/components/Toast.jsx';
 import { go, href, useMedia, useTitleUnderBar } from './util.js';
-import { OrderHead, ItemLines, OrderSummary, PayBar, PromoCard } from './order.jsx';
+import { OrderHead, ItemLines, OrderSummary, PayBar, PayBarContent, PromoCard } from './order.jsx';
+import { Dialog } from '../../src/components/Dialog.jsx';
 import { money } from './data.js';
 import { Page, PaymentLogos, PAY_BADGES, cashbackOf } from './ui.jsx';
 import { useStore } from './store.jsx';
@@ -21,17 +22,27 @@ const EmptyCart = ({ onBrowse }) => (
   <Status status="neutral" icon={<Icon name="ShoppingCart01" size={28} />} title="Your cart is empty" description="Pick a game and add a service to start" actionLabel="Browse games" onAction={onBrowse} />
 );
 
-/** The cart as a side panel (a desktop): a scrim, the lines, and the summary at the bottom. */
+/** The mini-cart: a side panel on a desktop, the standard dialog (a sheet) on a phone. The lines and the promo code card scroll; the pay bar (the price, the bonus, the button) is pinned at the bottom. */
 export function CartDrawer({ open, onClose }) {
   const store = useStore();
+  const mobile = useMedia('(max-width: 767px)');
+  const checkout = () => { onClose(); go('/checkout'); };
   useEffect(() => {
-    if (!open) return undefined;
+    if (!open || mobile) return undefined;
     const key = (e) => e.key === 'Escape' && onClose();
     document.addEventListener('keydown', key);
     const was = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     return () => { document.removeEventListener('keydown', key); document.body.style.overflow = was; };
-  }, [open]);
+  }, [open, mobile]);
+  const body = store.cart.length ? <div className="og-stack"><ItemLines /><PromoCard /></div> : <EmptyCart onBrowse={() => { onClose(); go('/catalog'); }} />;
+  if (mobile) {
+    return (
+      <Dialog open={open} onOpenChange={(o) => !o && onClose()} title={`Shopping Cart · ${store.count}`} className="og-minicart" primaryAction={store.cart.length ? <PayBarContent amount={store.total} action="Secure checkout" onClick={checkout} /> : undefined}>
+        {body}
+      </Dialog>
+    );
+  }
   if (!open) return null;
   return (
     <>
@@ -44,10 +55,10 @@ export function CartDrawer({ open, onClose }) {
         {store.cart.length ? (
           <>
             <div className="og-drawer__body og-stack"><ItemLines /><PromoCard /></div>
-            <div className="og-drawer__foot"><PayBar inline amount={store.total} action="Secure checkout" onClick={() => { onClose(); go('/checkout'); }} /></div>
+            <div className="og-drawer__foot"><PayBar inline amount={store.total} action="Secure checkout" onClick={checkout} /></div>
           </>
         ) : (
-          <div className="og-drawer__body"><EmptyCart onBrowse={() => { onClose(); go('/catalog'); }} /></div>
+          <div className="og-drawer__body">{body}</div>
         )}
       </aside>
     </>

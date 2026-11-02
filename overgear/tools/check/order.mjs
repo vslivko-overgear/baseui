@@ -33,8 +33,8 @@ const SHARED = {
   couponText: '.og-coupon [data-slot="list-item-title"]',
   paybar: '.og-paybar',
   payAmount: '.og-paybar__amount',
-  payBadge: '.og-paybar .bui-badge, .og-paybar [data-slot=badge]',
-  payButton: '.og-paybar .bui-button',
+  payBadge: '.og-paybar__in .bui-badge, .og-paybar__in [data-slot=badge]',
+  payButton: '.og-paybar__in .bui-button',
   pay: '.og-sticky .bui-card:first-child .bui-button[data-variant="primary"], .og-drawer__foot .bui-button[data-variant="primary"]',
   title: '.og-order__title',
   count: '.og-order__title + .og-caption',
@@ -74,7 +74,8 @@ for (const [width, phone] of [[390, true], [1440, false]]) {
   const home = await open('#/offer/venomous-abyss-heroic');
   await home.getByRole('button', { name: /Add to cart/ }).first().click();
   await home.waitForTimeout(700);
-  const opened = await home.locator('.og-drawer').count();
+  const PANEL = '.og-drawer, .bui-dialog__popup';   // the mini-cart: a side panel on a desktop, the standard dialog on a phone
+  const opened = await home.locator(PANEL).count();
   if (!opened) problems.push(`${where}: "Add to cart" does not open the mini-cart`);
   const miniLooks = opened ? await looks(home, phone) : {};
   for (const [name, mine] of [['cart', cartLooks], ['mini-cart', miniLooks]]) {
@@ -94,11 +95,13 @@ for (const [width, phone] of [[390, true], [1440, false]]) {
   }
   if (opened) {
     // the mini-cart: the pay bar (the price, the bonus, the button) pinned at the bottom of the panel, the promo code in the list that scrolls, no summary block
-    const mini = await home.evaluate(() => {
-      const d = document.querySelector('.og-drawer').getBoundingClientRect(); const bar = document.querySelector('.og-drawer .og-paybar')?.getBoundingClientRect();
-      const body = document.querySelector('.og-drawer__body'); const coupon = document.querySelector('.og-drawer .og-coupon');
-      return { pinned: !!bar && Math.abs(bar.bottom - d.bottom) <= 1, hasAll: !!document.querySelector('.og-drawer .og-paybar__amount') && !!document.querySelector('.og-drawer .og-paybar .bui-badge, .og-drawer .og-paybar [data-slot=badge]') && !!document.querySelector('.og-drawer .og-paybar .bui-button'), couponInList: !!coupon && body.contains(coupon), summary: !!document.querySelector('.og-drawer .og-sum__row') };
-    });
+    const mini = await home.evaluate((PANEL) => {
+      const d = document.querySelector(PANEL); const r = d.getBoundingClientRect();
+      const foot = d.querySelector('.og-paybar, .bui-dialog__actions')?.getBoundingClientRect();
+      const coupon = d.querySelector('.og-coupon'); const body = d.querySelector('.og-drawer__body, .bui-dialog__content');
+      return { dialog: d.classList.contains('bui-dialog__popup'), pinned: !!foot && Math.abs(foot.bottom - r.bottom) <= 1, hasAll: !!d.querySelector('.og-paybar__amount') && !!d.querySelector('.og-paybar__in .bui-badge, .og-paybar__in [data-slot=badge]') && !!d.querySelector('.og-paybar__in .bui-button'), couponInList: !!coupon && !!body && body.contains(coupon), summary: !!d.querySelector('.og-sum__row') };
+    }, PANEL);
+    if (mini.dialog !== phone) problems.push(`${where}: the mini-cart is ${mini.dialog ? 'a dialog on a desktop' : 'not the standard dialog on a phone'}`);
     if (!mini.pinned || !mini.hasAll) problems.push(`${where}: the mini-cart has no pay bar (price, bonus, button) pinned at the bottom (${JSON.stringify(mini)})`);
     if (!mini.couponInList) problems.push(`${where}: the promo code of the mini-cart is not a card in the list that scrolls`);
     if (mini.summary) problems.push(`${where}: the mini-cart has a summary block`);

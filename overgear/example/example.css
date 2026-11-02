@@ -460,7 +460,7 @@ a { color: inherit; }
 .og-paybar__in { display: flex; flex-direction: column; gap: var(--baseui-spacing-3); }
 .og-paybar__sum { margin: 0; display: flex; align-items: center; gap: var(--baseui-spacing-2); min-width: 0; }
 .og-paybar__amount { font: var(--baseui-typography-header-20); font-family: var(--baseui-typography-headline-font-family); }
-.og-paybar .bui-button { flex: 1; min-width: 0; }
+.og-paybar__in .bui-button { flex: 1; min-width: 0; }
 :root { --og-paybar-h: 128px; }
 /* the content leaves room for the bar: it is not hidden behind it */
 .og--mobile .og-wrap:has(.og-paybar) { padding-bottom: calc(var(--og-paybar-h) + var(--baseui-spacing-4)); }

@@ -93,10 +93,17 @@ function CashbackRow({ amount }) {
 export function PayBar({ amount, action, onClick, above, inline = false }) {
   return (
     <div className={inline ? 'og-paybar og-paybar--inline' : 'og-paybar'} style={inline ? undefined : { '--og-paybar-bottom': above ? 'var(--og-bottom)' : '0px' }}>
-      <div className="og-paybar__in">
-        <p className="og-paybar__sum"><span className="og-paybar__amount">{money(amount)}</span><Badge variant="warning-light" size="md" label={`+${cashbackOf(amount)}`} icon={<CashbackMark />} aria-label={`Cashback ${cashbackOf(amount)} OG Coins`} /></p>
-        <Button variant="primary" size="lg" textSize={16} label={action} onClick={onClick} />
-      </div>
+      <PayBarContent amount={amount} action={action} onClick={onClick} />
+    </div>
+  );
+}
+
+/** What is in the pay bar: the price with the bonus tag next to it, then the button. The footer of the dialog of the mini-cart on a phone holds it as well. */
+export function PayBarContent({ amount, action, onClick }) {
+  return (
+    <div className="og-paybar__in">
+      <p className="og-paybar__sum"><span className="og-paybar__amount">{money(amount)}</span><Badge variant="warning-light" size="md" label={`+${cashbackOf(amount)}`} icon={<CashbackMark />} aria-label={`Cashback ${cashbackOf(amount)} OG Coins`} /></p>
+      <Button variant="primary" size="lg" textSize={16} label={action} onClick={onClick} />
     </div>
   );
 }
