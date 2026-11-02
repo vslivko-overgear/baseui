@@ -1,11 +1,11 @@
 # Changelog
 
-## Overgear: the checkout, payment methods as a strip, the items apart
+## Overgear: the checkout, payment methods as outlined tiles, the items apart
 
-- **The payment methods are a strip of tiles** after "Secure Checkout", before the items and the summary: each a radio in an outline (a native radio, so the arrows and the focus work), the chosen one with a 2px outline in the selected color (white in the dark theme) and the others with the standard 1px one. All eight methods are in the strip (the "Show other payment methods" button is gone); it scrolls sideways when they do not fit, on a phone as well.
+- **The payment methods are outlined tiles** under their own heading "Payment method", after the items: each a radio (a native one, so the arrows and the focus work) in an outline, the chosen one with a 2px outline in the selected color (white in the dark theme) and the others with the standard 1px one. Five are shown and "Show other payment methods" opens the other three. (For a while they were one strip of tiles after the title; they are back after the items.)
 - **The items are cards of their own**, apart from each other, not lines in one card.
 - **The summary sticks 24px from the top** (it was 120px, the room for a header that sticks on the other pages: the checkout has none).
-- `overgear/tools/check/checkout.mjs` checks all of it on a desktop and on a phone: the strip in one row and before the items, the two outlines (their widths and colors against the tokens), that another method moves the outline and changes the fee, that the items are cards apart, and where the summary sticks (I checked that the old offset fails).
+- `overgear/tools/check/checkout.mjs` checks all of it on a desktop and on a phone: the tiles after the items under their heading, the two outlines (widths and colors against the tokens), that another method moves the outline and changes the fee, that the items are cards apart, and where the summary sticks.
 
 ## Overgear: the checkout list rows, the divider; and the audit reads oklab
 

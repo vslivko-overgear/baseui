@@ -2,8 +2,8 @@
 // The checkout and the promo code, in a real browser. A desktop: the button back (a button with its own background) and the logo are in a row with a divider under it, no band; the title
 // "Secure Checkout" is plain under the divider; there is no "Review order" and no "Order summary" heading. The promo code is a row of a list, text on the left and a chevron on the right, with no icon;
 // it opens a dialog: a wrong code is refused and the dialog stays, a right one closes it; the discount is green (the success color) in the summary; with a code applied the row has the code
-// on the right and a cross that takes it off. The payment methods are a strip of tiles after the title, before the items and the summary: each a radio in an outline, the chosen one with 2px in the selected
-// color and the others with the standard outline; the items are cards of their own; the summary sticks 24px from the top, not further.
+// on the right and a cross that takes it off. The payment methods are tiles under their own heading "Payment method", after the items: each a radio in an outline, the chosen one with 2px in the selected
+// color and the others with the standard outline (a button shows the other methods); the items are cards of their own; the summary sticks 24px from the top, not further.
 //
 //   node overgear/tools/check/checkout.mjs http://localhost:8000
 import { launch } from '../../../tools/lib/sweep.mjs';
@@ -47,21 +47,24 @@ for (const [width, phone] of [[1440, false], [390, true]]) {
   }
   const strip = await page.evaluate(() => {
     const tiles = [...document.querySelectorAll('.og-methodcard')];
-    const first = document.querySelector('.og-lines--surface > .og-line');
-    const summary = document.querySelector('.og-checkout .og-sticky');
+    const items = [...document.querySelectorAll('.og-lines--surface > .og-line')];
+    const heading = [...document.querySelectorAll('h2')].find((h) => h.textContent === 'Payment method');
     const look = (el) => { const c = getComputedStyle(el); return { width: parseFloat(c.borderTopWidth), color: c.borderTopColor, shadow: c.boxShadow }; };
     const probe = (name) => { const p = document.createElement('span'); p.style.color = `var(${name})`; document.body.append(p); const c = getComputedStyle(p).color; p.remove(); return c; };
     const on = tiles.find((t) => t.dataset.checked !== undefined); const off = tiles.find((t) => t.dataset.checked === undefined);
     return {
-      count: tiles.length, oneRow: new Set(tiles.map((t) => Math.round(t.getBoundingClientRect().top))).size === 1, radios: tiles.every((t) => t.querySelector('input[type=radio]')) && document.querySelector('[role=radiogroup]')?.getAttribute('aria-label') === 'Payment method',
-      before: !!first && tiles[0].getBoundingClientRect().bottom <= first.getBoundingClientRect().top && tiles[0].getBoundingClientRect().bottom <= summary.getBoundingClientRect().top,
+      count: tiles.length, radios: tiles.every((t) => t.querySelector('input[type=radio]')) && document.querySelector('[role=radiogroup]')?.getAttribute('aria-label') === 'Payment method',
+      headed: !!heading && heading.getBoundingClientRect().top >= items.at(-1).getBoundingClientRect().bottom && heading.getBoundingClientRect().bottom <= tiles[0].getBoundingClientRect().top,
       on: look(on), off: look(off), selected: probe('--baseui-extensions-border-selected'), standard: probe('--baseui-border-primary'),
-      items: [...document.querySelectorAll('.og-lines--surface > .og-line')].map((l) => { const r = l.getBoundingClientRect(); return { top: r.top, bottom: r.bottom, radius: parseFloat(getComputedStyle(l).borderTopLeftRadius), background: getComputedStyle(l).backgroundColor }; }),
+      items: items.map((l) => { const r = l.getBoundingClientRect(); return { top: r.top, bottom: r.bottom, radius: parseFloat(getComputedStyle(l).borderTopLeftRadius), background: getComputedStyle(l).backgroundColor }; }),
     };
   });
   const sum = (m) => m.width + (/\s(\d+)px\s+inset$/.exec(m.shadow)?.[1] ? +/\s(\d+)px\s+inset$/.exec(m.shadow)[1] : 0);
-  expectThat(strip.count >= 5 && strip.oneRow && strip.radios, `${where}: the payment methods are not a strip of radio tiles in one row (${strip.count} tiles)`);
-  if (!phone) expectThat(strip.before, 'desktop: the payment methods are not before the items and the summary');
+  expectThat(strip.count === 5 && strip.radios, `${where}: the payment methods are not five radio tiles with the others behind a button (${strip.count} tiles)`);
+  expectThat(strip.headed, `${where}: the payment methods have no heading "Payment method" of their own after the items`);
+  await page.getByRole('button', { name: 'Show other payment methods' }).click();
+  await page.waitForTimeout(200);
+  expectThat((await page.locator('.og-methodcard').count()) === 8, `${where}: the button does not show the other payment methods`);
   expectThat(sum(strip.on) === 2 && strip.on.color === strip.selected, `${where}: the chosen method does not have a 2px outline in the selected color (${JSON.stringify(strip.on)})`);
   expectThat(sum(strip.off) === 1 && strip.off.color === strip.standard, `${where}: a method that is not chosen does not have the standard 1px outline (${JSON.stringify(strip.off)})`);
   expectThat(strip.items.length >= 2 && strip.items.every((it, i, all) => it.radius >= 12 && it.background !== 'rgba(0, 0, 0, 0)' && (i === 0 || it.top > all[i - 1].bottom)), `${where}: the items are not cards of their own, apart from each other`);
@@ -109,4 +112,4 @@ for (const [width, phone] of [[1440, false], [390, true]]) {
 
 await browser.close();
 if (problems.length) { for (const p of problems) console.log(p); console.log(`\nCheckout: ${problems.length} problem${problems.length === 1 ? '' : 's'}.`); process.exit(1); }
-console.log('Checkout: the top with a divider, the strip of payment methods, the items as cards, the promo code as a row with a dialog, and the green discount.');
+console.log('Checkout: the top with a divider, the items as cards, the payment methods under their heading, the promo code as a row with a dialog, and the green discount.');

@@ -392,7 +392,7 @@ a { color: inherit; }
 .og-checkout .og-sticky { top: var(--baseui-spacing-6); }   /* the checkout has no header that sticks: the summary stays 24px from the top, not under a header that is not there */
 .og-checkout__foot { padding-block: var(--baseui-spacing-6); background: var(--baseui-background-secondary); }
 .og-checkout__foot .og-row { align-items: center; gap: var(--baseui-spacing-6); }
-.og-methods { display: flex; gap: var(--baseui-spacing-2); width: max-content; }
+.og-methods { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--baseui-spacing-2); }
 /* a payment method: a radio in an outline; the chosen one has 2px in the selected color, the others the standard outline */
 .og-methodcard { position: relative; display: flex; align-items: center; padding: var(--baseui-spacing-3) var(--baseui-spacing-4); border: 1px solid var(--baseui-border-primary); border-radius: var(--baseui-radius-2xl); cursor: pointer; }
 .og-methodcard input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }

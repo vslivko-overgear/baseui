@@ -10,7 +10,7 @@ import { Tooltip } from '../../src/components/Tooltip.jsx';
 import { Status } from '../../src/components/Status.jsx';
 import { Divider } from '../../src/components/Divider.jsx';
 import { Navbar } from '../../src/components/MobileNavigation.jsx';
-import { Bleed, ControlRow } from '../../src/components/Layout.jsx';
+import { ControlRow } from '../../src/components/Layout.jsx';
 import { Link } from '../../src/components/Link.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
 import { useToast } from '../../src/components/Toast.jsx';
@@ -198,19 +198,17 @@ const methodLabel = (m) => (
 );
 
 /** The checkout: the order, the payment method and the summary; it has a slim top bar of its own and no footer of the shop. */
-/** The payment methods as a strip of tiles, one beside another: each is a radio in an outline, the chosen one with a 2px outline in the selected color and the others with the standard one. The strip scrolls sideways when the tiles do not fit. */
-function MethodTiles({ value, onChange }) {
+/** The payment methods as tiles in a grid: each is a radio in an outline, the chosen one with a 2px outline in the selected color and the others with the standard one. */
+function MethodTiles({ value, onChange, methods }) {
   return (
-    <Bleed scroll className="og-methods-bleed">
-      <div className="og-methods" role="radiogroup" aria-label="Payment method">
-        {[...METHODS, ...MORE_METHODS].map((m) => (
-          <label key={m.id} className="og-methodcard" data-checked={value === m.id || undefined}>
-            <input type="radio" name="og-method" value={m.id} checked={value === m.id} onChange={() => onChange(m.id)} />
-            {methodLabel(m)}
-          </label>
-        ))}
-      </div>
-    </Bleed>
+    <div className="og-methods" role="radiogroup" aria-label="Payment method">
+      {methods.map((m) => (
+        <label key={m.id} className="og-methodcard" data-checked={value === m.id || undefined}>
+          <input type="radio" name="og-method" value={m.id} checked={value === m.id} onChange={() => onChange(m.id)} />
+          {methodLabel(m)}
+        </label>
+      ))}
+    </div>
   );
 }
 
@@ -218,6 +216,7 @@ export function Checkout() {
   const store = useStore();
   const { toast } = useToast();
   const [method, setMethod] = useState('card');
+  const [more, setMore] = useState(false);
   const [email, setEmail] = useState(store.user?.email || '');
   const [tried, setTried] = useState(false);
   const mobile = useMedia('(max-width: 767px)');
@@ -249,13 +248,16 @@ export function Checkout() {
         {!store.cart.length ? (
           <Page><Status status="neutral" title="Nothing to pay for" description="Your cart is empty" actionLabel="Browse games" onAction={() => go('/catalog')} /></Page>
         ) : (
-          <>
-          <MethodTiles value={method} onChange={setMethod} />
           <div className="og-co">
             <div className="og-stack og-stack--xl">
               <div className="og-stack">
                 <ul className="og-lines og-lines--cards og-lines--surface" aria-label="Order items">{store.cart.map((i) => <CartLine key={i.key} item={i} onRemove={() => store.remove(i.key)} />)}</ul>
                 {!store.user && <TextInput label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} status={tried && badEmail ? 'error' : undefined} caption={tried && badEmail ? 'Enter an email we can send the receipt to' : 'The receipt and the order chat link come here'} />}
+              </div>
+              <div className="og-stack">
+                <h2 className="og-h2">Payment method</h2>
+                <MethodTiles value={method} onChange={setMethod} methods={more ? [...METHODS, ...MORE_METHODS] : METHODS} />
+                <Button variant="ghost" width="100%" label={more ? 'Show fewer payment methods' : 'Show other payment methods'} icon={<Icon name={more ? 'ArrowUp' : 'ArrowDown'} size={20} />} onClick={() => setMore((v) => !v)} />
               </div>
               <Card variant="surface" padding={2}><Promo /></Card>
             </div>
@@ -278,7 +280,6 @@ export function Checkout() {
               </Card>
             </div>
           </div>
-          </>
         )}
         {mobile && !!store.cart.length && <PayBar label="Amount to pay" amount={amount} action="Pay" onClick={pay} />}
       </div>
