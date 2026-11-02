@@ -1,0 +1,388 @@
+/* Overgear: an example marketplace built from the baseui components, on mock data. Only tokens and the component classes.
+   Spacing is one ladder: 12 inside a group, 16 between related groups, 24 between blocks, 40 between sections. */
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; font: var(--baseui-typography-text-16-regular); background: var(--baseui-background-primary); color: var(--baseui-text-and-icon-primary); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+:root { --og-bottom: 84px; }
+.og-wrap { max-width: 1280px; margin: 0 auto; padding-inline: var(--baseui-spacing-6); }
+.og-header { position: sticky; top: 0; z-index: var(--baseui-z-index-30); background: var(--baseui-background-primary); }
+/* the header blur: the header is transparent and a layer under it blurs what scrolls beneath and fades out downwards, like the bottom bar (the setting `Header` of the Theme page; the theme glass gives it too) */
+:is([data-og-header="own"], [data-glass="on"]) .og-header { background: transparent; }
+:is([data-og-header="own"], [data-glass="on"]) .og-header::before {
+  content: ""; position: absolute; inset: 0 0 -24px; z-index: -1; pointer-events: none;
+  -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 65%, transparent); mask-image: linear-gradient(to bottom, #000 65%, transparent);
+}
+.og-top { display: flex; align-items: center; gap: var(--baseui-spacing-1); padding-block: var(--baseui-spacing-3); }
+.og-brand { display: inline-flex; align-items: center; gap: var(--baseui-spacing-2); text-decoration: none; font: var(--baseui-typography-header-24); font-family: var(--baseui-typography-headline-font-family); flex: none; }
+.og-brand__mark { width: 48px; height: 48px; border-radius: var(--baseui-radius-2xl); display: grid; place-items: center; background: var(--baseui-background-secondary); color: var(--baseui-text-and-icon-primary); }
+.og-search { flex: 1; max-width: 520px; min-width: 0; }
+.og-actions { display: flex; align-items: center; gap: var(--baseui-spacing-1); margin-inline-start: auto; }
+.og-cats { padding-bottom: 0; }
+.og-page { display: flex; flex-direction: column; gap: var(--baseui-spacing-10); padding-block: var(--baseui-spacing-8) var(--baseui-spacing-16); min-width: 0; }
+.og-stack { display: flex; flex-direction: column; gap: var(--baseui-spacing-4); min-width: 0; }
+.og-stack--lg { gap: var(--baseui-spacing-6); }
+.og-stack--xl { gap: var(--baseui-spacing-8); }
+.og-stack--related { gap: var(--bui-rel-related); }
+.og-stack--snug { gap: var(--baseui-spacing-2); }
+.og-stack--tight { gap: var(--baseui-spacing-3); }
+.og-stack--close { gap: var(--baseui-spacing-2); }
+.og-stack--hair { gap: var(--baseui-spacing-1); }
+.og-row { display: flex; align-items: center; gap: var(--baseui-spacing-3); flex-wrap: wrap; min-width: 0; }
+.og-row--between { justify-content: space-between; }
+.og-row--nowrap { flex-wrap: nowrap; }
+.og-title { margin: 0; font: var(--baseui-typography-header-40); font-family: var(--baseui-typography-headline-font-family); }
+.og-h2 { margin: 0; font: var(--baseui-typography-header-24); font-family: var(--baseui-typography-headline-font-family); }
+.og-h3 { margin: 0; font: var(--baseui-typography-text-20-semi-bold); }
+.og-text { margin: 0; font: var(--baseui-typography-text-16-regular); color: var(--baseui-text-and-icon-primary); }
+.og-meta { margin: 0; font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-secondary); }
+.og-section { display: flex; flex-direction: column; gap: var(--bui-rel-related); }
+.og-section__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--baseui-spacing-4); flex-wrap: wrap; }
+.og-hero { display: flex; flex-direction: column; gap: var(--baseui-spacing-4); align-items: center; text-align: center; padding-top: var(--baseui-spacing-2); }
+.og-hero h1 { margin: 0; max-width: 20ch; font: var(--baseui-typography-header-56); font-family: var(--baseui-typography-headline-font-family); text-wrap: balance; }
+.og-hero__head { align-items: center; }
+@keyframes og-shine { 0% { transform: scale(1) rotate(0); filter: brightness(1); } 30% { transform: scale(1.3) rotate(-10deg); filter: brightness(1.5); } 55% { transform: scale(1.12) rotate(8deg); filter: brightness(1.2); } 100% { transform: scale(1) rotate(0); filter: brightness(1); } }
+@keyframes og-spin { 0% { transform: rotateY(0) scale(1); } 50% { transform: rotateY(180deg) scale(1.25); } 100% { transform: rotateY(360deg) scale(1); } }
+@keyframes og-jump { 0% { transform: translateY(0) scaleY(1); } 18% { transform: translateY(2%) scale(1.08, 0.88); } 45% { transform: translateY(-34%) rotate(-12deg); } 70% { transform: translateY(0) rotate(6deg) scale(1.06, 0.92); } 100% { transform: translateY(0) rotate(0) scale(1); } }
+.og-hero__ico { display: inline-block; width: 0.9em; height: 0.9em; margin-inline-end: 0.12em; vertical-align: -0.12em; cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; }
+.og-hero__ico img { display: block; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+.og-hero__ico.is-playing { animation-duration: var(--baseui-duration-500); animation-timing-function: var(--baseui-ease-out); }
+.og-hero__ico.is-shine { animation-name: og-shine; }
+.og-hero__ico.is-spin { animation-name: og-spin; animation-duration: calc(var(--baseui-duration-500) * 1.4); }
+.og-hero__ico.is-jump { animation-name: og-jump; animation-duration: calc(var(--baseui-duration-500) * 1.3); }
+.og-hero__rating { margin: 0; display: inline-flex; align-items: center; gap: var(--baseui-spacing-2); }
+.og-grid { display: grid; gap: var(--baseui-spacing-4); grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--og-min, 220px)), 1fr)); }
+.og-grid--games { --og-min: 156px; gap: var(--baseui-spacing-2); }
+.og-grid--cards { --og-min: 260px; }
+.og-grid--three { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+.og-split { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: var(--baseui-spacing-8); align-items: start; }
+.og-split--right { grid-template-columns: minmax(0, 1fr) 360px; }
+.og-sticky { position: sticky; top: 120px; }
+.og-tile { display: flex; flex-direction: column; gap: var(--baseui-spacing-3); min-height: 96px; justify-content: flex-end; }
+.og-art { aspect-ratio: 16 / 9; border-radius: var(--baseui-radius-2xl); display: grid; place-items: center; color: var(--baseui-text-and-icon-primary); background: var(--baseui-background-tertiary); }
+.og-art--lg { aspect-ratio: 4 / 3; border-radius: var(--baseui-radius-3xl); }
+.og-bullets { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: var(--baseui-spacing-1); font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-primary); }
+.og-bullets li { display: flex; gap: var(--baseui-spacing-2); align-items: flex-start; }
+.og-bullets svg { flex: none; margin-top: 2px; }
+.og-price { margin: 0; font: var(--baseui-typography-header-24); font-family: var(--baseui-typography-headline-font-family); }
+.og-price--lg { margin: 0; font: var(--baseui-typography-header-40); font-family: var(--baseui-typography-headline-font-family); }
+.og-old { text-decoration: line-through; color: var(--baseui-text-and-icon-secondary); font: var(--baseui-typography-text-16-regular); }
+.og-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--bui-rel-related); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.og-step-n { width: 36px; height: 36px; border-radius: var(--baseui-radius-full); display: grid; place-items: center; background: var(--baseui-background-brand); color: var(--baseui-extensions-text-and-icon-on-brand); font: var(--baseui-typography-text-16-bold); }
+.og-steps li { display: flex; flex-direction: column; gap: var(--bui-rel-tight); }
+.og-scroller { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(280px, 1fr); gap: var(--baseui-spacing-4); overflow-x: auto; padding-bottom: var(--baseui-spacing-2); scroll-snap-type: x proximity; }
+.og-scroller > * { scroll-snap-align: start; }
+.og-footer { padding-block: var(--baseui-spacing-10); background: var(--baseui-background-secondary); }
+.og--mobile .og-links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--baseui-spacing-2); font: var(--baseui-typography-text-14-regular); }
+.og-links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--baseui-spacing-2); font: var(--baseui-typography-text-14-regular); }
+.og-links a { text-decoration: none; color: var(--baseui-text-and-icon-secondary); }
+.og-links a:hover { color: var(--baseui-text-and-icon-primary); }
+.og-table-wrap { overflow-x: auto; }
+.og-qty { display: inline-flex; align-items: center; gap: var(--baseui-spacing-2); }
+.og-bottom { position: fixed; left: 0; right: 0; bottom: 0; z-index: var(--baseui-z-index-30); }
+.og--mobile .og-wrap { padding-inline: var(--baseui-spacing-4); }
+.og--mobile .og-page { padding-bottom: var(--bui-rel-section); padding-top: var(--baseui-spacing-4); gap: var(--bui-rel-section); }
+.og--mobile.og--tab .og-wrap { padding-bottom: var(--og-bottom); }
+
+.og--mobile .og-hero h1 { font: var(--baseui-typography-header-32); }
+.og--mobile .og-title { font: var(--baseui-typography-header-28); }
+@media (max-width: 767px) {
+  .og-split, .og-split--right { display: contents; }
+  .og-sticky { position: static; }
+}
+.og-grid > .bui-card, .og-scroller > .bui-card { height: 100%; }
+
+.og-stack--2xl { gap: var(--baseui-spacing-10); }
+.og-cart { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--baseui-spacing-6); }
+.og-cart__item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--baseui-spacing-3) var(--baseui-spacing-4); align-items: start; }
+.og-cart__qty { grid-column: 1 / -1; max-width: 240px; }
+.og-promo { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--baseui-spacing-3); align-items: start; }
+.og-cats .bui-tab__line { background: transparent; }
+
+.og-login { display: flex; flex-direction: column; gap: var(--baseui-spacing-6); }
+.og-login__social { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--baseui-spacing-3); }
+.og-login__code { display: flex; }
+.og-login__legal { margin: 0; font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-secondary); }
+
+/* a game cover: a gradient of the tone of the game with soft shapes, a scrim under the name; an image url on the game replaces it */
+.og-cover { --c1: #3b3f8f; --c2: #151a4a; position: relative; display: flex; align-items: flex-end; aspect-ratio: 2 / 1; border-radius: var(--baseui-radius-2xl); overflow: hidden; background: radial-gradient(circle at 78% 28%, color-mix(in srgb, var(--c1) 80%, white) 0, transparent 34%), radial-gradient(circle at 22% 80%, var(--c1) 0, transparent 52%), linear-gradient(135deg, var(--c1), var(--c2)); background-size: cover; background-position: center; }
+.og-cover[data-tone="red"] { --c1: #a3262a; --c2: #2a0b0d; }
+.og-cover[data-tone="orange"] { --c1: #b8661d; --c2: #2c1608; }
+.og-cover[data-tone="green"] { --c1: #2d7d4f; --c2: #0c2216; }
+.og-cover[data-tone="pink"] { --c1: #a83a85; --c2: #2a0f22; }
+.og-cover[data-tone="blue-light"] { --c1: #2b7fb0; --c2: #0b2433; }
+.og-cover::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgb(0 0 0 / 70%), transparent 60%); }
+.og-cover__title { position: relative; z-index: 1; padding: var(--baseui-spacing-4); font: var(--baseui-typography-text-20-semi-bold); color: #fff; text-align: start; }
+.og--mobile .og-cover__title { font: var(--baseui-typography-text-16-semi-bold); padding: var(--baseui-spacing-3); }
+.og-nowrap { white-space: nowrap; }
+@keyframes og-orders { 0% { transform: scale(1); } 35% { transform: scale(1.12); } 100% { transform: scale(1); } }
+.og-orders { display: inline-block; font-variant-numeric: tabular-nums; font-weight: 600; }
+.og-orders.is-bump { animation: og-orders var(--baseui-duration-300) var(--baseui-ease-out); }
+
+/* the logo is a picture of the real service, shown in its own colors */
+.og-brand__full { display: block; height: 32px; width: auto; }
+/* the mark of the full logo, cropped: the box shows the first 29 of its 145 pixels (scaled to 28px high) and hides the name */
+.og-brand__crop { display: block; width: 25px; height: 28px; overflow: hidden; }
+.og-brand__crop img { display: block; height: 28px; width: auto; max-width: none; }
+
+/* marketplace tiles: two to a row on a phone, more on a wide screen */
+.og--mobile .og-price--sm { font: var(--baseui-typography-text-20-semi-bold); font-weight: 700; font-family: var(--baseui-typography-headline-font-family); margin: 0; }
+.og--mobile .og-footer { padding-bottom: calc(var(--og-bottom) + var(--baseui-spacing-8)); padding-top: var(--baseui-spacing-8); }
+
+/* skeletons of the tiles that are loading: the shape of the tile to come */
+.og-skel { width: 100%; }
+.og-skel--game { aspect-ratio: 2 / 1; border-radius: var(--baseui-radius-2xl); }
+
+.og-section--close { gap: var(--baseui-spacing-3); }
+
+.og-art { position: relative; overflow: hidden; }
+
+/* the games block: two rows of light tiles of different widths that scroll sideways together, out to the edges of the page */
+.og-grows { display: flex; flex-direction: column; gap: var(--baseui-spacing-2); width: max-content; }
+.og-grow { display: flex; gap: var(--baseui-spacing-2); }
+.og-gchip { position: relative; display: block; height: 76px; overflow: hidden; border-radius: var(--baseui-radius-custom-20); }   /* the chip fills its card, so it has the radius of the card */
+.og-gchip__name { position: absolute; top: var(--baseui-spacing-3); left: var(--baseui-spacing-3); right: 40%; z-index: 1; font: var(--baseui-typography-text-12-semi-bold); color: var(--baseui-text-and-icon-primary); text-align: start; }
+.og-gchip__art { position: absolute; top: 0; right: 0; bottom: 0; width: 62%; height: 100%; object-fit: cover; pointer-events: none; -webkit-mask-image: linear-gradient(to right, transparent, #000 55%); mask-image: linear-gradient(to right, transparent, #000 55%); }
+.og-wrap { --og-pad: var(--baseui-spacing-6); --bui-page-pad: var(--og-pad); }
+.og--mobile .og-wrap { --og-pad: var(--baseui-spacing-4); }
+/* a product that is a 3D object stands on the color of its game */
+
+/* the pictures of the tiles line up with the page edge (and the tags), the card background reaches out by its padding; the tiles are 4px apart */
+
+
+/* the tags scroll sideways in one row, out to the edges of the screen */
+.og-chips .bui-token-group__field { display: flex; width: max-content; }
+.og-chips .bui-token-group__list { flex-wrap: nowrap; }
+.og-chips .bui-token { flex: none; }
+
+.og-hero__stats { align-items: center; }
+
+/* a light blue glow behind the headline and the lines under it: a radial gradient that fades out before the edges */
+.og-hero { position: relative; isolation: isolate; }
+.og-hero::before { content: ""; position: absolute; z-index: -1; inset: calc(var(--baseui-spacing-8) * -1) calc(var(--og-pad, 24px) * -1) calc(var(--baseui-spacing-6) * -1); pointer-events: none; background: radial-gradient(ellipse 50% 50% at 50% 50%, rgb(70 130 255 / 38%), transparent 100%); }
+
+/* a page that is one block (a login prompt, an empty cart) takes the whole screen above the bottom bar and centers it */
+.og--mobile .og-page--fill { min-height: calc(100svh - var(--og-bottom)); padding-bottom: var(--og-bottom); justify-content: center; }
+
+
+/* the heart of the offer page plays a move when it is tapped */
+.og-heart { display: inline-grid; place-items: center; }
+.og-heart.is-on { animation: og-heart-on var(--baseui-duration-500) var(--baseui-ease-out); }
+.og-heart.is-off { animation: og-heart-off var(--baseui-duration-300) var(--baseui-ease-out); }
+@keyframes og-heart-on { 0% { transform: scale(0.7); } 40% { transform: scale(1.35) rotate(-8deg); } 70% { transform: scale(0.94) rotate(3deg); } 100% { transform: scale(1) rotate(0); } }
+@keyframes og-heart-off { 0% { transform: scale(1); } 40% { transform: scale(0.72); } 100% { transform: scale(1); } }
+
+/* the desktop header: 16px between the logo, the search and the icons, the search takes the width between them */
+.og:not(.og--mobile) .og-top { gap: var(--baseui-spacing-4); }
+.og:not(.og--mobile) .og-search { max-width: none; }
+/* the catalog button and the search are one group, 8px apart; the group takes the width between the logo and the buttons, 16px from each */
+.og-find { display: flex; align-items: center; gap: var(--baseui-spacing-2); flex: 1; min-width: 0; }
+.og-find .og-search { flex: 1; }
+.og:not(.og--mobile) .og-actions { margin-inline-start: 0; }
+
+/* the headline of the home page is two lines on a desktop; the trust lines are one line with a divider */
+.og:not(.og--mobile) .og-hero h1 { max-width: 32ch; }
+.og:not(.og--mobile) .og-hero__stats { flex-direction: row; align-items: center; gap: 0; }
+.og:not(.og--mobile) .og-hero__stats > p + p { margin-inline-start: var(--baseui-spacing-4); padding-inline-start: var(--baseui-spacing-4); border-inline-start: 1px solid var(--baseui-border-primary); }
+
+/* the catalog of a desktop: the games on the left, the kinds of offers of the chosen game on the right */
+.og-catalog { display: grid; grid-template-columns: minmax(280px, 360px) auto minmax(0, 1fr); gap: var(--baseui-spacing-8); align-items: start; }
+.og-catalog > .bui-divider { align-self: stretch; height: auto; }
+.og-catalog__title { margin: 0; font: var(--baseui-typography-header-32); font-family: var(--baseui-typography-headline-font-family); }
+/* the search is smaller (the small field) with the text of 16px */
+.og-catalog__search .bui-input, .og-catalog__search .bui-field__label { font-size: 16px; }
+.og-catalog__games { --bui-list-bleed: 0px; max-height: calc(100vh - 280px); overflow-y: auto; scrollbar-width: thin; }   /* the highlight of a row stays inside the scrolling box, it is not cut */
+
+/* the catalog of a desktop: a panel under the header that the Catalog button opens and closes, over a scrim */
+.og-catalog-modal { position: fixed; top: var(--og-header-h, 72px); bottom: 0; left: 0; right: 0; z-index: 1; display: flex; flex-direction: column; padding-block: var(--baseui-spacing-4) var(--baseui-spacing-6); background: var(--baseui-background-primary); }
+.og-catalog-modal > .og-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; width: 100%; }
+.og-catalog-modal .og-catalog { flex: 1; min-height: 0; align-items: stretch; }
+.og-catalog-modal .og-catalog__left, .og-catalog-modal .og-catalog__right { min-height: 0; }
+.og-catalog-modal .og-catalog__games { flex: 1; min-height: 0; overflow: hidden; }
+.og-catalog-modal .og-catalog__games { max-height: none; height: 100%; }
+.og-catalog-modal .og-catalog__right { overflow-y: auto; scrollbar-width: thin; }
+
+/* a desktop: the headings of the sections are one size up (24 to 28); the tag on a game tile stands at the bottom left, under the name */
+.og:not(.og--mobile) .og-h2 { font: var(--baseui-typography-header-28); font-family: var(--baseui-typography-headline-font-family); }
+.og-gchip__tag { display: flex; position: absolute; left: var(--baseui-spacing-3); bottom: var(--baseui-spacing-3); z-index: 1; }
+
+/* the home page on a desktop: the main blocks are 48px apart, a little more air than the other pages */
+.og:not(.og--mobile) .og-page--roomy { gap: var(--baseui-spacing-12); }
+.og-footer .og-stack--lg { gap: var(--bui-rel-section); }
+.og--mobile .og-grid--three, .og--mobile .og-steps { gap: var(--baseui-spacing-3); }
+
+.og-pay { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--baseui-spacing-4); }
+.og-pay img { display: block; height: 28px; width: auto; }
+
+.og-footer__cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--bui-rel-section) var(--bui-rel-group); }
+.og--mobile .og-footer__cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.og-footer__games { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--baseui-spacing-2) var(--bui-rel-group); }
+.og--mobile .og-footer__games { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.og-caps { margin: 0; font: 700 12px / 16px var(--baseui-typography-font-family); letter-spacing: 0.12em; text-transform: uppercase; color: var(--baseui-text-and-icon-secondary); }
+.og-caption { margin: 0; font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-secondary); }
+.og-caption--dim { color: var(--baseui-text-and-icon-secondary); }
+.og-footer__logo { display: block; height: 36px; width: auto; filter: url(#og-tint); }
+.og-footer__bottom { align-items: center; gap: var(--bui-rel-group); flex-wrap: wrap; }
+.og-footer__bottom .og-pay { justify-content: flex-end; gap: var(--bui-rel-group); }
+.og-footer__bottom .og-pay img { height: 24px; }
+.og-social { list-style: none; margin: 0; padding: 0; display: flex; gap: var(--baseui-spacing-2); }
+.og-footer .og-links { font: var(--baseui-typography-text-14-regular); }
+
+/* desktop: a 14px name on the game chips, the picture grows a little on hover */
+.og:not(.og--mobile) .og-gchip__name { font: var(--baseui-typography-text-14-semi-bold); }
+.og-gchip__art { transform-origin: right center; transition: transform var(--baseui-duration-300) var(--baseui-ease-out); }
+@media (hover: hover) { .bui-card:hover .og-gchip__art { transform: scale(1.08); } }
+
+/* desktop: the part of the home page from "Overgear is streamlined" down has bigger headings and more air */
+.og-about { display: flex; flex-direction: column; gap: var(--baseui-spacing-20); }
+.og:not(.og--mobile) .og-about .og-h2 { font: var(--baseui-typography-header-40); font-family: var(--baseui-typography-headline-font-family); }
+.og:not(.og--mobile) .og-about .og-section { gap: var(--bui-rel-group); }
+.og:not(.og--mobile) .og-about .og-h3 { font: var(--baseui-typography-header-24); font-family: var(--baseui-typography-headline-font-family); }
+.og--mobile .og-about { gap: var(--baseui-spacing-8); }
+.og--mobile .og-page--roomy { gap: var(--bui-rel-section); }
+.og-lead { display: flex; flex-direction: column; gap: var(--baseui-spacing-10); }
+.og:not(.og--mobile) .og-lead { gap: var(--baseui-spacing-12); }
+.og--mobile .og-lead { gap: var(--baseui-spacing-8); }
+.og:not(.og--mobile) .og-page--roomy { gap: calc(var(--baseui-spacing-20) + var(--baseui-spacing-4)); }
+.og:not(.og--mobile) .og-steps .og-h3 { font: var(--baseui-typography-header-20); font-family: var(--baseui-typography-headline-font-family); }
+
+/* the social buttons of the footer: the secondary text color, the mark in the color of the footer background */
+.og-social [data-slot="icon-button"], .og-social [data-slot="icon-button"] svg { color: var(--baseui-background-secondary); }
+.og-social [data-slot="icon-button"] { background: var(--baseui-text-and-icon-secondary); }
+.og-social [data-slot="icon-button"]:hover { background: var(--baseui-text-and-icon-primary); }
+
+.og-trust { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--bui-rel-related); }
+.og-trust li { display: flex; gap: var(--baseui-spacing-3); align-items: flex-start; }
+.og-trust svg { flex: none; }
+.og-trust__title { margin: 0; font: var(--baseui-typography-text-14-semi-bold); color: var(--baseui-text-and-icon-primary); }
+.og-art__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* the rating: one star the size of the text, 4px before the number; the count of ratings is beside the number */
+.og-rate { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); }
+.og-rate__star { flex: none; color: var(--baseui-text-and-icon-primary); }
+.og-rate__text { display: inline-flex; align-items: baseline; gap: var(--baseui-spacing-1); font: var(--baseui-typography-text-14-regular); }
+.og-rate[data-size="md"] .og-rate__text { font: var(--baseui-typography-text-16-regular); }
+.og-rate__value { color: var(--baseui-text-and-icon-primary); }
+.og-rate__count { color: var(--baseui-text-and-icon-secondary); }
+.og-rate__text--md { display: inline-flex; font: var(--baseui-typography-text-16-regular); }
+
+/* the second row of the purchase card: the cart button stretched up to the heart */
+.og-buyrow { display: flex; gap: var(--baseui-spacing-2); align-items: center; }
+.og-buyrow > :first-child { flex: 1; min-width: 0; }
+.og-buyrow > :last-child { flex: none; }
+
+.og-stars { display: inline-flex; gap: var(--baseui-spacing-1); color: var(--baseui-extensions-text-and-icon-warning); }
+.og-arrows { display: flex; gap: var(--baseui-spacing-2); }
+.og--mobile .og-arrows { display: none; }
+
+/* the hiring block: a heading, a text and a button, centered on a card */
+.og-hire { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--bui-rel-related); }
+.og-hire p { max-width: 64ch; }
+.og--mobile .og-hire { gap: var(--bui-rel-related); }
+
+/* a page that starts with breadcrumbs: the crumbs are 4px higher, and the title is 16px under them (it was 8px) */
+.og-stack--crumbs { gap: var(--baseui-spacing-4); }
+.og-page--crumbs { padding-top: calc(var(--baseui-spacing-8) - 4px); }
+.og--mobile .og-page--crumbs { padding-top: calc(var(--baseui-spacing-4) - 4px); }
+
+/* the chips of the subcategories and the sorting chip are one row: the chips scroll, the sorting stays at the right end; on a phone the sorting goes under them */
+.og-chiprow { display: flex; align-items: center; gap: var(--bui-rel-related); }
+.og-chiprow > .bui-bleed { flex: 1; min-width: 0; }
+.og-chiprow > :last-child { flex: none; }
+.og--mobile .og-chiprow { flex-direction: column; align-items: stretch; gap: var(--bui-rel-related); }
+.og--mobile .og-chiprow > :last-child { align-self: flex-start; }
+.og-count { margin-inline-start: var(--baseui-spacing-1); color: var(--baseui-text-and-icon-secondary); }
+
+/* the text inside the sections of an offer (about, requirements, reviews) is 16px */
+.og-offer-info .og-bullets, .og-offer-info .og-text, .og-offer-info .bui-list__title, .og-offer-info .bui-list__subtitle { font: var(--baseui-typography-text-16-regular); }
+.og-offer-info .og-bullets svg { margin-top: 4px; }
+
+/* the picture of an offer is a square before the title; the title and its line stay together at its right */
+.og-head-row { display: flex; align-items: center; gap: var(--bui-rel-related); }
+.og-art--square { flex: none; width: 80px; height: 80px; aspect-ratio: 1; border-radius: var(--baseui-radius-xl); }
+.og--mobile .og-art--square { width: 60px; height: 60px; border-radius: var(--baseui-radius-lg); }
+
+/* the cashback tag sits at the right of the price */
+.og-pricerow { display: flex; flex-wrap: wrap; align-items: center; gap: var(--bui-rel-related); }
+
+/* the catalog of a game: quick links, then the groups of offers as blocks in columns (a heading, the kinds under it) */
+.og-quick { display: flex; flex-wrap: wrap; gap: var(--baseui-spacing-2); }
+.og--mobile .og-quick { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+.og-blocks { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--bui-rel-section) var(--bui-rel-group); }
+.og-block { display: flex; flex-direction: column; gap: var(--bui-rel-related); min-width: 0; }
+.og-block__title { margin: 0; font: var(--baseui-typography-text-16-semi-bold); font-weight: 600; }
+.og-block__title a { color: var(--baseui-text-and-icon-primary); text-decoration: none; }
+.og-block__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--baseui-spacing-2); font: var(--baseui-typography-text-14-regular); }
+.og-block__list a { color: var(--baseui-text-and-icon-secondary); text-decoration: none; }
+.og-block a:hover { color: var(--baseui-text-and-icon-primary); }
+.og-stack--group { gap: var(--bui-rel-group); }
+.og-catalog__right.og-stack { gap: var(--baseui-spacing-8); }
+
+/* desktop header: the Catalog and Log in buttons and the search have 16px text (a phone keeps its sizes) */
+.og:not(.og--mobile) .og-header .bui-button[data-text] { font: var(--baseui-typography-text-16-semi-bold); }
+.og:not(.og--mobile) .og-header .og-search .bui-input, .og:not(.og--mobile) .og-header .og-search .bui-field__label { font-size: 16px; }
+
+/* the cart: the lines of an order, the summary, the side panel */
+.og-lines { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--bui-rel-group); }
+.og-line { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; gap: var(--baseui-spacing-3); align-items: start; }
+.og-line__pic { position: relative; width: 56px; height: 56px; border-radius: var(--baseui-radius-lg); overflow: hidden; display: grid; place-items: center; background: var(--baseui-background-tertiary); }
+.og-line__pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.og-line__body { display: flex; flex-direction: column; gap: var(--baseui-spacing-1); min-width: 0; }
+.og-line__head { display: flex; justify-content: space-between; gap: var(--baseui-spacing-3); }
+.og-line__title { font: var(--baseui-typography-text-16-semi-bold); }
+.og-line__price { font: var(--baseui-typography-text-16-semi-bold); white-space: nowrap; }
+.og-line__meta { margin: 0; display: flex; align-items: center; gap: var(--baseui-spacing-1); font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-secondary); }
+.og-line__meta svg { flex: none; }
+.og-sum__row { display: flex; justify-content: space-between; align-items: center; gap: var(--baseui-spacing-3); font: var(--baseui-typography-text-16-regular); }
+.og-sum__label { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); color: var(--baseui-text-and-icon-secondary); }
+.og-sum__row--soft .og-sum__label, .og-sum__row--soft .og-sum__value { font: var(--baseui-typography-text-14-regular); }
+.og-sum__row--big { font: var(--baseui-typography-text-20-semi-bold); font-family: var(--baseui-typography-headline-font-family); font-weight: 700; }
+.og-sum__hint { display: inline-flex; color: var(--baseui-text-and-icon-secondary); }
+.og-sum__coins { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); font-weight: 600; }
+.og-scrim { position: fixed; inset: 0; z-index: var(--baseui-z-index-30); background: rgb(0 0 0 / 0.6); }
+.og-drawer { position: fixed; top: 0; right: 0; bottom: 0; z-index: calc(var(--baseui-z-index-30) + 1); width: min(440px, 100vw); display: flex; flex-direction: column; background: var(--baseui-background-secondary); }
+.og-drawer__head { display: flex; align-items: center; justify-content: space-between; gap: var(--baseui-spacing-3); padding: var(--baseui-spacing-5); }
+.og-drawer__body { flex: 1; min-height: 0; overflow-y: auto; padding: 0 var(--baseui-spacing-5) var(--baseui-spacing-5); }
+.og-drawer__foot { padding: var(--baseui-spacing-5); background: var(--baseui-background-tertiary); }
+
+/* the checkout: a slim top bar, the order and the payment on the left, the summary on the right */
+.og-checkout { min-height: 100vh; display: flex; flex-direction: column; }
+.og-checkout__logo { display: inline-flex; padding-block: var(--baseui-spacing-5); }
+.og-checkout__bar { background: var(--baseui-background-secondary); }
+.og-checkout__bar-in { display: flex; align-items: center; gap: var(--baseui-spacing-4); padding-block: var(--baseui-spacing-6); }
+.og-co { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: var(--baseui-spacing-12); align-items: start; padding-block: var(--baseui-spacing-8) var(--baseui-spacing-16); }
+.og-checkout > .og-wrap:nth-of-type(2) { flex: 1; }
+.og-checkout__foot { padding-block: var(--baseui-spacing-6); background: var(--baseui-background-secondary); }
+.og-checkout__foot .og-row { align-items: center; gap: var(--baseui-spacing-6); }
+.og-method { display: inline-flex; align-items: center; gap: var(--baseui-spacing-3); }
+.og-method__tile { width: 40px; height: 40px; flex: none; display: grid; place-items: center; border-radius: var(--baseui-radius-lg); background: var(--baseui-background-tertiary); font: var(--baseui-typography-text-16-semi-bold); }
+.og-method__tile img { width: 28px; height: auto; }
+.og-method__name { font-weight: 600; }
+.og--mobile .og-co { grid-template-columns: minmax(0, 1fr); gap: var(--bui-rel-section); padding-top: var(--bui-rel-group); }
+.og--mobile .og-checkout__foot .og-row { flex-direction: column; align-items: flex-start; }
+.og-checkout > .og-wrap { width: 100%; }
+.og-checkout .bui-radio { align-items: center; }
+
+/* the cart panel: the count after the title is secondary and regular; every line lies on a card; the left corners of the panel are round */
+.og-h3__count { font-weight: 400; color: var(--baseui-text-and-icon-secondary); }
+.og-lines--cards { gap: var(--bui-rel-related); }
+.og-lines--cards > .og-line { padding: var(--baseui-spacing-4); border-radius: var(--baseui-radius-2xl); background: var(--baseui-background-tertiary); }
+.og:not(.og--mobile) .og-drawer { border-radius: var(--baseui-radius-3xl) 0 0 var(--baseui-radius-3xl); overflow: hidden; }
+
+/* the title of the cart panel is bold */
+.og-drawer__head .og-h3 { font-weight: 700; }
+
+/* the catalog icon: the lines of a menu turn into a cross and back (the top and the bottom line move to the middle and turn by 45 degrees, the middle one goes out) */
+.og-morph line { transform-box: fill-box; transform-origin: center; transition: transform var(--baseui-duration-300) var(--baseui-ease-out), opacity var(--baseui-duration-200, 200ms) var(--baseui-ease-out); }
+.og-morph[data-open] .og-morph__top { transform: translateY(6px) rotate(45deg) scaleX(0.943); }
+.og-morph[data-open] .og-morph__bottom { transform: translateY(-6px) rotate(-45deg) scaleX(0.943); }
+.og-morph[data-open] .og-morph__mid { transform: scaleX(0); opacity: 0; }
+[data-motion="off"] .og-morph line { transition: none; }
+
+/* the content of a card on its middle line */
+.og-center { align-items: center; text-align: center; }
+.og-center > .og-stack { align-items: center; }
+.og-center img { display: block; object-fit: contain; }
+
+/* a review is main text: the subtitle of its row is set in Primary */
+.og-reviews .bui-list__subtitle { color: var(--baseui-text-and-icon-primary); }

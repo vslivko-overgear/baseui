@@ -1,0 +1,69 @@
+/* The font of Overgear: Apfel Grotezk by Collletttivo (SIL Open Font License 1.1, see fonts/LICENSE.txt). It is the heading font and the text font of the pages that load this file. */
+/* The three weights of the family: Regular 400, Mittel 500 (Semi-Bold, 500 to 600), Fett 700 (Bold). Satt is not used. */
+@font-face { font-family: "Apfel Grotezk"; font-weight: 400; font-style: normal; font-display: swap; src: url("fonts/ApfelGrotezk-Regular.woff2") format("woff2"); }
+@font-face { font-family: "Apfel Grotezk"; font-weight: 500 600; font-style: normal; font-display: swap; src: url("fonts/ApfelGrotezk-Mittel.woff2") format("woff2"); }
+@font-face { font-family: "Apfel Grotezk"; font-weight: 700 900; font-style: normal; font-display: swap; src: url("fonts/ApfelGrotezk-Fett.woff2") format("woff2"); }
+/* The second font set, "Overgear.com": the one of the live site, TT Interphases Pro for the headings and the text (a variable font, 1 to 1000), with the tracking of the site:
+   -0.4px on the headings, -0.2px on the text. The font file is not in this repository: it is linked from the repository dalwoo-ru/overgear (a public repository of the
+   project, raw.githubusercontent.com sends the CORS header the browser asks for), pinned to a commit so the address does not move. The file is the one of overgear.com. */
+@font-face { font-family: "TT Interphases Pro"; font-weight: 1 1000; font-style: normal; font-display: swap; src: local("TT Interphases Pro"), url("https://raw.githubusercontent.com/dalwoo-ru/overgear/a0373607e594a5281dfeb168d0806132eb032941/assets/fonts/tt-interphases.woff2"); }
+:root {
+  /* !important: the theme settings of the documentation site write the fonts inline, and Overgear keeps its own */
+  --baseui-typography-font-family: "Apfel Grotezk", system-ui, -apple-system, "Segoe UI", sans-serif !important;
+  --baseui-typography-headline-font-family: "Apfel Grotezk", system-ui, -apple-system, "Segoe UI", sans-serif !important;
+}
+
+/* The colors of Overgear. They answer only to the pages that load this file (the showcase and the example), not to the rest of the site.
+   The light theme stays the default one; the dark theme is graphite with a slight blue cast: a deep ground, bluish gray layers and a soft cool-white text. */
+[data-theme="dark"] {
+  --baseui-text-and-icon-primary: #ededf5;
+  --baseui-text-and-icon-secondary: #a7a7c8;
+  --baseui-text-and-icon-disabled: #676b8b;
+  --baseui-text-and-icon-accent: #8b93ff;
+  --baseui-background-primary: #050622;
+  --baseui-background-secondary: #131632;
+  --baseui-background-tertiary: #1e2242;
+  --baseui-background-disabled: #293054;
+  --baseui-background-accent: #6a72ff;
+  --baseui-background-primary-hover: #0b0d2a;
+  --baseui-background-secondary-hover: #191c3a;
+  --baseui-background-tertiary-hover: #262b4d;
+  --baseui-border-primary: #293054;
+  --baseui-border-primary-hover: #353d66;
+  --baseui-border-accent: #3d4366;
+  --baseui-border-disabled: #1e2242;
+  --baseui-extensions-background-surface: #0b0d2b;
+  --baseui-extensions-background-surface-hover: #131632;
+}
+
+/* The blue cast of the dark theme has five steps. The full cast (step 5) is the navy scale of overgear.com (#050622, #1e2242, #293054, text #ededf5 and #a7a7c8);
+   step 1 is a neutral gray of the same lightness as the first graphite of Overgear. --og-tint (0, .25, .5, .75, 1; the Theme and Colors pages set it) is how much
+   of the navy is mixed in. The accent blue is not part of it. A browser without relative colors keeps the full cast. */
+@supports (color: oklch(from #000 l 0 h)) {
+  [data-theme="dark"] {
+    --baseui-text-and-icon-primary: color-mix(in oklab, #ededf5 calc(var(--og-tint, 1) * 100%), oklch(from #eceff5 l 0 h));
+    --baseui-text-and-icon-secondary: color-mix(in oklab, #a7a7c8 calc(var(--og-tint, 1) * 100%), oklch(from #9aa3b5 l 0 h));
+    --baseui-text-and-icon-disabled: color-mix(in oklab, #676b8b calc(var(--og-tint, 1) * 100%), oklch(from #5f6778 l 0 h));
+    --baseui-background-primary: color-mix(in oklab, #050622 calc(var(--og-tint, 1) * 100%), oklch(from #11141a l 0 h));
+    --baseui-background-secondary: color-mix(in oklab, #131632 calc(var(--og-tint, 1) * 100%), oklch(from #1c2029 l 0 h));
+    --baseui-background-tertiary: color-mix(in oklab, #1e2242 calc(var(--og-tint, 1) * 100%), oklch(from #262b37 l 0 h));
+    --baseui-background-disabled: color-mix(in oklab, #293054 calc(var(--og-tint, 1) * 100%), oklch(from #303644 l 0 h));
+    --baseui-background-primary-hover: color-mix(in oklab, #0b0d2a calc(var(--og-tint, 1) * 100%), oklch(from #181b22 l 0 h));
+    --baseui-background-secondary-hover: color-mix(in oklab, #191c3a calc(var(--og-tint, 1) * 100%), oklch(from #232835 l 0 h));
+    --baseui-background-tertiary-hover: color-mix(in oklab, #262b4d calc(var(--og-tint, 1) * 100%), oklch(from #2e3442 l 0 h));
+    --baseui-border-primary: color-mix(in oklab, #293054 calc(var(--og-tint, 1) * 100%), oklch(from #2a303c l 0 h));
+    --baseui-border-primary-hover: color-mix(in oklab, #353d66 calc(var(--og-tint, 1) * 100%), oklch(from #384050 l 0 h));
+    --baseui-border-accent: color-mix(in oklab, #3d4366 calc(var(--og-tint, 1) * 100%), oklch(from #3d4658 l 0 h));
+    --baseui-border-disabled: color-mix(in oklab, #1e2242 calc(var(--og-tint, 1) * 100%), oklch(from #262b36 l 0 h));
+    --baseui-extensions-background-surface: color-mix(in oklab, #0b0d2b calc(var(--og-tint, 1) * 100%), oklch(from #161a22 l 0 h));
+    --baseui-extensions-background-surface-hover: color-mix(in oklab, #131632 calc(var(--og-tint, 1) * 100%), oklch(from #1c212b l 0 h));
+  }
+}
+
+/* the font set of the site (the Theme page sets data-og-fonts="site" on <html>) */
+html[data-og-fonts="site"] {
+  --baseui-typography-font-family: "TT Interphases Pro", Inter, Arial, Helvetica, sans-serif !important;
+  --baseui-typography-headline-font-family: "TT Interphases Pro", Inter, Arial, Helvetica, sans-serif !important;
+}
+html[data-og-fonts="site"] body { letter-spacing: -0.2px; }
+html[data-og-fonts="site"] :is(h1, h2, h3, h4, h5, h6) { letter-spacing: -0.4px; }

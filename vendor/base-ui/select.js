@@ -1,0 +1,2 @@
+import { select as M } from '../base-ui.js';
+export const { Select, SelectArrowDataAttributes, SelectBackdropDataAttributes, SelectIconDataAttributes, SelectItemDataAttributes, SelectItemIndicatorDataAttributes, SelectPopupDataAttributes, SelectPositionerCssVariables, SelectPositionerDataAttributes, SelectScrollDownArrowDataAttributes, SelectScrollUpArrowDataAttributes, SelectSeparatorDataAttributes, SelectTriggerDataAttributes, SelectValueDataAttributes } = M;

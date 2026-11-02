@@ -1,0 +1,6 @@
+{
+  "trailingSlash": true,
+  "installCommand": "npm install",
+  "buildCommand": "node tools/build/js.mjs",
+  "outputDirectory": "."
+}

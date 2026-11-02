@@ -1,0 +1,147 @@
+# baseui
+
+> A design system on Base UI: foundations, components and a documentation site built from its own components. Zero build, ES modules, tokens in CSS variables.
+
+## Use
+
+- Read `CONSTITUTION.md` before building a prototype: the design rules, and what to do when a request breaks one (warn in the answer and put a ConstitutionBanner across the top of the prototype).
+- Load `tokens.css` and `src/components.css`; set `data-theme="light|dark"` on `<html>`.
+- Import components from `src/index.js`.
+- Every component documents its props with `describe()`; the pages below are generated from it.
+
+
+## Templates
+
+- [Templates](docs/templates/templates.md): Ready pages built from the components of the system, with mock data
+- [Analytics Dashboard](docs/templates/analytics-dashboard.md): Three bands: headline tiles, then charts, then supporting tables, all read from one filter bar. A summary surface rather than a drill-down
+- [Data Dashboard](docs/templates/data-dashboard.md): Comparison-heavy analytics behind a persistent filter bar: tiles that carry a sparkline and period-over-period deltas, then segmented breakdowns
+- [Executive Summary Dashboard](docs/templates/executive-summary-dashboard.md): A report-shaped page: a scorecard of headline numbers with deltas and status colors, goal bars, a trend grid and a written commentary column
+- [Funnel & Cohort Dashboard](docs/templates/funnel-cohort-dashboard.md): Analytics for sequence and retention: a staged funnel that reads as drop-off between steps, and a cohort matrix drawn as a heatmap
+- [Portfolio Dashboard](docs/templates/portfolio-dashboard.md): Holdings at a glance: total value, an allocation breakdown, a performance line and a sortable table of positions
+- [Project Status Dashboard](docs/templates/project-status-dashboard.md): Where every project stands: health by status, progress against milestones, who is blocked and what ships next
+- [Service Monitoring Dashboard](docs/templates/service-monitoring-dashboard.md): Uptime and latency for a set of services: a status grid, response time charts, an incident banner and a list of recent events
+- [Searchable Table](docs/templates/searchable-table.md): A flat collection with one search field above it: results narrow as you type, with an empty state when nothing matches
+- [Filterable Table](docs/templates/filterable-table.md): Progressive filtering over a flat collection: filter chips that stack, a saved view and a detail panel for the selected row
+- [Grouped Table](docs/templates/grouped-table.md): Rows bundled into collapsible sections with a count per group, so a long list reads as a few blocks
+- [Collapsible Table](docs/templates/collapsible-table.md): Several tables on one page, each in a collapsible card with its own columns, for groups that do not share a schema
+- [Inbox Table](docs/templates/inbox-table.md): A two-pane message queue: the list indexes a reading pane, and replying opens a composer that leaves the list live
+- [Comparison Table](docs/templates/comparison-table.md): Candidates in the columns and criteria in grouped rows, with a pinned label column and the best value in each row marked
+- [Contact Form](docs/templates/contact-form.md): A flat single-column form that mixes control types and ends on one full-width submit: no steps, no branching
+- [Two-column Form](docs/templates/two-column-form.md): Fields that belong together sit side by side, with a section title for each group and one action row at the end
+- [Checkout Form](docs/templates/checkout-form.md): A long sectioned form beside a summary that stays in view and recalculates as fields change
+- [Checkout Wizard](docs/templates/checkout-wizard.md): Cart, order and payment as steps, with a running summary that recalculates and validation before every advance
+- [Form Wizard](docs/templates/form-wizard.md): A linear form, one panel at a time, with a progress track above so every step keeps the full width; a step left broken stays flagged
+- [Vertical Wizard](docs/templates/vertical-wizard.md): Steps listed down the side with the current panel beside them: completed steps stay reachable, the rest are locked
+- [Inline Wizard](docs/templates/inline-wizard.md): A short flow inside a card on the page: steps swap in place, without a dialog or a new page
+- [Dialog Wizard](docs/templates/dialog-wizard.md): Two to four short steps in a dialog launched from the page, which stays where it was
+- [Settings Form](docs/templates/settings-form.md): One long settings page of sections, each with its fields, and a single save row that stays within reach
+- [Settings Panels](docs/templates/settings-panels.md): Settings split into panels: a list of areas on the left and the chosen area on the right, saved as you go
+- [Settings Dialog](docs/templates/settings-dialog.md): Preferences in a dialog with tabs, opened from the page and closed without losing the place underneath
+- [Login Card](docs/templates/login-card.md): A centered card with email and password, a remembered-device switch and one primary action
+- [Login Split](docs/templates/login-split.md): A sign-in form on one half and a picture with a short promise on the other
+- [Login SSO](docs/templates/login-sso.md): Sign-in through identity providers first, with the password form folded under a divider
+- [Kanban Board](docs/templates/kanban-board.md): Columns of cards by stage, with a count per column, avatars and labels on every card
+- [File Explorer](docs/templates/file-explorer.md): A folder tree beside a file list, with breadcrumbs, a list or grid switch and a details pane for the selected file
+- [Centered Hero](docs/templates/centered-hero.md): A symmetrical stack: headline, a short blurb and two actions, resting on one wide picture with nothing on the flanks
+- [Gallery Hero](docs/templates/gallery-hero.md): The same centered stack, resolving into a grid of several pictures so the imagery reads as a set
+- [Documentation Catalog](docs/templates/documentation-catalog.md): A reference landing that is pure wayfinding: a banner above a grid of category cards that link into sections
+- [Documentation Design](docs/templates/documentation-design.md): An article that alternates prose with live examples: a preview, a property table, paired do and don’t comparisons and a code block
+- [Documentation Technical](docs/templates/documentation-technical.md): A reference article in numbered steps with code at each stage, and callout cards for prerequisites and next links
+- [Order Detail](docs/templates/order-detail.md): One order in full: its status and timeline, the items, the totals, the addresses and the actions that are still possible
+- [Product Detail](docs/templates/product-detail.md): A product page: gallery, price, options, an add-to-cart action, details in tabs and a rating summary
+- [Work Item Detail](docs/templates/work-item-detail.md): A ticket page: title, description, activity with comments, and a side column of status, assignee, labels and dates
+- [AI Chat Conversation](docs/templates/ai-chat-conversation.md): A transcript of alternating turns with rich content inline, beside a panel that holds the generated result
+- [AI Chat Landing](docs/templates/ai-chat-landing.md): The empty counterpart to a transcript: one composer in the middle and suggestion chips instead of history
+- [Card Grid](docs/templates/card-grid.md): A searchable grid of cards with filter tabs and a real empty state: uniform tiles, narrowing in place
+- [Classic Gallery](docs/templates/classic-gallery.md): A uniform grid of equal-ratio tiles under a centered intro, with filters that narrow the set in place
+- [Mixed Gallery](docs/templates/mixed-gallery.md): Tiles of different heights packed in columns, like a masonry wall, with a filter row above
+- [Product Gallery](docs/templates/product-gallery.md): A storefront grid: product cards with price, badge and a rating, sorted and filtered from a toolbar
+- [Side Gallery](docs/templates/side-gallery.md): A filter column on the side and a result grid beside it, with a count and a sort control above the grid
+- [Top Nav](docs/templates/top-nav.md): An application frame with a top bar of destinations, an account menu and a page area below
+- [Side Nav](docs/templates/side-nav.md): An application frame with a collapsible side navigation of sections and a page area beside it
+- [Shell Nav](docs/templates/shell-nav.md): The frame in both shapes: a top bar on a narrow screen and a side column on a wide one, from the same destinations
+
+## Theming
+
+- [Theme Settings](docs/theming/theme-settings.md): The theme of this site and of your own app: the settings are applied at once and stored in a cookie on this device
+
+## Foundations
+
+- [All Tokens](docs/foundations/all-tokens.md)
+- [Color](docs/foundations/color.md)
+- [Constitution](docs/foundations/constitution.md): The design rules to follow so that an interface is at least acceptable: what to do and what not to do
+- [Focus](docs/foundations/focus.md)
+- [Icons](docs/foundations/icons.md): The icon catalog. Choose outline or filled, and the stroke width for outline
+- [Layout](docs/foundations/layout.md)
+- [Motion](docs/foundations/motion.md)
+- [Radius](docs/foundations/radius.md): Corner radii: the named scale, and the custom radii that make nested corners concentric
+- [Shadow](docs/foundations/shadow.md)
+- [Spacing](docs/foundations/spacing.md)
+- [Typography](docs/foundations/typography.md): Type styles for headings and text
+
+## Components
+
+- [Avatar](docs/components/avatar.md): A person or entity shown as an image, initials or a placeholder
+- [Avatar Group](docs/components/avatar-group.md): A row of overlapping avatars
+- [Badge](docs/components/badge.md): A compact label for a status, category or count
+- [Banner](docs/components/banner.md): An inline message with a status
+- [Constitution Banner](docs/components/constitution-banner.md): A strip across the top of a prototype that warns it breaks the design constitution: which rules, where, and what each one asks for. It is not dismissible
+- [Breadcrumbs](docs/components/breadcrumbs.md): Links that show where the user is in a hierarchy
+- [Button](docs/components/button.md): Triggers an action or navigates. A label that does not fit in the width of the button is cut with an ellipsis, never wrapped
+- [Icon Button](docs/components/icon-button.md): A button with only an icon
+- [Button Group](docs/components/button-group.md): Lays out the buttons of one decision: a row that wraps (horizontal) or a column in which every button fills the width (vertical). The layout is the group’s, so 
+- [Card](docs/components/card.md): A container that groups related content
+- [Clickable Card](docs/components/clickable-card.md): A card that acts as one link or button
+- [Selectable Card](docs/components/selectable-card.md): A card that can be selected, like a checkbox
+- [Collapsible](docs/components/collapsible.md): A section that expands and collapses
+- [Dialog](docs/components/dialog.md): The dialog: a centered window on a wide screen and a bottom sheet on small ones, built on the Base UI Dialog. The sheet can be dragged down by its header to clo
+- [Alert Dialog](docs/components/alert-dialog.md): A dialog that asks the user to confirm or cancel
+- [Divider](docs/components/divider.md): A line that separates content
+- [Dropdown](docs/components/dropdown.md): A menu of options that opens from any trigger. It opens over the page (drawn in the body, flipped and kept on screen), so it never pushes the content or gets cl
+- [Form](docs/components/form.md): The layout of a form: fields in rows with one gap in both directions, rows of one to four columns, and sections with a heading
+- [Form Row](docs/components/form-row.md): Fields side by side with the gap of the form. Equal columns, or a ratio such as [2, 1]; one column when the form is narrower than 360px
+- [Form Section](docs/components/form-section.md): A group of fields, with a heading or without one, inside a Form. The fields keep the gap of the form; when a form has sections, everything in it is in a section
+- [Calendar](docs/components/calendar.md): A month grid for picking a date or a date range
+- [Date Picker](docs/components/date-picker.md): A date field. It opens the calendar in a popover, and in a Dialog sheet on small screens. The field is a Text Input, so its size, variant, label and status come
+- [Checkbox](docs/components/checkbox.md): A box that turns one option on or off, with an optional label. The error is text under the box: it has no outline
+- [Checkbox Group](docs/components/checkbox-group.md): A group of checkboxes: the value is an array of the checked `value`s. The error is a message under the group; the boxes do not turn red
+- [Number Input](docs/components/number-input.md): A text input for numbers with a minus and a plus button. It takes the props of the Text Input (variant, status, caption, prefix, suffix, floatingLabel)
+- [OTP Input](docs/components/otp-input.md): A one-time code field. It checks the code through onComplete and shows the states of that check: verifying, error (the row shakes) and success. On enhanced anim
+- [Radio](docs/components/radio.md): A group of radio buttons: the value is the `value` of the selected option. The error is a message under the group; the circles do not turn red
+- [Rating](docs/components/rating.md): Collects a rating as stars. Only whole values can be chosen
+- [Selector](docs/components/selector.md): A field, or any element, that opens a list of options: the Base UI Select in the shared field shell. Single and multiple selection; below 768px the list is a bo
+- [Slider](docs/components/slider.md): Selects a number in a range, or with `range` two numbers: a lower and an upper bound
+- [Switch](docs/components/switch.md): An instant on/off of an independent setting: a track, a thumb and an optional label. Several switches are independent boolean fields; to choose N of M use a Che
+- [Text Input](docs/components/text-input.md): A single-line or multi-line text field with a floating label, built on the Base UI Input
+- [Typeahead](docs/components/typeahead.md): A text field that suggests options as you type: the Base UI Combobox in the shared field shell. The typed text and the selected value are separate states. Below
+- [Navbar](docs/components/navbar.md): The bar at the top of a mobile screen: a back button on the left, the title in the middle and up to two icon actions on the right
+- [Bottom Bar](docs/components/bottom-bar.md): The bar at the bottom of a mobile screen for switching between 2 to 6 top-level sections. The active one is highlighted; it can also float above the content, li
+- [Layout](docs/components/layout.md): A flex container with a consistent gap
+- [Center](docs/components/center.md): Centers its content
+- [Grid](docs/components/grid.md): A CSS grid with equal columns
+- [Section](docs/components/section.md): A padded block with an optional maximum width
+- [Link](docs/components/link.md): A hyperlink in the color of the text, underlined by default
+- [List](docs/components/list.md): A vertical list of rows with an optional title and divider
+- [List Item](docs/components/list-item.md): A list row: an icon or an avatar, a title with a caption, details and a control. A row with `onClick` or `items` is a button; otherwise it is plain text
+- [Pagination](docs/components/pagination.md): Navigation between pages. The number of items is always the same (the first and the last page, the current one with its neighbours, and a gap on each side), so 
+- [Popover](docs/components/popover.md): A floating panel anchored to a trigger. It opens over the page (drawn in the body, flipped and kept on screen), so it never pushes the content or gets clipped b
+- [Product Listing](docs/components/product-listing.md): A listing of products: the cards take the whole width of a row and the listing always shows whole rows. After the first rows come a "Show more" button (the defa
+- [Product Card](docs/components/product-card.md): The card of a product in a listing: a picture with a badge and a heart over it, the price, the title in two lines, the rating and one line of meta (for example 
+- [Progress Bar](docs/components/progress-bar.md): A linear progress indicator
+- [Rating Display](docs/components/rating-display.md): Shows a rating as stars, for example an average score. It cannot be changed
+- [Segmented Control](docs/components/segmented-control.md): A control for switching between a few exclusive options
+- [Skeleton](docs/components/skeleton.md): A placeholder shown while content loads
+- [Spinner](docs/components/spinner.md): A loading indicator
+- [Status](docs/components/status.md): Tells the user the state of a view: nothing to show, information, success, a warning or an error. It fills the container it is in, in width and height, and cent
+- [Table](docs/components/table.md): Tabular data with sorting, selection and several looks
+- [Tabs](docs/components/tabs.md): Switches between related views: the row of tabs and the panel under it. A row wider than its container scrolls, with slide buttons and a fade at the edges from 
+- [Toast](docs/components/toast.md): Shows brief notifications: a message, an optional action and a close button. Call `useToast()` to add one
+- [Token](docs/components/token.md): A chip for selection or indication: a Base UI Toggle with a size, a status and slots. With `action` it is a button, removable or plain
+- [Token Group](docs/components/token-group.md): A group of chips: a title, a wrapping container and a caption or an error. With `options` a managed set (the value is an array of the selected values), with `ch
+- [Tooltip](docs/components/tooltip.md): A short hint on hover or focus. It is never shown on a touch screen (no hover there), so keep the information available some other way
+
+## Tools
+
+- [Radius Check](docs/tools/radius-check.md): Checks that nested rounded corners are concentric: the inner radius is the outer radius minus the inset
+- [Size Balance](docs/tools/size-balance.md): Measures a screen from the 16px body text: one ladder of text sizes and one of control heights, so nothing is small here and too big there
+- [Spacing Balance](docs/tools/spacing-balance.md): Checks proximity: things that belong together sit closer than things that do not

@@ -1,0 +1,2 @@
+import { navigationMenu as M } from '../base-ui.js';
+export const { NavigationMenu, NavigationMenuArrowDataAttributes, NavigationMenuBackdropDataAttributes, NavigationMenuContentDataAttributes, NavigationMenuIconDataAttributes, NavigationMenuLinkDataAttributes, NavigationMenuPopupCssVariables, NavigationMenuPopupDataAttributes, NavigationMenuPositionerCssVariables, NavigationMenuPositionerDataAttributes, NavigationMenuTriggerDataAttributes } = M;

@@ -1,0 +1,2 @@
+import { autocomplete as M } from '../base-ui.js';
+export const { Autocomplete, AutocompleteArrowDataAttributes, AutocompleteBackdropDataAttributes, AutocompleteClearDataAttributes, AutocompleteInputDataAttributes, AutocompleteInputGroupDataAttributes, AutocompleteItemDataAttributes, AutocompletePopupDataAttributes, AutocompletePositionerCssVariables, AutocompletePositionerDataAttributes, AutocompleteSeparatorDataAttributes, AutocompleteTriggerDataAttributes } = M;
