@@ -1424,6 +1424,8 @@
 .bui-navbar:not(.bui-navbar--floating) .bui-navbar__side--end > [data-slot="icon-button"]:last-child { margin-inline-end: calc(var(--baseui-spacing-3) * -1); }
 .bui-navbar__heading { min-width: 0; text-align: center; }
 .bui-navbar__title { margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: var(--baseui-typography-text-16-regular); }
+.bui-navbar__title { transition: opacity var(--baseui-duration-200, 200ms) ease; }
+.bui-navbar__title[data-hidden] { opacity: 0; }
 .bui-navbar__subtitle { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: var(--baseui-typography-text-12-regular); color: var(--baseui-text-and-icon-secondary); }
 /* the bottom bar sticks to the bottom of its screen: in a column it is pushed down, in a scroller it stays in view */
 .bui-bottombar { position: sticky; bottom: 0; z-index: 2; margin-top: auto; display: flex; box-sizing: border-box; padding: var(--baseui-spacing-1-5) var(--baseui-spacing-2) calc(var(--baseui-spacing-1-5) + env(safe-area-inset-bottom, 0px)); background: var(--baseui-background-primary); }

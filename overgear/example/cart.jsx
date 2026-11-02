@@ -1,6 +1,6 @@
 // The cart and the checkout, as on Overgear: a side panel of the cart on a desktop (a page on a phone), and a checkout of its own
 // (no header and no footer of the shop): the order on the left, the payment method, the summary on the right.
-import { useState, useEffect } from '../../src/react.js';
+import { useState, useEffect, useRef } from '../../src/react.js';
 import { Button, IconButton } from '../../src/components/Button.jsx';
 import { Card } from '../../src/components/Card.jsx';
 import { TextInput } from '../../src/components/TextInput.jsx';
@@ -216,7 +216,15 @@ export function Checkout() {
   const store = useStore();
   const { toast } = useToast();
   const [method, setMethod] = useState('card');
-  const [more, setMore] = useState(false);
+  const [more, setMore] = useState(false)
+  const titleRef = useRef(null)
+  const [scrolled, setScrolled] = useState(false)
+  // the bar shows the title only once the heading of the page has scrolled under it
+  useEffect(() => {
+    const on = () => { const t = titleRef.current; setScrolled(!!t && t.getBoundingClientRect().bottom < 56); };
+    on(); window.addEventListener('scroll', on, { passive: true });
+    return () => window.removeEventListener('scroll', on);
+  }, []);;
   const [email, setEmail] = useState(store.user?.email || '');
   const [tried, setTried] = useState(false);
   const mobile = useMedia('(max-width: 767px)');
@@ -233,18 +241,18 @@ export function Checkout() {
   return (
     <div className="og-checkout">
       {mobile ? (
-        <Navbar title="Checkout" onBack={() => window.history.back()} />
+        <Navbar title="Secure Checkout" titleVisible={scrolled} onBack={() => window.history.back()} />
       ) : (
         <>
           <div className="og-wrap og-checkout__top">
-            <IconButton variant="secondary" size="md" label="Back" icon={<Icon name="ChevronLeft" size={24} />} onClick={() => window.history.back()} />
+            <IconButton variant="secondary" size="sm" label="Back" icon={<Icon name="ChevronLeft" size={20} />} onClick={() => window.history.back()} />
             <a className="og-checkout__logo" href={href('/')} aria-label="Overgear"><img src={LOGO_FULL} alt="" width="145" height="32" /></a>
           </div>
           <Divider />
         </>
       )}
       <div className="og-wrap og-checkout__main">
-        {!mobile && <h1 className="og-title og-checkout__title">Secure Checkout</h1>}
+        <h1 ref={titleRef} className="og-title og-checkout__title">Secure Checkout</h1>
         {!store.cart.length ? (
           <Page><Status status="neutral" title="Nothing to pay for" description="Your cart is empty" actionLabel="Browse games" onAction={() => go('/catalog')} /></Page>
         ) : (

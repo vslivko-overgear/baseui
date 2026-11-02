@@ -1560,6 +1560,11 @@ export interface NavbarProps {
    */
   showBack?: boolean;
   /**
+   * false hides the title (it fades) until the screen has its own heading scrolled out of view; the bar keeps its place
+   * @default true
+   */
+  titleVisible?: boolean;
+  /**
    * Called when the back button is pressed
    */
   onBack?: () => void;

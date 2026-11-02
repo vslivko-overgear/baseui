@@ -7,7 +7,7 @@ import { useFloating, themeAttrs, useAppear, useReady } from '../theme-flags.js'
 import { useHighlight } from '../highlight.js';
 
 /** The bar at the top of a mobile screen: back, title, up to two actions. */
-export function Navbar({ title, subtitle, showBack = true, onBack, backLabel = 'Back', actions = [], floating, glass, className, ...rest }) {
+export function Navbar({ title, subtitle, showBack = true, titleVisible = true, onBack, backLabel = 'Back', actions = [], floating, glass, className, ...rest }) {
   const isFloating = useFloating(floating);
   return (
     <header data-slot="navbar" className={cx('bui-navbar', isFloating && 'bui-navbar--floating', className)} {...themeAttrs({ glass })} {...rest}>
@@ -15,7 +15,7 @@ export function Navbar({ title, subtitle, showBack = true, onBack, backLabel = '
         {showBack && <IconButton variant="ghost" size="md" label={backLabel} tooltip={false} icon={<BuiltinIcon name="chevronLeft" size={24} />} onClick={onBack} />}
       </div>
       <div data-slot="navbar-heading" className="bui-navbar__heading">
-        <h1 data-slot="navbar-title" className="bui-navbar__title">
+        <h1 data-slot="navbar-title" className="bui-navbar__title" data-hidden={titleVisible ? undefined : ''} aria-hidden={titleVisible ? undefined : true}>
           {title}
         </h1>
         {subtitle && (
@@ -36,6 +36,7 @@ describe(Navbar, 'The bar at the top of a mobile screen: a back button on the le
   title: ['string', null, 'Screen title, centered; a long one is truncated'],
   subtitle: ['string', null, 'A second line under the title'],
   showBack: ['boolean', 'true', 'Show the back button'],
+  titleVisible: ['boolean', 'true', 'false hides the title (it fades) until the screen has its own heading scrolled out of view; the bar keeps its place'],
   onBack: ['() => void', null, 'Called when the back button is pressed'],
   backLabel: ['string', "'Back'", 'Accessible name of the back button'],
   floating: [

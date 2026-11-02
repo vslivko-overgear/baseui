@@ -40,10 +40,18 @@ for (const [width, phone] of [[1440, false], [390, true]]) {
     expectThat(layout.hasTop && layout.backBeforeLogo, 'desktop: the button back and the logo are not in a row, the button first');
     expectThat(!!layout.backBackground && layout.backBackground !== 'rgba(0, 0, 0, 0)', 'desktop: the button back has no background of its own');
     expectThat(layout.noBand && layout.dividerAfter && layout.dividerFull, 'desktop: under the logo there is a band, not a divider the width of the screen');
+    expectThat(await page.evaluate(() => document.querySelector('.og-checkout__top [data-slot=icon-button]')?.getBoundingClientRect().height <= 40), 'desktop: the button back is not smaller than 48px');
     expectThat(layout.titleBelow, 'desktop: "Secure Checkout" is not a plain title under the divider');
     expectThat(!layout.headings.includes('Order summary') && !layout.headings.some((h) => h.startsWith('Review order')), `desktop: a heading is there that should not be (${layout.headings.join(', ')})`);
   } else {
     expectThat(!(await page.getByRole('heading', { name: /Review order/ }).count()), 'phone: the "Review order" heading is there');
+    const bar = () => page.evaluate(() => ({ h1: document.querySelectorAll('.og-checkout__title').length, op: +getComputedStyle(document.querySelector('.bui-navbar__title')).opacity, text: document.querySelector('.bui-navbar__title').textContent }));
+    const top = await bar();
+    expectThat(top.h1 === 1 && top.op === 0, `phone: at the start the page has its title and the bar has none (${JSON.stringify(top)})`);
+    await page.evaluate(() => window.scrollTo(0, 600)); await page.waitForTimeout(500);
+    const down = await bar();
+    expectThat(down.op === 1 && down.text === 'Secure Checkout', `phone: scrolled, the bar does not show "Secure Checkout" (${JSON.stringify(down)})`);
+    await page.evaluate(() => window.scrollTo(0, 0)); await page.waitForTimeout(300);
   }
   const strip = await page.evaluate(() => {
     const tiles = [...document.querySelectorAll('.og-methodcard')];
