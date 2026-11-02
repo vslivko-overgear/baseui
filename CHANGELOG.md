@@ -1,5 +1,12 @@
 # Changelog
 
+## Overgear: the checkout, payment methods as a strip, the items apart
+
+- **The payment methods are a strip of tiles** after "Secure Checkout", before the items and the summary: each a radio in an outline (a native radio, so the arrows and the focus work), the chosen one with a 2px outline in the selected color (white in the dark theme) and the others with the standard 1px one. All eight methods are in the strip (the "Show other payment methods" button is gone); it scrolls sideways when they do not fit, on a phone as well.
+- **The items are cards of their own**, apart from each other, not lines in one card.
+- **The summary sticks 24px from the top** (it was 120px, the room for a header that sticks on the other pages: the checkout has none).
+- `overgear/tools/check/checkout.mjs` checks all of it on a desktop and on a phone: the strip in one row and before the items, the two outlines (their widths and colors against the tokens), that another method moves the outline and changes the fee, that the items are cards apart, and where the summary sticks (I checked that the old offset fails).
+
 ## Overgear: the checkout list rows, the divider; and the audit reads oklab
 
 - **The checkout:** "Review order (n items)" is gone. The grey band under the logo is gone too: the button back (a plain icon button with its own background) and the logo stand in a row with a divider the width of the screen under it, and "Secure Checkout" is a plain title under the divider.

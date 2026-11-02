@@ -386,11 +386,19 @@ a { color: inherit; }
 .og-checkout__logo { display: inline-flex; }
 /* the top of the checkout of a desktop: the button back and the logo in a row, a divider under it; the title is plain under the divider */
 .og-checkout__top { display: flex; align-items: center; gap: var(--baseui-spacing-4); padding-block: var(--baseui-spacing-4); }
-.og-checkout__title { padding-top: var(--baseui-spacing-8); }
+.og-checkout__title { padding-top: var(--baseui-spacing-8); padding-bottom: var(--baseui-spacing-4); }
 .og-co { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: var(--baseui-spacing-12); align-items: start; padding-block: var(--baseui-spacing-8) var(--baseui-spacing-16); }
 .og-checkout__main { flex: 1; }
+.og-checkout .og-sticky { top: var(--baseui-spacing-6); }   /* the checkout has no header that sticks: the summary stays 24px from the top, not under a header that is not there */
 .og-checkout__foot { padding-block: var(--baseui-spacing-6); background: var(--baseui-background-secondary); }
 .og-checkout__foot .og-row { align-items: center; gap: var(--baseui-spacing-6); }
+.og-methods { display: flex; gap: var(--baseui-spacing-2); width: max-content; }
+/* a payment method: a radio in an outline; the chosen one has 2px in the selected color, the others the standard outline */
+.og-methodcard { position: relative; display: flex; align-items: center; padding: var(--baseui-spacing-3) var(--baseui-spacing-4); border: 1px solid var(--baseui-border-primary); border-radius: var(--baseui-radius-2xl); cursor: pointer; }
+.og-methodcard input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.og-methodcard[data-checked] { border-color: var(--baseui-extensions-border-selected); box-shadow: inset 0 0 0 1px var(--baseui-extensions-border-selected); }
+.og-methodcard:has(input:focus-visible) { outline: var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color); outline-offset: var(--baseui-focus-outline-offset); }
+@media (hover: hover) { .og-methodcard:not([data-checked]):hover { background: var(--baseui-background-transparent-hover); } }
 .og-method { display: inline-flex; align-items: center; gap: var(--baseui-spacing-3); }
 .og-method__tile { width: 40px; height: 40px; flex: none; display: grid; place-items: center; border-radius: var(--baseui-radius-lg); background: var(--baseui-background-tertiary); font: var(--baseui-typography-text-16-semi-bold); }
 .og-method__tile img { width: 28px; height: auto; }
@@ -404,6 +412,7 @@ a { color: inherit; }
 .og-h3__count { font-weight: 400; color: var(--baseui-text-and-icon-secondary); }
 .og-lines--cards { gap: var(--bui-rel-related); }
 .og-lines--cards > .og-line { padding: var(--baseui-spacing-4); border-radius: var(--baseui-radius-2xl); background: var(--baseui-background-tertiary); }
+.og-lines--surface > .og-line { background: var(--baseui-extensions-background-surface); }   /* the items of the checkout: each its own card, as the cards of the page */
 .og:not(.og--mobile) .og-drawer { border-radius: var(--baseui-radius-3xl) 0 0 var(--baseui-radius-3xl); overflow: hidden; }
 
 /* the title of the cart panel is bold */

@@ -2,14 +2,15 @@
 // The checkout and the promo code, in a real browser. A desktop: the button back (a button with its own background) and the logo are in a row with a divider under it, no band; the title
 // "Secure Checkout" is plain under the divider; there is no "Review order" and no "Order summary" heading. The promo code is a row of a list, text on the left and a chevron on the right, with no icon;
 // it opens a dialog: a wrong code is refused and the dialog stays, a right one closes it; the discount is green (the success color) in the summary; with a code applied the row has the code
-// on the right and a cross that takes it off.
+// on the right and a cross that takes it off. The payment methods are a strip of tiles after the title, before the items and the summary: each a radio in an outline, the chosen one with 2px in the selected
+// color and the others with the standard outline; the items are cards of their own; the summary sticks 24px from the top, not further.
 //
 //   node overgear/tools/check/checkout.mjs http://localhost:8000
 import { launch } from '../../../tools/lib/sweep.mjs';
 
 const base = (process.argv[2] || 'http://localhost:8000').replace(/\/$/, '');
 const line = (key, title, price) => ({ key, id: 'venomous-abyss-heroic', title, sub: 'Piloted, heroic', price, qty: 1, eta: '3 hours' });
-const STATE = JSON.stringify({ cart: [line('a', 'Venomous Abyss Heroic', 89), line('b', 'Mythic+ Bundle', 149)], wishlist: [], orders: [], user: { name: 'Dana', email: 'dana@example.com' }, promo: '' });
+const STATE = JSON.stringify({ cart: [line('a', 'Venomous Abyss Heroic', 89), line('b', 'Mythic+ Bundle', 149), line('c', 'Power Leveling', 39), line('d', 'Gold 500K', 24), line('e', 'Raid pack', 189)], wishlist: [], orders: [], user: { name: 'Dana', email: 'dana@example.com' }, promo: '' });
 const browser = await launch().catch((e) => { console.error(e.message); process.exit(2); });
 const problems = [];
 const expectThat = (ok, what) => { if (!ok) problems.push(what); };
@@ -44,6 +45,38 @@ for (const [width, phone] of [[1440, false], [390, true]]) {
   } else {
     expectThat(!(await page.getByRole('heading', { name: /Review order/ }).count()), 'phone: the "Review order" heading is there');
   }
+  const strip = await page.evaluate(() => {
+    const tiles = [...document.querySelectorAll('.og-methodcard')];
+    const first = document.querySelector('.og-lines--surface > .og-line');
+    const summary = document.querySelector('.og-checkout .og-sticky');
+    const look = (el) => { const c = getComputedStyle(el); return { width: parseFloat(c.borderTopWidth), color: c.borderTopColor, shadow: c.boxShadow }; };
+    const probe = (name) => { const p = document.createElement('span'); p.style.color = `var(${name})`; document.body.append(p); const c = getComputedStyle(p).color; p.remove(); return c; };
+    const on = tiles.find((t) => t.dataset.checked !== undefined); const off = tiles.find((t) => t.dataset.checked === undefined);
+    return {
+      count: tiles.length, oneRow: new Set(tiles.map((t) => Math.round(t.getBoundingClientRect().top))).size === 1, radios: tiles.every((t) => t.querySelector('input[type=radio]')) && document.querySelector('[role=radiogroup]')?.getAttribute('aria-label') === 'Payment method',
+      before: !!first && tiles[0].getBoundingClientRect().bottom <= first.getBoundingClientRect().top && tiles[0].getBoundingClientRect().bottom <= summary.getBoundingClientRect().top,
+      on: look(on), off: look(off), selected: probe('--baseui-extensions-border-selected'), standard: probe('--baseui-border-primary'),
+      items: [...document.querySelectorAll('.og-lines--surface > .og-line')].map((l) => { const r = l.getBoundingClientRect(); return { top: r.top, bottom: r.bottom, radius: parseFloat(getComputedStyle(l).borderTopLeftRadius), background: getComputedStyle(l).backgroundColor }; }),
+    };
+  });
+  const sum = (m) => m.width + (/\s(\d+)px\s+inset$/.exec(m.shadow)?.[1] ? +/\s(\d+)px\s+inset$/.exec(m.shadow)[1] : 0);
+  expectThat(strip.count >= 5 && strip.oneRow && strip.radios, `${where}: the payment methods are not a strip of radio tiles in one row (${strip.count} tiles)`);
+  if (!phone) expectThat(strip.before, 'desktop: the payment methods are not before the items and the summary');
+  expectThat(sum(strip.on) === 2 && strip.on.color === strip.selected, `${where}: the chosen method does not have a 2px outline in the selected color (${JSON.stringify(strip.on)})`);
+  expectThat(sum(strip.off) === 1 && strip.off.color === strip.standard, `${where}: a method that is not chosen does not have the standard 1px outline (${JSON.stringify(strip.off)})`);
+  expectThat(strip.items.length >= 2 && strip.items.every((it, i, all) => it.radius >= 12 && it.background !== 'rgba(0, 0, 0, 0)' && (i === 0 || it.top > all[i - 1].bottom)), `${where}: the items are not cards of their own, apart from each other`);
+  const fee = () => page.locator('.og-sum__row', { hasText: 'Payment fee' }).textContent();
+  const before = await fee();
+  await page.locator('.og-methodcard', { hasText: 'Klarna' }).click();
+  await page.waitForTimeout(200);
+  expectThat((await fee()) !== before && (await page.locator('.og-methodcard[data-checked]').count()) === 1 && (await page.locator('.og-methodcard[data-checked]').textContent()).includes('Klarna'), `${where}: choosing another method does not move the outline and change the fee`);
+  if (!phone) {
+    await page.evaluate(() => window.scrollTo(0, 500));
+    await page.waitForTimeout(250);
+    const top = await page.evaluate(() => Math.round(document.querySelector('.og-checkout .og-sticky').getBoundingClientRect().top));
+    expectThat(top <= 32, `desktop: the summary sticks ${top}px from the top, further than 32px`);
+    await page.evaluate(() => window.scrollTo(0, 0));
+  }
   const row = page.locator('[data-slot="list-item"]', { hasText: 'Apply promo code' });
   expectThat((await row.count()) === 1, `${where}: the promo code is not a row of a list`);
   const shape = await row.evaluate((el) => { const icons = el.querySelectorAll('svg').length; const text = el.querySelector('span'); const chevron = el.querySelector('svg:last-of-type'); return { icons, chevronRight: !!chevron && !!text && chevron.getBoundingClientRect().left > text.getBoundingClientRect().right }; }).catch(() => ({ icons: -1, chevronRight: false }));
@@ -76,4 +109,4 @@ for (const [width, phone] of [[1440, false], [390, true]]) {
 
 await browser.close();
 if (problems.length) { for (const p of problems) console.log(p); console.log(`\nCheckout: ${problems.length} problem${problems.length === 1 ? '' : 's'}.`); process.exit(1); }
-console.log('Checkout: the top with a divider, the title, the promo code as a row with a dialog, and the green discount.');
+console.log('Checkout: the top with a divider, the strip of payment methods, the items as cards, the promo code as a row with a dialog, and the green discount.');
