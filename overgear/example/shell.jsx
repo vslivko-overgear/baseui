@@ -107,7 +107,6 @@ function Account({ onLogin }) {
           { value: 'orders', label: 'My orders', icon: <Icon name="ShoppingBag01" size={20} /> },
           { value: 'wishlist', label: 'Favorites', icon: <Icon name="Heart" size={20} /> },
           { value: 'settings', label: 'Settings', icon: <Icon name="Settings01" size={20} /> },
-          { type: 'divider' },
           { value: 'currency', label: 'Currency', details: currency, icon: <Icon name="CoinsHand" size={20} /> },
           { value: 'language', label: 'Language', details: language, icon: <Icon name="Globe01" size={20} /> },
           { value: 'support', label: 'Support', icon: <Icon name="MessageChatCircle" size={20} /> },
