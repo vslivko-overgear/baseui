@@ -37,6 +37,7 @@ const CHECKS = [
   ['overgear-search', 'overgear/tools/check/search.mjs'],
   ['overgear-wallet', 'overgear/tools/check/wallet.mjs'],
   ['overgear-paybar', 'overgear/tools/check/paybar.mjs'],
+  ['overgear-checkout', 'overgear/tools/check/checkout.mjs'],
 ];
 const only = process.argv[2];
 let failed = 0;

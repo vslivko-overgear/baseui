@@ -1,5 +1,11 @@
 # Changelog
 
+## Overgear: the checkout of a desktop, the promo code in a dialog
+
+- **The header of the checkout (a desktop):** the grey band is under the logo and holds the button back and the logo; "Secure Checkout" is a plain title under it, without a band of its own. The "Order summary" heading over the summary is gone.
+- **The discount is green:** "Promo WELCOME10 −$49.00" (the label and the amount) in the success color, in the summary of the checkout, of the cart and of the side cart.
+- **The promo code is a button** ("Apply promo code", and "Promo code WELCOME10" once it is applied) that opens a dialog with the field: a code that works closes it, takes its discount off and says so in a toast; one that does not is refused under the field and the dialog stays; with a code applied the dialog also has "Remove the code". It replaces the collapsible section, in the cart, the side cart and the checkout.
+
 ## Overgear: the pay button is pinned on a phone, in the cart and in the checkout
 
 - **The cart (a phone):** a bar pinned to the bottom of the screen, over the bottom bar of the tabs: "Subtotal $301.00" on the left and "Secure checkout" on the right. The summary on the page (the promo code, the subtotal, the cashback) stays; its own button is gone, so the page has one button for the action.

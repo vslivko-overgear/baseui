@@ -369,6 +369,7 @@ a { color: inherit; }
 .og-line__meta { margin: 0; display: flex; align-items: center; gap: var(--baseui-spacing-1); font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-secondary); }
 .og-line__meta svg { flex: none; }
 .og-sum__row { display: flex; justify-content: space-between; align-items: center; gap: var(--baseui-spacing-3); font: var(--baseui-typography-text-16-regular); }
+.og-sum__row--discount, .og-sum__row--discount .og-sum__label { color: var(--baseui-extensions-text-and-icon-success); }   /* the discount is green: label and amount */
 .og-sum__label { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); color: var(--baseui-text-and-icon-secondary); }
 .og-sum__row--soft .og-sum__label, .og-sum__row--soft .og-sum__value { font: var(--baseui-typography-text-14-regular); }
 .og-sum__row--big { font: var(--baseui-typography-text-20-semi-bold); font-family: var(--baseui-typography-headline-font-family); font-weight: 700; }
@@ -382,11 +383,13 @@ a { color: inherit; }
 
 /* the checkout: a slim top bar, the order and the payment on the left, the summary on the right */
 .og-checkout { min-height: 100vh; display: flex; flex-direction: column; }
-.og-checkout__logo { display: inline-flex; padding-block: var(--baseui-spacing-5); }
+.og-checkout__logo { display: inline-flex; }
+/* the band of the checkout of a desktop is under the logo, with the button back in it; the title is plain, under the band */
 .og-checkout__bar { background: var(--baseui-background-secondary); }
-.og-checkout__bar-in { display: flex; align-items: center; gap: var(--baseui-spacing-4); padding-block: var(--baseui-spacing-6); }
+.og-checkout__bar-in { display: flex; align-items: center; gap: var(--baseui-spacing-4); padding-block: var(--baseui-spacing-5); }
+.og-checkout__title { padding-top: var(--baseui-spacing-8); }
 .og-co { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: var(--baseui-spacing-12); align-items: start; padding-block: var(--baseui-spacing-8) var(--baseui-spacing-16); }
-.og-checkout > .og-wrap:nth-of-type(2) { flex: 1; }
+.og-checkout__main { flex: 1; }
 .og-checkout__foot { padding-block: var(--baseui-spacing-6); background: var(--baseui-background-secondary); }
 .og-checkout__foot .og-row { align-items: center; gap: var(--baseui-spacing-6); }
 .og-method { display: inline-flex; align-items: center; gap: var(--baseui-spacing-3); }

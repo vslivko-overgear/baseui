@@ -5,7 +5,7 @@ import { Button, IconButton } from '../../src/components/Button.jsx';
 import { Card } from '../../src/components/Card.jsx';
 import { TextInput } from '../../src/components/TextInput.jsx';
 import { RadioGroup } from '../../src/components/RadioGroup.jsx';
-import { Collapsible } from '../../src/components/Collapsible.jsx';
+import { Dialog } from '../../src/components/Dialog.jsx';
 import { Tooltip } from '../../src/components/Tooltip.jsx';
 import { Status } from '../../src/components/Status.jsx';
 import { Divider } from '../../src/components/Divider.jsx';
@@ -41,19 +41,35 @@ function CartLine({ item, onRemove }) {
   );
 }
 
-/** The promo code: a section that opens into a field. */
-function Promo({ level = 3 }) {
+/** The promo code: a button that opens a dialog with a field. The button says what is applied; a code that works closes the dialog and takes its discount off. */
+function Promo() {
   const store = useStore();
-  const [code, setCode] = useState(store.promo);
+  const { toast } = useToast();
+  const [open, setOpen] = useState(false);
+  const [code, setCode] = useState('');
   const [bad, setBad] = useState(false);
-  const apply = () => { const ok = code.trim().toUpperCase() === 'WELCOME10'; setBad(!ok && !!code); store.setPromo(ok ? 'WELCOME10' : ''); };
+  const show = () => { setCode(store.promo); setBad(false); setOpen(true); };
+  const apply = () => {
+    const ok = code.trim().toUpperCase() === 'WELCOME10';
+    setBad(!ok);
+    if (!ok) { document.getElementById('og-promo-code')?.focus(); return; }
+    store.setPromo('WELCOME10');
+    setOpen(false);
+    toast({ message: 'Promo code applied: 10% off', status: 'success' });
+  };
   return (
-    <Collapsible title="Apply promo code" headingLevel={level} defaultOpen={!!store.promo}>
-      <ControlRow size="md" align="start">
-        <TextInput label="Promo code" value={code} onChange={(e) => setCode(e.target.value)} status={bad ? 'error' : undefined} caption={bad ? 'This code does not work' : store.promo ? 'Applied: 10% off' : 'Try WELCOME10'} />
-        <Button variant="secondary" label="Apply" onClick={apply} />
-      </ControlRow>
-    </Collapsible>
+    <>
+      <Button variant="secondary" width="100%" size="md" icon={<Icon name="Tag01" size={20} />} label={store.promo ? `Promo code ${store.promo}` : 'Apply promo code'} onClick={show} />
+      <Dialog open={open} onOpenChange={setOpen} title="Promo code">
+        <form className="og-stack og-stack--lg" noValidate onSubmit={(e) => { e.preventDefault(); apply(); }}>
+          <TextInput id="og-promo-code" label="Promo code" autoComplete="off" value={code} onChange={(e) => { setCode(e.target.value); setBad(false); }} status={bad ? 'error' : undefined} caption={bad ? 'This code does not work' : 'Try WELCOME10'} />
+          <div className="og-stack">
+            <Button variant="primary" size="lg" textSize={16} width="100%" type="submit" label="Apply" />
+            {store.promo && <Button variant="secondary" size="lg" textSize={16} width="100%" label="Remove the code" onClick={() => { store.setPromo(''); setOpen(false); }} />}
+          </div>
+        </form>
+      </Dialog>
+    </>
   );
 }
 
@@ -83,13 +99,13 @@ function PayBar({ label, amount, action, onClick, above }) {
   );
 }
 
-function CartSummary({ onCheckout, pinned = false, level }) {
+function CartSummary({ onCheckout, pinned = false }) {
   const store = useStore();
   return (
     <div className="og-stack og-stack--lg">
       <div className="og-stack">
-        {store.discount > 0 && <div className="og-sum__row"><span className="og-sum__label">Promo WELCOME10</span><span className="og-sum__value">{`−${money(store.discount)}`}</span></div>}
-        <Promo level={level} />
+        {store.discount > 0 && <div className="og-sum__row og-sum__row--discount"><span className="og-sum__label">Promo WELCOME10</span><span className="og-sum__value">{`−${money(store.discount)}`}</span></div>}
+        <Promo />
         <div className="og-sum__row og-sum__row--big"><span>Subtotal</span><span>{money(store.total)}</span></div>
         <CashbackRow amount={store.total} />
       </div>
@@ -151,7 +167,7 @@ export function Cart() {
             {store.cart.map((i) => <CartLine key={i.key} item={i} onRemove={() => store.remove(i.key)} />)}
           </ul>
         </Card>
-        <Card variant="surface" padding={5}><div className="og-sticky"><CartSummary pinned={mobile} level={2} onCheckout={() => go('/checkout')} /></div></Card>
+        <Card variant="surface" padding={5}><div className="og-sticky"><CartSummary pinned={mobile} onCheckout={() => go('/checkout')} /></div></Card>
       </div>
       {mobile && <PayBar above label="Subtotal" amount={store.total} action="Secure checkout" onClick={() => go('/checkout')} />}
     </Page>
@@ -203,19 +219,15 @@ export function Checkout() {
       {mobile ? (
         <Navbar title="Checkout" onBack={() => window.history.back()} />
       ) : (
-        <>
-          <div className="og-wrap">
+        <div className="og-checkout__bar">
+          <div className="og-wrap og-checkout__bar-in">
+            <IconButton variant="secondary" size="sm" label="Back" icon={<Icon name="ChevronLeft" size={20} />} onClick={() => window.history.back()} />
             <a className="og-checkout__logo" href={href('/')} aria-label="Overgear"><img src={LOGO_FULL} alt="" width="145" height="32" /></a>
           </div>
-          <div className="og-checkout__bar">
-            <div className="og-wrap og-checkout__bar-in">
-              <IconButton variant="secondary" size="sm" label="Back" icon={<Icon name="ChevronLeft" size={20} />} onClick={() => window.history.back()} />
-              <h1 className="og-title">Secure Checkout</h1>
-            </div>
-          </div>
-        </>
+        </div>
       )}
-      <div className="og-wrap">
+      <div className="og-wrap og-checkout__main">
+        {!mobile && <h1 className="og-title og-checkout__title">Secure Checkout</h1>}
         {!store.cart.length ? (
           <Page><Status status="neutral" title="Nothing to pay for" description="Your cart is empty" actionLabel="Browse games" onAction={() => go('/catalog')} /></Page>
         ) : (
@@ -236,12 +248,11 @@ export function Checkout() {
               </div>
             </div>
             <div className="og-stack og-sticky">
-              <h2 className="og-h2">Order summary</h2>
               <Card variant="surface" padding={5}>
                 <div className="og-stack og-stack--lg">
                   <div className="og-stack">
                     <div className="og-sum__row"><span className="og-sum__label">Item(s)</span><span className="og-sum__value">{money(store.subtotal)}</span></div>
-                    {store.discount > 0 && <div className="og-sum__row"><span className="og-sum__label">Promo WELCOME10</span><span className="og-sum__value">{`−${money(store.discount)}`}</span></div>}
+                    {store.discount > 0 && <div className="og-sum__row og-sum__row--discount"><span className="og-sum__label">Promo WELCOME10</span><span className="og-sum__value">{`−${money(store.discount)}`}</span></div>}
                     <div className="og-sum__row"><span className="og-sum__label">Payment fee</span><span className="og-sum__value">{money(fee)}</span></div>
                   </div>
                   <Divider />
