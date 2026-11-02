@@ -96,7 +96,7 @@ function PayBar({ amount, action, onClick, above }) {
   return (
     <div className="og-paybar" style={{ '--og-paybar-bottom': above ? 'var(--og-bottom)' : '0px' }}>
       <div className="og-paybar__in">
-        <p className="og-paybar__sum"><span className="og-paybar__amount">{money(amount)}</span><Badge variant="secondary" size="md" label={`+${cashbackOf(amount)}`} icon={<CashbackMark />} aria-label={`Cashback ${cashbackOf(amount)} OG Coins`} /></p>
+        <p className="og-paybar__sum"><span className="og-paybar__amount">{money(amount)}</span><Badge variant="warning-light" size="md" label={`+${cashbackOf(amount)}`} icon={<CashbackMark />} aria-label={`Cashback ${cashbackOf(amount)} OG Coins`} /></p>
         <Button variant="primary" size="lg" textSize={16} label={action} onClick={onClick} />
       </div>
     </div>

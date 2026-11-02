@@ -53,7 +53,7 @@ export function Badge({ variant = 'secondary', size = 'md', type = 'label', max 
 }
 describe(Badge, 'A compact label for a status, category or count', {
   variant: [
-    "'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | 'blue' | 'blue-light' | 'green' | 'green-light' | 'orange' | 'pink' | 'red'",
+    "'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'warning-light' | 'error' | 'blue' | 'blue-light' | 'green' | 'green-light' | 'orange' | 'pink' | 'red'",
     "'secondary'",
     'primary is the inverse of the page, secondary a soft gray; the rest are semantic and accent colors, all solid',
   ],

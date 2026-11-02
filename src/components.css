@@ -86,6 +86,7 @@
 .bui-badge--info { background: var(--baseui-background-accent); color: var(--baseui-extensions-text-and-icon-on-color); }
 .bui-badge--success { background: var(--baseui-extensions-background-success); color: var(--baseui-extensions-text-and-icon-always-dark); }
 .bui-badge--warning { background: var(--baseui-extensions-background-warning); color: var(--baseui-extensions-text-and-icon-always-dark); }
+.bui-badge--warning-light { background: var(--baseui-extensions-background-light-warning); color: var(--baseui-text-and-icon-primary); }
 .bui-badge--error { background: var(--baseui-extensions-background-error); color: var(--baseui-extensions-text-and-icon-always-dark); }
 .bui-badge--blue { background: var(--baseui-accent-colors-blue); color: var(--baseui-extensions-text-and-icon-on-color); }
 .bui-badge--blue-light { background: var(--baseui-accent-colors-blue-light); color: var(--baseui-extensions-text-and-icon-always-dark); }

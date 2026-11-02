@@ -170,7 +170,7 @@ export interface BadgeProps {
    * primary is the inverse of the page, secondary a soft gray; the rest are semantic and accent colors, all solid
    * @default 'secondary'
    */
-  variant?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | 'blue' | 'blue-light' | 'green' | 'green-light' | 'orange' | 'pink' | 'red';
+  variant?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'warning-light' | 'error' | 'blue' | 'blue-light' | 'green' | 'green-light' | 'orange' | 'pink' | 'red';
   /**
    * Badge height: 18, 22 or 28px; the dot is 6, 8 or 10px
    * @default 'md'

@@ -2,6 +2,7 @@
 
 ## Overgear: the checkout, payment methods as outlined tiles, the items apart
 
+- **Bonus tags are light yellow:** `Badge` gets a `warning-light` variant (the light warning background, primary text); the cashback tags in the pay bar and on the offer page use it.
 - **Checkout terms** under the pay button: 12px and 8px from the button (was 14px and 24px).
 - **Phone checkout and cart:** the title stands 4px under the bar; the pay bar has no gradient over the content now and holds the price with the bonus (cashback) in a `Badge` next to it, then the button (`--og-paybar-h` 128px).
 - **Checkout, desktop and phone:** the button back on a desktop is smaller (40px, was 48); the phone has the title "Secure Checkout" on the page again, and the bar has none at the start: it fades in once the heading has scrolled under the bar. `Navbar` gets `titleVisible` (default true) for that.

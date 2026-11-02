@@ -91,7 +91,7 @@ export function Offer({ id }) {
               <div className="og-stack">
                 <div className="og-pricerow">
                   <p className="og-price og-price--lg">{money(unit * qty)}</p>
-                  <Badge variant="secondary" size="lg" label={`Cashback ${CASHBACK}%`} icon={<CashbackMark />} />
+                  <Badge variant="warning-light" size="lg" label={`Cashback ${CASHBACK}%`} icon={<CashbackMark />} />
                 </div>
                 {qty > 1 && <p className="og-meta">{`${money(unit)} each`}</p>}
               </div>
