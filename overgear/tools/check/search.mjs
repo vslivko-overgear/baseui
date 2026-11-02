@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // The search of the header, in a real browser. A desktop: typing opens a dropdown of suggestions under the field, the arrows move along them, Enter opens the one they are on, Escape closes the
-// dropdown and leaves the text. A phone: the field opens a screen of its own that covers the bottom bar, with the field in focus; typing fills it with suggestions, Enter runs the search and closes it.
+// dropdown and leaves the text; the page behind is dimmed and the dropdown has no outline. A phone: the field opens a screen of its own that covers the bottom bar, with the field in focus; typing fills it with suggestions, Enter runs the search and closes it.
 //
 //   node overgear/tools/check/search.mjs http://localhost:8000
 import { launch } from '../../../tools/lib/sweep.mjs';
@@ -29,6 +29,9 @@ const expectThat = (ok, what) => { if (!ok) problems.push(what); };
   const box = await page.locator('.og-search__panel').boundingBox();
   const bar = await field.boundingBox();
   expectThat(box && bar && box.y >= bar.y + bar.height && Math.abs(box.x - (await page.locator('.og-search').boundingBox()).x) < 2, 'desktop: the dropdown is not under the field');
+  expectThat((await page.locator('.og-scrim--search').count()) === 1 && (await page.locator('.og-scrim--search').evaluate((el) => getComputedStyle(el).backgroundColor)) !== 'rgba(0, 0, 0, 0)', 'desktop: the page behind the dropdown is not dimmed');
+  expectThat((await page.locator('.og-search__panel').evaluate((el) => getComputedStyle(el).borderTopWidth)) === '0px', 'desktop: the dropdown has an outline');
+  expectThat(await page.evaluate(() => { const p = document.querySelector('.og-search__panel').getBoundingClientRect(); const top = document.elementFromPoint(p.x + 40, p.y + 30); return !!top?.closest('.og-search__panel'); }), 'desktop: the dropdown is under the dimming');
   await field.press('ArrowDown');
   expectThat((await page.locator('.og-sg__row[data-active]').count()) === 1 && !!(await field.getAttribute('aria-activedescendant')), 'desktop: the arrow does not mark a suggestion');
   await field.press('Enter');
@@ -53,6 +56,9 @@ const expectThat = (ok, what) => { if (!ok) problems.push(what); };
   page.on('pageerror', (e) => errors.push(e.message));
   await page.goto(url);
   await page.waitForTimeout(1500);
+  const rect = (selector) => page.evaluate((q) => { const r = document.querySelector(q).getBoundingClientRect(); return [r.x, r.y, r.width, r.height].map((v) => Math.round(v * 10) / 10); }, selector);
+  const logo = await rect('.og-brand__mark');
+  const headerField = await rect('.og-header .og-search .bui-field');
   await page.locator('.og-search input').first().click();
   await page.waitForTimeout(400);
   const screen = page.getByRole('dialog', { name: 'Search' });
@@ -60,6 +66,9 @@ const expectThat = (ok, what) => { if (!ok) problems.push(what); };
   expectThat(await page.evaluate(() => !!document.activeElement?.closest('.og-searchscreen')), 'phone: the field of the screen is not in focus');
   const covered = await page.evaluate(() => { const r = document.querySelector('.og-searchscreen').getBoundingClientRect(); const top = document.elementFromPoint(195, innerHeight - 20); return r.width >= innerWidth - 1 && r.height >= innerHeight - 1 && !!top?.closest('.og-searchscreen'); });
   expectThat(covered, 'phone: the screen does not cover the whole window, the bottom bar included');
+  expectThat(JSON.stringify(await rect('.og-searchscreen__back')) === JSON.stringify(logo), `phone: the back button is not in the rectangle of the logo (${await rect('.og-searchscreen__back')} against ${logo})`);
+  const screenField = await rect('.og-searchscreen .bui-field');
+  expectThat(screenField[0] === headerField[0] && screenField[1] === headerField[1] && screenField[3] === headerField[3], `phone: the field is not at the place and of the height of the one of the header (${screenField} against ${headerField})`);
   await page.keyboard.type('path');
   await page.waitForTimeout(300);
   expectThat((await page.locator('.og-sg__row').allTextContents()).some((t) => t.startsWith('Path of Exile')), 'phone: "path" does not suggest Path of Exile');

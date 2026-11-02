@@ -18,7 +18,9 @@ a { color: inherit; }
 .og-brand__mark { width: 48px; height: 48px; border-radius: var(--baseui-radius-2xl); display: grid; place-items: center; background: var(--baseui-background-secondary); color: var(--baseui-text-and-icon-primary); }
 .og-search { position: relative; flex: 1; max-width: 520px; min-width: 0; }
 /* the suggestions of the search: a dropdown under the field on a desktop, the body of a screen of its own on a phone */
-.og-search__panel { position: absolute; top: calc(100% + var(--baseui-spacing-2)); left: 0; right: 0; z-index: 5; max-height: min(70vh, 560px); overflow-y: auto; scrollbar-width: thin; padding: var(--baseui-spacing-2); border-radius: var(--baseui-radius-3xl); background: var(--baseui-extensions-background-surface); border: 1px solid var(--baseui-border-primary); box-shadow: var(--baseui-shadow-md); }
+.og-search[data-open] { z-index: calc(var(--baseui-z-index-30) + 1); }   /* above the dimmed page */
+.og-search .og-scrim--search { position: fixed; inset: 0; z-index: -1; background: rgb(0 0 0 / 0.5); }   /* behind the field and the dropdown (the .og-scrim of the drawer has a z-index of its own and a later rule) */
+.og-search__panel { position: absolute; top: calc(100% + var(--baseui-spacing-2)); left: 0; right: 0; z-index: 5; max-height: min(70vh, 560px); overflow-y: auto; scrollbar-width: thin; padding: var(--baseui-spacing-2); border-radius: var(--baseui-radius-3xl); background: var(--baseui-extensions-background-surface); box-shadow: var(--baseui-shadow-md); }
 .og-sg { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
 .og-sg__group { margin: 0; padding: var(--baseui-spacing-3) var(--baseui-spacing-3) var(--baseui-spacing-1); font: var(--baseui-typography-text-12-semi-bold); color: var(--baseui-text-and-icon-secondary); }
 .og-sg__row { display: flex; align-items: center; gap: var(--baseui-spacing-3); padding: var(--baseui-spacing-2) var(--baseui-spacing-3); border-radius: var(--baseui-radius-xl); cursor: pointer; color: var(--baseui-text-and-icon-primary); }
@@ -30,7 +32,8 @@ a { color: inherit; }
 .og-sg__sub { font: var(--baseui-typography-text-12-regular); color: var(--baseui-text-and-icon-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .og-sg__row[data-kind="query"] .og-sg__name { font: var(--baseui-typography-text-14-regular); }
 .og-searchscreen { position: fixed; inset: 0; z-index: calc(var(--baseui-z-index-30) + 2); display: flex; flex-direction: column; background: var(--baseui-background-primary); }
-.og-searchscreen__bar { padding: var(--baseui-spacing-3) var(--baseui-spacing-4); }   /* a ControlRow: the back button and the field have one height and one icon size */
+.og-searchscreen__bar { padding-inline: var(--baseui-spacing-4); }   /* the bar of the header (og-top, a ControlRow: one height and one icon size), with the margin of a phone */
+.og-searchscreen .og-searchscreen__back.bui-button { flex: none; width: 48px; height: 48px; border-radius: var(--baseui-radius-2xl); background: var(--baseui-background-secondary); color: var(--baseui-text-and-icon-primary); }   /* the rectangle of the logo */
 .og-searchscreen__body { flex: 1; min-height: 0; overflow-y: auto; padding: 0 var(--baseui-spacing-4) var(--baseui-spacing-6); }
 .og-searchscreen .og-sg__row { padding-inline: var(--baseui-spacing-1); }
 .og-actions { display: flex; align-items: center; gap: var(--baseui-spacing-1); margin-inline-start: auto; }

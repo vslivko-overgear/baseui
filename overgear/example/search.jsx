@@ -88,7 +88,9 @@ function SearchDropdown({ query }) {
   }, [open]);
   const activeId = open && s.active >= 0 && s.rows[s.active] ? `${listId}-${s.rows[s.active].id}` : undefined;
   return (
-    <form className="og-search" role="search" ref={box} onSubmit={(e) => { e.preventDefault(); }}>
+    <form className="og-search" data-open={open || undefined} role="search" ref={box} onSubmit={(e) => { e.preventDefault(); }}>
+      {/* the page behind is dimmed while the dropdown is open; a click on it closes the dropdown (the pointer handler of the document) */}
+      {open && <div className="og-scrim og-scrim--search" aria-hidden="true" onPointerDown={() => setOpen(false)} />}
       <TextInput
         type="search" size="sm" label="Search" value={s.q} autoComplete="off"
         role="combobox" aria-expanded={open} aria-controls={listId} aria-autocomplete="list" aria-activedescendant={activeId}
@@ -115,8 +117,9 @@ function SearchScreen({ query, onClose }) {
   const activeId = s.active >= 0 && s.rows[s.active] ? `${listId}-${s.rows[s.active].id}` : undefined;
   return (
     <div className="og-searchscreen" role="dialog" aria-modal="true" aria-label="Search">
-      <ControlRow size="md" gap={1} className="og-searchscreen__bar">
-        <IconButton variant="ghost" size="md" label="Close the search" icon={<Icon name="ArrowLeft" size={24} />} onClick={onClose} />
+      <ControlRow size="md" gap={1} className="og-top og-searchscreen__bar">
+        {/* the back button stands where the logo stood, in the same rectangle */}
+        <IconButton variant="secondary" size="md" className="og-searchscreen__back" label="Close the search" icon={<Icon name="ArrowLeft" size={24} />} onClick={onClose} />
         <TextInput
           type="search" size="sm" label="Search" value={s.q} autoComplete="off" autoFocus enterKeyHint="search"
           role="combobox" aria-expanded="true" aria-controls={listId} aria-autocomplete="list" aria-activedescendant={activeId}
