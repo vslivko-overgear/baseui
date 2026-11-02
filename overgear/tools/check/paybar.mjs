@@ -29,7 +29,10 @@ for (const [hash, action, label, tabs] of [['#/cart', 'Secure checkout', 'Subtot
   const first = await bar(page);
   expectThat(!!first, `phone ${hash}: no pay bar`);
   if (first) {
-    expectThat(first.button === action && first.text.includes(label) && /\$\d/.test(first.text), `phone ${hash}: the bar does not hold "${label}", an amount and "${action}" (${first.text})`);
+    expectThat(first.button === action && /\$\d/.test(first.text) && /\+\d/.test(first.text), `phone ${hash}: the bar does not hold an amount, the bonus tag and "${action}" (${first.text})`);
+    const lay = await page.evaluate(() => { const p = document.querySelector('.og-paybar'); const a = p.querySelector('.og-paybar__amount').getBoundingClientRect(); const t = p.querySelector('.bui-badge, [data-slot=badge]')?.getBoundingClientRect(); const b = p.querySelector('.bui-button').getBoundingClientRect(); return { tag: !!t, row: !!t && Math.abs((a.top + a.bottom) / 2 - (t.top + t.bottom) / 2) < 4 && t.left >= a.right, below: b.top >= a.bottom, gradient: getComputedStyle(p, '::before').content }; });
+    expectThat(lay.tag && lay.row && lay.below, `phone ${hash}: the price, the bonus tag next to it, then the button, is not the order (${JSON.stringify(lay)})`);
+    expectThat(lay.gradient === 'none' || lay.gradient === 'normal', `phone ${hash}: the bar has a gradient over the content`);
     expectThat(tabs ? first.bottom <= first.tabsTop + 1 : first.bottom === first.vh, `phone ${hash}: the bar is not ${tabs ? 'over the bottom bar of the tabs' : 'at the bottom of the screen'} (${first.bottom} against ${tabs ? first.tabsTop : first.vh})`);
     expectThat((await primaries(page, action)) === 1, `phone ${hash}: the page has a second "${action}" button`);
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));

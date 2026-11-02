@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from '../../src/react.js';
 import { Button, IconButton } from '../../src/components/Button.jsx';
 import { Card } from '../../src/components/Card.jsx';
+import { Badge } from '../../src/components/Badge.jsx';
 import { TextInput } from '../../src/components/TextInput.jsx';
 import { Dialog } from '../../src/components/Dialog.jsx';
 import { List, ListItem } from '../../src/components/List.jsx';
@@ -91,11 +92,11 @@ function CashbackRow({ amount }) {
 
 /** The summary of the cart: the sum, the promo code, the subtotal, the cashback and the button to the checkout. */
 /** The bar that is pinned to the bottom of the screen of a phone: what is to pay and the button that pays. `above` lifts it over the bottom bar of the tabs (the cart); the checkout has none. */
-function PayBar({ label, amount, action, onClick, above }) {
+function PayBar({ amount, action, onClick, above }) {
   return (
     <div className="og-paybar" style={{ '--og-paybar-bottom': above ? 'var(--og-bottom)' : '0px' }}>
       <div className="og-paybar__in">
-        <p className="og-paybar__sum"><span className="og-meta">{label}</span><span className="og-paybar__amount">{money(amount)}</span></p>
+        <p className="og-paybar__sum"><span className="og-paybar__amount">{money(amount)}</span><Badge variant="secondary" size="md" label={`+${cashbackOf(amount)}`} icon={<CashbackMark />} aria-label={`Cashback ${cashbackOf(amount)} OG Coins`} /></p>
         <Button variant="primary" size="lg" textSize={16} label={action} onClick={onClick} />
       </div>
     </div>
@@ -172,7 +173,7 @@ export function Cart() {
         </Card>
         <Card variant="surface" padding={5}><div className="og-sticky"><CartSummary pinned={mobile} onCheckout={() => go('/checkout')} /></div></Card>
       </div>
-      {mobile && <PayBar above label="Subtotal" amount={store.total} action="Secure checkout" onClick={() => go('/checkout')} />}
+      {mobile && <PayBar above amount={store.total} action="Secure checkout" onClick={() => go('/checkout')} />}
     </Page>
   );
 }
@@ -289,7 +290,7 @@ export function Checkout() {
             </div>
           </div>
         )}
-        {mobile && !!store.cart.length && <PayBar label="Amount to pay" amount={amount} action="Pay" onClick={pay} />}
+        {mobile && !!store.cart.length && <PayBar amount={amount} action="Pay" onClick={pay} />}
       </div>
       <div className="og-checkout__foot">
         <div className="og-wrap og-row og-row--between">

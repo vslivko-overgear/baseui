@@ -387,6 +387,7 @@ a { color: inherit; }
 /* the top of the checkout of a desktop: the button back and the logo in a row, a divider under it; the title is plain under the divider */
 .og-checkout__top { display: flex; align-items: center; gap: var(--baseui-spacing-4); padding-block: var(--baseui-spacing-4); }
 .og-checkout__title { padding-top: var(--baseui-spacing-12); }   /* lower than it was, and close to the blocks under it (the padding of .og-co is the rest) */
+.og--mobile .og-checkout__title { padding-top: var(--baseui-spacing-1); }   /* 4px under the bar of the phone */
 .og-co__main { gap: var(--baseui-spacing-12); }   /* the sections of the left column (the items, the payment method, the promo code) are further apart than the items are from each other */
 .og--mobile .og-co__main { gap: var(--baseui-spacing-8); }
 .og-co__pay > .og-h2 { margin-bottom: var(--baseui-spacing-2); }   /* the heading of the methods stands 24px from them */
@@ -447,12 +448,11 @@ a { color: inherit; }
 
 /* the pay bar pinned to the bottom of the screen of a phone, in the cart (over the bottom bar of the tabs) and in the checkout: what is to pay on the left, the button that pays on the right */
 .og-paybar { position: fixed; left: 0; right: 0; bottom: var(--og-paybar-bottom, 0px); z-index: var(--baseui-z-index-30); background: var(--baseui-background-primary); padding: var(--baseui-spacing-3) var(--baseui-spacing-4) max(var(--baseui-spacing-3), env(safe-area-inset-bottom)); }
-.og-paybar::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: var(--baseui-spacing-6); background: linear-gradient(to top, var(--baseui-background-primary), transparent); pointer-events: none; }
-.og-paybar__in { display: flex; align-items: center; gap: var(--baseui-spacing-4); }
-.og-paybar__sum { margin: 0; display: flex; flex-direction: column; min-width: 0; }
+.og-paybar__in { display: flex; flex-direction: column; gap: var(--baseui-spacing-3); }
+.og-paybar__sum { margin: 0; display: flex; align-items: center; gap: var(--baseui-spacing-2); min-width: 0; }
 .og-paybar__amount { font: var(--baseui-typography-header-20); font-family: var(--baseui-typography-headline-font-family); }
 .og-paybar .bui-button { flex: 1; min-width: 0; }
-:root { --og-paybar-h: 80px; }
+:root { --og-paybar-h: 128px; }
 /* the content leaves room for the bar: it is not hidden behind it */
 .og--mobile .og-wrap:has(.og-paybar) { padding-bottom: calc(var(--og-paybar-h) + var(--baseui-spacing-4)); }
 .og--mobile.og--tab .og-wrap:has(.og-paybar) { padding-bottom: calc(var(--og-bottom) + var(--og-paybar-h) + var(--baseui-spacing-4)); }
