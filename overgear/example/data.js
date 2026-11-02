@@ -105,6 +105,20 @@ export const SERVICES = [
   { id: 'achievements', label: 'Achievements' }, { id: 'collectibles', label: 'Collectibles' },
 ];
 
+// the labels of the kinds of offers that are not a service of World of Warcraft (SERVICES): what the offers of the other games are filed under
+const KIND_LABELS = {
+  boss: 'Boss kills', gear: 'Gear', currency: 'Currency', atlas: 'Atlas', raid: 'Raids', crafting: 'Crafting', monolith: 'Monoliths', camo: 'Camos', rank: 'Rank boost',
+  exotic: 'Exotics', coaching: 'Coaching', abyss: 'Abyss', topup: 'Top-ups', placement: 'Placement', coins: 'Coins',
+};
+export const kindLabel = (id) => SERVICES.find((s) => s.id === id)?.label || KIND_LABELS[id];
+
+/** The kinds of offers in a list of offers, as [{ id, label }]: the services of World of Warcraft in their order, then the others as they come. */
+export function kindsOf(offers) {
+  const ids = [...new Set(offers.map((o) => o.service))];
+  const known = SERVICES.map((s) => s.id).filter((id) => ids.includes(id));
+  return [...known, ...ids.filter((id) => !known.includes(id))].map((id) => ({ id, label: kindLabel(id) }));
+}
+
 /** The catalog of a game: quick links (a row of chips) and the groups of offers, each a heading with the kinds under it. Every link opens the listing of its group. */
 const WOW_CATALOG = {
   quick: [{ id: 'hot', label: 'Hot offers', emoji: 'Fire' }, { id: 'gold', label: 'WoW Gold', emoji: 'Coin' }, { id: 'hot', label: 'Season 2', emoji: 'Crescent moon' }],
