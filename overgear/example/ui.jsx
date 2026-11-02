@@ -9,7 +9,8 @@ import { Icon } from '../../src/components/Icon.jsx';
 import { Token } from '../../src/components/Token.jsx';
 import { Dropdown } from '../../src/components/Dropdown.jsx';
 import { useStore } from './store.jsx';
-import { go, href } from './util.js';
+import { useToast } from '../../src/components/Toast.jsx';
+import { go, href, useMedia, openMiniCart } from './util.js';
 import { money, gameOf, GAME_TILES, GAME_TAGS, EMOJI, sold } from './data.js';
 
 const CARD_TONE = { blue: 'blue', 'blue-light': 'blue', green: 'green', orange: 'orange', pink: 'pink', red: 'red' };
@@ -178,3 +179,10 @@ export function CashbackMark() {
 /** The cashback of an order, in percent of its price (paid in OG Coins). */
 export const CASHBACK = 1;
 export const cashbackOf = (amount) => (amount * CASHBACK / 100).toFixed(2);
+
+/** What follows "Add to cart": on a desktop the mini-cart of the header opens; on a phone, where the cart is a tab of its own, a toast with a way to it. */
+export function useAddedToCart() {
+  const { toast } = useToast();
+  const mobile = useMedia('(max-width: 767px)');
+  return () => (mobile ? toast({ message: 'Added to the cart', status: 'success', action: { label: 'Open cart', onClick: () => go('/cart') } }) : openMiniCart());
+}

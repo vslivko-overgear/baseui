@@ -19,11 +19,10 @@ import { Slider } from '../../src/components/Slider.jsx';
 import { TextInput } from '../../src/components/TextInput.jsx';
 import { Banner } from '../../src/components/Banner.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
-import { useToast } from '../../src/components/Toast.jsx';
 import { Bleed } from '../../src/components/Layout.jsx';
 import { go } from './util.js';
 import { GAMES, CATEGORIES, OFFERS, SERVICES, SELLERS, REGIONS, REALMS, FACTIONS, FAQ, WOW_VERSIONS, money, gameOf } from './data.js';
-import { Page, PageHead, Section, GameTile, OfferListing, Stars, SortChip } from './ui.jsx';
+import { useAddedToCart, Page, PageHead, Section, GameTile, OfferListing, Stars, SortChip } from './ui.jsx';
 import { useStore } from './store.jsx';
 
 /** The offers of all the games: a listing like the page of a game, filtered by the group of games and sorted. */
@@ -116,7 +115,7 @@ export function Gold() {
   const [amount, setAmount] = useState(500);
   const [method, setMethod] = useState('mail');
   const [character, setCharacter] = useState('');
-  const { toast } = useToast();
+  const addedToCart = useAddedToCart();
   const sellers = useMemo(() => [...SELLERS].filter((s) => !online || s.online).sort((a, b) => (sort === 'price' ? a.per - b.per : b.orders - a.orders)), [online, sort]);
   const seller = SELLERS.find((s) => s.id === pick) || sellers[0];
   const price = +((amount / 1000) * seller.per * (method === 'express' ? 1.1 : 1)).toFixed(2);
@@ -126,7 +125,7 @@ export function Gold() {
     setTried(true);
     if (noName) { document.getElementById('og-character')?.focus(); return; }
     store.add({ key: `gold-${seller.id}-${realm}-${amount}-${method}`, title: `WoW Gold, ${amount}K`, sub: `${region} ${realm}, ${faction}, ${seller.name}, ${method === 'mail' ? 'Mail' : method === 'trade' ? 'Trade' : 'Express'}`, price, character });
-    toast({ message: 'Added to the cart', status: 'success', action: { label: 'Open cart', onClick: () => go('/cart') } });
+    addedToCart();
   };
   return (
     <Page>

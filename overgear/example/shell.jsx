@@ -14,7 +14,7 @@ import { useStore } from './store.jsx';
 import { usePrefs } from './prefs.jsx';
 import { CatalogColumns } from './catalog.jsx';
 import { CartDrawer } from './cart.jsx';
-import { go, href } from './util.js';
+import { go, href, OPEN_CART } from './util.js';
 import { GAMES } from './data.js';
 import { PaymentLogos, PAY_MAIN, PAY_BADGES } from './ui.jsx';
 import { ControlRow } from '../../src/components/Layout.jsx';
@@ -148,6 +148,8 @@ export function Header({ route, onLogin }) {
   const store = useStore();
   const [catalog, setCatalog] = useState(false);
   const [cart, setCart] = useState(false);
+  // any page can open the mini-cart (after "Add to cart")
+  useEffect(() => { const open = () => setCart(true); window.addEventListener(OPEN_CART, open); return () => window.removeEventListener(OPEN_CART, open); }, []);
   // the panel closes when the page changes and on Escape
   useEffect(() => { setCatalog(false); }, [route.path, route.query.s, route.query.c]);
   useEffect(() => {

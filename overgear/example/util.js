@@ -68,3 +68,7 @@ export function useStored(key, initial) {
   }), [key]);
   return [value, set];
 }
+
+/** The mini-cart of the header (a desktop) opens on this event, so any page can open it without owning its state. */
+export const OPEN_CART = 'og:open-cart';
+export const openMiniCart = () => window.dispatchEvent(new Event(OPEN_CART));

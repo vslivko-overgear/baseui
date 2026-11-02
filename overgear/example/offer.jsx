@@ -12,12 +12,11 @@ import { Status } from '../../src/components/Status.jsx';
 import { Avatar } from '../../src/components/Avatar.jsx';
 import { List, ListItem } from '../../src/components/List.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
-import { useToast } from '../../src/components/Toast.jsx';
 import { Bleed } from '../../src/components/Layout.jsx';
 import { go } from './util.js';
 import { OFFERS, REVIEWS, SERVICES, money, offerOf, gameOf, sold } from './data.js';
 import { ControlRow } from '../../src/components/Layout.jsx';
-import { Page, PageHead, Section, OfferListing, Stars, WishButton, CashbackMark, CASHBACK } from './ui.jsx';
+import { useAddedToCart, Page, PageHead, Section, OfferListing, Stars, WishButton, CashbackMark, CASHBACK } from './ui.jsx';
 import { useStore } from './store.jsx';
 import { Faq } from './games.jsx';
 
@@ -34,7 +33,7 @@ const DIFFICULTY = [{ value: 'normal', label: 'Normal', k: 0.6 }, { value: 'hero
 /** An offer: what it gives, the options that change the price, the purchase panel, details and reviews. */
 export function Offer({ id }) {
   const store = useStore();
-  const { toast } = useToast();
+  const addedToCart = useAddedToCart();
   const offer = offerOf(id);
   const [mode, setMode] = useState('piloted');
   const [difficulty, setDifficulty] = useState('heroic');
@@ -50,7 +49,7 @@ export function Offer({ id }) {
   const add = (buy) => {
     store.add({ key: `${offer.id}-${mode}-${difficulty}-${extras.join()}`, id: offer.id, image: offer.image, eta: offer.eta, title: offer.title, sub: `${MODES.find((m) => m.value === mode).label}, ${difficulty}${extras.length ? `, ${extras.length} extras` : ''}`, price: unit, qty });
     if (buy) go('/checkout');
-    else toast({ message: 'Added to the cart', status: 'success', action: { label: 'Open cart', onClick: () => go('/cart') } });
+    else addedToCart();
   };
   const related = OFFERS.filter((o) => o.service === offer.service && o.id !== offer.id).slice(0, 3);
   return (
