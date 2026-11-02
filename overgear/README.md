@@ -20,6 +20,7 @@ The rules moved from baseui are `U12 → OG1` (mobile tab screens and empty stat
 | `index.jsx`, `ConstitutionBanner.jsx`, `theme.js`, `overgear.css`, `fonts/` | The sublibrary: what `baseui-kit/overgear` ships. `theme.js` is the Overgear theme (one cookie for the showcase and the example) |
 | `constitution/`, `tools/`, `tests/` | Store rules, their generator, checks and tests |
 | `showcase/` | The showcase pages (theme, typography, colors); opened by `overgear/index.html` |
+| `audience.js` | The audiences of the store (who the home page is made for): the setting of the Theme page and the pure functions that put the game of an audience first in the tiles and in the listing; the example reads it |
 | `example/` | The example store; opened by `overgear/example/index.html` |
 
 ## Use

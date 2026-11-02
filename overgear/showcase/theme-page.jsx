@@ -10,11 +10,13 @@ import { Slider } from '../../src/components/Slider.jsx';
 import { SegmentedControl } from '../../src/components/SegmentedControl.jsx';
 import { Tabs } from '../../src/components/Tabs.jsx';
 import { Switch } from '../../src/components/Switch.jsx';
+import { Selector } from '../../src/components/Selector.jsx';
 import { saveTheme, loadTheme, DEFAULT, MOTION_OPTIONS, BRAND_OPTIONS } from '../../site/theme.js';
+import { AUDIENCES, AUDIENCE_DEFAULT, audienceOf } from '../audience.js';
 import { COOKIE, LOCAL_DEFAULT, TINT_DEFAULT, FONT_SETS, FONTS_DEFAULT, applyOvergearTheme } from '../theme.js';
 
 // Overgear starts from the default of the system with the enhanced animations; the brand stays the default one (white in the dark theme)
-const START = { ...DEFAULT, motion: 'enhanced', tint: TINT_DEFAULT, fonts: FONTS_DEFAULT, local: { ...LOCAL_DEFAULT } };
+const START = { ...DEFAULT, motion: 'enhanced', tint: TINT_DEFAULT, fonts: FONTS_DEFAULT, audience: AUDIENCE_DEFAULT, local: { ...LOCAL_DEFAULT } };
 const seg = (values) => values.map((v) => ({ value: v, label: v[0].toUpperCase() + v.slice(1) }));
 
 function Row({ title, hint, children }) {
@@ -73,6 +75,17 @@ export function Theme() {
           </Row>
         </div>
         <ButtonGroup><Button variant="secondary" label="Reset" onClick={() => setTheme({ ...START })} /></ButtonGroup>
+      </section>
+      <section className="ov-section">
+        <div className="ov-section__head">
+          <h3 className="ov-h2">Audience</h3>
+          <p className="ov-note">Who the home page of the example is made for. The game of the audience leads: its tile is the first, tagged For you, and its products come first in the listing; the other games follow as usual. The example reads it when it opens</p>
+        </div>
+        <div className="ov-settings">
+          <Row title="Audience" hint="All players is the page as it is. A player of Diablo 4 has Diablo 4 first, a player of World of Warcraft has World of Warcraft first">
+            <Selector label="Audience" options={AUDIENCES.map(([value, label]) => ({ value, label }))} value={audienceOf(theme)} onValueChange={(audience) => set({ audience })} />
+          </Row>
+        </div>
       </section>
       <section className="ov-section">
         <div className="ov-section__head">

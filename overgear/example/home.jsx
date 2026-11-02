@@ -6,6 +6,9 @@ import { Skeleton } from '../../src/components/Skeleton.jsx';
 import { Avatar } from '../../src/components/Avatar.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
 import { go } from './util.js';
+import { loadTheme } from '../../site/theme.js';
+import { COOKIE } from '../theme.js';
+import { audienceOf, tileRows, splitOffers } from '../audience.js';
 import { GAMES, OFFERS, REVIEWS, CATEGORIES, TILE_ROWS, gameOf } from './data.js';
 import { Bleed } from '../../src/components/Layout.jsx';
 import { Page, Section, GameTile, GameChip, OfferListing } from './ui.jsx';
@@ -118,12 +121,15 @@ export function Home() {
   const [playing, setPlaying] = useTakeTurns(3);
   const turn = (i) => ({ playing: playing === i, onPlay: () => setPlaying(i), onEnd: () => setPlaying(-1) });
   const [category, setCategory] = useState('All games');
-  // the products of different games take turns, so the first screen is varied
+  // who the page is made for (the Theme setting of the showcase): its game leads the tiles and the listing
+  const audience = audienceOf(loadTheme(COOKIE));
+  // the products of the game of the audience come first; the products of the other games take turns, so the first screen is varied
   const products = (() => {
+    const [own, rest] = splitOffers(OFFERS.filter((o) => category === 'All games' || gameOf(o.game).category === category), audience);
     const by = new Map();
-    for (const o of OFFERS) if (category === 'All games' || gameOf(o.game).category === category) by.set(o.game, [...(by.get(o.game) || []), o]);
+    for (const o of rest) by.set(o.game, [...(by.get(o.game) || []), o]);
     const lists = [...by.values()];
-    const out = [];
+    const out = [...own];
     for (let i = 0; lists.some((l) => i < l.length); i++) for (const l of lists) if (i < l.length) out.push(l[i]);
     return out;
   })();
@@ -156,9 +162,9 @@ export function Home() {
         <section className="og-section" aria-label="Games">
           <Bleed scroll>
             <div className="og-grows">
-              {TILE_ROWS.map((row, i) => (
+              {tileRows(TILE_ROWS, audience).map((row, i) => (
                 <div key={i} className="og-grow">
-                  {row.map(([slug, width]) => <GameChip key={slug} slug={slug} width={width} />)}
+                  {row.map(([slug, width]) => <GameChip key={slug} slug={slug} width={width} tag={slug === audience ? 'For you' : undefined} />)}
                 </div>
               ))}
             </div>
