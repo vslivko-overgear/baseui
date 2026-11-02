@@ -380,3 +380,6 @@ export const USAGE = {
   },
   Rating: { do: ['Give it a label'], dont: ['Use stars for something that is not a rating'] },
 };
+
+/** The usage guidance of a component, by its name. Kept out of describe(): it is read by the documentation, the docs build and the agents, never by an app, so it must not ship with the components. */
+export const usageOf = (component) => USAGE[component?.displayName || component?.name] || null;

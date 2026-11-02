@@ -26,6 +26,7 @@ const data = await page.evaluate(async () => {
   const manifest = (await import('/site/manifest.js')).default;
   const kebab = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   const rows = [];
+  const { usageOf } = await import('/src/usage.js');
   const read = async (item, section, group, parent) => {
     const abs = new URL(item.file, `${location.origin}/site/manifest.js`).href;
     let docs = null; let examples = [];
@@ -33,7 +34,7 @@ const data = await page.evaluate(async () => {
       const m = await import(abs);
       const c = m.default && m.default.component;
       const info = c && c.__docgenInfo;
-      if (info) docs = { description: info.description || '', usage: info.usage || null, props: Object.entries(info.props || {}).map(([name, p]) => ({ name, type: (p.tsType && (p.tsType.raw || p.tsType.name)) || '', def: p.defaultValue ? p.defaultValue.value : '', text: (p.description || '').replace(/\s+/g, ' ').trim() })) };
+      if (info) docs = { description: info.description || '', usage: usageOf(c), props: Object.entries(info.props || {}).map(([name, p]) => ({ name, type: (p.tsType && (p.tsType.raw || p.tsType.name)) || '', def: p.defaultValue ? p.defaultValue.value : '', text: (p.description || '').replace(/\s+/g, ' ').trim() })) };
       examples = Object.keys(m).filter((k) => !['default', '__namedExportsOrder', 'page', 'Playground'].includes(k)).map((k) => k.replace(/([a-z])([A-Z])/g, '$1 $2'));
     } catch { /* a page that is not a component */ }
     const slug = kebab(item.title);

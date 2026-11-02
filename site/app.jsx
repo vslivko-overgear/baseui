@@ -1,4 +1,5 @@
 import { documentControls } from './controls-docs.js';
+import { usageOf } from '../src/usage.js';
 import { createRoot } from 'react-dom/client';
 import { React } from '../src/react.js';
 import manifest from './manifest.js';
@@ -365,7 +366,7 @@ const brief = (text = '', max = 110) =>
     .slice(0, max);
 /** What to do and what not to do with a component (src/usage.js), the guidance an agent reads before it builds with it. */
 function UsageBlock({ component }) {
-  const usage = component && component.__docgenInfo && component.__docgenInfo.usage;
+  const usage = component && usageOf(component);
   if (!usage) return null;
   return (
     <section className="section" id="usage" data-anchor="Usage">

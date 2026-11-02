@@ -161,16 +161,19 @@ describe('usage guidance', () => {
       for (const t of [...u.do, ...u.dont]) expect(t.length, `${name}: ${t}`).toBeGreaterThan(10);
     }
   });
-  test('describe() attaches the usage to the component', async () => {
+  test('usageOf() finds the usage of a component by its name, and describe() does not carry it', async () => {
     const { Button, Card, Badge } = await import('../src/index.jsx');
-    expect(Button.__docgenInfo.usage.do.join(' ')).toMatch(/single|one primary/i);
-    expect(Card.__docgenInfo.usage.dont.join(' ')).toMatch(/Nest a card/);
-    expect(Badge.__docgenInfo.usage.dont.length).toBeGreaterThan(2);
+    const { usageOf } = await import('../src/usage.js');
+    expect(usageOf(Button).do.join(' ')).toMatch(/single|one primary/i);
+    expect(usageOf(Card).dont.join(' ')).toMatch(/Nest a card/);
+    expect(usageOf(Badge).dont.length).toBeGreaterThan(2);
+    expect(Button.__docgenInfo.usage).toBeUndefined();
   });
   test('the components people reach for first have guidance', async () => {
     const lib = await import('../src/index.jsx');
+    const { usageOf } = await import('../src/usage.js');
     for (const n of ['Button', 'IconButton', 'Card', 'Banner', 'Badge', 'Dialog', 'AlertDialog', 'Selector', 'TextInput', 'Switch', 'Table', 'Tabs', 'Toast'.replace('Toast', 'ToastProvider'), 'Tooltip', 'ProgressBar']) {
-      expect(lib[n].__docgenInfo.usage, n).toBeTruthy();
+      expect(usageOf(lib[n]), n).toBeTruthy();
     }
   });
 });

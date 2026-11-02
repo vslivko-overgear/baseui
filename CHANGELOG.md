@@ -1,5 +1,10 @@
 # Changelog
 
+## Usage guidance no longer ships with the components
+
+- `describe()` used to attach the usage guidance of `src/usage.js` (Do and Don't lines, 19 KB minified) to every component, and because it runs when a module loads, a bundler could not drop it: an app that imported only `Button` carried all of it (35.7 KB of which 19.1 KB was guidance; 16.5 KB now). The guidance is read from `usageOf(component)` in `src/usage.js` instead, by the documentation site, the docs build and the tests; `__docgenInfo` keeps the description and the props.
+- `tests/boundary.test.js` holds what must be true of baseui itself about its sublibraries; `overgear/tests` keeps only what is Overgear's, and `npm test` runs both on vitest. `tests/checks.test.js` keeps the rules, the scripts that find them and the agent defaults in step. `tools/check/fixtures.mjs` runs the audit on pages that break a rule on purpose (D12, D15, D18, M2).
+
 ## .gitignore no longer grows on every build
 
 - `tools/build/js.mjs` rewrote the generated block of `.gitignore` by finding its marker with the old script name (`tools/build-js.mjs`); after the tools were moved the marker did not match and every build appended another block (the file had grown to 11,000 lines, with a stale `overgear/theme.js` entry that would have dropped that source file from a copy of the repository). The marker is matched under both names and the file is one block again.
