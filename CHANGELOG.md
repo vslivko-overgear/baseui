@@ -1,5 +1,9 @@
 # Changelog
 
+## Overgear: no "Catalog" title on the catalog page
+
+- The title "Catalog" is gone from the top of the catalog page, on a desktop and on a phone: the page starts with the search of the games (on a desktop, the two columns). The panel that the Catalog button opens had none.
+
 ## Rule D19: a list stands on its text, its highlight reaches out and is not cut
 
 - The catalog list of games had its text inset from the heading and the field above it, because the list of the page had its bleed taken away (`--bui-list-bleed: 0`) to keep the highlight of a hovered or active row from being cut by the scrolling box round it. The way it is meant: the text of the rows stands on the edge of the content, the highlight reaches 12px out past it, and is not cut.

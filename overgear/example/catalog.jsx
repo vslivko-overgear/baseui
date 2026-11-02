@@ -16,13 +16,12 @@ import { Icon } from '../../src/components/Icon.jsx';
 import { Navbar } from '../../src/components/MobileNavigation.jsx';
 import { go, href } from './util.js';
 import { GAMES, EMOJI, catalogOf, gameOf } from './data.js';
-import { Page, PageHead } from './ui.jsx';
+import { Page } from './ui.jsx';
 
 /** The games of the shop on a phone: the left column of the catalog of a desktop, as a page. A game opens its kinds of offers (CatalogGame). */
 export function Catalog() {
   return (
     <Page>
-      <PageHead title="Catalog" />
       <GamesColumn onSelect={(slug) => go(`/catalog/${slug}`)} />
     </Page>
   );
@@ -117,7 +116,6 @@ export function CatalogColumns({ slug, onChoose, select }) {
 export function CatalogDesktop({ slug }) {
   return (
     <Page>
-      <PageHead title="Catalog" />
       <CatalogColumns key={slug} slug={slug} select={(s) => go(`/catalog/${s}`)} />
     </Page>
   );
