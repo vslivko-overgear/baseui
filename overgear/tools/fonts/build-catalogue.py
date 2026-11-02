@@ -6,8 +6,9 @@ Every font is fetched from the place its author publishes it (below), cut down t
   pip install fonttools brotli
   python3 overgear/tools/fonts/build-catalogue.py            # needs the network; rewrites overgear/fonts/catalogue/
 
-A font is in this list only when its license is the SIL OFL, said by a license file of its repository or archive, or by the license field of the font itself. The rest of the sans-serif fonts
-of the catalogue are not here: see overgear/fonts/catalogue/README.md for each of them and the reason.
+A font is in this list only when (1) its license lets us ship it (the SIL OFL, said by a license file of its repository or archive or by the license field of the font itself; or the GPL with the font
+exception, for FreeSans) and (2) it has a bold: a face of weight 700 or more, static or a variable range that reaches it. A font with one weight is left out: a bold of it would be a made one.
+The rest of the sans-serif fonts of the catalogue are not here: see overgear/fonts/catalogue/README.md for each of them and the reason.
 
 Outputs: <slug>/<slug>-<weight>.woff2 and <slug>/LICENSE.txt, catalogue.css (the @font-face rules: a browser fetches a file only when the family is used), catalogue.js (the list for the
 Theme page, in alphabetical order) and README.md (author, source, license, files).
@@ -18,52 +19,39 @@ from urllib.parse import quote
 OUT = os.path.join(os.path.dirname(__file__), '..', '..', 'fonts', 'catalogue')
 UNICODES = ('U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD,'
             'U+0100-02AF,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116')
-RANGE = (100, 900)   # a font with one file: it answers every weight, so the browser does not make a bold of its own
 
 def gh(repo, branch):
     return {'type': 'github', 'repo': repo, 'branch': branch, 'url': f'https://github.com/{repo}'}
 
 # slug, name, author, source (where it is published), files [(weight or (min, max), path in the source)], license (a path in the source, 'font' for the license field of the font)
 FONTS = [
-    ('alfphabet', 'Alfphabet', 'Karl Bassil / OSP', {'type': 'archive', 'url': 'https://gitlab.constantvzw.org/osp/foundry.alfphabet/-/archive/master/foundry.alfphabet-master.tar.gz', 'page': 'http://osp.kitchen/foundry/alfphabet/'},
-     [(RANGE, 'foundry.alfphabet-master/fonts/Alfphabet-IV.ttf')], 'foundry.alfphabet-master/LICENSE.txt'),
     ('aspekta', 'Aspekta', 'Ivo Dolenc', gh('ivodolenc/aspekta', 'main'),
      [(400, 'packages/fonts/ttf/Aspekta-400.ttf'), (500, 'packages/fonts/ttf/Aspekta-500.ttf'), (600, 'packages/fonts/ttf/Aspekta-600.ttf'), (700, 'packages/fonts/ttf/Aspekta-700.ttf')], 'LICENSE.txt'),
-    ('barlaxent', 'Barlaxent', 'Jeremy Tribby', {'type': 'archive', 'url': 'http://typotheque.le75.be/site/assets/files/1034/barlaxent.zip', 'page': 'http://typotheque.le75.be/#barlaxent'},
-     [(RANGE, 'barlaxent.otf')], 'font'),
-    ('breite-grotesk', 'Breite Grotesk', 'Nicolas Franck Pauly', gh('metapolator/Breite', 'master'), [(RANGE, 'Output/Regular.otf')], 'readme'),
-    ('cat-neuzeit', 'CAT Neuzeit', 'Peter Wiegel', {'type': 'archive', 'url': 'http://www.peter-wiegel.de/Fonts/CATNeuzeit.zip', 'page': 'http://www.peter-wiegel.de/CAT_Neuzeit.html'},
-     [(RANGE, 'CATNeuzeit.ttf')], 'Open Font License.txt'),
-    ('evening', 'Evening', 'Bryce Wilner', gh('brycewilner/Evening', 'master'), [(RANGE, 'Evening-Regular.otf')], 'readme'),
     ('fibel-nord', 'Fibel Nord', 'Peter Wiegel', {'type': 'archive', 'url': 'http://www.peter-wiegel.de/Fonts/FibelNordTT.zip', 'page': 'http://www.peter-wiegel.de/Fibel.html'},
      [(400, 'Fibel Nord.ttf'), (700, 'Fibel Nord Bold.ttf')], 'Open Font License.txt'),
+    ('freesans', 'FreeSans', 'Primož Peterlin and others (GNU FreeFont)', {'type': 'archive', 'url': 'https://ftp.gnu.org/gnu/freefont/freefont-ttf-20120503.zip', 'page': 'https://www.gnu.org/software/freefont/', 'license': 'GPL-3.0-or-later with the font exception'},
+     [(400, 'freefont-20120503/FreeSans.ttf'), (700, 'freefont-20120503/FreeSansBold.ttf')], ('freefont-20120503/README', 'delete this exception statement from your version.', 'freefont-20120503/COPYING')),
     ('haskoy', 'Hasköy', 'Ertekin Erdin', gh('ertekinno/haskoy', 'main'),
      [(400, 'fonts/otf/Haskoy-Regular.otf'), (500, 'fonts/otf/Haskoy-Medium.otf'), (600, 'fonts/otf/Haskoy-SemiBold.otf'), (700, 'fonts/otf/Haskoy-Bold.otf')], 'OFL.txt'),
-    ('helmet', 'Helmet', 'Carl Enlund', gh('carlenlund/helmet', 'master'), [(RANGE, 'Helmet-Regular.ttf')], 'LICENSE'),
-    ('liga-sans', 'Liga Sans', 'Nathan Laurent', gh('NathanLaurent/Liga-Sans', 'main'), [(RANGE, 'LigaSans-Bold.otf')], 'LICENCE.txt'),
     ('lil-grotesk', 'Lil Grotesk', 'Bastien Sozeau', gh('noirblancrouge/LilGrotesk', 'master'), [((100, 900), 'fonts/variable/LilGrotesk[wght].ttf')], 'OFL.txt'),
-    ('lt-institute', 'LT Institute', 'Daniel Lyons', {'type': 'archive', 'url': 'https://2d6ef404-3457-416f-9d11-f7188f68ac99.filesusr.com/archives/356ba5_6cbb8bc1fc79445190ae6b9ff9b05d69.zip?dn=LTInstitute.zip', 'page': 'https://lyonstype4.wixsite.com/lyonstype-beta/fonts'},
-     [(RANGE, 'LTInstitute-1.otf')], 'font'),
-    ('lunchtype', 'Lunchtype', 'Stefan Wetterstrand', {'type': 'archive', 'url': 'https://uncut.wtf/downloads/lunchtype.zip', 'page': 'https://uncut.wtf/'},
-     [(300, 'Lunchtype22-Light.ttf'), (400, 'Lunchtype22-Regular.ttf'), (500, 'Lunchtype22-Medium.ttf')], 'SIL Open Font License.txt'),
     ('manifont-grotesk', 'Manifont Grotesk', 'Alexandre Liziard', gh('Interstices-/Manifont-Grotesk', 'master'),
      [(400, 'fontes/TTF/ManifontGroteskBook.ttf'), (700, 'fontes/TTF/ManifontGroteskBold.ttf')], 'LICENSE.txt'),
     ('micro-grotesk', 'Micro Grotesk', 'Eli Heuer', gh('eliheuer/micro-grotesk', 'main'), [((100, 900), 'fonts/MicroGrotesk[wght].ttf')], 'OFL.txt'),
     ('miedinger', 'Miedinger', 'Owen Earl', gh('indestructible-type/Miedinger', 'master'),
      [(400, 'Finished/Book/Miedinger*-Book.otf'), (700, 'Finished/Bold/Miedinger*-Bold.otf')], 'LICENSE.md'),
-    ('milkman', 'Milkman', 'Giulia Boggio', {'type': 'archive', 'url': 'https://uncut.wtf/downloads/milkman.ttf.zip', 'page': 'https://uncut.wtf/'}, [(RANGE, 'milkman.ttf')], 'font'),
-    ('opening-hours-sans', 'Opening Hours Sans', 'Opening Hours Studio', gh('opening-hours-studio/opening-hours-sans', 'main'), [(RANGE, 'fonts/OpeningHoursSans-Regular.otf')], 'LICENSE.md'),
-    ('optician-sans', 'Optician Sans', 'Simen Schikulski', gh('anewtypeofinterference/Optician-Sans', 'master'), [(RANGE, 'OpenType-TT/Optician-Sans.ttf')], 'LICENSE.md'),
     ('overused-grotesk', 'Overused Grotesk', 'RandomMaerks', gh('RandomMaerks/Overused-Grotesk', 'main'), [((200, 900), 'fonts/variable/OverusedGrotesk-VF.ttf')], 'LICENSE.txt'),
     ('panamera', 'Panamera', 'Bastien Sozeau', gh('noirblancrouge/Panamera', 'master'), [((100, 900), 'fonts/variable/Panamera[wght].ttf')], 'OFL.txt'),
     ('prodigy-sans', 'Prodigy Sans', 'Wei Huang', gh('weiweihuanghuang/Prodigy-Sans', 'master'),
      [(400, 'fonts/desktop/ProdigySans-Regular.otf'), (500, 'fonts/desktop/ProdigySans-Medium.otf'), (600, 'fonts/desktop/ProdigySans-SemiBold.otf'), (700, 'fonts/desktop/ProdigySans-Bold.otf')], 'OFL.txt'),
     ('rag', 'Rag', 'Dennis Grauel', gh('dennisgrauel/Rag', 'main'), [(400, 'fonts/otf/Rag-Regular.otf'), (700, 'fonts/otf/Rag-Bold.otf')], 'OFL.txt'),
-    ('solitus', 'Solitus', 'J Hudson', gh('jhudson100/Solitus-font', 'master'), [(RANGE, 'Solitus.ttf')], 'OFL.txt'),
     ('standard', 'Standard', 'Bryce Wilner', gh('brycewilner/Standard', 'master'), [(400, 'standard-book.otf'), (700, 'standard-bold.otf')], 'font'),
-    ('tanklager', 'Tanklager', 'Ariel Martín Pérez', {'type': 'archive', 'url': 'https://codeberg.org/ArielMartinPerez/Tanklager/archive/main.zip', 'page': 'https://www.tunera.xyz/fonts/tanklager/'},
-     [(RANGE, 'tanklager/fonts/TTF/Tanklager-Original.ttf')], 'tanklager/LICENSE.txt'),
-    ('violet-sans', 'Violet Sans', 'Violet Office', gh('violetoffice/violet_sans', 'master'), [(RANGE, 'fonts/TTF/VioletSans-Regular.ttf')], 'OFL.txt'),
+]
+
+# the sans-serif fonts of the catalogue that are not in the list, and why: [name, reason]
+EXCLUDED = [
+    ('Fonts with one weight (OFL, fetched and tried)', 'Alfphabet, Barlaxent, Breite Grotesk, CAT Neuzeit, Evening, Helmet, Liga Sans (a bold only), LT Institute, Lunchtype (light, regular and medium), Milkman, Opening Hours Sans, Optician Sans, Solitus, Tanklager, Violet Sans, and Hedvig Letters Sans (loaded from the CDN in the Theme page, regular only), Fudd (MIT) and Logisoso (GPL v2 with the font exception, sources only): no bold, so a bold of them would be a made one'),
+    ('No license that allows it could be shown', 'Berlin Grotesk, Swansea, Milford, Project Blackbird, Vorsik, Libre Office Sans, Reglo, GNU Grotesk and Marynata have none in the files; Vercetti has its own Licence Amicale'),
+    ('Files that a script cannot reach', 'Perun, Bertioga Sans and Giphurs (GitHub repositories too large for the CDN, and no listing of their files), Karrik and Abordage (Velvetyne: the site is a page without a file, and its GitLab answers 404 and 429), Porpora, Amiamie, DINdong, BDO Grotesk, AUTHENTIC Sans, Dauphine, FUNGIS, Konstant Grotesk Neue, Anderson Grotesk, Vremena Grotesk (commercial)'),
 ]
 
 def curl(url, dest=None):
@@ -109,6 +97,11 @@ def name_of(path, i):
     return n.toUnicode().strip() if n else ''
 
 def license_text(src, how, first_font):
+    if isinstance(how, tuple):   # (a notice file, the end of the notice in it, the license file): the notice with the exception, then the license itself
+        notice_file, end, license_file = how
+        notice = fetch(src, notice_file).decode('utf-8', 'replace').replace('\r\n', '\n')
+        notice = notice[:notice.index(end) + len(end)]
+        return notice + '\n\n' + '=' * 70 + '\n\n' + fetch(src, license_file).decode('utf-8', 'replace').replace('\r\n', '\n')
     if how in ('font', 'readme'):
         notice = name_of(first_font, 0) or name_of(first_font, 13)
         said = name_of(first_font, 13) if how == 'font' else 'the readme of the repository says the font is under the SIL Open Font License (' + src['url'] + ')'
@@ -121,7 +114,13 @@ def subset(raw, dest, ext):
     subprocess.run(['pyftsubset', tmp, f'--unicodes={UNICODES}', '--layout-features=*', '--flavor=woff2', '--no-hinting', '--name-IDs=*', '--notdef-outline', f'--output-file={dest}'], check=True)
     os.unlink(tmp)
 
+def has_bold(files):
+    return any((w[1] if isinstance(w, tuple) else w) >= 700 for w, _ in files)
+
+
 def main():
+    for slug, name, _, _, files, _ in FONTS:
+        if not has_bold(files): sys.exit(f'{name} has no bold: it does not belong to the list')
     if os.path.isdir(OUT): shutil.rmtree(OUT)
     os.makedirs(OUT)
     rows, css = [], ['/* The sans-serif fonts of the catalogue uncut.wtf under the SIL Open Font License, cut to Latin, Latin Extended and Cyrillic (generated by tools/fonts/build-catalogue.py).\n   The browser fetches a file only when its family is used. A font with one file answers every weight: it is not made bold by the browser. */']
@@ -144,10 +143,11 @@ def main():
     open(os.path.join(OUT, 'catalogue.css'), 'w').write('\n'.join(css) + '\n')
     open(os.path.join(OUT, 'catalogue.js'), 'w').write('// The sans-serif fonts of the catalogue uncut.wtf in this directory, in alphabetical order: [key, name] (generated by tools/fonts/build-catalogue.py)\nexport const CATALOGUE_FONTS = '
         + json.dumps([[r[0], r[1]] for r in rows], ensure_ascii=False, indent=2).replace('[\n    "', '["').replace('",\n    "', '", "').replace('"\n  ]', '"]') + ';\n')
-    lines = ['# The fonts of the catalogue uncut.wtf', '', 'Generated by `overgear/tools/fonts/build-catalogue.py`. Each font is the sans-serif font of the catalogue [uncut.wtf](https://uncut.wtf/) that is published under the SIL Open Font License 1.1 and can be fetched by a script; the license of each is in its directory. Files are cut to Latin, Latin Extended and Cyrillic, as WOFF2.', '',
+    lines = ['# The fonts of the catalogue uncut.wtf', '', 'Generated by `overgear/tools/fonts/build-catalogue.py`. Each font is a sans-serif font of the catalogue [uncut.wtf](https://uncut.wtf/) that is published under the SIL Open Font License 1.1 (FreeSans: the GPL with the font exception), can be fetched by a script and has a bold. The license of each is in its directory. Files are cut to Latin, Latin Extended and Cyrillic, as WOFF2.', '',
              '| Font | Author | Source | Files |', '| --- | --- | --- | --- |']
     for slug, name, author, page, files in rows:
         lines.append(f"| {name} | {author} | {page} | {', '.join(f'{w}: {s // 1024} KB' for w, _, s in files)} |")
+    lines += ['', '## Not in the list', ''] + [f'- **{n}**: {why}' for n, why in EXCLUDED]
     open(os.path.join(OUT, 'README.md'), 'w').write('\n'.join(lines) + '\n')
     print('total', sum(s for r in rows for _, _, s in r[4]) // 1024, 'KB')
 

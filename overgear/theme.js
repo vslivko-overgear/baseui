@@ -11,14 +11,13 @@ export const TINT_STEPS = [0, 0.25, 0.5, 0.75, 1];
 export const TINT_DEFAULT = TINT_STEPS.length - 1;
 /**
  * The sans-serif fonts of the catalogue uncut.wtf (a free typeface catalogue) that are served from a CDN under an open license (SIL OFL 1.1): the fonts of Fontsource, linked from jsdelivr,
- * loaded when chosen and not before. [key (the id at Fontsource), name, weights]. The others of the catalogue that are under the OFL are in this repository (overgear/fonts/catalogue,
+ * loaded when chosen and not before. Only fonts with a bold are listed (Hedvig Letters Sans has a regular only). [key (the id at Fontsource), name, weights]. The others of the catalogue that we may ship and that have a bold are in this repository (overgear/fonts/catalogue,
  * CATALOGUE_FONTS); the rest of its sans-serif fonts are not here: see overgear/fonts/catalogue/README.md.
  */
 export const UNCUT_FONTS = [
   ['geist', 'Geist', [400, 500, 600, 700]], ['instrument-sans', 'Instrument Sans', [400, 500, 600, 700]], ['pretendard', 'Pretendard', [400, 500, 600, 700]],
   ['uncut-sans', 'Uncut Sans', [400, 500, 600, 700]], ['inclusive-sans', 'Inclusive Sans', [400, 500, 600, 700]], ['tasa-orbiter', 'TASA Orbiter', [400, 500, 600, 700]],
   ['hauora-sans', 'Hauora Sans', [400, 500, 600, 700]], ['kulim-park', 'Kulim Park', [400, 600, 700]], ['zen-kaku-gothic-new', 'Zen Kaku Gothic New', [400, 500, 700]],
-  ['hedvig-letters-sans', 'Hedvig Letters Sans', [400]],
 ];
 /**
  * The fonts of the Theme page, in the order of its list: TT Interphases Pro, the font of the live site (linked from the overgear repository; Inter stands in until it loads) comes first,

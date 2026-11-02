@@ -30,6 +30,17 @@ describe('fonts', () => {
     for (const [key, , weights] of UNCUT_FONTS) expect(weights, key).toContain(400);
   });
 
+  test('every font of the list has a bold: a bold of a font with one weight would be a made one', () => {
+    const css = readFileSync('overgear/fonts/catalogue/catalogue.css', 'utf8');
+    const weights = (name) => [...css.matchAll(new RegExp(`font-family: "${name}"; font-weight: (\\d+)(?: (\\d+))?;`, 'g'))].flatMap((m) => [Number(m[1]), Number(m[2] || m[1])]);
+    for (const [key, name] of FONTS) {
+      if (key === 'site' || key === 'apfel') continue;   // TT Interphases Pro is a variable font from 1 to 1000, Apfel Grotezk has Regular, Mittel and Fett
+      const cdn = UNCUT_FONTS.find(([k]) => k === key);
+      const top = cdn ? Math.max(...cdn[2]) : Math.max(...weights(name));
+      expect(top, `${name} has no bold`).toBeGreaterThanOrEqual(700);
+    }
+  });
+
   describe('the fonts of this repository (overgear/fonts/catalogue)', () => {
     const css = readFileSync('overgear/fonts/catalogue/catalogue.css', 'utf8');
     test.each(CATALOGUE_FONTS)('%s has a face for its name, its files and a license of the SIL Open Font License', (slug, name) => {
@@ -37,7 +48,7 @@ describe('fonts', () => {
       const files = [...css.matchAll(new RegExp(`url\\("(${slug}/[^"]+)"\\)`, 'g'))].map((m) => m[1]);
       expect(files.length, `${name} has no files`).toBeGreaterThan(0);
       for (const file of files) expect(existsSync(`overgear/fonts/catalogue/${file}`), file).toBe(true);
-      expect(readFileSync(`overgear/fonts/catalogue/${slug}/LICENSE.txt`, 'utf8'), `${slug} license`).toMatch(/open font license/i);
+      expect(readFileSync(`overgear/fonts/catalogue/${slug}/LICENSE.txt`, 'utf8'), `${slug} license`).toMatch(/open font license|font exception|GNU GENERAL PUBLIC LICENSE/i);
     });
 
     test('the stylesheet is loaded by overgear.css, and a font of this repository names itself in --og-font without loading anything', () => {
