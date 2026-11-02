@@ -29,8 +29,8 @@ describe('rules and their checks', () => {
 
   test('every script all.mjs runs belongs to a rule', () => {
     const named = new Set(RULES.flatMap((r) => [r.tool, ...(r.tools || [])]).filter(Boolean));
-    // the audit of the constitution itself runs on every rule marked auto, so it has no `tool` of its own
-    for (const script of runners.filter((s) => s !== 'tools/check/constitution.mjs')) expect(named.has(script), `${script} serves no rule`).toBe(true);
+    // the audit of the constitution runs on every rule marked auto, and its fixtures keep it honest: neither has a `tool` of its own
+    for (const script of runners.filter((s) => !['tools/check/constitution.mjs', 'tools/check/fixtures.mjs'].includes(s))) expect(named.has(script), `${script} serves no rule`).toBe(true);
   });
 
   test('a rule names its extra scripts only as a list', () => {

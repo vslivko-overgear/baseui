@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Audit fixtures</title>
+<!-- Small pages that break a rule on purpose, and the same page made right. tools/check/fixtures.mjs runs the audit on each case and expects exactly the rules named in data-expect
+     (none for a page that is right). The audit that finds nothing would pass every other check, so this is what keeps it honest. Only the rules that need real layout are here:
+     the ones of the rules that jsdom can measure are tested in tests/constitution.test.jsx. -->
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="../../src/components.css">
+<style>
+  body { margin: 0; padding: 16px; background: var(--baseui-background-primary); color: var(--baseui-text-and-icon-primary); font: 16px/1.4 sans-serif; }
+  [data-case] { width: 360px; margin-bottom: 16px; }
+  .row { display: flex; gap: 8px; align-items: center; }
+</style>
+</head>
+<body>
+
+<!-- D15: buttons side by side have one icon size -->
+<section data-case="D15 icons of buttons differ" data-expect="D15">
+  <div class="row">
+    <button class="bui-button" data-slot="button" data-variant="secondary" data-size="md"><span class="bui-button__content"><span class="bui-button__icon" style="width:24px;height:24px"><svg width="24" height="24" viewBox="0 0 24 24"></svg></span><span class="bui-button__label">Add to cart</span></span></button>
+    <button class="bui-button" data-slot="icon-button" data-variant="secondary" data-size="md" aria-label="Favorites"><svg width="20" height="20" viewBox="0 0 20 20"></svg></button>
+  </div>
+</section>
+<section data-case="D15 icons of buttons match" data-expect="">
+  <div class="row">
+    <button class="bui-button" data-slot="button" data-variant="secondary" data-size="md"><span class="bui-button__content"><span class="bui-button__icon" style="width:20px;height:20px"><svg width="20" height="20" viewBox="0 0 20 20"></svg></span><span class="bui-button__label">Add to cart</span></span></button>
+    <button class="bui-button" data-slot="icon-button" data-variant="secondary" data-size="md" aria-label="Favorites"><svg width="20" height="20" viewBox="0 0 20 20"></svg></button>
+  </div>
+</section>
+
+<!-- D15: a button beside a field has the height of the field -->
+<section data-case="D15 button shorter than the field" data-expect="D15">
+  <div class="row">
+    <div class="bui-field" style="width:200px"><div class="bui-field__cell" style="height:56px"><input aria-label="Promo code" style="font-size:16px;width:100%;min-width:0;box-sizing:border-box"></div></div>
+    <button class="bui-button" data-slot="button" data-variant="primary" style="height:40px;font-size:16px">Apply</button>
+  </div>
+</section>
+<section data-case="D15 button and field of one height" data-expect="">
+  <div class="row">
+    <div class="bui-field" style="width:200px"><div class="bui-field__cell" style="height:56px"><input aria-label="Promo code" style="font-size:16px;width:100%;min-width:0;box-sizing:border-box"></div></div>
+    <button class="bui-button" data-slot="button" data-variant="primary" style="height:56px;font-size:16px">Apply</button>
+  </div>
+</section>
+
+<!-- D18: one gap between the fields of a form -->
+<section data-case="D18 gaps of 12 and 24" data-expect="D18">
+  <form>
+    <div class="bui-field" style="height:56px"><input aria-label="Name"></div>
+    <div class="bui-field" style="height:56px;margin-top:12px"><input aria-label="Email"></div>
+    <div class="bui-field" style="height:56px;margin-top:24px"><input aria-label="Phone"></div>
+  </form>
+</section>
+<section data-case="D18 one gap" data-expect="">
+  <form>
+    <div class="bui-field" style="height:56px"><input aria-label="Name"></div>
+    <div class="bui-field" style="height:56px;margin-top:16px"><input aria-label="Email"></div>
+    <div class="bui-field" style="height:56px;margin-top:16px"><input aria-label="Phone"></div>
+  </form>
+</section>
+
+<!-- D12: a filled element stays inside the box that holds it -->
+<section data-case="D12 sticks out of its container" data-expect="D12">
+  <div style="background:#222;padding:8px;width:200px"><div style="background:#555;color:#fff;height:24px;margin-left:-24px">label</div></div>
+</section>
+<section data-case="D12 stays inside" data-expect="">
+  <div style="background:#222;padding:8px;width:200px"><div style="background:#555;color:#fff;height:24px">label</div></div>
+</section>
+
+</body>
+</html>

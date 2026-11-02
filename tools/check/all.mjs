@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-// Runs every browser check against a static server it starts itself (so nothing has to be running), and exits 1 if any of them finds something.
+// Runs every browser check (fixtures: the audit finds what it should; the others look for violations on real pages) against a static server it starts itself (so nothing has to be running), and exits 1 if any of them finds something.
 //
-//   node tools/check/all.mjs            # radii, sizes, constitution, spacing (the templates), Overgear spacing
+//   node tools/check/all.mjs            # radii, sizes, fixtures, constitution, spacing (the templates), Overgear spacing
 //   node tools/check/all.mjs radii      # only the ones whose name contains the word
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
@@ -27,6 +27,7 @@ const base = `http://127.0.0.1:${server.address().port}`;
 const CHECKS = [
   ['radii', 'tools/check/radii.mjs'],
   ['sizes', 'tools/check/sizes.mjs'],
+  ['fixtures', 'tools/check/fixtures.mjs'],
   ['constitution', 'tools/check/constitution.mjs'],
   ['spacing', 'tools/check/spacing.mjs'],
   ['overgear-spacing', 'overgear/tools/check/spacing.mjs'],

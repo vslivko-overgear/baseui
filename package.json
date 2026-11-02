@@ -95,6 +95,7 @@
     "typecheck": "node tools/check/typecheck.mjs",
     "tailwind": "node tools/build/tailwind.mjs",
     "constitution": "node tools/build/constitution.mjs && node overgear/tools/build/constitution.mjs",
+    "check:fixtures": "node tools/check/fixtures.mjs",
     "check:constitution": "node tools/check/constitution.mjs",
     "check:spacing": "node tools/check/spacing.mjs",
     "check:overgear:spacing": "node overgear/tools/check/spacing.mjs",
