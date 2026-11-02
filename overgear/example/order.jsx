@@ -90,9 +90,9 @@ function CashbackRow({ amount }) {
 }
 
 /** The bar that is pinned to the bottom of the screen of a phone: what is to pay and the button that pays. `above` lifts it over the bottom bar of the tabs (the cart); the checkout has none. */
-export function PayBar({ amount, action, onClick, above }) {
+export function PayBar({ amount, action, onClick, above, inline = false }) {
   return (
-    <div className="og-paybar" style={{ '--og-paybar-bottom': above ? 'var(--og-bottom)' : '0px' }}>
+    <div className={inline ? 'og-paybar og-paybar--inline' : 'og-paybar'} style={inline ? undefined : { '--og-paybar-bottom': above ? 'var(--og-bottom)' : '0px' }}>
       <div className="og-paybar__in">
         <p className="og-paybar__sum"><span className="og-paybar__amount">{money(amount)}</span><Badge variant="warning-light" size="md" label={`+${cashbackOf(amount)}`} icon={<CashbackMark />} aria-label={`Cashback ${cashbackOf(amount)} OG Coins`} /></p>
         <Button variant="primary" size="lg" textSize={16} label={action} onClick={onClick} />
@@ -146,7 +146,12 @@ export function OrderSummary({ fee, label = 'Amount to pay', amount, action, onA
           )}
         </div>
       </Card>
-      <Card variant="surface" padding={0} className="og-coupon"><Promo /></Card>
+      <PromoCard />
     </>
   );
+}
+
+/** The promo code row on a card of its own. */
+export function PromoCard() {
+  return <Card variant="surface" padding={0} className="og-coupon"><Promo /></Card>;
 }

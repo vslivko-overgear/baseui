@@ -14,6 +14,10 @@ const problems = [];
 
 // what a part looks like: the style properties that make it look the way it does
 const LOOK = ['backgroundColor', 'borderTopLeftRadius', 'paddingTop', 'paddingLeft', 'color', 'fontSize', 'fontWeight', 'lineHeight', 'height'];
+// the mini-cart has no summary block and no title of the page: the price, the bonus and the button are the pinned bar of the phone, and the promo code is a card in the list
+const MINI_WITHOUT = new Set(['title', 'count', 'summary', 'sumRow', 'sumBig', 'sumSoft', 'pay']);
+// the bar exists on a phone in the checkout and the cart; on a desktop only the mini-cart has it, so there it is compared with the one of the phone
+const BAR = ['paybar', 'payAmount', 'payBadge', 'payButton'];
 const SHARED = {
   line: '.og-lines--surface > .og-line',
   lineTitle: '.og-line__title',
@@ -27,6 +31,10 @@ const SHARED = {
   sumSoft: '.og-sum__row--soft',
   coupon: '.og-coupon',
   couponText: '.og-coupon [data-slot="list-item-title"]',
+  paybar: '.og-paybar',
+  payAmount: '.og-paybar__amount',
+  payBadge: '.og-paybar .bui-badge, .og-paybar [data-slot=badge]',
+  payButton: '.og-paybar .bui-button',
   pay: '.og-sticky .bui-card:first-child .bui-button[data-variant="primary"], .og-drawer__foot .bui-button[data-variant="primary"]',
   title: '.og-order__title',
   count: '.og-order__title + .og-caption',
@@ -44,7 +52,8 @@ const looks = (page, phone) => page.evaluate(({ SHARED, LOOK, phone }) => {
   return out;
 }, { SHARED, LOOK, phone });
 
-for (const [width, phone] of [[1440, false], [390, true]]) {
+let barBase = {};   // the look of the pay bar in the checkout of a phone
+for (const [width, phone] of [[390, true], [1440, false]]) {
   const where = phone ? 'phone' : 'desktop';
   const ctx = await browser.newContext({ viewport: { width, height: 900 }, hasTouch: phone });
   const open = async (hash) => {
@@ -56,6 +65,7 @@ for (const [width, phone] of [[1440, false], [390, true]]) {
   };
   const checkout = await open('#/checkout');
   const base0 = await looks(checkout, phone);
+  if (phone) barBase = base0;
   const cart = await open('#/cart');
   const cartLooks = await looks(cart, phone);
   // the mini-cart: opened by the event that "Add to cart" sends; on a phone too
@@ -67,14 +77,25 @@ for (const [width, phone] of [[1440, false], [390, true]]) {
   const miniLooks = opened ? await looks(home, phone) : {};
   for (const [name, mine] of [['cart', cartLooks], ['mini-cart', miniLooks]]) {
     for (const part of Object.keys(SHARED)) {
-      const a = base0[part]; const b = mine[part];
-      if (!a) continue;   // the checkout does not have it (the title and the count are not in the mini-cart)
-      if (!b) { if (!(name === 'mini-cart' && (part === 'title' || part === 'count' || part === 'pay' && phone))) problems.push(`${where}: the ${name} has no "${part}" as the checkout has`); continue; }
+      if (name === 'mini-cart' && part === 'paybar') continue;   // the bar of the panel is pinned in the panel, not in the screen: its parts are compared
+      const a = (name === 'mini-cart' && BAR.includes(part) ? barBase : base0)[part]; const b = mine[part];
+      if (!a) continue;   // the checkout does not have it
+      if (!b) { if (!(name === 'mini-cart' && MINI_WITHOUT.has(part))) problems.push(`${where}: the ${name} has no "${part}" as the checkout has`); continue; }
       for (const k of Object.keys(a)) {
-        if (name === 'mini-cart' && part === 'summary' && k === 'backgroundColor') continue;
         if (a[k] !== b[k]) problems.push(`${where}: "${part}" of the ${name} differs from the checkout in ${k} (${b[k]} against ${a[k]})`);
       }
     }
+  }
+  if (opened) {
+    // the mini-cart: the pay bar (the price, the bonus, the button) pinned at the bottom of the panel, the promo code in the list that scrolls, no summary block
+    const mini = await home.evaluate(() => {
+      const d = document.querySelector('.og-drawer').getBoundingClientRect(); const bar = document.querySelector('.og-drawer .og-paybar')?.getBoundingClientRect();
+      const body = document.querySelector('.og-drawer__body'); const coupon = document.querySelector('.og-drawer .og-coupon');
+      return { pinned: !!bar && Math.abs(bar.bottom - d.bottom) <= 1, hasAll: !!document.querySelector('.og-drawer .og-paybar__amount') && !!document.querySelector('.og-drawer .og-paybar .bui-badge, .og-drawer .og-paybar [data-slot=badge]') && !!document.querySelector('.og-drawer .og-paybar .bui-button'), couponInList: !!coupon && body.contains(coupon), summary: !!document.querySelector('.og-drawer .og-sum__row') };
+    });
+    if (!mini.pinned || !mini.hasAll) problems.push(`${where}: the mini-cart has no pay bar (price, bonus, button) pinned at the bottom (${JSON.stringify(mini)})`);
+    if (!mini.couponInList) problems.push(`${where}: the promo code of the mini-cart is not a card in the list that scrolls`);
+    if (mini.summary) problems.push(`${where}: the mini-cart has a summary block`);
   }
   await ctx.close();
 }

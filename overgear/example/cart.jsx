@@ -10,7 +10,7 @@ import { Navbar } from '../../src/components/MobileNavigation.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
 import { useToast } from '../../src/components/Toast.jsx';
 import { go, href, useMedia, useTitleUnderBar } from './util.js';
-import { OrderHead, ItemLines, OrderSummary, PayBar } from './order.jsx';
+import { OrderHead, ItemLines, OrderSummary, PayBar, PromoCard } from './order.jsx';
 import { money } from './data.js';
 import { Page, PaymentLogos, PAY_BADGES, cashbackOf } from './ui.jsx';
 import { useStore } from './store.jsx';
@@ -43,8 +43,8 @@ export function CartDrawer({ open, onClose }) {
         </div>
         {store.cart.length ? (
           <>
-            <div className="og-drawer__body"><ItemLines /></div>
-            <div className="og-drawer__foot"><div className="og-stack"><OrderSummary label="Subtotal" amount={store.total} action="Secure checkout" onAction={() => { onClose(); go('/checkout'); }} /></div></div>
+            <div className="og-drawer__body og-stack"><ItemLines /><PromoCard /></div>
+            <div className="og-drawer__foot"><PayBar inline amount={store.total} action="Secure checkout" onClick={() => { onClose(); go('/checkout'); }} /></div>
           </>
         ) : (
           <div className="og-drawer__body"><EmptyCart onBrowse={() => { onClose(); go('/catalog'); }} /></div>
