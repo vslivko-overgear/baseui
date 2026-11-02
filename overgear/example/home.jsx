@@ -13,8 +13,8 @@ import { GAMES, OFFERS, REVIEWS, TILE_ROWS, gameOf, kindsOf } from './data.js';
 import { Bleed } from '../../src/components/Layout.jsx';
 import { Page, Section, GameTile, GameChip, OfferListing } from './ui.jsx';
 
-// 3D icons: Microsoft Fluent Emoji (MIT), linked from a CDN
-const ART = 'https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets';
+// the 3D icons of the headline: the blue ones of Overgear (assets/hero), 160 px for a 50 px icon, so they stay sharp on a screen of 3x
+const ART = './assets/hero';
 
 /** A word of the headline with a small 3D icon before it. Each kind of icon has its own short move: a gem shines, a coin spins, a trophy jumps.
  *  The icons play one at a time on their own, and a click on an icon plays it too (decorative: it is not a control). */
@@ -155,8 +155,8 @@ export function Home() {
         <div className="og-hero">
           <div className="og-stack og-stack--tight og-hero__head">
             <h1>
-              Save your time getting <Word art="Gem%20stone/3D/gem_stone_3d.png" kind="shine" {...turn(0)}>items</Word>,{' '}
-              <Word art="Coin/3D/coin_3d.png" kind="spin" {...turn(1)}>currency</Word> and <Word art="Trophy/3D/trophy_3d.png" kind="jump" {...turn(2)}>skills</Word>
+              Save your time getting <Word art="gem.webp" kind="shine" {...turn(0)}>items</Word>,{' '}
+              <Word art="coin.webp" kind="spin" {...turn(1)}>currency</Word> and <Word art="trophy.webp" kind="jump" {...turn(2)}>skills</Word>
             </h1>
           </div>
           <div className="og-stack og-stack--tight og-hero__stats">

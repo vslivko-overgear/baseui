@@ -1,5 +1,9 @@
 # Changelog
 
+## Overgear: the icons of the headline are the blue ones of Overgear
+
+- The gem, the coin and the trophy before the words of the headline of the home page are the new blue 3D icons (`overgear/example/assets/hero`), not the emoji of Fluent from a CDN. They are WebP with transparency, cut to the object and sized 160 px for an icon of about 50 px, so they stay sharp on a screen of 3x: 7, 10 and 10 KB. The moves are unchanged (the gem shines, the coin spins, the trophy jumps): they are CSS on the wrapper, not on the picture, so no recoloring of vectors was needed.
+
 ## Overgear: the search of the header works
 
 - **A desktop:** typing in the search opens a dropdown under the field with suggestions: **one list, with no group titles**, in which the games and the offers that match stand together by how close each is to the text (a game before an offer of the same closeness; eight at most), and as the last row "Search for …". The arrows move along the rows (`aria-activedescendant`), Enter opens the row they are on or runs the search of the text, Escape closes the dropdown and keeps the text, a click outside closes it. The page behind is dimmed while it is open, and the dropdown has no outline. With nothing typed it shows the recent searches (kept on the device, five at most) and the popular games, also in one list with no titles.
