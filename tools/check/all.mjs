@@ -32,6 +32,7 @@ const CHECKS = [
   ['spacing', 'tools/check/spacing.mjs'],
   ['overgear-spacing', 'overgear/tools/check/spacing.mjs'],
   ['overgear-tiles', 'overgear/tools/check/tiles.mjs'],
+  ['overgear-catalog', 'overgear/tools/check/catalog.mjs'],
 ];
 const only = process.argv[2];
 let failed = 0;

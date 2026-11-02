@@ -1,5 +1,9 @@
 # Changelog
 
+## Overgear: the games of the catalog panel scroll
+
+- The column of games in the panel that the Catalog button of the desktop header opens was cut off (`overflow: hidden`) and did not scroll: with the long list of games the lower ones could not be reached. It scrolls in its own column now, as it does on the catalog page. `overgear/tools/check/catalog.mjs` (part of `npm run check`) turns the wheel over the list in both places and fails when it does not move.
+
 ## Overgear: audiences
 
 - A new setting on the Theme page of the showcase, **Audience**: who the home page of the example is made for. It offers World of Warcraft, All players (the example as it is) and the three other games with the most content now, marked as examples: Diablo 4 · Example, Path of Exile 2 · Example, Final Fantasy XIV · Example (a test keeps the three in step with the offers). "All players" is the page as it was. With the audience of a game, that game leads: its tile is the first, and its products come first in the listing; the other games follow in their order, and every tile keeps its own width. The audience of World of Warcraft also brings its versions (WoW Forever, TBC Anniversary, WoW Classic Era): the four tiles stand as a group of two rows of different widths, as high as the two rows of the other tiles beside them, a group gap before the rest (`AUDIENCE_GROUP`, `tileLayout`); on a phone the group is narrower than the screen, so a piece of the next games shows. **The tiles always end in a rectangle**: for every audience the two levels are of equal length (`levelRows` moves a tile to the shorter row when that helps, then stretches the widths of each row by the same share, 8% at most), in the group and in the rest. It is tested for every audience (`overgear/tests/audience.test.mjs`) and measured in the browser (`overgear/tools/check/tiles.mjs`, part of `npm run check`).

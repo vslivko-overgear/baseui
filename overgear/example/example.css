@@ -204,7 +204,7 @@ a { color: inherit; }
 .og-catalog-modal > .og-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; width: 100%; }
 .og-catalog-modal .og-catalog { flex: 1; min-height: 0; align-items: stretch; }
 .og-catalog-modal .og-catalog__left, .og-catalog-modal .og-catalog__right { min-height: 0; }
-.og-catalog-modal .og-catalog__games { flex: 1; min-height: 0; overflow: hidden; }
+.og-catalog-modal .og-catalog__games { flex: 1; min-height: 0; overflow-y: auto; }   /* the games scroll in their own column, the panel itself does not */
 .og-catalog-modal .og-catalog__games { max-height: none; height: 100%; }
 .og-catalog-modal .og-catalog__right { overflow-y: auto; scrollbar-width: thin; }
 
