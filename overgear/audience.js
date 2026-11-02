@@ -3,13 +3,15 @@
 // The pure functions here take the slugs of the games and return a new order, so they are tested without a browser.
 
 /**
- * The audiences of the Theme page: World of Warcraft, the three other games with the most content in the example now (a test keeps the three in step with the offers),
- * and the example as it is, for all players: [slug, name]. Any other game still works as an audience (a stored one, or one passed to the functions below); it is just not offered.
+ * The audiences of the Theme page: World of Warcraft, all players, and the three other games with the most content in the example now (a test keeps the three in step with
+ * the offers), each marked as an example: [slug, name]. Any other game still works as an audience (a stored one, or one passed to the functions below); it is just not offered.
  */
 export const AUDIENCES = [
-  ['wow', 'World of Warcraft'], ['diablo-4', 'Diablo 4'], ['poe-2', 'Path of Exile 2'], ['ffxiv', 'Final Fantasy XIV'],
-  ['all', 'Example · All players'],
+  ['wow', 'World of Warcraft'], ['all', 'All players'],
+  ['diablo-4', 'Diablo 4 · Example'], ['poe-2', 'Path of Exile 2 · Example'], ['ffxiv', 'Final Fantasy XIV · Example'],
 ];
+/** The name of the game of an audience, without the mark of an example. */
+export const gameNameOf = (name) => name.replace(/ · Example$/, '');
 export const AUDIENCE_DEFAULT = 'all';
 
 /** The gap between tiles, in px (the 2 step of the spacing scale): the length of a row is its widths and its gaps. */

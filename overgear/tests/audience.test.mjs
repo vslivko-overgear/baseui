@@ -1,6 +1,6 @@
 // The audiences of the store: the order of the tiles and of the offers for who the home page is made for, and the setting that holds it.
 import { describe, expect, test } from 'vitest';
-import { AUDIENCES, AUDIENCE_DEFAULT, AUDIENCE_GROUP, TILE_GAP, audienceOf, tileRows, tileLayout, levelRows, splitOffers, gameTabs } from '../audience.js';
+import { AUDIENCES, AUDIENCE_DEFAULT, AUDIENCE_GROUP, TILE_GAP, gameNameOf, audienceOf, tileRows, tileLayout, levelRows, splitOffers, gameTabs } from '../audience.js';
 import { GAMES, OFFERS, TILE_ROWS, gameOf } from '../example/data.js';
 
 describe('audiences', () => {
@@ -8,20 +8,21 @@ describe('audiences', () => {
     const tiles = TILE_ROWS.flat().map(([slug]) => slug);
     for (const [slug, name] of AUDIENCES.filter(([s]) => s !== AUDIENCE_DEFAULT)) {
       expect(tiles, `${slug} has no tile`).toContain(slug);
-      if (GAMES.some((g) => g.slug === slug)) expect(gameOf(slug).name, slug).toBe(name);
+      if (GAMES.some((g) => g.slug === slug)) expect(gameOf(slug).name, slug).toBe(gameNameOf(name));
     }
     expect(AUDIENCES.filter(([s]) => s === AUDIENCE_DEFAULT)).toHaveLength(1);
   });
 
-  test('the audiences are World of Warcraft, the three other games with the most offers, and the example for all players, which comes last', () => {
-    expect(AUDIENCES[0][0]).toBe('wow');
-    expect(AUDIENCES.at(-1)).toEqual([AUDIENCE_DEFAULT, 'Example · All players']);
+  test('the audiences are World of Warcraft, all players under it, and the three other games with the most offers, each marked as an example', () => {
+    expect(AUDIENCES.map(([s]) => s).slice(0, 2)).toEqual(['wow', AUDIENCE_DEFAULT]);
+    expect(AUDIENCES[1][1]).toBe('All players');
     expect(AUDIENCES).toHaveLength(5);
+    for (const [slug, name] of AUDIENCES.slice(2)) expect(name, slug).toBe(`${gameNameOf(name)} · Example`);
     // "the most content now": the games with the most offers after World of Warcraft; in a tie, the one that comes first on the tiles
     const count = (slug) => OFFERS.filter((o) => o.game === slug).length;
     const tiles = TILE_ROWS.flat().map(([slug]) => slug);
     const top = tiles.filter((s) => s !== 'wow').sort((a, b) => count(b) - count(a) || tiles.indexOf(a) - tiles.indexOf(b)).slice(0, 3);
-    expect(AUDIENCES.slice(1, 4).map(([s]) => s), 'the offers changed: update the games of AUDIENCES').toEqual(top);
+    expect(AUDIENCES.slice(2).map(([s]) => s), 'the offers changed: update the games of AUDIENCES').toEqual(top);
   });
 
   test('a theme without a known audience is for all players', () => {

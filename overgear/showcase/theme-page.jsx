@@ -82,7 +82,7 @@ export function Theme() {
           <p className="ov-note">Who the home page of the example is made for. The game of the audience leads: its tile is the first and its products come first in the listing; the other games follow as usual. The example reads it when it opens</p>
         </div>
         <div className="ov-settings">
-          <Row title="Audience" hint="World of Warcraft and the three games with the most content now, or the example as it is for all players. A player of Diablo 4 has Diablo 4 first, a player of World of Warcraft has World of Warcraft first">
+          <Row title="Audience" hint="All players is the example as it is. World of Warcraft and the three games with the most content now are audiences of their own: a player of Diablo 4 has Diablo 4 first, a player of World of Warcraft has World of Warcraft first">
             <Selector label="Audience" options={AUDIENCES.map(([value, label]) => ({ value, label }))} value={audienceOf(theme)} onValueChange={(audience) => set({ audience })} />
           </Row>
         </div>
