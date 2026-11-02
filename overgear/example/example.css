@@ -416,3 +416,12 @@ a { color: inherit; }
 
 /* a review is main text: the subtitle of its row is set in Primary */
 .og-reviews .bui-list__subtitle { color: var(--baseui-text-and-icon-primary); }
+
+/* the balance: the money and the OG Coins side by side in the button of the header, and the card of the account tab of a phone */
+.og-amounts { display: inline-flex; align-items: center; gap: var(--baseui-spacing-3); }
+.og-amounts__coins { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); color: var(--baseui-text-and-icon-secondary); }
+.og-balance { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--baseui-spacing-4); }
+.og-balance__money, .og-balance__coin { margin: 0; font: var(--baseui-typography-header-28); font-family: var(--baseui-typography-headline-font-family); }
+.og-balance__coin { display: inline-flex; align-items: center; gap: var(--baseui-spacing-2); }
+.og-balance__coin svg { width: 24px; height: 24px; }
+.og-balance__coins { align-items: flex-end; text-align: end; }

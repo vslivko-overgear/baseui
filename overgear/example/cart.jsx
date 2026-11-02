@@ -180,7 +180,7 @@ export function Checkout() {
   const pay = () => {
     setTried(true);
     if (badEmail) return;
-    const order = store.placeOrder({ email: store.user?.email || email, method, total: amount });
+    const order = store.placeOrder({ email: store.user?.email || email, method, total: amount, cashback: +cashbackOf(amount) });
     toast({ message: 'Payment received', status: 'success' });
     go(`/order/${order.id}`);
   };

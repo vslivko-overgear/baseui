@@ -16,6 +16,8 @@ import { go } from './util.js';
 import { money, OFFERS, offerOf } from './data.js';
 import { Page, PageHead, OfferListing } from './ui.jsx';
 import { useStore } from './store.jsx';
+import { BalanceCard } from './wallet.jsx';
+import { useMedia } from './util.js';
 
 const STATUS = { Paid: 'info', Completed: 'success', 'In progress': 'warning' };
 const dateOf = (t) => new Date(t).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -45,6 +47,7 @@ export function Account({ tab, onLogin }) {
   const store = useStore();
   const [name, setName] = useState(store.user?.name || '');
   const [mail, setMail] = useState(true);
+  const mobile = useMedia('(max-width: 767px)');
   // the wishlist is kept on the device, so it opens without a login
   if (!store.user && tab !== 'wishlist') {
     return (
@@ -64,6 +67,7 @@ export function Account({ tab, onLogin }) {
       <Page>
         <div className="og-stack og-stack--related">
           <h1 className="og-title">Account</h1>
+          {mobile && <BalanceCard />}
           <List aria-label="Profile">
             <ListItem avatar={<Avatar name={store.user.name} size="lg" />} subtitle={store.user.email} onClick={() => go('/account?tab=settings')} details={<Value />}>{store.user.name}</ListItem>
           </List>

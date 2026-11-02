@@ -6,6 +6,7 @@ import { Page } from './ui.jsx';
 import { startOvergearTheme } from '../theme.js';
 import { StoreProvider } from './store.jsx';
 import { useRoute, useMedia, go } from './util.js';
+import { TopUpDialog } from './wallet.jsx';
 import { Header, MobileHeader, MobileBar, Footer, LoginDialog } from './shell.jsx';
 import { Home } from './home.jsx';
 import { Offers, Game, Gold, SearchResults } from './games.jsx';
@@ -57,6 +58,7 @@ function Shell() {
       {!tab && !bare && <Footer />}
       {mobile && !bare && <MobileBar route={route} />}
       <LoginDialog open={login} onClose={() => setLogin(false)} />
+      <TopUpDialog />
     </div>
   );
 }

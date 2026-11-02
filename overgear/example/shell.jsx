@@ -15,6 +15,7 @@ import { usePrefs } from './prefs.jsx';
 import { CatalogColumns } from './catalog.jsx';
 import { CartDrawer } from './cart.jsx';
 import { Search } from './search.jsx';
+import { WalletButton } from './wallet.jsx';
 import { go, href, OPEN_CART } from './util.js';
 import { GAMES } from './data.js';
 import { PaymentLogos, PAY_MAIN, PAY_BADGES } from './ui.jsx';
@@ -165,6 +166,7 @@ export function Header({ route, onLogin }) {
             <Search query={route.query.q} />
           </ControlRow>
           <ControlRow className="og-actions" gap={1}>
+            {store.user && <WalletButton />}
             {store.user && <IconButton variant="ghost" label="My orders" icon={<Icon name="ShoppingBag01" size={24} />} onClick={() => go('/account?tab=orders')} />}
             <span title="Favorites" style={{ position: 'relative', display: 'inline-flex' }}>
               <IconButton variant="ghost" label={store.wishlist.length ? `Favorites, ${store.wishlist.length} items` : 'Favorites'} icon={<Icon name="Heart" size={24} />} onClick={() => go('/account?tab=wishlist')} />

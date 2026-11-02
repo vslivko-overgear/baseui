@@ -1,5 +1,12 @@
 # Changelog
 
+## Overgear: the balance and the top-up
+
+- **A desktop:** a logged-in visitor has one button in the header, before the icons, with the money and the OG Coins (the cashback of the orders, with the gold mark) and a plus: `$48.50 ⬡ 3.20 +`. It opens the top-up.
+- **A phone:** the account tab has a card on top with the balance and the OG Coins in two columns and a Top up button; the header of a phone has no balance of its own.
+- **The top-up** is one dialog, mounted once (`TopUpDialog`) and opened by any trigger with `openTopUp()`: presets of $10, $25, $50 and $100 or any amount from $5 to $1,000 (a sentence under the field when it is not an amount or out of the range, shown on pressing Pay: a button is never disabled), a way to pay and a Pay button with the amount; paying adds to the balance, closes the dialog and says so in a toast.
+- The wallet is part of the store (`balance`, `coins`, `topUp`); a browser that kept its state from before starts with the wallet of a new one ($48.50 and 3.20 coins), and the cashback of a placed order is added to the coins. The rules of the amount and of the sums are pure (`overgear/example/wallet-core.js`, tested in `overgear/tests/wallet.test.mjs`); `overgear/tools/check/wallet.mjs` (part of `npm run check`) drives the button, the card and the top-up in a real browser.
+
 ## Overgear: the icons of the headline are the blue ones of Overgear
 
 - The gem, the coin and the trophy before the words of the headline of the home page are the new blue 3D icons (`overgear/example/assets/hero`), not the emoji of Fluent from a CDN. They are WebP with transparency, cut to the object and sized 160 px for an icon of about 50 px, so they stay sharp on a screen of 3x: 7, 10 and 10 KB. The moves are unchanged (the gem shines, the coin spins, the trophy jumps): they are CSS on the wrapper, not on the picture, so no recoloring of vectors was needed.

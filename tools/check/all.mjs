@@ -34,6 +34,7 @@ const CHECKS = [
   ['overgear-tiles', 'overgear/tools/check/tiles.mjs'],
   ['overgear-catalog', 'overgear/tools/check/catalog.mjs'],
   ['overgear-search', 'overgear/tools/check/search.mjs'],
+  ['overgear-wallet', 'overgear/tools/check/wallet.mjs'],
 ];
 const only = process.argv[2];
 let failed = 0;
