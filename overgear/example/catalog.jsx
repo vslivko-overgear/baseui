@@ -129,6 +129,7 @@ export function CatalogGame({ slug }) {
     <Page>
       <QuickLinks game={game} />
       <CollapsibleGroup
+        headingLevel={2}
         multiple
         items={catalogOf(game).groups.map((g) => ({
           value: g.id,

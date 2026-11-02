@@ -3,6 +3,7 @@
 ## Overgear: no "Catalog" title on the catalog page
 
 - The title "Catalog" is gone from the top of the catalog page, on a desktop and on a phone: the page starts with the search of the games (on a desktop, the two columns). The panel that the Catalog button opens had none.
+- The audit of the pages now also looks at the page of a game of the catalog (`#/catalog/wow`, which on a phone is its own screen), and found an old one there: its sections were `h3` under the `h1` of the bar (A9, a skipped level). `Collapsible` and `CollapsibleGroup` have a `headingLevel` (3 by default, as before); the page uses 2.
 
 ## Rule D19: a list stands on its text, its highlight reaches out and is not cut
 

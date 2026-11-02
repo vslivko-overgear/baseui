@@ -796,6 +796,11 @@ export interface CollapsibleProps {
    */
   title?: ReactNode;
   /**
+   * The level of the heading: one below the heading of the page or of the section it belongs to (rule A9: no level is skipped)
+   * @default 3
+   */
+  headingLevel?: 2 | 3 | 4 | 5 | 6;
+  /**
    * Open state
    */
   open?: boolean;
@@ -828,6 +833,11 @@ export interface CollapsibleGroupProps {
    * Sections
    */
   items?: Array<{ value: string; title: ReactNode; content: ReactNode; disabled?: boolean }>;
+  /**
+   * The level of the heading of every section (one below the heading of the page or of the section the group belongs to)
+   * @default 3
+   */
+  headingLevel?: 2 | 3 | 4 | 5 | 6;
   /**
    * Allow several open sections
    * @default false

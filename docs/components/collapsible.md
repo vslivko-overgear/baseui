@@ -20,6 +20,7 @@ A section that expands and collapses
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `title` | `ReactNode` | — | Heading that toggles the content |
+| `headingLevel` | `2 \| 3 \| 4 \| 5 \| 6` | `3` | The level of the heading: one below the heading of the page or of the section it belongs to (rule A9: no level is skipped) |
 | `open` | `boolean` | — | Open state |
 | `defaultOpen` | `boolean` | `false` | Initial state |
 | `onOpenChange` | `(open: boolean) => void` | — | Called when toggled |

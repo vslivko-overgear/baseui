@@ -9,7 +9,7 @@
 import { launch, sweep, report, arg } from '../lib/sweep.mjs';
 
 const base = arg(2, 'http://localhost:8000');
-const PAGES = ['overgear/#/theme', 'overgear/#/typography', 'overgear/#/colors', 'overgear/example/#/', 'overgear/example/#/games/wow', 'overgear/example/#/offer/venomous-abyss-heroic', 'overgear/example/#/catalog', 'overgear/example/#/account', 'overgear/example/#/info/terms', 'templates/frame/?t=contact-form', 'templates/frame/?t=two-column-form', 'templates/frame/?t=checkout-form', 'templates/frame/?t=checkout-wizard', 'templates/frame/?t=settings-form', 'templates/frame/?t=login-simple'];
+const PAGES = ['overgear/#/theme', 'overgear/#/typography', 'overgear/#/colors', 'overgear/example/#/', 'overgear/example/#/games/wow', 'overgear/example/#/offer/venomous-abyss-heroic', 'overgear/example/#/catalog', 'overgear/example/#/catalog/wow', 'overgear/example/#/account', 'overgear/example/#/info/terms', 'templates/frame/?t=contact-form', 'templates/frame/?t=two-column-form', 'templates/frame/?t=checkout-form', 'templates/frame/?t=checkout-wizard', 'templates/frame/?t=settings-form', 'templates/frame/?t=login-simple'];
 const paths = process.argv.slice(3).length ? process.argv.slice(3) : PAGES;
 
 const browser = await launch().catch((e) => { console.error(e.message); process.exit(2); });
