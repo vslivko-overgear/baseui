@@ -2,7 +2,7 @@
 
 ## Overgear: audiences
 
-- A new setting on the Theme page of the showcase, **Audience**: who the home page of the example is made for. "All players" is the page as it was. With the audience of a game, that game leads: its tile is the first, tagged For you, and its products come first in the listing; the other games follow in their order, and every tile keeps its own width. The example reads the setting when it opens; it is kept with the theme, in the same cookie, and Reset puts it back. The functions are in `overgear/audience.js` (pure, tested in `overgear/tests/audience.test.mjs`, which also keeps the names of the audiences in step with the games of the example).
+- A new setting on the Theme page of the showcase, **Audience**: who the home page of the example is made for. "All players" is the page as it was. With the audience of a game, that game leads: its tile is the first, tagged For you, and its products come first in the listing; the other games follow in their order, and every tile keeps its own width. The audience of World of Warcraft also brings its versions (WoW Forever, TBC Anniversary, WoW Classic Era): their tiles follow its own, so the first row is three tiles longer (`AUDIENCE_TILES`). The example reads the setting when it opens; it is kept with the theme, in the same cookie, and Reset puts it back. The functions are in `overgear/audience.js` (pure, tested in `overgear/tests/audience.test.mjs`, which also keeps the names of the audiences in step with the games of the example).
 
 ## Usage guidance no longer ships with the components
 

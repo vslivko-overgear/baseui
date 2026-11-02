@@ -1,6 +1,6 @@
 // The audiences of the store: the order of the tiles and of the offers for who the home page is made for, and the setting that holds it.
 import { describe, expect, test } from 'vitest';
-import { AUDIENCES, AUDIENCE_DEFAULT, audienceOf, tileRows, splitOffers } from '../audience.js';
+import { AUDIENCES, AUDIENCE_DEFAULT, AUDIENCE_TILES, audienceOf, tileRows, splitOffers } from '../audience.js';
 import { GAMES, OFFERS, TILE_ROWS, gameOf } from '../example/data.js';
 
 describe('audiences', () => {
@@ -34,6 +34,18 @@ describe('audiences', () => {
     // the others follow in their order
     expect(rows[0][1][0]).toBe('wow');
     expect(rows[1].map(([s]) => s)).toEqual(TILE_ROWS[1].map(([s]) => s));
+  });
+
+  test('World of Warcraft brings its versions: they follow its tile, and the first row is longer by them', () => {
+    const rows = tileRows(TILE_ROWS, 'wow');
+    expect(rows[0].slice(0, 4).map(([s]) => s)).toEqual(['wow', 'wow-forever', 'wow-20th-anniversary', 'wow-classic-era']);
+    expect(rows[0].length).toBe(TILE_ROWS[0].length + AUDIENCE_TILES.wow.length);
+    expect(rows[1].length).toBe(TILE_ROWS[1].length);
+    expect(rows[0][0][1]).toBe(200);
+    for (const [slug] of AUDIENCE_TILES.wow) expect(gameOf(slug)?.cover, `${slug} has a cover`).toBeTruthy();
+    const all = rows.flat().map(([s]) => s);
+    expect(new Set(all).size).toBe(all.length);
+    for (const [slug] of TILE_ROWS.flat()) expect(all).toContain(slug);
   });
 
   test('an audience from the second row comes to the front of the first, and a game without a tile changes nothing', () => {
