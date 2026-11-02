@@ -88,6 +88,7 @@ export const GAME_TILES = {
 };
 // the widths differ from row to row, so the edges of the tiles do not line up: the rows stagger
 // a tag at the bottom left of a game tile
+// not shown for now (the tiles of the home page have no tags); a tile takes one through its `tag` prop
 export const GAME_TAGS = { wow: 'Popular' };
 export const TILE_ROWS = [
   [['wow', 200], ['diablo-4', 140], ['poe-2', 190], ['ffxiv', 160], ['lost-ark', 130], ['last-epoch', 180], ['genshin-impact', 160]],

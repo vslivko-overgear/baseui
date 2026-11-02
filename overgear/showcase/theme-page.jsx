@@ -79,7 +79,7 @@ export function Theme() {
       <section className="ov-section">
         <div className="ov-section__head">
           <h3 className="ov-h2">Audience</h3>
-          <p className="ov-note">Who the home page of the example is made for. The game of the audience leads: its tile is the first, tagged For you, and its products come first in the listing; the other games follow as usual. The example reads it when it opens</p>
+          <p className="ov-note">Who the home page of the example is made for. The game of the audience leads: its tile is the first and its products come first in the listing; the other games follow as usual. The example reads it when it opens</p>
         </div>
         <div className="ov-settings">
           <Row title="Audience" hint="All players is the page as it is. A player of Diablo 4 has Diablo 4 first, a player of World of Warcraft has World of Warcraft first">

@@ -169,7 +169,7 @@ export function Home() {
                 <div className="og-grows og-grows--group" style={{ '--og-group': `${Math.round(groupLength)}px` }}>
                   {tiles.group.map((row, i) => (
                     <div key={i} className="og-grow">
-                      {row.map(([slug, width]) => <GameChip key={slug} slug={slug} grow={width} tag={slug === audience ? 'For you' : undefined} />)}
+                      {row.map(([slug, width]) => <GameChip key={slug} slug={slug} grow={width} />)}
                     </div>
                   ))}
                 </div>
@@ -177,7 +177,7 @@ export function Home() {
               <div className="og-grows">
                 {tiles.rows.map((row, i) => (
                   <div key={i} className="og-grow">
-                    {row.map(([slug, width]) => <GameChip key={slug} slug={slug} width={width} tag={slug === audience ? 'For you' : undefined} />)}
+                    {row.map(([slug, width]) => <GameChip key={slug} slug={slug} width={width} />)}
                   </div>
                 ))}
               </div>

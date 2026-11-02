@@ -11,7 +11,7 @@ import { Dropdown } from '../../src/components/Dropdown.jsx';
 import { useStore } from './store.jsx';
 import { useToast } from '../../src/components/Toast.jsx';
 import { go, href, useMedia, openMiniCart } from './util.js';
-import { money, gameOf, GAME_TILES, GAME_TAGS, EMOJI, sold } from './data.js';
+import { money, gameOf, GAME_TILES, EMOJI, sold } from './data.js';
 
 const CARD_TONE = { blue: 'blue', 'blue-light': 'blue', green: 'green', orange: 'orange', pink: 'pink', red: 'red' };
 const BADGE_VARIANT = { 'Hot Offer': 'error', Sale: 'success', 'Save More': 'info', Bundle: 'info', Seasonal: 'warning' };
@@ -62,7 +62,7 @@ export function Section({ title, action, close, wide, children }) {
 }
 
 /** A tile of the games block: a light card with the name of the game and its picture on the right, fading into the card. */
-export function GameChip({ slug, width, grow, tag = GAME_TAGS[slug] }) {
+export function GameChip({ slug, width, grow, tag }) {
   const game = gameOf(slug);
   return (
     <ClickableCard label={game.name} variant="default" padding={0} onClick={() => go(`/games/${slug}`)} style={grow ? { flex: `${grow} 1 0`, minWidth: 0 } : { width, flex: 'none' }}>
