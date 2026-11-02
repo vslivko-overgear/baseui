@@ -1,5 +1,9 @@
 # Changelog
 
+## Overgear: the catalog of a phone is the list of games
+
+- The catalog page of a phone is now the left column of the catalog of a desktop as a page: a search, a sort and one row for each game, a game opens its kinds of offers. The picture tiles of the games and the chips of the groups (All games, World of Warcraft, Action RPG…) are gone from the catalog; the list scrolls with the page. The column is one component (`GamesColumn`) used by the page of a phone and by the two columns of a desktop. `overgear/tools/check/catalog.mjs` checks the phone too.
+
 ## Overgear: the balance and the top-up
 
 - **A desktop:** a logged-in visitor has one button in the header, before the icons, with the money and the OG Coins (the cashback of the orders, with the gold mark) and a plus: `+ $48.50 ⬡ 3.20`, in regular weight and all in one color. It opens the top-up.

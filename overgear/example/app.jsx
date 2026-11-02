@@ -23,7 +23,7 @@ function Body({ route, onLogin, mobile }) {
   const [first, second, third] = route.parts;
   if (!first) return <Home />;
   // the catalog is a classifier of the pages; the listings (games) are the shop with the products
-  if (first === 'catalog') return !mobile ? <CatalogDesktop slug={second} /> : second ? <CatalogGame slug={second} /> : <Catalog category={route.query.c || 'All games'} />;
+  if (first === 'catalog') return !mobile ? <CatalogDesktop slug={second} /> : second ? <CatalogGame slug={second} /> : <Catalog />;
   if (first === 'games') {
     if (!second) return <Offers category={route.query.c || 'All games'} />;
     if (third === 'gold') return <Gold />;

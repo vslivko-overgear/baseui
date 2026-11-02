@@ -1,10 +1,8 @@
 // The catalog: a classifier of the pages of the shop. It leads to the listings (games.jsx), where the products are.
-//   /catalog            the games, by group and by name
+//   /catalog            the games, in one list (a search, a sort and a row for each game)
 //   /catalog/:slug      the kinds of offers of a game (a row opens the listing of that kind)
-// On a desktop both are one page of two columns: the games on the left, the kinds of the chosen game on the right.
+// On a desktop both are one page of two columns: the games on the left, the kinds of the chosen game on the right. On a phone the left column is the page /catalog, and a game opens the second.
 import { useState } from '../../src/react.js';
-import { Bleed } from '../../src/components/Layout.jsx';
-import { TokenGroup } from '../../src/components/TokenGroup.jsx';
 import { TextInput } from '../../src/components/TextInput.jsx';
 import { List, ListItem } from '../../src/components/List.jsx';
 import { Status } from '../../src/components/Status.jsx';
@@ -17,23 +15,15 @@ import { CollapsibleGroup } from '../../src/components/Collapsible.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
 import { Navbar } from '../../src/components/MobileNavigation.jsx';
 import { go, href } from './util.js';
-import { GAMES, CATEGORIES, EMOJI, catalogOf, gameOf } from './data.js';
-import { Page, PageHead, GameTile } from './ui.jsx';
+import { GAMES, EMOJI, catalogOf, gameOf } from './data.js';
+import { Page, PageHead } from './ui.jsx';
 
-/** The games of the shop, by group (the chips) and by name. */
-export function Catalog({ category = 'All games' }) {
-  const [q, setQ] = useState('');
-  const list = GAMES.filter((g) => (category === 'All games' || g.category === category) && g.name.toLowerCase().includes(q.toLowerCase()));
+/** The games of the shop on a phone: the left column of the catalog of a desktop, as a page. A game opens its kinds of offers (CatalogGame). */
+export function Catalog() {
   return (
     <Page>
       <PageHead title="Catalog" />
-      <div className="og-stack">
-        <TextInput type="search" label="Find a game" value={q} onChange={(e) => setQ(e.target.value)} />
-        <Bleed scroll className="og-chips">
-          <TokenGroup size="sm" aria-label="Groups of games" value={[category]} onValueChange={(v) => v.length && go(v[v.length - 1] === 'All games' ? '/catalog' : `/catalog?c=${encodeURIComponent(v[v.length - 1])}`)} options={CATEGORIES.map((c) => ({ value: c, label: c === 'All games' ? 'All games' : c }))} />
-        </Bleed>
-        {list.length ? <div className="og-grid og-grid--games">{list.map((g) => <GameTile key={g.slug} game={g} />)}</div> : <Status status="neutral" title="No game found" description="Try another name" actionLabel="Clear" actionVariant="secondary" onAction={() => setQ('')} />}
-      </div>
+      <GamesColumn onSelect={(slug) => go(`/catalog/${slug}`)} />
     </Page>
   );
 }
@@ -75,35 +65,42 @@ function CatalogBlocks({ game, onChoose }) {
   );
 }
 
-/** The two columns of the catalog: the games on the left (with a search) and the kinds of offers of the chosen game on the right. A kind opens its listing. */
-export function CatalogColumns({ slug, onChoose, select }) {
+/** The left column of the catalog: a search, a sort and a row for each game. `active` marks the game that is open on its right (a desktop); `onSelect(slug)` says which one was chosen. */
+function GamesColumn({ active, onSelect }) {
   const [q, setQ] = useState('');
-  const [active, setActive] = useState(slug || GAMES[0].slug);
-  const game = gameOf(active) || GAMES[0];
   const [sort, setSort] = useState('popular');
   const list = GAMES.filter((g) => g.name.toLowerCase().includes(q.toLowerCase()));
   if (sort !== 'popular') list.sort((a, b) => (sort === 'az' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)));
   return (
-    <div className="og-catalog">
-      <div className="og-stack og-catalog__left">
-        <ControlRow size="md">
-          <TextInput type="search" className="og-catalog__search" label="Find a game" value={q} onChange={(e) => setQ(e.target.value)} />
-          <Dropdown
-            placement="bottom-end"
-            label="Sort games"
-            value={sort}
-            onValueChange={setSort}
-            options={[{ value: 'popular', label: 'By popularity' }, { value: 'az', label: 'A to Z' }, { value: 'za', label: 'Z to A' }]}
-            trigger={<IconButton variant="secondary" label="Sort games" tooltip={false} icon={<Icon name="SwitchVertical01" size={24} />} />}
-          />
-        </ControlRow>
-        <div className="og-catalog__games">
-          <List aria-label="Games">
-            {list.map((g) => <ListItem key={g.slug} active={g.slug === game.slug} onClick={() => (select ? select(g.slug) : setActive(g.slug))} details={<Icon name="ChevronRight" size={20} />}>{g.name}</ListItem>)}
-          </List>
-          {!list.length && <Status status="neutral" title="No game found" description="Try another name" />}
-        </div>
+    <div className="og-stack og-catalog__left">
+      <ControlRow size="md">
+        <TextInput type="search" className="og-catalog__search" label="Find a game" value={q} onChange={(e) => setQ(e.target.value)} />
+        <Dropdown
+          placement="bottom-end"
+          label="Sort games"
+          value={sort}
+          onValueChange={setSort}
+          options={[{ value: 'popular', label: 'By popularity' }, { value: 'az', label: 'A to Z' }, { value: 'za', label: 'Z to A' }]}
+          trigger={<IconButton variant="secondary" label="Sort games" tooltip={false} icon={<Icon name="SwitchVertical01" size={24} />} />}
+        />
+      </ControlRow>
+      <div className="og-catalog__games">
+        <List aria-label="Games">
+          {list.map((g) => <ListItem key={g.slug} active={g.slug === active} onClick={() => onSelect(g.slug)} details={<Icon name="ChevronRight" size={20} />}>{g.name}</ListItem>)}
+        </List>
+        {!list.length && <Status status="neutral" title="No game found" description="Try another name" />}
       </div>
+    </div>
+  );
+}
+
+/** The two columns of the catalog: the games on the left (with a search) and the kinds of offers of the chosen game on the right. A kind opens its listing. */
+export function CatalogColumns({ slug, onChoose, select }) {
+  const [active, setActive] = useState(slug || GAMES[0].slug);
+  const game = gameOf(active) || GAMES[0];
+  return (
+    <div className="og-catalog">
+      <GamesColumn active={game.slug} onSelect={(s) => (select ? select(s) : setActive(s))} />
       <Divider orientation="vertical" />
       <div className="og-stack og-stack--group og-catalog__right">
         <div className="og-stack">

@@ -213,7 +213,8 @@ a { color: inherit; }
 .og-catalog__title { margin: 0; font: var(--baseui-typography-header-32); font-family: var(--baseui-typography-headline-font-family); }
 /* the search is smaller (the small field) with the text of 16px */
 .og-catalog__search .bui-input, .og-catalog__search .bui-field__label { font-size: 16px; }
-.og-catalog__games { --bui-list-bleed: 0px; max-height: calc(100vh - 280px); overflow-y: auto; scrollbar-width: thin; }   /* the highlight of a row stays inside the scrolling box, it is not cut */
+.og-catalog__games { --bui-list-bleed: 0px; max-height: calc(100vh - 280px); overflow-y: auto; scrollbar-width: thin; }
+.og--mobile .og-catalog__games { max-height: none; overflow: visible; }   /* on a phone the list is the page: it scrolls with it */   /* the highlight of a row stays inside the scrolling box, it is not cut */
 
 /* the catalog of a desktop: a panel under the header that the Catalog button opens and closes, over a scrim */
 .og-catalog-modal { position: fixed; top: var(--og-header-h, 72px); bottom: 0; left: 0; right: 0; z-index: 1; display: flex; flex-direction: column; padding-block: var(--baseui-spacing-4) var(--baseui-spacing-6); background: var(--baseui-background-primary); }
