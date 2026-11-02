@@ -202,13 +202,16 @@ export function Home() {
           </div>
         </Section>
         <Reviews />
-        <Card variant="surface" padding={10}>
-          <section className="og-hire" aria-label="Hiring">
-            <h2 className="og-h2">We are hiring PRO Players to join our elite team</h2>
-            <p className="og-text">Join our squad of 5,000+ hand-picked pros helping gamers worldwide. Pass our rigorous selection, prove your skills, and get paid for your gaming passion</p>
-            <Button variant="primary" onClick={() => go('/info/careers')}>Start earning with Overgear</Button>
-          </section>
-        </Card>
+        <div className="og-hire-wrap">
+          <img className="og-hire__elf" src="./assets/hire/elf.webp" alt="" width="640" height="960" loading="lazy" />
+          <Card variant="surface" padding={10} className="og-hire-card">
+            <section className="og-hire" aria-label="Hiring">
+              <h2 className="og-h2">We are hiring PRO Players to join our elite team</h2>
+              <p className="og-text">Join our squad of 5,000+ hand-picked pros helping gamers worldwide. Pass our rigorous selection, prove your skills, and get paid for your gaming passion</p>
+              <Button variant="primary" onClick={() => go('/info/careers')}>Start earning with Overgear</Button>
+            </section>
+          </Card>
+        </div>
       </div>
     </Page>
   );

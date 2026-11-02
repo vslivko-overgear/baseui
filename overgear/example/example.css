@@ -277,7 +277,15 @@ a { color: inherit; }
 .og--mobile .og-arrows { display: none; }
 
 /* the hiring block: a heading, a text and a button, centered on a card */
-.og-hire { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--bui-rel-related); }
+.og-hire { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--bui-rel-related); padding-top: 232px; }
+/* the elf stands on the top edge of the block and reaches out above it: she and the card share one grid, she in both rows, the card in the second, so the gap to the section above is the gap of the page.
+   Below she fades into the surface, under the text */
+.og-hire-wrap { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: 168px auto; }
+.og-hire-card { grid-area: 2 / 1; border-radius: var(--baseui-radius-4xl); }
+.og-hire__elf { grid-area: 1 / 1 / span 2 / 1; justify-self: center; z-index: 1; width: 400px; height: 100%; object-fit: contain; object-position: top; pointer-events: none; user-select: none; -webkit-mask-image: linear-gradient(to bottom, #000 52%, transparent 90%); mask-image: linear-gradient(to bottom, #000 52%, transparent 90%); }
+.og--mobile .og-hire-wrap { grid-template-rows: 120px auto; }
+.og--mobile .og-hire { padding-top: 168px; }
+.og--mobile .og-hire__elf { width: 288px; }
 .og-hire p { max-width: 64ch; }
 .og--mobile .og-hire { gap: var(--bui-rel-related); }
 
