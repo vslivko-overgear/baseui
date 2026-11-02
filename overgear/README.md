@@ -9,7 +9,7 @@ Read the shared [constitution](../CONSTITUTION.md), then the local [constitution
 - `constitution/rules.js` is the single source for store rules; add new ones here with stable `OG`-prefixed ids
 - `CONSTITUTION.md`, `AGENTS.md` and `CLAUDE.md` are generated; regenerate with `npm run constitution`
 - `tools/` holds store checks and the local document generator (`build/`, `check/`, `audits/`, like the root `tools/`)
-- `tests/` protects the boundary and checks store-specific behavior; run `npm run test:overgear`
+- `tests/` checks the store-specific behavior (its rules, documents and listing audit); run `npx vitest run overgear`. That baseui knows nothing of Overgear is tested in `tests/boundary.test.js`
 
 The rules moved from baseui are `U12 → OG1` (mobile tab screens and empty states), `U13 → OG2` (product listings, including the 4px mobile card gap), and `U14 → OG3` (catalog versus listing). The other baseui ids stay unchanged.
 

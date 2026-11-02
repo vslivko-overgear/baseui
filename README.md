@@ -93,7 +93,7 @@ The banner is not dismissible and stays while a rule is broken; `<ConstitutionBa
 
 ## Product rules
 
-Store-specific rules live in the [Overgear sublibrary](overgear/README.md), with their own [constitution](overgear/CONSTITUTION.md) and [agent instructions](overgear/AGENTS.md). New Overgear rules go in `overgear/constitution/rules.js`; they are not added to the shared constitution or component usage guidance. `baseui-kit/overgear` is an explicit opt-in entry with a banner that understands both shared and local rules. Run `npm run test:overgear` to check this boundary.
+Store-specific rules live in the [Overgear sublibrary](overgear/README.md), with their own [constitution](overgear/CONSTITUTION.md) and [agent instructions](overgear/AGENTS.md). New Overgear rules go in `overgear/constitution/rules.js`; they are not added to the shared constitution or component usage guidance. `baseui-kit/overgear` is an explicit opt-in entry with a banner that understands both shared and local rules. `npm test` checks this boundary (`tests/boundary.test.js`) and the Overgear rules (`overgear/tests`).
 
 ## Structure
 
