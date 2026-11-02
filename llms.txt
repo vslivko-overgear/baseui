@@ -86,7 +86,7 @@
 - [Badge](docs/components/badge.md): A compact label for a status, category or count
 - [Banner](docs/components/banner.md): An inline message with a status
 - [Constitution Banner](docs/components/constitution-banner.md): A strip across the top of a prototype that warns it breaks the design constitution: which rules, where, and what each one asks for. It is not dismissible
-- [Breadcrumbs](docs/components/breadcrumbs.md): Links that show where the user is in a hierarchy
+- [Breadcrumbs](docs/components/breadcrumbs.md): Links that show where the user is in a hierarchy. A trail longer than its room stays on one line and scrolls sideways, starting at its end
 - [Button](docs/components/button.md): Triggers an action or navigates. A label that does not fit in the width of the button is cut with an ellipsis, never wrapped
 - [Icon Button](docs/components/icon-button.md): A button with only an icon
 - [Button Group](docs/components/button-group.md): Lays out the buttons of one decision: a row that wraps (horizontal) or a column in which every button fills the width (vertical). The layout is the group’s, so 

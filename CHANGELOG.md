@@ -2,6 +2,7 @@
 
 ## Overgear: the checkout, payment methods as outlined tiles, the items apart
 
+- **Breadcrumbs stay on one line:** a trail longer than its room scrolls sideways and starts at its end (it wrapped onto a second line). New rule U15 and `tools/check/breadcrumbs.mjs`. In Overgear the trail ends at the parent of the page, the current level is not shown (`showCurrent={false}`): new rule OG5 and `overgear/tools/check/breadcrumbs.mjs`.
 - **Every tag of the cashback explains itself:** `Hint` can wrap any element (a badge): a tooltip with a mouse, the dialog with the text and Close on a phone. `CashbackTag` (the pay bar, the offer page) is the one tag, `CASHBACK_HINT` the one text. `tools/check/hint.mjs` fails when a light yellow badge is not a hint.
 - **New `Hint` component** (the question mark beside a label): a tooltip with a mouse; on a touch screen or a phone, where a tooltip never shows, a tap opens a `Dialog` without a header, with the text and a Close button. The cashback hint of the Overgear summary uses it. Rule U10 now names it, `tools/check/hint.mjs` checks both behaviours.
 - **`Dialog` does not move the focus onto its first control after a finger, a mouse or when it is opened by code** (a ring on the close button that nobody asked for); only when the last thing used was the keyboard. `initialFocus` still overrides it. `tools/check/dialog-focus.mjs` checks it (a tap, code and the keyboard), under rule A5.

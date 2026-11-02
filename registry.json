@@ -301,7 +301,7 @@
       "name": "breadcrumbs",
       "type": "registry:ui",
       "title": "Breadcrumbs",
-      "description": "Links that show where the user is in a hierarchy",
+      "description": "Links that show where the user is in a hierarchy. A trail longer than its room stays on one line and scrolls sideways, starting at its end",
       "dependencies": [],
       "registryDependencies": [
         "https://baseuikit.vercel.app/r/baseui-core.json",

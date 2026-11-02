@@ -325,7 +325,7 @@ export interface BreadcrumbsProps {
   [dataAttribute: `data-${string}`]: string | number | boolean | undefined;
   [ariaAttribute: `aria-${string}`]: string | number | boolean | undefined;
 }
-/** Links that show where the user is in a hierarchy */
+/** Links that show where the user is in a hierarchy. A trail longer than its room stays on one line and scrolls sideways, starting at its end */
 export function Breadcrumbs(props: BreadcrumbsProps): ReactElement | null;
 
 export interface ButtonProps {

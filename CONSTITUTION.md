@@ -1,6 +1,6 @@
 # baseui design constitution
 
-Version 1.1. 61 rules in 6 groups (37 must, 24 should): what to do and what not to do so that an interface is at least acceptable. Generated from `src/constitution/rules.js`; the same rules are on the Foundations / Constitution page.
+Version 1.1. 62 rules in 6 groups (38 must, 24 should): what to do and what not to do so that an interface is at least acceptable. Generated from `src/constitution/rules.js`; the same rules are on the Foundations / Constitution page.
 
 A **must** protects people and is always reported. A **should** is a strong default: keep it, or say why not.
 
@@ -261,6 +261,14 @@ A person can finish what they came for, without guessing
 - **Why:** A disabled button gives no reason and no way forward; an error next to the field does. Disabled is for an action that is not available, not for a form that is not filled
 - **Source:** WCAG 3.3.1 and 3.3.3; UX writing and forms guidance; found by `auditConstitution()`
 - **Requests that lead here:** disable the button until the form is filled; the button is inactive while the fields are empty; enable the submit when valid
+
+### U15 Breadcrumbs stay on one line (must)
+
+- **Do:** Keep a trail of breadcrumbs on one line. When it is longer than its room it scrolls sideways (the Breadcrumbs component does it, starting at the end of the trail)
+- **Don't:** let a trail wrap onto a second line, shorten the names with dots or hide the middle of the trail
+- **Why:** A trail on two lines looks like two blocks, pushes the page down by a different amount on every page, and breaks the rhythm under the header
+- **Source:** Navigation patterns: breadcrumbs on a narrow screen; found by a script (`tools/check/breadcrumbs.mjs`)
+- **Requests that lead here:** breadcrumbs wrap; the trail on two lines; long breadcrumbs; shorten the breadcrumbs
 
 ## Hierarchy and layout
 

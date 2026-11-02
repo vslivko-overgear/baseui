@@ -130,8 +130,10 @@
 .bui-banner--error .bui-banner__icon { color: var(--baseui-extensions-text-and-icon-error); }
 
 /* ---------- Breadcrumbs ---------- */
-.bui-breadcrumbs ol { display: flex; flex-wrap: wrap; align-items: center; gap: var(--baseui-spacing-1); margin: 0; padding: 0; list-style: none; font: var(--baseui-typography-text-14-regular); }
-.bui-breadcrumbs li { display: inline-flex; align-items: center; }
+.bui-breadcrumbs { overflow-x: auto; overflow-y: hidden; scrollbar-width: none; padding-block: var(--baseui-spacing-1); }   /* one line that scrolls sideways; the 4px keep the focus ring of a link from being cut */
+.bui-breadcrumbs::-webkit-scrollbar { display: none; }
+.bui-breadcrumbs ol { display: flex; flex-wrap: nowrap; width: max-content; min-width: 100%; align-items: center; gap: var(--baseui-spacing-1); margin: 0; padding: 0; list-style: none; font: var(--baseui-typography-text-14-regular); }
+.bui-breadcrumbs li { display: inline-flex; flex: none; align-items: center; white-space: nowrap; }
 .bui-breadcrumbs__sep { color: var(--baseui-text-and-icon-secondary); }
 .bui-breadcrumbs__link {
   all: unset; cursor: pointer; border-radius: var(--baseui-radius-md); color: var(--baseui-text-and-icon-secondary);

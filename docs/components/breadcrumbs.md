@@ -1,6 +1,6 @@
 # Breadcrumbs
 
-Links that show where the user is in a hierarchy
+Links that show where the user is in a hierarchy. A trail longer than its room stays on one line and scrolls sideways, starting at its end
 
 ## Usage
 

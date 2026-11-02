@@ -214,6 +214,14 @@ export const RULES = [
     signals: ['disable the button until the form is filled', 'the button is inactive while the fields are empty', 'enable the submit when valid'],
   },
   {
+    id: 'U15', category: 'U', level: 'must', title: 'Breadcrumbs stay on one line',
+    do: 'Keep a trail of breadcrumbs on one line. When it is longer than its room it scrolls sideways (the Breadcrumbs component does it, starting at the end of the trail)',
+    dont: 'Do not let a trail wrap onto a second line, shorten the names with dots or hide the middle of the trail',
+    why: 'A trail on two lines looks like two blocks, pushes the page down by a different amount on every page, and breaks the rhythm under the header',
+    source: 'Navigation patterns: breadcrumbs on a narrow screen', check: 'tool', tool: 'tools/check/breadcrumbs.mjs',
+    signals: ['breadcrumbs wrap', 'the trail on two lines', 'long breadcrumbs', 'shorten the breadcrumbs'],
+  },
+  {
     id: 'D16', category: 'D', level: 'must', title: 'Links are text-colored and underlined',
     do: 'Set a link in the color of the text around it and underline it (the Link component does it by default). Use `underline="hover"` or `"none"` only for links that are clearly navigation: a menu, a footer list, a breadcrumb',
     dont: 'Do not recolor a link in a paragraph, a list or a hint, and do not remove its underline, so that color is the only mark of a link',

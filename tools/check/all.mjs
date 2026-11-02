@@ -40,7 +40,9 @@ const CHECKS = [
   ['overgear-checkout', 'overgear/tools/check/checkout.mjs'],
   ['dialog-focus', 'tools/check/dialog-focus.mjs'],
   ['hint', 'tools/check/hint.mjs'],
+  ['breadcrumbs', 'tools/check/breadcrumbs.mjs'],
   ['overgear-order', 'overgear/tools/check/order.mjs'],
+  ['overgear-breadcrumbs', 'overgear/tools/check/breadcrumbs.mjs'],
 ];
 const only = process.argv[2];
 let failed = 0;

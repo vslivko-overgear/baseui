@@ -36,6 +36,14 @@ export const RULES = [
     source: 'Mobile search screens (the search bars of iOS and Android); an exception to A5 that the product chose', check: 'tool', tool: 'overgear/tools/check/search.mjs',
     signals: ['remove the focus ring', 'no outline on the search field', 'the search on a phone', 'the field of the search screen', 'the text of the search jumps'],
   },
+  {
+    id: 'OG5', category: 'U', level: 'should', title: 'Breadcrumbs end at the parent',
+    do: 'Show the trail of breadcrumbs down to the parent of the page and no further: the current level is not in the trail, because the title of the page is right under it (`showCurrent={false}`). The parent stays a link',
+    dont: 'Do not show the current page as the last item of the trail, and do not turn the trail off: the way up stays',
+    why: 'The page says its own name in its title; repeating it in the trail makes the trail longer, and a long trail is the first thing that breaks on a phone',
+    source: 'The product chose it; an exception to U6, where the current place is marked in the navigation: here the title of the page marks it', check: 'tool', tool: 'overgear/tools/check/breadcrumbs.mjs',
+    signals: ['breadcrumbs', 'the trail of the page', 'show the current page in the trail', 'where am I on the page'],
+  },
 ];
 
 // Explicit opt-in: the shared library never imports this module.
