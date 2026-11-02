@@ -165,8 +165,9 @@ export function auditConstitution(root = typeof document === 'undefined' ? null 
       }
     }
 
-    // D13: a count written into the label of a tab, a segment or a token
-    if (hasText && /^(segmented|tab|token)-label$/.test(el.getAttribute('data-slot') || '') && /(\s|\()\d+\+?\)?$/.test(own) && !/\b(of|step|page|week|day|year|top|q|season|chapter|part|level|tier|episode|act|vol)\b/i.test(own)) add('D13', el, `${describeEl(el)} has the count in its label ("${own}"): use the counter`);
+    // D13: a count written into the label of a tab, a segment or a token. A count is in brackets, has a plus, or is a number of two digits or more after one word;
+    // a number at the end of a longer label or of one digit is more often part of a name (Diablo 4, Counter Strike 2, EA Sports FC 27), so it is left alone
+    if (hasText && /^(segmented|tab|token)-label$/.test(el.getAttribute('data-slot') || '') && (/(\(\d+\)|\s\d+\+)$/.test(own) || (/\s\d{2,}$/.test(own) && own.trim().split(/\s+/).length <= 2)) && !/\b(of|step|page|week|day|year|top|q|season|chapter|part|level|tier|episode|act|vol)\b/i.test(own)) add('D13', el, `${describeEl(el)} has the count in its label ("${own}"): use the counter`);
 
     // A7 images
     if (el.tagName === 'IMG' && !el.hasAttribute('alt')) add('A7', el, `${describeEl(el)} has no alt`);

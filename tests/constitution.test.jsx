@@ -330,8 +330,10 @@ describe('D13: a count is a counter', () => {
     expect(audit('<span data-slot="segmented-label">All 48</span>').D13).toBeTruthy();
     expect(audit('<span data-slot="tab-label">Inbox (3)</span>').D13).toBeTruthy();
     expect(audit('<span data-slot="token-label">Open 12</span>').D13).toBeTruthy();
+    expect(audit('<span data-slot="token-label">Open 5+</span>').D13).toBeTruthy();
   });
-  test('accepts a label without a count', () => {
+  test('accepts the number in the name of a game, and a label without a count', () => {
+    expect(audit('<span data-slot="token-label">Diablo 4</span><span data-slot="token-label">Counter Strike 2</span><span data-slot="tab-label">Destiny 2</span><span data-slot="token-label">EA Sports FC 27</span>').D13).toBeUndefined();
     expect(audit('<span data-slot="segmented-label">All</span><span data-slot="segmented-counter">48</span>').D13).toBeUndefined();
     expect(audit('<span data-slot="tab-label">Step 2 of 3</span>').D13).toBeUndefined();
   });
