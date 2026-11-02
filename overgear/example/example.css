@@ -243,7 +243,9 @@ a { color: inherit; }
 .og--mobile .og-footer__games { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .og-caps { margin: 0; font: 700 12px / 16px var(--baseui-typography-font-family); letter-spacing: 0.12em; text-transform: uppercase; color: var(--baseui-text-and-icon-secondary); }
 .og-caption { margin: 0; font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-secondary); }
-.og-promo, .og-promo :is([data-slot=list-item-header], [data-slot=list-item-title]) { color: var(--baseui-text-and-icon-secondary); }   /* the promo code row: secondary, no card around it, under the summary */
+.og-coupon { overflow: hidden; }
+.og-coupon .bui-list__row { padding-inline: var(--baseui-spacing-5); }   /* the fields at the sides as in the summary above; the whole row is the button */
+.og-coupon, .og-coupon :is([data-slot=list-item-header], [data-slot=list-item-title]) { color: var(--baseui-text-and-icon-secondary); }   /* the promo code row: secondary, no card around it, under the summary */
 .og-caption--legal { font: var(--baseui-typography-text-12-regular); }   /* the terms under the pay button: 12px, 8px from the button */
 .og-caption--dim { color: var(--baseui-text-and-icon-secondary); }
 .og-footer__logo { display: block; height: 36px; width: auto; filter: url(#og-tint); }
@@ -365,7 +367,9 @@ a { color: inherit; }
 .og-line__pic { position: relative; width: 56px; height: 56px; border-radius: var(--baseui-radius-lg); overflow: hidden; display: grid; place-items: center; background: var(--baseui-background-tertiary); }
 .og-line__pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .og-line__body { display: flex; flex-direction: column; gap: var(--baseui-spacing-1); min-width: 0; }
-.og-line__head { display: flex; justify-content: space-between; gap: var(--baseui-spacing-3); }
+.og-line__side { align-self: stretch; display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; gap: var(--baseui-spacing-3); }   /* the price on top, the quantity and the bin at the bottom */
+.og-line__qty { width: 136px; }
+.og-line__actions { display: flex; align-items: center; gap: var(--baseui-spacing-2); }
 .og-line__title { font: var(--baseui-typography-text-16-semi-bold); }
 .og-line__price { font: var(--baseui-typography-text-16-semi-bold); white-space: nowrap; }
 .og-line__meta { margin: 0; display: flex; align-items: center; gap: var(--baseui-spacing-1); font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-secondary); }

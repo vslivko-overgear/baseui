@@ -10,7 +10,7 @@ import { launch } from '../../../tools/lib/sweep.mjs';
 
 const base = (process.argv[2] || 'http://localhost:8000').replace(/\/$/, '');
 const line = (key, title, price) => ({ key, id: 'venomous-abyss-heroic', title, sub: 'Piloted, heroic', price, qty: 1, eta: '3 hours' });
-const STATE = JSON.stringify({ cart: [line('a', 'Venomous Abyss Heroic', 89), line('b', 'Mythic+ Bundle', 149), line('c', 'Power Leveling', 39), line('d', 'Gold 500K', 24), line('e', 'Raid pack', 189)], wishlist: [], orders: [], user: { name: 'Dana', email: 'dana@example.com' }, promo: '' });
+const STATE = JSON.stringify({ cart: [line('a', 'Venomous Abyss Heroic', 89), line('b', 'Mythic+ Bundle', 149), line('c', 'Power Leveling', 39), line('d', 'Gold 500K', 24), { ...line('e', 'Raid pack', 189), qty: 3 }], wishlist: [], orders: [], user: { name: 'Dana', email: 'dana@example.com' }, promo: '' });
 const browser = await launch().catch((e) => { console.error(e.message); process.exit(2); });
 const problems = [];
 const expectThat = (ok, what) => { if (!ok) problems.push(what); };
@@ -54,7 +54,9 @@ for (const [width, phone] of [[1440, false], [390, true]]) {
     await page.evaluate(() => window.scrollTo(0, 0)); await page.waitForTimeout(300);
   }
   const head = await page.evaluate(() => { const h = document.querySelector('.og-checkout__title'); const c = h?.nextElementSibling; const probe = document.createElement('span'); probe.style.color = 'var(--baseui-text-and-icon-secondary)'; document.body.append(probe); const sec = getComputedStyle(probe).color; probe.remove(); return c ? { text: c.textContent, below: c.getBoundingClientRect().top >= h.getBoundingClientRect().bottom, secondary: getComputedStyle(c).color === sec } : null; });
-  expectThat(head && head.text === '5 items' && head.below && head.secondary, `${where}: under "Secure Checkout" there is no secondary count of the items (${JSON.stringify(head)})`);
+  expectThat(head && head.text === '7 items' && head.below && head.secondary, `${where}: under "Secure Checkout" there is no secondary count of the items (${JSON.stringify(head)})`);
+  const side = await page.evaluate(() => [...document.querySelectorAll('.og-lines--surface > .og-line')].map((l) => { const bin = l.querySelector('.og-line__actions [data-slot=icon-button]').getBoundingClientRect(); const price = l.querySelector('.og-line__price').getBoundingClientRect(); const st = l.querySelector('.og-line__actions [data-slot=number-input], .og-line__actions .bui-number-input, .og-line__actions input'); const sr = st?.getBoundingClientRect(); return { bottom: bin.top > price.bottom, step: !!st, left: !!sr && sr.right <= bin.left }; }));
+  expectThat(side.every((x) => x.bottom) && side.filter((x) => x.step).length === 1 && side.at(-1).step && side.at(-1).left, `${where}: the bin is not at the bottom, or the stepper is not only on the line of several units and left of the bin (${JSON.stringify(side)})`);
   const strip = await page.evaluate(() => {
     const tiles = [...document.querySelectorAll('.og-methodcard')];
     const items = [...document.querySelectorAll('.og-lines--surface > .og-line')];
@@ -110,10 +112,10 @@ for (const [width, phone] of [[1440, false], [390, true]]) {
     const row = [...document.querySelectorAll('[data-slot="list-item"]')].find((e) => e.textContent.includes('Apply promo code'));
     const probe = document.createElement('span'); probe.style.color = 'var(--baseui-text-and-icon-secondary)'; document.body.append(probe); const sec = getComputedStyle(probe).color; probe.remove();
     const sum = document.querySelector('.og-sticky .bui-card, .og-sticky [data-slot=card]');
-    const carded = !!row.closest('.bui-card, [data-slot=card]');
+    const card = row.closest('.og-coupon'); const cr = card.getBoundingClientRect(); const rr = row.querySelector('button').getBoundingClientRect(); const carded = !!card && Math.abs(rr.width - cr.width) < 2 && Math.abs(rr.height - cr.height) < 2;   // the whole card is the button
     return { color: getComputedStyle(row.querySelector('[data-slot="list-item-title"]')).color, sec, carded, under: row.getBoundingClientRect().top >= sum.getBoundingClientRect().bottom, right: row.getBoundingClientRect().left >= sum.getBoundingClientRect().left - 1 };
   });
-  expectThat(pr.color === pr.sec && !pr.carded, `${where}: the promo row is not secondary without a card (${JSON.stringify(pr)})`);
+  expectThat(pr.color === pr.sec && pr.carded, `${where}: the promo row is not secondary, on a card that is one button (${JSON.stringify(pr)})`);
   expectThat(pr.under && pr.right, `${where}: the promo row is not under the summary, in its column (${JSON.stringify(pr)})`);
   expectThat((await page.locator('.bui-collapsible').count()) === 0, `${where}: the promo code is a collapsible section`);
   const promo = row.getByRole('button');

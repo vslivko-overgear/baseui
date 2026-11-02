@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from '../../src/react.js';
 import { Button, IconButton } from '../../src/components/Button.jsx';
 import { Card } from '../../src/components/Card.jsx';
+import { NumberInput } from '../../src/components/NumberInput.jsx';
 import { Badge } from '../../src/components/Badge.jsx';
 import { TextInput } from '../../src/components/TextInput.jsx';
 import { Dialog } from '../../src/components/Dialog.jsx';
@@ -24,20 +25,24 @@ const LOGO_FULL = 'https://overgear.com/images/overgear-logo-full.svg';
 const plural = (n) => `${n} item${n === 1 ? '' : 's'}`;
 
 /** A line of the order: the picture, the name and the price, what it is, who sells it and when it comes. */
-function CartLine({ item, onRemove }) {
+function CartLine({ item, onRemove, onQty }) {
+  const [multi] = useState(item.qty > 1);   // a line of several units keeps its stepper while it is on the screen, also at 1
   return (
     <li className="og-line">
       <div className="og-line__pic">{item.image ? <img src={item.image} alt="" /> : <Icon name="Image01" size={24} />}</div>
       <div className="og-line__body">
-        <div className="og-line__head">
-          <span className="og-line__title">{item.title}</span>
-          <span className="og-line__price">{money(item.price * item.qty)}</span>
-        </div>
+        <span className="og-line__title">{item.title}</span>
         <p className="og-line__meta">{item.qty > 1 ? `${item.sub} · × ${item.qty}` : item.sub}</p>
         <p className="og-line__meta"><Icon name="User01" size={16} />Sold by Overgear</p>
         {item.eta && <p className="og-line__meta"><Icon name="Clock" size={16} />{`Delivery time: ${item.eta}`}</p>}
       </div>
-      {onRemove && <IconButton variant="ghost" size="xsm" label={`Remove ${item.title}`} icon={<Icon name="Trash01" size={20} />} onClick={onRemove} />}
+      <div className="og-line__side">
+        <span className="og-line__price">{money(item.price * item.qty)}</span>
+        <div className="og-line__actions">
+          {multi && onQty && <span className="og-line__qty"><NumberInput size="sm" aria-label={`Quantity of ${item.title}`} min={1} value={item.qty} onValueChange={(v) => onQty(Math.max(1, Number(v) || 1))} /></span>}
+          {onRemove && <IconButton variant="ghost" size="xsm" label={`Remove ${item.title}`} icon={<Icon name="Trash01" size={20} />} onClick={onRemove} />}
+        </div>
+      </div>
     </li>
   );
 }
@@ -145,7 +150,7 @@ export function CartDrawer({ open, onClose }) {
         {store.cart.length ? (
           <>
             <ul className="og-lines og-lines--cards og-drawer__body" aria-label="Cart items">
-              {store.cart.map((i) => <CartLine key={i.key} item={i} onRemove={() => store.remove(i.key)} />)}
+              {store.cart.map((i) => <CartLine key={i.key} item={i} onRemove={() => store.remove(i.key)} onQty={(q) => store.setQty(i.key, q)} />)}
             </ul>
             <div className="og-drawer__foot"><CartSummary onCheckout={() => { onClose(); go('/checkout'); }} /></div>
           </>
@@ -168,7 +173,7 @@ export function Cart() {
       <div className="og-split og-split--right">
         <Card variant="surface" padding={5}>
           <ul className="og-lines" aria-label="Cart items">
-            {store.cart.map((i) => <CartLine key={i.key} item={i} onRemove={() => store.remove(i.key)} />)}
+            {store.cart.map((i) => <CartLine key={i.key} item={i} onRemove={() => store.remove(i.key)} onQty={(q) => store.setQty(i.key, q)} />)}
           </ul>
         </Card>
         <Card variant="surface" padding={5}><div className="og-sticky"><CartSummary pinned={mobile} onCheckout={() => go('/checkout')} /></div></Card>
@@ -264,7 +269,7 @@ export function Checkout() {
           <div className="og-co">
             <div className="og-stack og-stack--xl og-co__main">
               <div className="og-stack">
-                <ul className="og-lines og-lines--cards og-lines--surface" aria-label="Order items">{store.cart.map((i) => <CartLine key={i.key} item={i} onRemove={() => store.remove(i.key)} />)}</ul>
+                <ul className="og-lines og-lines--cards og-lines--surface" aria-label="Order items">{store.cart.map((i) => <CartLine key={i.key} item={i} onRemove={() => store.remove(i.key)} onQty={(q) => store.setQty(i.key, q)} />)}</ul>
                 {!store.user && <TextInput label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} status={tried && badEmail ? 'error' : undefined} caption={tried && badEmail ? 'Enter an email we can send the receipt to' : 'The receipt and the order chat link come here'} />}
               </div>
               <div className="og-stack og-co__pay">
@@ -292,7 +297,7 @@ export function Checkout() {
                   </div>
                 </div>
               </Card>
-              <div className="og-promo"><Promo /></div>
+              <Card variant="surface" padding={0} className="og-coupon"><Promo /></Card>
             </div>
           </div>
         )}
