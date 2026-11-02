@@ -22,6 +22,7 @@ import { Icon } from '../../src/components/Icon.jsx';
 import { Bleed } from '../../src/components/Layout.jsx';
 import { go } from './util.js';
 import { GAMES, CATEGORIES, OFFERS, SERVICES, SELLERS, REGIONS, REALMS, FACTIONS, FAQ, WOW_VERSIONS, money, gameOf } from './data.js';
+import { matchGames, matchOffers } from './suggest.js';
 import { useAddedToCart, Page, PageHead, Section, GameTile, OfferListing, Stars, SortChip } from './ui.jsx';
 import { useStore } from './store.jsx';
 
@@ -48,9 +49,8 @@ export function Offers({ category = 'All games' }) {
 
 /** The results of the header search: games and services that match. */
 export function SearchResults({ q = '' }) {
-  const t = q.toLowerCase();
-  const games = GAMES.filter((g) => g.name.toLowerCase().includes(t));
-  const offers = OFFERS.filter((o) => `${o.title} ${o.bullets.join(' ')}`.toLowerCase().includes(t));
+  const games = matchGames(q);
+  const offers = matchOffers(q);
   return (
     <Page>
       <PageHead title={q ? `Results for “${q}”` : 'Search'} meta={`${games.length} games, ${offers.length} offers`} />

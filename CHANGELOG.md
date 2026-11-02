@@ -1,5 +1,11 @@
 # Changelog
 
+## Overgear: the search of the header works
+
+- **A desktop:** typing in the search opens a dropdown under the field with suggestions: the games and the offers that match (the closest first, four games and five offers at most), and as the last row "Search for …". The arrows move along the rows (`aria-activedescendant`), Enter opens the row they are on or runs the search of the text, Escape closes the dropdown and keeps the text, a click outside closes it. With nothing typed it shows the recent searches (kept on the device, five at most) and the popular games.
+- **A phone:** the field opens a screen of its own (a dialog over the whole window, the bottom bar included) with a back button and the field in focus, and the same suggestions under it; Enter runs the search and closes it.
+- The matching is in `overgear/example/suggest.js`, pure and tested (`overgear/tests/suggest.test.mjs`), and the page of results uses the same functions, so a suggestion and the result of its search agree. `overgear/tools/check/search.mjs` (part of `npm run check`) drives both in a real browser.
+
 ## Overgear: the fonts of the Theme page are a dropdown, with the fonts of uncut.wtf that have a bold
 
 - The font setting of the Theme page is a dropdown, not a segmented control. TT Interphases Pro (the font of the live site) comes first, all the others follow **in alphabetical order**: Apfel Grotezk (the font of the showcase, still the default) and the sans-serif fonts of the catalogue [uncut.wtf](https://uncut.wtf/) that we may ship and that **have a bold**: a font with one weight is not in the list, because a bold of it would be a made one. 24 fonts in all.

@@ -14,6 +14,7 @@ import { useStore } from './store.jsx';
 import { usePrefs } from './prefs.jsx';
 import { CatalogColumns } from './catalog.jsx';
 import { CartDrawer } from './cart.jsx';
+import { Search } from './search.jsx';
 import { go, href, OPEN_CART } from './util.js';
 import { GAMES } from './data.js';
 import { PaymentLogos, PAY_MAIN, PAY_BADGES } from './ui.jsx';
@@ -133,15 +134,6 @@ function MenuMorph({ open }) {
 
 function CatalogButton({ open, onToggle }) {
   return <Button variant="secondary" size="md" textSize={14} icon={<MenuMorph open={open} />} label="Catalog" aria-expanded={open} aria-controls="og-catalog-modal" onClick={onToggle} />;
-}
-
-export function Search({ query }) {
-  const [q, setQ] = useState(query || '');
-  return (
-    <form className="og-search" role="search" onSubmit={(e) => { e.preventDefault(); go(`/search?q=${encodeURIComponent(q)}`); }}>
-      <TextInput type="search" size="sm" label="Search" value={q} onChange={(e) => setQ(e.target.value)} />
-    </form>
-  );
 }
 
 export function Header({ route, onLogin }) {
