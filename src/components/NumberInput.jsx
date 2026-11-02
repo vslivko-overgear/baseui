@@ -1,4 +1,4 @@
-import { useControllable } from '../react.js';
+import { useControllable, useId } from '../react.js';
 import { TextInput } from './TextInput.jsx';
 import { Icon } from './Icon.jsx';
 import { describe } from '../doc.js';
@@ -7,6 +7,7 @@ const clamp = (n, min, max) => Math.min(max, Math.max(min, n));
 
 export function NumberInput({ value, defaultValue, onValueChange, min = -Infinity, max = Infinity, step = 1, label, size, disabled = false, loading = false, readOnly = false, ...rest }) {
   const [v, setV] = useControllable(value, defaultValue ?? '', onValueChange);
+  const labelId = useId();
   const bump = (d) => setV(clamp((Number(v) || 0) + d * step, min, max));
   // the buttons are part of the field: they follow its disabled, loading and read-only states
   const frozen = disabled || loading || readOnly;
@@ -17,9 +18,9 @@ export function NumberInput({ value, defaultValue, onValueChange, min = -Infinit
       </button>
     </span>
   );
-  return (
+  const field = (
     <TextInput
-      label={label}
+      aria-labelledby={label ? labelId : undefined}
       size={size}
       disabled={disabled}
       loading={loading}
@@ -47,6 +48,16 @@ export function NumberInput({ value, defaultValue, onValueChange, min = -Infinit
       {...rest}
     />
   );
+  if (!label) return field;
+  // the label is outside of the field, to the right of it, as the label of a checkbox or a radio; the field hugs its content
+  return (
+    <span data-slot="number-input" className={`bui-number-row${size === 'sm' ? ' bui-number-row--sm' : ''}`}>
+      {field}
+      <span id={labelId} className="bui-number-row__label">
+        {label}
+      </span>
+    </span>
+  );
 }
 describe(NumberInput, 'A text input for numbers: a minus button first, the number in the middle, a plus button last. It takes the props of the Text Input (variant, status, caption, prefix, suffix, floatingLabel)', {
   value: ['number | string', null, 'Value'],
@@ -55,7 +66,7 @@ describe(NumberInput, 'A text input for numbers: a minus button first, the numbe
   min: ['number', null, 'Minimum'],
   max: ['number', null, 'Maximum'],
   step: ['number', '1', 'Step'],
-  label: ['string', null, 'Floating label'],
+  label: ['string', null, 'Text to the right of the field, outside of it, as the label of a checkbox or a radio (the field hugs its content). Without it pass `aria-label`'],
   size: ["'sm' | 'md'", null, 'Input size (same as Text Input): the buttons are 36px in md and 32px in sm'],
   disabled: ['boolean', 'false', 'Disabled state of the field and of its buttons'],
   loading: ['boolean', 'false', 'Loading state of the field (the buttons are off)'],
