@@ -10,40 +10,37 @@ import { go, useMedia } from './util.js';
 import { gameOf, money } from './data.js';
 import { suggest, withRecent, readRecent, keepRecent } from './suggest.js';
 
-/** The rows of the suggestions, in the order they are shown: [{ id, group, kind, text, sub, image, run }]. `search(text)` runs a search, `open(path)` goes to a page. */
+/** The rows of the suggestions, in the order they are shown, one list with no groups: [{ id, kind, text, sub, image, run }]. `search(text)` runs a search, `open(path)` goes to a page. */
 function rowsFor(query, recent, search, open) {
   const s = suggest(query, recent);
   const rows = [];
+  const gameRow = (g, sub) => ({ id: `game-${g.slug}`, kind: 'game', text: g.name, sub, image: g.cover, run: () => open(`/games/${g.slug}`) });
   if (s.empty) {
-    for (const text of s.recent) rows.push({ id: `recent-${text}`, group: 'Recent searches', kind: 'recent', text, run: () => search(text) });
-    for (const g of s.popular) rows.push({ id: `popular-${g.slug}`, group: 'Popular games', kind: 'game', text: g.name, sub: 'Game', image: g.cover, run: () => open(`/games/${g.slug}`) });
+    for (const text of s.recent) rows.push({ id: `recent-${text}`, kind: 'recent', text, run: () => search(text) });
+    for (const g of s.popular) rows.push(gameRow(g, 'Game'));
     return rows;
   }
-  for (const g of s.games) rows.push({ id: `game-${g.slug}`, group: 'Games', kind: 'game', text: g.name, sub: g.category, image: g.cover, run: () => open(`/games/${g.slug}`) });
-  for (const o of s.offers) rows.push({ id: `offer-${o.id}`, group: 'Offers', kind: 'offer', text: o.title, sub: `${gameOf(o.game)?.name || ''} · ${money(o.price)}`, image: o.image, run: () => open(`/offer/${o.id}`) });
-  rows.push({ id: 'query', group: null, kind: 'query', text: `Search for “${query.trim()}”`, run: () => search(query) });
+  for (const it of s.items) {
+    if (it.type === 'game') rows.push(gameRow(it.game, it.game.category));
+    else rows.push({ id: `offer-${it.offer.id}`, kind: 'offer', text: it.offer.title, sub: `${gameOf(it.offer.game)?.name || ''} · ${money(it.offer.price)}`, image: it.offer.image, run: () => open(`/offer/${it.offer.id}`) });
+  }
+  rows.push({ id: 'query', kind: 'query', text: `Search for “${query.trim()}”`, run: () => search(query) });
   return rows;
 }
 
-/** The list of suggestions: groups with a title, rows with a picture, a text and a line under it. The row marked `active` is the one the arrows are on. */
+/** The list of suggestions: one list of rows with a picture, a text and a line under it. The row marked `active` is the one the arrows are on. */
 function Suggestions({ rows, active, listId, onPick, onHover }) {
-  let group;
   return (
     <ul className="og-sg" role="listbox" id={listId} aria-label="Suggestions">
-      {rows.map((row, i) => {
-        const title = row.group !== group && row.group ? row.group : null;
-        group = row.group;
-        return (
-          <li key={row.id} role="presentation">
-            {title && <p className="og-sg__group" role="presentation">{title}</p>}
-            <div id={`${listId}-${row.id}`} role="option" aria-selected={i === active} className="og-sg__row" data-active={i === active || undefined} data-kind={row.kind} onMouseDown={(e) => e.preventDefault()} onMouseEnter={() => onHover(i)} onClick={() => onPick(row)}>
-              {row.image ? <img className="og-sg__pic" src={row.image} alt="" width="40" height="40" loading="lazy" draggable="false" /> : <span className="og-sg__pic og-sg__pic--icon" aria-hidden="true"><Icon name={row.kind === 'recent' ? 'Clock' : 'SearchSm'} size={20} /></span>}
-              <span className="og-sg__text"><span className="og-sg__name">{row.text}</span>{row.sub && <span className="og-sg__sub">{row.sub}</span>}</span>
-              {row.kind === 'recent' && <Icon name="ArrowUpLeft" size={20} aria-hidden="true" />}
-            </div>
-          </li>
-        );
-      })}
+      {rows.map((row, i) => (
+        <li key={row.id} role="presentation">
+          <div id={`${listId}-${row.id}`} role="option" aria-selected={i === active} className="og-sg__row" data-active={i === active || undefined} data-kind={row.kind} onMouseDown={(e) => e.preventDefault()} onMouseEnter={() => onHover(i)} onClick={() => onPick(row)}>
+            {row.image ? <img className="og-sg__pic" src={row.image} alt="" width="40" height="40" draggable="false" /> : <span className="og-sg__pic og-sg__pic--icon" aria-hidden="true"><Icon name={row.kind === 'recent' ? 'Clock' : 'SearchSm'} size={20} /></span>}
+            <span className="og-sg__text"><span className="og-sg__name">{row.text}</span>{row.sub && <span className="og-sg__sub">{row.sub}</span>}</span>
+            {row.kind === 'recent' && <Icon name="ArrowUpLeft" size={20} aria-hidden="true" />}
+          </div>
+        </li>
+      ))}
     </ul>
   );
 }

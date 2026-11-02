@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // The search of the header, in a real browser. A desktop: typing opens a dropdown of suggestions under the field, the arrows move along them, Enter opens the one they are on, Escape closes the
-// dropdown and leaves the text; the page behind is dimmed and the dropdown has no outline. A phone: the field opens a screen of its own that covers the bottom bar, with the field in focus; typing fills it with suggestions, Enter runs the search and closes it.
+// dropdown and leaves the text; the suggestions are one list, with no group titles; the page behind is dimmed and the dropdown has no outline. A phone: the field opens a screen of its own that covers the bottom bar, with the field in focus and no outline round it; typing fills it with suggestions, Enter runs the search and closes it.
 //
 //   node overgear/tools/check/search.mjs http://localhost:8000
 import { launch } from '../../../tools/lib/sweep.mjs';
@@ -9,6 +9,8 @@ const base = (process.argv[2] || 'http://localhost:8000').replace(/\/$/, '');
 const url = `${base}/overgear/example/index.html`;
 const browser = await launch().catch((e) => { console.error(e.message); process.exit(2); });
 const problems = [];
+// one list with no group titles: a single list, and nothing in an item but its row (a title of a group would be a text that is not a row)
+const oneList = (page) => page.evaluate(() => document.querySelectorAll('.og-sg').length === 1 && [...document.querySelectorAll('.og-sg > li')].every((li) => li.children.length === 1 && li.firstElementChild.getAttribute('role') === 'option' && li.textContent === li.firstElementChild.textContent));
 const expectThat = (ok, what) => { if (!ok) problems.push(what); };
 
 {
@@ -21,11 +23,13 @@ const expectThat = (ok, what) => { if (!ok) problems.push(what); };
   await field.click();
   await page.waitForTimeout(200);
   expectThat((await page.locator('.og-sg__row').count()) > 0, 'desktop: the focused empty field shows no recent or popular suggestions');
+  expectThat(await oneList(page), 'desktop: the empty field shows its suggestions in groups with titles, or in more than one list');
   await field.fill('dia');
   await page.waitForTimeout(200);
   const rows = await page.locator('.og-sg__row').allTextContents();
   expectThat(rows.some((t) => t.startsWith('Diablo')), `desktop: "dia" does not suggest Diablo (${rows.join(' | ')})`);
   expectThat(rows.at(-1)?.startsWith('Search for'), 'desktop: the last suggestion is not the search of the text');
+  expectThat(await oneList(page), 'desktop: the suggestions are in groups with titles');
   const box = await page.locator('.og-search__panel').boundingBox();
   const bar = await field.boundingBox();
   expectThat(box && bar && box.y >= bar.y + bar.height && Math.abs(box.x - (await page.locator('.og-search').boundingBox()).x) < 2, 'desktop: the dropdown is not under the field');
@@ -69,6 +73,8 @@ const expectThat = (ok, what) => { if (!ok) problems.push(what); };
   expectThat(JSON.stringify(await rect('.og-searchscreen__back')) === JSON.stringify(logo), `phone: the back button is not in the rectangle of the logo (${await rect('.og-searchscreen__back')} against ${logo})`);
   const screenField = await rect('.og-searchscreen .bui-field');
   expectThat(screenField[0] === headerField[0] && screenField[1] === headerField[1] && screenField[3] === headerField[3], `phone: the field is not at the place and of the height of the one of the header (${screenField} against ${headerField})`);
+  expectThat((await page.locator('.og-searchscreen .bui-field .bui-field__cell').evaluate((el) => getComputedStyle(el).outlineStyle)) === 'none', 'phone: the field of the search screen has an outline');
+  expectThat(await oneList(page), 'phone: the suggestions have group titles');
   await page.keyboard.type('path');
   await page.waitForTimeout(300);
   expectThat((await page.locator('.og-sg__row').allTextContents()).some((t) => t.startsWith('Path of Exile')), 'phone: "path" does not suggest Path of Exile');

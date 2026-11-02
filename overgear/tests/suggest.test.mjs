@@ -32,19 +32,38 @@ describe('matching', () => {
 });
 
 describe('suggestions', () => {
-  test('a few games and offers for a text, never more than the limits', () => {
+  const names = (s) => s.items.map((it) => (it.type === 'game' ? it.game.name : it.offer.title));
+
+  test('one list of games and offers together, never more than the limit', () => {
     const s = suggest('a');
     expect(s.empty).toBe(false);
-    expect(s.games.length).toBeLessThanOrEqual(LIMITS.games);
-    expect(s.offers.length).toBeLessThanOrEqual(LIMITS.offers);
+    expect(s.items.length).toBeLessThanOrEqual(LIMITS.total);
+    for (const it of s.items) expect(['game', 'offer']).toContain(it.type);
   });
 
-  test('they are the head of what the page of results shows for the same text', () => {
-    for (const text of ['dia', 'raid', 'wow', 'gold']) {
-      const s = suggest(text);
-      expect(s.games.map((g) => g.slug)).toEqual(matchGames(text).slice(0, LIMITS.games).map((g) => g.slug));
-      expect(s.offers.map((o) => o.id)).toEqual(matchOffers(text).slice(0, LIMITS.offers).map((o) => o.id));
-    }
+  test('they are ranked by relevance whatever the kind: a title that starts with the text comes before a game that only has it inside', () => {
+    const s = suggest('arena');
+    const kinds = s.items.map((it) => it.type);
+    expect(names(s)[0].toLowerCase().startsWith('arena')).toBe(true);
+    expect(kinds).toContain('offer');
+    // a game that starts with the text comes before an offer that has it only in its lines
+    const d = suggest('dia');
+    expect(d.items[0].type).toBe('game');
+    expect(names(d)[0]).toMatch(/^Diablo/);
+  });
+
+  test('of equal closeness a game comes before an offer, and a match in the lines only comes last', () => {
+    const items = suggest('dia').items;
+    const first = items.findIndex((it) => it.type === 'offer');
+    expect(first).toBeGreaterThan(0);
+    // no game after the first offer that is farther than it: here every game starts with "dia", so they all come first
+    for (const it of items.slice(0, first)) expect(it.type).toBe('game');
+  });
+
+  test('the kinds mix in one list by closeness, they are not kept in groups', () => {
+    // for "raid": an offer that starts with it, then a game with a word that starts with it, then offers again
+    const kinds = suggest('raid').items.map((it) => it.type).join(',');
+    expect(kinds).toMatch(/offer,game,offer/);
   });
 
   test('nothing typed: the recent searches and the popular games', () => {
