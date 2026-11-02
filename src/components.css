@@ -1480,9 +1480,9 @@
 .bui-stepper-btns--start { margin-inline-start: calc((var(--fs-height) - var(--stp)) / 2 - 16px); }
 .bui-number .bui-field__icon { margin-right: 0; }   /* the minus is the first part of the field: the number is centered between the two buttons */
 .bui-number input { text-align: center; }
-.bui-number-row { display: inline-flex; align-items: center; gap: var(--baseui-spacing-3); max-width: 100%; vertical-align: middle; }
-.bui-number-row__label { font: var(--baseui-typography-text-16-regular); color: var(--baseui-text-and-icon-primary); }
-.bui-number-row--sm .bui-number-row__label { font: var(--baseui-typography-text-14-regular); }
+.bui-number-row { display: inline-flex; flex-direction: column; align-items: flex-start; gap: var(--baseui-spacing-2); max-width: 100%; vertical-align: middle; }
+.bui-number-row__label { font: var(--baseui-typography-text-16-semi-bold); color: var(--baseui-text-and-icon-primary); }
+.bui-number-row--sm .bui-number-row__label { font: var(--baseui-typography-text-14-semi-bold); }
 .bui-field.bui-number { width: auto; flex: none; }   /* the field hugs: the buttons and a number of a few digits */
 .bui-number input { width: 5ch; min-width: 0; flex: none; }
 .bui-field__small .bui-stepper-btns { --stp: 32px; }

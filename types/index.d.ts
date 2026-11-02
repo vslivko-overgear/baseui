@@ -1622,7 +1622,7 @@ export interface NumberInputProps {
    */
   step?: number;
   /**
-   * Text to the right of the field, outside of it, as the label of a checkbox or a radio (the field hugs its content). Without it pass `aria-label`
+   * Text above the field, outside of it, semi-bold (the field hugs its content). Without it pass `aria-label`
    */
   label?: string;
   /**

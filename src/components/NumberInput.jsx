@@ -49,13 +49,13 @@ export function NumberInput({ value, defaultValue, onValueChange, min = -Infinit
     />
   );
   if (!label) return field;
-  // the label is outside of the field, to the right of it, as the label of a checkbox or a radio; the field hugs its content
+  // the label is outside of the field, above it, semi-bold; the field hugs its content
   return (
     <span data-slot="number-input" className={`bui-number-row${size === 'sm' ? ' bui-number-row--sm' : ''}`}>
-      {field}
       <span id={labelId} className="bui-number-row__label">
         {label}
       </span>
+      {field}
     </span>
   );
 }
@@ -66,7 +66,7 @@ describe(NumberInput, 'A text input for numbers: a minus button first, the numbe
   min: ['number', null, 'Minimum'],
   max: ['number', null, 'Maximum'],
   step: ['number', '1', 'Step'],
-  label: ['string', null, 'Text to the right of the field, outside of it, as the label of a checkbox or a radio (the field hugs its content). Without it pass `aria-label`'],
+  label: ['string', null, 'Text above the field, outside of it, semi-bold (the field hugs its content). Without it pass `aria-label`'],
   size: ["'sm' | 'md'", null, 'Input size (same as Text Input): the buttons are 36px in md and 32px in sm'],
   disabled: ['boolean', 'false', 'Disabled state of the field and of its buttons'],
   loading: ['boolean', 'false', 'Loading state of the field (the buttons are off)'],
