@@ -107,12 +107,13 @@ export function WishButton({ id, compact, variant = 'ghost' }) {
 }
 
 /** The props of a ProductCard for an offer (the card of the design system), with the heart of the favorites. */
-export function offerProps(o, store, key = o.id) {
+export function offerProps(o, store, key = o.id, showGame = false) {
   const game = gameOf(o.game);
   return {
     id: key,
     title: o.title,
     price: money(o.price),
+    eyebrow: showGame ? game.name : undefined,
     image: o.image,
     imageAlt: `${game.name}: ${o.title}`,
     badge: o.badge,
@@ -125,9 +126,9 @@ export function offerProps(o, store, key = o.id) {
 }
 
 /** The offers as a listing of the design system: whole rows, "Show more" after the first two (the setting of the example). */
-export function OfferListing({ offers, ...rest }) {
+export function OfferListing({ offers, showGame = false, ...rest }) {
   const store = useStore();
-  return <ProductListing more="infinite" items={offers.map((o, i) => offerProps(o, store, o.listKey ?? `${o.id}~${i}`))} {...rest} />;
+  return <ProductListing more="infinite" items={offers.map((o, i) => offerProps(o, store, o.listKey ?? `${o.id}~${i}`, showGame))} {...rest} />;
 }
 
 export const Link = ({ to, children, ...rest }) => <a href={href(to)} {...rest}>{children}</a>;

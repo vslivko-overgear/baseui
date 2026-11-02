@@ -1857,6 +1857,10 @@ export interface ProductCardProps {
    */
   badgeVariant?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
   /**
+   * A line above the price in 12px Secondary: the game or the category the product belongs to
+   */
+  eyebrow?: ReactNode;
+  /**
    * Rating, shown with a star
    */
   rating?: number;

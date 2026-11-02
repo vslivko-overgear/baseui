@@ -91,7 +91,7 @@ export const USAGE = {
     dont: ['Use a Card when you mean a page region'],
   },
   ProductCard: {
-    do: ['Use it for a compact product summary: a picture, the price, a title of two lines, the rating and one line of meta', 'Give the heart through `favorite` when the product can be kept', 'Put it inside a ProductListing, which lays the cards in rows'],
+    do: ['Use it for a compact product summary: a picture, the price, a title of two lines, the rating and one line of meta; when a listing mixes games, put the name of the game above the price with `eyebrow`', 'Give the heart through `favorite` when the product can be kept', 'Put it inside a ProductListing, which lays the cards in rows'],
     dont: ['Use it when the content needs a different structure than this compact card supports', 'Add more lines to it (a description, three badges): a listing is scanned, not read'],
   },
   ProductListing: {

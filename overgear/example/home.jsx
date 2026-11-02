@@ -174,7 +174,7 @@ export function Home() {
               options={CATEGORIES.map((c) => ({ value: c, label: c === 'All games' ? 'All Games' : c }))}
             />
           </Bleed>
-          <OfferListing more="button" offers={Array.from({ length: loaded }, (_, i) => ({ ...products[i % products.length], listKey: `${category}-${i}` }))} hasMore={loaded < MAX_LOADED} loading={loadingMore} onLoadMore={loadMore} />
+          <OfferListing showGame more="button" offers={Array.from({ length: loaded }, (_, i) => ({ ...products[i % products.length], listKey: `${category}-${i}` }))} hasMore={loaded < MAX_LOADED} loading={loadingMore} onLoadMore={loadMore} />
         </Section>
 
       </div>

@@ -33,10 +33,10 @@ function FavoriteButton({ favorite }) {
 }
 
 /**
- * The card of a product in a listing: a picture with a badge and a heart over it, the price, the title in two lines, the rating and one line of meta.
+ * The card of a product in a listing: a picture with a badge and a heart over it, an optional line above the price (the game), the price, the title in two lines, the rating and one line of meta.
  * It is the one card of a listing: use it inside ProductListing, which lays the cards in whole rows.
  */
-export function ProductCard({ title, price, image, imageAlt = '', fallbackIcon = 'Image01', badge, badgeVariant = 'secondary', rating, meta, favorite, onClick, href, label, className, ...rest }) {
+export function ProductCard({ title, price, image, imageAlt = '', fallbackIcon = 'Image01', badge, badgeVariant = 'secondary', eyebrow, rating, meta, favorite, onClick, href, label, className, ...rest }) {
   return (
     <div data-slot="product-card" className={cx('bui-product-card', className)} {...rest}>
       <ClickableCard label={label ?? title} variant="surface" padding={2} onClick={onClick} href={href}>
@@ -50,6 +50,7 @@ export function ProductCard({ title, price, image, imageAlt = '', fallbackIcon =
             )}
           </span>
           <span className="bui-product-card__body" data-spacing-ignore="">
+            {eyebrow && <span className="bui-product-card__eyebrow">{eyebrow}</span>}
             <span className="bui-product-card__price">{price}</span>
             <span className="bui-product-card__title">{title}</span>
             {(rating != null || meta) && (
@@ -81,6 +82,7 @@ describe(ProductCard, 'The card of a product in a listing: a picture with a badg
   fallbackIcon: ['string', "'Image01'", 'Icon of the catalog shown when there is no picture'],
   badge: ['string', null, 'A mark over the top left corner of the picture: Sale, Hot offer'],
   badgeVariant: ["'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'", "'secondary'", 'Color of the badge'],
+  eyebrow: ['ReactNode', null, 'A line above the price in 12px Secondary: the game or the category the product belongs to'],
   rating: ['number', null, 'Rating, shown with a star'],
   meta: ['ReactNode', null, 'The line on the right of the rating: sold, delivery time'],
   favorite: ['{ active?: boolean, onToggle?: (active: boolean) => void, label?: string }', null, 'The heart over the top right corner of the picture: filled when active; tapping it plays a short move'],
