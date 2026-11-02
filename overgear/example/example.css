@@ -363,12 +363,14 @@ a { color: inherit; }
 
 /* the cart: the lines of an order, the summary, the side panel */
 .og-lines { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--bui-rel-group); }
-.og-line { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; gap: var(--baseui-spacing-3); align-items: start; }
+.og-line { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: var(--baseui-spacing-3); align-items: start; }
 .og-line__pic { position: relative; width: 56px; height: 56px; border-radius: var(--baseui-radius-lg); overflow: hidden; display: grid; place-items: center; background: var(--baseui-background-tertiary); }
 .og-line__pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .og-line__body { display: flex; flex-direction: column; gap: var(--baseui-spacing-1); min-width: 0; }
 .og-line__head { display: flex; justify-content: space-between; gap: var(--baseui-spacing-3); }
-.og-line__qty { width: 136px; margin-top: var(--baseui-spacing-2); }   /* the quantity: a row of its own after the delivery time, in the column of the text */
+.og-line__qty { width: 136px; }
+.og-line__foot { display: flex; align-items: center; justify-content: space-between; gap: var(--baseui-spacing-3); margin-top: var(--baseui-spacing-1); }   /* the last row of a line: the quantity on the left, the bin at the bottom right */
+.og-line__foot > :only-child { margin-inline-start: auto; }
 .og-line__title { font: var(--baseui-typography-text-16-semi-bold); }
 .og-line__price { font: var(--baseui-typography-text-16-semi-bold); white-space: nowrap; }
 .og-line__meta { margin: 0; display: flex; align-items: center; gap: var(--baseui-spacing-1); font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-secondary); }

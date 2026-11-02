@@ -2,6 +2,7 @@
 
 ## Overgear: the checkout, payment methods as outlined tiles, the items apart
 
+- **Checkout lines:** the price stays on top at the right, the bin is the last row of the line at the bottom right (the quantity stepper of a line of several units is on the same row, on the left).
 - **Checkout lines:** the price and the bin are back on top, at the right; the quantity stepper of a line of several units is a row of its own after the delivery time, in the column of the text.
 - **`NumberInput`: the minus first, the number in the middle (centered), the plus last** (it was the number, then both buttons at the end). In the Overgear lines on a phone the price, the quantity and the bin are a row of their own under the text, so the text is not squeezed into a narrow column.
 - **Checkout lines:** the price on top and the bin at the bottom right of each line; a line of several units has a quantity stepper left of the bin. The promo code is on a card again (as the summary above, 20px at the sides) and the whole card is the button.

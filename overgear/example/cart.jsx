@@ -38,9 +38,11 @@ function CartLine({ item, onRemove, onQty }) {
         <p className="og-line__meta">{item.qty > 1 ? `${item.sub} · × ${item.qty}` : item.sub}</p>
         <p className="og-line__meta"><Icon name="User01" size={16} />Sold by Overgear</p>
         {item.eta && <p className="og-line__meta"><Icon name="Clock" size={16} />{`Delivery time: ${item.eta}`}</p>}
-        {multi && onQty && <span className="og-line__qty"><NumberInput size="sm" aria-label={`Quantity of ${item.title}`} min={1} value={item.qty} onValueChange={(v) => onQty(Math.max(1, Number(v) || 1))} /></span>}
+        <div className="og-line__foot">
+          {multi && onQty && <span className="og-line__qty"><NumberInput size="sm" aria-label={`Quantity of ${item.title}`} min={1} value={item.qty} onValueChange={(v) => onQty(Math.max(1, Number(v) || 1))} /></span>}
+          {onRemove && <IconButton variant="ghost" size="xsm" label={`Remove ${item.title}`} icon={<Icon name="Trash01" size={20} />} onClick={onRemove} />}
+        </div>
       </div>
-      {onRemove && <IconButton variant="ghost" size="xsm" label={`Remove ${item.title}`} icon={<Icon name="Trash01" size={20} />} onClick={onRemove} />}
     </li>
   );
 }
