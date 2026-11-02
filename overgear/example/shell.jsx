@@ -13,10 +13,9 @@ import { Icon } from '../../src/components/Icon.jsx';
 import { useStore } from './store.jsx';
 import { usePrefs } from './prefs.jsx';
 import { CatalogColumns } from './catalog.jsx';
-import { CartDrawer } from './cart.jsx';
 import { Search } from './search.jsx';
 import { WalletButton } from './wallet.jsx';
-import { go, href, OPEN_CART } from './util.js';
+import { go, href, openMiniCart } from './util.js';
 import { GAMES } from './data.js';
 import { PaymentLogos, PAY_MAIN, PAY_BADGES } from './ui.jsx';
 import { ControlRow } from '../../src/components/Layout.jsx';
@@ -139,9 +138,6 @@ function CatalogButton({ open, onToggle }) {
 export function Header({ route, onLogin }) {
   const store = useStore();
   const [catalog, setCatalog] = useState(false);
-  const [cart, setCart] = useState(false);
-  // any page can open the mini-cart (after "Add to cart")
-  useEffect(() => { const open = () => setCart(true); window.addEventListener(OPEN_CART, open); return () => window.removeEventListener(OPEN_CART, open); }, []);
   // the panel closes when the page changes and on Escape
   useEffect(() => { setCatalog(false); }, [route.path, route.query.s, route.query.c]);
   useEffect(() => {
@@ -172,14 +168,13 @@ export function Header({ route, onLogin }) {
               {store.wishlist.length > 0 && <span style={{ position: 'absolute', top: 2, right: 2, pointerEvents: 'none' }}><Badge type="counter" variant="red" size="sm" label={store.wishlist.length} /></span>}
             </span>
             <span style={{ position: 'relative', display: 'inline-flex' }}>
-              <IconButton variant="ghost" label={`Cart, ${store.count} items`} icon={<Icon name="ShoppingCart01" size={24} />} onClick={() => setCart(true)} />
+              <IconButton variant="ghost" label={`Cart, ${store.count} items`} icon={<Icon name="ShoppingCart01" size={24} />} onClick={openMiniCart} />
               {store.count > 0 && <span style={{ position: 'absolute', top: 2, right: 2, pointerEvents: 'none' }}><Badge type="counter" variant="red" size="sm" label={store.count} /></span>}
             </span>
             <Account onLogin={onLogin} />
           </ControlRow>
         </div>
       </div>
-      <CartDrawer open={cart} onClose={() => setCart(false)} />
       {catalog && (
         <>
           <div id="og-catalog-modal" className="og-catalog-modal" role="dialog" aria-label="Catalog">

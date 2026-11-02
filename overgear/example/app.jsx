@@ -5,14 +5,14 @@ import { Status } from '../../src/components/Status.jsx';
 import { Page } from './ui.jsx';
 import { startOvergearTheme } from '../theme.js';
 import { StoreProvider } from './store.jsx';
-import { useRoute, useMedia, go } from './util.js';
+import { useRoute, useMedia, go, OPEN_CART } from './util.js';
 import { TopUpDialog } from './wallet.jsx';
 import { Header, MobileHeader, MobileBar, Footer, LoginDialog } from './shell.jsx';
 import { Home } from './home.jsx';
 import { Offers, Game, Gold, SearchResults } from './games.jsx';
 import { Catalog, CatalogDesktop, CatalogGame, CatalogGroup, CatalogBar } from './catalog.jsx';
 import { Offer } from './offer.jsx';
-import { Cart, Checkout, OrderDone } from './cart.jsx';
+import { Cart, CartDrawer, Checkout, OrderDone } from './cart.jsx';
 import { Account } from './account.jsx';
 import { Info } from './info.jsx';
 
@@ -44,6 +44,9 @@ function Shell() {
   const route = useRoute();
   const mobile = useMedia('(max-width: 767px)');
   const [login, setLogin] = useState(false);
+  const [mini, setMini] = useState(false);   // the mini-cart: any page opens it (after "Add to cart", the cart button of the header), on a desktop and on a phone
+  useEffect(() => { const open = () => setMini(true); window.addEventListener(OPEN_CART, open); return () => window.removeEventListener(OPEN_CART, open); }, []);
+  useEffect(() => { setMini(false); }, [route.path]);
   useEffect(() => { window.scrollTo(0, 0); }, [route.path]);
   // on a phone the tabs of the bottom bar (Catalog, Favorites, Cart, Account) are screens of their own: no header and no footer
   const step2 = mobile && route.parts[0] === 'catalog' && !!route.parts[1];
@@ -57,6 +60,7 @@ function Shell() {
       </main>
       {!tab && !bare && <Footer />}
       {mobile && !bare && <MobileBar route={route} />}
+      <CartDrawer open={mini} onClose={() => setMini(false)} />
       <LoginDialog open={login} onClose={() => setLogin(false)} />
       <TopUpDialog />
     </div>

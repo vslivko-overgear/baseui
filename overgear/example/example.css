@@ -393,7 +393,7 @@ a { color: inherit; }
 .og-checkout__top { display: flex; align-items: center; gap: var(--baseui-spacing-4); padding-block: var(--baseui-spacing-4); }
 .og-checkout__head { padding-top: var(--baseui-spacing-12); }
 .og--mobile .og-checkout__head { padding-top: var(--baseui-spacing-1); }
-.og-checkout__title { padding: 0; }   /* lower than it was, and close to the blocks under it (the padding of .og-co is the rest) */
+.og-order__title { padding: 0; }   /* lower than it was, and close to the blocks under it (the padding of .og-co is the rest) */
    /* 4px under the bar of the phone */
 .og-co__main { gap: var(--baseui-spacing-12); }   /* the sections of the left column (the items, the payment method, the promo code) are further apart than the items are from each other */
 .og--mobile .og-co__main { gap: var(--baseui-spacing-8); }

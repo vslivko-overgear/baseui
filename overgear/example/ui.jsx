@@ -181,9 +181,7 @@ export function CashbackMark() {
 export const CASHBACK = 1;
 export const cashbackOf = (amount) => (amount * CASHBACK / 100).toFixed(2);
 
-/** What follows "Add to cart": on a desktop the mini-cart of the header opens; on a phone, where the cart is a tab of its own, a toast with a way to it. */
+/** What follows "Add to cart": the mini-cart opens, on a desktop and on a phone. */
 export function useAddedToCart() {
-  const { toast } = useToast();
-  const mobile = useMedia('(max-width: 767px)');
-  return () => (mobile ? toast({ message: 'Added to the cart', status: 'success', action: { label: 'Open cart', onClick: () => go('/cart') } }) : openMiniCart());
+  return openMiniCart;
 }
