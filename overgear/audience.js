@@ -22,7 +22,7 @@ export const TILE_GAP = 8;
  * the edges of the rows do not line up. The two rows are of equal length, so the group is a rectangle. [slug, width] each; the games are those of the example.
  */
 export const AUDIENCE_GROUP = {
-  wow: [[['wow', 200], ['wow-forever', 150]], [['wow-20th-anniversary', 160], ['wow-classic-era', 190]]],
+  wow: [[['wow', 170], ['wow-forever', 130]], [['wow-20th-anniversary', 140], ['wow-classic-era', 160]]],
 };
 
 /** The audience of a theme: one of those offered, or all players. */

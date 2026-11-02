@@ -130,7 +130,6 @@ export function Home() {
   // who the page is made for (the Theme setting of the showcase): its game leads the tiles and the listing
   const audience = audienceOf(loadTheme(COOKIE));
   const tiles = tileLayout(TILE_ROWS, audience);
-  const groupLength = tiles.group[0]?.reduce((n, [, w]) => n + w, 0) + (tiles.group[0]?.length - 1) * TILE_GAP;
   // the products of the game of the audience come first; the products of the other games take turns, so the first screen is varied
   const products = (() => {
     const [own, rest] = splitOffers(OFFERS.filter((o) => (category === 'all' || o.game === category) && (kind === 'all' || o.service === kind)), audience);
@@ -171,10 +170,10 @@ export function Home() {
           <Bleed scroll>
             <div className="og-tiles">
               {tiles.group.length > 0 && (
-                <div className="og-grows og-grows--group" style={{ '--og-group': `${Math.round(groupLength)}px` }}>
+                <div className="og-grows">
                   {tiles.group.map((row, i) => (
                     <div key={i} className="og-grow">
-                      {row.map(([slug, width]) => <GameChip key={slug} slug={slug} grow={width} />)}
+                      {row.map(([slug, width]) => <GameChip key={slug} slug={slug} width={width} />)}
                     </div>
                   ))}
                 </div>
