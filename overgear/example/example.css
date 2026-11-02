@@ -315,6 +315,10 @@ a { color: inherit; }
 .og-stack--crumbs { gap: var(--baseui-spacing-4); }
 .og-page--crumbs { padding-top: calc(var(--baseui-spacing-8) - 4px); }
 .og--mobile .og-page--crumbs { padding-top: calc(var(--baseui-spacing-4) - 4px); }
+/* a page that starts with a bar of 48px like the header (the search of the catalog): the bar stands where the bar of the header stands, 12px from the top, so nothing jumps between them */
+.og--mobile .og-page--bar { padding-top: calc(var(--baseui-spacing-4) - 4px); }
+.og--mobile .og-catalog__left .bui-control-row { --row-text: 14px; }   /* the text of the search is the text of the search of the header */
+.og--mobile .og-catalog__search .bui-input, .og--mobile .og-catalog__search .bui-field__label { font-size: 14px; }
 
 /* the chips of the subcategories and the sorting chip are one row: the chips scroll, the sorting stays at the right end; on a phone the sorting goes under them */
 .og-chiprow { display: flex; align-items: center; gap: var(--bui-rel-related); }

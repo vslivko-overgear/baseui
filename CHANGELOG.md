@@ -1,5 +1,9 @@
 # Changelog
 
+## Overgear: the bar of the catalog of a phone is where the bar of the header is
+
+- The search of the catalog of a phone stood 4 px lower than the search of the header on the other pages (16 px from the top, not 12) and its text was 16 px, not 14: the bar jumped when the catalog opened. It is now at the same top, of the same height and with the same text (`Page` has a `bar` prop for a page that starts with a bar of 48 px). `overgear/tools/check/catalog.mjs` compares the two bars of a phone.
+
 ## Overgear: no "Catalog" title on the catalog page
 
 - The title "Catalog" is gone from the top of the catalog page, on a desktop and on a phone: the page starts with the search of the games (on a desktop, the two columns). The panel that the Catalog button opens had none.

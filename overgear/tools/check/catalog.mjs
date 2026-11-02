@@ -38,6 +38,15 @@ for (const height of [900, 620]) {
   if (state.images) problems.push('phone: the rows of the catalog have pictures');
   if (state.rows < 10) problems.push(`phone: the catalog has ${state.rows} rows of games`);
   if (state.overflow !== 'visible') problems.push(`phone: the list of games is a scroller of its own (${state.overflow}), not the page`);
+  // the bar of the catalog is where the bar of the header is on the other pages: the same top, height and size of text, so nothing jumps between them
+  const bar = () => page.evaluate(() => { const f = document.querySelector('.og-header .og-search .bui-field, .og-catalog__left .bui-field'); const r = f.getBoundingClientRect(); return { top: Math.round(r.top), height: Math.round(r.height), text: getComputedStyle(f.querySelector('input')).fontSize }; });
+  const onCatalog = await bar();
+  await page.goto(`${base}/overgear/example/index.html#/`);
+  await page.waitForTimeout(1200);
+  const onHome = await bar();
+  await page.goto(`${base}/overgear/example/index.html#/catalog`);
+  await page.waitForTimeout(1200);
+  if (onCatalog.top !== onHome.top || onCatalog.height !== onHome.height || onCatalog.text !== onHome.text) problems.push(`phone: the bar of the catalog (top ${onCatalog.top}, ${onCatalog.height} high, text ${onCatalog.text}) is not where the bar of the header is (top ${onHome.top}, ${onHome.height} high, text ${onHome.text})`);
   await page.getByLabel('Find a game').fill('dia');
   await page.waitForTimeout(300);
   const found = await page.locator('.og-catalog__games [data-slot=list-item]').allTextContents();

@@ -21,7 +21,7 @@ import { Page } from './ui.jsx';
 /** The games of the shop on a phone: the left column of the catalog of a desktop, as a page. A game opens its kinds of offers (CatalogGame). */
 export function Catalog() {
   return (
-    <Page>
+    <Page bar>
       <GamesColumn onSelect={(slug) => go(`/catalog/${slug}`)} />
     </Page>
   );
