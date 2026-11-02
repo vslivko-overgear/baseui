@@ -10,7 +10,18 @@ describe('audiences', () => {
       expect(tiles, `${slug} has no tile`).toContain(slug);
       if (GAMES.some((g) => g.slug === slug)) expect(gameOf(slug).name, slug).toBe(name);
     }
-    expect(AUDIENCES[0][0]).toBe(AUDIENCE_DEFAULT);
+    expect(AUDIENCES.filter(([s]) => s === AUDIENCE_DEFAULT)).toHaveLength(1);
+  });
+
+  test('the audiences are World of Warcraft, the three other games with the most offers, and the example for all players, which comes last', () => {
+    expect(AUDIENCES[0][0]).toBe('wow');
+    expect(AUDIENCES.at(-1)).toEqual([AUDIENCE_DEFAULT, 'Example · All players']);
+    expect(AUDIENCES).toHaveLength(5);
+    // "the most content now": the games with the most offers after World of Warcraft; in a tie, the one that comes first on the tiles
+    const count = (slug) => OFFERS.filter((o) => o.game === slug).length;
+    const tiles = TILE_ROWS.flat().map(([slug]) => slug);
+    const top = tiles.filter((s) => s !== 'wow').sort((a, b) => count(b) - count(a) || tiles.indexOf(a) - tiles.indexOf(b)).slice(0, 3);
+    expect(AUDIENCES.slice(1, 4).map(([s]) => s), 'the offers changed: update the games of AUDIENCES').toEqual(top);
   });
 
   test('a theme without a known audience is for all players', () => {

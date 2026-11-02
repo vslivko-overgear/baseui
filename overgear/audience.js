@@ -2,11 +2,13 @@
 // follows. The audience is a setting of the Theme page (kept with the theme, in one cookie); the example reads it. "All players" is the page as it is.
 // The pure functions here take the slugs of the games and return a new order, so they are tested without a browser.
 
-/** The audiences: all players, and one for each game that has a tile on the home page: [slug, name]. */
+/**
+ * The audiences of the Theme page: World of Warcraft, the three other games with the most content in the example now (a test keeps the three in step with the offers),
+ * and the example as it is, for all players: [slug, name]. Any other game still works as an audience (a stored one, or one passed to the functions below); it is just not offered.
+ */
 export const AUDIENCES = [
-  ['all', 'All players'], ['wow', 'World of Warcraft'], ['diablo-4', 'Diablo 4'], ['poe-2', 'Path of Exile 2'], ['ffxiv', 'Final Fantasy XIV'], ['lost-ark', 'Lost Ark'],
-  ['last-epoch', 'Last Epoch'], ['genshin-impact', 'Genshin Impact'], ['call-of-duty', 'Call of Duty'], ['d2', 'Destiny 2'], ['valorant', 'Valorant'], ['cs2', 'Counter Strike 2'],
-  ['fortnite', 'Fortnite'], ['apex', 'Apex Legends'], ['eft', 'Escape from Tarkov'],
+  ['wow', 'World of Warcraft'], ['diablo-4', 'Diablo 4'], ['poe-2', 'Path of Exile 2'], ['ffxiv', 'Final Fantasy XIV'],
+  ['all', 'Example · All players'],
 ];
 export const AUDIENCE_DEFAULT = 'all';
 
@@ -21,7 +23,7 @@ export const AUDIENCE_GROUP = {
   wow: [[['wow', 200], ['wow-forever', 150]], [['wow-20th-anniversary', 160], ['wow-classic-era', 190]]],
 };
 
-/** The audience of a theme: a known one, or all players. */
+/** The audience of a theme: one of those offered, or all players. */
 export const audienceOf = (theme) => (AUDIENCES.some(([slug]) => slug === theme?.audience) ? theme.audience : AUDIENCE_DEFAULT);
 
 const lengthOf = (row) => row.reduce((n, [, width]) => n + width, 0) + (row.length - 1) * TILE_GAP;
