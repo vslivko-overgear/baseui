@@ -83,5 +83,13 @@
   <div style="width:240px;padding-inline:16px"><ul class="bui-list-group__list" aria-label="Games"><li data-slot="list-item" class="bui-list__item"><div data-slot="list-item-header" class="bui-list__header bui-list__md bui-list__interactive"><button type="button" class="bui-list__row">World of Warcraft</button></div></li><li data-slot="list-item" class="bui-list__item"><div data-slot="list-item-header" class="bui-list__header bui-list__md bui-list__interactive"><button type="button" class="bui-list__row">Diablo 4</button></div></li></ul></div>
 </section>
 
+<!-- M4: a list of options is a sheet on a phone (this page is 400px wide, a phone) -->
+<section data-case="M4 a menu over the page on a phone" data-expect="M4">
+  <div class="bui-dropdown bui-dropdown--standalone" role="listbox" aria-label="Sort" style="position:static;width:200px"><div role="option" aria-selected="true" class="bui-dropdown__item">By popularity</div></div>
+</section>
+<section data-case="M4 a sheet on a phone" data-expect="">
+  <div role="dialog" aria-label="Sort"><div role="listbox" class="bui-choice-popup__list bui-choice-sheet__list"><button type="button" role="option" aria-selected="true" class="bui-choice-popup__item bui-choice-sheet__option">By popularity</button></div></div>
+</section>
+
 </body>
 </html>

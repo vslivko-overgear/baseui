@@ -5,6 +5,9 @@ import { Button } from './Button.jsx';
 import { BuiltinIcon } from '../builtin-icons.jsx';
 import { optionLabel } from './dropdown-parts.jsx';
 
+/** Up to this width a list of options (Selector, Typeahead, Dropdown) opens as a bottom sheet, not as a menu over the page (rule M4). */
+export const SHEET_QUERY = '(max-width: 767px)';
+
 const matches = (option, query) => optionLabel(option, option.value).toLocaleLowerCase().includes(query);
 
 /**

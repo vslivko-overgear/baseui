@@ -1,6 +1,6 @@
 # Dropdown
 
-A menu of options that opens from any trigger. It opens over the page (drawn in the body, flipped and kept on screen), so it never pushes the content or gets clipped by a scrolling container. It stands alone: Selector and Typeahead draw their lists with the same items, groups and dividers
+A menu of options that opens from any trigger. Below 768px it is a bottom sheet, as the list of a Selector is. Above, it opens over the page (drawn in the body, flipped and kept on screen), so it never pushes the content or gets clipped by a scrolling container. It stands alone: Selector and Typeahead draw their lists with the same items, groups and dividers
 
 The list that opens under a Selector or a Typeahead
 
@@ -10,6 +10,7 @@ The list that opens under a Selector or a Typeahead
 
 - Keep items short and about an action
 - Group related items in sections when there are many
+- Leave the sheet on a phone: below 768px the options open as a bottom sheet, as the list of a Selector does
 
 **Don't**
 
@@ -36,6 +37,7 @@ The list that opens under a Selector or a Typeahead
 | `label` | `string` | — | Accessible name of the menu |
 | `motion` | `'off' \| 'basic' \| 'enhanced'` | `theme` | Animation of opening and closing: off, basic (a quick fade), or enhanced (the menu grows from its trigger, and it plays out when it closes); by default the Animations setting of the theme |
 | `glass` | `boolean` | `theme` | Translucent, blurred menu; true or false overrides the Glass setting of the theme |
+| `sheet` | `boolean` | `true` | Below 768px the options open as a bottom sheet (the same as the list of a Selector), not as a menu over the page; false keeps the menu on a phone too |
 
 ## Examples
 

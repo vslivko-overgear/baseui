@@ -28,6 +28,7 @@ const CHECKS = [
   ['radii', 'tools/check/radii.mjs'],
   ['sizes', 'tools/check/sizes.mjs'],
   ['fixtures', 'tools/check/fixtures.mjs'],
+  ['sheets', 'tools/check/sheets.mjs'],
   ['constitution', 'tools/check/constitution.mjs'],
   ['spacing', 'tools/check/spacing.mjs'],
   ['overgear-spacing', 'overgear/tools/check/spacing.mjs'],

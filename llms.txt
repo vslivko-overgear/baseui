@@ -97,7 +97,7 @@
 - [Dialog](docs/components/dialog.md): The dialog: a centered window on a wide screen and a bottom sheet on small ones, built on the Base UI Dialog. The sheet can be dragged down by its header to clo
 - [Alert Dialog](docs/components/alert-dialog.md): A dialog that asks the user to confirm or cancel
 - [Divider](docs/components/divider.md): A line that separates content
-- [Dropdown](docs/components/dropdown.md): A menu of options that opens from any trigger. It opens over the page (drawn in the body, flipped and kept on screen), so it never pushes the content or gets cl
+- [Dropdown](docs/components/dropdown.md): A menu of options that opens from any trigger. Below 768px it is a bottom sheet, as the list of a Selector is. Above, it opens over the page (drawn in the body,
 - [Form](docs/components/form.md): The layout of a form: fields in rows with one gap in both directions, rows of one to four columns, and sections with a heading
 - [Form Row](docs/components/form-row.md): Fields side by side with the gap of the form. Equal columns, or a ratio such as [2, 1]; one column when the form is narrower than 360px
 - [Form Section](docs/components/form-section.md): A group of fields, with a heading or without one, inside a Form. The fields keep the gap of the form; when a form has sections, everything in it is in a section

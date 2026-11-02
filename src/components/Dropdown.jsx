@@ -1,7 +1,8 @@
 import { cx, cloneElement, isValidElement, useEffect, useId, useMemo, useRef, useState, useControllable } from '../react.js';
 import { Button } from './Button.jsx';
 import { describe } from '../doc.js';
-import { themeAttrs, usePresence, useMotion } from '../theme-flags.js';
+import { themeAttrs, usePresence, useMotion, useMediaQuery } from '../theme-flags.js';
+import { ChoiceSheet, SHEET_QUERY } from './ChoiceSheet.jsx';
 import { Floating, useAnchoredPosition, panelStyle, useDismiss } from '../floating.js';
 import { DropdownItemContent, DropdownGroup, DropdownDivider, DropdownSelectAll, CheckMark, trackSelection, itemClass, isOption } from './dropdown-parts.jsx';
 
@@ -26,10 +27,13 @@ export function Dropdown({
   glass,
   motion,
   label,
+  sheet: sheetAllowed = true,
   className,
   ...rest
 }) {
   const [isOpen, setOpen] = useControllable(open, defaultOpen, onOpenChange);
+  // below 768px the list is a bottom sheet, as the list of a Selector is (rule M4); `sheet={false}` keeps the menu over the page
+  const sheet = useMediaQuery(SHEET_QUERY) && sheetAllowed;
   const [selected, setSelected] = useControllable(value, defaultValue ?? (multiple ? [] : null), onValueChange);
   const [active, setActive] = useState(-1);
   const root = useRef(null);
@@ -53,7 +57,7 @@ export function Dropdown({
     panel.current?.focus();
     return undefined;
   }, [isOpen]);
-  useDismiss(isOpen, () => setOpen(false), root, panel);
+  useDismiss(isOpen && !sheet, () => setOpen(false), root, panel);
 
   const choose = (o) => {
     if (!o || o.disabled) return;
@@ -87,7 +91,7 @@ export function Dropdown({
     panel.current?.querySelector('[data-highlighted]')?.scrollIntoView({ block: 'nearest' });
   }, [active]);
 
-  const triggerProps = { 'aria-haspopup': 'listbox', 'aria-expanded': isOpen, 'aria-controls': isOpen ? id : undefined, onClick: () => setOpen(!isOpen) };
+  const triggerProps = { 'aria-haspopup': sheet ? 'dialog' : 'listbox', 'aria-expanded': isOpen, 'aria-controls': isOpen && !sheet ? id : undefined, onClick: () => setOpen(!isOpen) };
   let n = -1;
   return (
     <span ref={root} data-slot="dropdown-root" className={cx('bui-dropdown-root', className)} {...rest}>
@@ -100,7 +104,20 @@ export function Dropdown({
               Open
             </Button>
           ))}
-      {shown && (
+      {sheet && (
+        <ChoiceSheet
+          open={isOpen}
+          title={label}
+          options={real}
+          value={selected}
+          multiple={multiple}
+          action={multiple ? 'apply' : 'close'}
+          commitOnSelect={!multiple}
+          onCommit={(v) => setSelected(v)}
+          onOpenChange={(o) => setOpen(o)}
+        />
+      )}
+      {!sheet && shown && (
         <Floating>
           <div
             ref={(el) => {
@@ -162,7 +179,7 @@ export function Dropdown({
 }
 describe(
   Dropdown,
-  'A menu of options that opens from any trigger. It opens over the page (drawn in the body, flipped and kept on screen), so it never pushes the content or gets clipped by a scrolling container. It stands alone: Selector and Typeahead draw their lists with the same items, groups and dividers',
+  'A menu of options that opens from any trigger. Below 768px it is a bottom sheet, as the list of a Selector is. Above, it opens over the page (drawn in the body, flipped and kept on screen), so it never pushes the content or gets clipped by a scrolling container. It stands alone: Selector and Typeahead draw their lists with the same items, groups and dividers',
   {
     trigger: ['ReactElement | (props) => ReactElement', null, 'What opens the menu: an element (it gets the open handler and the ARIA attributes) or a render function that receives the trigger props. Default: an Open button'],
     options: [
@@ -192,5 +209,6 @@ describe(
       'Animation of opening and closing: off, basic (a quick fade), or enhanced (the menu grows from its trigger, and it plays out when it closes); by default the Animations setting of the theme',
     ],
     glass: ['boolean', 'theme', 'Translucent, blurred menu; true or false overrides the Glass setting of the theme'],
+    sheet: ['boolean', 'true', 'Below 768px the options open as a bottom sheet (the same as the list of a Selector), not as a menu over the page; false keeps the menu on a phone too'],
   },
 );

@@ -342,6 +342,13 @@ export function auditConstitution(root = typeof document === 'undefined' ? null 
     if (role === 'tooltip' && el.querySelector('a, button, input, select, textarea, [tabindex]')) add('U10', el, `${describeEl(el)} is a tooltip with something to press inside it; a tooltip is a hint, put the control in the interface`);
   }
 
+  // M4 a list of options is a sheet on a phone: no menu of options floats over the page while the window is narrower than 768px
+  if (win.innerWidth < 768) {
+    for (const menu of /** @type {any[]} */ ([...root.querySelectorAll('.bui-dropdown')])) {
+      if (visible(menu, win) && menu.getBoundingClientRect().width > 0) add('M4', menu, `${describeEl(menu)} is a menu over the page on a phone; a list of options is a bottom sheet below 768px (Dropdown has sheet on by default)`);
+    }
+  }
+
   // M2 horizontal scroll
   const scroller = doc.documentElement;
   if (root === doc.body && scroller.scrollWidth > scroller.clientWidth + 1) add('M2', scroller, `the page scrolls sideways (${scroller.scrollWidth}px in ${scroller.clientWidth}px)`);

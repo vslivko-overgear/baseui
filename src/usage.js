@@ -213,7 +213,7 @@ export const USAGE = {
     dont: ['Use it for an action that is not destructive: use Dialog', 'Signal danger by color alone: the label has to say it'],
   },
   Dropdown: {
-    do: ['Keep items short and about an action', 'Group related items in sections when there are many'],
+    do: ['Keep items short and about an action', 'Group related items in sections when there are many', 'Leave the sheet on a phone: below 768px the options open as a bottom sheet, as the list of a Selector does'],
     dont: ['Use a menu for navigation', 'Put more than 10–12 items in one menu without sections'],
   },
   Collapsible: {

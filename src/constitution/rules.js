@@ -521,6 +521,14 @@ export const RULES = [
     source: 'Astryx motion guidelines (adapted); WCAG 2.3.3', check: 'review',
     signals: ['slow hover animations', 'animate everything', 'wait for the intro', 'a delay on every transition'],
   },
+  {
+    id: 'M4', category: 'M', level: 'must', title: 'A list of options is a sheet on a phone',
+    do: 'On a phone (below 768px) open every list of options (`Selector`, `Typeahead`, `Dropdown`) as a bottom sheet, which the components do by themselves; leave `sheet` on in `Dropdown`. A menu over the page is for a desktop',
+    dont: 'Do not draw a list of options with a menu of your own that floats over the page on a phone, and do not turn the sheet off (`sheet={false}`) to keep a menu on a phone',
+    why: 'A menu over a phone page is small, hides behind the thumb and the keyboard and gets cut by the edge of the screen; a sheet is as wide as the screen and its rows are easy to reach',
+    source: 'baseui ChoiceSheet; mobile patterns: a bottom sheet for a choice', check: 'auto', tools: ['tools/check/sheets.mjs'],
+    signals: ['a dropdown on a phone', 'a menu opens over the page on mobile', 'a popup list on a phone', 'a sort menu on mobile', 'a select on mobile'],
+  },
 ];
 
 export const RULES_BY_ID = Object.fromEntries(RULES.map((r) => [r.id, r]));

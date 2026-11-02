@@ -2,7 +2,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, test, vi } from 'vitest';
-import { Breadcrumbs, Button, ButtonGroup, Form, FormRow, FormSection, IconButton, ControlRow, Checkbox, Dialog, OtpInput, Pagination, ProgressBar, Slider, Rating, Selector, Switch, Tabs, TextInput } from '../src/index.jsx';
+import { Breadcrumbs, Button, ButtonGroup, Form, FormRow, FormSection, IconButton, ControlRow, Checkbox, Dialog, OtpInput, Pagination, ProgressBar, Slider, Rating, Selector, Dropdown, Switch, Tabs, TextInput } from '../src/index.jsx';
 
 describe('Switch', () => {
   test('toggles and reports', async () => {
@@ -381,5 +381,55 @@ describe('Selector on a phone', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Apply' }));
     await waitFor(() => expect(screen.queryByRole('option', { name: 'Alpha' })).toBeNull());
     window.matchMedia = original;
+  });
+});
+
+describe('Dropdown (rule M4: a list of options is a sheet on a phone)', () => {
+  const opts = [{ value: 'a', label: 'Alpha' }, { value: 'b', label: 'Beta' }];
+  const phone = () => {
+    const original = window.matchMedia;
+    window.matchMedia = (q) => ({ matches: q.includes('767'), media: q, addEventListener() {}, removeEventListener() {}, addListener() {}, removeListener() {} });
+    return () => { window.matchMedia = original; };
+  };
+
+  test('on a desktop it is a menu over the page, not a dialog', async () => {
+    render(<Dropdown label="Sort" options={opts} trigger={<Button label="Open" />} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Open' }));
+    expect(await screen.findByRole('listbox', { name: 'Sort' })).toBeInTheDocument();
+    expect(screen.queryByRole('dialog')).toBeNull();
+  });
+
+  test('on a phone it is a bottom sheet (a dialog) with the same options, and a single choice closes it', async () => {
+    const restore = phone();
+    const onValueChange = vi.fn();
+    render(<Dropdown label="Sort" options={opts} onValueChange={onValueChange} trigger={<Button label="Open" />} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Open' }));
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+    expect(document.querySelector('.bui-dropdown')).toBeNull();
+    await userEvent.click(await screen.findByRole('option', { name: 'Beta' }));
+    expect(onValueChange).toHaveBeenCalledWith('b');
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+    restore();
+  });
+
+  test('a multiple choice waits for Apply on a phone', async () => {
+    const restore = phone();
+    const onValueChange = vi.fn();
+    render(<Dropdown label="Sort" multiple options={opts} onValueChange={onValueChange} trigger={<Button label="Open" />} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Open' }));
+    await userEvent.click(await screen.findByRole('option', { name: 'Alpha' }));
+    expect(onValueChange).not.toHaveBeenCalled();
+    await userEvent.click(screen.getByRole('button', { name: 'Apply' }));
+    expect(onValueChange).toHaveBeenCalledWith(['a']);
+    restore();
+  });
+
+  test('sheet={false} keeps the menu on a phone', async () => {
+    const restore = phone();
+    render(<Dropdown label="Sort" sheet={false} options={opts} trigger={<Button label="Open" />} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Open' }));
+    expect(await screen.findByRole('listbox', { name: 'Sort' })).toBeInTheDocument();
+    expect(screen.queryByRole('dialog')).toBeNull();
+    restore();
   });
 });

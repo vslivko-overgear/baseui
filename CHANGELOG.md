@@ -1,5 +1,11 @@
 # Changelog
 
+## Rule M4: a list of options is a sheet on a phone, and Dropdown follows it
+
+- **Why the sort of the catalog opened a menu on a phone.** "Below 768px the list is a bottom sheet" was built into `Selector` and `Typeahead` only (`ChoiceSheet`, `SHEET_QUERY`). `Dropdown`, the standalone menu that draws the same list, always opened over the page, and the example used it for the sort of the catalog and of the listings. Nothing said it was a rule (the line of M2 about "sheets below md" was a hint, not a check), and nothing looked at it.
+- **`Dropdown` is a bottom sheet below 768px** now, with the same options, a single choice that closes it and a multiple one that waits for Apply, as the list of a `Selector` is; `sheet={false}` keeps the menu over the page on a phone. `SHEET_QUERY` lives in `ChoiceSheet.jsx` (still exported from `Selector.jsx`). The sorts of the catalog and of the listings in the example are sheets on a phone without a change of theirs.
+- **M4** (must, checked by the audit): a menu over the page (`.bui-dropdown`) on a window narrower than 768px is a finding. `tools/check/sheets.mjs` (part of `npm run check`) opens the controls of the example that open a list, on a phone and on a desktop, and expects a sheet on the first and a menu on the second; `tools/check/fixtures.html` has the two cases; `tests/components.test.jsx` tests `Dropdown` on both. I checked that the old behaviour makes the check fail.
+
 ## Overgear: the bar of the catalog of a phone is where the bar of the header is
 
 - The search of the catalog of a phone stood 4 px lower than the search of the header on the other pages (16 px from the top, not 12) and its text was 16 px, not 14: the bar jumped when the catalog opened. It is now at the same top, of the same height and with the same text (`Page` has a `bar` prop for a page that starts with a bar of 48 px). `overgear/tools/check/catalog.mjs` compares the two bars of a phone.

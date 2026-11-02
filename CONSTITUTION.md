@@ -1,6 +1,6 @@
 # baseui design constitution
 
-Version 1.1. 60 rules in 6 groups (36 must, 24 should): what to do and what not to do so that an interface is at least acceptable. Generated from `src/constitution/rules.js`; the same rules are on the Foundations / Constitution page.
+Version 1.1. 61 rules in 6 groups (37 must, 24 should): what to do and what not to do so that an interface is at least acceptable. Generated from `src/constitution/rules.js`; the same rules are on the Foundations / Constitution page.
 
 A **must** protects people and is always reported. A **should** is a strong default: keep it, or say why not.
 
@@ -573,4 +573,12 @@ It moves with care and fits the screen it is on
 - **Why:** Motion is there to show what changed; any that gets in the way of the next action is an obstacle
 - **Source:** Astryx motion guidelines (adapted); WCAG 2.3.3; needs a review
 - **Requests that lead here:** slow hover animations; animate everything; wait for the intro; a delay on every transition
+
+### M4 A list of options is a sheet on a phone (must)
+
+- **Do:** On a phone (below 768px) open every list of options (`Selector`, `Typeahead`, `Dropdown`) as a bottom sheet, which the components do by themselves; leave `sheet` on in `Dropdown`. A menu over the page is for a desktop
+- **Don't:** draw a list of options with a menu of your own that floats over the page on a phone, and do not turn the sheet off (`sheet={false}`) to keep a menu on a phone
+- **Why:** A menu over a phone page is small, hides behind the thumb and the keyboard and gets cut by the edge of the screen; a sheet is as wide as the screen and its rows are easy to reach
+- **Source:** baseui ChoiceSheet; mobile patterns: a bottom sheet for a choice; found by `auditConstitution()`
+- **Requests that lead here:** a dropdown on a phone; a menu opens over the page on mobile; a popup list on a phone; a sort menu on mobile; a select on mobile
 

@@ -1199,11 +1199,16 @@ export interface DropdownProps {
    * @default theme
    */
   glass?: boolean;
+  /**
+   * Below 768px the options open as a bottom sheet (the same as the list of a Selector), not as a menu over the page; false keeps the menu on a phone too
+   * @default true
+   */
+  sheet?: boolean;
   children?: ReactNode;
   [dataAttribute: `data-${string}`]: string | number | boolean | undefined;
   [ariaAttribute: `aria-${string}`]: string | number | boolean | undefined;
 }
-/** A menu of options that opens from any trigger. It opens over the page (drawn in the body, flipped and kept on screen), so it never pushes the content or gets clipped by a scrolling container. It stands alone: Selector and Typeahead draw their lists with the same items, groups and dividers */
+/** A menu of options that opens from any trigger. Below 768px it is a bottom sheet, as the list of a Selector is. Above, it opens over the page (drawn in the body, flipped and kept on screen), so it never pushes the content or gets clipped by a scrolling container. It stands alone: Selector and Typeahead draw their lists with the same items, groups and dividers */
 export function Dropdown(props: DropdownProps): ReactElement | null;
 
 export interface FormProps {

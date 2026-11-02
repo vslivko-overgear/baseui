@@ -1,14 +1,13 @@
 import { cx, isValidElement, useState, useRef, useEffect, useMemo, useId } from '../react.js';
 import { Select as BaseSelect } from '@base-ui/react/select';
 import { FieldShell } from './FieldShell.jsx';
-import { ChoiceSheet } from './ChoiceSheet.jsx';
+import { ChoiceSheet, SHEET_QUERY } from './ChoiceSheet.jsx';
 import { DropdownList, isOption } from './dropdown-parts.jsx';
 import { BuiltinIcon } from '../builtin-icons.jsx';
 import { useMediaQuery } from '../theme-flags.js';
 import { describe } from '../doc.js';
 
-/** Up to this width a Selector and a Typeahead open a bottom sheet instead of a dropdown. */
-export const SHEET_QUERY = '(max-width: 767px)';
+export { SHEET_QUERY };
 
 /** Focus leaving the field for its own list (the popup or the sheet) is not a blur: the host gets `onBlur` only when the focus really goes elsewhere. */
 export function useChoiceBlur(onBlur) {

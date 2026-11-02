@@ -549,12 +549,13 @@
       "name": "dropdown",
       "type": "registry:ui",
       "title": "Dropdown",
-      "description": "A menu of options that opens from any trigger. It opens over the page (drawn in the body, flipped and kept on screen), so it never pushes the content or gets clipped by a scrolling container. It stands alone: Selector and Typeahead draw their lists with the same items, groups and dividers",
+      "description": "A menu of options that opens from any trigger. Below 768px it is a bottom sheet, as the list of a Selector is. Above, it opens over the page (drawn in the body, flipped and kept on screen), so it never pushes the content or gets clipped by a scrolling container. It stands alone: Selector and Typeahead draw their lists with the same items, groups and dividers",
       "dependencies": [],
       "registryDependencies": [
         "https://baseuikit.vercel.app/r/baseui-core.json",
         "https://baseuikit.vercel.app/r/baseui-styles.json",
         "https://baseuikit.vercel.app/r/button.json",
+        "https://baseuikit.vercel.app/r/choice-sheet.json",
         "https://baseuikit.vercel.app/r/dropdown-parts.json"
       ],
       "files": [
