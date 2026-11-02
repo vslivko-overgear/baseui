@@ -184,8 +184,10 @@ export function Home() {
           <ol className="og-steps">
             {STEPS.map(([t, d], i) => (
               <li key={t}>
-                <span className="og-step-n" aria-hidden="true">{i + 1}</span>
-                <div className="og-stack og-stack--tight"><h3 className="og-h3">{t}</h3><p className="og-text">{d}</p></div>
+                <Card variant="surface" padding={5}>
+                  <span className="og-step-n" aria-hidden="true">{i + 1}</span>
+                  <div className="og-stack og-stack--tight"><h3 className="og-h3">{t}</h3><p className="og-text">{d}</p></div>
+                </Card>
               </li>
             ))}
           </ol>
