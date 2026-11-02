@@ -42,13 +42,13 @@ function CartLine({ item, onRemove }) {
 }
 
 /** The promo code: a section that opens into a field. */
-function Promo() {
+function Promo({ level = 3 }) {
   const store = useStore();
   const [code, setCode] = useState(store.promo);
   const [bad, setBad] = useState(false);
   const apply = () => { const ok = code.trim().toUpperCase() === 'WELCOME10'; setBad(!ok && !!code); store.setPromo(ok ? 'WELCOME10' : ''); };
   return (
-    <Collapsible title="Apply promo code" defaultOpen={!!store.promo}>
+    <Collapsible title="Apply promo code" headingLevel={level} defaultOpen={!!store.promo}>
       <ControlRow size="md" align="start">
         <TextInput label="Promo code" value={code} onChange={(e) => setCode(e.target.value)} status={bad ? 'error' : undefined} caption={bad ? 'This code does not work' : store.promo ? 'Applied: 10% off' : 'Try WELCOME10'} />
         <Button variant="secondary" label="Apply" onClick={apply} />
@@ -71,17 +71,29 @@ function CashbackRow({ amount }) {
 }
 
 /** The summary of the cart: the sum, the promo code, the subtotal, the cashback and the button to the checkout. */
-function CartSummary({ onCheckout }) {
+/** The bar that is pinned to the bottom of the screen of a phone: what is to pay and the button that pays. `above` lifts it over the bottom bar of the tabs (the cart); the checkout has none. */
+function PayBar({ label, amount, action, onClick, above }) {
+  return (
+    <div className="og-paybar" style={{ '--og-paybar-bottom': above ? 'var(--og-bottom)' : '0px' }}>
+      <div className="og-paybar__in">
+        <p className="og-paybar__sum"><span className="og-meta">{label}</span><span className="og-paybar__amount">{money(amount)}</span></p>
+        <Button variant="primary" size="lg" textSize={16} label={action} onClick={onClick} />
+      </div>
+    </div>
+  );
+}
+
+function CartSummary({ onCheckout, pinned = false, level }) {
   const store = useStore();
   return (
     <div className="og-stack og-stack--lg">
       <div className="og-stack">
         {store.discount > 0 && <div className="og-sum__row"><span className="og-sum__label">Promo WELCOME10</span><span className="og-sum__value">{`−${money(store.discount)}`}</span></div>}
-        <Promo />
+        <Promo level={level} />
         <div className="og-sum__row og-sum__row--big"><span>Subtotal</span><span>{money(store.total)}</span></div>
         <CashbackRow amount={store.total} />
       </div>
-      <Button variant="primary" size="lg" width="100%" label="Secure checkout" onClick={onCheckout} />
+      {!pinned && <Button variant="primary" size="lg" width="100%" label="Secure checkout" onClick={onCheckout} />}
     </div>
   );
 }
@@ -128,6 +140,7 @@ export function CartDrawer({ open, onClose }) {
 /** The cart as a page (a phone, or a direct link). */
 export function Cart() {
   const store = useStore();
+  const mobile = useMedia('(max-width: 767px)');
   if (!store.cart.length) return <Page fill><EmptyCart onBrowse={() => go('/catalog')} /></Page>;
   return (
     <Page>
@@ -138,8 +151,9 @@ export function Cart() {
             {store.cart.map((i) => <CartLine key={i.key} item={i} onRemove={() => store.remove(i.key)} />)}
           </ul>
         </Card>
-        <Card variant="surface" padding={5}><div className="og-sticky"><CartSummary onCheckout={() => go('/checkout')} /></div></Card>
+        <Card variant="surface" padding={5}><div className="og-sticky"><CartSummary pinned={mobile} level={2} onCheckout={() => go('/checkout')} /></div></Card>
       </div>
+      {mobile && <PayBar above label="Subtotal" amount={store.total} action="Secure checkout" onClick={() => go('/checkout')} />}
     </Page>
   );
 }
@@ -235,13 +249,14 @@ export function Checkout() {
                     <div className="og-sum__row og-sum__row--big"><span>Amount to pay</span><span>{money(amount)}</span></div>
                     <CashbackRow amount={amount} />
                   </div>
-                  <Button variant="primary" size="lg" width="100%" label="Pay" onClick={pay} />
+                  {!mobile && <Button variant="primary" size="lg" width="100%" label="Pay" onClick={pay} />}
                   <p className="og-caption">By placing an order at overgear.com, you agree to our <Link href={href('/info/terms')}>Terms of Use</Link> and <Link href={href('/info/privacy')}>Privacy Policy</Link>. After your purchase, we may email you offers about products and services similar to your order.</p>
                 </div>
               </Card>
             </div>
           </div>
         )}
+        {mobile && !!store.cart.length && <PayBar label="Amount to pay" amount={amount} action="Pay" onClick={pay} />}
       </div>
       <div className="og-checkout__foot">
         <div className="og-wrap og-row og-row--between">

@@ -13,15 +13,25 @@ const PAGES = ['overgear/#/theme', 'overgear/#/typography', 'overgear/#/colors',
 const paths = process.argv.slice(3).length ? process.argv.slice(3) : PAGES;
 
 const browser = await launch().catch((e) => { console.error(e.message); process.exit(2); });
-const found = await sweep({
-  browser, base, paths, widths: [1500, 390], settle: 1800,
-  audit: (page) => page.evaluate(async () => {
-    const m = await import('/src/constitution/audit.js');
-    const tabs = await import('/src/constitution/audit-tabs.js');
-    // the static audit first, then the one that presses the tabs (D17); it puts the page back
-    return [...m.auditConstitution(document.body), ...(await tabs.auditTabs(document.body))].map((v) => ({ id: v.id, note: v.note }));
-  }),
-  key: (r) => `${r.id.padEnd(4)} ${r.note}`,
+const audit = (page) => page.evaluate(async () => {
+  const m = await import('/src/constitution/audit.js');
+  const tabs = await import('/src/constitution/audit-tabs.js');
+  // the static audit first, then the one that presses the tabs (D17); it puts the page back
+  return [...m.auditConstitution(document.body), ...(await tabs.auditTabs(document.body))].map((v) => ({ id: v.id, note: v.note }));
 });
+const key = (r) => `${r.id.padEnd(4)} ${r.note}`;
+const found = await sweep({ browser, base, paths, widths: [1500, 390], settle: 1800, audit, key });
+
+// The pages of the example as a logged-in visitor with a cart (the header has a balance, the cart and the checkout have lines): the pages above have a visitor with nothing in them.
+// Only when no path was given on the command line.
+const LOGGED_IN = ['overgear/example/#/', 'overgear/example/#/cart', 'overgear/example/#/checkout', 'overgear/example/#/account', 'overgear/example/#/account?tab=orders'];
+let more = 0;
+if (!process.argv.slice(3).length) {
+  const line = (key, title, price) => ({ key, id: 'venomous-abyss-heroic', title, sub: 'Piloted, heroic', price, qty: 1, eta: '3 hours' });
+  const state = JSON.stringify({ cart: [line('a', 'Venomous Abyss Heroic', 89), line('b', 'Mythic+ Bundle', 149)], wishlist: [], orders: [], user: { name: 'Dana', email: 'dana@example.com' }, promo: '' });
+  const again = await sweep({ browser, base, paths: LOGGED_IN, widths: [1500, 390], settle: 1800, audit, key, init: [(s) => { if (!localStorage.getItem('baseui-overgear')) localStorage.setItem('baseui-overgear', s); }, state] });
+  for (const [k, where] of again) { if (!found.has(k)) found.set(k, new Set()); for (const w of where) found.get(k).add(`${w} (logged in)`); }
+  more = LOGGED_IN.length;
+}
 await browser.close();
-process.exit(report(found, { name: 'Constitution audit', pages: paths.length, clean: 'nothing found', noun: 'finding' }));
+process.exit(report(found, { name: 'Constitution audit', pages: paths.length + more, clean: 'nothing found', noun: 'finding' }));

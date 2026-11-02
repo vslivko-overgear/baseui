@@ -23,11 +23,13 @@ export async function openFirstRow(page) {
 }
 
 // `audit(page, path)` returns rows; `key(row)` turns a row into the text it is grouped by. Returns Map<key, Set<where>>.
-export async function sweep({ browser, base, paths, widths = [1300], settle = 1200, audit, key }) {
+export async function sweep({ browser, base, paths, widths = [1300], settle = 1200, audit, key, init }) {
   const found = new Map();
   for (const path of paths) {
     for (const width of widths) {
       const page = await browser.newPage({ viewport: { width, height: widths.length > 1 ? 900 : 1000 } });
+      // `init`: [function, argument] run in the page before it loads (for example, to put a logged-in visitor with a cart in its storage)
+      if (init) await page.addInitScript(init[0], init[1]);
       try {
         const response = await page.goto(`${base}/${path}`);
         if (response && !response.ok()) throw new Error(`Could not load ${path}: ${response.status()}`);

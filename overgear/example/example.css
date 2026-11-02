@@ -430,3 +430,17 @@ a { color: inherit; }
 .og-balance__coin { display: inline-flex; align-items: center; gap: var(--baseui-spacing-2); }
 .og-balance__coin svg { width: 24px; height: 24px; }
 .og-balance__coins { align-items: flex-end; text-align: end; }
+
+/* the pay bar pinned to the bottom of the screen of a phone, in the cart (over the bottom bar of the tabs) and in the checkout: what is to pay on the left, the button that pays on the right */
+.og-paybar { position: fixed; left: 0; right: 0; bottom: var(--og-paybar-bottom, 0px); z-index: var(--baseui-z-index-30); background: var(--baseui-background-primary); padding: var(--baseui-spacing-3) var(--baseui-spacing-4) max(var(--baseui-spacing-3), env(safe-area-inset-bottom)); }
+.og-paybar::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: var(--baseui-spacing-6); background: linear-gradient(to top, var(--baseui-background-primary), transparent); pointer-events: none; }
+.og-paybar__in { display: flex; align-items: center; gap: var(--baseui-spacing-4); }
+.og-paybar__sum { margin: 0; display: flex; flex-direction: column; min-width: 0; }
+.og-paybar__amount { font: var(--baseui-typography-header-20); font-family: var(--baseui-typography-headline-font-family); }
+.og-paybar .bui-button { flex: 1; min-width: 0; }
+:root { --og-paybar-h: 80px; }
+/* the content leaves room for the bar: it is not hidden behind it */
+.og--mobile .og-wrap:has(.og-paybar) { padding-bottom: calc(var(--og-paybar-h) + var(--baseui-spacing-4)); }
+.og--mobile.og--tab .og-wrap:has(.og-paybar) { padding-bottom: calc(var(--og-bottom) + var(--og-paybar-h) + var(--baseui-spacing-4)); }
+.og--mobile .og-checkout:has(.og-paybar) .og-checkout__foot { padding-bottom: calc(var(--og-paybar-h) + var(--baseui-spacing-4)); }
+

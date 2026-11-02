@@ -1,5 +1,12 @@
 # Changelog
 
+## Overgear: the pay button is pinned on a phone, in the cart and in the checkout
+
+- **The cart (a phone):** a bar pinned to the bottom of the screen, over the bottom bar of the tabs: "Subtotal $301.00" on the left and "Secure checkout" on the right. The summary on the page (the promo code, the subtotal, the cashback) stays; its own button is gone, so the page has one button for the action.
+- **The checkout (a phone):** the same bar at the very bottom of the screen: "Amount to pay $302.47" and "Pay". The page ends with room under it (the footer is not hidden behind the bar). On a desktop nothing changes: the buttons stay in the summary.
+- `overgear/tools/check/paybar.mjs` (part of `npm run check`) checks the bars on a phone (they are where they should be, they do not move with the page, the end of the page is clear of them, there is no second button, Pay pays) and the summaries on a desktop; I checked that it fails when the room under the bar is gone.
+- The audit of the constitution (`check:constitution`) also goes through the example as a logged-in visitor with a cart (5 pages, a desktop and a phone): the header with the balance, the cart, the checkout and the account. It found one old finding there, A9 in the cart (the promo code was an `h3` under the `h1`); `Promo` takes a heading level and the cart gives it 2.
+
 ## Rule M4: a list of options is a sheet on a phone, and Dropdown follows it
 
 - **Why the sort of the catalog opened a menu on a phone.** "Below 768px the list is a bottom sheet" was built into `Selector` and `Typeahead` only (`ChoiceSheet`, `SHEET_QUERY`). `Dropdown`, the standalone menu that draws the same list, always opened over the page, and the example used it for the sort of the catalog and of the listings. Nothing said it was a rule (the line of M2 about "sheets below md" was a hint, not a check), and nothing looked at it.
