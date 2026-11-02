@@ -244,7 +244,7 @@ a { color: inherit; }
 .og-caps { margin: 0; font: 700 12px / 16px var(--baseui-typography-font-family); letter-spacing: 0.12em; text-transform: uppercase; color: var(--baseui-text-and-icon-secondary); }
 .og-caption { margin: 0; font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-secondary); }
 .og-coupon { overflow: hidden; }
-.og-coupon .bui-list__row { padding-inline: var(--baseui-spacing-5); }   /* the fields at the sides as in the summary above; the whole row is the button */
+.og-coupon .bui-list__row { padding-inline: var(--baseui-spacing-5); min-height: 56px; }   /* as high as the large button of the page (56px) */   /* the fields at the sides as in the summary above; the whole row is the button */
 .og-coupon, .og-coupon :is([data-slot=list-item-header], [data-slot=list-item-title]) { color: var(--baseui-text-and-icon-secondary); }   /* the promo code row: secondary, no card around it, under the summary */
 .og-caption--legal { font: var(--baseui-typography-text-12-regular); }   /* the terms under the pay button: 12px, 8px from the button */
 .og-caption--dim { color: var(--baseui-text-and-icon-secondary); }

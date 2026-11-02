@@ -49,6 +49,8 @@ const looks = (page, phone) => page.evaluate(({ SHARED, LOOK, phone }) => {
     if (name === 'summary' || name === 'sumRow' || name === 'sumBig' || name === 'sumSoft' || name === 'coupon' || name === 'couponText' || name === 'title' || name === 'count') delete o.height;
     out[name] = o;
   }
+  const c = document.querySelector('.og-coupon');
+  out._couponHeight = c ? Math.round(c.getBoundingClientRect().height) : null;
   return out;
 }, { SHARED, LOOK, phone });
 
@@ -77,6 +79,7 @@ for (const [width, phone] of [[390, true], [1440, false]]) {
   const miniLooks = opened ? await looks(home, phone) : {};
   for (const [name, mine] of [['cart', cartLooks], ['mini-cart', miniLooks]]) {
     for (const part of Object.keys(SHARED)) {
+      if (part.startsWith('_')) continue;
       if (name === 'mini-cart' && part === 'paybar') continue;   // the bar of the panel is pinned in the panel, not in the screen: its parts are compared
       const a = (name === 'mini-cart' && BAR.includes(part) ? barBase : base0)[part]; const b = mine[part];
       if (!a) continue;   // the checkout does not have it
@@ -85,6 +88,9 @@ for (const [width, phone] of [[390, true], [1440, false]]) {
         if (a[k] !== b[k]) problems.push(`${where}: "${part}" of the ${name} differs from the checkout in ${k} (${b[k]} against ${a[k]})`);
       }
     }
+  }
+  for (const [name, mine] of [['checkout', base0], ['cart', cartLooks], ['mini-cart', miniLooks]]) {
+    if (mine._couponHeight !== 56) problems.push(`${where}: the promo code row of the ${name} is ${mine._couponHeight}px high, not as high as the large button (56px)`);
   }
   if (opened) {
     // the mini-cart: the pay bar (the price, the bonus, the button) pinned at the bottom of the panel, the promo code in the list that scrolls, no summary block
