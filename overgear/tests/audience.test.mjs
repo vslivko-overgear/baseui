@@ -1,6 +1,6 @@
 // The audiences of the store: the order of the tiles and of the offers for who the home page is made for, and the setting that holds it.
 import { describe, expect, test } from 'vitest';
-import { AUDIENCES, AUDIENCE_DEFAULT, AUDIENCE_GROUP, TILE_GAP, audienceOf, tileRows, tileLayout, levelRows, splitOffers } from '../audience.js';
+import { AUDIENCES, AUDIENCE_DEFAULT, AUDIENCE_GROUP, TILE_GAP, audienceOf, tileRows, tileLayout, levelRows, splitOffers, gameTabs } from '../audience.js';
 import { GAMES, OFFERS, TILE_ROWS, gameOf } from '../example/data.js';
 
 describe('audiences', () => {
@@ -87,5 +87,35 @@ describe('audiences', () => {
     expect(own.every((o) => o.game === 'diablo-4')).toBe(true);
     expect(rest.some((o) => o.game === 'diablo-4')).toBe(false);
     expect(own.length + rest.length).toBe(OFFERS.length);
+  });
+
+  describe('the tabs of the listing', () => {
+    const order = TILE_ROWS.flat().map(([slug]) => slug);
+    const available = [...new Set(OFFERS.map((o) => o.game))];
+    const tabs = (audience) => gameTabs(audience, order, available);
+
+    test('World of Warcraft is the first game tab (the second tab of the row) for all players and for its own audience', () => {
+      expect(tabs('all')[0]).toBe('wow');
+      expect(tabs('wow')[0]).toBe('wow');
+    });
+
+    test('for the audience of another game that game is the first and World of Warcraft the second (the third tab of the row)', () => {
+      for (const slug of ['diablo-4', 'poe-2', 'valorant']) expect(tabs(slug).slice(0, 2), slug).toEqual([slug, 'wow']);
+    });
+
+    test('every game with offers is a tab once, and a game without offers is not', () => {
+      for (const [slug] of AUDIENCES) {
+        const list = tabs(slug);
+        expect(new Set(list).size).toBe(list.length);
+        expect([...list].sort(), slug).toEqual([...available].sort());
+      }
+      expect(tabs('fortnite')).not.toContain('fortnite');
+      expect(tabs('fortnite')[0]).toBe('wow');
+    });
+
+    test('the rest follow in the order of the tiles', () => {
+      const rest = tabs('diablo-4').slice(2).filter((s) => order.includes(s));
+      expect(rest).toEqual(order.filter((s) => rest.includes(s)));
+    });
   });
 });

@@ -8,8 +8,8 @@ import { Icon } from '../../src/components/Icon.jsx';
 import { go } from './util.js';
 import { loadTheme } from '../../site/theme.js';
 import { COOKIE } from '../theme.js';
-import { audienceOf, tileLayout, splitOffers, TILE_GAP } from '../audience.js';
-import { GAMES, OFFERS, REVIEWS, CATEGORIES, TILE_ROWS, gameOf } from './data.js';
+import { audienceOf, tileLayout, splitOffers, gameTabs, TILE_GAP } from '../audience.js';
+import { GAMES, OFFERS, REVIEWS, TILE_ROWS, gameOf } from './data.js';
 import { Bleed } from '../../src/components/Layout.jsx';
 import { Page, Section, GameTile, GameChip, OfferListing } from './ui.jsx';
 
@@ -120,14 +120,15 @@ function Reviews() {
 export function Home() {
   const [playing, setPlaying] = useTakeTurns(3);
   const turn = (i) => ({ playing: playing === i, onPlay: () => setPlaying(i), onEnd: () => setPlaying(-1) });
-  const [category, setCategory] = useState('All games');
+  // the tabs of the listing are games: All games is the one that is open, the game of the audience is the next to it
+  const [category, setCategory] = useState('all');
   // who the page is made for (the Theme setting of the showcase): its game leads the tiles and the listing
   const audience = audienceOf(loadTheme(COOKIE));
   const tiles = tileLayout(TILE_ROWS, audience);
   const groupLength = tiles.group[0]?.reduce((n, [, w]) => n + w, 0) + (tiles.group[0]?.length - 1) * TILE_GAP;
   // the products of the game of the audience come first; the products of the other games take turns, so the first screen is varied
   const products = (() => {
-    const [own, rest] = splitOffers(OFFERS.filter((o) => category === 'All games' || gameOf(o.game).category === category), audience);
+    const [own, rest] = splitOffers(OFFERS.filter((o) => category === 'all' || o.game === category), audience);
     const by = new Map();
     for (const o of rest) by.set(o.game, [...(by.get(o.game) || []), o]);
     const lists = [...by.values()];
@@ -187,13 +188,13 @@ export function Home() {
           <Bleed scroll className="og-chips">
             <TokenGroup
               size="sm"
-              aria-label="Category"
+              aria-label="Game"
               value={[category]}
               onValueChange={(v) => v.length && setCategory(v[v.length - 1])}
-              options={CATEGORIES.map((c) => ({ value: c, label: c === 'All games' ? 'All Games' : c }))}
+              options={[{ value: 'all', label: 'All Games' }, ...gameTabs(audience, TILE_ROWS.flat().map(([slug]) => slug), OFFERS.map((o) => o.game)).map((slug) => ({ value: slug, label: gameOf(slug).name }))]}
             />
           </Bleed>
-          <OfferListing showGame more="button" offers={Array.from({ length: loaded }, (_, i) => ({ ...products[i % products.length], listKey: `${category}-${i}` }))} hasMore={loaded < MAX_LOADED} loading={loadingMore} onLoadMore={loadMore} />
+          <OfferListing showGame={category === 'all'} more="button" offers={Array.from({ length: loaded }, (_, i) => ({ ...products[i % products.length], listKey: `${category}-${i}` }))} hasMore={loaded < MAX_LOADED} loading={loadingMore} onLoadMore={loadMore} />
         </Section>
 
       </div>

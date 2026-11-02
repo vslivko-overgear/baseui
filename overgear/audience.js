@@ -79,3 +79,15 @@ export function splitOffers(offers, audience) {
   if (audience === AUDIENCE_DEFAULT) return [[], offers];
   return [offers.filter((o) => o.game === audience), offers.filter((o) => o.game !== audience)];
 }
+
+/**
+ * The games of the tabs of the listing, after "All games": World of Warcraft is the second tab for all players and for its own audience; for the audience of another game
+ * that game is the second and World of Warcraft the third. The rest follow in the order of `order` (the tiles of the page), then the games `order` does not know.
+ * Only games with offers are tabs: a tab of a game with nothing to show would be empty. `available` is the slugs of the games with offers.
+ */
+export function gameTabs(audience, order, available) {
+  const has = new Set(available);
+  const lead = [audience === AUDIENCE_DEFAULT ? null : audience, 'wow'].filter((slug, i, all) => slug && has.has(slug) && all.indexOf(slug) === i);
+  const rest = [...order.filter((slug) => has.has(slug)), ...available].filter((slug, i, all) => !lead.includes(slug) && all.indexOf(slug) === i);
+  return [...lead, ...rest];
+}
