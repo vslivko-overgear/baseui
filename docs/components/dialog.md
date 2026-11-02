@@ -43,7 +43,7 @@ A modal window for focused content. On small screens it becomes a bottom sheet
 | `contentClassName` | `string` | — | Extra class of the content part |
 | `portalContainer` | `HTMLElement` | — | Container of the portal; the body by default |
 | `keepMounted` | `boolean` | — | Keep the portal mounted after closing |
-| `initialFocus` | `RefObject \| boolean \| function` | — | Initial focus after opening |
+| `initialFocus` | `RefObject \| boolean \| function` | `keyboard only` | Initial focus after opening: by default the focus goes into the dialog only when the last thing the person used was the keyboard; after a finger or a mouse, or when it is opened by code, nothing is focused, so no ring shows on its first control |
 | `finalFocus` | `RefObject \| boolean \| function` | — | Focus after closing |
 | `modal` | `boolean` | `true` | Block the page behind the dialog |
 | `ref` | `Ref<HTMLDivElement>` | — | Ref to the popup |

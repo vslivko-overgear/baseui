@@ -8,7 +8,7 @@ import { Badge } from '../../src/components/Badge.jsx';
 import { TextInput } from '../../src/components/TextInput.jsx';
 import { Dialog } from '../../src/components/Dialog.jsx';
 import { List, ListItem } from '../../src/components/List.jsx';
-import { Tooltip } from '../../src/components/Tooltip.jsx';
+import { Hint } from '../../src/components/Hint.jsx';
 import { Divider } from '../../src/components/Divider.jsx';
 import { Link } from '../../src/components/Link.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
@@ -82,7 +82,7 @@ function CashbackRow({ amount }) {
     <div className="og-sum__row og-sum__row--soft">
       <span className="og-sum__label">
         Cashback you will receive
-        <Tooltip content="Cashback is credited to your balance in OG Coins after the order is completed"><span className="og-sum__hint" tabIndex={0}><Icon name="HelpCircle" size={16} /></span></Tooltip>
+        <Hint label="About the cashback" content="Cashback is credited to your balance in OG Coins after the order is completed" />
       </span>
       <span className="og-sum__value og-sum__coins">{cashbackOf(amount)}<CashbackMark /></span>
     </div>

@@ -22,7 +22,7 @@ A compact label for a status, category or count
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `variant` | `'primary' \| 'secondary' \| 'info' \| 'success' \| 'warning' \| 'error' \| 'blue' \| 'blue-light' \| 'green' \| 'green-light' \| 'orange' \| 'pink' \| 'red'` | `'secondary'` | primary is the inverse of the page, secondary a soft gray; the rest are semantic and accent colors, all solid |
+| `variant` | `'primary' \| 'secondary' \| 'info' \| 'success' \| 'warning' \| 'warning-light' \| 'error' \| 'blue' \| 'blue-light' \| 'green' \| 'green-light' \| 'orange' \| 'pink' \| 'red'` | `'secondary'` | primary is the inverse of the page, secondary a soft gray; the rest are semantic and accent colors, all solid |
 | `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Badge height: 18, 22 or 28px; the dot is 6, 8 or 10px |
 | `type` | `'label' \| 'counter' \| 'dot'` | `'label'` | label is a text pill; counter is a round number; dot is a small mark with no text |
 | `max` | `number` | `99` | Counter only: numbers above it show as `99+` |

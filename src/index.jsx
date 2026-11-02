@@ -47,6 +47,7 @@ export { ToastProvider, useToast } from './components/Toast.jsx';
 export { Token } from './components/Token.jsx';
 export { TokenGroup } from './components/TokenGroup.jsx';
 export { Tooltip } from './components/Tooltip.jsx';
+export { Hint } from './components/Hint.jsx';
 export { Typeahead } from './components/Typeahead.jsx';
 
 export { RULES, CATEGORIES, AGENT_PROTOCOL, AGENT_DEFAULTS, CONSTITUTION_VERSION, rule, ruleText, dontBody } from './constitution/rules.js';

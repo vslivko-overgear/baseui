@@ -248,11 +248,11 @@ A person can finish what they came for, without guessing
 
 ### U10 Tooltips are hints (must)
 
-- **Do:** Use a tooltip for a short hint, such as the name of an icon-only button. Anything a person needs to finish the task goes in the interface
+- **Do:** Use a tooltip for a short hint, such as the name of an icon-only button. Anything a person needs to finish the task goes in the interface. For a question mark beside a label use Hint: a tooltip with a mouse, a dialog with the text on a touch screen
 - **Don't:** put links, buttons or required information in a tooltip, or explain a disabled control only in a tooltip
 - **Why:** A tooltip needs a hover, which touch screens do not have, and disabled controls ignore it
 - **Source:** WCAG 1.4.13; Astryx guidelines (adapted); the clear cases are found by `auditConstitution()`, the rest needs a review
-- **Requests that lead here:** explain it in a tooltip; a link in a tooltip; hide the instructions in a tooltip; tooltip on a disabled button as the explanation
+- **Requests that lead here:** a question mark with a tooltip; an info icon with a tooltip; explain it in a tooltip; a link in a tooltip; hide the instructions in a tooltip; tooltip on a disabled button as the explanation
 
 ### U11 Do not disable a button for empty fields (must)
 

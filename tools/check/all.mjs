@@ -39,6 +39,7 @@ const CHECKS = [
   ['overgear-paybar', 'overgear/tools/check/paybar.mjs'],
   ['overgear-checkout', 'overgear/tools/check/checkout.mjs'],
   ['dialog-focus', 'tools/check/dialog-focus.mjs'],
+  ['hint', 'tools/check/hint.mjs'],
   ['overgear-order', 'overgear/tools/check/order.mjs'],
 ];
 const only = process.argv[2];

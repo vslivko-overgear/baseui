@@ -2804,6 +2804,12 @@ textarea.bui-input {
   font: var(--baseui-typography-text-14-regular); animation: bui-fade var(--baseui-duration-150) var(--baseui-ease-out);
 }
 
+/* ---------- Hint ---------- */
+.bui-hint { all: unset; box-sizing: border-box; cursor: pointer; display: inline-grid; place-items: center; border-radius: var(--baseui-radius-full); color: var(--baseui-text-and-icon-secondary); }
+.bui-hint:focus-visible { outline: var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color); outline-offset: var(--baseui-focus-outline-offset); }
+@media (hover: hover) { .bui-hint:hover { color: var(--baseui-text-and-icon-primary); } }
+.bui-hint__text { margin: 0; font: var(--baseui-typography-text-16-regular); color: var(--baseui-text-and-icon-primary); }
+
 /* ---------- Glass ----------
    Translucent surfaces that blur what is behind them. [data-glass="on"] on <html> turns it on for the theme ([data-glass="dropdowns"] only for the menus of dropdowns); the glass prop of a component
    writes the same attribute on the component ("on" or "off"). Three kinds, all with the same blur:

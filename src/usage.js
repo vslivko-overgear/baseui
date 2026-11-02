@@ -168,6 +168,10 @@ export const USAGE = {
     do: ['Keep it short, under about 140 characters of plain text', 'Use it to name icon-only controls'],
     dont: ['Put links or buttons in a tooltip: use Popover', 'Put in it what a person needs to finish the task'],
   },
+  Hint: {
+    do: ['Use it for a short explanation next to a label or a value (what a fee or a cashback is)', 'Write the text so that it makes sense on its own: on a phone it opens in a dialog'],
+    dont: ['Use a bare Tooltip around an info icon: it never shows on a touch screen', 'Put links, buttons or what a person needs to finish the task in it'],
+  },
   Popover: {
     do: ['Keep it to one task or one piece of information', 'Give it a clear way to close'],
     dont: ['Open a popover from inside a popover'],

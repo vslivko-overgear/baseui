@@ -98,6 +98,7 @@ export default [
       { title: 'Toast', file: N('Toast') },
       { title: 'Token', file: N('Token'), lead: 'A small token that can be selected or removed', children: [{ title: 'Token Group', file: N('TokenGroup'), lead: 'A group of tokens with single or multiple selection' }] },
       { title: 'Tooltip', file: N('Tooltip') },
+      { title: 'Hint', file: N('Hint') },
     ],
   },
   {

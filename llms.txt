@@ -105,7 +105,7 @@
 - [Date Picker](docs/components/date-picker.md): A date field. It opens the calendar in a popover, and in a Dialog sheet on small screens. The field is a Text Input, so its size, variant, label and status come
 - [Checkbox](docs/components/checkbox.md): A box that turns one option on or off, with an optional label. The error is text under the box: it has no outline
 - [Checkbox Group](docs/components/checkbox-group.md): A group of checkboxes: the value is an array of the checked `value`s. The error is a message under the group; the boxes do not turn red
-- [Number Input](docs/components/number-input.md): A text input for numbers with a minus and a plus button. It takes the props of the Text Input (variant, status, caption, prefix, suffix, floatingLabel)
+- [Number Input](docs/components/number-input.md): A text input for numbers: a minus button first, the number in the middle, a plus button last. It takes the props of the Text Input (variant, status, caption, pr
 - [OTP Input](docs/components/otp-input.md): A one-time code field. It checks the code through onComplete and shows the states of that check: verifying, error (the row shakes) and success. On enhanced anim
 - [Radio](docs/components/radio.md): A group of radio buttons: the value is the `value` of the selected option. The error is a message under the group; the circles do not turn red
 - [Rating](docs/components/rating.md): Collects a rating as stars. Only whole values can be chosen
@@ -139,6 +139,7 @@
 - [Token](docs/components/token.md): A chip for selection or indication: a Base UI Toggle with a size, a status and slots. With `action` it is a button, removable or plain
 - [Token Group](docs/components/token-group.md): A group of chips: a title, a wrapping container and a caption or an error. With `options` a managed set (the value is an array of the selected values), with `ch
 - [Tooltip](docs/components/tooltip.md): A short hint on hover or focus. It is never shown on a touch screen (no hover there), so keep the information available some other way
+- [Hint](docs/components/hint.md): A question mark that explains the text next to it: a tooltip with a mouse, a dialog with the text and a Close button on a touch screen or a phone (a tooltip has
 
 ## Tools
 

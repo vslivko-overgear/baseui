@@ -23,6 +23,7 @@ The bar at the top of a mobile screen
 | `title` | `string` | — | Screen title, centered; a long one is truncated |
 | `subtitle` | `string` | — | A second line under the title |
 | `showBack` | `boolean` | `true` | Show the back button |
+| `titleVisible` | `boolean` | `true` | false hides the title (it fades) until the screen has its own heading scrolled out of view; the bar keeps its place |
 | `onBack` | `() => void` | — | Called when the back button is pressed |
 | `backLabel` | `string` | `'Back'` | Accessible name of the back button |
 | `floating` | `boolean` | `theme` | A floating bar: separate rounded pieces with a shadow over a gradient that fades the content (blurred when glass is on), inset from the screen edges; by default it follows the Floating setting of the theme |

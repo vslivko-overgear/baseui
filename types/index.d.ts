@@ -1324,6 +1324,38 @@ export interface GroupProps {
 /** A block with its heading: the heading sits close to the content, the group takes its distance from the Stack around it */
 export function Group(props: GroupProps): ReactElement | null;
 
+export interface HintProps {
+  /**
+   * The text of the hint
+   */
+  content?: ReactNode;
+  /**
+   * Accessible name of the question mark
+   * @default 'More information'
+   */
+  label?: string;
+  /**
+   * Label of the button that closes the dialog on a touch screen
+   * @default 'Close'
+   */
+  closeLabel?: string;
+  /**
+   * Size of the icon, px
+   * @default 16
+   */
+  size?: number;
+  /**
+   * Side of the tooltip with a mouse
+   * @default 'top'
+   */
+  placement?: 'top' | 'bottom' | 'left' | 'right';
+  children?: ReactNode;
+  [dataAttribute: `data-${string}`]: string | number | boolean | undefined;
+  [ariaAttribute: `aria-${string}`]: string | number | boolean | undefined;
+}
+/** A question mark that explains the text next to it: a tooltip with a mouse, a dialog with the text and a Close button on a touch screen or a phone (a tooltip has no hover there) */
+export function Hint(props: HintProps): ReactElement | null;
+
 export interface HStackProps {
   /**
    * Gap in gaps (1 gap = 4px), a step of the spacing scale

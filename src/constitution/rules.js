@@ -197,11 +197,11 @@ export const RULES = [
   },
   {
     id: 'U10', category: 'U', level: 'must', title: 'Tooltips are hints',
-    do: 'Use a tooltip for a short hint, such as the name of an icon-only button. Anything a person needs to finish the task goes in the interface',
+    do: 'Use a tooltip for a short hint, such as the name of an icon-only button. Anything a person needs to finish the task goes in the interface. For a question mark beside a label use Hint: a tooltip with a mouse, a dialog with the text on a touch screen',
     dont: 'Do not put links, buttons or required information in a tooltip, or explain a disabled control only in a tooltip',
     why: 'A tooltip needs a hover, which touch screens do not have, and disabled controls ignore it',
-    source: 'WCAG 1.4.13; Astryx guidelines (adapted)', check: 'partial',
-    signals: ['explain it in a tooltip', 'a link in a tooltip', 'hide the instructions in a tooltip', 'tooltip on a disabled button as the explanation'],
+    source: 'WCAG 1.4.13; Astryx guidelines (adapted)', check: 'partial', tools: ['tools/check/hint.mjs'],
+    signals: ['a question mark with a tooltip', 'an info icon with a tooltip', 'explain it in a tooltip', 'a link in a tooltip', 'hide the instructions in a tooltip', 'tooltip on a disabled button as the explanation'],
   },
 
   // ---------------------------------------------------------------- Hierarchy and layout

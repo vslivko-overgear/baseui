@@ -45,6 +45,7 @@ src/components/Divider.js
 src/components/Dropdown.js
 src/components/FieldShell.js
 src/components/Form.js
+src/components/Hint.js
 src/components/Icon.js
 src/components/Layout.js
 src/components/Link.js
@@ -117,6 +118,7 @@ src/stories/Form.stories.js
 src/stories/FormRow.stories.js
 src/stories/FormSection.stories.js
 src/stories/Grid.stories.js
+src/stories/Hint.stories.js
 src/stories/IconButton.stories.js
 src/stories/Link.stories.js
 src/stories/List.stories.js

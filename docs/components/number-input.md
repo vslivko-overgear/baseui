@@ -1,6 +1,6 @@
 # Number Input
 
-A text input for numbers with a minus and a plus button. It takes the props of the Text Input (variant, status, caption, prefix, suffix, floatingLabel)
+A text input for numbers: a minus button first, the number in the middle, a plus button last. It takes the props of the Text Input (variant, status, caption, prefix, suffix, floatingLabel)
 
 ## Usage
 
@@ -23,7 +23,7 @@ A text input for numbers with a minus and a plus button. It takes the props of t
 | `min` | `number` | — | Minimum |
 | `max` | `number` | — | Maximum |
 | `step` | `number` | `1` | Step |
-| `label` | `string` | — | Floating label |
+| `label` | `string` | — | Text above the field, outside of it, semi-bold (the field hugs its content). Without it pass `aria-label` |
 | `size` | `'sm' \| 'md'` | — | Input size (same as Text Input): the buttons are 36px in md and 32px in sm |
 | `disabled` | `boolean` | `false` | Disabled state of the field and of its buttons |
 | `loading` | `boolean` | `false` | Loading state of the field (the buttons are off) |

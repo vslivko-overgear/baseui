@@ -378,7 +378,6 @@ a { color: inherit; }
 .og-sum__label { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); color: var(--baseui-text-and-icon-secondary); }
 .og-sum__row--soft .og-sum__label, .og-sum__row--soft .og-sum__value { font: var(--baseui-typography-text-14-regular); }
 .og-sum__row--big { font: var(--baseui-typography-text-20-semi-bold); font-family: var(--baseui-typography-headline-font-family); font-weight: 700; }
-.og-sum__hint { display: inline-flex; color: var(--baseui-text-and-icon-secondary); }
 .og-sum__coins { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); font-weight: 600; }
 .og-scrim { position: fixed; inset: 0; z-index: var(--baseui-z-index-30); background: rgb(0 0 0 / 0.6); }
 .og-drawer { position: fixed; top: 0; right: 0; bottom: 0; z-index: calc(var(--baseui-z-index-30) + 1); width: min(440px, 100vw); display: flex; flex-direction: column; background: var(--baseui-background-secondary); }
