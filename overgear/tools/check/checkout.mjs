@@ -1,6 +1,8 @@
 #!/usr/bin/env node
-// The checkout of a desktop and the promo code, in a real browser. The band is under the logo and holds the button back and the logo, the title "Secure Checkout" is plain under it, there is no
-// "Order summary" heading; the promo code is a button that opens a dialog: a wrong code is refused and the dialog stays, a right one closes it, and the discount is green (the success color) in the summary.
+// The checkout and the promo code, in a real browser. A desktop: the button back (a button with its own background) and the logo are in a row with a divider under it, no band; the title
+// "Secure Checkout" is plain under the divider; there is no "Review order" and no "Order summary" heading. The promo code is a row of a list, text on the left and a chevron on the right, with no icon;
+// it opens a dialog: a wrong code is refused and the dialog stays, a right one closes it; the discount is green (the success color) in the summary; with a code applied the row has the code
+// on the right and a cross that takes it off.
 //
 //   node overgear/tools/check/checkout.mjs http://localhost:8000
 import { launch } from '../../../tools/lib/sweep.mjs';
@@ -22,19 +24,32 @@ for (const [width, phone] of [[1440, false], [390, true]]) {
   const where = phone ? 'phone' : 'desktop';
   if (!phone) {
     const layout = await page.evaluate(() => {
-      const band = document.querySelector('.og-checkout__bar')?.getBoundingClientRect();
+      const top = document.querySelector('.og-checkout__top');
+      const back = top?.querySelector('[aria-label="Back"]');
+      const logo = top?.querySelector('.og-checkout__logo');
+      const divider = top?.nextElementSibling;
       const title = [...document.querySelectorAll('h1')].find((h) => h.textContent === 'Secure Checkout');
-      const back = document.querySelector('.og-checkout__bar [aria-label="Back"]');
-      const logo = document.querySelector('.og-checkout__bar .og-checkout__logo');
-      return { hasBand: !!band, titleInBand: !!title?.closest('.og-checkout__bar'), titleBelow: !!title && !!band && title.getBoundingClientRect().top >= band.bottom, backIn: !!back, logoIn: !!logo, backBeforeLogo: !!back && !!logo && back.getBoundingClientRect().left < logo.getBoundingClientRect().left, headings: [...document.querySelectorAll('h1, h2')].map((h) => h.textContent) };
+      return {
+        hasTop: !!top, backBeforeLogo: !!back && !!logo && back.getBoundingClientRect().left < logo.getBoundingClientRect().left,
+        backBackground: back ? getComputedStyle(back).backgroundColor : null, noBand: !document.querySelector('.og-checkout__bar'),
+        dividerAfter: !!divider?.classList.contains('bui-divider'), dividerFull: !!divider && Math.round(divider.getBoundingClientRect().width) === innerWidth,
+        titleBelow: !!title && !!divider && title.getBoundingClientRect().top >= divider.getBoundingClientRect().bottom, headings: [...document.querySelectorAll('h1, h2')].map((h) => h.textContent),
+      };
     });
-    expectThat(layout.hasBand && layout.backIn && layout.logoIn && layout.backBeforeLogo, 'desktop: the band under the logo does not hold the button back and the logo');
-    expectThat(!layout.titleInBand && layout.titleBelow, 'desktop: "Secure Checkout" is not a plain title under the band');
-    expectThat(!layout.headings.includes('Order summary'), 'desktop: the "Order summary" heading is there');
+    expectThat(layout.hasTop && layout.backBeforeLogo, 'desktop: the button back and the logo are not in a row, the button first');
+    expectThat(!!layout.backBackground && layout.backBackground !== 'rgba(0, 0, 0, 0)', 'desktop: the button back has no background of its own');
+    expectThat(layout.noBand && layout.dividerAfter && layout.dividerFull, 'desktop: under the logo there is a band, not a divider the width of the screen');
+    expectThat(layout.titleBelow, 'desktop: "Secure Checkout" is not a plain title under the divider');
+    expectThat(!layout.headings.includes('Order summary') && !layout.headings.some((h) => h.startsWith('Review order')), `desktop: a heading is there that should not be (${layout.headings.join(', ')})`);
+  } else {
+    expectThat(!(await page.getByRole('heading', { name: /Review order/ }).count()), 'phone: the "Review order" heading is there');
   }
-  const promo = page.getByRole('button', { name: 'Apply promo code' });
-  expectThat((await promo.count()) === 1, `${where}: the promo code is not a button`);
+  const row = page.locator('[data-slot="list-item"]', { hasText: 'Apply promo code' });
+  expectThat((await row.count()) === 1, `${where}: the promo code is not a row of a list`);
+  const shape = await row.evaluate((el) => { const icons = el.querySelectorAll('svg').length; const text = el.querySelector('span'); const chevron = el.querySelector('svg:last-of-type'); return { icons, chevronRight: !!chevron && !!text && chevron.getBoundingClientRect().left > text.getBoundingClientRect().right }; }).catch(() => ({ icons: -1, chevronRight: false }));
+  expectThat(shape.icons === 1 && shape.chevronRight, `${where}: the promo row is not a text on the left and a chevron on the right and nothing else (${JSON.stringify(shape)})`);
   expectThat((await page.locator('.bui-collapsible').count()) === 0, `${where}: the promo code is a collapsible section`);
+  const promo = row.getByRole('button');
   await promo.click();
   await page.waitForTimeout(400);
   const dialog = page.getByRole('dialog', { name: 'Promo code' });
@@ -50,11 +65,15 @@ for (const [width, phone] of [[1440, false], [390, true]]) {
   const green = await page.evaluate(() => { const row = document.querySelector('.og-sum__row--discount'); if (!row) return null; const probe = document.createElement('span'); probe.style.color = 'var(--baseui-extensions-text-and-icon-success)'; document.body.append(probe); const success = getComputedStyle(probe).color; probe.remove(); return { row: getComputedStyle(row).color, label: getComputedStyle(row.querySelector('.og-sum__label')).color, value: getComputedStyle(row.lastElementChild).color, success, text: row.textContent }; });
   expectThat(!!green && green.row === green.success && green.label === green.success && green.value === green.success, `${where}: the discount is not in the success color (${JSON.stringify(green)})`);
   expectThat(!!green && /−\$\d/.test(green.text), `${where}: the discount row has no amount`);
-  expectThat((await page.getByRole('button', { name: 'Promo code WELCOME10' }).count()) === 1, `${where}: the button does not say which code is applied`);
+  const applied = page.locator('[data-slot="list-item"]', { hasText: 'Promo code' });
+  expectThat((await applied.count()) === 1 && (await applied.textContent()).includes('WELCOME10') && (await applied.getByRole('button', { name: 'Remove the promo code' }).count()) === 1, `${where}: with a code applied the row has no "Promo code", the code and a cross`);
+  await applied.getByRole('button', { name: 'Remove the promo code' }).click();
+  await page.waitForTimeout(400);
+  expectThat((await page.locator('[data-slot="list-item"]', { hasText: 'Apply promo code' }).count()) === 1 && (await page.locator('.og-sum__row--discount').count()) === 0, `${where}: the cross does not take the code off`);
   expectThat(!errors.length, `${where}: errors ${errors.join('; ')}`);
   await page.close();
 }
 
 await browser.close();
 if (problems.length) { for (const p of problems) console.log(p); console.log(`\nCheckout: ${problems.length} problem${problems.length === 1 ? '' : 's'}.`); process.exit(1); }
-console.log('Checkout: the band, the title, the promo code in a dialog and the green discount.');
+console.log('Checkout: the top with a divider, the title, the promo code as a row with a dialog, and the green discount.');

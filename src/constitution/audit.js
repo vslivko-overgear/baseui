@@ -11,7 +11,22 @@ function parseColor(value) {
   if (m) return { r: +m[1], g: +m[2], b: +m[3], a: m[4] === undefined ? 1 : m[4].endsWith('%') ? parseFloat(m[4]) / 100 : +m[4] };
   m = value.match(/^color\(srgb\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)(?:\s*\/\s*([\d.]+%?))?\s*\)$/);
   if (m) return { r: +m[1] * 255, g: +m[2] * 255, b: +m[3] * 255, a: m[4] === undefined ? 1 : m[4].endsWith('%') ? parseFloat(m[4]) / 100 : +m[4] };
-  return null;
+  // the other spaces a browser may answer with (oklab, oklch, lab, lch, color(display-p3 …)): the browser itself turns them into sRGB through a canvas
+  return /^(oklab|oklch|lab|lch|hwb|color)\(/.test(value) ? viaCanvas(value) : null;
+}
+let probe;
+/** A color in a space the audit does not read, as sRGB: what a canvas paints with it. null where there is no canvas (jsdom). */
+function viaCanvas(value) {
+  try {
+    if (probe === undefined) probe = typeof document === 'undefined' || /jsdom/i.test(navigator.userAgent) ? null : document.createElement('canvas').getContext('2d', { willReadFrequently: true });
+    if (!probe) return null;
+    probe.clearRect(0, 0, 1, 1);
+    probe.fillStyle = '#000';
+    probe.fillStyle = value;
+    probe.fillRect(0, 0, 1, 1);
+    const [r, g, b, a] = probe.getImageData(0, 0, 1, 1).data;
+    return { r, g, b, a: a / 255 };
+  } catch { return null; }
 }
 const over = (top, under) => {
   const a = top.a + under.a * (1 - top.a);

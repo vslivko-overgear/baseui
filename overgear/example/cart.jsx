@@ -6,6 +6,7 @@ import { Card } from '../../src/components/Card.jsx';
 import { TextInput } from '../../src/components/TextInput.jsx';
 import { RadioGroup } from '../../src/components/RadioGroup.jsx';
 import { Dialog } from '../../src/components/Dialog.jsx';
+import { List, ListItem } from '../../src/components/List.jsx';
 import { Tooltip } from '../../src/components/Tooltip.jsx';
 import { Status } from '../../src/components/Status.jsx';
 import { Divider } from '../../src/components/Divider.jsx';
@@ -41,14 +42,14 @@ function CartLine({ item, onRemove }) {
   );
 }
 
-/** The promo code: a button that opens a dialog with a field. The button says what is applied; a code that works closes the dialog and takes its discount off. */
+/** The promo code: a row of a list that opens a dialog with a field: the text on the left, a chevron on the right. With a code applied it is a row with the code on the right and a cross that takes it off. */
 function Promo() {
   const store = useStore();
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [code, setCode] = useState('');
   const [bad, setBad] = useState(false);
-  const show = () => { setCode(store.promo); setBad(false); setOpen(true); };
+  const show = () => { setCode(''); setBad(false); setOpen(true); };
   const apply = () => {
     const ok = code.trim().toUpperCase() === 'WELCOME10';
     setBad(!ok);
@@ -59,14 +60,17 @@ function Promo() {
   };
   return (
     <>
-      <Button variant="secondary" width="100%" size="md" icon={<Icon name="Tag01" size={20} />} label={store.promo ? `Promo code ${store.promo}` : 'Apply promo code'} onClick={show} />
+      <List aria-label="Promo code">
+        {store.promo ? (
+          <ListItem details={<span className="og-row og-row--nowrap">{store.promo}<IconButton variant="ghost" size="xsm" label="Remove the promo code" icon={<Icon name="XClose" size={20} />} onClick={() => store.setPromo('')} /></span>}>Promo code</ListItem>
+        ) : (
+          <ListItem onClick={show} details={<Icon name="ChevronRight" size={20} />}>Apply promo code</ListItem>
+        )}
+      </List>
       <Dialog open={open} onOpenChange={setOpen} title="Promo code">
         <form className="og-stack og-stack--lg" noValidate onSubmit={(e) => { e.preventDefault(); apply(); }}>
           <TextInput id="og-promo-code" label="Promo code" autoComplete="off" value={code} onChange={(e) => { setCode(e.target.value); setBad(false); }} status={bad ? 'error' : undefined} caption={bad ? 'This code does not work' : 'Try WELCOME10'} />
-          <div className="og-stack">
-            <Button variant="primary" size="lg" textSize={16} width="100%" type="submit" label="Apply" />
-            {store.promo && <Button variant="secondary" size="lg" textSize={16} width="100%" label="Remove the code" onClick={() => { store.setPromo(''); setOpen(false); }} />}
-          </div>
+          <Button variant="primary" size="lg" textSize={16} width="100%" type="submit" label="Apply" />
         </form>
       </Dialog>
     </>
@@ -219,12 +223,13 @@ export function Checkout() {
       {mobile ? (
         <Navbar title="Checkout" onBack={() => window.history.back()} />
       ) : (
-        <div className="og-checkout__bar">
-          <div className="og-wrap og-checkout__bar-in">
-            <IconButton variant="secondary" size="sm" label="Back" icon={<Icon name="ChevronLeft" size={20} />} onClick={() => window.history.back()} />
+        <>
+          <div className="og-wrap og-checkout__top">
+            <IconButton variant="secondary" size="md" label="Back" icon={<Icon name="ChevronLeft" size={24} />} onClick={() => window.history.back()} />
             <a className="og-checkout__logo" href={href('/')} aria-label="Overgear"><img src={LOGO_FULL} alt="" width="145" height="32" /></a>
           </div>
-        </div>
+          <Divider />
+        </>
       )}
       <div className="og-wrap og-checkout__main">
         {!mobile && <h1 className="og-title og-checkout__title">Secure Checkout</h1>}
@@ -234,7 +239,6 @@ export function Checkout() {
           <div className="og-co">
             <div className="og-stack og-stack--xl">
               <div className="og-stack">
-                <h2 className="og-h2">Review order <span className="og-meta">{`(${plural(store.count)})`}</span></h2>
                 <Card variant="surface" padding={4}><ul className="og-lines" aria-label="Order items">{store.cart.map((i) => <CartLine key={i.key} item={i} onRemove={() => store.remove(i.key)} />)}</ul></Card>
                 {!store.user && <TextInput label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} status={tried && badEmail ? 'error' : undefined} caption={tried && badEmail ? 'Enter an email we can send the receipt to' : 'The receipt and the order chat link come here'} />}
               </div>

@@ -384,9 +384,8 @@ a { color: inherit; }
 /* the checkout: a slim top bar, the order and the payment on the left, the summary on the right */
 .og-checkout { min-height: 100vh; display: flex; flex-direction: column; }
 .og-checkout__logo { display: inline-flex; }
-/* the band of the checkout of a desktop is under the logo, with the button back in it; the title is plain, under the band */
-.og-checkout__bar { background: var(--baseui-background-secondary); }
-.og-checkout__bar-in { display: flex; align-items: center; gap: var(--baseui-spacing-4); padding-block: var(--baseui-spacing-5); }
+/* the top of the checkout of a desktop: the button back and the logo in a row, a divider under it; the title is plain under the divider */
+.og-checkout__top { display: flex; align-items: center; gap: var(--baseui-spacing-4); padding-block: var(--baseui-spacing-4); }
 .og-checkout__title { padding-top: var(--baseui-spacing-8); }
 .og-co { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: var(--baseui-spacing-12); align-items: start; padding-block: var(--baseui-spacing-8) var(--baseui-spacing-16); }
 .og-checkout__main { flex: 1; }

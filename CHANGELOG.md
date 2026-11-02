@@ -1,5 +1,11 @@
 # Changelog
 
+## Overgear: the checkout list rows, the divider; and the audit reads oklab
+
+- **The checkout:** "Review order (n items)" is gone. The grey band under the logo is gone too: the button back (a plain icon button with its own background) and the logo stand in a row with a divider the width of the screen under it, and "Secure Checkout" is a plain title under the divider.
+- **The promo code is a row of a list**: "Apply promo code" on the left and a chevron on the right, no icon, and it opens the dialog. With a code applied it is a non-interactive row: "Promo code" on the left, the code on the right and a cross that takes it off (the dialog has no "Remove" button any more). `overgear/tools/check/checkout.mjs` checks all of it.
+- **The audit of the constitution (A1, A… every contrast and background check) did not read `oklab()` colors**, which is what a browser answers with for the tinted surfaces of Overgear: such a background was taken for white, so a green discount on a dark card was reported as 2:1 (a false finding), and dark text on a dark card would have passed (a miss). The audit now has the browser turn those colors into sRGB through a canvas (`oklab`, `oklch`, `lab`, `lch`, `hwb`, `color()`); two fixtures hold both cases.
+
 ## Overgear: the checkout of a desktop, the promo code in a dialog
 
 - **The header of the checkout (a desktop):** the grey band is under the logo and holds the button back and the logo; "Secure Checkout" is a plain title under it, without a band of its own. The "Order summary" heading over the summary is gone.
