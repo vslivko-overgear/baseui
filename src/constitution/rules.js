@@ -6,6 +6,7 @@
 // check   'auto'   found by auditConstitution() in the browser (src/constitution/audit.js)
 //         'tool'   found by a script in tools/ (named in `tool`)
 //         'review' needs a person or an agent to look at the screen
+// tools   extra scripts that also look at the rule (the row heights of D15 are measured by tools/check/sizes.mjs); `tool` and `tools` are run by tools/check/all.mjs
 // signals phrases in a request that lead to a violation; an agent matches them in any language.
 // source  where the rule comes from: WCAG 2.1 AA, the baseui tokens, or the UX writing principles the system follows.
 
@@ -412,7 +413,7 @@ export const RULES = [
     do: 'Controls that stand in one row (a button and an input, a search and a sort button, a row of chips and buttons) have the same height, the same text size and the same icon size. Put them in a `ControlRow` with one tier (md or lg with a field): the controls take its height, its text size and its icon size by themselves. Without a ControlRow, set them by hand: an input of 56px with 16px text takes a button of size lg with textSize 16, an input of 48px with 16px text takes size md with textSize 16, and every icon in the row is the same size',
     dont: 'Do not put a default-size button next to a taller or shorter input, set the button text in another size than the field text, or mix a 24px icon with a 20px one in a row',
     why: 'Controls in one row read as one line; a control that is shorter, set in another size or has a bigger icon looks like a mistake',
-    source: 'baseui ControlRow, Button and Text Input', check: 'auto',
+    source: 'baseui ControlRow, Button and Text Input', check: 'auto', tools: ['tools/check/sizes.mjs'],
     signals: ['a button next to the field', 'an Apply button beside the input', 'a search button', 'a field with a submit button in the same row', 'the icons are different sizes', 'not the same height'],
   },
 
@@ -547,10 +548,12 @@ export const AGENT_PROTOCOL = [
 /**
  * Defaults for an agent that generates an interface with baseui: what to reach for when nothing else is asked.
  * Printed on the Foundations pages they belong to, in CONSTITUTION.md and in AGENTS.md.
+ * `rules` are the ids of the rules a default serves; a test keeps them real, so a default cannot outlive its rule.
  */
 export const AGENT_DEFAULTS = [
   {
     id: 'punctuation',
+    rules: ['C6'],
     title: 'Final period',
     text: [
       'Write the last sentence of any text without a period, in labels, captions, hints, descriptions, list items, tooltips, toasts and paragraphs. Keep the periods between sentences, and keep a question mark, an exclamation mark and an ellipsis',
@@ -558,6 +561,7 @@ export const AGENT_DEFAULTS = [
   },
   {
     id: 'typography',
+    rules: ['H5'],
     title: 'Text color',
     text: [
       'Set the main text in text-and-icon-primary: paragraphs, list items, descriptions and anything a person has to read. text-and-icon-secondary is for supporting text only: a caption, a hint, metadata, a timestamp, the helper line under a title',
@@ -566,6 +570,7 @@ export const AGENT_DEFAULTS = [
   },
   {
     id: 'weight',
+    rules: ['H9'],
     title: 'Font weight',
     text: [
       'When you set a font weight yourself, take bold or regular: bold for what leads (a title, a heading, a price, a name), regular for everything else. Semi-bold is never your choice: it comes from the components that carry it (buttons, tabs, labels, list titles), or from a direct request of the person',
@@ -573,6 +578,7 @@ export const AGENT_DEFAULTS = [
   },
   {
     id: 'radius',
+    rules: ['D4'],
     title: 'Radius',
     text: [
       'Use only the named radius scale: none, sm, md, lg, xl, 2xl, 3xl, 4xl and full. Do not use the custom radii (radius-custom-10, 14, 20, 28) by default',
@@ -581,6 +587,7 @@ export const AGENT_DEFAULTS = [
   },
   {
     id: 'layout',
+    rules: ['H8'],
     title: 'Relative layout',
     text: [
       'Place blocks by the gap of their container, not by fixed heights, offsets or margins that match a neighbour. Blocks that move together are one container (Stack, Group), so when one is moved, resized or removed, everything after it follows. After a change, look at the blocks around it and make sure no gap, hole or overlap is left',
@@ -588,6 +595,7 @@ export const AGENT_DEFAULTS = [
   },
   {
     id: 'spacing',
+    rules: ['H3', 'H6', 'H7', 'D3'],
     title: 'Spacing',
     text: [
       'Choose a gap by how closely the blocks belong together, not by one number for the page. Inside an element 4 to 8, a heading to its content 8, related blocks 16, groups 24, sections 40. Use `Stack relation` and `Group` instead of a number',
@@ -597,6 +605,7 @@ export const AGENT_DEFAULTS = [
   },
   {
     id: 'buttons',
+    rules: ['U1'],
     title: 'Button groups',
     text: [
       'Put the buttons of one decision in a `ButtonGroup` and let it lay them out: horizontal is a row, vertical is a column in which every button is full width. Do not set a width on each button of a stack, and give the group one primary button',
@@ -604,6 +613,7 @@ export const AGENT_DEFAULTS = [
   },
   {
     id: 'forms',
+    rules: ['D18'],
     title: 'Forms',
     text: [
       'Lay out the fields of a form with `Form`, `FormRow` and `FormSection`: one gap between rows and columns, related fields in a row, a titled group as a section. Do not space fields with a Stack and a Grid of your own',
