@@ -172,10 +172,13 @@ export function Header({ route, onLogin }) {
           </ControlRow>
           <ControlRow className="og-actions" gap={1}>
             {store.user && <IconButton variant="ghost" label="My orders" icon={<Icon name="ShoppingBag01" size={24} />} onClick={() => go('/account?tab=orders')} />}
-            <span title="Favorites"><IconButton variant="ghost" label="Favorites" icon={<Icon name="Heart" size={24} />} onClick={() => go('/account?tab=wishlist')} /></span>
+            <span title="Favorites" style={{ position: 'relative', display: 'inline-flex' }}>
+              <IconButton variant="ghost" label={store.wishlist.length ? `Favorites, ${store.wishlist.length} items` : 'Favorites'} icon={<Icon name="Heart" size={24} />} onClick={() => go('/account?tab=wishlist')} />
+              {store.wishlist.length > 0 && <span style={{ position: 'absolute', top: 2, right: 2, pointerEvents: 'none' }}><Badge type="counter" variant="red" size="sm" label={store.wishlist.length} /></span>}
+            </span>
             <span style={{ position: 'relative', display: 'inline-flex' }}>
               <IconButton variant="ghost" label={`Cart, ${store.count} items`} icon={<Icon name="ShoppingCart01" size={24} />} onClick={() => setCart(true)} />
-              {store.count > 0 && <span style={{ position: 'absolute', top: 2, right: 2, pointerEvents: 'none' }}><Badge type="counter" variant="info" size="sm" label={store.count} /></span>}
+              {store.count > 0 && <span style={{ position: 'absolute', top: 2, right: 2, pointerEvents: 'none' }}><Badge type="counter" variant="red" size="sm" label={store.count} /></span>}
             </span>
             <Account onLogin={onLogin} />
           </ControlRow>
