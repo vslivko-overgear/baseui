@@ -1,6 +1,6 @@
 // The audiences of the store: the order of the tiles and of the offers for who the home page is made for, and the setting that holds it.
 import { describe, expect, test } from 'vitest';
-import { AUDIENCES, AUDIENCE_DEFAULT, AUDIENCE_FAMILY, audienceOf, tileRows, tileLayout, splitOffers } from '../audience.js';
+import { AUDIENCES, AUDIENCE_DEFAULT, AUDIENCE_GROUP, TILE_GAP, audienceOf, tileRows, tileLayout, levelRows, splitOffers } from '../audience.js';
 import { GAMES, OFFERS, TILE_ROWS, gameOf } from '../example/data.js';
 
 describe('audiences', () => {
@@ -24,28 +24,21 @@ describe('audiences', () => {
     expect(splitOffers(OFFERS, 'all')).toEqual([[], OFFERS]);
   });
 
-  test('the game of an audience takes the first tile, every tile keeps its width and the rows keep their size', () => {
+  test('the game of an audience takes the first tile and the others follow', () => {
     const rows = tileRows(TILE_ROWS, 'diablo-4');
-    expect(rows[0][0]).toEqual(['diablo-4', 140]);
-    expect(rows.map((r) => r.length)).toEqual(TILE_ROWS.map((r) => r.length));
-    const width = Object.fromEntries(TILE_ROWS.flat());
-    for (const [slug, w] of rows.flat()) expect(w, slug).toBe(width[slug]);
-    expect(rows.flat().map(([s]) => s).sort()).toEqual(TILE_ROWS.flat().map(([s]) => s).sort());
-    // the others follow in their order
+    expect(rows[0][0][0]).toBe('diablo-4');
     expect(rows[0][1][0]).toBe('wow');
-    expect(rows[1].map(([s]) => s)).toEqual(TILE_ROWS[1].map(([s]) => s));
+    expect(rows.flat().map(([s]) => s).sort()).toEqual(TILE_ROWS.flat().map(([s]) => s).sort());
   });
 
-  test('World of Warcraft stands with its versions as a group of four, and the rest stays in its rows', () => {
+  test('World of Warcraft stands with its versions as a group of its own, in two rows of different widths', () => {
     const { group, rows } = tileLayout(TILE_ROWS, 'wow');
-    expect(group.map(([s]) => s)).toEqual(['wow', 'wow-forever', 'wow-20th-anniversary', 'wow-classic-era']);
-    for (const slug of AUDIENCE_FAMILY.wow) expect(gameOf(slug)?.cover, `${slug} has a cover`).toBeTruthy();
+    expect(group.flat().map(([s]) => s)).toEqual(['wow', 'wow-forever', 'wow-20th-anniversary', 'wow-classic-era']);
+    expect(new Set(group.flat().map(([, w]) => w)).size, 'the widths are not all equal').toBeGreaterThan(2);
+    for (const [slug] of group.flat()) expect(gameOf(slug)?.cover, `${slug} has a cover`).toBeTruthy();
     const left = rows.flat().map(([s]) => s);
-    for (const [slug] of group) expect(left).not.toContain(slug);
-    // every other tile is still there, in its row and order
-    expect(rows[0].map(([s]) => s)).toEqual(TILE_ROWS[0].map(([s]) => s).filter((s) => s !== 'wow'));
-    expect(rows[1]).toEqual(TILE_ROWS[1]);
-    expect(group.length + left.length).toBe(TILE_ROWS.flat().length + AUDIENCE_FAMILY.wow.length);
+    for (const [slug] of group.flat()) expect(left).not.toContain(slug);
+    expect(left.sort()).toEqual(TILE_ROWS.flat().map(([s]) => s).filter((s) => s !== 'wow').sort());
   });
 
   test('an audience without a family has no group; all players keep the rows', () => {
@@ -57,6 +50,35 @@ describe('audiences', () => {
   test('an audience from the second row comes to the front of the first, and a game without a tile changes nothing', () => {
     expect(tileRows(TILE_ROWS, 'valorant')[0][0][0]).toBe('valorant');
     expect(tileRows(TILE_ROWS, 'no-such-game')).toBe(TILE_ROWS);
+  });
+
+  // The tiles end in a rectangle: the first and the second level are of equal length, whatever the audience (a row is its widths and its gaps)
+  describe('the tiles end in a rectangle', () => {
+    const length = (row) => row.reduce((n, [, w]) => n + w, 0) + (row.length - 1) * TILE_GAP;
+    const base = Object.fromEntries(TILE_ROWS.flat());
+    const sets = (audience) => { const { group, rows } = tileLayout(TILE_ROWS, audience); return group.length ? [group, rows] : [rows]; };
+
+    test.each(AUDIENCES.map(([slug]) => [slug]))('%s: both levels are as long as each other, in the group and in the rest', (audience) => {
+      for (const levels of sets(audience)) {
+        expect(levels).toHaveLength(2);
+        expect(Math.abs(length(levels[0]) - length(levels[1])), `${audience}: ${levels.map(length)}`).toBeLessThan(0.5);
+      }
+    });
+
+    test.each(AUDIENCES.map(([slug]) => [slug]))('%s: no tile is stretched or squeezed by more than 8%%, and none is lost or doubled', (audience) => {
+      const { group, rows } = tileLayout(TILE_ROWS, audience);
+      for (const [slug, w] of rows.flat()) expect(w / base[slug], slug).toBeGreaterThan(0.92);
+      for (const [slug, w] of rows.flat()) expect(w / base[slug], slug).toBeLessThan(1.08);
+      const all = [...group.flat(), ...rows.flat()].map(([s]) => s);
+      expect(new Set(all).size).toBe(all.length);
+      expect(all.sort()).toEqual([...TILE_ROWS.flat().map(([s]) => s), ...(AUDIENCE_GROUP[audience] || []).flat().map(([s]) => s).filter((s) => !(s in base))].sort());
+    });
+
+    test('levelRows moves a tile to the shorter row when that helps, keeps the tile it is told to keep, and ends both rows at one place', () => {
+      const rows = levelRows([[['a', 200], ['b', 200], ['c', 200]], [['d', 100]]], 'a');
+      expect(Math.abs(length(rows[0]) - length(rows[1]))).toBeLessThan(0.5);
+      expect(rows[0][0][0]).toBe('a');
+    });
   });
 
   test('the offers of the audience are split from the rest, in their order', () => {

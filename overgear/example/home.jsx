@@ -5,11 +5,10 @@ import { TokenGroup } from '../../src/components/TokenGroup.jsx';
 import { Skeleton } from '../../src/components/Skeleton.jsx';
 import { Avatar } from '../../src/components/Avatar.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
-import { Divider } from '../../src/components/Divider.jsx';
 import { go } from './util.js';
 import { loadTheme } from '../../site/theme.js';
 import { COOKIE } from '../theme.js';
-import { audienceOf, tileLayout, splitOffers } from '../audience.js';
+import { audienceOf, tileLayout, splitOffers, TILE_GAP } from '../audience.js';
 import { GAMES, OFFERS, REVIEWS, CATEGORIES, TILE_ROWS, gameOf } from './data.js';
 import { Bleed } from '../../src/components/Layout.jsx';
 import { Page, Section, GameTile, GameChip, OfferListing } from './ui.jsx';
@@ -125,6 +124,7 @@ export function Home() {
   // who the page is made for (the Theme setting of the showcase): its game leads the tiles and the listing
   const audience = audienceOf(loadTheme(COOKIE));
   const tiles = tileLayout(TILE_ROWS, audience);
+  const groupLength = tiles.group[0]?.reduce((n, [, w]) => n + w, 0) + (tiles.group[0]?.length - 1) * TILE_GAP;
   // the products of the game of the audience come first; the products of the other games take turns, so the first screen is varied
   const products = (() => {
     const [own, rest] = splitOffers(OFFERS.filter((o) => category === 'All games' || gameOf(o.game).category === category), audience);
@@ -165,12 +165,13 @@ export function Home() {
           <Bleed scroll>
             <div className="og-tiles">
               {tiles.group.length > 0 && (
-                <>
-                  <div className="og-gquad">
-                    {tiles.group.map(([slug]) => <GameChip key={slug} slug={slug} width="100%" tag={slug === audience ? 'For you' : undefined} />)}
-                  </div>
-                  <Divider orientation="vertical" />
-                </>
+                <div className="og-grows og-grows--group" style={{ '--og-group': `${Math.round(groupLength)}px` }}>
+                  {tiles.group.map((row, i) => (
+                    <div key={i} className="og-grow">
+                      {row.map(([slug, width]) => <GameChip key={slug} slug={slug} grow={width} tag={slug === audience ? 'For you' : undefined} />)}
+                    </div>
+                  ))}
+                </div>
               )}
               <div className="og-grows">
                 {tiles.rows.map((row, i) => (

@@ -31,6 +31,7 @@ const CHECKS = [
   ['constitution', 'tools/check/constitution.mjs'],
   ['spacing', 'tools/check/spacing.mjs'],
   ['overgear-spacing', 'overgear/tools/check/spacing.mjs'],
+  ['overgear-tiles', 'overgear/tools/check/tiles.mjs'],
 ];
 const only = process.argv[2];
 let failed = 0;

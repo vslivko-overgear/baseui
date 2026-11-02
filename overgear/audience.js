@@ -10,35 +10,68 @@ export const AUDIENCES = [
 ];
 export const AUDIENCE_DEFAULT = 'all';
 
-/** The games of the family of an audience (World of Warcraft has its versions): they stand with its own tile as a group of their own. The games are those of the example. */
-export const AUDIENCE_FAMILY = { wow: ['wow-forever', 'wow-20th-anniversary', 'wow-classic-era'] };
+/** The gap between tiles, in px (the 2 step of the spacing scale): the length of a row is its widths and its gaps. */
+export const TILE_GAP = 8;
+
+/**
+ * The tiles an audience brings with its own: its family (World of Warcraft has its versions). They stand as a group of their own, in two rows, and are not of equal width on purpose:
+ * the edges of the rows do not line up. The two rows are of equal length, so the group is a rectangle. [slug, width] each; the games are those of the example.
+ */
+export const AUDIENCE_GROUP = {
+  wow: [[['wow', 200], ['wow-forever', 150]], [['wow-20th-anniversary', 160], ['wow-classic-era', 190]]],
+};
 
 /** The audience of a theme: a known one, or all players. */
 export const audienceOf = (theme) => (AUDIENCES.some(([slug]) => slug === theme?.audience) ? theme.audience : AUDIENCE_DEFAULT);
 
+const lengthOf = (row) => row.reduce((n, [, width]) => n + width, 0) + (row.length - 1) * TILE_GAP;
+
+/**
+ * Two rows of tiles of equal length: tiles move from the longer row to the shorter while that brings the lengths closer (the tile of `keep` stays where it is), then the widths of each
+ * row are stretched or squeezed by the same share, a few per cent at most, so that both end at the same place. [[slug, width], …] ×2 in, the same shape out.
+ */
+export function levelRows(rows, keep) {
+  const level = rows.map((row) => [...row]);
+  for (let step = 0; step < 6; step++) {
+    const [a, b] = level.map(lengthOf);
+    const from = a > b ? 0 : 1;
+    let best = null;
+    level[from].forEach(([slug, width], i) => {
+      const after = Math.abs(Math.abs(a - b) - 2 * (width + TILE_GAP));
+      if (slug !== keep && after < Math.abs(a - b) && (!best || after < best.after)) best = { i, after };
+    });
+    if (!best) break;
+    level[1 - from].push(...level[from].splice(best.i, 1));
+  }
+  const target = (lengthOf(level[0]) + lengthOf(level[1])) / 2;
+  return level.map((row) => {
+    const free = target - (row.length - 1) * TILE_GAP;
+    const k = free / row.reduce((n, [, width]) => n + width, 0);
+    return row.map(([slug, width]) => [slug, +(width * k).toFixed(2)]);
+  });
+}
+
 /**
  * The rows of tiles for an audience: its game moves to the first place of the first row and the others follow in their order, each with the width it was drawn for
- * (a tile with a tag or a long name needs its own). The rows keep their number of tiles. [[slug, width], …] in, the same shape out.
+ * (a tile with a tag or a long name needs its own). The two rows end at the same place, whatever the order: see levelRows. [[slug, width], …] in, the same shape out.
  */
 export function tileRows(rows, audience) {
   if (audience === AUDIENCE_DEFAULT || !rows.some((row) => row.some(([slug]) => slug === audience))) return rows;
   const tiles = rows.flat();
   const ordered = [tiles.find(([slug]) => slug === audience), ...tiles.filter(([slug]) => slug !== audience)];
   let i = 0;
-  return rows.map((row) => row.map(() => ordered[i++]));
+  return levelRows(rows.map((row) => row.map(() => ordered[i++])), audience);
 }
 
 /**
- * What the tiles of the home page show for an audience: `group`, the tiles of an audience with a family (its own and its versions: the page stands them two by two, apart
- * from the rest), and `rows`, the other tiles in the rows they were in. An audience without a family has no group and the rows of tileRows.
+ * What the tiles of the home page show for an audience: `group`, the two rows of the tiles of an audience with a family (the page stands them apart from the rest),
+ * and `rows`, the other tiles in two rows, level with each other. An audience without a family has no group and the rows of tileRows.
  */
 export function tileLayout(rows, audience) {
-  const family = AUDIENCE_FAMILY[audience];
-  if (!family) return { group: [], rows: tileRows(rows, audience) };
-  const slugs = new Set([audience, ...family]);
-  const widthOf = Object.fromEntries(rows.flat());
-  const group = [audience, ...family].map((slug) => [slug, widthOf[slug] ?? 190]);
-  return { group, rows: rows.map((row) => row.filter(([slug]) => !slugs.has(slug))) };
+  const group = AUDIENCE_GROUP[audience];
+  if (!group) return { group: [], rows: tileRows(rows, audience) };
+  const taken = new Set(group.flat().map(([slug]) => slug));
+  return { group, rows: levelRows(rows.map((row) => row.filter(([slug]) => !taken.has(slug)))) };
 }
 
 /** The offers split for an audience: [those of its game, the rest]. The page lists the first part first and mixes the games of the second. */

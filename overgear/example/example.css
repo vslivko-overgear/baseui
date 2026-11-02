@@ -141,10 +141,11 @@ a { color: inherit; }
 /* the games block: two rows of light tiles of different widths that scroll sideways together, out to the edges of the page */
 .og-grows { display: flex; flex-direction: column; gap: var(--baseui-spacing-2); width: max-content; }
 .og-grow { display: flex; gap: var(--baseui-spacing-2); }
-/* the tiles of an audience with a family: two by two (as high as the two rows beside it), a line, then the rest. The group is apart from the rest by more than the tiles are from each other */
-.og--mobile .og-gquad { grid-template-columns: repeat(2, calc((100vw - 40px) / 2)); }   /* the group fills the width of the screen, the rest is a swipe away */
-.og-tiles { display: flex; gap: var(--baseui-spacing-4); width: max-content; }
-.og-gquad { display: grid; grid-template-columns: repeat(2, 200px); gap: var(--baseui-spacing-2); align-content: start; }
+/* the tiles of an audience with a family and the rest: one row of two levels, the group (a rectangle of its own, its tiles grow by their widths) and a group gap before the rest.
+   On a phone the group is narrower than the screen, so a piece of the next games shows and says the row goes on */
+.og-tiles { display: flex; gap: var(--baseui-spacing-6); width: max-content; }
+.og-grows--group { width: var(--og-group); }
+.og--mobile .og-grows--group { width: calc(100vw - 96px); }
 .og-gchip { position: relative; display: block; height: 76px; overflow: hidden; border-radius: var(--baseui-radius-custom-20); }   /* the chip fills its card, so it has the radius of the card */
 .og-gchip__name { position: absolute; top: var(--baseui-spacing-3); left: var(--baseui-spacing-3); right: 40%; z-index: 1; font: var(--baseui-typography-text-12-semi-bold); color: var(--baseui-text-and-icon-primary); text-align: start; }
 .og-gchip__art { position: absolute; top: 0; right: 0; bottom: 0; width: 62%; height: 100%; object-fit: cover; pointer-events: none; -webkit-mask-image: linear-gradient(to right, transparent, #000 55%); mask-image: linear-gradient(to right, transparent, #000 55%); }
