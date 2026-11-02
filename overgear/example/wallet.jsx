@@ -27,11 +27,11 @@ export function Amounts() {
   );
 }
 
-/** The balance in the header of a desktop: the amounts and a plus, one button that opens the top-up. */
+/** The balance in the header of a desktop: a plus and the amounts, one button that opens the top-up. */
 export function WalletButton() {
   const store = useStore();
   return (
-    <Button variant="secondary" size="md" textSize={14} aria-label={`Balance ${money(store.balance)} and ${coinsText(store.coins)} OG Coins. Top up`} endContent={<Icon name="Plus" size={20} />} onClick={openTopUp}>
+    <Button variant="secondary" size="md" textSize={14} aria-label={`Balance ${money(store.balance)} and ${coinsText(store.coins)} OG Coins. Top up`} icon={<Icon name="Plus" size={20} />} onClick={openTopUp}>
       <Amounts />
     </Button>
   );

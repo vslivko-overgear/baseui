@@ -2,7 +2,7 @@
 
 ## Overgear: the balance and the top-up
 
-- **A desktop:** a logged-in visitor has one button in the header, before the icons, with the money and the OG Coins (the cashback of the orders, with the gold mark) and a plus: `$48.50 ⬡ 3.20 +`. It opens the top-up.
+- **A desktop:** a logged-in visitor has one button in the header, before the icons, with the money and the OG Coins (the cashback of the orders, with the gold mark) and a plus: `+ $48.50 ⬡ 3.20`, in regular weight and all in one color. It opens the top-up.
 - **A phone:** the account tab has a card on top with the balance and the OG Coins in two columns and a Top up button; the header of a phone has no balance of its own.
 - **The top-up** is one dialog, mounted once (`TopUpDialog`) and opened by any trigger with `openTopUp()`: presets of $10, $25, $50 and $100 or any amount from $5 to $1,000 (a sentence under the field when it is not an amount or out of the range, shown on pressing Pay: a button is never disabled), a way to pay and a Pay button with the amount; paying adds to the balance, closes the dialog and says so in a toast.
 - The wallet is part of the store (`balance`, `coins`, `topUp`); a browser that kept its state from before starts with the wallet of a new one ($48.50 and 3.20 coins), and the cashback of a placed order is added to the coins. The rules of the amount and of the sums are pure (`overgear/example/wallet-core.js`, tested in `overgear/tests/wallet.test.mjs`); `overgear/tools/check/wallet.mjs` (part of `npm run check`) drives the button, the card and the top-up in a real browser.
