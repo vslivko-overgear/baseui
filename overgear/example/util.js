@@ -72,3 +72,15 @@ export function useStored(key, initial) {
 /** The mini-cart of the header (a desktop) opens on this event, so any page can open it without owning its state. */
 export const OPEN_CART = 'og:open-cart';
 export const openMiniCart = () => window.dispatchEvent(new Event(OPEN_CART));
+
+/** True once the heading of the page (the first element that matches `selector`) has scrolled under the bar of a phone: the bar then shows the title, which it does not at the start. `key` runs it again when the page changes. */
+export function useTitleUnderBar(selector, key) {
+  const [under, setUnder] = useState(false);
+  useEffect(() => {
+    const on = () => { const t = document.querySelector(selector); setUnder(!!t && t.getBoundingClientRect().bottom < 56); };
+    on();
+    window.addEventListener('scroll', on, { passive: true });
+    return () => window.removeEventListener('scroll', on);
+  }, [selector, key]);
+  return under;
+}

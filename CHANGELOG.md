@@ -2,6 +2,7 @@
 
 ## Overgear: the checkout, payment methods as outlined tiles, the items apart
 
+- **Overgear catalog on a phone:** the search and the sort stay at the top while the list of games scrolls, each game has a rounded 1:1 picture; a game (step 2) and its group (step 3) are laid out the same: a title of the page under the bar (4px from it), the quick links on step 2, and a list of rows with chevrons, instead of the expanding sections. The bar has no title at the start and shows it when the heading scrolls under it (as in the checkout); back goes one step up. `useTitleUnderBar` is the one hook for both. The route `/catalog/:slug/:group` is the step 3.
 - **`NumberInput`: the label is outside of the field,** above it, semi-bold (it was a floating label inside), and the field hugs its content (it was the full width).
 - **Checkout lines:** the price and the bin are a right column as high as the text on the left (the text hugs): the price on top, the bin at the bottom, no empty row under the text; the stepper stays after the delivery time.
 - **Checkout lines:** the price stays on top at the right, the bin is the last row of the line at the bottom right (the quantity stepper of a line of several units is on the same row, on the left).

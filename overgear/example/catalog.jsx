@@ -1,6 +1,7 @@
 // The catalog: a classifier of the pages of the shop. It leads to the listings (games.jsx), where the products are.
 //   /catalog            the games, in one list (a search, a sort and a row for each game)
-//   /catalog/:slug      the kinds of offers of a game (a row opens the listing of that kind)
+//   /catalog/:slug      the groups of offers of a game (a row opens the group)
+//   /catalog/:slug/:group   the kinds of a group (a row opens the listing of that kind); on a phone, laid out as the step before it
 // On a desktop both are one page of two columns: the games on the left, the kinds of the chosen game on the right. On a phone the left column is the page /catalog, and a game opens the second.
 import { useState } from '../../src/react.js';
 import { TextInput } from '../../src/components/TextInput.jsx';
@@ -11,10 +12,9 @@ import { Divider } from '../../src/components/Divider.jsx';
 import { Dropdown } from '../../src/components/Dropdown.jsx';
 import { IconButton } from '../../src/components/Button.jsx';
 import { Token } from '../../src/components/Token.jsx';
-import { CollapsibleGroup } from '../../src/components/Collapsible.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
 import { Navbar } from '../../src/components/MobileNavigation.jsx';
-import { go, href } from './util.js';
+import { go, href, useTitleUnderBar } from './util.js';
 import { GAMES, EMOJI, catalogOf, gameOf } from './data.js';
 import { Page } from './ui.jsx';
 
@@ -27,10 +27,12 @@ export function Catalog() {
   );
 }
 
-/** The top bar of a catalog page of a game on a phone: it is the bar of the screen, so it sits outside the padded page and spans the whole width. */
-export function CatalogBar({ slug }) {
+/** The top bar of a catalog page of a game (step 2) or of a group of it (step 3) on a phone: it is the bar of the screen, so it sits outside the padded page and spans the whole width. It has no title at the start (the page has its own); the title shows when the heading of the page scrolls under the bar. */
+export function CatalogBar({ slug, group }) {
   const game = gameOf(slug);
-  return <Navbar title={game?.name || 'Game'} onBack={() => go('/catalog')} />;
+  const g = group && catalogOf(game || GAMES[0]).groups.find((x) => x.id === group);
+  const under = useTitleUnderBar('.og-step__title', `${slug}/${group}`);
+  return <Navbar title={g?.label || game?.name || 'Game'} titleVisible={under} onBack={() => go(g ? `/catalog/${slug}` : '/catalog')} />;
 }
 
 /** Opens the listing of a group of offers of a game (the gold of WoW has its own page). */
@@ -64,6 +66,11 @@ function CatalogBlocks({ game, onChoose }) {
   );
 }
 
+/** The picture of a game in a row: a rounded square, 1:1; a game without a cover gets the gradient of its tone. */
+function GamePic({ game }) {
+  return <span className="og-gpic" data-tone={game.tone} aria-hidden="true">{game.cover && <img src={game.cover} alt="" width="40" height="40" loading="lazy" draggable="false" />}</span>;
+}
+
 /** The left column of the catalog: a search, a sort and a row for each game. `active` marks the game that is open on its right (a desktop); `onSelect(slug)` says which one was chosen. */
 function GamesColumn({ active, onSelect }) {
   const [q, setQ] = useState('');
@@ -85,7 +92,7 @@ function GamesColumn({ active, onSelect }) {
       </ControlRow>
       <div className="og-catalog__games bui-list-scroll">
         <List aria-label="Games">
-          {list.map((g) => <ListItem key={g.slug} active={g.slug === active} onClick={() => onSelect(g.slug)} details={<Icon name="ChevronRight" size={20} />}>{g.name}</ListItem>)}
+          {list.map((g) => <ListItem key={g.slug} active={g.slug === active} avatar={<GamePic game={g} />} onClick={() => onSelect(g.slug)} details={<Icon name="ChevronRight" size={20} />}>{g.name}</ListItem>)}
         </List>
         {!list.length && <Status status="neutral" title="No game found" description="Try another name" />}
       </div>
@@ -121,27 +128,37 @@ export function CatalogDesktop({ slug }) {
   );
 }
 
-/** The groups of offers of a game on a phone: the quick links, then a section per group that opens into its kinds; every line opens a listing. */
+/** Step 2 on a phone: the title of the game, its quick links and a row for each group of offers; a row opens step 3 (CatalogGroup). */
 export function CatalogGame({ slug }) {
   const game = gameOf(slug);
   if (!game) return <Page><Status status="neutral" title="Game not found" actionLabel="Catalog" onAction={() => go('/catalog')} /></Page>;
   return (
-    <Page>
-      <QuickLinks game={game} />
-      <CollapsibleGroup
-        headingLevel={2}
-        multiple
-        items={catalogOf(game).groups.map((g) => ({
-          value: g.id,
-          title: g.label,
-          content: (
-            <List aria-label={g.label}>
-              <ListItem onClick={() => openKind(game, g.id)} details={<Icon name="ChevronRight" size={20} />}>{`All ${g.label}`}</ListItem>
-              {g.items.map((it) => <ListItem key={it} onClick={() => openKind(game, g.id)} details={<Icon name="ChevronRight" size={20} />}>{it}</ListItem>)}
-            </List>
-          ),
-        }))}
-      />
+    <Page bar>
+      <div className="og-stack og-stack--group og-step">
+        <h1 className="og-title og-step__title">{game.name}</h1>
+        <QuickLinks game={game} />
+        <List aria-label={game.name}>
+          {catalogOf(game).groups.map((g) => <ListItem key={g.id} onClick={() => go(`/catalog/${slug}/${g.id}`)} details={<Icon name="ChevronRight" size={20} />}>{g.label}</ListItem>)}
+        </List>
+      </div>
+    </Page>
+  );
+}
+
+/** Step 3 on a phone: the title of a group and a row for each of its kinds, laid out as step 2; a row opens a listing. */
+export function CatalogGroup({ slug, group }) {
+  const game = gameOf(slug);
+  const g = game && catalogOf(game).groups.find((x) => x.id === group);
+  if (!g) return <Page><Status status="neutral" title="Not found" actionLabel="Catalog" onAction={() => go(game ? `/catalog/${slug}` : '/catalog')} /></Page>;
+  return (
+    <Page bar>
+      <div className="og-stack og-stack--group og-step">
+        <h1 className="og-title og-step__title">{g.label}</h1>
+        <List aria-label={g.label}>
+          <ListItem onClick={() => openKind(game, g.id)} details={<Icon name="ChevronRight" size={20} />}>{`All ${g.label}`}</ListItem>
+          {g.items.map((it) => <ListItem key={it} onClick={() => openKind(game, g.id)} details={<Icon name="ChevronRight" size={20} />}>{it}</ListItem>)}
+        </List>
+      </div>
     </Page>
   );
 }

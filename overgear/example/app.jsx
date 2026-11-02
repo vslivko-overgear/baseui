@@ -10,7 +10,7 @@ import { TopUpDialog } from './wallet.jsx';
 import { Header, MobileHeader, MobileBar, Footer, LoginDialog } from './shell.jsx';
 import { Home } from './home.jsx';
 import { Offers, Game, Gold, SearchResults } from './games.jsx';
-import { Catalog, CatalogDesktop, CatalogGame, CatalogBar } from './catalog.jsx';
+import { Catalog, CatalogDesktop, CatalogGame, CatalogGroup, CatalogBar } from './catalog.jsx';
 import { Offer } from './offer.jsx';
 import { Cart, Checkout, OrderDone } from './cart.jsx';
 import { Account } from './account.jsx';
@@ -23,7 +23,7 @@ function Body({ route, onLogin, mobile }) {
   const [first, second, third] = route.parts;
   if (!first) return <Home />;
   // the catalog is a classifier of the pages; the listings (games) are the shop with the products
-  if (first === 'catalog') return !mobile ? <CatalogDesktop slug={second} /> : second ? <CatalogGame slug={second} /> : <Catalog />;
+  if (first === 'catalog') return !mobile ? <CatalogDesktop slug={second} /> : third ? <CatalogGroup slug={second} group={third} /> : second ? <CatalogGame slug={second} /> : <Catalog />;
   if (first === 'games') {
     if (!second) return <Offers category={route.query.c || 'All games'} />;
     if (third === 'gold') return <Gold />;
@@ -51,7 +51,7 @@ function Shell() {
   const tab = mobile && (route.parts[0] === 'catalog' || ['cart', 'account'].includes(route.parts[0]));
   return (
     <div className={cx('og', mobile && 'og--mobile', tab && 'og--tab')}>
-      {bare ? null : step2 ? <CatalogBar slug={route.parts[1]} /> : tab ? null : mobile ? <MobileHeader route={route} onLogin={() => setLogin(true)} /> : <Header route={route} onLogin={() => setLogin(true)} />}
+      {bare ? null : step2 ? <CatalogBar slug={route.parts[1]} group={route.parts[2]} /> : tab ? null : mobile ? <MobileHeader route={route} onLogin={() => setLogin(true)} /> : <Header route={route} onLogin={() => setLogin(true)} />}
       <main className={bare ? 'og-bare' : 'og-wrap'} key={route.path + (route.query.c || '') + (route.query.s || '')}>
         <Body route={route} onLogin={() => setLogin(true)} mobile={mobile} />
       </main>

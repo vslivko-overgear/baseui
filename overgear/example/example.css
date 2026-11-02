@@ -465,3 +465,13 @@ a { color: inherit; }
 .og--mobile.og--tab .og-wrap:has(.og-paybar) { padding-bottom: calc(var(--og-bottom) + var(--og-paybar-h) + var(--baseui-spacing-4)); }
 .og--mobile .og-checkout:has(.og-paybar) .og-checkout__foot { padding-bottom: calc(var(--og-paybar-h) + var(--baseui-spacing-4)); }
 
+
+/* the pictures of the games in the rows: rounded squares, 1:1 */
+.og-gpic { position: relative; display: block; width: 40px; height: 40px; border-radius: var(--baseui-radius-lg); overflow: hidden; background: var(--baseui-background-tertiary); }
+.og-gpic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* on a phone the search and the sort stay at the top of the list while it scrolls */
+.og--mobile .og-catalog__left > .bui-control-row { position: sticky; top: 0; z-index: 3; background: var(--baseui-background-primary); padding-block: var(--baseui-spacing-3) var(--baseui-spacing-2); }   /* the 12px above are the top of the bar, where the bar of the header stands: the page has none of its own here */
+.og--mobile .og-page--bar:has(.og-catalog__left) { padding-top: 0; }
+/* the steps of the catalog on a phone: the title of the page under the bar, 4px from it; the bar shows it once it scrolls away */
+.og-step__title { padding-top: 0; }
+.og--mobile .og-page--bar:has(.og-step) { padding-top: var(--baseui-spacing-1); }
