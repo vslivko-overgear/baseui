@@ -28,8 +28,8 @@ for (const [audience] of AUDIENCES) {
     if (levels.some((l) => l.wrapped)) problems.push(`${where}: a tile wrapped to another line`);
   });
   if (!sections.length) problems.push(`${audience}: no tiles found`);
-  // the whole thing: the group and the rest start on one line and the levels of the two end at the same place
-  if (sections.length === 2 && Math.abs(Math.max(...sections[0].map((l) => l.right)) - sections[1][0].left) < 8) problems.push(`${audience}: the group touches the rest`);
+  // the group and the rest are a tile gap apart, 8px, as any two tiles are
+  if (sections.length === 2) { const gap = sections[1][0].left - Math.max(...sections[0].map((l) => l.right)); if (Math.abs(gap - 8) > 0.5) problems.push(`${audience}: the group is ${gap.toFixed(1)}px from the rest, not 8px`); }
   await context.close();
 }
 await browser.close();
