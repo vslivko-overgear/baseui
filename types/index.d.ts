@@ -1082,7 +1082,8 @@ export interface DialogProps {
    */
   keepMounted?: boolean;
   /**
-   * Initial focus after opening
+   * Initial focus after opening: by default the focus goes into the dialog only when the last thing the person used was the keyboard; after a finger or a mouse, or when it is opened by code, nothing is focused, so no ring shows on its first control
+   * @default keyboard only
    */
   initialFocus?: RefObject<any> | boolean | ((...args: any[]) => any);
   /**

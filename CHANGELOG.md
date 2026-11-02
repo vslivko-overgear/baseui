@@ -2,6 +2,7 @@
 
 ## Overgear: the checkout, payment methods as outlined tiles, the items apart
 
+- **`Dialog` does not move the focus onto its first control after a finger, a mouse or when it is opened by code** (a ring on the close button that nobody asked for); only when the last thing used was the keyboard. `initialFocus` still overrides it. `tools/check/dialog-focus.mjs` checks it (a tap, code and the keyboard), under rule A5.
 - **Mini-cart on a phone is the standard `Dialog`** (a sheet): the lines and the promo code card scroll, the pay bar (the price, the bonus, the button) is its footer. On a desktop it stays the side panel. `PayBarContent` is shared by the bar, the panel and the dialog.
 - **The promo code row is 56px high** (as the large button of the page; it was 48px), in the checkout, the cart and the mini-cart.
 - **Mini-cart:** the pay bar of the phone (the price, the bonus tag, the button) is pinned at the bottom of the panel, on a desktop and on a phone; the promo code card is in the list that scrolls; the summary block is gone.

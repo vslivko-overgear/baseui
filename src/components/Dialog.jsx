@@ -42,6 +42,15 @@ const keyboardStyle = (box) =>
     ? { '--dialog-visual-viewport-height': `${box.height}px`, '--dialog-visual-viewport-offset-top': `${box.offsetTop}px` }
     : undefined;
 
+// Opened with a finger or a mouse, a dialog does not move the focus onto its first control (a ring on the close button that nobody asked for); opened with the keyboard it does, as a keyboard user needs.
+// the last thing the person used, the keyboard or a pointer (a dialog opened by code has no trigger to ask)
+let lastWasKeyboard = false;
+if (typeof document !== 'undefined') {
+  document.addEventListener('keydown', () => { lastWasKeyboard = true; }, true);
+  document.addEventListener('pointerdown', () => { lastWasKeyboard = false; }, true);
+}
+const focusOnKeyboard = () => lastWasKeyboard;
+
 /**
  * The dialog of the design system, on the Base UI Dialog: a centered window on a wide screen and a bottom sheet below 768px, which can be
  * dragged down by its header to close. A header (a title, a subtitle, the close and back buttons), a scrolling content and a footer of actions.
@@ -64,7 +73,7 @@ export function Dialog({
   contentClassName,
   portalContainer,
   keepMounted,
-  initialFocus,
+  initialFocus = focusOnKeyboard,
   finalFocus,
   ref,
   open,
@@ -256,7 +265,7 @@ describe(
     contentClassName: ['string', null, 'Extra class of the content part'],
     portalContainer: ['HTMLElement', null, 'Container of the portal; the body by default'],
     keepMounted: ['boolean', null, 'Keep the portal mounted after closing'],
-    initialFocus: ['RefObject | boolean | function', null, 'Initial focus after opening'],
+    initialFocus: ['RefObject | boolean | function', 'keyboard only', 'Initial focus after opening: by default the focus goes into the dialog only when the last thing the person used was the keyboard; after a finger or a mouse, or when it is opened by code, nothing is focused, so no ring shows on its first control'],
     finalFocus: ['RefObject | boolean | function', null, 'Focus after closing'],
     modal: ['boolean', 'true', 'Block the page behind the dialog'],
     ref: ['Ref<HTMLDivElement>', null, 'Ref to the popup'],

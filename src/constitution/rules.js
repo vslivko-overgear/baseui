@@ -53,7 +53,7 @@ export const RULES = [
     do: 'Leave the focus ring of the system (2px, 2px offset) on every interactive element',
     dont: 'Do not write outline: none, or restyle the ring so that it disappears on a background',
     why: 'Without it a keyboard user does not know where they are',
-    source: 'WCAG 2.4.7', check: 'review',
+    source: 'WCAG 2.4.7', check: 'review', tools: ['tools/check/dialog-focus.mjs'],   // the ring is for the keyboard: a dialog opened with a finger or by code puts none on its first control
     signals: ['remove the outline', 'hide the focus ring', 'no focus styles', 'outline none'],
   },
   {
