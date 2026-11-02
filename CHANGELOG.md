@@ -1,5 +1,9 @@
 # Changelog
 
+## .gitignore no longer grows on every build
+
+- `tools/build/js.mjs` rewrote the generated block of `.gitignore` by finding its marker with the old script name (`tools/build-js.mjs`); after the tools were moved the marker did not match and every build appended another block (the file had grown to 11,000 lines, with a stale `overgear/theme.js` entry that would have dropped that source file from a copy of the repository). The marker is matched under both names and the file is one block again.
+
 ## Dialog: close buttons that work, a sheet that closes on a single choice
 
 - **`data-dialog-close`**: a control inside a `Dialog` with this attribute (a Close, Done or Cancel button) closes its own dialog with no `onClick` to wire; a dialog in a dialog closes only itself (the click bubbles through the React tree of portals, so the handler checks which dialog the control belongs to). The reason is `close-press`. The mobile sheet of Selector and Typeahead had a "Close" and an "Apply" button with nothing behind them: they close now.
