@@ -70,6 +70,10 @@ for (const [width, phone] of [[1440, false], [390, true]]) {
       items: items.map((l) => { const r = l.getBoundingClientRect(); return { top: r.top, bottom: r.bottom, radius: parseFloat(getComputedStyle(l).borderTopLeftRadius), background: getComputedStyle(l).backgroundColor }; }),
     };
   });
+  if (!phone) {
+    const terms = await page.evaluate(() => { const c = document.querySelector('.og-caption--legal'); const b = c?.parentElement.querySelector('.bui-button'); return c && b ? { size: parseFloat(getComputedStyle(c).fontSize), gap: c.getBoundingClientRect().top - b.getBoundingClientRect().bottom } : null; });
+    expectThat(terms && terms.size === 12 && terms.gap <= 12, `desktop: the terms are not 12px and close to the pay button (${JSON.stringify(terms)})`);
+  }
   const sum = (m) => m.width + (/\s(\d+)px\s+inset$/.exec(m.shadow)?.[1] ? +/\s(\d+)px\s+inset$/.exec(m.shadow)[1] : 0);
   expectThat(strip.count === 6 && strip.radios, `${where}: the payment methods are not six radio tiles with the others behind a button (${strip.count} tiles)`);
   expectThat(strip.button === 'secondary', `${where}: the button for the other methods is not secondary (${strip.button})`);

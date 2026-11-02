@@ -283,8 +283,10 @@ export function Checkout() {
                     <div className="og-sum__row og-sum__row--big"><span>Amount to pay</span><span>{money(amount)}</span></div>
                     <CashbackRow amount={amount} />
                   </div>
-                  {!mobile && <Button variant="primary" size="lg" width="100%" label="Pay" onClick={pay} />}
-                  <p className="og-caption">By placing an order at overgear.com, you agree to our <Link href={href('/info/terms')}>Terms of Use</Link> and <Link href={href('/info/privacy')}>Privacy Policy</Link>. After your purchase, we may email you offers about products and services similar to your order.</p>
+                  <div className="og-stack og-stack--close">
+                    {!mobile && <Button variant="primary" size="lg" width="100%" label="Pay" onClick={pay} />}
+                    <p className="og-caption og-caption--legal">By placing an order at overgear.com, you agree to our <Link href={href('/info/terms')}>Terms of Use</Link> and <Link href={href('/info/privacy')}>Privacy Policy</Link>. After your purchase, we may email you offers about products and services similar to your order.</p>
+                  </div>
                 </div>
               </Card>
             </div>
