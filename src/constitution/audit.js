@@ -210,6 +210,19 @@ export function auditConstitution(root = typeof document === 'undefined' ? null 
     }
   }
 
+  // D19: the highlight of a row of a list is not cut by a box, and the rows of a list of a page stand on their text (the bleed is not taken away)
+  for (const header of /** @type {any[]} */ ([...root.querySelectorAll('.bui-list__header')])) {
+    if (!visible(header, win) || header.closest('[data-constitution-example]')) continue;
+    const r = header.getBoundingClientRect();
+    if (!(r.width > 0)) continue;
+    for (let n = header.parentElement; n && n !== doc.body && n !== doc.documentElement; n = n.parentElement) {
+      if (!/(auto|scroll|hidden|clip)/.test(win.getComputedStyle(n).overflowX)) continue;
+      const c = n.getBoundingClientRect();
+      if (r.left < c.left - 1 || r.right > c.right + 1) { add('D19', header, `the highlight of a row of ${describeEl(header)} is cut by ${describeEl(n)}; put the list in a bui-list-scroll box`); break; }
+    }
+    if (!header.closest('.bui-card, .bui-dialog__popup, .bui-popover, .bui-dropdown__popup, .bui-collapsible, .bui-list__nested-wrap') && parseFloat(win.getComputedStyle(header).marginLeft) === 0) add('D19', header, `the rows of ${describeEl(header)} have no room for the highlight, so the text is inset from the edge of the content; do not set --bui-list-bleed to 0 on a list of a page`);
+  }
+
   // D15: a button in one row with an input has the height, the text size and the icon size of the input
   const fields = [...root.querySelectorAll('.bui-field')].filter((f) => visible(f, win));
   for (const btn of /** @type {any[]} */ ([...root.querySelectorAll('.bui-button')])) {

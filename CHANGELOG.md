@@ -1,5 +1,11 @@
 # Changelog
 
+## Rule D19: a list stands on its text, its highlight reaches out and is not cut
+
+- The catalog list of games had its text inset from the heading and the field above it, because the list of the page had its bleed taken away (`--bui-list-bleed: 0`) to keep the highlight of a hovered or active row from being cut by the scrolling box round it. The way it is meant: the text of the rows stands on the edge of the content, the highlight reaches 12px out past it, and is not cut.
+- **`bui-list-scroll`**, a new class in `components.css`, is the box that scrolls round a `List`: it leaves the room for the highlight (a padding and the same negative margin), so both hold. The catalog of the example uses it, on a desktop (the page and the panel) and on a phone: the text of the rows is on the same line as the title and the field (measured: 104 and 104 px on a desktop, 16 and 16 on a phone), and the highlight reaches out 12px on each side and is not cut.
+- **D19** (should, checked by the audit): the audit finds a row whose highlight is cut by an ancestor that clips sideways, and a list of a page (outside a card, a dialog or a popup) whose rows have no bleed. Fixtures in `tools/check/fixtures.html` hold both violations and both right ways; the 15 pages of the checks have none. The usage guidance of `List` says it.
+
 ## Overgear: the catalog of a phone is the list of games
 
 - The catalog page of a phone is now the left column of the catalog of a desktop as a page: a search, a sort and one row for each game, a game opens its kinds of offers. The picture tiles of the games and the chips of the groups (All games, World of Warcraft, Action RPG…) are gone from the catalog; the list scrolls with the page. The column is one component (`GamesColumn`) used by the page of a phone and by the two columns of a desktop. `overgear/tools/check/catalog.mjs` checks the phone too.

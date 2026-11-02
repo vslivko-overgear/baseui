@@ -346,8 +346,8 @@ export const USAGE = {
 
   // ------------------------------------------------------------------ data
   List: {
-    do: ['Give the list a header or a name that says what it holds', 'Use the start and end slots for icons, avatars and badges'],
-    dont: ['Put interactive elements inside an interactive row', 'Use a list for a single item', 'Mix clickable and plain rows without telling them apart'],
+    do: ['Give the list a header or a name that says what it holds', 'Use the start and end slots for icons, avatars and badges', 'Put a list in a box that scrolls into `bui-list-scroll`: it leaves the room for the highlight of a row, so the text stays on the edge of the content and the highlight is not cut'],
+    dont: ['Put interactive elements inside an interactive row', 'Use a list for a single item', 'Mix clickable and plain rows without telling them apart', 'Take the bleed away (`--bui-list-bleed: 0`) from a list of a page: the text moves off the edge of the content'],
   },
   ListItem: {
     do: ['Make the whole row the target when it is clickable'],

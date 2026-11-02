@@ -69,5 +69,19 @@
   <div style="background:#222;padding:8px;width:200px"><div style="background:#555;color:#fff;height:24px">label</div></div>
 </section>
 
+<!-- D19: a list stands on its text, its highlight reaches out and is not cut -->
+<section data-case="D19 highlight cut by a scrolling box" data-expect="D19">
+  <div style="width:240px;height:90px;overflow-y:auto"><ul class="bui-list-group__list" aria-label="Games"><li data-slot="list-item" class="bui-list__item"><div data-slot="list-item-header" class="bui-list__header bui-list__md bui-list__interactive"><button type="button" class="bui-list__row">World of Warcraft</button></div></li><li data-slot="list-item" class="bui-list__item"><div data-slot="list-item-header" class="bui-list__header bui-list__md bui-list__interactive"><button type="button" class="bui-list__row">Diablo 4</button></div></li></ul></div>
+</section>
+<section data-case="D19 scrolling box with room for the highlight" data-expect="">
+  <div class="bui-list-scroll" style="width:264px;height:90px"><ul class="bui-list-group__list" aria-label="Games"><li data-slot="list-item" class="bui-list__item"><div data-slot="list-item-header" class="bui-list__header bui-list__md bui-list__interactive"><button type="button" class="bui-list__row">World of Warcraft</button></div></li><li data-slot="list-item" class="bui-list__item"><div data-slot="list-item-header" class="bui-list__header bui-list__md bui-list__interactive"><button type="button" class="bui-list__row">Diablo 4</button></div></li></ul></div>
+</section>
+<section data-case="D19 the bleed taken away from a list of a page" data-expect="D19">
+  <div style="--bui-list-bleed:0px;width:240px"><ul class="bui-list-group__list" aria-label="Games"><li data-slot="list-item" class="bui-list__item"><div data-slot="list-item-header" class="bui-list__header bui-list__md bui-list__interactive"><button type="button" class="bui-list__row">World of Warcraft</button></div></li><li data-slot="list-item" class="bui-list__item"><div data-slot="list-item-header" class="bui-list__header bui-list__md bui-list__interactive"><button type="button" class="bui-list__row">Diablo 4</button></div></li></ul></div>
+</section>
+<section data-case="D19 a list of a page as it is" data-expect="">
+  <div style="width:240px;padding-inline:16px"><ul class="bui-list-group__list" aria-label="Games"><li data-slot="list-item" class="bui-list__item"><div data-slot="list-item-header" class="bui-list__header bui-list__md bui-list__interactive"><button type="button" class="bui-list__row">World of Warcraft</button></div></li><li data-slot="list-item" class="bui-list__item"><div data-slot="list-item-header" class="bui-list__header bui-list__md bui-list__interactive"><button type="button" class="bui-list__row">Diablo 4</button></div></li></ul></div>
+</section>
+
 </body>
 </html>

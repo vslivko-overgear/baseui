@@ -84,7 +84,7 @@ function GamesColumn({ active, onSelect }) {
           trigger={<IconButton variant="secondary" label="Sort games" tooltip={false} icon={<Icon name="SwitchVertical01" size={24} />} />}
         />
       </ControlRow>
-      <div className="og-catalog__games">
+      <div className="og-catalog__games bui-list-scroll">
         <List aria-label="Games">
           {list.map((g) => <ListItem key={g.slug} active={g.slug === active} onClick={() => onSelect(g.slug)} details={<Icon name="ChevronRight" size={20} />}>{g.name}</ListItem>)}
         </List>

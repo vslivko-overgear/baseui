@@ -1,6 +1,6 @@
 # baseui design constitution
 
-Version 1.1. 59 rules in 6 groups (36 must, 23 should): what to do and what not to do so that an interface is at least acceptable. Generated from `src/constitution/rules.js`; the same rules are on the Foundations / Constitution page.
+Version 1.1. 60 rules in 6 groups (36 must, 24 should): what to do and what not to do so that an interface is at least acceptable. Generated from `src/constitution/rules.js`; the same rules are on the Foundations / Constitution page.
 
 A **must** protects people and is always reported. A **should** is a strong default: keep it, or say why not.
 
@@ -485,6 +485,14 @@ The interface is made of the system, not next to it
 - **Why:** Uneven distances between inputs read as a mistake and make a form harder to scan; one gap in both directions makes the rows and the columns look like one grid
 - **Source:** baseui Form; found by `auditConstitution()`
 - **Requests that lead here:** a form; checkout form; sign up form; address fields; inputs side by side; two columns of fields; card number and CVC
+
+### D19 A list stands on its text, its highlight reaches out and is not cut (should)
+
+- **Do:** Align the rows of a `List` on a page by their text, on the edge of the content like the heading and the fields round it. The highlight of a hovered or active row reaches out past the text (the bleed, 12px) and is never cut. A list in a box that scrolls goes in `bui-list-scroll`, which leaves the room for the highlight; inside a card, a dialog or a popup the highlight stays within it and the text is inset by its padding
+- **Don't:** set `--bui-list-bleed: 0` on a list of a page to stop the highlight from being cut (it moves the text off the edge), and do not put a list in a box with `overflow` that clips its highlight
+- **Why:** The eye follows the left edge of the text: a list whose text is inset from the heading above it looks misaligned, and a highlight with a cut edge looks broken
+- **Source:** baseui List; the text of a list on the edge of the content; found by `auditConstitution()`
+- **Requests that lead here:** the list is not aligned with the title; the highlight is cut; the hover is cut off at the edge; the active row sticks out; the text of the list is indented; a list in a scrolling box
 
 ## Copy
 

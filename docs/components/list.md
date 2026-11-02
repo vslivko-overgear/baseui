@@ -10,12 +10,14 @@ A vertical list of rows with an optional title and divider. Text, titles and div
 
 - Give the list a header or a name that says what it holds
 - Use the start and end slots for icons, avatars and badges
+- Put a list in a box that scrolls into `bui-list-scroll`: it leaves the room for the highlight of a row, so the text stays on the edge of the content and the highlight is not cut
 
 **Don't**
 
 - Put interactive elements inside an interactive row
 - Use a list for a single item
 - Mix clickable and plain rows without telling them apart
+- Take the bleed away (`--bui-list-bleed: 0`) from a list of a page: the text moves off the edge of the content
 
 ## Props
 

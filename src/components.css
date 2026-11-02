@@ -1379,6 +1379,8 @@
 .bui-list__header {
   margin-inline: calc(var(--bui-list-bleed, var(--baseui-spacing-3)) * -1);
 }
+/* A box that scrolls round a List (rule D19): it leaves the room the highlight of a row reaches into, so the text of the rows stays on the edge of the content and the highlight is not cut by the box */
+.bui-list-scroll { overflow-y: auto; scrollbar-width: thin; margin-inline: calc(var(--bui-list-bleed, var(--baseui-spacing-3)) * -1); padding-inline: var(--bui-list-bleed, var(--baseui-spacing-3)); }
 /* The highlight of a row bleeds 12px past the text so that the text lines up with the page; inside a container it stays within it */
 .bui-card, .bui-dialog__popup, .bui-popover, .bui-dropdown__popup, .bui-collapsible { --bui-list-bleed: 0px; }
 .bui-list__row {
