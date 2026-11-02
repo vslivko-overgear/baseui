@@ -139,7 +139,7 @@
 - [Token](docs/components/token.md): A chip for selection or indication: a Base UI Toggle with a size, a status and slots. With `action` it is a button, removable or plain
 - [Token Group](docs/components/token-group.md): A group of chips: a title, a wrapping container and a caption or an error. With `options` a managed set (the value is an array of the selected values), with `ch
 - [Tooltip](docs/components/tooltip.md): A short hint on hover or focus. It is never shown on a touch screen (no hover there), so keep the information available some other way
-- [Hint](docs/components/hint.md): A question mark that explains the text next to it: a tooltip with a mouse, a dialog with the text and a Close button on a touch screen or a phone (a tooltip has
+- [Hint](docs/components/hint.md): A question mark (or any small element you give it, such as a badge) that explains something: a tooltip with a mouse, a dialog with the text and a Close button o
 
 ## Tools
 

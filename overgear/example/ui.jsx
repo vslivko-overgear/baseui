@@ -4,6 +4,7 @@ import { ClickableCard } from '../../src/components/Card.jsx';
 import { ProductListing } from '../../src/components/ProductListing.jsx';
 import { Breadcrumbs } from '../../src/components/Breadcrumbs.jsx';
 import { Badge } from '../../src/components/Badge.jsx';
+import { Hint } from '../../src/components/Hint.jsx';
 import { IconButton } from '../../src/components/Button.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
 import { Token } from '../../src/components/Token.jsx';
@@ -177,6 +178,14 @@ export function CashbackMark() {
     </svg>
   );
 }
+/** The words that explain the cashback: the hint of the line of the summary and of every tag of it. */
+export const CASHBACK_HINT = 'Cashback is credited to your balance in OG Coins after the order is completed';
+
+/** A tag of the cashback (light yellow, the mark of OG Coins): it explains itself, a tooltip with a mouse and a dialog on a phone. Every tag of the cashback is this one. */
+export function CashbackTag({ label, size = 'md' }) {
+  return <Hint label={`About the cashback, ${label}`} content={CASHBACK_HINT}><Badge variant="warning-light" size={size} label={label} icon={<CashbackMark />} /></Hint>;
+}
+
 /** The cashback of an order, in percent of its price (paid in OG Coins). */
 export const CASHBACK = 1;
 export const cashbackOf = (amount) => (amount * CASHBACK / 100).toFixed(2);

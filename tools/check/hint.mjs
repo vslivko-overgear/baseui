@@ -43,6 +43,25 @@ for (const [width, phone] of [[390, true], [1440, false]]) {
   }
   await page.close();
 }
+// every tag of the cashback (the light yellow badge) explains itself: it is inside a hint, and a tap on it opens the same dialog
+for (const hash of ['#/offer/venomous-abyss-heroic', '#/checkout', '#/cart']) {
+  const page = await (await browser.newContext({ viewport: { width: 390, height: 800 }, hasTouch: true })).newPage();
+  await page.addInitScript((s) => { if (!localStorage.getItem('baseui-overgear')) localStorage.setItem('baseui-overgear', s); }, STATE);
+  await page.goto(`${base}/overgear/example/index.html${hash}`);
+  await page.waitForTimeout(1500);
+  const tags = await page.evaluate(() => [...document.querySelectorAll('.bui-badge--warning-light')].map((b) => !!b.closest('[data-slot="hint"]')));
+  if (!tags.length) problems.push(`phone ${hash}: no tag of the cashback on the page`);
+  if (tags.some((x) => !x)) problems.push(`phone ${hash}: a tag of the cashback does not explain itself (it is not a hint)`);
+  const tag = page.locator('[data-slot="hint"] .bui-badge--warning-light').first();
+  if (await tag.count()) {
+    await tag.scrollIntoViewIfNeeded();
+    await tag.tap();
+    await page.waitForTimeout(600);
+    const text = await page.evaluate(() => document.querySelector('[role="dialog"]')?.textContent || '');
+    if (!/Cashback is credited/.test(text)) problems.push(`phone ${hash}: a tap on the tag of the cashback does not open its hint (${text.slice(0, 40)})`);
+  }
+  await page.close();
+}
 await browser.close();
 if (problems.length) { for (const p of problems) console.log(p); console.log(`\nHint: ${problems.length} problem${problems.length === 1 ? '' : 's'}.`); process.exit(1); }
 console.log('Hint: a dialog with the text and a Close button on a phone, a tooltip with a mouse.');

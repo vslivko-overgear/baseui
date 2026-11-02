@@ -16,7 +16,7 @@ import { Bleed } from '../../src/components/Layout.jsx';
 import { go } from './util.js';
 import { OFFERS, REVIEWS, SERVICES, money, offerOf, gameOf, sold } from './data.js';
 import { ControlRow } from '../../src/components/Layout.jsx';
-import { useAddedToCart, Page, PageHead, Section, OfferListing, Stars, WishButton, CashbackMark, CASHBACK } from './ui.jsx';
+import { useAddedToCart, Page, PageHead, Section, OfferListing, Stars, WishButton, CashbackTag, CASHBACK } from './ui.jsx';
 import { useStore } from './store.jsx';
 import { Faq } from './games.jsx';
 
@@ -91,7 +91,7 @@ export function Offer({ id }) {
               <div className="og-stack">
                 <div className="og-pricerow">
                   <p className="og-price og-price--lg">{money(unit * qty)}</p>
-                  <Badge variant="warning-light" size="lg" label={`Cashback ${CASHBACK}%`} icon={<CashbackMark />} />
+                  <CashbackTag size="lg" label={`Cashback ${CASHBACK}%`} />
                 </div>
                 {qty > 1 && <p className="og-meta">{`${money(unit)} each`}</p>}
               </div>

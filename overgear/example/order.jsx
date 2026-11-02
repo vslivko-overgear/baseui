@@ -4,7 +4,6 @@ import { useState } from '../../src/react.js';
 import { Button, IconButton } from '../../src/components/Button.jsx';
 import { Card } from '../../src/components/Card.jsx';
 import { NumberInput } from '../../src/components/NumberInput.jsx';
-import { Badge } from '../../src/components/Badge.jsx';
 import { TextInput } from '../../src/components/TextInput.jsx';
 import { Dialog } from '../../src/components/Dialog.jsx';
 import { List, ListItem } from '../../src/components/List.jsx';
@@ -15,7 +14,7 @@ import { Icon } from '../../src/components/Icon.jsx';
 import { useToast } from '../../src/components/Toast.jsx';
 import { href } from './util.js';
 import { money } from './data.js';
-import { CashbackMark, cashbackOf } from './ui.jsx';
+import { CashbackMark, CashbackTag, CASHBACK_HINT, cashbackOf } from './ui.jsx';
 import { useStore } from './store.jsx';
 
 export const plural = (n) => `${n} item${n === 1 ? '' : 's'}`;
@@ -82,7 +81,7 @@ function CashbackRow({ amount }) {
     <div className="og-sum__row og-sum__row--soft">
       <span className="og-sum__label">
         Cashback you will receive
-        <Hint label="About the cashback" content="Cashback is credited to your balance in OG Coins after the order is completed" />
+        <Hint label="About the cashback" content={CASHBACK_HINT} />
       </span>
       <span className="og-sum__value og-sum__coins">{cashbackOf(amount)}<CashbackMark /></span>
     </div>
@@ -102,7 +101,7 @@ export function PayBar({ amount, action, onClick, above, inline = false }) {
 export function PayBarContent({ amount, action, onClick }) {
   return (
     <div className="og-paybar__in">
-      <p className="og-paybar__sum"><span className="og-paybar__amount">{money(amount)}</span><Badge variant="warning-light" size="md" label={`+${cashbackOf(amount)}`} icon={<CashbackMark />} aria-label={`Cashback ${cashbackOf(amount)} OG Coins`} /></p>
+      <p className="og-paybar__sum"><span className="og-paybar__amount">{money(amount)}</span><CashbackTag label={`+${cashbackOf(amount)}`} /></p>
       <Button variant="primary" size="lg" textSize={16} label={action} onClick={onClick} />
     </div>
   );

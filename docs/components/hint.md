@@ -1,6 +1,6 @@
 # Hint
 
-A question mark that explains the text next to it: a tooltip with a mouse, a dialog with the text and a Close button on a touch screen or a phone (a tooltip has no hover there)
+A question mark (or any small element you give it, such as a badge) that explains something: a tooltip with a mouse, a dialog with the text and a Close button on a touch screen or a phone (a tooltip has no hover there)
 
 ## Usage
 
@@ -23,6 +23,7 @@ A question mark that explains the text next to it: a tooltip with a mouse, a dia
 | `closeLabel` | `string` | `'Close'` | Label of the button that closes the dialog on a touch screen |
 | `size` | `number` | `16` | Size of the icon, px |
 | `placement` | `'top' \| 'bottom' \| 'left' \| 'right'` | `'top'` | Side of the tooltip with a mouse |
+| `children` | `ReactNode` | — | What to press instead of the question mark, for example a Badge: the whole thing then explains itself (a tooltip with a mouse, the dialog on a touch screen). Give it a `label` that says what it explains |
 
 ## Examples
 

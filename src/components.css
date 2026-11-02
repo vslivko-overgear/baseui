@@ -2808,6 +2808,7 @@ textarea.bui-input {
 .bui-hint { all: unset; box-sizing: border-box; cursor: pointer; display: inline-grid; place-items: center; border-radius: var(--baseui-radius-full); color: var(--baseui-text-and-icon-secondary); }
 .bui-hint:focus-visible { outline: var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color); outline-offset: var(--baseui-focus-outline-offset); }
 @media (hover: hover) { .bui-hint:hover { color: var(--baseui-text-and-icon-primary); } }
+.bui-hint--wrap { display: inline-flex; color: inherit; border-radius: inherit; }
 .bui-hint__text { margin: 0; font: var(--baseui-typography-text-16-regular); color: var(--baseui-text-and-icon-primary); }
 
 /* ---------- Glass ----------
