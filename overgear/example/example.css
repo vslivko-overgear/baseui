@@ -367,12 +367,8 @@ a { color: inherit; }
 .og-line__pic { position: relative; width: 56px; height: 56px; border-radius: var(--baseui-radius-lg); overflow: hidden; display: grid; place-items: center; background: var(--baseui-background-tertiary); }
 .og-line__pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .og-line__body { display: flex; flex-direction: column; gap: var(--baseui-spacing-1); min-width: 0; }
-.og-line__side { align-self: stretch; display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; gap: var(--baseui-spacing-3); }   /* the price on top, the quantity and the bin at the bottom */
-.og-line__qty { width: 136px; }
-/* on a phone the price, the quantity and the bin are a row of their own under the text: the text does not live in a narrow column beside them */
-.og--mobile .og-line { grid-template-columns: 56px minmax(0, 1fr); }
-.og--mobile .og-line__side { grid-column: 1 / -1; flex-direction: row; align-items: center; justify-content: space-between; }
-.og-line__actions { display: flex; align-items: center; gap: var(--baseui-spacing-2); }
+.og-line__head { display: flex; justify-content: space-between; gap: var(--baseui-spacing-3); }
+.og-line__qty { width: 136px; margin-top: var(--baseui-spacing-2); }   /* the quantity: a row of its own after the delivery time, in the column of the text */
 .og-line__title { font: var(--baseui-typography-text-16-semi-bold); }
 .og-line__price { font: var(--baseui-typography-text-16-semi-bold); white-space: nowrap; }
 .og-line__meta { margin: 0; display: flex; align-items: center; gap: var(--baseui-spacing-1); font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-secondary); }
