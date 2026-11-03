@@ -72,7 +72,7 @@ export function Game({ slug, service = 'hot' }) {
     return (
       <Page crumbs>
         <div className="og-stack og-stack--crumbs">
-          <Breadcrumbs items={[{ label: 'Home', href: '#/' }, { label: 'Games', href: '#/games' }, { label: game.name }]} showCurrent={false} />
+          <Breadcrumbs items={[{ label: 'Home', href: '#/' }, { label: 'Games', href: '#/games' }, { label: game.name }]} />
           <Status status="neutral" title={`${game.name} offers are on the way`} description="This example has the full catalog for World of Warcraft only" actionLabel="Open World of Warcraft" onAction={() => go('/games/wow')} />
         </div>
       </Page>

@@ -20,7 +20,7 @@ export function WalletPage({ onLogin }) {
   return (
     <Page bar>
       <div className="og-stack og-stack--xl" data-test-id="wallet-page">
-        <PageHead title="Wallet" meta="Your balance and OG Coins" />
+        <PageHead crumbs={[{ label: 'Home', href: '#/' }, { label: 'Account', href: '#/account' }, { label: 'Wallet' }]} title="Wallet" meta="Your balance and OG Coins" />
         <BalanceCard />
         <Section title="OG Coins">
           <div className="og-stack og-stack--lg" data-test-id="wallet-coins">

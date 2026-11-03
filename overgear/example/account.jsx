@@ -1,4 +1,4 @@
-import { useState, useEffect } from '../../src/react.js';
+import { useState } from '../../src/react.js';
 import { Button } from '../../src/components/Button.jsx';
 import { ButtonGroup } from '../../src/components/ButtonGroup.jsx';
 import { Card } from '../../src/components/Card.jsx';
@@ -10,14 +10,13 @@ import { Icon } from '../../src/components/Icon.jsx';
 import { Divider } from '../../src/components/Divider.jsx';
 import { List, ListItem } from '../../src/components/List.jsx';
 import { usePrefs } from './prefs.jsx';
-import { go, goReplace } from './util.js';
+import { go } from './util.js';
 import { offerOf } from './data.js';
 import { Page, PageHead, OfferListing } from './ui.jsx';
 import { useStore } from './store.jsx';
 import { Amounts } from './wallet.jsx';
 import { RankBadge, useRank } from './rank.jsx';
 import { rankLine } from './rank-core.js';
-import { useMedia } from './util.js';
 
 
 /** The value on the right of a row and the chevron after it. */
@@ -67,28 +66,11 @@ export function AccountMenu({ active, hide = [], prefs, onPick, ...rest }) {
   );
 }
 
-/** The account on a desktop: the menu on the left (the profile with the rank, the orders, the favorites, the settings), the page of the active row on the right. A phone has no menu: every row is a screen of its own. */
-export function AccountShell({ route, children }) {
-  const store = useStore();
-  if (!store.user) return children;
-  const [first] = route.parts;
-  const key = first === 'order' ? 'orders' : first === 'account' ? route.query.tab || 'settings' : first;
-  return (
-    <div className="og-acc" data-test-id="account-shell">
-      <nav className="og-acc__menu" aria-label="Account"><AccountMenu active={key} hide={['currency', 'language', 'support']} /></nav>
-      <div className="og-acc__page">{children}</div>
-    </div>
-  );
-}
-
 /** The account: a list like the profile of the real service. The orders, the favorites and the settings are screens behind its rows. */
 export function Account({ tab, onLogin }) {
   const store = useStore();
   const [name, setName] = useState(store.user?.name || '');
   const [mail, setMail] = useState(true);
-  const mobile = useMedia('(max-width: 767px)');
-  // on a desktop the account is its menu: the root opens the first page of it
-  useEffect(() => { if (!mobile && store.user && !tab) goReplace('/orders'); }, [mobile, store.user, tab]);
   // the wishlist is kept on the device, so it opens without a login
   if (!store.user && tab !== 'wishlist') {
     return (
@@ -104,7 +86,6 @@ export function Account({ tab, onLogin }) {
   const wished = store.wishlist.map(offerOf).filter(Boolean);
   const out = () => { store.logout(); go('/'); };
   if (!tab) {
-    if (!mobile) return null;
     return (
       <Page>
         <div className="og-stack og-stack--related">
@@ -121,7 +102,7 @@ export function Account({ tab, onLogin }) {
   const titles = { wishlist: 'Favorites', settings: 'Settings' };
   return (
     <Page>
-      <PageHead crumbs={tab === 'wishlist' || !mobile ? undefined : [{ label: 'Account', href: '#/account' }, { label: titles[tab] || 'Account' }]} title={titles[tab] || 'Account'} />
+      <PageHead crumbs={tab === 'wishlist' ? undefined : [{ label: 'Account', href: '#/account' }, { label: titles[tab] || 'Account' }]} title={titles[tab] || 'Account'} />
       {tab === 'wishlist' && (
         <OfferListing offers={wished} />
       )}

@@ -18,19 +18,13 @@ import { OrderPage } from './order-page.jsx';
 import { RankPage } from './rank.jsx';
 import { WalletPage } from './wallet-page.jsx';
 import { CheckoutResult } from './order-result.jsx';
-import { Account, AccountShell } from './account.jsx';
+import { Account } from './account.jsx';
 import { Info } from './info.jsx';
 
 // the global settings come from the Theme page; the bottom bar and the dropdowns have local ones that can be switched off there
 startOvergearTheme();
 
-/** The pages behind the account on a desktop sit in its menu layout. */
 function Body({ route, onLogin, mobile }) {
-  const page = <Pages route={route} onLogin={onLogin} mobile={mobile} />;
-  return !mobile && ['account', 'orders', 'order', 'rank', 'wallet'].includes(route.parts[0]) ? <AccountShell route={route}>{page}</AccountShell> : page;
-}
-
-function Pages({ route, onLogin, mobile }) {
   const [first, second, third] = route.parts;
   if (!first) return <Home />;
   // the catalog is a classifier of the pages; the listings (games) are the shop with the products

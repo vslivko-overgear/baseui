@@ -410,7 +410,7 @@ export function OrderPage({ link, onLogin }) {
     <Page bar>
       <div className="og-stack og-stack--xl" data-test-id="order-page" data-status={order.status}>
         <div className="og-stack og-stack--crumbs">
-          <Breadcrumbs items={[{ label: 'Home', href: href('/') }, { label: 'My orders', href: href('/orders') }, { label: order.title }]} showCurrent={false} />
+          <Breadcrumbs items={[{ label: 'Home', href: href('/') }, { label: 'My orders', href: href('/orders') }, { label: order.title }]} />
           <div className="og-stack og-stack--hair">
             <h1 className="og-title" data-test-id="order-title">{order.title}</h1>
             <p className="og-text" data-test-id="order-meta">{`Order ID ${order.link} · Created ${dateTime(order.createdAt)}`}</p>

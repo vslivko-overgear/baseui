@@ -618,11 +618,6 @@ a { color: inherit; }
 .og-bullets--num li::before { content: counter(og-n) "."; flex: none; min-width: 2ch; }
 .og--mobile .og-rank__now { flex-wrap: wrap; }
 
-/* the account on a desktop: the menu on the left, the active page on the right */
-.og-acc { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: var(--baseui-spacing-10); align-items: start; padding-block: var(--baseui-spacing-8) var(--baseui-spacing-16); }
-.og-acc__menu { position: sticky; top: calc(var(--og-header-h, 72px) + var(--baseui-spacing-4)); }
-.og-acc__page { min-width: 0; }
-.og-acc .og-page, .og-acc .og-page--crumbs { padding-block: 0; }
 /* the profile popup is drawn like the panel of a Dropdown: 4px between the panel and the rows (the rows bleed 12px, so 16px of side padding), radius 20px, rows 16px */
 .og-acc__pop { width: 360px; max-width: calc(100vw - 2 * var(--baseui-spacing-3)); padding: var(--baseui-spacing-1) var(--baseui-spacing-4); border-radius: var(--baseui-radius-custom-20); }
 .og-acc__div { margin-block: var(--baseui-spacing-2); }

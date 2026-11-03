@@ -10,7 +10,7 @@ import { Link } from '../../src/components/Link.jsx';
 import { List, ListItem } from '../../src/components/List.jsx';
 import { ProgressBar } from '../../src/components/ProgressBar.jsx';
 import { Status } from '../../src/components/Status.jsx';
-import { go, href, useMedia } from './util.js';
+import { go, href } from './util.js';
 import { money } from './data.js';
 import { Page, PageHead, Section } from './ui.jsx';
 import { useStore } from './store.jsx';
@@ -73,14 +73,13 @@ export function RankPage({ onLogin }) {
   const store = useStore();
   const rank = useRank();
   const [history, setHistory] = useState(false);
-  const mobile = useMedia('(max-width: 767px)');
   if (!store.user) return <Page fill><Status status="neutral" icon={<Icon name="Star01" size={28} />} title="Sign in to see your rank" description="Your rank depends on what you spend" actionLabel="Sign in" onAction={onLogin} /></Page>;
   const { grade, paid, progress } = rank;
   const { next } = progress;
   return (
     <Page bar>
       <div className="og-stack og-stack--xl" data-test-id="rank-page" data-rank={grade.code}>
-        <PageHead crumbs={mobile ? [{ label: 'Home', href: '#/' }, { label: 'Account', href: '#/account' }, { label: 'Your Rank' }] : undefined} title="Your Rank" meta="Your rank impacts cashback rates, shipping priority, and other perks" />
+        <PageHead crumbs={[{ label: 'Home', href: '#/' }, { label: 'Account', href: '#/account' }, { label: 'Your Rank' }]} title="Your Rank" meta="Your rank impacts cashback rates, shipping priority, and other perks" />
         <Card variant="surface" padding={5}>
           <div className="og-stack og-stack--lg">
             <div className="og-rank__now">

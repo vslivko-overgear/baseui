@@ -21,7 +21,7 @@ const BADGE_VARIANT = { 'Hot Offer': 'error', Sale: 'success', 'Save More': 'inf
 export function PageHead({ crumbs, title, meta, media, children }) {
   return (
     <div className={`og-stack ${crumbs ? 'og-stack--crumbs' : 'og-stack--close'}`}>
-      {crumbs && <Breadcrumbs items={crumbs} showCurrent={false} />}
+      {crumbs && <Breadcrumbs items={crumbs} />}
       <div className={media ? 'og-head-row' : undefined}>
         {media}
         <div className="og-stack og-stack--hair">
