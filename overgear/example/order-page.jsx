@@ -24,7 +24,7 @@ import { Page, PageHead } from './ui.jsx';
 import { useStore } from './store.jsx';
 import { reorderPath } from './orders.jsx';
 import {
-  ORDER_STATUS as S, statusLabel, statusBadge, statusText, panelTone, orderSteps, progressTone, buyerActions, isPaused, isClosed, isKYC, timeLeft, leftText, isDelayed, autoCompleteAt, tipsOpen, showReview,
+  ORDER_STATUS as S, statusLabel, statusBadge, statusText, panelTone, orderTimeline, progressTone, buyerActions, isPaused, isClosed, isKYC, timeLeft, leftText, isDelayed, autoCompleteAt, tipsOpen, showReview,
   showJoinPanel, hasUnfilledDelivery, deliveryErrors, fillDelivery, MIN_REVIEW, MAX_REVIEW, reviewError, reviewReady, askTrustpilot, addReview, addTip, confirmDelivery, cancelOrder, openDispute, confirmLockLeft,
   nextEvents, applyEvent, cardDate,
 } from './order-core.js';
@@ -42,7 +42,10 @@ const dateTime = (t) => new Date(t).toLocaleString('en-US', { month: 'short', da
 
 /** The timeline of the order: a segment for each step, filled as far as the step is done, in the color of the state of the order. */
 function Steps({ order, now }) {
-  const { steps, current } = orderSteps(order, now);
+  const line = orderTimeline(order, now);
+  if (!line) return null;
+  if (line.kind === 'bar') return <ProgressBar size="sm" color={line.tone} value={100} aria-label="Order progress" data-test-id="order-steps" />;
+  const { steps, current } = line;
   const tone = progressTone(order, now);
   return (
     <ol className="og-osteps" aria-label="Order progress" data-test-id="order-steps" style={{ '--steps': steps.length }}>
@@ -316,7 +319,8 @@ function Next({ order, now, onEvent }) {
             <li key={e.id}><Badge variant="secondary" size="sm" label={WHO[e.who]} /><Button variant="secondary" size="md" label={e.label} onClick={() => onEvent(e.id)} data-test-id={`order-event-${e.id}`} /></li>
           ))}
         </ul>
-      ) : <p className="og-meta">Nothing more happens to this order</p>}
+      ) : !hasUnfilledDelivery(order) && <p className="og-meta">Nothing more happens to this order</p>}
+      {hasUnfilledDelivery(order) && <p className="og-meta" data-test-id="order-next-wait">The seller starts after you fill in the delivery details</p>}
     </Card>
   );
 }

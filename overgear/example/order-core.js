@@ -223,6 +223,21 @@ export const orderSteps = (order, now) => {
   const current = [...steps].reverse().find((s) => s.active)?.name ?? '';
   return { steps: steps.map(({ name, title, value, active }) => ({ name, title, value, active })), current };
 };
+/**
+ * What the page draws above the status (the real service, StatePanel): while the order is new or in progress, the steps and after them "Completed" (not reached); a completed order is one full green bar; a failed or cancelled one is a
+ * red bar; one in arbitration or pending is an orange bar.
+ */
+export const orderTimeline = (order, now) => {
+  const { state } = order;
+  if (state === T.NEW || state === T.IN_PROGRESS) {
+    const { steps, current } = orderSteps(order, now);
+    return { kind: 'steps', steps: [...steps, { name: 'completed', title: 'Completed', value: 0, active: false }], current };
+  }
+  if (state === T.COMPLETED) return { kind: 'bar', tone: 'success' };
+  if ([T.FAILED, T.CANCELLED].includes(state)) return { kind: 'bar', tone: 'error' };
+  if ([T.ARBITRAGE, T.PENDING].includes(state)) return { kind: 'bar', tone: 'warning' };
+  return null;
+};
 const ARBITRATABLE = [S.IN_PROGRESS, S.WAIT_SCREENSHOTS, S.CONFIRM_DELIVERY, S.KYC_LOCK, S.KYC_WATCH];
 
 /** The color of the timeline: red for an order that failed, orange for one that waits, green for the rest; an order in progress that is late is orange. */
@@ -431,6 +446,11 @@ export const etaSeconds = (text) => {
  * cancel, a dispute) are not here: the page makes them.
  */
 export const nextEvents = (order, now) => {
+  const events = eventsOf(order, now);
+  // the seller does not start before the buyer has given the delivery details: until then the order waits (the page tells it)
+  return hasUnfilledDelivery(order) ? events.filter((e) => !['view', 'accept'].includes(e.id)) : events;
+};
+const eventsOf = (order, now) => {
   const { status } = order;
   const e = (id, label, who) => ({ id, label, who });
   switch (status) {
@@ -450,7 +470,8 @@ export const applyEvent = (order, id, now) => {
     case 'view': return move(order, S.SELLER_RECEIVED, now);
     case 'reject': return move(order, S.REJECTED, now);
     case 'error': return move(order, S.ERROR, now);
-    case 'accept': return move(order, S.IN_PROGRESS, now, { acceptedAt: now, boosterAssigned: true });
+    // the demo shortens the time of the work (at most 2 minutes), so the bar of "In progress" moves while you watch
+    case 'accept': return move(order, S.IN_PROGRESS, now, { acceptedAt: now, boosterAssigned: true, duration: Math.min(order.duration, 120) });
     case 'deliver': return move(order, S.CONFIRM_DELIVERY, now, { deliveredAt: now, files: order.files.length ? order.files : ['proof-1', 'proof-2'] });
     case 'late': return { ...order, acceptedAt: now - order.duration * 1000 - 1000, frozenAt: null, resumedAt: null };
     case 'pause': return move(order, S.KYC_WATCH, now, { frozenAt: now, resumedAt: null });
