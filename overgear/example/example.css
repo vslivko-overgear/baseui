@@ -281,7 +281,7 @@ a { color: inherit; }
 .og-trust { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--bui-rel-related); }
 .og-trust li { display: flex; gap: var(--baseui-spacing-3); align-items: flex-start; }
 .og-trust svg { flex: none; color: var(--baseui-extensions-text-and-icon-success); }   /* the icons of the trust block are green */
-.og-trust .og-stack--hair { gap: var(--baseui-spacing-0-5, 2px); }   /* the title and its line are closer */
+.og-trust .og-stack--hair { gap: 0; }   /* the title and its line stand together */
 .og-trust__title { margin: 0; font: var(--baseui-typography-text-14-semi-bold); color: var(--baseui-text-and-icon-primary); }
 .og-art__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
