@@ -239,7 +239,7 @@ export function Footer() {
       <div className="og-wrap og-stack og-stack--lg">
         <PaymentLogos items={PAY_MAIN} />
         <Divider />
-        <div className="og-row og-row--between">
+        <div className="og-row og-row--between og-footer__brand">
           <svg width="0" height="0" aria-hidden="true" focusable="false" style={{ position: 'absolute' }}>
             <filter id="og-tint" colorInterpolationFilters="sRGB"><feFlood style={{ floodColor: 'var(--baseui-text-and-icon-secondary)' }} /><feComposite in2="SourceAlpha" operator="in" /></filter>
           </svg>

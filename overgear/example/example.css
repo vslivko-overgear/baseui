@@ -276,7 +276,10 @@ a { color: inherit; }
 /* the social buttons of the footer: the secondary text color, the mark in the color of the footer background */
 .og-social [data-slot="icon-button"], .og-social [data-slot="icon-button"] svg { color: var(--baseui-background-secondary); }
 .og-social [data-slot="icon-button"] { background: var(--baseui-text-and-icon-secondary); }
-.og-social [data-slot="icon-button"]:hover { background: var(--baseui-text-and-icon-primary); }
+/* the hover is the one of a mouse only (a touch leaves no stuck state) and it has to beat the hover of the secondary button, which paints the button dark under a dark mark */
+@media (hover: hover) { .og-social [data-slot="icon-button"][data-variant]:hover:not(:disabled):not([data-disabled]) { background-color: var(--baseui-text-and-icon-primary); } }
+/* on a phone the logo and the networks are one row too tight: 24px between them when they wrap */
+.og--mobile .og-footer__brand { row-gap: var(--baseui-spacing-6); }
 
 .og-trust { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--bui-rel-related); }
 .og-trust li { display: flex; gap: var(--baseui-spacing-3); align-items: flex-start; }
