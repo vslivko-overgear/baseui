@@ -22,7 +22,7 @@ export function Amounts() {
   const store = useStore();
   return (
     <span className="og-amounts">
-      <span className="og-amounts__coins"><Icon name="Wallet01" size={20} />{money(store.balance)}</span>
+      <span className="og-amounts__coins"><Icon name="PlusCircle" size={20} filled />{money(store.balance)}</span>
       <span className="og-amounts__coins"><CashbackMark />{coinsText(store.coins)}</span>
     </span>
   );
@@ -44,14 +44,13 @@ export function WalletButton() {
     )}>
       <div className="og-wallet" onMouseEnter={() => hover(true)} onMouseLeave={() => hover(false)} data-test-id="wallet-card">
         <dl className="og-info">
-          <div className="og-info__row"><dt className="og-text">Your balance</dt><dd>{money(store.balance)}</dd></div>
-          <div className="og-info__row"><dt className="og-text">OG Coins</dt><dd className="og-wallet__coins"><CashbackMark />{coinsText(store.coins)}</dd></div>
+          <div className="og-info__row"><dt>Your balance</dt><dd>{money(store.balance)}</dd></div>
+          <div className="og-info__row"><dt>OG Coins</dt><dd className="og-wallet__coins"><CashbackMark />{coinsText(store.coins)}</dd></div>
         </dl>
         <Button variant="primary" size="md" width="100%" label="Top Up Balance" onClick={() => { clearTimeout(timer.current); setOpen(false); openTopUp(); }} data-test-id="wallet-top-up" />
-        <Divider />
-        <div className="og-stack og-stack--close">
-          <p className="og-text">{`1 coin = $1. Coins can be used for purchases`}</p>
-          <Link href={href('/info/loyalty')} onClick={() => setOpen(false)} data-test-id="wallet-loyalty">More about loyalty</Link>
+        <div className="og-stack og-stack--close og-wallet__note">
+          <p>1 coin = $1. Coins can be used for purchases</p>
+          <Link href="https://loyalty.overgear.com/" target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)} data-test-id="wallet-loyalty">More about loyalty</Link>
         </div>
       </div>
     </Popover>

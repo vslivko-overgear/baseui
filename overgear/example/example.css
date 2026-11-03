@@ -446,7 +446,7 @@ a { color: inherit; }
 .og-reviews .bui-list__subtitle { color: var(--baseui-text-and-icon-primary); }
 
 /* the balance: the money and the OG Coins side by side in the button of the header, and the card of the account tab of a phone */
-.og-amounts { display: inline-flex; align-items: center; gap: var(--baseui-spacing-3); font: var(--baseui-typography-text-14-regular); }   /* regular, all in the color of the button: the money and the coins are one line */
+.og-amounts { display: inline-flex; align-items: center; line-height: 20px; gap: var(--baseui-spacing-3); font: var(--baseui-typography-text-14-regular); }   /* regular, all in the color of the button: the money and the coins are one line */
 .og-amounts__coins { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); }
 .og-balance { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--baseui-spacing-4); }
 .og-balance__money, .og-balance__coin { margin: 0; font: var(--baseui-typography-header-28); font-family: var(--baseui-typography-headline-font-family); }
@@ -552,6 +552,12 @@ a { color: inherit; }
 .og-osteps .bui-progress__track { width: 100%; }
 
 /* the balance of the header: the card that opens on hover (the balance, the coins, the top-up, what the coins are) and the top-up with its bonus */
+.og-wallet .og-info { gap: var(--baseui-spacing-2); }
+.og-wallet .og-info dt, .og-wallet .og-info dd { margin: 0; font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-primary); }   /* the name and the value of a row are one size */
+.og-wallet .og-info dd { font: var(--baseui-typography-text-14-semi-bold); }
+.og-wallet__note { font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-secondary); }   /* what a coin is and the way to the loyalty program: 14px, secondary */
+.og-wallet__note p { margin: 0; }
+.og-wallet__note a { font: inherit; color: inherit; }
 .og-wallet { width: 280px; display: flex; flex-direction: column; gap: var(--baseui-spacing-4); padding: var(--baseui-spacing-1); }
 .og-wallet__coins { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); }
 .og-topup__bonus { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--baseui-spacing-3); }
