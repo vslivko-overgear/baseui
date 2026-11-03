@@ -7,6 +7,7 @@ import { auditConstitution, contrastRatio } from '../src/constitution/audit.js';
 import { auditTabs } from '../src/constitution/audit-tabs.js';
 import { Button, ConstitutionBanner, Tabs } from '../src/index.jsx';
 import { useState } from 'react';
+import { CHECKS } from '../tools/check/manifest.mjs';
 
 describe('constitution', () => {
   // The constitution: its data is consistent, the audit finds what it claims to, the banner shows it.
@@ -429,7 +430,7 @@ describe('checks', () => {
   // `auto` or `tool`; a script named by a rule is one that tools/check/all.mjs runs, and every script it runs belongs to a rule; a default for agents names rules that exist.
   const read = (path) => readFileSync(path, 'utf8');
   const idsFound = (path) => new Set([...read(path).matchAll(/\badd\('([A-Z]+\d+)'/g)].map((m) => m[1]));
-  const runners = [...read('tools/check/all.mjs').matchAll(/\['[\w-]+', '(tools\/check\/[\w.-]+)'\]/g)].map((m) => m[1]);
+  const runners = CHECKS.map((c) => c.script).filter((s) => s.startsWith('tools/'));   // the shared checks; those of a sublibrary are tested in its own directory
 
   describe('rules and their checks', () => {
     test('a rule marked auto or partial is found by the audit, and the audit finds nothing else', () => {
@@ -454,6 +455,15 @@ describe('checks', () => {
       const named = new Set(RULES.flatMap((r) => [r.tool, ...(r.tools || [])]).filter(Boolean));
       // the audit of the constitution runs on every rule marked auto, and its fixtures keep it honest: neither has a `tool` of its own
       for (const script of runners.filter((s) => !['tools/check/constitution.mjs', 'tools/check/fixtures.mjs'].includes(s))) expect(named.has(script), `${script} serves no rule`).toBe(true);
+    });
+
+    test('the list of the checks names scripts that exist, each once, with a cost and the files it watches', () => {
+      expect(new Set(CHECKS.map((c) => c.name)).size).toBe(CHECKS.length);
+      for (const c of CHECKS) {
+        expect(existsSync(c.script), `${c.name}: ${c.script}`).toBe(true);
+        expect(c.cost, `${c.name} has no cost`).toBeGreaterThan(0);
+        expect(c.touches?.length, `${c.name} watches no file`).toBeGreaterThan(0);
+      }
     });
 
     test('a rule names its extra scripts only as a list', () => {

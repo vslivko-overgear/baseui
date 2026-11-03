@@ -29,6 +29,20 @@ This repository is the baseui design system. When you build an interface or a pr
    - **Button groups.** Put the buttons of one decision in a `ButtonGroup` and let it lay them out: horizontal is a row, vertical is a column in which every button is full width. Do not set a width on each button of a stack, and give the group one primary button
    - **Forms.** Lay out the fields of a form with `Form`, `FormRow` and `FormSection`: one gap between rows and columns, related fields in a row, a titled group as a section. Do not space fields with a Stack and a Grid of your own
 
+## Verify by the size of the change
+
+- Run `node tools/check/plan.mjs`: it reads the changed files and prints the tier of the change and the commands that tier calls for (`--run` runs them, `--full` adds the slow checks). The list of the checks, with what each costs and which files it watches, is `tools/check/manifest.mjs`
+- **T0**, text only (documents, copy, pictures): nothing to run
+- **T1**, one page of the example (a local look): the unit tests of the example and the quick checks that name the file; then look at the page (a screenshot at 1440 and 390 px): a local change is judged by eye, not by an audit
+- **T2**, a shared part of the example (ui, shell, store, the cores, the audience, the theme): all the unit tests and the checks that name the file, the slow ones too
+- **T3**, baseui itself (tokens, styles, components, icons, the rules, the tools): the unit tests, the build, the types and every check that names the file, the slow ones too
+- Say the tier and why in your answer. Do not run the slow audits (the constitution, spacing and radii checks take one to three minutes each) for a local tweak, and do not skip a check that the plan lists for a shared or global change
+
+## When a decision changes
+
+- When a person reverses a decision that a rule or a check holds, change the rule and the check in the same commit: retire the id (an id is never reused) and write the new decision, instead of leaving a check that fails or a rule that says the opposite
+- When the same property of the same kind of thing is changed a third time (a gap, a padding, a radius, a color), stop and say that it should be a rule, a default or a token; add it to the constitution, to `AGENT_DEFAULTS` or to the sublibrary, with a check where one can be written
+
 ## Scope of rules
 
 - Shared rules in `src/constitution/rules.js` must apply across products. Store-specific navigation, commerce and brand decisions belong to the product sublibrary, not to the shared constitution, defaults, component usage guidance or audit tools

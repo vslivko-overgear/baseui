@@ -2,12 +2,14 @@
 // Runs every browser check (fixtures: the audit finds what it should; the others look for violations on real pages) against a static server it starts itself (so nothing has to be running), and exits 1 if any of them finds something.
 //
 //   node tools/check/all.mjs            # radii, sizes, fixtures, constitution, spacing (the templates), Overgear spacing
-//   node tools/check/all.mjs radii      # only the ones whose name contains the word
+//   node tools/check/all.mjs radii      # only the ones whose name contains the word (several: radii,sizes)
+//   node tools/check/plan.mjs --run     # only the ones the changed files call for
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { spawn } from 'node:child_process';
 import { extname, join, normalize } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { CHECKS } from './manifest.mjs';
 
 const root = join(fileURLToPath(new URL('.', import.meta.url)), '..', '..');
 const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.woff2': 'font/woff2', '.woff': 'font/woff', '.otf': 'font/otf', '.ttf': 'font/ttf', '.md': 'text/plain' };
@@ -24,29 +26,11 @@ const server = createServer(async (req, res) => {
 await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
 const base = `http://127.0.0.1:${server.address().port}`;
 
-const CHECKS = [
-  ['radii', 'tools/check/radii.mjs'],
-  ['sizes', 'tools/check/sizes.mjs'],
-  ['fixtures', 'tools/check/fixtures.mjs'],
-  ['sheets', 'tools/check/sheets.mjs'],
-  ['constitution', 'tools/check/constitution.mjs'],
-  ['spacing', 'tools/check/spacing.mjs'],
-  ['overgear-spacing', 'overgear/tools/check/spacing.mjs'],
-  ['overgear-tiles', 'overgear/tools/check/tiles.mjs'],
-  ['overgear-catalog', 'overgear/tools/check/catalog.mjs'],
-  ['overgear-search', 'overgear/tools/check/search.mjs'],
-  ['overgear-wallet', 'overgear/tools/check/wallet.mjs'],
-  ['overgear-paybar', 'overgear/tools/check/paybar.mjs'],
-  ['overgear-checkout', 'overgear/tools/check/checkout.mjs'],
-  ['dialog-focus', 'tools/check/dialog-focus.mjs'],
-  ['hint', 'tools/check/hint.mjs'],
-  ['breadcrumbs', 'tools/check/breadcrumbs.mjs'],
-  ['overgear-order', 'overgear/tools/check/order.mjs'],
-  ['overgear-orders', 'overgear/tools/check/orders.mjs'],
-];
 const only = process.argv[2];
 let failed = 0;
-for (const [name, script] of CHECKS.filter(([n]) => !only || n.includes(only))) {
+// `only` is a word, or several words with commas (the names of tools/check/manifest.mjs): one word: the checks whose name contains it; several: exactly those names
+const words = only ? only.split(',') : [];
+for (const { name, script } of CHECKS.filter((c) => !words.length || (words.length === 1 ? c.name.includes(words[0]) : words.includes(c.name)))) {
   console.log(`\n== ${name}`);
   const code = await new Promise((resolve) => spawn('node', [script, base], { cwd: root, stdio: 'inherit' }).on('exit', resolve));
   if (code) { failed++; console.log(`-- ${name} failed (exit ${code})`); }

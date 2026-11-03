@@ -2,7 +2,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, test } from 'vitest';
 import { RULES as BASE_RULES, rule as baseRule } from '../../src/constitution/rules.js';
-import { RULES, APPLICABLE_RULES, rule } from '../constitution/rules.js';
+import { RULES, APPLICABLE_RULES, RETIRED, rule } from '../constitution/rules.js';
 import { listingBalance, spacingBalance } from '../tools/audits/spacing-balance.js';
 import { render, screen } from '@testing-library/react';
 import { ConstitutionBanner as BaseBanner } from '../../src/components/ConstitutionBanner.jsx';
@@ -106,5 +106,19 @@ describe('banner', () => {
     test('the shared banner does not silently accept store ids', () => {
       expect(() => render(<BaseBanner violations={['OG3']} />)).toThrow(/Unknown/);
     });
+  });
+});
+
+describe('the checks of the rules', () => {
+  test('every script a rule of Overgear names is in the list of the checks, and exists', async () => {
+    const { CHECKS } = await import('../../tools/check/manifest.mjs');
+    const scripts = new Set(CHECKS.map((c) => c.script));
+    for (const r of RULES.filter((x) => x.tool)) {
+      expect(existsSync(r.tool), `${r.id}: ${r.tool}`).toBe(true);
+      expect(scripts.has(r.tool), `${r.id}: ${r.tool} is not in tools/check/manifest.mjs`).toBe(true);
+    }
+  });
+  test('a retired id is not a rule', () => {
+    for (const id of Object.keys(RETIRED)) expect(RULES.some((r) => r.id === id), id).toBe(false);
   });
 });
