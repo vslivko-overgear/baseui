@@ -198,6 +198,7 @@ export function Offer({ id }) {
             </Card>
           </div>
         </div>
+      <Section title="Questions"><Faq /></Section>
     </Page>
   );
 }
