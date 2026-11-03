@@ -11,7 +11,7 @@ import { List, ListItem } from '../../src/components/List.jsx';
 import { ProgressBar } from '../../src/components/ProgressBar.jsx';
 import { Status } from '../../src/components/Status.jsx';
 import { Table, pixel, proportional } from '../../src/components/Table.jsx';
-import { go, href } from './util.js';
+import { go, href, useMedia } from './util.js';
 import { money } from './data.js';
 import { Page, PageHead } from './ui.jsx';
 import { useStore } from './store.jsx';
@@ -53,11 +53,12 @@ function Flag({ on }) {
 
 /** The perks: what the rank gives now, and what the next one will (the Table of the design system). */
 function BenefitsTable({ grade, next }) {
+  const wide = useMedia('(max-width: 767px)') ? 72 : 160;   // the columns of the values: wider on a desktop
   const cell = (b, g) => (b.kind === 'percent' ? <strong>{benefitValue(b, g)}</strong> : <Flag on={benefitValue(b, g)} />);
   const columns = [
     { key: 'name', header: 'Benefits', width: proportional(1, { minWidth: 100 }), renderCell: (b) => <span className="og-rtable__name">{b.name}{b.hint && <Hint label={`About ${b.name}`} content={b.hint} />}</span> },
-    { key: 'now', header: 'Now', align: 'center', width: pixel(72), renderCell: (b) => cell(b, grade) },
-    ...(next ? [{ key: 'next', header: 'Next', align: 'center', width: pixel(72), renderCell: (b) => cell(b, next) }] : []),
+    { key: 'now', header: 'Now', align: 'center', width: pixel(wide), renderCell: (b) => cell(b, grade) },
+    ...(next ? [{ key: 'next', header: 'Next', align: 'center', width: pixel(wide), renderCell: (b) => cell(b, next) }] : []),
   ];
   return <Table data={BENEFITS} columns={columns} rowKey="uid" caption="Benefits of the rank" data-test-id="rank-benefits" />;
 }

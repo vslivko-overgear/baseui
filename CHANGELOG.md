@@ -2,6 +2,7 @@
 
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
+- **Overgear, the table of the perks of the rank: the columns "Now" and "Next" are 160px wide on a desktop** (72px, as before, on a phone). Overgear checks were not run.
 - **Overgear, the rank page: in the line under the progress bar the subtitles ("to level up", "Next rank") stand close to their titles** (the gap is 0, it was 4px). Overgear checks were not run.
 - **Overgear, the rank page: the heading "How do ranks work?" is inside its card** (as in "Why Players Choose Overgear" on the offer page), with the three points under it. Overgear checks were not run.
 - **Overgear, "You may also like" on the offer page is an endless list with bigger cards:** all the other offers (the same service first, then the game, then the most sold of the others), two rows at the start and the next rows as the end of the list comes into view; the cards are at least 280px wide (four in a row on a desktop, five before). Overgear checks were not run.
