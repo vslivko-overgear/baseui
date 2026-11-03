@@ -2,6 +2,7 @@
 
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
+- **Overgear, the offer page has a block of selling points between the head and the form:** a surface with the first three points of the offer in a row, each with an icon (they wrap on a phone). Overgear checks were not run.
 - **Overgear, "You may also like" has four offers on every offer page, so the row is full:** the same service first, then the other offers of the game, then the most sold ones of the other games (some games have two or three offers only). Overgear checks were not run.
 - **Overgear, "You may also like" on the offer page is a plain section again (not a card):** the title and the listing of four offers, the button "Discover all" under it. Overgear checks were not run.
 - **Overgear, the offer page: only the part after the form follows the structure of the real product pages** (the head, the form with the options and the right column are as they were): "Your wins", "How does it work?" (3 steps), "Why Players Choose Overgear" (4 promises in a card), "What players say about Overgear" (reviews as cards), "You may also like" (with "Discover all"), "Create Your Custom Offer!", the texts ("About", "What the service includes") and the questions replace "About this offer", "Requirements", the reviews list, "Similar offers" and "Questions". Overgear checks were not run.

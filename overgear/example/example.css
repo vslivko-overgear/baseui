@@ -646,3 +646,7 @@ a { color: inherit; }
 .og-custom__act { align-items: center; }
 .og-custom__reply { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); }
 .og-custom__reply b { color: var(--baseui-text-and-icon-primary); font: var(--baseui-typography-text-14-semi-bold); }
+/* the selling points of the offer, between the head and the form */
+.og-usp { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--baseui-spacing-3) var(--baseui-spacing-6); font: var(--baseui-typography-text-16-semi-bold); color: var(--baseui-text-and-icon-primary); }
+.og-usp li { display: flex; align-items: center; gap: var(--baseui-spacing-2); }
+.og-usp svg { flex: none; }
