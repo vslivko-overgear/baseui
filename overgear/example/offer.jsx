@@ -13,7 +13,7 @@ import { Avatar } from '../../src/components/Avatar.jsx';
 import { List, ListItem } from '../../src/components/List.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
 import { Bleed } from '../../src/components/Layout.jsx';
-import { go } from './util.js';
+import { go, useMedia } from './util.js';
 import { OFFERS, REVIEWS, SERVICES, money, offerOf, gameOf, sold } from './data.js';
 import { useAddedToCart, Page, PageHead, Section, OfferListing, Stars, WishButton, CashbackTag, CASHBACK, PaymentLogos, PAY_OFFER } from './ui.jsx';
 import { useStore } from './store.jsx';
@@ -52,6 +52,7 @@ export function Offer({ id }) {
   const [difficulty, setDifficulty] = useState('heroic');
   const [extras, setExtras] = useState([]);
   const [qty, setQty] = useState(1);
+  const mobile = useMedia('(max-width: 767px)');
   const [reviewsShown, setReviewsShown] = useState(4);
   const [note, setNote] = useState('');
   if (!offer) return <Page><Status status="neutral" title="Offer not found" actionLabel="All games" onAction={() => go('/catalog')} /></Page>;
@@ -82,11 +83,19 @@ export function Offer({ id }) {
         <div className="og-split og-split--right">
           <div className="og-stack og-stack--xl">
             <div className="og-stack">
-            <Card variant="surface" padding={3} data-test-id="offer-usp">
+            {mobile ? <Bleed scroll>
+            <Card variant="surface" padding={3} className="og-uspcard" data-test-id="offer-usp">
               <ul className="og-usp">
                 {offer.bullets.slice(0, 3).map((b, i) => <li key={b}><Icon name={USP_ICONS[i]} size={20} /><span>{b}</span></li>)}
               </ul>
             </Card>
+            </Bleed> : (
+            <Card variant="surface" padding={3} className="og-uspcard" data-test-id="offer-usp">
+              <ul className="og-usp">
+                {offer.bullets.slice(0, 3).map((b, i) => <li key={b}><Icon name={USP_ICONS[i]} size={20} /><span>{b}</span></li>)}
+              </ul>
+            </Card>
+            )}
             <Card variant="surface" padding={5}>
               <div className="og-stack og-stack--lg">
                   <SegmentedControl label="Difficulty" fullWidth size="sm" value={difficulty} onValueChange={setDifficulty} items={DIFFICULTY.map((d) => ({ value: d.value, label: d.label }))} />

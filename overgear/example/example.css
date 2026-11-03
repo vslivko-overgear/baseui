@@ -656,9 +656,9 @@ a { color: inherit; }
 .og-usp svg { flex: none; }
 /* dividers between the selling points: vertical in a row, horizontal in a column on a phone */
 .og-usp li + li { padding-inline-start: var(--baseui-spacing-6); border-inline-start: 1px solid var(--baseui-border-primary); }
-/* on a phone the points scroll sideways, each one as wide as its text; the dividers stay vertical */
-.og--mobile .og-usp { flex-wrap: nowrap; overflow-x: auto; gap: 0; scrollbar-width: none; }
-.og--mobile .og-usp::-webkit-scrollbar { display: none; }
+/* on a phone the capsule itself scrolls sideways (it is inside a Bleed), each point as wide as its text; the dividers stay vertical */
+.og--mobile .og-usp { flex-wrap: nowrap; gap: 0; font: var(--baseui-typography-text-14-semi-bold); }
+.og--mobile .og-uspcard { width: max-content; }   /* the capsule is as wide as its points and scrolls as a whole */
 .og--mobile .og-usp li { flex: none; white-space: nowrap; }
 .og--mobile .og-usp li + li { margin-inline-start: var(--baseui-spacing-4); padding-inline-start: var(--baseui-spacing-4); }
 /* on a desktop the three points are three columns of one width, with the dividers between them */
