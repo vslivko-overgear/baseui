@@ -30,12 +30,13 @@ export function useRank() {
 
 /** The picture of a rank: a shield in the color of the rank, with as many chevrons as its level. */
 export function RankBadge({ grade, size = 40 }) {
-  const chevrons = Array.from({ length: grade.level }, (_, i) => 34 - i * 6);
+  const step = grade.level > 4 ? 4.4 : 6;
+  const chevrons = Array.from({ length: grade.level }, (_, i) => +(36 - i * step).toFixed(1));
   return (
     <svg width={size} height={Math.round(size * 1.15)} viewBox="0 0 40 46" fill="none" role="img" aria-label={`${grade.name} rank`} className="og-rankbadge">
       <path d="M20 1.5 37.5 8v14.5C37.5 33 29.5 41.5 20 44.5 10.5 41.5 2.5 33 2.5 22.5V8L20 1.5Z" fill={grade.color} />
       <path d="M20 1.5 37.5 8v14.5C37.5 33 29.5 41.5 20 44.5V1.5Z" fill="#000" opacity="0.14" />
-      {chevrons.map((y) => <path key={y} d={`M13 ${y} L20 ${y - 6.5} L27 ${y}`} stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />)}
+      {chevrons.map((y) => <path key={y} d={`M13 ${y} L20 ${y - 5} L27 ${y}`} stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />)}
     </svg>
   );
 }
@@ -119,7 +120,7 @@ export function RankPage({ onLogin }) {
         <Section title="All ranks">
           <List aria-label="All ranks" data-test-id="rank-all">
             {GRADES.map((g) => (
-              <ListItem key={g.code} avatar={<RankBadge grade={g} size={32} />} subtitle={g.paidUsd ? `From ${money(g.paidUsd)} spent in 365 days · cashback ${g.cashbackPercentage}% · coins pay up to ${g.purchaseLimitPercentage}%` : `Everyone starts here · cashback ${g.cashbackPercentage}% · coins pay up to ${g.purchaseLimitPercentage}%`} details={g.code === grade.code ? <Badge variant="info" size="sm" label="Your rank" /> : undefined}>{g.name}</ListItem>
+              <ListItem key={g.code} avatar={<RankBadge grade={g} size={32} />} subtitle={g.topClients ? `Top ${g.topClients} clients by spending in 365 days · cashback ${g.cashbackPercentage}% · coins pay up to ${g.purchaseLimitPercentage}%` : g.paidUsd ? `From $${g.paidUsd.toLocaleString('en-US')} spent in 365 days · cashback ${g.cashbackPercentage}% · coins pay up to ${g.purchaseLimitPercentage}%` : `Everyone starts here · cashback ${g.cashbackPercentage}% · coins pay up to ${g.purchaseLimitPercentage}%`} details={g.code === grade.code ? <Badge variant="info" size="sm" label="Your rank" /> : undefined}>{g.name}</ListItem>
             ))}
           </List>
         </Section>

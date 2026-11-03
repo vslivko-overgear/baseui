@@ -39,7 +39,7 @@ function Preferences({ before, children }) {
   );
 }
 
-/** The profile row: the avatar with the picture of the rank at its corner, the nick, and the rank under it ("Rank: Knight"); a click opens the page of the rank. */
+/** The profile row: the avatar with the picture of the rank at its corner, the nick, and the rank under it ("Rank: Guardian"); a click opens the page of the rank. */
 function ProfileRow() {
   const store = useStore();
   const { grade } = useRank();

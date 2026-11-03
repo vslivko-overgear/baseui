@@ -11,21 +11,22 @@ describe('rank-core', () => {
     expect(spentLastYear(orders, now)).toBe(100);
   });
   it('picks the highest reached rank', () => {
-    expect(gradeFor(0).code).toBe('shield');
-    expect(gradeFor(250).code).toBe('knight');
+    expect(gradeFor(0).code).toBe('guardian');
+    expect(gradeFor(100).code).toBe('gladiator');
+    expect(gradeFor(1000).code).toBe('epic-hero');
     expect(gradeFor(99999).code).toBe('legend');
   });
   it('shows the way to the next rank', () => {
-    const p = progressTo(125, GRADES[0]);
-    expect(p.left).toBe(125);
+    const p = progressTo(50, GRADES[0]);
+    expect(p.left).toBe(50);
     expect(p.percentage).toBe(50);
-    expect(progressTo(20000, GRADES[4]).isMax).toBe(true);
+    expect(progressTo(20000, GRADES[6]).isMax).toBe(true);
   });
   it('builds the history, newest first, with a fall back when old orders leave the year', () => {
-    const h = rankHistory([done(300, 300)], now);
-    expect(h.map((e) => e.grade.code)).toEqual(['shield', 'knight']);
+    const h = rankHistory([done(120, 300)], now);
+    expect(h.map((e) => e.grade.code)).toEqual(['guardian', 'gladiator']);
   });
   it('writes the line of the account', () => {
-    expect(rankLine(GRADES[1])).toBe('Rank: Knight');
+    expect(rankLine(GRADES[1])).toBe('Rank: Gladiator');
   });
 });

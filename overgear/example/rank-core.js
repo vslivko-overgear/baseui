@@ -1,14 +1,17 @@
 // The ranks of a buyer, with the rules of the real service (og-frontend-4: the Bonuses tab of the profile, the rank in the menu of the profile): the ranks (grades), how a rank is earned (the spending of the last
 // 365 days), the way to the next one, the perks of a rank, and the history of the rank. Pure functions; rank.jsx draws them.
-// The ranks themselves (names, thresholds, perks) come from the backend of the real service; the ones here are the example's.
+// The ranks are those of https://loyalty.overgear.com/ranks: the names, the thresholds ($0, 100, 300, 600, 1000, 3000) and the cashback (1 to 5%) are the page's, as are 15% (Guardian), 35% (Champion) and 50% (the top) of the points redemption.
+// The rest of the points redemption, which rank gets the keep-conversation and priority perks, and the amount that stands for "Top 100 Clients" (Legend: `topClients`, a place among clients, not a sum) are the example's; the real ones come from the backend. Customizable bundles are "Coming Soon" for everyone.
 
 /** The ranks, from the lowest. `paidUsd`: what has to be spent in the last 365 days to have the rank. The perks are the five of the benefits table of the real service. */
 export const GRADES = [
-  { level: 1, code: 'shield', name: 'Shield', paidUsd: 0, cashbackPercentage: 1, purchaseLimitPercentage: 15, customizableBundles: false, keepConversationWithBooster: false, priorityOrderFulfillment: 0, color: '#9aa3b2' },
-  { level: 2, code: 'knight', name: 'Knight', paidUsd: 250, cashbackPercentage: 1.5, purchaseLimitPercentage: 20, customizableBundles: false, keepConversationWithBooster: true, priorityOrderFulfillment: 0, color: '#4ea1ff' },
-  { level: 3, code: 'champion', name: 'Champion', paidUsd: 1000, cashbackPercentage: 2, purchaseLimitPercentage: 25, customizableBundles: true, keepConversationWithBooster: true, priorityOrderFulfillment: 1, color: '#b574ff' },
-  { level: 4, code: 'warlord', name: 'Warlord', paidUsd: 3000, cashbackPercentage: 2.5, purchaseLimitPercentage: 30, customizableBundles: true, keepConversationWithBooster: true, priorityOrderFulfillment: 2, color: '#ff9f43' },
-  { level: 5, code: 'legend', name: 'Legend', paidUsd: 10000, cashbackPercentage: 3, purchaseLimitPercentage: 35, customizableBundles: true, keepConversationWithBooster: true, priorityOrderFulfillment: 3, color: '#ffd24a' },
+  { level: 1, code: 'guardian', name: 'Guardian', paidUsd: 0, cashbackPercentage: 1, purchaseLimitPercentage: 15, customizableBundles: false, keepConversationWithBooster: false, priorityOrderFulfillment: 0, color: '#9aa3b2' },
+  { level: 2, code: 'gladiator', name: 'Gladiator', paidUsd: 100, cashbackPercentage: 2, purchaseLimitPercentage: 20, customizableBundles: false, keepConversationWithBooster: true, priorityOrderFulfillment: 0, color: '#4ea1ff' },
+  { level: 3, code: 'commander', name: 'Commander', paidUsd: 300, cashbackPercentage: 2.5, purchaseLimitPercentage: 25, customizableBundles: false, keepConversationWithBooster: true, priorityOrderFulfillment: 1, color: '#3ecf8e' },
+  { level: 4, code: 'champion', name: 'Champion', paidUsd: 600, cashbackPercentage: 3, purchaseLimitPercentage: 35, customizableBundles: false, keepConversationWithBooster: true, priorityOrderFulfillment: 1, color: '#b574ff' },
+  { level: 5, code: 'epic-hero', name: 'Epic Hero', paidUsd: 1000, cashbackPercentage: 3.5, purchaseLimitPercentage: 40, customizableBundles: false, keepConversationWithBooster: true, priorityOrderFulfillment: 2, color: '#ff7ab8' },
+  { level: 6, code: 'paragon', name: 'Paragon', paidUsd: 3000, cashbackPercentage: 4, purchaseLimitPercentage: 45, customizableBundles: false, keepConversationWithBooster: true, priorityOrderFulfillment: 2, color: '#ff9f43' },
+  { level: 7, code: 'legend', name: 'Legend', paidUsd: 10000, topClients: 100, cashbackPercentage: 5, purchaseLimitPercentage: 50, customizableBundles: false, keepConversationWithBooster: true, priorityOrderFulfillment: 3, color: '#ffd24a' },
 ];
 
 const DAY = 864e5;
@@ -60,5 +63,5 @@ export const rankHistory = (orders, now, grades = GRADES) => {
   return events.reverse();
 };
 
-/** What the person reads about their rank on the account line: "Rank: Knight". */
+/** What the person reads about their rank on the account line: "Rank: Guardian". */
 export const rankLine = (grade) => `Rank: ${grade.name}`;
