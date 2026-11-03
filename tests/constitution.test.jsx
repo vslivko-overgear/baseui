@@ -480,3 +480,15 @@ describe('checks', () => {
     });
   });
 });
+
+describe('retired rules', () => {
+  test('a retired id is not a rule, and the documents list it', async () => {
+    const { RETIRED, RULES: ALL } = await import('../src/constitution/rules.js');
+    const { readFileSync } = await import('node:fs');
+    const doc = readFileSync('CONSTITUTION.md', 'utf8');
+    for (const id of Object.keys(RETIRED)) {
+      expect(ALL.some((r) => r.id === id), id).toBe(false);
+      expect(doc).toContain(`\`${id}\``);
+    }
+  });
+});

@@ -1,6 +1,6 @@
 # baseui design constitution
 
-Version 1.1. 62 rules in 6 groups (38 must, 24 should): what to do and what not to do so that an interface is at least acceptable. Generated from `src/constitution/rules.js`; the same rules are on the Foundations / Constitution page.
+Version 1.2. 59 rules in 6 groups (36 must, 23 should): what to do and what not to do so that an interface is at least acceptable. Generated from `src/constitution/rules.js`; the same rules are on the Foundations / Constitution page.
 
 A **must** protects people and is always reported. A **should** is a strong default: keep it, or say why not.
 
@@ -222,11 +222,11 @@ A person can finish what they came for, without guessing
 
 ### U5 Destructive actions (must)
 
-- **Do:** Ask before deleting or overwriting, naming what will be lost, or offer an undo. Style the action as destructive
-- **Don't:** delete on one tap, or confirm with a bare "Are you sure?"
+- **Do:** Ask before deleting or overwriting, naming what will be lost, or offer an undo. Style the action as destructive. Title the dialog with the action and the object ("Delete 3 files?"), say what cannot be undone, and label the buttons with the verbs ("Delete files" / "Keep files")
+- **Don't:** delete on one tap, or confirm with a bare "Are you sure?" and OK / Cancel
 - **Why:** Mistakes happen, and some cannot be taken back
 - **Source:** UX writing: confirmation dialogs; needs a review
-- **Requests that lead here:** delete without confirmation; instant delete; one-tap irreversible action
+- **Requests that lead here:** delete without confirmation; instant delete; one-tap irreversible action; are you sure; OK / Cancel dialog; generic confirmation
 
 ### U6 Where am I (must)
 
@@ -382,11 +382,11 @@ The interface is made of the system, not next to it
 
 ### D2 Components, not lookalikes (must)
 
-- **Do:** Use the system component when there is one: Button, Text Input, Selector, Switch, Dialog, Tabs, Table
-- **Don't:** restyle a div into a button, or write a second version of a component that exists
+- **Do:** Use the system component when there is one: Button, Text Input, Selector, Switch, Dialog, Tabs, Table. Use one pattern for one job everywhere in the product, and one word for one thing
+- **Don't:** restyle a div into a button, write a second version of a component that exists, style two buttons that do the same differently, or call it "Delete" here and "Remove" there
 - **Why:** The system keeps behavior, states and accessibility together
 - **Source:** Design system: components; needs a review
-- **Requests that lead here:** build a custom dropdown; my own button style; recreate the component
+- **Requests that lead here:** build a custom dropdown; my own button style; recreate the component; make this one different; each screen its own style
 
 ### D3 The spacing scale (must)
 
@@ -403,14 +403,6 @@ The interface is made of the system, not next to it
 - **Why:** Mismatched corners look unfinished
 - **Source:** baseui Radius; found by a script (`tools/check/radii.mjs`)
 - **Requests that lead here:** same radius for everything; round the inner box more
-
-### D5 Same thing, same look, same name (must)
-
-- **Do:** Use one pattern for one job everywhere in the product, and one word for one thing
-- **Don't:** style two buttons that do the same differently, or call it "Delete" here and "Remove" there
-- **Why:** Consistency is what lets people predict
-- **Source:** Design critique: consistency; UX writing: consistent; needs a review
-- **Requests that lead here:** make this one different; each screen its own style
 
 ### D6 Icons (should)
 
@@ -544,14 +536,6 @@ Words that say what happens and what to do
 - **Source:** UX writing: empty states; needs a review
 - **Requests that lead here:** no data; leave it empty; blank state
 
-### C4 Confirmations name the consequence (must)
-
-- **Do:** Title the dialog with the action and the object ("Delete 3 files?"), say what cannot be undone, and label buttons with the verbs ("Delete files" / "Keep files")
-- **Don't:** ask "Are you sure?" with OK and Cancel
-- **Why:** People click through vague dialogs
-- **Source:** UX writing: confirmation dialogs; needs a review
-- **Requests that lead here:** are you sure; OK / Cancel dialog; generic confirmation
-
 ### C5 Plain, consistent language (should)
 
 - **Do:** Write the way a helpful person talks, with the fewest words that carry the meaning, and the same term for the same thing. Use sentence case
@@ -572,14 +556,6 @@ Words that say what happens and what to do
 
 It moves with care and fits the screen it is on
 
-### M1 Careful motion (must)
-
-- **Do:** Use the motion tokens (150, 300, 500ms) and let prefers-reduced-motion and the Animations setting switch them off. Keep motion to what explains a change
-- **Don't:** flash more than three times a second, loop decorative animation, or block the interface while it plays
-- **Why:** Motion can cause nausea or seizures, and it slows people down
-- **Source:** WCAG 2.3.1, 2.3.3; needs a review
-- **Requests that lead here:** flashing; bouncing; parallax everywhere; long intro animation; looping background
-
 ### M2 Fits the screen (must)
 
 - **Do:** Make it work from 360px wide with no horizontal scroll, using the Layout tokens and the Tailwind breakpoints (mobile and sheets below md, 768px)
@@ -588,13 +564,13 @@ It moves with care and fits the screen it is on
 - **Source:** baseui Layout; found by `auditConstitution()`
 - **Requests that lead here:** desktop only; fixed 1440px width; horizontal scroll
 
-### M3 Motion explains, never delays (should)
+### M3 Motion explains, never delays (must)
 
-- **Do:** Animate changes that move or rearrange things: a panel opening, content expanding. Keep hover and other frequent feedback instant, let a closing panel leave the way it came, and let tooltips and menus disappear at once
-- **Don't:** delay a hover or a click with an animation, make a person wait for an animation to end before they can act, or move things against where they came from or where they go
-- **Why:** Motion is there to show what changed; any that gets in the way of the next action is an obstacle
-- **Source:** Astryx motion guidelines (adapted); WCAG 2.3.3; needs a review
-- **Requests that lead here:** slow hover animations; animate everything; wait for the intro; a delay on every transition
+- **Do:** Use the motion tokens (150, 300, 500ms) and let prefers-reduced-motion and the Animations setting switch them off. Animate changes that move or rearrange things: a panel opening, content expanding. Keep hover and other frequent feedback instant, let a closing panel leave the way it came, and let tooltips and menus disappear at once
+- **Don't:** flash more than three times a second, loop decorative animation, delay a hover or a click with an animation, make a person wait for an animation to end before they can act, or move things against where they came from or where they go
+- **Why:** Motion is there to show what changed; any that gets in the way of the next action is an obstacle, and flashing can cause nausea or seizures
+- **Source:** Astryx motion guidelines (adapted); WCAG 2.3.1, 2.3.3; needs a review
+- **Requests that lead here:** slow hover animations; animate everything; wait for the intro; a delay on every transition; flashing; bouncing; looping background
 
 ### M4 A list of options is a sheet on a phone (must)
 
@@ -603,4 +579,12 @@ It moves with care and fits the screen it is on
 - **Why:** A menu over a phone page is small, hides behind the thumb and the keyboard and gets cut by the edge of the screen; a sheet is as wide as the screen and its rows are easy to reach
 - **Source:** baseui ChoiceSheet; mobile patterns: a bottom sheet for a choice; found by `auditConstitution()`
 - **Requests that lead here:** a dropdown on a phone; a menu opens over the page on mobile; a popup list on a phone; a sort menu on mobile; a select on mobile
+
+## Retired ids
+
+These ids were rules and are not any more; an id is never reused.
+
+- `D5`: Merged into D2 (one pattern for one job, one word for one thing)
+- `C4`: Merged into U5 (a confirmation names the action and the object)
+- `M1`: Merged into M3 (motion tokens, reduced motion, no flashing)
 

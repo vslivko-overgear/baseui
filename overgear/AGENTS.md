@@ -15,6 +15,10 @@ This directory is the Overgear sublibrary, showcase and store. Read the root `AG
 - A page of the example (`overgear/example/*.jsx`, `example.css`) is T1: run `node tools/check/plan.mjs`, then look at the page at 1440 and 390 px. A shared part (`ui.jsx`, `order.jsx`, `shell.jsx`, `store.jsx`, the `*-core.js` files, `audience.js`, `theme.js`) is T2. See the tiers in the root `AGENTS.md`
 - A decision a check or a rule holds is changed together with it (retire the id, write the new one); `overgear/tests/decisions.test.mjs` holds the decisions that are cheap to hold by reading the source
 
+## Page density
+
+- How far the blocks of a page are apart is `Page density`, not a gap of the page's own: `dense` (16px) for a list page such as the orders, nothing for most pages (a section, 40px), `airy` (56px) for a page of a few big blocks such as the wallet. The blocks are direct children of `Page`
+
 ## The order: the checkout, the cart and the mini-cart
 
 - The parts that these three have in common are in `overgear/example/order.jsx` (`CartLine`, `ItemLines`, `OrderSummary`, `Promo`, `PayBar`, `PayBarContent`, `OrderHead`). Change a line, the summary, the promo code row, the pay bar or the title there, once; never copy one into a surface or style it with a class of that surface

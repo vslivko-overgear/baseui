@@ -11,7 +11,7 @@
 // signals phrases in a request that lead to a violation; an agent matches them in any language.
 // source  where the rule comes from: WCAG 2.1 AA, the baseui tokens, or the UX writing principles the system follows.
 
-export const CONSTITUTION_VERSION = '1.1';
+export const CONSTITUTION_VERSION = '1.2';
 
 export const CATEGORIES = [
   { id: 'A', title: 'Accessibility', lead: 'Everyone can see, reach and operate the interface. Based on WCAG 2.1 AA' },
@@ -156,11 +156,11 @@ export const RULES = [
   },
   {
     id: 'U5', category: 'U', level: 'must', title: 'Destructive actions',
-    do: 'Ask before deleting or overwriting, naming what will be lost, or offer an undo. Style the action as destructive',
-    dont: 'Do not delete on one tap, or confirm with a bare "Are you sure?"',
+    do: 'Ask before deleting or overwriting, naming what will be lost, or offer an undo. Style the action as destructive. Title the dialog with the action and the object ("Delete 3 files?"), say what cannot be undone, and label the buttons with the verbs ("Delete files" / "Keep files")',
+    dont: 'Do not delete on one tap, or confirm with a bare "Are you sure?" and OK / Cancel',
     why: 'Mistakes happen, and some cannot be taken back',
     source: 'UX writing: confirmation dialogs', check: 'review',
-    signals: ['delete without confirmation', 'instant delete', 'one-tap irreversible action'],
+    signals: ['delete without confirmation', 'instant delete', 'one-tap irreversible action', 'are you sure', 'OK / Cancel dialog', 'generic confirmation'],
   },
   {
     id: 'U6', category: 'U', level: 'must', title: 'Where am I',
@@ -314,11 +314,11 @@ export const RULES = [
   },
   {
     id: 'D2', category: 'D', level: 'must', title: 'Components, not lookalikes',
-    do: 'Use the system component when there is one: Button, Text Input, Selector, Switch, Dialog, Tabs, Table',
-    dont: 'Do not restyle a div into a button, or write a second version of a component that exists',
+    do: 'Use the system component when there is one: Button, Text Input, Selector, Switch, Dialog, Tabs, Table. Use one pattern for one job everywhere in the product, and one word for one thing',
+    dont: 'Do not restyle a div into a button, write a second version of a component that exists, style two buttons that do the same differently, or call it "Delete" here and "Remove" there',
     why: 'The system keeps behavior, states and accessibility together',
     source: 'Design system: components', check: 'review',
-    signals: ['build a custom dropdown', 'my own button style', 'recreate the component'],
+    signals: ['build a custom dropdown', 'my own button style', 'recreate the component', 'make this one different', 'each screen its own style'],
   },
   {
     id: 'D3', category: 'D', level: 'must', title: 'The spacing scale',
@@ -335,14 +335,6 @@ export const RULES = [
     why: 'Mismatched corners look unfinished',
     source: 'baseui Radius', check: 'tool', tool: 'tools/check/radii.mjs',
     signals: ['same radius for everything', 'round the inner box more'],
-  },
-  {
-    id: 'D5', category: 'D', level: 'must', title: 'Same thing, same look, same name',
-    do: 'Use one pattern for one job everywhere in the product, and one word for one thing',
-    dont: 'Do not style two buttons that do the same differently, or call it "Delete" here and "Remove" there',
-    why: 'Consistency is what lets people predict',
-    source: 'Design critique: consistency; UX writing: consistent', check: 'review',
-    signals: ['make this one different', 'each screen its own style'],
   },
   {
     id: 'D6', category: 'D', level: 'should', title: 'Icons',
@@ -479,14 +471,6 @@ export const RULES = [
     signals: ['no data', 'leave it empty', 'blank state'],
   },
   {
-    id: 'C4', category: 'C', level: 'must', title: 'Confirmations name the consequence',
-    do: 'Title the dialog with the action and the object ("Delete 3 files?"), say what cannot be undone, and label buttons with the verbs ("Delete files" / "Keep files")',
-    dont: 'Do not ask "Are you sure?" with OK and Cancel',
-    why: 'People click through vague dialogs',
-    source: 'UX writing: confirmation dialogs', check: 'review',
-    signals: ['are you sure', 'OK / Cancel dialog', 'generic confirmation'],
-  },
-  {
     id: 'C5', category: 'C', level: 'should', title: 'Plain, consistent language',
     do: 'Write the way a helpful person talks, with the fewest words that carry the meaning, and the same term for the same thing. Use sentence case',
     dont: 'Do not use jargon, internal names, lorem ipsum or filler like "Welcome to our amazing platform"',
@@ -506,14 +490,6 @@ export const RULES = [
 
   // ---------------------------------------------------------------- Motion and responsiveness
   {
-    id: 'M1', category: 'M', level: 'must', title: 'Careful motion',
-    do: 'Use the motion tokens (150, 300, 500ms) and let prefers-reduced-motion and the Animations setting switch them off. Keep motion to what explains a change',
-    dont: 'Do not flash more than three times a second, loop decorative animation, or block the interface while it plays',
-    why: 'Motion can cause nausea or seizures, and it slows people down',
-    source: 'WCAG 2.3.1, 2.3.3', check: 'review',
-    signals: ['flashing', 'bouncing', 'parallax everywhere', 'long intro animation', 'looping background'],
-  },
-  {
     id: 'M2', category: 'M', level: 'must', title: 'Fits the screen',
     do: 'Make it work from 360px wide with no horizontal scroll, using the Layout tokens and the Tailwind breakpoints (mobile and sheets below md, 768px)',
     dont: 'Do not design only for a desktop width, or let content run off the screen',
@@ -522,12 +498,12 @@ export const RULES = [
     signals: ['desktop only', 'fixed 1440px width', 'horizontal scroll'],
   },
   {
-    id: 'M3', category: 'M', level: 'should', title: 'Motion explains, never delays',
-    do: 'Animate changes that move or rearrange things: a panel opening, content expanding. Keep hover and other frequent feedback instant, let a closing panel leave the way it came, and let tooltips and menus disappear at once',
-    dont: 'Do not delay a hover or a click with an animation, make a person wait for an animation to end before they can act, or move things against where they came from or where they go',
-    why: 'Motion is there to show what changed; any that gets in the way of the next action is an obstacle',
-    source: 'Astryx motion guidelines (adapted); WCAG 2.3.3', check: 'review',
-    signals: ['slow hover animations', 'animate everything', 'wait for the intro', 'a delay on every transition'],
+    id: 'M3', category: 'M', level: 'must', title: 'Motion explains, never delays',
+    do: 'Use the motion tokens (150, 300, 500ms) and let prefers-reduced-motion and the Animations setting switch them off. Animate changes that move or rearrange things: a panel opening, content expanding. Keep hover and other frequent feedback instant, let a closing panel leave the way it came, and let tooltips and menus disappear at once',
+    dont: 'Do not flash more than three times a second, loop decorative animation, delay a hover or a click with an animation, make a person wait for an animation to end before they can act, or move things against where they came from or where they go',
+    why: 'Motion is there to show what changed; any that gets in the way of the next action is an obstacle, and flashing can cause nausea or seizures',
+    source: 'Astryx motion guidelines (adapted); WCAG 2.3.1, 2.3.3', check: 'review',
+    signals: ['slow hover animations', 'animate everything', 'wait for the intro', 'a delay on every transition', 'flashing', 'bouncing', 'looping background'],
   },
   {
     id: 'M4', category: 'M', level: 'must', title: 'A list of options is a sheet on a phone',
@@ -538,6 +514,13 @@ export const RULES = [
     signals: ['a dropdown on a phone', 'a menu opens over the page on mobile', 'a popup list on a phone', 'a sort menu on mobile', 'a select on mobile'],
   },
 ];
+
+/** Ids that were rules and are not any more (an id is never reused): the rule that took over their job. */
+export const RETIRED = {
+  D5: 'Merged into D2 (one pattern for one job, one word for one thing)',
+  C4: 'Merged into U5 (a confirmation names the action and the object)',
+  M1: 'Merged into M3 (motion tokens, reduced motion, no flashing)',
+};
 
 export const RULES_BY_ID = Object.fromEntries(RULES.map((r) => [r.id, r]));
 

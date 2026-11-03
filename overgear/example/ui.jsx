@@ -34,14 +34,14 @@ export function PageHead({ crumbs, title, meta, media, titleTestId, titleGap, ch
   );
 }
 
-/** `fill`: the page is one block that takes the whole screen, centered (a login prompt, an empty cart). */
-export function Page({ children, fill, roomy, bar, crumbs: withCrumbs }) {
+/** `density`: how far the blocks of the page are apart. `dense` (16px) for a list page (orders), none for most pages (a section, 40px), `airy` (56px) for a page of a few big blocks (the wallet). `fill`: the page is one block that takes the whole screen, centered (a login prompt, an empty cart). */
+export function Page({ children, fill, roomy, density, bar, crumbs: withCrumbs }) {
   // the title of a page belongs to the first block under it: they are one group, 16px apart; the other blocks are a section apart
   const kids = Children.toArray(children);
   const head = kids[0]?.type === PageHead;
   const crumbs = withCrumbs || (head && kids[0].props.crumbs);
   return (
-    <div className={`og-page${fill ? ' og-page--fill' : ''}${roomy ? ' og-page--roomy' : ''}${bar ? ' og-page--bar' : ''}${crumbs ? ' og-page--crumbs' : ''}`}>
+    <div className={`og-page${fill ? ' og-page--fill' : ''}${roomy ? ' og-page--roomy' : ''}${density ? ` og-page--${density}` : ''}${bar ? ' og-page--bar' : ''}${crumbs ? ' og-page--crumbs' : ''}`}>
       {head ? <div className="og-stack">{kids[0]}{kids[1]}</div> : kids[0]}
       {kids.slice(head ? 2 : 1)}
     </div>

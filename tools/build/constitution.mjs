@@ -7,7 +7,7 @@ import { existsSync } from 'node:fs';
 import { writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import { AGENT_DEFAULTS, AGENT_PROTOCOL, CATEGORIES, CONSTITUTION_VERSION, RULES } from '../../src/constitution/rules.js';
+import { AGENT_DEFAULTS, AGENT_PROTOCOL, CATEGORIES, CONSTITUTION_VERSION, RETIRED, RULES } from '../../src/constitution/rules.js';
 import { ruleMarkdown } from './constitution-markdown.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -52,6 +52,7 @@ for (const c of CATEGORIES) {
     md.push(...ruleMarkdown(r));
   }
 }
+md.push('## Retired ids', '', 'These ids were rules and are not any more; an id is never reused.', '', ...Object.entries(RETIRED).map(([id, why]) => `- \`${id}\`: ${why}`), '');
 await writeFile(join(root, 'CONSTITUTION.md'), `${md.join('\n')}\n`);
 if (existsSync(join(root, 'docs', 'foundations'))) await writeFile(join(root, 'docs', 'foundations', 'constitution.md'), `${md.join('\n')}\n\nLive page: https://baseuikit.vercel.app/#/foundations/constitution\n`);
 

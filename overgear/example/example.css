@@ -667,8 +667,9 @@ a { color: inherit; }
 .og-sub__act { margin-top: auto; padding-top: var(--baseui-spacing-2); display: flex; flex-direction: column; }
 .og-sub__head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--baseui-spacing-3); }
 .og-sub__head .bui-badge { flex: none; }
-/* the wallet page: more air between its main blocks (56px on a desktop) */
-.og:not(.og--mobile) .og-wpage { gap: calc(var(--baseui-spacing-12) + var(--baseui-spacing-2)); }
+/* page density: dense is the blocks of a list page 16px apart; airy is the blocks of a page of a few big ones 56px apart (a section on a phone) */
+.og-page--dense { gap: var(--bui-rel-related); }
+.og:not(.og--mobile) .og-page--airy { gap: calc(var(--baseui-spacing-12) + var(--baseui-spacing-2)); }
 /* the amounts and the top-up on one background (secondary): 16px of padding, the wrapper 28px, so what is inside has 12px (28 - 16: the class bui-nested), 12px gaps */
 .og-wwrap { --bui-card-radius: var(--baseui-radius-custom-28); --bui-card-pad: var(--baseui-spacing-4); padding: var(--bui-card-pad); border-radius: var(--bui-card-radius); background: var(--baseui-background-secondary); gap: var(--baseui-spacing-3); }
 .og-wwrap .og-amounts-grid { gap: var(--baseui-spacing-3); }
