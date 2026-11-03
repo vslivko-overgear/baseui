@@ -130,7 +130,8 @@
 .bui-banner--error .bui-banner__icon { color: var(--baseui-extensions-text-and-icon-error); }
 
 /* ---------- Breadcrumbs ---------- */
-.bui-breadcrumbs { overflow-x: auto; overflow-y: hidden; scrollbar-width: none; padding-block: var(--baseui-spacing-1); }   /* one line that scrolls sideways; the 4px keep the focus ring of a link from being cut */
+.bui-breadcrumbs { overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }   /* one line that scrolls sideways */
+.bui-breadcrumbs__link:focus-visible { outline-offset: -2px; }   /* the ring of a link is inside it: the trail clips what is outside, and it has no room of its own around it */
 .bui-breadcrumbs::-webkit-scrollbar { display: none; }
 .bui-breadcrumbs ol { display: flex; flex-wrap: nowrap; width: max-content; min-width: 100%; align-items: center; gap: var(--baseui-spacing-1); margin: 0; padding: 0; list-style: none; font: var(--baseui-typography-text-14-regular); }
 .bui-breadcrumbs li { display: inline-flex; flex: none; align-items: center; white-space: nowrap; }
@@ -2347,7 +2348,7 @@
 
 .bui-field {
   flex-direction: column;
-  gap: var(--baseui-spacing-0-5);
+  gap: var(--baseui-spacing-1);
   width: 100%;
   display: flex;
 }
