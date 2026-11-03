@@ -626,5 +626,6 @@ a { color: inherit; }
 .og-acc .og-page, .og-acc .og-page--crumbs { padding-block: 0; }
 .og-acc__pop { width: 360px; max-width: calc(100vw - 2 * var(--baseui-spacing-3)); }
 .og-acc__div { margin-block: var(--baseui-spacing-2); }
-/* the profile row: the space above and below the avatar equals the space at its side (12px) */
-.og-profilerow .bui-list__header { min-height: calc(40px + 2 * var(--baseui-spacing-3)); }
+/* the profile row: 8px above and below the avatar; its corners are concentric with the row (16px - 8px = 8px) */
+.og-profilerow .bui-list__header { min-height: calc(40px + 2 * var(--baseui-spacing-2)); }
+.og-profilerow__avatar { border-radius: var(--baseui-radius-lg); }
