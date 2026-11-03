@@ -624,3 +624,4 @@ a { color: inherit; }
 .og-acc__menu { position: sticky; top: calc(var(--og-header-h, 72px) + var(--baseui-spacing-4)); }
 .og-acc__page { min-width: 0; }
 .og-acc .og-page, .og-acc .og-page--crumbs { padding-block: 0; }
+.og-acc__pop { width: 360px; max-width: calc(100vw - 2 * var(--baseui-spacing-4)); }

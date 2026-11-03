@@ -22,29 +22,41 @@ import { useMedia } from './util.js';
 /** The value on the right of a row and the chevron after it. */
 const Value = ({ children }) => <span className="og-row og-row--nowrap">{children}<Icon name="ChevronRight" size={20} /></span>;
 
-/** What a visitor can set before logging in: the currency, the language, and the way to the support. */
-function Preferences({ before, children }) {
-  const { currency, language, open, sheets } = usePrefs();
-  return (
-    <>
-      <List aria-label="Preferences">
-        {before}
-        <ListItem icon={<Icon name="CoinsHand" size={24} />} onClick={() => open('currency')} details={<Value>{currency}</Value>}>Currency</ListItem>
-        <ListItem icon={<Icon name="Globe01" size={24} />} onClick={() => open('language')} details={<Value>{language}</Value>}>Language</ListItem>
-        <ListItem icon={<Icon name="MessageChatCircle" size={24} />} onClick={() => go('/info/contact')} details={<Value />}>Support</ListItem>
-        {children}
-      </List>
-      {sheets}
-    </>
-  );
-}
-
 /** The profile row: the avatar with the picture of the rank at its corner, the nick, and the rank under it ("Rank: Guardian"); a click opens the page of the rank. */
-function ProfileRow({ active }) {
+export function ProfileRow({ active, onPick }) {
   const store = useStore();
   const { grade } = useRank();
   return (
-    <ListItem avatar={<span className="og-avatarrank"><Avatar name={store.user.name} size="lg" /><span className="og-avatarrank__badge"><RankBadge grade={grade} size={22} /></span></span>} subtitle={rankLine(grade)} onClick={() => go('/rank')} active={active} details={<Value />} data-test-id="profile-rank-row">{store.user.name}</ListItem>
+    <ListItem avatar={<span className="og-avatarrank"><Avatar name={store.user.name} size="lg" /><span className="og-avatarrank__badge"><RankBadge grade={grade} size={22} /></span></span>} subtitle={rankLine(grade)} onClick={() => { onPick?.(); go('/rank'); }} active={active} details={<Value />} data-test-id="profile-rank-row">{store.user.name}</ListItem>
+  );
+}
+
+/**
+ * The one menu of the account, on a phone (the account screen), in the profile popup of the header and in the left column of the account page on a desktop: the profile with the rank, the orders, the favorites, the settings,
+ * the currency, the language, the support and the logout. A visitor without a login gets the three preferences only. Each place hides what it does not need (`hide`: ids of rows), marks the row of the open page (`active`),
+ * and passes `prefs` (the result of `usePrefs`) when the sheets of the currency and the language must outlive the menu (a popup); `onPick` runs after a row is chosen (a popup closes).
+ */
+export function AccountMenu({ active, hide = [], prefs, onPick, ...rest }) {
+  const store = useStore();
+  const own = usePrefs();
+  const { currency, language, open } = prefs || own;
+  const wished = store.wishlist.map(offerOf).filter(Boolean);
+  const pick = (fn) => () => { onPick?.(); fn(); };
+  const row = (id, icon, label, props) => !hide.includes(id) && <ListItem key={id} icon={<Icon name={icon} size={24} />} active={active === id} data-test-id={`account-menu-${id}`} {...props}>{label}</ListItem>;
+  return (
+    <>
+      <List aria-label="Account menu" {...rest}>
+        {store.user && !hide.includes('profile') && <ProfileRow active={active === 'rank'} onPick={onPick} />}
+        {store.user && row('orders', 'ShoppingBag01', 'My orders', { onClick: pick(() => go('/orders')), details: <Value>{store.orders.length}</Value> })}
+        {store.user && row('wishlist', 'Heart', 'Favorites', { onClick: pick(() => go('/account?tab=wishlist')), details: <Value>{wished.length}</Value> })}
+        {store.user && row('settings', 'Settings01', 'Settings', { onClick: pick(() => go('/account?tab=settings')), details: <Value /> })}
+        {row('currency', 'CoinsHand', 'Currency', { onClick: pick(() => open('currency')), details: <Value>{currency}</Value> })}
+        {row('language', 'Globe01', 'Language', { onClick: pick(() => open('language')), details: <Value>{language}</Value> })}
+        {row('support', 'MessageChatCircle', 'Support', { onClick: pick(() => go('/info/contact')), details: <Value /> })}
+        {store.user && row('logout', 'LogOut01', 'Log out', { onClick: pick(() => { store.logout(); go('/'); }), details: <Value /> })}
+      </List>
+      {!prefs && own.sheets}
+    </>
   );
 }
 
@@ -54,19 +66,9 @@ export function AccountShell({ route, children }) {
   if (!store.user) return children;
   const [first] = route.parts;
   const key = first === 'order' ? 'orders' : first === 'account' ? route.query.tab || 'settings' : first;
-  const wished = store.wishlist.map(offerOf).filter(Boolean);
-  const out = () => { store.logout(); go('/'); };
   return (
     <div className="og-acc" data-test-id="account-shell">
-      <nav className="og-acc__menu" aria-label="Account">
-        <List aria-label="Account menu">
-          <ProfileRow active={key === 'rank'} />
-          <ListItem icon={<Icon name="ShoppingBag01" size={24} />} active={key === 'orders'} onClick={() => go('/orders')} details={<span className="og-meta">{store.orders.length}</span>} data-test-id="account-menu-orders">My orders</ListItem>
-          <ListItem icon={<Icon name="Heart" size={24} />} active={key === 'wishlist'} onClick={() => go('/account?tab=wishlist')} details={<span className="og-meta">{wished.length}</span>} data-test-id="account-menu-wishlist">Favorites</ListItem>
-          <ListItem icon={<Icon name="Settings01" size={24} />} active={key === 'settings'} onClick={() => go('/account?tab=settings')} data-test-id="account-menu-settings">Settings</ListItem>
-          <ListItem icon={<Icon name="LogOut01" size={24} />} onClick={out}>Log out</ListItem>
-        </List>
-      </nav>
+      <nav className="og-acc__menu" aria-label="Account"><AccountMenu active={key} hide={['currency', 'language', 'support']} /></nav>
       <div className="og-acc__page">{children}</div>
     </div>
   );
@@ -87,7 +89,7 @@ export function Account({ tab, onLogin }) {
         <div className="og-stack og-stack--related">
           <h1 className="og-title">Account</h1>
           <Button variant="primary" size="lg" width="100%" label="Log in" onClick={onLogin} />
-          <Preferences />
+          <AccountMenu />
         </div>
       </Page>
     );
@@ -101,17 +103,7 @@ export function Account({ tab, onLogin }) {
         <div className="og-stack og-stack--related">
           <h1 className="og-title">Account</h1>
           {mobile && <BalanceCard />}
-          <List aria-label="Profile">
-            <ProfileRow />
-
-          </List>
-          <Preferences before={<>
-            <ListItem icon={<Icon name="ShoppingBag01" size={24} />} onClick={() => go('/orders')} details={<Value>{store.orders.length}</Value>}>My orders</ListItem>
-            <ListItem icon={<Icon name="Heart" size={24} />} onClick={() => go('/account?tab=wishlist')} details={<Value>{wished.length}</Value>}>Favorites</ListItem>
-            <ListItem icon={<Icon name="Settings01" size={24} />} onClick={() => go('/account?tab=settings')} details={<Value />}>Settings</ListItem>
-          </>}>
-            <ListItem icon={<Icon name="LogOut01" size={24} />} onClick={out} details={<Value />}>Log out</ListItem>
-          </Preferences>
+          <AccountMenu />
         </div>
       </Page>
     );

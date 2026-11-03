@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from '../../src/react.js';
 import { TextInput } from '../../src/components/TextInput.jsx';
 import { Button, IconButton } from '../../src/components/Button.jsx';
 import { Badge } from '../../src/components/Badge.jsx';
-import { Dropdown } from '../../src/components/Dropdown.jsx';
+import { Popover } from '../../src/components/Popover.jsx';
 import { Divider } from '../../src/components/Divider.jsx';
 import { Dialog } from '../../src/components/Dialog.jsx';
 import { Link } from '../../src/components/Link.jsx';
@@ -15,7 +15,7 @@ import { usePrefs } from './prefs.jsx';
 import { CatalogColumns } from './catalog.jsx';
 import { Search } from './search.jsx';
 import { WalletButton } from './wallet.jsx';
-import { RankBadge, useRank } from './rank.jsx';
+import { AccountMenu } from './account.jsx';
 import { go, href, openMiniCart } from './util.js';
 import { GAMES } from './data.js';
 import { PaymentLogos, PAY_MAIN, PAY_BADGES } from './ui.jsx';
@@ -82,43 +82,22 @@ export function LoginDialog({ open, onClose }) {
 
 function Account({ onLogin }) {
   const store = useStore();
-  const { currency, language, open, sheets } = usePrefs();
+  const prefs = usePrefs();
   const [menu, setMenu] = useState(false);
   const timer = useRef(null);
-  const { grade } = useRank();
   if (!store.user) return <Button variant="secondary" size="md" textSize={14} label="Log in" onClick={onLogin} />;
-  // the profile menu opens on hover (and on a click) with the rows of the account list of the phone
+  // the profile popup opens on hover (and on a click); it is the same menu as the account screen of a phone and the left column of the account page
   const hover = (on) => { clearTimeout(timer.current); timer.current = setTimeout(() => setMenu(on), on ? 0 : 160); };
-  const choose = (v) => {
-    if (v === 'logout') { store.logout(); go('/'); } else if (v === 'currency' || v === 'language') open(v); else if (v === 'support') go('/info/contact'); else if (v === 'orders') go('/orders'); else if (v === 'rank') go('/rank'); else go(`/account?tab=${v}`);
-  };
   return (
     <>
-      <Dropdown
-        label="Profile"
-        placement="bottom-end"
-        selectable={false}
-        open={menu}
-        onOpenChange={setMenu}
-        onMouseEnter={() => hover(true)}
-        onMouseLeave={() => hover(false)}
-        trigger={<IconButton variant="ghost" label="Profile" tooltip={false} icon={<Icon name="User01" size={24} />} />}
-        value={null}
-        options={[
-          { value: 'rank', label: <span className="og-rankmenu"><strong>{store.user.name}</strong><span className="og-meta" data-test-id="profile-popup-rank">{`Rank • ${grade.name}`}</span></span>, icon: <RankBadge grade={grade} size={36} /> },
-          { type: 'divider' },
-          { value: 'orders', label: 'My orders', icon: <Icon name="ShoppingBag01" size={20} /> },
-          { value: 'wishlist', label: 'Favorites', icon: <Icon name="Heart" size={20} /> },
-          { value: 'settings', label: 'Settings', icon: <Icon name="Settings01" size={20} /> },
-          { value: 'currency', label: 'Currency', details: currency, icon: <Icon name="CoinsHand" size={20} /> },
-          { value: 'language', label: 'Language', details: language, icon: <Icon name="Globe01" size={20} /> },
-          { value: 'support', label: 'Support', icon: <Icon name="MessageChatCircle" size={20} /> },
-          { type: 'divider' },
-          { value: 'logout', label: 'Log out', icon: <Icon name="LogOut01" size={20} /> },
-        ]}
-        onValueChange={choose}
-      />
-      {sheets}
+      <Popover open={menu} onOpenChange={(o) => { clearTimeout(timer.current); setMenu(o); }} placement="bottom-end" label="Profile" panelClassName="og-acc__pop" trigger={(props) => (
+        <IconButton {...props} variant="ghost" label="Profile" tooltip={false} icon={<Icon name="User01" size={24} />} onMouseEnter={() => hover(true)} onMouseLeave={() => hover(false)} />
+      )}>
+        <div onMouseEnter={() => hover(true)} onMouseLeave={() => hover(false)} data-test-id="profile-popup">
+          <AccountMenu prefs={prefs} onPick={() => setMenu(false)} />
+        </div>
+      </Popover>
+      {prefs.sheets}
     </>
   );
 }
