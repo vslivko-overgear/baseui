@@ -73,7 +73,7 @@ export function Offer({ id }) {
   // the selling points: separate tags on a surface, each as wide as its text (on a phone the row scrolls sideways)
   const usp = (
     <ul className="og-usp" data-test-id="offer-usp">
-      {offer.bullets.slice(0, 3).map((b, i) => <li key={b} className="og-usp__tag"><Icon name={USP_ICONS[i]} size={20} /><span>{b}</span></li>)}
+      {offer.bullets.slice(0, 3).map((b, i) => <li key={b} className="og-usp__tag"><Icon name={USP_ICONS[i]} size={20} filled /><span>{b}</span></li>)}
     </ul>
   );
   return (

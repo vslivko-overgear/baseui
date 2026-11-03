@@ -651,7 +651,7 @@ a { color: inherit; }
 .og-custom__reply { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); }
 .og-custom__reply b { color: var(--baseui-text-and-icon-primary); font: var(--baseui-typography-text-14-semi-bold); }
 /* the selling points of the offer, between the head and the form: separate tags on a surface, each as wide as its text; on a phone the row (inside a Bleed) scrolls sideways */
-.og-usp { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--baseui-spacing-2); font: var(--baseui-typography-text-14-semi-bold); color: var(--baseui-text-and-icon-primary); }
-.og-usp__tag { display: flex; align-items: center; gap: var(--baseui-spacing-2); padding: var(--baseui-spacing-3) var(--baseui-spacing-4); border-radius: var(--baseui-radius-2xl); background: var(--baseui-background-secondary); white-space: nowrap; }
+.og-usp { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--baseui-spacing-2); font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-primary); }
+.og-usp__tag { display: flex; align-items: center; gap: var(--baseui-spacing-2); padding: var(--baseui-spacing-2) var(--baseui-spacing-3); border-radius: var(--baseui-radius-xl); background: var(--baseui-background-secondary); white-space: nowrap; }
 .og-usp__tag svg { flex: none; }
 .og--mobile .og-usp { flex-wrap: nowrap; width: max-content; }
