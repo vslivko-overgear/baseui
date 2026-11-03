@@ -5,13 +5,13 @@
 
 /** The ranks, from the lowest. `paidUsd`: what has to be spent in the last 365 days to have the rank. The perks are the five of the benefits table of the real service. */
 export const GRADES = [
-  { level: 1, code: 'guardian', name: 'Guardian', paidUsd: 0, cashbackPercentage: 1, purchaseLimitPercentage: 15, customizableBundles: false, keepConversationWithBooster: false, priorityOrderFulfillment: 0, color: '#9aa3b2' },
-  { level: 2, code: 'gladiator', name: 'Gladiator', paidUsd: 100, cashbackPercentage: 2, purchaseLimitPercentage: 20, customizableBundles: false, keepConversationWithBooster: true, priorityOrderFulfillment: 0, color: '#4ea1ff' },
-  { level: 3, code: 'commander', name: 'Commander', paidUsd: 300, cashbackPercentage: 2.5, purchaseLimitPercentage: 25, customizableBundles: false, keepConversationWithBooster: true, priorityOrderFulfillment: 1, color: '#3ecf8e' },
-  { level: 4, code: 'champion', name: 'Champion', paidUsd: 600, cashbackPercentage: 3, purchaseLimitPercentage: 35, customizableBundles: false, keepConversationWithBooster: true, priorityOrderFulfillment: 1, color: '#b574ff' },
-  { level: 5, code: 'epic-hero', name: 'Epic Hero', paidUsd: 1000, cashbackPercentage: 3.5, purchaseLimitPercentage: 40, customizableBundles: false, keepConversationWithBooster: true, priorityOrderFulfillment: 2, color: '#ff7ab8' },
-  { level: 6, code: 'paragon', name: 'Paragon', paidUsd: 3000, cashbackPercentage: 4, purchaseLimitPercentage: 45, customizableBundles: false, keepConversationWithBooster: true, priorityOrderFulfillment: 2, color: '#ff9f43' },
-  { level: 7, code: 'legend', name: 'Legend', paidUsd: 10000, topClients: 100, cashbackPercentage: 5, purchaseLimitPercentage: 50, customizableBundles: false, keepConversationWithBooster: true, priorityOrderFulfillment: 3, color: '#ffd24a' },
+  { level: 1, code: 'guardian', name: 'Guardian', paidUsd: 0, cashbackPercentage: 1, purchaseLimitPercentage: 15, customizableBundles: false, keepConversationWithBooster: false, priorityOrderFulfillment: 0 },
+  { level: 2, code: 'gladiator', name: 'Gladiator', paidUsd: 100, cashbackPercentage: 2, purchaseLimitPercentage: 20, customizableBundles: false, keepConversationWithBooster: true, priorityOrderFulfillment: 0 },
+  { level: 3, code: 'commander', name: 'Commander', paidUsd: 300, cashbackPercentage: 2.5, purchaseLimitPercentage: 25, customizableBundles: false, keepConversationWithBooster: true, priorityOrderFulfillment: 1 },
+  { level: 4, code: 'champion', name: 'Champion', paidUsd: 600, cashbackPercentage: 3, purchaseLimitPercentage: 35, customizableBundles: false, keepConversationWithBooster: true, priorityOrderFulfillment: 1 },
+  { level: 5, code: 'epic-hero', name: 'Epic Hero', paidUsd: 1000, cashbackPercentage: 3.5, purchaseLimitPercentage: 40, customizableBundles: false, keepConversationWithBooster: true, priorityOrderFulfillment: 2 },
+  { level: 6, code: 'paragon', name: 'Paragon', paidUsd: 3000, cashbackPercentage: 4, purchaseLimitPercentage: 45, customizableBundles: false, keepConversationWithBooster: true, priorityOrderFulfillment: 2 },
+  { level: 7, code: 'legend', name: 'Legend', paidUsd: 10000, topClients: 100, cashbackPercentage: 5, purchaseLimitPercentage: 50, customizableBundles: false, keepConversationWithBooster: true, priorityOrderFulfillment: 3 },
 ];
 
 const DAY = 864e5;

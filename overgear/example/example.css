@@ -594,7 +594,7 @@ a { color: inherit; }
 .og-methodcard .og-stack--hair { gap: 0; }   /* the name of the method and its fee stand together */
 
 /* the rank: the picture of the shield, the line in the menu and in the account, the page */
-.og-rankbadge { flex: none; display: block; }
+.og-rankbadge { flex: none; display: block; object-fit: contain; }
 .og-rankmenu { display: flex; flex-direction: column; gap: 0; min-width: 0; }
 .og-rankmenu .og-meta { font: var(--baseui-typography-text-14-regular); }
 .og-avatarrank { position: relative; display: inline-flex; }

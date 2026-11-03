@@ -28,17 +28,9 @@ export function useRank() {
   }, [store.orders]);
 }
 
-/** The picture of a rank: a shield in the color of the rank, with as many chevrons as its level. */
+/** The picture of a rank: the badge of the loyalty program (assets/ranks), as the real service shows it; it fits a box of `size` pixels. */
 export function RankBadge({ grade, size = 40 }) {
-  const step = grade.level > 4 ? 4.4 : 6;
-  const chevrons = Array.from({ length: grade.level }, (_, i) => +(36 - i * step).toFixed(1));
-  return (
-    <svg width={size} height={Math.round(size * 1.15)} viewBox="0 0 40 46" fill="none" role="img" aria-label={`${grade.name} rank`} className="og-rankbadge">
-      <path d="M20 1.5 37.5 8v14.5C37.5 33 29.5 41.5 20 44.5 10.5 41.5 2.5 33 2.5 22.5V8L20 1.5Z" fill={grade.color} />
-      <path d="M20 1.5 37.5 8v14.5C37.5 33 29.5 41.5 20 44.5V1.5Z" fill="#000" opacity="0.14" />
-      {chevrons.map((y) => <path key={y} d={`M13 ${y} L20 ${y - 5} L27 ${y}`} stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />)}
-    </svg>
-  );
+  return <img className="og-rankbadge" src={`./assets/ranks/${grade.code}.png`} alt={`${grade.name} rank`} width={size} height={size} draggable="false" />;
 }
 
 const dateOf = (t) => new Date(t).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
