@@ -85,7 +85,7 @@ export function WalletPage({ onLogin }) {
           </div>
         </div>
         <Section title="Your terms">
-          <Card variant="surface" padding={4}>
+          <Card variant="surface" padding={4} className="og-terms" style={{ paddingInline: 'var(--baseui-spacing-1)' }}>
             <List aria-label="Your terms" spacing="lg" data-test-id="wallet-terms">
               <ListItem avatar={<Pic><Icon name="Coins01" size={24} /></Pic>} subtitle="of every purchase comes back as OG Coins once the order is completed">{`${grade.cashbackPercentage}% cashback`}</ListItem>
               <ListItem avatar={<Pic><Icon name="Wallet01" size={24} /></Pic>} subtitle="of a purchase can be paid with OG Coins">{`Up to ${grade.purchaseLimitPercentage}%`}</ListItem>

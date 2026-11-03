@@ -679,3 +679,5 @@ a { color: inherit; }
 .og-wwrap .og-amounts-grid { gap: var(--baseui-spacing-2); }
 .og-wwrap .bui-card { border-radius: var(--baseui-radius-2xl); }
 .og-wamount__label { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); }
+/* the terms: 16px from the edge of the surface to the icon (the list bleeds 12px, so 4px of side padding) and a bigger gap between the rows */
+.og-terms [data-slot="list"] { gap: var(--baseui-spacing-3); }
