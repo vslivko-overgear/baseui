@@ -796,7 +796,7 @@
   }
 }
 .bui-dialog__content {
-  padding-top: var(--baseui-spacing-1);
+  padding-top: var(--baseui-spacing-3);   /* 8px more than the 4px that the header gave: the first thing under the title is not close to it */
   margin-top: calc(var(--baseui-spacing-1) * -1);
   position: relative;
 }
@@ -935,6 +935,14 @@
 }
 .bui-dialog__content:has(+ .bui-dialog__actions) {
   padding-bottom: var(--baseui-spacing-2);
+}
+/* the close button and the title: the middle of the glyph is the middle of the first line of the title (the box of the button stood 2px higher), and the edge of the glyph, not of its 24px box, stands on the edge of the content
+   (the glyph is 12px in the middle of the box and its stroke is 2.5px: it begins 4.75px inside) */
+.bui-dialog__icon-button { margin-top: calc(var(--baseui-spacing-2) + 2px); }
+.bui-dialog__close-button { margin-right: calc(var(--baseui-layout-margin-mobile) - var(--baseui-spacing-2) - 4.75px); }
+@media (width>=768px) {
+  .bui-dialog__icon-button { margin-block-start: calc(var(--baseui-layout-margin-desktop) - var(--baseui-spacing-1) - var(--baseui-spacing-2) + 2px); }
+  .bui-dialog__close-button { margin-right: calc(var(--baseui-layout-margin-desktop) - var(--baseui-spacing-2) - 4.75px); }
 }
 
 /* Dialog (sheet on small screens): 12px above a full-height sheet; the floating one has 12px on every side.
