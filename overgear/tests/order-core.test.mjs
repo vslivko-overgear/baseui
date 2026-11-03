@@ -2,7 +2,7 @@
 import { describe, expect, test } from 'vitest';
 import {
   AUTO_COMPLETE, CONFIRM_LOCK, ORDER_STATE, ORDER_STATUS as S, PAGE_SIZE, applyEvent, askTrustpilot, autoCompleteAt, buyerActions, cancelOrder, confirmDelivery, confirmLockLeft, durationPart,
-  filterOrders, isDelayed, isPaused, listState, nextEvents, normalizeOrder, openDispute, orderSteps, ordersFromCart, outcomeOf, pageOf, panelTone, progressTone, resultView, reviewError, reviewReady,
+  filterOrders, gameFilters, STATUS_FILTERS, isDelayed, isPaused, listState, nextEvents, normalizeOrder, openDispute, orderSteps, ordersFromCart, outcomeOf, pageOf, panelTone, progressTone, resultView, reviewError, reviewReady,
   showJoinPanel, sortOrders, stateOfStatus, statusBadge, statusText, tipsOpen,
 } from '../example/order-core.js';
 
@@ -148,6 +148,34 @@ describe('the result page of a payment', () => {
     expect(outcomeOf('card')).toBe('success');
     expect(outcomeOf('neteller')).toBe('error');
     expect(outcomeOf('paypal')).toBe('check');
+  });
+});
+
+describe('the filters of the list', () => {
+  const orders = [
+    base({ link: 'a', game: 'wow', state: ORDER_STATE.COMPLETED, status: S.COMPLETED }),
+    base({ link: 'b', game: 'wow', state: ORDER_STATE.IN_PROGRESS, status: S.IN_PROGRESS }),
+    base({ link: 'c', game: 'diablo-4', state: ORDER_STATE.COMPLETED, status: S.COMPLETED }),
+    base({ link: 'd', game: 'diablo-4', state: ORDER_STATE.CANCELLED, status: S.REFUNDED }),
+    base({ link: 'e', game: 'diablo-4', state: ORDER_STATE.CANCELLED, status: S.CANCELLED }),
+  ];
+  const links = (f) => filterOrders(orders, f).map((o) => o.link).join('');
+  test('are a game, a state and a status, each one or none', () => {
+    expect(links({})).toBe('abcde');
+    expect(links({ game: 'diablo-4' })).toBe('cde');
+    expect(links({ state: ORDER_STATE.COMPLETED })).toBe('ac');
+    expect(links({ status: S.REFUNDED })).toBe('d');
+    expect(links({ game: 'all', state: 'all', status: 'all' })).toBe('abcde');
+  });
+  test('work together: an order has to pass all three', () => {
+    expect(links({ game: 'diablo-4', state: ORDER_STATE.CANCELLED })).toBe('de');
+    expect(links({ game: 'diablo-4', state: ORDER_STATE.CANCELLED, status: S.CANCELLED })).toBe('e');
+    expect(links({ game: 'wow', state: ORDER_STATE.CANCELLED })).toBe('');
+  });
+  test('offer the games of the orders, the one with more orders first, and every status', () => {
+    expect(gameFilters(orders, (g) => g.toUpperCase()).map((o) => o.value)).toEqual(['all', 'diablo-4', 'wow']);
+    expect(STATUS_FILTERS).toHaveLength(Object.keys(S).length + 1);
+    expect(new Set(STATUS_FILTERS.map((f) => f.label)).size).toBe(STATUS_FILTERS.length);
   });
 });
 

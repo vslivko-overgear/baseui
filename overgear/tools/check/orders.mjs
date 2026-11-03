@@ -55,15 +55,37 @@ const choose = async (page, index, option) => { await page.getByRole('combobox')
   await page.getByRole('button', { name: 'Page 2' }).click();
   await page.waitForTimeout(400);
   expectThat((await cards()) === orders.length - PAGE_SIZE, `desktop: the second page has ${await cards()} cards`);
-  // the filter by the state
+  // the filters: a game, a state and a status, which work together
   await visit(page, '/orders');
-  await choose(page, 1, 'Completed');
+  const idx = { game: 1, state: 2, status: 3, sort: 4 };
+  const shown = () => page.evaluate(() => [...document.querySelectorAll('[data-test-id="order-card"]')].map((c) => ({ game: c.querySelector('[data-test-id="order-card-game"] span').textContent, status: c.querySelector('[data-test-id="order-card-status"]').textContent })));
+  await choose(page, idx.game, 'Diablo 4');
+  const d4 = orders.filter((o) => o.game === 'diablo-4');
+  expectThat((await cards()) === Math.min(d4.length, PAGE_SIZE) && (await shown()).every((c) => c.game === 'Diablo 4'), `the filter by the game "Diablo 4" shows ${await cards()} cards, not the ${d4.length} orders of the game`);
+  expectThat((await text(page, 'orders-listing'))?.includes(`${d4.length} orders`), 'the count does not follow the filter by the game');
+  await choose(page, idx.state, 'Cancelled');
+  const d4c = filterOrders(orders, { game: 'diablo-4', state: STATE_FILTERS.find((f) => f.label === 'Cancelled').value });
+  expectThat((await cards()) === d4c.length, `a game and a state together show ${await cards()} cards, not ${d4c.length}`);
+  await choose(page, idx.status, 'Refunded');
+  const d4r = filterOrders(orders, { game: 'diablo-4', state: STATE_FILTERS.find((f) => f.label === 'Cancelled').value, status: S.REFUNDED });
+  expectThat((await cards()) === d4r.length && (await shown()).every((c) => c.status === 'Refunded'), `a game, a state and a status together show ${await cards()} cards, not ${d4r.length}`);
+  await choose(page, idx.game, 'Torchlight: Infinite');
+  expectThat((await page.locator('[data-test-id="orders-empty"]').count()) === 1 && (await page.getByText('No orders found').count()) === 1, 'filters that no order passes do not show "No orders found"');
+  await page.getByRole('button', { name: 'Reset filters' }).click();
+  await page.waitForTimeout(400);
+  expectThat((await cards()) === PAGE_SIZE, 'Reset filters does not bring the list back');
+  await choose(page, idx.state, 'Completed');
   const done = filterOrders(orders, STATE_FILTERS.find((f) => f.label === 'Completed').value).length;
   expectThat((await cards()) === Math.min(done, PAGE_SIZE), `the filter "Completed" shows ${await cards()} cards, not ${Math.min(done, PAGE_SIZE)}`);
   expectThat(await page.evaluate(() => [...document.querySelectorAll('[data-test-id="order-card-status"]')].every((b) => /Completed|Resolved/.test(b.textContent))), 'the filter "Completed" lets another status in');
-  await choose(page, 2, 'Price: high to low');
+  await choose(page, idx.sort, 'Price: high to low');
   const prices = await page.evaluate(() => [...document.querySelectorAll('[data-test-id="order-card-price"] strong')].map((s) => +s.textContent.replace('$', '')));
   expectThat(prices.every((p, i) => i === 0 || prices[i - 1] >= p), 'the sort "Price: high to low" does not sort by price');
+  // the card has the picture of the order on the left, and Reorder is a secondary button
+  await visit(page, '/orders');
+  const card = await page.evaluate(() => { const c = document.querySelector('[data-test-id="order-card"]'); const pic = c.querySelector('.og-ocard__pic'); const title = c.querySelector('[data-test-id="order-card-title"]'); const re = c.querySelector('[data-test-id="order-card-reorder"]'); const pr = pic.getBoundingClientRect(); return { img: !!pic.querySelector('img'), square: Math.abs(pr.width - pr.height) < 1, left: pr.right <= title.getBoundingClientRect().left, variant: re.dataset.variant }; });
+  expectThat(card.img && card.square && card.left, `the card has no square picture at the left of the info (${JSON.stringify(card)})`);
+  expectThat(card.variant === 'secondary', `Reorder is not a secondary button (${card.variant})`);
   // the states of the list
   for (const [demo, id, label] of [['loading', 'orders-list-skeleton', 'loading'], ['error', 'orders-error', 'an error'], ['empty', 'orders-empty', 'empty'], ['temporary', 'orders-temporary', 'a guest account']]) {
     await visit(page, `/orders?demo=${demo}`);

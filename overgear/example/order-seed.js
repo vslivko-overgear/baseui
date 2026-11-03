@@ -1,5 +1,5 @@
 // The orders that a browser starts with: a few of every status, so every state of the real service can be seen on the list and on the page of an order. Made from the offers of the example, relative to now.
-import { OFFERS, SELLERS } from './data.js';
+import { OFFERS, SELLERS, gameOf } from './data.js';
 import { ORDER_STATUS as S, stateOfStatus, etaSeconds } from './order-core.js';
 
 const HOUR = 36e5;
@@ -12,6 +12,14 @@ export const deliveryFor = (productType) => (productType === 'currency'
 
 const GOLD = { id: 'wow-gold-500k', title: 'WoW Gold, 500K', price: 24.5, eta: '15 minutes', productType: 'currency' };
 const pick = (id) => OFFERS.find((o) => o.id === id) || OFFERS[0];
+// the orders in the other games of the shop: the filter by the game needs more than one
+const other = (id, game, title, price, eta, productType = 'service') => ({ id, game, title, price, eta, productType });
+const D4_LEVELING = other('d4-leveling', 'diablo-4', 'Diablo 4: Power Leveling to 60', 45, '1 day');
+const D4_LILITH = other('d4-lilith', 'diablo-4', 'Diablo 4: Uber Lilith Kill', 35, '2 hours');
+const POE_ORBS = other('poe2-orbs', 'poe-2', 'Path of Exile 2: Divine Orbs, 100', 42, '15 minutes', 'currency');
+const COD_RANK = other('cod-rank', 'call-of-duty', 'Call of Duty: Rank Boost to Ranked Play', 59, '1 day');
+const TORCH_START = other('torch-start', 'torchlight-infinite', 'Torchlight: Infinite Season Starter', 29, '3 hours');
+const AION_KINAH = other('aion-kinah', 'aion-2', 'AION 2: Kinah, 10M', 19, '15 minutes', 'currency');
 
 // [offer, status, hours ago it was placed, extras]: the order of the list is the newest first
 const PLAN = [
@@ -38,6 +46,13 @@ const PLAN = [
   ['hallows-end', S.COMPLETED, 16 * 24, { og: true, started: 380, delivered: 378, completed: 377 }],
   ['tidebound-grotto', S.COMPLETED, 18 * 24, {}],
   ['ulatek', S.COMPLETED, 20 * 24, { og: true }],
+  [D4_LEVELING, S.IN_PROGRESS, 3, { og: true, started: 2.5, filled: true }],
+  [POE_ORBS, S.COMPLETED, 9 * 24, { og: true, filled: true, started: 215, delivered: 214.8, completed: 214.7 }],
+  [COD_RANK, S.CONFIRM_DELIVERY, 20, { started: 19, delivered: 1 }],
+  [D4_LILITH, S.CANCELLED, 12 * 24, {}],
+  [TORCH_START, S.NEW, 0.7, { og: true }],
+  [AION_KINAH, S.REFUNDED, 13 * 24, { started: 310, ticket: 'The currency never arrived' }],
+  [COD_RANK, S.COMPLETED, 19 * 24, { started: 450, delivered: 440, completed: 439 }],
   ['reputation', S.COMPLETED, 22 * 24, {}],
   ['rated-bg', S.COMPLETED, 25 * 24, {}],
   ['mythic-10-timed', S.COMPLETED, 28 * 24, { og: true }],
@@ -61,14 +76,14 @@ export const seedOrders = (now) => PLAN.map(([ref, status, ago, x], i) => {
     id: String(n),
     title: offer.title,
     sub: '',
-    offerId: offer.id !== GOLD.id ? offer.id : undefined,
-    game: 'wow',
+    offerId: OFFERS.some((o) => o.id === offer.id) ? offer.id : undefined,
+    game: offer.game || 'wow',
     productType,
     og: !!x.og,
     qty: 1,
     price: offer.price,
     currency: 'USD',
-    image: offer.image,
+    image: offer.image || gameOf(offer.game || 'wow')?.cover,
     status,
     state: stateOfStatus(status),
     createdAt,

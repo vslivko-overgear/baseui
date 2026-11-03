@@ -478,8 +478,11 @@ a { color: inherit; }
 .og--mobile .og-page--bar:has(.og-step) { padding-top: var(--baseui-spacing-1); }
 
 /* ---- the orders after the purchase: the list, the page of an order, the result of a payment ---- */
-/* a card of the list: the info, the game, the seller, the price and Reorder in a row; on a phone they stand in a column */
-.og-ocard__row { display: grid; grid-template-columns: minmax(0, 1.6fr) 150px 170px 100px auto; gap: var(--baseui-spacing-4); align-items: center; }
+/* a card of the list: the picture, the info, the game, the seller, the price and Reorder in a row; on a phone the picture stands by the info and the rest in two rows under it */
+.og-ocard__row { display: grid; grid-template-columns: 56px minmax(0, 1.6fr) 150px 170px 100px auto; gap: var(--baseui-spacing-4); align-items: center; }
+.og-ocard__head { display: contents; }
+.og-ocard__pic { position: relative; width: 56px; height: 56px; border-radius: var(--baseui-radius-lg); overflow: hidden; display: grid; place-items: center; background: var(--baseui-background-tertiary); }
+.og-ocard__pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .og-ocard__info { display: flex; flex-direction: column; gap: var(--baseui-spacing-1); min-width: 0; }
 .og-ocard__title { font: var(--baseui-typography-text-16-semi-bold); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .og-ocard__meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--baseui-spacing-2); }
@@ -489,8 +492,11 @@ a { color: inherit; }
 .og-seller { display: inline-flex; align-items: center; gap: var(--baseui-spacing-2); min-width: 0; }
 .og-seller__name { font: var(--baseui-typography-text-14-semi-bold); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .og--mobile .og-ocard__row { grid-template-columns: 1fr 1fr; }
-.og--mobile .og-ocard__info { grid-column: 1 / -1; }
+.og--mobile .og-ocard__head { grid-column: 1 / -1; display: flex; align-items: center; gap: var(--baseui-spacing-3); }
+.og--mobile .og-ocard__pic { flex: none; }
 .og--mobile .og-ocard__row > .bui-button { width: 100%; }   /* the price and Reorder share the last row */
+.og-ofilters { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--baseui-spacing-3); }
+.og--mobile .og-ofilters { grid-template-columns: 1fr 1fr; }
 
 /* the states of a page are opened from a line of links at its end (the demo) */
 .og-result__demo { display: flex; flex-wrap: wrap; align-items: center; gap: var(--baseui-spacing-3); padding-top: var(--baseui-spacing-4); }

@@ -325,7 +325,7 @@ export const ordersCount = (n) => `${n} order${n === 1 ? '' : 's'}`;
 
 export const PAGE_SIZE = 20;
 export const STATE_FILTERS = [
-  { value: 'all', label: 'All orders' },
+  { value: 'all', label: 'All states' },
   { value: T.NEW, label: 'New' },
   { value: T.IN_PROGRESS, label: 'In progress' },
   { value: T.PENDING, label: 'Pending' },
@@ -334,6 +334,18 @@ export const STATE_FILTERS = [
   { value: T.CANCELLED, label: 'Cancelled' },
   { value: T.FAILED, label: 'Failed' },
 ];
+/** The status filter: every status the backend has (the two paused ones are told apart: the list needs two names for two options). */
+export const STATUS_FILTERS = [
+  { value: 'all', label: 'All statuses' },
+  ...Object.values(S).map((value) => ({ value, label: value === S.ORDER_PAUSED_NEW ? 'Paused (new)' : value === S.ORDER_PAUSED_IN_PROGRESS ? 'Paused (in progress)' : statusLabel(value) })),
+];
+/** The game filter: the games the buyer has orders in, the one with more orders first. `nameOf(slug)` gives the title of a game. */
+export const gameFilters = (orders, nameOf) => {
+  const count = new Map();
+  for (const o of orders) count.set(o.game, (count.get(o.game) || 0) + 1);
+  const games = [...count.entries()].sort((a, b) => b[1] - a[1] || String(nameOf(a[0])).localeCompare(String(nameOf(b[0])))).map(([value]) => ({ value, label: nameOf(value) || value }));
+  return [{ value: 'all', label: 'All games' }, ...games];
+};
 export const SORTS = [
   { value: 'new', label: 'Newest first' },
   { value: 'old', label: 'Oldest first' },
@@ -341,7 +353,13 @@ export const SORTS = [
   { value: 'price-low', label: 'Price: low to high' },
   { value: 'eta', label: 'Delivery time' },
 ];
-export const filterOrders = (orders, state) => (state === 'all' || !state ? orders : orders.filter((o) => normalizeOrderState(o.state) === normalizeOrderState(state)));
+/** The three filters of the list work together: a game, a state and a status, each one or none (`all`). A filter that is not given is not applied; a string is the state (the way it was). */
+export const filterOrders = (orders, filters) => {
+  const { game, state, status } = typeof filters === 'string' ? { state: filters } : filters || {};
+  return orders.filter((o) => (!game || game === 'all' || o.game === game)
+    && (!state || state === 'all' || normalizeOrderState(o.state) === normalizeOrderState(state))
+    && (!status || status === 'all' || o.status === status));
+};
 export const sortOrders = (orders, sort) => {
   const by = { new: (a, b) => b.createdAt - a.createdAt, old: (a, b) => a.createdAt - b.createdAt, 'price-high': (a, b) => b.price - a.price, 'price-low': (a, b) => a.price - b.price, eta: (a, b) => (a.duration || 0) - (b.duration || 0) }[sort] || ((a, b) => b.createdAt - a.createdAt);
   return [...orders].sort(by);

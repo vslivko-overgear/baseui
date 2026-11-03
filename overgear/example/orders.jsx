@@ -10,14 +10,13 @@ import { Pagination } from '../../src/components/Pagination.jsx';
 import { Skeleton } from '../../src/components/Skeleton.jsx';
 import { Status } from '../../src/components/Status.jsx';
 import { Avatar } from '../../src/components/Avatar.jsx';
-import { ControlRow } from '../../src/components/Layout.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
 import { go, href, useMedia, useTitleUnderBar } from './util.js';
 import { money, gameOf } from './data.js';
 import { Page, PageHead } from './ui.jsx';
 import { useStore } from './store.jsx';
 import { Navbar } from '../../src/components/MobileNavigation.jsx';
-import { STATE_FILTERS, SORTS, filterOrders, sortOrders, pageOf, listState, statusLabel, statusBadge, cardDate, ordersCount } from './order-core.js';
+import { STATE_FILTERS, STATUS_FILTERS, SORTS, gameFilters, filterOrders, sortOrders, pageOf, listState, statusLabel, statusBadge, cardDate, ordersCount } from './order-core.js';
 
 /** Where Reorder leads: the offer of the order, or the game when the offer is gone. */
 export const reorderPath = (order) => (order.offerId ? `/offer/${order.offerId}` : `/games/${order.game || 'wow'}`);
@@ -42,17 +41,20 @@ export function OrderCard({ order }) {
   return (
     <ClickableCard href={href(`/order/${order.link}`)} label={order.title} variant="surface" padding={4} className="og-ocard" data-test-id="order-card">
       <div className="og-ocard__row">
-        <div className="og-ocard__info">
-          <span className="og-ocard__title" data-test-id="order-card-title">{order.title}</span>
-          <span className="og-ocard__meta">
-            <Badge variant={statusBadge(order.status)} size="sm" label={statusLabel(order.status)} data-test-id="order-card-status" />
-            <span className="og-meta" data-test-id="order-card-date">{cardDate(order.createdAt)}</span>
-          </span>
+        <div className="og-ocard__head">
+          <span className="og-ocard__pic" aria-hidden="true">{order.image ? <img src={order.image} alt="" loading="lazy" draggable="false" /> : <Icon name="Image01" size={24} />}</span>
+          <div className="og-ocard__info">
+            <span className="og-ocard__title" data-test-id="order-card-title">{order.title}</span>
+            <span className="og-ocard__meta">
+              <Badge variant={statusBadge(order.status)} size="sm" label={statusLabel(order.status)} data-test-id="order-card-status" />
+              <span className="og-meta" data-test-id="order-card-date">{cardDate(order.createdAt)}</span>
+            </span>
+          </div>
         </div>
         <span className="og-ocard__chip" data-test-id="order-card-game"><span>{game}</span><span className="og-meta">game</span></span>
         <SellerInfo seller={order.seller} />
         <span className="og-ocard__price" data-test-id="order-card-price"><strong>{money(order.price)}</strong><span className="og-meta">price</span></span>
-        <Button variant="primary" size="sm" label="Reorder" onClick={() => go(reorderPath(order))} data-test-id="order-card-reorder" />
+        <Button variant="secondary" size="sm" label="Reorder" onClick={() => go(reorderPath(order))} data-test-id="order-card-reorder" />
       </div>
     </ClickableCard>
   );
@@ -70,7 +72,9 @@ const DEMO = [['', 'The list'], ['loading', 'Loading'], ['error', 'An error'], [
 export function Orders({ onLogin, demo = '' }) {
   const store = useStore();
   const mobile = useMedia('(max-width: 767px)');
+  const [game, setGame] = useState('all');
   const [state, setState] = useState('all');
+  const [status, setStatus] = useState('all');
   const [sort, setSort] = useState('new');
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -78,10 +82,12 @@ export function Orders({ onLogin, demo = '' }) {
   // the list is asked for when the page opens: a short wait with the skeleton, as on the network
   useEffect(() => { setLoading(true); const id = setTimeout(() => setLoading(false), 450); return () => clearTimeout(id); }, [attempt]);
   // the page goes back to the first when the filter or the sort changes
-  useEffect(() => { setPage(1); }, [state, sort]);
+  useEffect(() => { setPage(1); }, [game, state, status, sort]);
 
   const mine = demo === 'empty' ? [] : store.orders;
-  const filtered = sortOrders(filterOrders(mine, state), sort);
+  const filtered = sortOrders(filterOrders(mine, { game, state, status }), sort);
+  const filtering = game !== 'all' || state !== 'all' || status !== 'all';
+  const reset = () => { setGame('all'); setState('all'); setStatus('all'); };
   const view = pageOf(filtered, page, mobile);
   const phase = listState({ temporary: demo === 'temporary' || (!store.user && !!store.temp), loading: loading || demo === 'loading', error: demo === 'error', count: filtered.length });
 
@@ -93,7 +99,7 @@ export function Orders({ onLogin, demo = '' }) {
     temporary: <Status status="neutral" title="Orders are not available for a temporary account" description="Sign in with your email to see your orders" actionLabel="Sign in" onAction={onLogin} data-test-id="orders-temporary" />,
     error: <Status status="error" title="Something went wrong" description="We couldn't load your orders. Please try again" actionLabel="Try again" onAction={() => { setAttempt((n) => n + 1); if (demo) go('/orders'); }} data-test-id="orders-error" />,
     loading: <Skeletons />,
-    empty: <Status status="neutral" icon={<Icon name="ShoppingBag01" size={28} />} title={state === 'all' ? 'No orders yet' : 'No orders found'} description={state === 'all' ? 'Your orders will be here' : 'Try another state'} actionLabel={state === 'all' ? 'Browse games' : 'All orders'} onAction={() => (state === 'all' ? go('/catalog') : setState('all'))} data-test-id="orders-empty" />,
+    empty: <Status status="neutral" icon={<Icon name="ShoppingBag01" size={28} />} title={filtering ? 'No orders found' : 'No orders yet'} description={filtering ? 'Try other filters' : 'Your orders will be here'} actionLabel={filtering ? 'Reset filters' : 'Browse games'} onAction={() => (filtering ? reset() : go('/catalog'))} data-test-id="orders-empty" />,
     list: (
       <div className="og-stack" data-test-id="orders-list">
         <div className="og-stack og-stack--tight">{view.nodes.map((o) => <OrderCard key={o.link} order={o} />)}</div>
@@ -104,16 +110,18 @@ export function Orders({ onLogin, demo = '' }) {
     ),
   }[phase];
 
-  const showControls = phase === 'list' || phase === 'loading' || (phase === 'empty' && state !== 'all');
+  const showControls = phase === 'list' || phase === 'loading' || (phase === 'empty' && filtering);
   return (
     <Page bar>
       <div className="og-stack og-stack--xl" data-test-id="orders-listing">
         <PageHead title="My orders" meta={phase === 'list' || phase === 'empty' ? ordersCount(filtered.length) : undefined} />
         {showControls && (
-          <ControlRow size="md">
-            <Selector size="sm" label="Order state" value={state} onValueChange={setState} options={STATE_FILTERS} data-test-id="orders-filters" />
+          <div className="og-ofilters" data-test-id="orders-filters">
+            <Selector size="sm" label="Game" value={game} onValueChange={setGame} options={gameFilters(store.orders, (g) => gameOf(g)?.name)} />
+            <Selector size="sm" label="State" value={state} onValueChange={setState} options={STATE_FILTERS} />
+            <Selector size="sm" label="Status" value={status} onValueChange={setStatus} options={STATUS_FILTERS} />
             <Selector size="sm" label="Sort by" value={sort} onValueChange={setSort} options={SORTS} data-test-id="orders-sort" />
-          </ControlRow>
+          </div>
         )}
         {body}
         <nav className="og-result__demo" aria-label="States of this page">
