@@ -639,8 +639,12 @@ a { color: inherit; }
 .og-wins { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--baseui-spacing-3); font: var(--baseui-typography-text-16-regular); color: var(--baseui-text-and-icon-primary); }
 .og-wins li { display: flex; gap: var(--baseui-spacing-2); align-items: flex-start; }
 .og-wins svg { flex: none; margin-top: 2px; }
-.og-reviewgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--baseui-spacing-3); }
-.og--mobile .og-reviewgrid { grid-template-columns: minmax(0, 1fr); }
+/* the reviews: the avatar at the left, and the background only under the text (the nick, the rating, the text) */
+.og-reviewlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--baseui-spacing-3); }
+.og-review { display: flex; align-items: flex-start; gap: var(--baseui-spacing-3); }
+.og-review > [data-slot="avatar"], .og-review > .bui-avatar { flex: none; }
+.og-review__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--baseui-spacing-2); padding: var(--baseui-spacing-4); border-radius: var(--baseui-radius-2xl); background: var(--baseui-background-secondary); }
+.og-review__name { font: var(--baseui-typography-text-14-semi-bold); color: var(--baseui-text-and-icon-primary); }
 .og-stars { display: inline-flex; gap: 2px; color: var(--baseui-extensions-text-and-icon-info, var(--baseui-text-and-icon-primary)); }
 .og-custom { display: flex; align-items: center; justify-content: space-between; gap: var(--baseui-spacing-4); flex-wrap: wrap; }
 .og-custom__act { align-items: center; }

@@ -118,17 +118,18 @@ export function Offer({ id }) {
               </div>
             </Card>
             <Section title="What players say about Overgear">
-              <div className="og-reviewgrid" data-test-id="offer-reviews">
+              <ul className="og-reviewlist" data-test-id="offer-reviews">
                 {REVIEWS.slice(0, 4).map(([n, t]) => (
-                  <Card key={n} variant="surface" padding={4}>
-                    <div className="og-stack og-stack--related">
+                  <li key={n} className="og-review">
+                    <Avatar alt={n} />
+                    <div className="og-review__body">
+                      <strong className="og-review__name">{n}</strong>
                       <span className="og-stars" aria-label="5 stars">{[0, 1, 2, 3, 4].map((i) => <Icon key={i} name="Star01" size={16} filled />)}</span>
                       <p className="og-text">{t}</p>
-                      <p className="og-meta">{`by ${n}`}</p>
                     </div>
-                  </Card>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </Section>
             {related.length > 0 && (
               <Section title="You may also like">

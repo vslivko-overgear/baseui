@@ -2,6 +2,7 @@
 
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
+- **Overgear, the reviews of the offer page are a vertical list again:** the avatar at the left, the background only under the text, and in it the nick, then the rating (five stars), then the text. Overgear checks were not run.
 - **Overgear, the offer page has a block of selling points between the head and the form:** a surface in the width of the left column (the price card on the right starts at its top) with the first three points of the offer in a row, each with an icon and thin dividers between them, in three columns of one width, each point in the middle of its column (on a phone they stand in a column with horizontal dividers). Overgear checks were not run.
 - **Overgear, "You may also like" has four offers on every offer page, so the row is full:** the same service first, then the other offers of the game, then the most sold ones of the other games (some games have two or three offers only). Overgear checks were not run.
 - **Overgear, "You may also like" on the offer page is a plain section again (not a card):** the title and the listing of four offers, the button "Discover all" under it. Overgear checks were not run.
