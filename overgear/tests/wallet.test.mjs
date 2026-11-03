@@ -51,7 +51,7 @@ describe('the wallet', () => {
 
 describe('the bonus for a top-up', () => {
   test('is 5 percent from $100 and 10 percent from $500', async () => {
-    const { bonusFor, bonusRateFor, lowestBonusAmount, suggestionLabel, BONUS_RULES } = await import('../example/wallet-core.js');
+    const { bonusFor, bonusRateFor, lowestBonusAmount, SUGGESTIONS, BONUS_RULES } = await import('../example/wallet-core.js');
     expect(BONUS_RULES).toEqual([{ refillAmount: 100, percentage: 5 }, { refillAmount: 500, percentage: 10 }]);
     expect(bonusFor(99)).toBe(null);
     expect(bonusFor(100)).toBe(5);
@@ -65,8 +65,7 @@ describe('the bonus for a top-up', () => {
     expect(bonusRateFor(500)).toBe(10);
     expect(lowestBonusAmount()).toBe(100);
     expect(lowestBonusAmount([])).toBe(100);
-    expect(suggestionLabel(100)).toBe('$100 +5%');
-    expect(suggestionLabel(50)).toBe('$50');
-    expect(suggestionLabel(1000)).toBe('$1,000');
+    expect(SUGGESTIONS).toEqual([100, 200, 500]);
+    expect(SUGGESTIONS.map((n) => bonusRateFor(n))).toEqual([5, 5, 10]);
   });
 });

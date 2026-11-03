@@ -46,12 +46,8 @@ export const bonusFor = (amount, rules = BONUS_RULES) => {
 };
 /** The percent that the bonus of `amount` is, or null. */
 export const bonusRateFor = (amount, rules = BONUS_RULES) => bracketOf(amount, rules)?.percentage ?? null;
-/** The amounts the top-up suggests; the ones that open a bracket of the bonus say so. */
-export const SUGGESTIONS = [25, 50, 100, 250, 500, 1000];
-export const suggestionLabel = (n, rules = BONUS_RULES) => {
-  const opens = rules.find((r) => r.refillAmount === n);
-  return `$${n.toLocaleString('en-US')}${opens ? ` +${opens.percentage}%` : ''}`;
-};
+/** The amounts the top-up suggests, each with the percent of its bonus (`bonusRateFor`). */
+export const SUGGESTIONS = [100, 200, 500];
 /** The smallest top-up that gives a bonus. */
 export const lowestBonusAmount = (rules = BONUS_RULES) => rules.reduce((min, r) => Math.min(min, r.refillAmount), rules[0]?.refillAmount ?? 100);
 

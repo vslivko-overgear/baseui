@@ -12,8 +12,9 @@ import { Icon } from '../../src/components/Icon.jsx';
 import { useToast } from '../../src/components/Toast.jsx';
 import { useStore } from './store.jsx';
 import { money } from './data.js';
+import { Badge } from '../../src/components/Badge.jsx';
 import { CashbackMark } from './ui.jsx';
-import { OPEN_TOP_UP, openTopUp, parseAmount, amountError, coinsText, bonusFor, bonusRateFor, lowestBonusAmount, SUGGESTIONS, suggestionLabel, PURCHASE_LIMIT } from './wallet-core.js';
+import { OPEN_TOP_UP, openTopUp, parseAmount, amountError, coinsText, bonusFor, bonusRateFor, lowestBonusAmount, SUGGESTIONS, PURCHASE_LIMIT } from './wallet-core.js';
 
 /** The money and the OG Coins of the visitor, side by side. */
 export function Amounts() {
@@ -103,8 +104,10 @@ export function TopUpDialog() {
   return (
     <Dialog open={open} onOpenChange={(o) => !paying && setOpen(o)} title="Top Up Balance">
       <form className="og-stack og-stack--lg og-topup" noValidate onSubmit={(e) => { e.preventDefault(); pay(); }}>
-        <TextInput id="og-topup-amount" label="Amount, USD" inputMode="decimal" autoComplete="off" prefix="$" value={text} onChange={(e) => setText(e.target.value)} status={tried && error ? 'error' : undefined} caption={tried && error ? error : undefined} />
-        <TokenGroup size="sm" aria-label="Amount suggestions" value={SUGGESTIONS.includes(amount) ? [String(amount)] : []} onValueChange={(v) => v.length && setText(v[v.length - 1])} options={SUGGESTIONS.map((n) => ({ value: String(n), label: suggestionLabel(n) }))} />
+        <div className="og-stack og-stack--close">
+          <TextInput id="og-topup-amount" label="Amount, USD" inputMode="decimal" autoComplete="off" prefix="$" value={text} onChange={(e) => setText(e.target.value)} status={tried && error ? 'error' : undefined} caption={tried && error ? error : undefined} />
+          <TokenGroup size="sm" aria-label="Amount suggestions" value={SUGGESTIONS.includes(amount) ? [String(amount)] : []} onValueChange={(v) => v.length && setText(v[v.length - 1])} options={SUGGESTIONS.map((n) => ({ value: String(n), label: <span className="og-topup__chip">{`$${n}`}<Badge variant="warning-light" size="sm" label={`+${bonusRateFor(n)}%`} icon={<CashbackMark />} /></span> }))} />
+        </div>
         <div className="og-topup__box" data-test-id="topup-bonus">
           {bonus ? (
             <>

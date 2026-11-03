@@ -570,3 +570,4 @@ a { color: inherit; }
 .og-topup__what { display: flex; flex-direction: column; gap: var(--baseui-spacing-1); }
 .og-topup__rate { font: var(--baseui-typography-header-24); font-family: var(--baseui-typography-headline-font-family); }
 .og-topup__rules { margin: 0; font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-secondary); }
+.og-topup__chip { display: inline-flex; align-items: center; gap: var(--baseui-spacing-2); }
