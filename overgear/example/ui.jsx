@@ -18,14 +18,14 @@ const CARD_TONE = { blue: 'blue', 'blue-light': 'blue', green: 'green', orange: 
 const BADGE_VARIANT = { 'Hot Offer': 'error', Sale: 'success', 'Save More': 'info', Bundle: 'info', Seasonal: 'warning' };
 
 /** The head of a page: breadcrumbs, then the title with its line under it as one group. */
-export function PageHead({ crumbs, title, meta, media, children }) {
+export function PageHead({ crumbs, title, meta, media, titleTestId, children }) {
   return (
     <div className={`og-stack ${crumbs ? 'og-stack--crumbs' : 'og-stack--close'}`}>
       {crumbs && <Breadcrumbs items={crumbs} />}
       <div className={media ? 'og-head-row' : undefined}>
         {media}
         <div className="og-stack og-stack--hair">
-          <h1 className="og-title">{title}</h1>
+          <h1 className="og-title" data-test-id={titleTestId}>{title}</h1>
           {meta && <p className="og-meta">{meta}</p>}
           {children}
         </div>

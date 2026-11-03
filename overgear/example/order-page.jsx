@@ -17,11 +17,10 @@ import { Rating, RatingDisplay } from '../../src/components/Rating.jsx';
 import { SegmentedControl } from '../../src/components/SegmentedControl.jsx';
 import { Status } from '../../src/components/Status.jsx';
 import { TextInput } from '../../src/components/TextInput.jsx';
-import { Breadcrumbs } from '../../src/components/Breadcrumbs.jsx';
 import { useToast } from '../../src/components/Toast.jsx';
 import { go, href, useMedia } from './util.js';
 import { money, gameOf } from './data.js';
-import { Page } from './ui.jsx';
+import { Page, PageHead } from './ui.jsx';
 import { useStore } from './store.jsx';
 import { reorderPath } from './orders.jsx';
 import {
@@ -409,17 +408,18 @@ export function OrderPage({ link, onLogin }) {
   return (
     <Page bar>
       <div className="og-stack og-stack--xl" data-test-id="order-page" data-status={order.status}>
-        <div className="og-stack og-stack--crumbs">
-          <Breadcrumbs items={[{ label: 'Home', href: href('/') }, { label: 'My orders', href: href('/orders') }, { label: order.title }]} />
-          <div className="og-stack og-stack--hair">
-            <h1 className="og-title" data-test-id="order-title">{order.title}</h1>
-            <p className="og-text" data-test-id="order-meta">{`Order ID ${order.link} · Created ${dateTime(order.createdAt)}`}</p>
+        <PageHead
+          crumbs={[{ label: 'Home', href: href('/') }, { label: 'My orders', href: href('/orders') }, { label: order.title }]}
+          title={order.title}
+          titleTestId="order-title"
+          media={<div className="og-art og-art--square" role="img" aria-label={order.title}>{order.image ? <img className="og-art__img" src={order.image} alt="" /> : <Icon name="Image01" size={32} />}</div>}
+        >
+          <div className="og-row og-row--wrap">
+            <Badge variant={statusBadge(order.status)} size="md" label={statusLabel(order.status)} data-test-id="order-badge" />
+            <span className="og-meta" data-test-id="order-meta">{`Order ID ${order.link} · Created ${dateTime(order.createdAt)}`}</span>
           </div>
-        </div>
-        <div className="og-stack og-stack--close">
-          <Badge variant={statusBadge(order.status)} size="md" label={statusLabel(order.status)} data-test-id="order-badge" />
-          <Steps order={order} now={now} />
-        </div>
+        </PageHead>
+        <Steps order={order} now={now} />
         {mobile ? (
           <div className="og-stack">
             <SegmentedControl label="Order sections" fullWidth value={tab} onValueChange={setTab} items={[{ value: 'status', label: 'Status' }, { value: 'chat', label: 'Chat' }]} />

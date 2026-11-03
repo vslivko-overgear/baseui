@@ -2,6 +2,7 @@
 
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
+- **Overgear, the head of the page of an order is built like the head of an offer:** the picture of the order on the left (square), the title, and under it one row with the status tag and "Order ID · Created", then the steps; it uses `PageHead` with `media` (which now takes `titleTestId`). Overgear checks were not run.
 - **Overgear, the social buttons of the footer have no tooltip on hover** (the name stays as the accessible label). Overgear checks were not run.
 - **Overgear, the social buttons of the footer:** the hover no longer paints the button dark under a dark mark (the hover of the secondary button won over the one of the footer; now the button turns light on hover, with a mouse only, so a touch leaves no stuck state); on a phone there are 24px between the logo and the networks (12px before). Overgear checks were not run.
 - **Overgear, the table of the perks of the rank is the `Table` of the design system** (the hand-made table and its styles are gone), and the text "How do ranks work?" is 16px on its own surface (a card). Overgear checks were not run.
