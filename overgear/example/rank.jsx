@@ -9,13 +9,15 @@ import { Hint } from '../../src/components/Hint.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
 import { Link } from '../../src/components/Link.jsx';
 import { List, ListItem } from '../../src/components/List.jsx';
+import { useToast } from '../../src/components/Toast.jsx';
 import { ProgressBar } from '../../src/components/ProgressBar.jsx';
 import { Status } from '../../src/components/Status.jsx';
 import { go, href, useMedia } from './util.js';
 import { money } from './data.js';
-import { Page, PageHead, Section } from './ui.jsx';
+import { Page, PageHead, Section, CashbackMark } from './ui.jsx';
 import { useStore } from './store.jsx';
-import { GRADES, spentLastYear, gradeFor, progressTo, BENEFITS, benefitValue, rankHistory } from './rank-core.js';
+import { coinsText, BONUS_RULES, openTopUp } from './wallet-core.js';
+import { spentLastYear, gradeFor, progressTo, BENEFITS, benefitValue, rankHistory } from './rank-core.js';
 
 /** The rank of the buyer now: the spending of the last 365 days, the rank, the way to the next one and the history. */
 export function useRank() {
@@ -75,13 +77,14 @@ export function RankPage({ onLogin }) {
   const rank = useRank();
   const [history, setHistory] = useState(false);
   const mobile = useMedia('(max-width: 767px)');
+  const toast = useToast();
   if (!store.user) return <Page fill><Status status="neutral" icon={<Icon name="Star01" size={28} />} title="Sign in to see your rank" description="Your rank depends on what you spend" actionLabel="Sign in" onAction={onLogin} /></Page>;
   const { grade, paid, progress } = rank;
   const { next } = progress;
   return (
     <Page bar>
       <div className="og-stack og-stack--xl" data-test-id="rank-page" data-rank={grade.code}>
-        <PageHead crumbs={mobile ? [{ label: 'Home', href: '#/' }, { label: 'Account', href: '#/account' }, { label: 'Your Rank' }] : undefined} title="Your Rank" meta="Your rank impacts cashback rates, order priority, and other perks" />
+        <PageHead crumbs={mobile ? [{ label: 'Home', href: '#/' }, { label: 'Account', href: '#/account' }, { label: 'Your Rank' }] : undefined} title="Your Rank" meta="Your rank impacts cashback rates, shipping priority, and other perks" />
         <Card variant="surface" padding={5}>
           <div className="og-stack og-stack--lg">
             <div className="og-rank__now">
@@ -90,7 +93,10 @@ export function RankPage({ onLogin }) {
                 <h2 className="og-h2" data-test-id="rank-name">{grade.name}</h2>
                 <p className="og-meta">{`${money(paid)} spent in the last 365 days`}</p>
               </div>
-              <Button variant="secondary" size="md" label="Rank history" onClick={() => setHistory(true)} data-test-id="rank-history" />
+              <div className="og-rank__actions">
+                <Link href="https://loyalty.overgear.com/ranks" target="_blank" rel="noopener noreferrer" data-test-id="rank-all">See all ranks</Link>
+                <Button variant="secondary" size="md" label="Rank history" onClick={() => setHistory(true)} data-test-id="rank-history" />
+              </div>
             </div>
             {progress.isMax ? (
               <div className="og-stack og-stack--close" data-test-id="rank-max">
@@ -110,18 +116,48 @@ export function RankPage({ onLogin }) {
             <Button variant="secondary" size="lg" width="100%" label="Continue shopping" onClick={() => go('/')} />
           </div>
         </Card>
-        <Section title="All ranks">
-          <List aria-label="All ranks" data-test-id="rank-all">
-            {GRADES.map((g) => (
-              <ListItem key={g.code} avatar={<RankBadge grade={g} size={32} />} subtitle={g.topClients ? `Top ${g.topClients} clients by spending in 365 days · cashback ${g.cashbackPercentage}% · coins pay up to ${g.purchaseLimitPercentage}%` : g.paidUsd ? `From $${g.paidUsd.toLocaleString('en-US')} spent in 365 days · cashback ${g.cashbackPercentage}% · coins pay up to ${g.purchaseLimitPercentage}%` : `Everyone starts here · cashback ${g.cashbackPercentage}% · coins pay up to ${g.purchaseLimitPercentage}%`} details={g.code === grade.code ? <Badge variant="info" size="sm" label="Your rank" /> : undefined}>{g.name}</ListItem>
-            ))}
-          </List>
+        <Section title="OG Coins">
+          <div className="og-stack og-stack--lg" data-test-id="rank-coins">
+            <div className="og-stack og-stack--hair">
+              <strong className="og-rank__coins"><CashbackMark />{`${coinsText(store.coins)} OG Coins`}</strong>
+              <span className="og-meta">1 OG Coin = $1.00</span>
+            </div>
+            <div className="og-stack og-stack--close">
+              <h3 className="og-h3">How can I acquire OG Coins?</h3>
+              <ul className="og-bullets">
+                <li><span>{`Top up your Overgear Wallet: ${BONUS_RULES.map((r) => `+${r.percentage}% bonus on deposits over ${money(r.refillAmount).replace('.00', '')}`).join(', ')}`}</span></li>
+                <li><span>{`Earn ${grade.cashbackPercentage}% cashback in OG Coin on all purchases, credited after order completion`}</span></li>
+              </ul>
+            </div>
+            <div className="og-stack og-stack--close">
+              <h3 className="og-h3">How can I use it?</h3>
+              <p className="og-text">{`OG Coins can cover up to ${grade.purchaseLimitPercentage}% of your purchase costs`}</p>
+            </div>
+          </div>
+        </Section>
+        <Section title="Ways to get OG Coins">
+          <div className="og-stack">
+            <Card variant="surface" padding={5}>
+              <div className="og-stack og-stack--related" data-test-id="rank-way-topup">
+                <div className="og-stack og-stack--hair"><h3 className="og-h3">Receive up to 10%</h3><span className="og-meta">when you top up</span></div>
+                <div className="og-row">{BONUS_RULES.map((r) => <Badge key={r.refillAmount} variant="warning-light" size="md" label={`${r.percentage}% for ${money(r.refillAmount).replace('.00', '')}+`} />)}</div>
+                <Button variant="primary" size="lg" width="100%" label="Top up" onClick={() => openTopUp()} />
+              </div>
+            </Card>
+            <Card variant="surface" padding={5}>
+              <div className="og-stack og-stack--related" data-test-id="rank-way-subscribe">
+                <div className="og-stack og-stack--hair"><h3 className="og-h3">Gain 10 OG Coins</h3><span className="og-meta">for newsletter subscription</span></div>
+                <div className="og-row"><Badge variant="warning-light" size="md" label="$5 for Discord" /><Badge variant="warning-light" size="md" label="$5 for email" /></div>
+                <Button variant="secondary" size="lg" width="100%" label="Subscribe" onClick={() => toast({ message: 'You are subscribed (a demo: nothing was sent)', status: 'success' })} />
+              </div>
+            </Card>
+          </div>
         </Section>
         <Section title="How do ranks work?">
           <ol className="og-bullets og-bullets--num">
-            <li>Ranks are recalculated and updated automatically once a day to ensure the information remains accurate</li>
-            <li>Your rank depends on how much you spend. You can learn more about ranks <Link href="https://loyalty.overgear.com/ranks" target="_blank" rel="noopener noreferrer">here</Link></li>
-            <li>Your rank is based on your spending over the last 365 days. You can review completed orders in <Link href={href('/orders')}>my orders page</Link></li>
+            <li><span>Ranks are recalculated and updated automatically once a day to ensure the information remains accurate</span></li>
+            <li><span>Your rank depends on how much you spend. You can learn more about ranks <Link href="https://loyalty.overgear.com/ranks" target="_blank" rel="noopener noreferrer">here</Link></span></li>
+            <li><span>Your rank is based on your spending over the last 365 days. You can review completed orders in <Link href={href('/orders')}>my orders page</Link></span></li>
           </ol>
         </Section>
       </div>
