@@ -64,10 +64,10 @@ export function Offer({ id }) {
     store.add({ key: `${offer.id}-${mode}-${difficulty}-${extras.join()}`, id: offer.id, image: offer.image, eta: offer.eta, title: offer.title, sub: `${MODES.find((m) => m.value === mode).label}, ${difficulty}${extras.length ? `, ${extras.length} extras` : ''}`, price: unit, qty });
     addedToCart();
   };
-  // four, so the row is full: the same service first, then the other offers of the game, then the most sold ones of the other games
+  // ten, so that the first row is full at any width (the listing shows whole rows): the same service first, then the other offers of the game, then the most sold ones of the other games
   const others = OFFERS.filter((o) => o.id !== offer.id);
   const rank = (o) => (o.service === offer.service ? 0 : o.game === offer.game ? 1 : 2);
-  const related = [...others].sort((a, b) => rank(a) - rank(b) || (rank(a) === 2 ? b.sold - a.sold : 0)).slice(0, 4);
+  const related = [...others].sort((a, b) => rank(a) - rank(b) || (rank(a) === 2 ? b.sold - a.sold : 0)).slice(0, 10);
   const [first, ...rest] = offer.bullets;
   return (
     <Page>
@@ -133,14 +133,6 @@ export function Offer({ id }) {
               </ul>
               {reviewsShown < REVIEWS.length && <Button variant="secondary" size="lg" width="100%" label="Show more reviews" onClick={() => setReviewsShown((n) => n + 4)} data-test-id="offer-reviews-more" />}
             </Section>
-            {related.length > 0 && (
-              <Section title="You may also like">
-                <div className="og-stack" data-test-id="offer-more">
-                  <OfferListing offers={related} />
-                  <Button variant="secondary" size="lg" width="100%" label="Discover all" onClick={() => go(`/games/wow?s=${service.id}`)} />
-                </div>
-              </Section>
-            )}
             <Card variant="surface" padding={5}>
               <div className="og-custom" data-test-id="offer-custom">
                 <div className="og-stack og-stack--hair">
@@ -164,6 +156,7 @@ export function Offer({ id }) {
                 <li><span>A pro player on your order within 15 minutes, with a VPN on every login</span></li>
               </ol>
             </Section>
+            <Section title="Questions"><Faq /></Section>
                 </div>
           </div>
           <div className="og-stack og-sticky">
@@ -198,7 +191,13 @@ export function Offer({ id }) {
             </Card>
           </div>
         </div>
-      <Section title="Questions"><Faq /></Section>
+      {related.length > 0 && (
+        <Section title="You may also like">
+          <div data-test-id="offer-more">
+            <OfferListing offers={related} rows={1} more="button" moreLabel="Discover more" />
+          </div>
+        </Section>
+      )}
     </Page>
   );
 }
