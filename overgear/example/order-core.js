@@ -238,6 +238,22 @@ export const orderTimeline = (order, now) => {
   if ([T.ARBITRAGE, T.PENDING].includes(state)) return { kind: 'bar', tone: 'warning' };
   return null;
 };
+/**
+ * How each step of the timeline looks: `done` (passed, green), `current` (the stage the order is at, white), `run` (the stage where the work goes on, white and moving: searching for a booster, in progress), `problem` (the
+ * stage the order is stuck at: a pause or a delay, yellow, on that stage only) and `todo` (not reached, empty). Bars (a failed, a cancelled order) and an order with no timeline come out as they are.
+ */
+export const stepLooks = (order, now) => {
+  const line = orderTimeline(order, now);
+  if (!line || line.kind !== 'steps') return line;
+  const problem = progressTone(order, now) === 'warning';
+  const steps = line.steps.map((s) => {
+    let look = 'todo';
+    if (s.name === line.current) look = problem ? 'problem' : ['searchingForBooster', 'inProgress'].includes(s.name) ? 'run' : 'current';
+    else if (s.active) look = 'done';
+    return { ...s, look };
+  });
+  return { ...line, steps };
+};
 const ARBITRATABLE = [S.IN_PROGRESS, S.WAIT_SCREENSHOTS, S.CONFIRM_DELIVERY, S.KYC_LOCK, S.KYC_WATCH];
 
 /** The color of the timeline: red for an order that failed, orange for one that waits, green for the rest; an order in progress that is late is orange. */

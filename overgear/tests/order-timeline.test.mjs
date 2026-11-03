@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { orderTimeline, applyEvent, confirmDelivery, ORDER_STATUS as S } from '../example/order-core.js';
+import { orderTimeline, stepLooks, applyEvent, confirmDelivery, ORDER_STATUS as S } from '../example/order-core.js';
 import { seedOrders } from '../example/order-seed.js';
 
 const now = Date.UTC(2026, 5, 1);
@@ -26,5 +26,16 @@ describe('orderTimeline', () => {
   it('has the step "Completed" after the steps, not reached', () => {
     const last = orderTimeline(fresh(), now).steps.at(-1);
     expect(last).toMatchObject({ name: 'completed', value: 0, active: false });
+  });
+  it('colors the steps by their state: passed green, current white, working white and moving, a problem yellow on its stage only', () => {
+    const looks = (line) => Object.fromEntries(line.steps.map((s) => [s.name, s.look]));
+    const searching = applyEvent(fresh(), 'view', now);
+    expect(looks(stepLooks(searching, now))).toMatchObject({ addDeliveryDetails: 'done', searchingForBooster: 'run', inProgress: 'todo', completed: 'todo' });
+    const working = applyEvent(applyEvent(fresh(), 'view', now), 'accept', now);
+    expect(looks(stepLooks(working, now + 1000))).toMatchObject({ searchingForBooster: 'done', inProgress: 'run', confirmation: 'todo' });
+    const paused = applyEvent(working, 'pause', now + 2000);
+    expect(looks(stepLooks(paused, now + 3000))).toMatchObject({ searchingForBooster: 'done', inProgress: 'problem', confirmation: 'todo' });
+    const delivered = applyEvent(working, 'deliver', now + 4000);
+    expect(looks(stepLooks(delivered, now + 5000))).toMatchObject({ inProgress: 'done', confirmation: 'current', completed: 'todo' });
   });
 });

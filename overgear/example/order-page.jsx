@@ -24,7 +24,7 @@ import { Page, PageHead } from './ui.jsx';
 import { useStore } from './store.jsx';
 import { reorderPath } from './orders.jsx';
 import {
-  ORDER_STATUS as S, statusLabel, statusBadge, statusText, panelTone, orderTimeline, progressTone, buyerActions, isPaused, isClosed, isKYC, timeLeft, leftText, isDelayed, autoCompleteAt, tipsOpen, showReview,
+  ORDER_STATUS as S, statusLabel, statusBadge, statusText, panelTone, stepLooks, progressTone, buyerActions, isPaused, isClosed, isKYC, timeLeft, leftText, isDelayed, autoCompleteAt, tipsOpen, showReview,
   showJoinPanel, hasUnfilledDelivery, deliveryErrors, fillDelivery, MIN_REVIEW, MAX_REVIEW, reviewError, reviewReady, askTrustpilot, addReview, addTip, confirmDelivery, cancelOrder, openDispute, confirmLockLeft,
   nextEvents, applyEvent, cardDate,
 } from './order-core.js';
@@ -41,17 +41,19 @@ const dateTime = (t) => new Date(t).toLocaleString('en-US', { month: 'short', da
 // ---- the steps ----
 
 /** The timeline of the order: a segment for each step, filled as far as the step is done, in the color of the state of the order. */
+/** The look of a step by its state: passed is green, the current stage is white, the stage where the work goes on is white and moves, the stage with a problem is yellow, the rest is empty. */
+const STEP_BAR = { done: { color: 'success', value: 100 }, current: { color: 'brand', value: 100 }, run: { color: 'brand' }, problem: { color: 'warning', value: 100 }, todo: { color: 'brand', value: 0 } };
+
 function Steps({ order, now }) {
-  const line = orderTimeline(order, now);
+  const line = stepLooks(order, now);
   if (!line) return null;
   if (line.kind === 'bar') return <ProgressBar size="sm" color={line.tone} value={100} aria-label="Order progress" data-test-id="order-steps" />;
   const { steps, current } = line;
-  const tone = progressTone(order, now);
   return (
     <ol className="og-osteps" aria-label="Order progress" data-test-id="order-steps" style={{ '--steps': steps.length }}>
       {steps.map((s) => (
-        <li key={s.name} className="og-osteps__step" data-active={s.active || undefined} aria-current={s.name === current ? 'step' : undefined} data-test-id={`order-step-${s.name}`}>
-          <ProgressBar size="sm" color={tone} value={Math.round(s.value * 100)} aria-label={s.title} />
+        <li key={s.name} className="og-osteps__step" data-active={s.active || undefined} data-look={s.look} aria-current={s.name === current ? 'step' : undefined} data-test-id={`order-step-${s.name}`}>
+          <ProgressBar size="sm" color={STEP_BAR[s.look].color} value={STEP_BAR[s.look].value} aria-label={s.title} />
           <span className="og-osteps__title">{s.title}</span>
         </li>
       ))}
