@@ -685,7 +685,6 @@ a { color: inherit; }
 @keyframes og-run { to { transform: translateX(100%); } }
 @media (prefers-reduced-motion: reduce) { .og-osteps__step[data-look="run"] .bui-progress__track::after { animation: none; } }
 /* the offers at the bottom of an offer page: bigger cards (the narrowest 280px, four in a row on a desktop) */
-.og-related { --bui-listing-min: 280px; }
 
 /* the payment history: the filters in a row, the amount and the state of a transaction */
 .og-txfilters { display: flex; align-items: center; gap: var(--baseui-spacing-6); flex-wrap: wrap; }
@@ -708,5 +707,5 @@ a { color: inherit; }
 /* the number of the orders in the title: secondary, at its side */
 .og-title__count { margin-inline-start: var(--baseui-spacing-2); color: var(--baseui-text-and-icon-secondary); }
 
-/* the pictures of the product cards of the listings are square (1:1), not 4:5 */
-.bui-product-card__art { aspect-ratio: 1 / 1; }
+/* the listings of products have four cards in a row on a desktop (a card is 280px at least) */
+.og { --bui-listing-min: 280px; }

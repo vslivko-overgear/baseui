@@ -2,7 +2,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, test, vi } from 'vitest';
-import { Breadcrumbs, Button, Card, Stack, ButtonGroup, Form, FormRow, FormSection, IconButton, ControlRow, Checkbox, Dialog, OtpInput, Pagination, ProgressBar, Slider, Rating, Selector, Dropdown, Switch, Tabs, TextInput } from '../src/index.jsx';
+import { Breadcrumbs, Button, Card, ProductCard, Stack, ButtonGroup, Form, FormRow, FormSection, IconButton, ControlRow, Checkbox, Dialog, OtpInput, Pagination, ProgressBar, Slider, Rating, Selector, Dropdown, Switch, Tabs, TextInput } from '../src/index.jsx';
 
 describe('Switch', () => {
   test('toggles and reports', async () => {
@@ -448,5 +448,21 @@ describe('Card padding and Stack relation', () => {
   test('Stack relation="pair" has no gap', () => {
     const { container } = render(<Stack relation="pair"><span>a</span><span>b</span></Stack>);
     expect(container.firstChild.style.gap).toBe('var(--bui-rel-pair)');
+  });
+});
+
+describe('ProductCard points', () => {
+  test('the points are lines under the title, with an icon when given', () => {
+    const { container } = render(<ProductCard title="Gift" price="$5" points={['Fast', { text: 'Safe', icon: 'ShieldTick' }]} />);
+    const points = [...container.querySelectorAll('.bui-product-card__point')];
+    expect(points.map((p) => p.textContent)).toEqual(['Fast', 'Safe']);
+    expect(points[0].querySelector('svg')).toBeNull();
+    expect(points[1].querySelector('svg')).not.toBeNull();
+    const body = container.querySelector('.bui-product-card__body').children;
+    expect([...body].findIndex((c) => c.className.includes('__points'))).toBe([...body].findIndex((c) => c.className.includes('__title')) + 1);
+  });
+  test('without points there is no list', () => {
+    const { container } = render(<ProductCard title="Gift" price="$5" />);
+    expect(container.querySelector('.bui-product-card__points')).toBeNull();
   });
 });

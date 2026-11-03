@@ -1890,7 +1890,7 @@ export interface ProductCardProps {
    */
   price?: ReactNode;
   /**
-   * Picture url; it fills the 4:5 area. Without it the fallback icon is shown
+   * Picture url; it fills the square (1:1) area. Without it the fallback icon is shown
    */
   image?: string;
   /**
@@ -1916,6 +1916,10 @@ export interface ProductCardProps {
    * A line above the price in 12px Secondary: the game or the category the product belongs to
    */
   eyebrow?: ReactNode;
+  /**
+   * The selling points under the title, up to three, one line each (a point that does not fit ends with an ellipsis): a text, or a text with an icon of the catalog shown filled
+   */
+  points?: Array<string | { text: string, icon?: string }>;
   /**
    * Rating, shown with a star
    */

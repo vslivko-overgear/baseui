@@ -16,7 +16,7 @@ import { Hint } from '../../src/components/Hint.jsx';
 import { Bleed } from '../../src/components/Layout.jsx';
 import { go, useMedia } from './util.js';
 import { OFFERS, REVIEWS, SERVICES, money, offerOf, gameOf, sold } from './data.js';
-import { useAddedToCart, Page, PageHead, Section, OfferListing, Stars, WishButton, CashbackTag, CASHBACK, PaymentLogos, PAY_OFFER } from './ui.jsx';
+import { useAddedToCart, Page, PageHead, Section, OfferListing, Stars, WishButton, CashbackTag, CASHBACK, PaymentLogos, PAY_OFFER, USP_ICONS } from './ui.jsx';
 import { useStore } from './store.jsx';
 import { Faq } from './games.jsx';
 
@@ -41,7 +41,6 @@ const STEPS = [
   'The job is done — the booster confirms in Discord, and every drop stays with you',
 ];
 /** The icons of the selling points under the title (the first three points of the offer). */
-const USP_ICONS = ['Zap', 'Star01', 'ShieldTick'];
 /** What opens when a point is hovered (a tooltip) or tapped (the standard dialog of a phone): a line more about it. */
 const USP_MORE = [
   (b) => `${b}. A verified pro player does it by hand on your character: no scripts, no bots, and a VPN on every login`,
@@ -210,7 +209,7 @@ export function Offer({ id }) {
       {related.length > 0 && (
         <Section title="You may also like">
           <div data-test-id="offer-more">
-            <OfferListing offers={related} rows={2} more="infinite" className="og-related" />
+            <OfferListing offers={related} rows={2} more="infinite" />
           </div>
         </Section>
       )}

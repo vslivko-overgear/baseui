@@ -109,6 +109,9 @@ export function WishButton({ id, compact, variant = 'ghost', text = false }) {
   return <IconButton variant={variant} size={compact ? 'xsm' : 'md'} tooltip={false} label={on ? 'Remove from favorites' : 'Add to favorites'} icon={icon} onClick={(e) => { e.stopPropagation(); setMove(on ? 'off' : 'on'); store.toggleWish(id); }} />;
 }
 
+/** The icons of the three selling points of an offer (the tags of its page and the lines of its card). */
+export const USP_ICONS = ['Zap', 'Star01', 'ShieldTick'];
+
 /** The props of a ProductCard for an offer (the card of the design system), with the heart of the favorites. */
 export function offerProps(o, store, key = o.id, showGame = false) {
   const game = gameOf(o.game);
@@ -117,6 +120,7 @@ export function offerProps(o, store, key = o.id, showGame = false) {
     title: o.title,
     price: money(o.price),
     eyebrow: showGame ? game.name : undefined,
+    points: o.bullets.slice(0, 3).map((text, i) => ({ text, icon: USP_ICONS[i] })),
     image: o.image,
     imageAlt: `${game.name}: ${o.title}`,
     badge: o.badge,

@@ -21,12 +21,13 @@ The card of a product in a listing: a picture with a badge and a heart over it, 
 | --- | --- | --- | --- |
 | `title` | `string` | — | Name of the product, two lines at most |
 | `price` | `ReactNode` | — | Price, in bold |
-| `image` | `string` | — | Picture url; it fills the 4:5 area. Without it the fallback icon is shown |
+| `image` | `string` | — | Picture url; it fills the square (1:1) area. Without it the fallback icon is shown |
 | `imageAlt` | `string` | `''` | Alternative text of the picture (empty when the title says the same) |
 | `fallbackIcon` | `string` | `'Image01'` | Icon of the catalog shown when there is no picture |
 | `badge` | `string` | — | A mark over the top left corner of the picture: Sale, Hot offer |
 | `badgeVariant` | `'primary' \| 'secondary' \| 'success' \| 'warning' \| 'error' \| 'info'` | `'secondary'` | Color of the badge |
 | `eyebrow` | `ReactNode` | — | A line above the price in 12px Secondary: the game or the category the product belongs to |
+| `points` | `Array<string \| { text: string, icon?: string }>` | — | The selling points under the title, up to three, one line each (a point that does not fit ends with an ellipsis): a text, or a text with an icon of the catalog shown filled |
 | `rating` | `number` | — | Rating, shown with a star |
 | `meta` | `ReactNode` | — | The line on the right of the rating: sold, delivery time |
 | `favorite` | `{ active?: boolean, onToggle?: (active: boolean) => void, label?: string }` | — | The heart over the top right corner of the picture: filled when active; tapping it plays a short move |

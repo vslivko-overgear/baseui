@@ -36,7 +36,7 @@ function FavoriteButton({ favorite }) {
  * The card of a product in a listing: a picture with a badge and a heart over it, an optional line above the price (the game), the price, the title in two lines, the rating and one line of meta.
  * It is the one card of a listing: use it inside ProductListing, which lays the cards in whole rows.
  */
-export function ProductCard({ title, price, image, imageAlt = '', fallbackIcon = 'Image01', badge, badgeVariant = 'secondary', eyebrow, rating, meta, favorite, onClick, href, label, className, ...rest }) {
+export function ProductCard({ title, price, image, imageAlt = '', fallbackIcon = 'Image01', badge, badgeVariant = 'secondary', eyebrow, points, rating, meta, favorite, onClick, href, label, className, ...rest }) {
   return (
     <div data-slot="product-card" className={cx('bui-product-card', className)} {...rest}>
       <ClickableCard label={label ?? title} variant="surface" padding={2} onClick={onClick} href={href}>
@@ -53,6 +53,19 @@ export function ProductCard({ title, price, image, imageAlt = '', fallbackIcon =
             {eyebrow && <span className="bui-product-card__eyebrow">{eyebrow}</span>}
             <span className="bui-product-card__price">{price}</span>
             <span className="bui-product-card__title">{title}</span>
+            {points?.length > 0 && (
+              <span className="bui-product-card__points">
+                {points.map((point) => {
+                  const { text, icon } = typeof point === 'string' ? { text: point } : point;
+                  return (
+                    <span key={text} className="bui-product-card__point" title={text}>
+                      {icon && <Icon name={icon} size={16} filled />}
+                      <span>{text}</span>
+                    </span>
+                  );
+                })}
+              </span>
+            )}
             {(rating != null || meta) && (
               <span className="bui-product-card__meta">
                 {rating != null ? (
@@ -77,12 +90,13 @@ export function ProductCard({ title, price, image, imageAlt = '', fallbackIcon =
 describe(ProductCard, 'The card of a product in a listing: a picture with a badge and a heart over it, the price, the title in two lines, the rating and one line of meta (for example how many were sold)', {
   title: ['string', null, 'Name of the product, two lines at most'],
   price: ['ReactNode', null, 'Price, in bold'],
-  image: ['string', null, 'Picture url; it fills the 4:5 area. Without it the fallback icon is shown'],
+  image: ['string', null, 'Picture url; it fills the square (1:1) area. Without it the fallback icon is shown'],
   imageAlt: ['string', "''", 'Alternative text of the picture (empty when the title says the same)'],
   fallbackIcon: ['string', "'Image01'", 'Icon of the catalog shown when there is no picture'],
   badge: ['string', null, 'A mark over the top left corner of the picture: Sale, Hot offer'],
   badgeVariant: ["'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'", "'secondary'", 'Color of the badge'],
   eyebrow: ['ReactNode', null, 'A line above the price in 12px Secondary: the game or the category the product belongs to'],
+  points: ["Array<string | { text: string, icon?: string }>", null, 'The selling points under the title, up to three, one line each (a point that does not fit ends with an ellipsis): a text, or a text with an icon of the catalog shown filled'],
   rating: ['number', null, 'Rating, shown with a star'],
   meta: ['ReactNode', null, 'The line on the right of the rating: sold, delivery time'],
   favorite: ['{ active?: boolean, onToggle?: (active: boolean) => void, label?: string }', null, 'The heart over the top right corner of the picture: filled when active; tapping it plays a short move'],

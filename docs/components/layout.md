@@ -22,7 +22,7 @@ Containers that arrange content with consistent spacing
 | --- | --- | --- | --- |
 | `direction` | `'row' \| 'column'` | `'column'` | Main axis |
 | `gap` | `number` | `4` | Gap in gaps (1 gap = 4px), a step of the spacing scale: 4 is 16px |
-| `relation` | `'tight' \| 'related' \| 'group' \| 'section'` | — | The gap by how closely the blocks belong together (8 / 16 / 24 / 40px); it replaces `gap` |
+| `relation` | `'pair' \| 'tight' \| 'related' \| 'group' \| 'section'` | — | The gap by how closely the blocks belong together (0 / 8 / 16 / 24 / 40px); it replaces `gap`. `pair` is a title and the line that describes it: no gap, the line-height is the space |
 | `align` | `'start' \| 'center' \| 'end' \| 'stretch' \| 'baseline'` | — | Cross-axis alignment |
 | `justify` | `'start' \| 'center' \| 'end' \| 'between' \| 'around'` | — | Main-axis distribution |
 | `wrap` | `boolean` | `false` | Allow items to wrap |
