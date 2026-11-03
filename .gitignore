@@ -28,7 +28,7 @@ overgear/index.js
 overgear/showcase/app.js
 overgear/showcase/theme-page.js
 overgear/showcase/typography-page.js
-overgear/tests/banner.test.js
+overgear/tests/constitution.test.js
 site/app.js
 site/story.js
 site/templates-ui.js

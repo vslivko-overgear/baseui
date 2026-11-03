@@ -543,10 +543,10 @@ export interface CardProps {
    */
   variant?: 'default' | 'surface' | 'transparent' | 'muted' | 'blue' | 'green' | 'orange' | 'pink' | 'red';
   /**
-   * Inner padding in gaps (1 gap = 4px), a step of the spacing scale: 4 is 16px
+   * Inner padding in gaps (1 gap = 4px), a step of the spacing scale: 4 is 16px. `list` is for a card that holds a List: 16px above and below and 4px at the sides, because the rows reach 12px out of their box, so the icons stand 16px from the edge and the rows are 4px from it
    * @default 4
    */
-  padding?: number;
+  padding?: number | 'list';
   /**
    * Shadow depth
    * @default 'none'
@@ -759,10 +759,10 @@ export interface ClickableCardProps {
    */
   variant?: 'default' | 'surface' | 'transparent' | 'muted' | 'blue' | 'green' | 'orange' | 'pink' | 'red';
   /**
-   * Inner padding in gaps (1 gap = 4px), a step of the spacing scale: 4 is 16px
+   * Inner padding in gaps (1 gap = 4px), a step of the spacing scale: 4 is 16px. `list` is for a card that holds a List: 16px above and below and 4px at the sides, because the rows reach 12px out of their box, so the icons stand 16px from the edge and the rows are 4px from it
    * @default 4
    */
-  padding?: number;
+  padding?: number | 'list';
   /**
    * Shadow depth
    * @default 'none'
@@ -2341,10 +2341,10 @@ export interface SelectableCardProps {
    */
   variant?: 'default' | 'surface' | 'transparent' | 'muted' | 'blue' | 'green' | 'orange' | 'pink' | 'red';
   /**
-   * Inner padding in gaps (1 gap = 4px), a step of the spacing scale: 4 is 16px
+   * Inner padding in gaps (1 gap = 4px), a step of the spacing scale: 4 is 16px. `list` is for a card that holds a List: 16px above and below and 4px at the sides, because the rows reach 12px out of their box, so the icons stand 16px from the edge and the rows are 4px from it
    * @default 4
    */
-  padding?: number;
+  padding?: number | 'list';
   /**
    * Shadow depth
    * @default 'none'
@@ -2618,9 +2618,9 @@ export interface StackProps {
    */
   gap?: number;
   /**
-   * The gap by how closely the blocks belong together (8 / 16 / 24 / 40px); it replaces `gap`
+   * The gap by how closely the blocks belong together (0 / 8 / 16 / 24 / 40px); it replaces `gap`. `pair` is a title and the line that describes it: no gap, the line-height is the space
    */
-  relation?: 'tight' | 'related' | 'group' | 'section';
+  relation?: 'pair' | 'tight' | 'related' | 'group' | 'section';
   /**
    * Cross-axis alignment
    */

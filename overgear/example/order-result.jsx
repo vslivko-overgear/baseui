@@ -21,14 +21,6 @@ const TONE = { success: 'success', error: 'error', warning: 'error', check: 'war
 /** A payment under verification settles after this long in the example (the real provider answers when it does). */
 const SETTLE_MS = POLL_MS * 2;
 
-/** The states of the result page the example lets you open, for the strip at the bottom. */
-const DEMO = (first) => [
-  { label: 'Paid, one order', href: `/checkout/result/success?orderLink=${first}` },
-  { label: 'Paid, several orders', href: '/checkout/result/success' },
-  { label: 'Verifying', href: '/checkout/result/check' },
-  { label: 'Declined', href: '/checkout/result/error' },
-  { label: 'Failed', href: '/checkout/result/warning' },
-];
 
 export function CheckoutResult({ result, orderLink, transaction }) {
   const store = useStore();
@@ -86,10 +78,6 @@ export function CheckoutResult({ result, orderLink, transaction }) {
         />
         {view.note && <Banner status="success">{view.note}</Banner>}
       </div>
-      <nav className="og-result__demo" aria-label="States of this page">
-        <span className="og-meta">Show the state</span>
-        {DEMO(store.orders[0]?.link).map((d) => <a key={d.label} href={href(d.href)} onClick={(e) => { e.preventDefault(); go(d.href); }}>{d.label}</a>)}
-      </nav>
     </ResultShell>
   );
 }

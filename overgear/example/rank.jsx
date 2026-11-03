@@ -96,8 +96,8 @@ export function RankPage({ onLogin }) {
               <div className="og-stack og-stack--related" data-test-id="rank-progress">
                 <ProgressBar size="md" color="success" value={Math.round(progress.percentage)} aria-label={`Progress to ${next.name}`} />
                 <div className="og-row og-row--between og-rank__goal">
-                  <div className="og-stack og-stack--hair"><strong>{`Spend ${money(progress.left)} more`}</strong><span className="og-meta">to level up</span></div>
-                  <div className="og-rank__next"><div className="og-stack og-stack--hair og-rank__nextname"><strong data-test-id="rank-next">{next.name}</strong><span className="og-meta">Next rank</span></div><RankBadge grade={next} size={40} /></div>
+                  <div className="og-stack og-stack--pair"><strong>{`Spend ${money(progress.left)} more`}</strong><span className="og-meta">to level up</span></div>
+                  <div className="og-rank__next"><div className="og-stack og-stack--pair og-rank__nextname"><strong data-test-id="rank-next">{next.name}</strong><span className="og-meta">Next rank</span></div><RankBadge grade={next} size={40} /></div>
                 </div>
               </div>
             )}

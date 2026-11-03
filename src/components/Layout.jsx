@@ -8,7 +8,7 @@ const ALIGN = { start: 'flex-start', end: 'flex-end', center: 'center', stretch:
 const JUSTIFY = { start: 'flex-start', end: 'flex-end', center: 'center', between: 'space-between', around: 'space-around' };
 
 /** The levels of relation between blocks (rule H3): a gap is chosen by how closely the blocks belong together, not by a number. */
-const RELATION = { tight: 'var(--bui-rel-tight)', related: 'var(--bui-rel-related)', group: 'var(--bui-rel-group)', section: 'var(--bui-rel-section)' };
+const RELATION = { pair: 'var(--bui-rel-pair)', tight: 'var(--bui-rel-tight)', related: 'var(--bui-rel-related)', group: 'var(--bui-rel-group)', section: 'var(--bui-rel-section)' };
 
 export function Stack({ direction = 'column', gap = 4, relation, align, justify, wrap = false, as = 'div', className, style, children, ...rest }) {
   const Tag = as;
@@ -113,7 +113,7 @@ export function Bleed({ scroll = false, outset, as = 'div', className, style, ch
 describe(Stack, 'A flex container with a consistent gap', {
   direction: ["'row' | 'column'", "'column'", 'Main axis'],
   gap: ['number', '4', 'Gap in gaps (1 gap = 4px), a step of the spacing scale: 4 is 16px'],
-  relation: ["'tight' | 'related' | 'group' | 'section'", null, 'The gap by how closely the blocks belong together (8 / 16 / 24 / 40px); it replaces `gap`'],
+  relation: ["'pair' | 'tight' | 'related' | 'group' | 'section'", null, 'The gap by how closely the blocks belong together (0 / 8 / 16 / 24 / 40px); it replaces `gap`. `pair` is a title and the line that describes it: no gap, the line-height is the space'],
   align: ["'start' | 'center' | 'end' | 'stretch' | 'baseline'", null, 'Cross-axis alignment'],
   justify: ["'start' | 'center' | 'end' | 'between' | 'around'", null, 'Main-axis distribution'],
   wrap: ['boolean', 'false', 'Allow items to wrap'],

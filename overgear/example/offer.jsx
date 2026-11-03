@@ -129,7 +129,7 @@ export function Offer({ id }) {
                 <h2 className="og-h2">Why Players Choose Overgear</h2>
                 <ul className="og-trust">
                   {WHY.map(([icon, t, d]) => (
-                    <li key={t}><Icon name={icon} size={24} /><div className="og-stack og-stack--hair"><p className="og-trust__title">{t}</p><p className="og-meta">{d}</p></div></li>
+                    <li key={t}><Icon name={icon} size={24} /><div className="og-stack og-stack--pair"><p className="og-trust__title">{t}</p><p className="og-meta">{d}</p></div></li>
                   ))}
                 </ul>
               </div>
@@ -200,7 +200,7 @@ export function Offer({ id }) {
               <div className="og-stack og-stack--lg">
                 <ul className="og-trust">
                   {TRUST.map(([icon, t, d]) => (
-                    <li key={t}><Icon name={icon} size={24} /><div className="og-stack og-stack--hair"><p className="og-trust__title">{t}</p><p className="og-meta">{d}</p></div></li>
+                    <li key={t}><Icon name={icon} size={24} /><div className="og-stack og-stack--pair"><p className="og-trust__title">{t}</p><p className="og-meta">{d}</p></div></li>
                   ))}
                 </ul>
               </div>

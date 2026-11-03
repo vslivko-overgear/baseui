@@ -626,6 +626,7 @@ export const AGENT_DEFAULTS = [
     text: [
       'Choose a gap by how closely the blocks belong together, not by one number for the page. Inside an element 4 to 8, a heading to its content 8, related blocks 16, groups 24, sections 40. Use `Stack relation` and `Group` instead of a number',
       'A heading is at most 60% of its font size from its content, 16 at least: a big heading never hangs far above what it names. A line that continues the block above it (a rating under a headline, the counter under the rating, a button over the list it opens) goes in the same group, 8 to 16 away, never at the gap of the page',
+      'A title and the line that describes it (a subtitle, a caption right under a heading, a name and its role) are a pair: `Stack relation="pair"`, no gap, the line-height is the space. Do not tune the gap of a pair by hand: if it looks far, the pair is not a pair (a line that continues the block above it is related, 8 to 16)',
       'Never pull a block closer with a negative margin: put it in the group it belongs to. A row of tags or a listing that must reach the screen edges is a `Bleed`',
     ],
   },
@@ -643,6 +644,31 @@ export const AGENT_DEFAULTS = [
     title: 'Forms',
     text: [
       'Lay out the fields of a form with `Form`, `FormRow` and `FormSection`: one gap between rows and columns, related fields in a row, a titled group as a section. Do not space fields with a Stack and a Grid of your own',
+    ],
+  },
+  {
+    id: 'hug-fill',
+    rules: ['D15'],
+    title: 'Hug and fill',
+    text: [
+      'A control or a tag is as wide as its content (hug) unless it stands alone in a row of its own or the row is a grid of equal cells (fill). In a row of filters, the control with a short value (a sort) hugs and the rest fill',
+      'A row that does not fit on a phone scrolls sideways as a whole, in a `Bleed`, with every item hugging its content. Never scroll the content inside one long shape',
+    ],
+  },
+  {
+    id: 'status-colors',
+    rules: ['D7'],
+    title: 'Status colors',
+    text: [
+      'A state has one color everywhere: success is green, a problem or a warning is yellow, an error is red, a passed step is neutral with a check, the current one is the accent. Do not take the brand color for a status',
+    ],
+  },
+  {
+    id: 'product-screens',
+    rules: ['U4'],
+    title: 'Product screens',
+    text: [
+      'A product screen has no demo or debug controls: no strip to switch states, no sample-data labels, no notes for the designer. A state is reached by a real action or by a story, not by a switch on the page',
     ],
   },
 ];

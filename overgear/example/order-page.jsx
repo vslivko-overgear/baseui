@@ -42,7 +42,7 @@ const dateTime = (t) => new Date(t).toLocaleString('en-US', { month: 'short', da
 
 /** The timeline of the order: a segment for each step, filled as far as the step is done, in the color of the state of the order. */
 /** The look of a step by its state: passed is a dimmed (disabled) white bar with a check at its text, the current stage is green, the stage where the work goes on is a full green bar with a soft light moving over it, the stage with a problem is yellow, the rest is empty. */
-const STEP_BAR = { done: { color: 'brand', value: 100 }, current: { color: 'success', value: 100 }, run: { color: 'success', value: 100 }, problem: { color: 'warning', value: 100 }, todo: { color: 'brand', value: 0 } };
+const STEP_BAR = { done: { color: 'success', value: 100 }, current: { color: 'success', value: 100 }, run: { color: 'success', value: 100 }, problem: { color: 'warning', value: 100 }, todo: { color: 'success', value: 0 } };
 
 function Steps({ order, now }) {
   const line = stepLooks(order, now);
@@ -402,7 +402,7 @@ export function OrderPage({ link, onLogin }) {
   const left = (
     <>
       <StatusPanel order={order} now={now} actions={actions} />
-      {kyc && order.status === S.KYC_LOCK && <p className="og-meta" data-test-id="order-kyc">The seller waits for your identity verification. The real service opens the verification page here</p>}
+      {kyc && order.status === S.KYC_LOCK && <p className="og-text" data-test-id="order-kyc">The seller waits for your identity verification. The real service opens the verification page here</p>}
       {order.delivery && <DeliveryDetails key={order.delivery.filled ? 'filled' : 'form'} order={order} onSave={(values) => { update(fillDelivery(order, values)); toast({ message: 'Delivery details saved', status: 'success' }); }} />}
       {showReview(order) && <ReviewAndTips order={order} now={now} onReview={(rate, text) => { update(addReview(order, rate, text, Date.now())); toast({ message: 'Thank you for your review', status: 'success' }); }} onTip={(a) => { update(addTip(order, a)); toast({ message: `Tip sent: ${money(a)}`, status: 'success' }); }} />}
       {showJoinPanel(store.discord, order) && <JoinPanel onJoin={() => { store.joinDiscord(); toast({ message: 'You joined the Discord server (a demo: nothing was opened)', status: 'success' }); }} />}

@@ -43,6 +43,7 @@ a { color: inherit; }
 .og-stack--lg { gap: var(--baseui-spacing-6); }
 .og-stack--xl { gap: var(--baseui-spacing-8); }
 .og-stack--related { gap: var(--bui-rel-related); }
+.og-stack--pair { gap: var(--bui-rel-pair); }   /* a title and the line that describes it */
 .og-stack--snug { gap: var(--baseui-spacing-2); }
 .og-stack--tight { gap: var(--baseui-spacing-3); }
 .og-stack--close { gap: var(--baseui-spacing-2); }
@@ -284,7 +285,6 @@ a { color: inherit; }
 .og-trust { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--bui-rel-related); }
 .og-trust li { display: flex; gap: var(--baseui-spacing-3); align-items: flex-start; }
 .og-trust svg { flex: none; }   /* the icons of the trust block are white (the primary color) */
-.og-trust .og-stack--hair { gap: 0; }   /* the title and its line stand together */
 .og-trust__title { margin: 0; font: var(--baseui-typography-text-14-semi-bold); color: var(--baseui-text-and-icon-primary); }
 .og-art__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
@@ -502,9 +502,6 @@ a { color: inherit; }
 .og--mobile .og-ofilters > :not(.og-ofilters__sort) { flex: 1 1 calc(50% - 4px); }
 
 /* the states of a page are opened from a line of links at its end (the demo) */
-.og-result__demo { display: flex; flex-wrap: wrap; align-items: center; gap: var(--baseui-spacing-3); padding-top: var(--baseui-spacing-4); }
-.og-result__demo a { font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-secondary); text-decoration: underline; text-underline-offset: 3px; }
-.og-result__demo a:hover { color: var(--baseui-text-and-icon-primary); }
 
 /* the result of a payment: a standalone page with a slim top bar and one block in the middle */
 .og-result { min-height: 100vh; display: flex; flex-direction: column; }
@@ -518,8 +515,7 @@ a { color: inherit; }
 .og-result__overline--warning { color: var(--baseui-extensions-text-and-icon-warning, var(--baseui-text-and-icon-primary)); }
 .og-result__spin { position: relative; display: inline-grid; place-items: center; }
 .og-result__spin .bui-spinner { position: absolute; inset: -14px; margin: auto; }
-.og-result__main .og-result__demo { justify-content: center; }
-
+.og-result__main 
 /* the page of an order */
 .og-order { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: var(--baseui-spacing-6); align-items: start; }
 .og-osteps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(var(--steps, 3), minmax(0, 1fr)); gap: var(--baseui-spacing-2); }
@@ -593,7 +589,6 @@ a { color: inherit; }
 .og-methods--more { padding-top: var(--baseui-spacing-2); }
 @media (prefers-reduced-motion: reduce) { .og-collapse { transition: none; } }
 [data-motion="off"] .og-collapse { transition: none; }
-.og-methodcard .og-stack--hair { gap: 0; }   /* the name of the method and its fee stand together */
 
 /* the rank: the picture of the shield, the line in the menu and in the account, the page */
 .og-rankbadge { flex: none; display: block; object-fit: contain; }
@@ -674,10 +669,9 @@ a { color: inherit; }
 .og-sub__head .bui-badge { flex: none; }
 /* the wallet page: more air between its main blocks (56px on a desktop) */
 .og:not(.og--mobile) .og-wpage { gap: calc(var(--baseui-spacing-12) + var(--baseui-spacing-2)); }
-/* the amounts and the top-up on one background (secondary): 16px of padding, the wrapper 28px, what is inside 12px (28 - 16), 12px gaps */
-.og-wwrap { padding: var(--baseui-spacing-4); border-radius: var(--baseui-radius-custom-28); background: var(--baseui-background-secondary); gap: var(--baseui-spacing-3); }
+/* the amounts and the top-up on one background (secondary): 16px of padding, the wrapper 28px, so what is inside has 12px (28 - 16: the class bui-nested), 12px gaps */
+.og-wwrap { --bui-card-radius: var(--baseui-radius-custom-28); --bui-card-pad: var(--baseui-spacing-4); padding: var(--bui-card-pad); border-radius: var(--bui-card-radius); background: var(--baseui-background-secondary); gap: var(--baseui-spacing-3); }
 .og-wwrap .og-amounts-grid { gap: var(--baseui-spacing-3); }
-.og-wwrap .bui-card, .og-wwrap .bui-button { border-radius: var(--baseui-radius-xl); }
 .og-wamount__label { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); }
 /* the terms: 16px from the edge of the surface to the icon (the list bleeds 12px, so 4px of side padding) and a bigger gap between the rows */
 .og-terms [data-slot="list"] { gap: var(--baseui-spacing-3); }
@@ -691,8 +685,6 @@ a { color: inherit; }
 @media (prefers-reduced-motion: reduce) { .og-osteps__step[data-look="run"] .bui-progress__track::after { animation: none; } }
 /* the offers at the bottom of an offer page: bigger cards (the narrowest 280px, four in a row on a desktop) */
 .og-related { --bui-listing-min: 280px; }
-/* in the line under the bar of the rank the subtitles stand close to their titles */
-.og-rank__goal .og-stack--hair { gap: 0; }
 
 /* the payment history: the filters in a row, the amount and the state of a transaction */
 .og-txfilters { display: flex; align-items: center; gap: var(--baseui-spacing-6); flex-wrap: wrap; }

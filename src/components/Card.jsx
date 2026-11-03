@@ -5,7 +5,7 @@ const px = (v) => (typeof v === 'number' ? `${v}px` : v);
 const SHADOW = { none: 'none', low: 'var(--baseui-shadow-sm)', med: 'var(--baseui-shadow-md)', high: 'var(--baseui-shadow-lg)' };
 const CARD_DOC = {
   variant: ["'default' | 'surface' | 'transparent' | 'muted' | 'blue' | 'green' | 'orange' | 'pink' | 'red'", "'default'", 'Background; surface is the Surface color of the theme (a shadow in the light theme, none in the dark one) for a card that holds Secondary elements: fields, avatars, a progress track'],
-  padding: ['number', '4', 'Inner padding in gaps (1 gap = 4px), a step of the spacing scale: 4 is 16px'],
+  padding: ["number | 'list'", '4', 'Inner padding in gaps (1 gap = 4px), a step of the spacing scale: 4 is 16px. `list` is for a card that holds a List: 16px above and below and 4px at the sides, because the rows reach 12px out of their box, so the icons stand 16px from the edge and the rows are 4px from it'],
   elevation: ["'none' | 'low' | 'med' | 'high'", "'none'", 'Shadow depth'],
   width: ['number | string', null, 'Number is px'],
   height: ['number | string', null, 'Number is px'],
@@ -19,7 +19,8 @@ function cardProps({ variant = 'default', padding = 4, elevation, width, height,
     'data-variant': variant,
     className: cx('bui-card', `bui-card--${variant}`, className, extra),
     style: {
-      padding: `var(--baseui-spacing-${padding})`,
+      // `list`: the rows of a List reach 12px out of their box (the highlight of a row), so 4px at the sides put the icons 16px from the edge and the rows 4px from it
+      ...(String(padding) === 'list' ? { padding: 'var(--baseui-spacing-4) var(--baseui-spacing-1)', '--bui-card-pad': 'var(--baseui-spacing-1)' } : { padding: `var(--baseui-spacing-${padding})`, '--bui-card-pad': `var(--baseui-spacing-${padding})` }),
       boxShadow: elevation ? SHADOW[elevation] : undefined,
       width: px(width),
       height: px(height),

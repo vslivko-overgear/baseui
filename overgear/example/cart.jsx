@@ -103,7 +103,7 @@ const MORE_METHODS = [
 const methodLabel = (m) => (
   <span className="og-method">
     {m.tile}
-    <span className="og-stack og-stack--hair"><b className="og-method__name">{m.name}</b><span className="og-meta">{m.fee ? `${money(m.fee)} service fee` : 'No service fee'}</span></span>
+    <span className="og-stack og-stack--pair"><b className="og-method__name">{m.name}</b><span className="og-meta">{m.fee ? `${money(m.fee)} service fee` : 'No service fee'}</span></span>
   </span>
 );
 

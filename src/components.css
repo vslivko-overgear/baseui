@@ -245,7 +245,7 @@
 @media (prefers-reduced-motion: reduce) { .bui-calendar__day, .bui-calendar__nav { transition: none; } }
 
 /* ---------- Card ---------- */
-.bui-card { position: relative; box-sizing: border-box; display: flex; flex-direction: column; border-radius: var(--baseui-radius-custom-20); color: var(--baseui-text-and-icon-primary); font: var(--baseui-typography-text-16-regular); }
+.bui-card { --bui-card-radius: var(--baseui-radius-custom-20); position: relative; box-sizing: border-box; display: flex; flex-direction: column; border-radius: var(--bui-card-radius); color: var(--baseui-text-and-icon-primary); font: var(--baseui-typography-text-16-regular); }
 .bui-card--default { background: var(--baseui-background-secondary); }
 .bui-card--transparent { background: transparent; }
 .bui-card--surface { background: var(--baseui-extensions-background-surface); box-shadow: var(--baseui-shadow-sm); }
@@ -465,6 +465,11 @@
 @keyframes bui-dot-grow { 0% { transform: scale(0); } 60% { transform: scale(1.3); } 100% { transform: scale(1); } }
 [data-slot="checkbox-box"][data-checked] [data-slot="checkbox-indicator"] svg path, [data-slot="checkbox-box"][data-indeterminate] [data-slot="checkbox-indicator"] svg path { stroke-dasharray: 24; animation: bui-check-draw calc(280ms * var(--bui-fx)) var(--baseui-ease-out) both; }
 [data-slot="radio-button"][data-checked] [data-slot="radio-indicator"] { animation: bui-dot-grow calc(280ms * var(--bui-fx)) var(--baseui-ease-out); }
+
+/* Concentric corners (rule D4): what stands in a box with a padding has the radius of the box minus the padding. A box sets --bui-card-radius and --bui-card-pad (a Card does; any other box takes the class bui-nest and sets them),
+   its children get --bui-inner-radius, and an element that must follow the box takes the class bui-nested (it inherits down the tree, so an element deeper in the box has it too). */
+.bui-nest > *, .bui-card > * { --bui-inner-radius: max(calc(var(--bui-card-radius, 0px) - var(--bui-card-pad, 0px)), 0px); }
+.bui-nested { border-radius: var(--bui-inner-radius, 0px); }
 
 /* ---------- Chip ---------- */
 .bui-token {
@@ -1162,7 +1167,7 @@
 .bui-grid { display: grid; }
 .bui-section { box-sizing: border-box; width: 100%; margin-inline: auto; }
 /* the levels of relation between blocks (rule H3): 8 / 16 / 24 / 40; on a phone only the page padding is smaller */
-:root { --bui-rel-tight: var(--baseui-spacing-2); --bui-rel-related: var(--baseui-spacing-4); --bui-rel-group: var(--baseui-spacing-6); --bui-rel-section: var(--baseui-spacing-10); --bui-page-pad: var(--baseui-spacing-6); }
+:root { --bui-rel-pair: 0px; --bui-rel-tight: var(--baseui-spacing-2); --bui-rel-related: var(--baseui-spacing-4); --bui-rel-group: var(--baseui-spacing-6); --bui-rel-section: var(--baseui-spacing-10); --bui-page-pad: var(--baseui-spacing-6); }
 @media (max-width: 767px) { :root { --bui-page-pad: var(--baseui-spacing-4); } }
 /* A form: one gap (--bui-form-gap) between rows and between columns, so the distance is the same in both directions. The form is a container: its rows stack when it is narrow. */
 .bui-form { --bui-form-gap: var(--baseui-spacing-4); display: flex; flex-direction: column; gap: var(--bui-form-gap); min-width: 0; container-type: inline-size; }

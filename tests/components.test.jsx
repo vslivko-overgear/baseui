@@ -2,7 +2,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, test, vi } from 'vitest';
-import { Breadcrumbs, Button, ButtonGroup, Form, FormRow, FormSection, IconButton, ControlRow, Checkbox, Dialog, OtpInput, Pagination, ProgressBar, Slider, Rating, Selector, Dropdown, Switch, Tabs, TextInput } from '../src/index.jsx';
+import { Breadcrumbs, Button, Card, Stack, ButtonGroup, Form, FormRow, FormSection, IconButton, ControlRow, Checkbox, Dialog, OtpInput, Pagination, ProgressBar, Slider, Rating, Selector, Dropdown, Switch, Tabs, TextInput } from '../src/index.jsx';
 
 describe('Switch', () => {
   test('toggles and reports', async () => {
@@ -431,5 +431,22 @@ describe('Dropdown (rule M4: a list of options is a sheet on a phone)', () => {
     expect(await screen.findByRole('listbox', { name: 'Sort' })).toBeInTheDocument();
     expect(screen.queryByRole('dialog')).toBeNull();
     restore();
+  });
+});
+
+describe('Card padding and Stack relation', () => {
+  test('padding="list" gives the vertical 16 and the side 4 of a list card, and sets the nested padding', () => {
+    const { container } = render(<Card padding="list">x</Card>);
+    const card = container.querySelector('[data-slot="card"]');
+    expect(card.style.padding).toBe('var(--baseui-spacing-4) var(--baseui-spacing-1)');
+    expect(card.style.getPropertyValue('--bui-card-pad')).toBe('var(--baseui-spacing-1)');
+  });
+  test('a numeric padding is the nested padding too', () => {
+    const { container } = render(<Card padding={3}>x</Card>);
+    expect(container.querySelector('[data-slot="card"]').style.getPropertyValue('--bui-card-pad')).toBe('var(--baseui-spacing-3)');
+  });
+  test('Stack relation="pair" has no gap', () => {
+    const { container } = render(<Stack relation="pair"><span>a</span><span>b</span></Stack>);
+    expect(container.firstChild.style.gap).toBe('var(--bui-rel-pair)');
   });
 });

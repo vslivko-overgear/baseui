@@ -55,8 +55,8 @@ function Subscription({ item }) {
 
 /** One amount of the wallet on its own card, from the left edge. */
 const Amount = ({ label, hint, children, testId }) => (
-  <Card variant="surface" padding={5}>
-    <div className="og-stack og-stack--hair og-wamount" data-test-id={testId}>
+  <Card variant="surface" padding={5} className="bui-nested">
+    <div className="og-stack og-stack--pair og-wamount" data-test-id={testId}>
       <p className="og-meta og-wamount__label">{label}{hint && <Hint label={`About ${label}`} content={hint} />}</p>
       <p className="og-balance__money">{children}</p>
     </div>
@@ -76,21 +76,21 @@ export function WalletPage({ onLogin }) {
       <div className="og-stack og-stack--xl og-wpage" data-test-id="wallet-page">
         <div className="og-stack">
           <PageHead crumbs={[{ label: 'Home', href: '#/' }, { label: 'Account', href: '#/account' }, { label: 'Wallet' }]} title="Wallet" />
-          <div className="og-stack og-wwrap" data-test-id="wallet-wrap">
+          <div className="og-stack og-wwrap bui-nest" data-test-id="wallet-wrap">
             <div className="og-amounts-grid">
               <Amount label="Balance" testId="wallet-balance">{money(store.balance)}</Amount>
               <Amount label="OG Coins" hint="1 OG Coin is $1. Coins come back as cashback and as rewards, and they can pay a part of a purchase" testId="wallet-coins"><span className="og-balance__coin"><CashbackMark />{coinsText(store.coins)}</span></Amount>
             </div>
-            <Button variant="primary" size="lg" width="100%" label="Top up" icon={<Icon name="Plus" size={20} />} onClick={openTopUp} data-test-id="wallet-top-up-page" />
+            <Button variant="primary" size="lg" width="100%" className="bui-nested" label="Top up" icon={<Icon name="Plus" size={20} />} onClick={openTopUp} data-test-id="wallet-top-up-page" />
           </div>
-          <Card variant="surface" padding={4} className="og-terms" style={{ paddingInline: 'var(--baseui-spacing-1)' }}>
+          <Card variant="surface" padding="list" className="og-terms">
             <List aria-label="History">
               <ListItem avatar={<Pic><Icon name="ClockRewind" size={24} /></Pic>} subtitle="Top-ups, payments, cashback and bonuses" onClick={() => go('/wallet/history')} details={<Icon name="ChevronRight" size={20} />} data-test-id="wallet-history-link">Payment History</ListItem>
             </List>
           </Card>
         </div>
         <Section title="Your terms">
-          <Card variant="surface" padding={4} className="og-terms" style={{ paddingInline: 'var(--baseui-spacing-1)' }}>
+          <Card variant="surface" padding="list" className="og-terms">
             <List aria-label="Your terms" spacing="lg" data-test-id="wallet-terms">
               <ListItem avatar={<Pic><Icon name="Coins01" size={24} /></Pic>} subtitle="of every purchase comes back as OG Coins once the order is completed">{`${grade.cashbackPercentage}% cashback`}</ListItem>
               <ListItem avatar={<Pic><Icon name="Wallet01" size={24} /></Pic>} subtitle="of a purchase can be paid with OG Coins">{`Up to ${grade.purchaseLimitPercentage}%`}</ListItem>
