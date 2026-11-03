@@ -45,7 +45,7 @@ export function StoreProvider({ children }) {
       updateOrder: (link, change) => patch((s) => ({ orders: s.orders.map((o) => (o.link === link ? (typeof change === 'function' ? change(o) : { ...o, ...change }) : o)) })),
       // the subscriptions of the wallet: each pays its reward once
       subs: { ...NO_SUBS, ...(state.subs || {}), discord: !!state.discord || !!state.subs?.discord },
-      setSubscription: (id, on) => patch((s) => { const { subs, reward } = withSubscription({ ...(s.subs || {}), discord: !!s.discord || !!s.subs?.discord }, id, on); return { subs, discord: id === 'discord' ? on : s.discord, wallet: reward ? withCoins(s.wallet || WALLET_START, reward) : s.wallet }; }),
+      setSubscription: (id, on, extra = {}) => patch((s) => { const { subs: done, reward } = withSubscription({ ...(s.subs || {}), discord: !!s.discord || !!s.subs?.discord }, id, on); const subs = { ...done, ...extra }; return { subs, discord: id === 'discord' ? on : s.discord, wallet: reward ? withCoins(s.wallet || WALLET_START, reward) : s.wallet }; }),
       joinDiscord: () => patch((s) => { const { subs, reward } = withSubscription(s.subs, 'discord', true); return { subs, discord: true, wallet: reward ? withCoins(s.wallet || WALLET_START, reward) : s.wallet }; }),
       // a payment that waits for its provider: the orders it will make once it settles
       setPending: (pending) => patch(() => ({ pending })),
