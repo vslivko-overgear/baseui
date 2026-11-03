@@ -12,6 +12,7 @@ import { Status } from '../../src/components/Status.jsx';
 import { Avatar } from '../../src/components/Avatar.jsx';
 import { List, ListItem } from '../../src/components/List.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
+import { Hint } from '../../src/components/Hint.jsx';
 import { Bleed } from '../../src/components/Layout.jsx';
 import { go, useMedia } from './util.js';
 import { OFFERS, REVIEWS, SERVICES, money, offerOf, gameOf, sold } from './data.js';
@@ -41,6 +42,12 @@ const STEPS = [
 ];
 /** The icons of the selling points under the title (the first three points of the offer). */
 const USP_ICONS = ['Zap', 'Star01', 'ShieldTick'];
+/** What opens when a point is hovered (a tooltip) or tapped (the standard dialog of a phone): a line more about it. */
+const USP_MORE = [
+  (b) => `${b}. A verified pro player does it by hand on your character: no scripts, no bots, and a VPN on every login`,
+  (b) => `${b}. The clock starts when the booster begins, and you follow the progress in the order chat until the job is done`,
+  (b) => `${b}. Your loot, gold and progress stay with you, and the money is released only when you confirm the result`,
+];
 const DIFFICULTY = [{ value: 'normal', label: 'Normal', k: 0.6 }, { value: 'heroic', label: 'Heroic', k: 1 }, { value: 'mythic', label: 'Mythic', k: 2.2 }];
 
 /** An offer: what it gives, the options that change the price, the purchase panel, details and reviews. */
@@ -73,7 +80,13 @@ export function Offer({ id }) {
   // the selling points: separate tags on a surface, each as wide as its text (on a phone the row scrolls sideways)
   const usp = (
     <ul className="og-usp" data-test-id="offer-usp">
-      {offer.bullets.slice(0, 3).map((b, i) => <li key={b} className="og-usp__tag"><Icon name={USP_ICONS[i]} size={20} filled /><span>{b}</span></li>)}
+      {offer.bullets.slice(0, 3).map((b, i) => (
+        <li key={b}>
+          <Hint label={`More about: ${b}`} content={USP_MORE[i](b)}>
+            <span className="og-usp__tag"><Icon name={USP_ICONS[i]} size={20} filled /><span>{b}</span></span>
+          </Hint>
+        </li>
+      ))}
     </ul>
   );
   return (
