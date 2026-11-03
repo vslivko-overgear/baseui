@@ -566,3 +566,7 @@ a { color: inherit; }
 .og-topup__brackets li { display: inline-flex; align-items: center; gap: var(--baseui-spacing-2); }
 .bui-button__label:has(> .og-amounts) { display: flex; align-items: center; }   /* the amounts are centered in the button: as an inline box they sat on the baseline of a taller line */
 .og-wallet-btn { box-shadow: inset 0 0 0 1px var(--baseui-border-primary); }   /* the balance in the header has an outline, not a gray fill; it stands from the search as the catalog button does (the gap of the row) */
+.og-topup__box { display: flex; align-items: center; justify-content: space-between; gap: var(--baseui-spacing-4); padding: var(--baseui-spacing-4) var(--baseui-spacing-5); border-radius: var(--baseui-radius-2xl); background: var(--baseui-background-secondary); }   /* the bonus of the top-up: the coins on the left, the percent on the right */
+.og-topup__what { display: flex; flex-direction: column; gap: var(--baseui-spacing-1); }
+.og-topup__rate { font: var(--baseui-typography-header-24); font-family: var(--baseui-typography-headline-font-family); }
+.og-topup__rules { margin: 0; font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-secondary); }

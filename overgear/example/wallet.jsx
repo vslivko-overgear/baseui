@@ -3,9 +3,8 @@
 import { useState, useEffect, useRef } from '../../src/react.js';
 import { Dialog } from '../../src/components/Dialog.jsx';
 import { Button } from '../../src/components/Button.jsx';
-import { Banner } from '../../src/components/Banner.jsx';
 import { Card } from '../../src/components/Card.jsx';
-import { Divider } from '../../src/components/Divider.jsx';
+import { TokenGroup } from '../../src/components/TokenGroup.jsx';
 import { Link } from '../../src/components/Link.jsx';
 import { Popover } from '../../src/components/Popover.jsx';
 import { TextInput } from '../../src/components/TextInput.jsx';
@@ -13,9 +12,8 @@ import { Icon } from '../../src/components/Icon.jsx';
 import { useToast } from '../../src/components/Toast.jsx';
 import { useStore } from './store.jsx';
 import { money } from './data.js';
-import { href } from './util.js';
-import { CashbackMark, CashbackTag } from './ui.jsx';
-import { OPEN_TOP_UP, openTopUp, parseAmount, amountError, coinsText, bonusFor, lowestBonusAmount, BONUS_RULES, PURCHASE_LIMIT } from './wallet-core.js';
+import { CashbackMark } from './ui.jsx';
+import { OPEN_TOP_UP, openTopUp, parseAmount, amountError, coinsText, bonusFor, bonusRateFor, lowestBonusAmount, SUGGESTIONS, suggestionLabel, PURCHASE_LIMIT } from './wallet-core.js';
 
 /** The money and the OG Coins of the visitor, side by side. */
 export function Amounts() {
@@ -105,26 +103,22 @@ export function TopUpDialog() {
   return (
     <Dialog open={open} onOpenChange={(o) => !paying && setOpen(o)} title="Top Up Balance">
       <form className="og-stack og-stack--lg og-topup" noValidate onSubmit={(e) => { e.preventDefault(); pay(); }}>
-        <TextInput id="og-topup-amount" label="Amount, USD" inputMode="decimal" autoComplete="off" prefix="$" value={text} onChange={(e) => setText(e.target.value)} status={tried && error ? 'error' : undefined} caption={tried && error ? error : 'From $5 to $1,000'} />
-        <div className="og-stack og-stack--related">
-          <Banner status="info" data-test-id="topup-bonus">
-            {bonus ? (
-              <span className="og-topup__bonus">As a bonus, you will receive:<strong className="og-topup__coins"><CashbackMark />{`${coinsText(bonus)} OG Coins`}</strong></span>
-            ) : (
-              <span className="og-topup__bonus">{`Top up from $${lowest} to get bonus coins`}<Button type="button" variant="secondary" size="sm" label="Get bonus" onClick={() => setText(String(lowest))} /></span>
-            )}
-          </Banner>
-          <ul className="og-topup__brackets" aria-label="Bonus for a top-up">
-            {BONUS_RULES.map((r) => (
-              <li key={r.refillAmount}><CashbackTag size="md" label={`+${r.percentage}%`} hint={`A top-up from $${r.refillAmount} gives ${r.percentage}% of it in OG Coins`} /><span className="og-meta">{`From $${r.refillAmount}`}</span></li>
-            ))}
-          </ul>
+        <TextInput id="og-topup-amount" label="Amount, USD" inputMode="decimal" autoComplete="off" prefix="$" value={text} onChange={(e) => setText(e.target.value)} status={tried && error ? 'error' : undefined} caption={tried && error ? error : undefined} />
+        <TokenGroup size="sm" aria-label="Amount suggestions" value={SUGGESTIONS.includes(amount) ? [String(amount)] : []} onValueChange={(v) => v.length && setText(v[v.length - 1])} options={SUGGESTIONS.map((n) => ({ value: String(n), label: suggestionLabel(n) }))} />
+        <div className="og-topup__box" data-test-id="topup-bonus">
+          {bonus ? (
+            <>
+              <span className="og-topup__what"><span className="og-meta">As a bonus, you will receive</span><strong className="og-topup__coins"><CashbackMark />{`${coinsText(bonus)} OG Coins`}</strong></span>
+              <strong className="og-topup__rate" data-test-id="topup-rate">{`${bonusRateFor(amount)}%`}</strong>
+            </>
+          ) : (
+            <>
+              <span className="og-text">{`Top up from $${lowest} to get bonus coins`}</span>
+              <Button type="button" variant="primary" size="sm" label="Get bonus" onClick={() => setText(String(lowest))} data-test-id="topup-get-bonus" />
+            </>
+          )}
         </div>
-        <Divider />
-        <div className="og-stack og-stack--close">
-          <h3 className="og-h3">{`You get additional coins with every top-up over $${lowest}`}</h3>
-          <p className="og-text">{`One coin is equal to $1. Pay up to ${PURCHASE_LIMIT}% of shop products and currencies. Cannot be applied with discounted items and promotional codes`}</p>
-        </div>
+        <p className="og-topup__rules">{`One coin is equal to $1. Pay up to ${PURCHASE_LIMIT}% of shop products and currencies. Cannot be applied with discounted items and promotional codes`}</p>
         <Button variant="primary" size="lg" textSize={16} width="100%" type="submit" loading={paying} label={amount != null && !error ? `Top up ${money(amount)}` : 'Top up'} data-test-id="topup-submit" />
       </form>
     </Dialog>

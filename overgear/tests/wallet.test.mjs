@@ -50,17 +50,23 @@ describe('the wallet', () => {
 });
 
 describe('the bonus for a top-up', () => {
-  test('is the percentage of the highest bracket that the amount reaches', async () => {
-    const { bonusFor, lowestBonusAmount, BONUS_RULES } = await import('../example/wallet-core.js');
-    expect(bonusFor(49)).toBe(null);
-    expect(bonusFor(50)).toBe(1.5);
+  test('is 5 percent from $100 and 10 percent from $500', async () => {
+    const { bonusFor, bonusRateFor, lowestBonusAmount, suggestionLabel, BONUS_RULES } = await import('../example/wallet-core.js');
+    expect(BONUS_RULES).toEqual([{ refillAmount: 100, percentage: 5 }, { refillAmount: 500, percentage: 10 }]);
+    expect(bonusFor(99)).toBe(null);
     expect(bonusFor(100)).toBe(5);
-    expect(bonusFor(300)).toBe(21);
+    expect(bonusFor(300)).toBe(15);
+    expect(bonusFor(500)).toBe(50);
     expect(bonusFor(1000)).toBe(100);
     expect(bonusFor('')).toBe(null);
     expect(bonusFor('abc')).toBe(null);
-    expect(lowestBonusAmount()).toBe(50);
+    expect(bonusRateFor(99)).toBe(null);
+    expect(bonusRateFor(250)).toBe(5);
+    expect(bonusRateFor(500)).toBe(10);
+    expect(lowestBonusAmount()).toBe(100);
     expect(lowestBonusAmount([])).toBe(100);
-    expect(BONUS_RULES.every((r, i, all) => i === 0 || all[i - 1].percentage < r.percentage)).toBe(true);
+    expect(suggestionLabel(100)).toBe('$100 +5%');
+    expect(suggestionLabel(50)).toBe('$50');
+    expect(suggestionLabel(1000)).toBe('$1,000');
   });
 });

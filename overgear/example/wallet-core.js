@@ -31,14 +31,26 @@ export const coinsText = (n) => n.toFixed(2);
 
 // The bonus for a top-up, as the real service has it (its backend gives the brackets; these are the example's): from a top-up of `refillAmount` dollars the buyer gets `percentage` percent of it in OG Coins.
 // One coin is one dollar, and coins pay up to PURCHASE_LIMIT percent of a shop product (never a discounted one, or one with a promo code).
-export const BONUS_RULES = [{ refillAmount: 50, percentage: 3 }, { refillAmount: 100, percentage: 5 }, { refillAmount: 250, percentage: 7 }, { refillAmount: 500, percentage: 10 }];
+export const BONUS_RULES = [{ refillAmount: 100, percentage: 5 }, { refillAmount: 500, percentage: 10 }];
 export const PURCHASE_LIMIT = 15;
+/** The bracket of the highest percentage that `amount` reaches, or undefined. */
+const bracketOf = (amount, rules) => {
+  const n = Number(amount);
+  if (amount === '' || amount == null || Number.isNaN(n) || !rules.length) return undefined;
+  return rules.reduce((best, r) => (r.refillAmount <= n && r.refillAmount > (best?.refillAmount || 0) ? r : best), undefined);
+};
 /** The coins a top-up of `amount` gives: the percentage of the highest bracket that the amount reaches; null when it reaches none (the real service says so, and offers the amount that does). */
 export const bonusFor = (amount, rules = BONUS_RULES) => {
-  const n = Number(amount);
-  if (amount === '' || amount == null || Number.isNaN(n) || !rules.length) return null;
-  const hit = rules.reduce((best, r) => (r.refillAmount <= n && r.refillAmount > (best?.refillAmount || 0) ? r : best), undefined);
-  return hit?.percentage ? Math.round((n / 100) * hit.percentage * 100) / 100 : null;
+  const hit = bracketOf(amount, rules);
+  return hit?.percentage ? Math.round((Number(amount) / 100) * hit.percentage * 100) / 100 : null;
+};
+/** The percent that the bonus of `amount` is, or null. */
+export const bonusRateFor = (amount, rules = BONUS_RULES) => bracketOf(amount, rules)?.percentage ?? null;
+/** The amounts the top-up suggests; the ones that open a bracket of the bonus say so. */
+export const SUGGESTIONS = [25, 50, 100, 250, 500, 1000];
+export const suggestionLabel = (n, rules = BONUS_RULES) => {
+  const opens = rules.find((r) => r.refillAmount === n);
+  return `$${n.toLocaleString('en-US')}${opens ? ` +${opens.percentage}%` : ''}`;
 };
 /** The smallest top-up that gives a bonus. */
 export const lowestBonusAmount = (rules = BONUS_RULES) => rules.reduce((min, r) => Math.min(min, r.refillAmount), rules[0]?.refillAmount ?? 100);
