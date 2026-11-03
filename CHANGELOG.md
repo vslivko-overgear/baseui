@@ -2,6 +2,7 @@
 
 ## Overgear: the checkout, payment methods as outlined tiles, the items apart
 
+- **Overgear, the mini-cart of a desktop slides in from the right and slides out to it** (300 ms in, 280 ms out; the scrim fades). It stays mounted while it leaves (`usePresence`); the animation setting of the theme stops it, and so does a system setting of reduced motion.
 - **`Dialog` header, systemically:** the middle of the close glyph is the middle of the first line of the title (the box of the button stood 2px higher); the edge of the glyph, not of its 24px box, stands on the edge of the content (it begins 4.75px inside the box); and the content starts 8px lower under the header (it started at the edge of it).
 - **Overgear, the balance button in the header:** a click on it opens the top-up at once; the hover card with the details stays on hover.
 - **Overgear, the top-up:** the bonus block is 72px high with a bonus and without (the height of the block without one is the base), so the dialog does not jump when the amount crosses $100; the rules of the coins stand 8px under it.

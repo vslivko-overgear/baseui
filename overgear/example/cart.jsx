@@ -1,6 +1,7 @@
 // The cart and the checkout, as on Overgear: a side panel of the cart on a desktop (a page on a phone), and a checkout of its own
 // (no header and no footer of the shop): the order on the left, the payment method, the summary on the right.
 import { useState, useEffect } from '../../src/react.js';
+import { usePresence } from '../../src/theme-flags.js';
 import { Button, IconButton } from '../../src/components/Button.jsx';
 import { Card } from '../../src/components/Card.jsx';
 import { TextInput } from '../../src/components/TextInput.jsx';
@@ -28,6 +29,7 @@ export function CartDrawer({ open, onClose }) {
   const store = useStore();
   const mobile = useMedia('(max-width: 767px)');
   const checkout = () => { onClose(); go('/checkout'); };
+  const [shown, closing] = usePresence(open, 280);   // the panel stays mounted while it slides out
   useEffect(() => {
     if (!open || mobile) return undefined;
     const key = (e) => e.key === 'Escape' && onClose();
@@ -44,11 +46,11 @@ export function CartDrawer({ open, onClose }) {
       </Dialog>
     );
   }
-  if (!open) return null;
+  if (!shown) return null;
   return (
     <>
-      <div className="og-scrim" onClick={onClose} aria-hidden="true" />
-      <aside className="og-drawer" role="dialog" aria-modal="true" aria-label="Shopping cart">
+      <div className="og-scrim" data-closing={closing || undefined} onClick={onClose} aria-hidden="true" />
+      <aside className="og-drawer" data-closing={closing || undefined} role="dialog" aria-modal="true" aria-label="Shopping cart">
         <div className="og-drawer__head">
           <h2 className="og-h3">Shopping Cart <span className="og-h3__count">{store.count}</span></h2>
           <IconButton variant="ghost" size="sm" label="Close the cart" icon={<Icon name="XClose" size={24} />} onClick={onClose} />

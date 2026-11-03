@@ -571,3 +571,14 @@ a { color: inherit; }
 .og-topup__rate { font: var(--baseui-typography-header-24); font-family: var(--baseui-typography-headline-font-family); }
 .og-topup__rules { margin: 0; font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-secondary); }
 .og-topup__chip { display: inline-flex; align-items: center; gap: var(--baseui-spacing-2); }
+
+/* the mini-cart of a desktop slides in from the right and slides out to it; the scrim fades. The animation setting of the theme ([data-motion="off"]) stops them. */
+@keyframes og-drawer-in { from { transform: translateX(100%); } }
+@keyframes og-drawer-out { to { transform: translateX(100%); } }
+@keyframes og-scrim-in { from { opacity: 0; } }
+@keyframes og-scrim-out { to { opacity: 0; } }
+.og-drawer { animation: og-drawer-in var(--baseui-duration-300, 300ms) var(--baseui-ease-out, ease-out); }
+.og-drawer[data-closing] { animation: og-drawer-out 280ms var(--baseui-ease-out, ease-out) forwards; pointer-events: none; }
+.og-scrim:not(.og-scrim--search) { animation: og-scrim-in var(--baseui-duration-300, 300ms) var(--baseui-ease-out, ease-out); }
+.og-scrim[data-closing] { animation: og-scrim-out 280ms var(--baseui-ease-out, ease-out) forwards; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .og-drawer, .og-scrim { animation: none !important; } }
