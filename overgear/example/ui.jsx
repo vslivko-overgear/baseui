@@ -156,6 +156,8 @@ export function SortChip({ value, onValueChange, options, label = 'Sorting' }) {
 const PAY_ALL = [['mastercard', 'Mastercard'], ['visa', 'Visa'], ['paypal', 'PayPal'], ['apple-pay', 'Apple Pay'], ['google-pay', 'Google Pay'], ['jcb', 'JCB'], ['stripe', 'Stripe'], ['sepa', 'SEPA'], ['securecode', 'Mastercard SecureCode'], ['verified-by-visa', 'Verified by Visa'], ['pci-dss', 'PCI DSS']];
 export const PAY_MAIN = PAY_ALL.slice(0, 8);
 export const PAY_BADGES = PAY_ALL.slice(8);
+/** The logos under the button of an offer, as on the real page (stripe, cards, wallets, PayPal, crypto). */
+export const PAY_OFFER = [['stripe', 'Stripe'], ['mastercard', 'Mastercard'], ['visa', 'Visa'], ['american-express', 'American Express'], ['apple-pay', 'Apple Pay'], ['google-pay', 'Google Pay'], ['paypal', 'PayPal'], ['crypto', 'Crypto']];
 export function PaymentLogos({ items = PAY_ALL, label = 'Payment methods' }) {
   return (
     <ul className="og-pay" aria-label={label}>

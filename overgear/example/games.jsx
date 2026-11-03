@@ -25,6 +25,7 @@ import { GAMES, CATEGORIES, OFFERS, SERVICES, SELLERS, REGIONS, REALMS, FACTIONS
 import { matchGames, matchOffers } from './suggest.js';
 import { useAddedToCart, Page, PageHead, Section, GameTile, OfferListing, Stars, SortChip } from './ui.jsx';
 import { useStore } from './store.jsx';
+import { TorchlightPage } from './tli.jsx';
 
 /** The offers of all the games: a listing like the page of a game, filtered by the group of games and sorted. */
 export function Offers({ category = 'All games' }) {
@@ -68,6 +69,7 @@ export function Game({ slug, service = 'hot' }) {
   const [sort, setSort] = useState('popular');
   const [page, setPage] = useState(1);
   if (!game) return <Page><Status status="neutral" title="Game not found" actionLabel="All games" onAction={() => go('/catalog')} /></Page>;
+  if (slug === 'torchlight-infinite') return <TorchlightPage />;
   if (game.category !== 'World of Warcraft') {
     return (
       <Page crumbs>
