@@ -690,3 +690,5 @@ a { color: inherit; }
 @media (prefers-reduced-motion: reduce) { .og-osteps__step[data-look="run"] .bui-progress__track::after { animation: none; } }
 /* the offers at the bottom of an offer page: bigger cards (the narrowest 280px, four in a row on a desktop) */
 .og-related { --bui-listing-min: 280px; }
+/* in the line under the bar of the rank the subtitles stand close to their titles */
+.og-rank__goal .og-stack--hair { gap: 0; }
