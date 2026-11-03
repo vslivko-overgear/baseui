@@ -22,7 +22,7 @@ export function StoreProvider({ children }) {
       // a browser that kept its state before the wallet existed starts with the wallet of a new one
       balance: (state.wallet || WALLET_START).balance,
       coins: (state.wallet || WALLET_START).coins,
-      topUp: (amount) => patch((s) => ({ wallet: withTopUp(s.wallet || WALLET_START, amount) })),
+      topUp: (amount, coins = 0) => patch((s) => ({ wallet: withCoins(withTopUp(s.wallet || WALLET_START, amount), coins) })),
       count: state.cart.reduce((n, i) => n + i.qty, 0),
       subtotal: total,
       discount,

@@ -48,3 +48,19 @@ describe('the wallet', () => {
     expect(coinsText(0)).toBe('0.00');
   });
 });
+
+describe('the bonus for a top-up', () => {
+  test('is the percentage of the highest bracket that the amount reaches', async () => {
+    const { bonusFor, lowestBonusAmount, BONUS_RULES } = await import('../example/wallet-core.js');
+    expect(bonusFor(49)).toBe(null);
+    expect(bonusFor(50)).toBe(1.5);
+    expect(bonusFor(100)).toBe(5);
+    expect(bonusFor(300)).toBe(21);
+    expect(bonusFor(1000)).toBe(100);
+    expect(bonusFor('')).toBe(null);
+    expect(bonusFor('abc')).toBe(null);
+    expect(lowestBonusAmount()).toBe(50);
+    expect(lowestBonusAmount([])).toBe(100);
+    expect(BONUS_RULES.every((r, i, all) => i === 0 || all[i - 1].percentage < r.percentage)).toBe(true);
+  });
+});

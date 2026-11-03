@@ -1,39 +1,60 @@
 // The balance of a visitor and the way to top it up. A button in the header (a desktop) and a card in the account tab (a phone) show the money and the OG Coins and open one dialog,
 // the top-up, which any of them asks for with openTopUp().
-import { useState, useEffect } from '../../src/react.js';
+import { useState, useEffect, useRef } from '../../src/react.js';
 import { Dialog } from '../../src/components/Dialog.jsx';
 import { Button } from '../../src/components/Button.jsx';
+import { Banner } from '../../src/components/Banner.jsx';
 import { Card } from '../../src/components/Card.jsx';
+import { Divider } from '../../src/components/Divider.jsx';
+import { Link } from '../../src/components/Link.jsx';
+import { Popover } from '../../src/components/Popover.jsx';
 import { TextInput } from '../../src/components/TextInput.jsx';
-import { TokenGroup } from '../../src/components/TokenGroup.jsx';
-import { RadioGroup } from '../../src/components/RadioGroup.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
 import { useToast } from '../../src/components/Toast.jsx';
 import { useStore } from './store.jsx';
 import { money } from './data.js';
-import { CashbackMark } from './ui.jsx';
-import { PRESETS, OPEN_TOP_UP, openTopUp, parseAmount, amountError, coinsText } from './wallet-core.js';
-
-const METHODS = [{ value: 'card', label: 'Visa, Mastercard' }, { value: 'paypal', label: 'PayPal' }, { value: 'apple-pay', label: 'Apple Pay' }, { value: 'google-pay', label: 'Google Pay' }];
+import { href } from './util.js';
+import { CashbackMark, CashbackTag } from './ui.jsx';
+import { OPEN_TOP_UP, openTopUp, parseAmount, amountError, coinsText, bonusFor, lowestBonusAmount, BONUS_RULES, PURCHASE_LIMIT } from './wallet-core.js';
 
 /** The money and the OG Coins of the visitor, side by side. */
 export function Amounts() {
   const store = useStore();
   return (
     <span className="og-amounts">
-      <span className="og-amounts__money">{money(store.balance)}</span>
+      <span className="og-amounts__coins"><Icon name="Wallet01" size={20} />{money(store.balance)}</span>
       <span className="og-amounts__coins"><CashbackMark />{coinsText(store.coins)}</span>
     </span>
   );
 }
 
-/** The balance in the header of a desktop: a plus and the amounts, one button that opens the top-up. */
+/** The balance in the header of a desktop: the amounts in one button. With a mouse a card opens (after 200 ms, and stays 150 ms after the mouse leaves) with the balance, the OG Coins, the top-up and what the coins are;
+ *  a tap opens it, too. The way to top up is the button of the card. */
 export function WalletButton() {
   const store = useStore();
+  const [open, setOpen] = useState(false);
+  const timer = useRef(null);
+  const hover = (on) => { clearTimeout(timer.current); timer.current = setTimeout(() => setOpen(on), on ? 200 : 150); };
+  useEffect(() => () => clearTimeout(timer.current), []);
   return (
-    <Button variant="secondary" size="md" textSize={14} aria-label={`Balance ${money(store.balance)} and ${coinsText(store.coins)} OG Coins. Top up`} icon={<Icon name="Plus" size={20} />} onClick={openTopUp}>
-      <Amounts />
-    </Button>
+    <Popover open={open} onOpenChange={(o) => { clearTimeout(timer.current); setOpen(o); }} placement="bottom-end" label="Your balance" trigger={(props) => (
+      <Button {...props} variant="secondary" size="md" textSize={14} aria-label={`Balance ${money(store.balance)} and ${coinsText(store.coins)} OG Coins`} onMouseEnter={() => hover(true)} onMouseLeave={() => hover(false)}>
+        <Amounts />
+      </Button>
+    )}>
+      <div className="og-wallet" onMouseEnter={() => hover(true)} onMouseLeave={() => hover(false)} data-test-id="wallet-card">
+        <dl className="og-info">
+          <div className="og-info__row"><dt className="og-text">Your balance</dt><dd>{money(store.balance)}</dd></div>
+          <div className="og-info__row"><dt className="og-text">OG Coins</dt><dd className="og-wallet__coins"><CashbackMark />{coinsText(store.coins)}</dd></div>
+        </dl>
+        <Button variant="primary" size="md" width="100%" label="Top Up Balance" onClick={() => { clearTimeout(timer.current); setOpen(false); openTopUp(); }} data-test-id="wallet-top-up" />
+        <Divider />
+        <div className="og-stack og-stack--close">
+          <p className="og-text">{`1 coin = $1. Coins can be used for purchases`}</p>
+          <Link href={href('/info/loyalty')} onClick={() => setOpen(false)} data-test-id="wallet-loyalty">More about loyalty</Link>
+        </div>
+      </div>
+    </Popover>
   );
 }
 
@@ -53,43 +74,59 @@ export function BalanceCard() {
   );
 }
 
-/** The top-up: an amount (a few presets or any amount), a way to pay and the button. It is mounted once and opens on openTopUp(). */
+/** The top-up, as the real service has it: an amount, the bonus coins that this amount gives (or the amount that gives one), the brackets of the bonus, what the coins are, and the button. It has no choice of a payment
+ *  system (the real one is on the page the button leads to). It is mounted once and opens on openTopUp(). */
 export function TopUpDialog() {
   const store = useStore();
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
-  const [text, setText] = useState('25');
-  const [method, setMethod] = useState('card');
+  const [text, setText] = useState('100');
   const [tried, setTried] = useState(false);
   const [paying, setPaying] = useState(false);
   useEffect(() => {
-    const show = () => { setText('25'); setTried(false); setPaying(false); setOpen(true); };
+    const show = () => { setText('100'); setTried(false); setPaying(false); setOpen(true); };
     window.addEventListener(OPEN_TOP_UP, show);
     return () => window.removeEventListener(OPEN_TOP_UP, show);
   }, []);
   const error = amountError(text);
   const amount = parseAmount(text);
+  const bonus = amount != null ? bonusFor(amount) : null;
+  const lowest = lowestBonusAmount();
   const pay = () => {
     setTried(true);
     if (error) { document.getElementById('og-topup-amount')?.focus(); return; }
     setPaying(true);
     setTimeout(() => {
-      store.topUp(amount);
+      store.topUp(amount, bonus || 0);
       setPaying(false);
       setOpen(false);
-      toast({ message: `${money(amount)} added to your balance`, status: 'success' });
+      toast({ message: bonus ? `${money(amount)} added to your balance, and ${coinsText(bonus)} OG Coins` : `${money(amount)} added to your balance`, status: 'success' });
     }, 700);
   };
   return (
-    <Dialog open={open} onOpenChange={(o) => !paying && setOpen(o)} title="Top up your balance">
+    <Dialog open={open} onOpenChange={(o) => !paying && setOpen(o)} title="Top Up Balance">
       <form className="og-stack og-stack--lg og-topup" noValidate onSubmit={(e) => { e.preventDefault(); pay(); }}>
-        <p className="og-text">{`On your balance now: ${money(store.balance)}`}</p>
+        <TextInput id="og-topup-amount" label="Amount, USD" inputMode="decimal" autoComplete="off" prefix="$" value={text} onChange={(e) => setText(e.target.value)} status={tried && error ? 'error' : undefined} caption={tried && error ? error : 'From $5 to $1,000'} />
         <div className="og-stack og-stack--related">
-          <TokenGroup size="sm" aria-label="Amount" value={PRESETS.includes(amount) ? [String(amount)] : []} onValueChange={(v) => v.length && setText(v[v.length - 1])} options={PRESETS.map((n) => ({ value: String(n), label: `$${n}` }))} />
-          <TextInput id="og-topup-amount" label="Amount, USD" inputMode="decimal" autoComplete="off" value={text} onChange={(e) => setText(e.target.value)} status={tried && error ? 'error' : undefined} caption={tried && error ? error : `From $5 to $1,000`} />
+          <Banner status="info" data-test-id="topup-bonus">
+            {bonus ? (
+              <span className="og-topup__bonus">As a bonus, you will receive:<strong className="og-topup__coins"><CashbackMark />{`${coinsText(bonus)} OG Coins`}</strong></span>
+            ) : (
+              <span className="og-topup__bonus">{`Top up from $${lowest} to get bonus coins`}<Button type="button" variant="secondary" size="sm" label="Get bonus" onClick={() => setText(String(lowest))} /></span>
+            )}
+          </Banner>
+          <ul className="og-topup__brackets" aria-label="Bonus for a top-up">
+            {BONUS_RULES.map((r) => (
+              <li key={r.refillAmount}><CashbackTag size="md" label={`+${r.percentage}%`} hint={`A top-up from $${r.refillAmount} gives ${r.percentage}% of it in OG Coins`} /><span className="og-meta">{`From $${r.refillAmount}`}</span></li>
+            ))}
+          </ul>
         </div>
-        <RadioGroup label="Pay with" value={method} onValueChange={setMethod} options={METHODS} />
-        <Button variant="primary" size="lg" textSize={16} width="100%" type="submit" loading={paying} label={amount != null && !error ? `Pay ${money(amount)}` : 'Pay'} />
+        <Divider />
+        <div className="og-stack og-stack--close">
+          <h3 className="og-h3">{`You get additional coins with every top-up over $${lowest}`}</h3>
+          <p className="og-text">{`One coin is equal to $1. Pay up to ${PURCHASE_LIMIT}% of shop products and currencies. Cannot be applied with discounted items and promotional codes`}</p>
+        </div>
+        <Button variant="primary" size="lg" textSize={16} width="100%" type="submit" loading={paying} label={amount != null && !error ? `Top up ${money(amount)}` : 'Top up'} data-test-id="topup-submit" />
       </form>
     </Dialog>
   );

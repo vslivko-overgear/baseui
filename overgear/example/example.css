@@ -550,3 +550,11 @@ a { color: inherit; }
 .og-next__list li { display: grid; grid-template-columns: 88px auto; justify-content: start; }
 .og-result__block .bui-status__text { white-space: pre-line; }
 .og-osteps .bui-progress__track { width: 100%; }
+
+/* the balance of the header: the card that opens on hover (the balance, the coins, the top-up, what the coins are) and the top-up with its bonus */
+.og-wallet { width: 280px; display: flex; flex-direction: column; gap: var(--baseui-spacing-4); padding: var(--baseui-spacing-1); }
+.og-wallet__coins { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); }
+.og-topup__bonus { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--baseui-spacing-3); }
+.og-topup__coins { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); }
+.og-topup__brackets { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--baseui-spacing-3) var(--baseui-spacing-5); }
+.og-topup__brackets li { display: inline-flex; align-items: center; gap: var(--baseui-spacing-2); }
