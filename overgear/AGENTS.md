@@ -19,6 +19,11 @@ This directory is the Overgear sublibrary, showcase and store. Read the root `AG
 
 - How far the blocks of a page are apart is `Page density`, not a gap of the page's own: `dense` (16px) for a list page such as the orders, nothing for most pages (a section, 40px), `airy` (56px) for a page of a few big blocks such as the wallet. The blocks are direct children of `Page`
 
+## The games of the home page
+
+- On a desktop the games are blocks of two rows of tiles of different widths, fitted into the width with no scroll: `fitTiles` in `overgear/audience.js` (pure, tested in `overgear/tests/catalog.test.mjs`) returns the blocks, the page grows the tiles by their widths. Both rows of a block end at the same place; an audience with a family (World of Warcraft) has it as a block of its own, the others are another block; when the tiles would be squeezed by more than a fifth, the last ones of the rest are left out, never the family. Do not turn it into a grid of equal columns
+- `overgear/tools/check/tiles.mjs` measures it in a browser for every audience at three widths
+
 ## The order: the checkout, the cart and the mini-cart
 
 - The parts that these three have in common are in `overgear/example/order.jsx` (`CartLine`, `ItemLines`, `OrderSummary`, `Promo`, `PayBar`, `PayBarContent`, `OrderHead`). Change a line, the summary, the promo code row, the pay bar or the title there, once; never copy one into a surface or style it with a class of that surface

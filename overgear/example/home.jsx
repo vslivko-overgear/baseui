@@ -5,10 +5,10 @@ import { TokenGroup } from '../../src/components/TokenGroup.jsx';
 import { Skeleton } from '../../src/components/Skeleton.jsx';
 import { Avatar } from '../../src/components/Avatar.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
-import { go, useMedia } from './util.js';
+import { go, useMedia, useWidth } from './util.js';
 import { loadTheme } from '../../site/theme.js';
 import { COOKIE } from '../theme.js';
-import { audienceOf, tileLayout, splitOffers, gameTabs, TILE_GAP } from '../audience.js';
+import { audienceOf, tileLayout, splitOffers, gameTabs, TILE_GAP, fitTiles } from '../audience.js';
 import { GAMES, OFFERS, REVIEWS, TILE_ROWS, gameOf, kindsOf } from './data.js';
 import { Bleed } from '../../src/components/Layout.jsx';
 import { Page, Section, GameTile, GameChip, OfferListing } from './ui.jsx';
@@ -117,8 +117,6 @@ function Reviews() {
   );
 }
 
-const DESKTOP_COLUMNS = 6;
-
 export function Home() {
   const [playing, setPlaying] = useTakeTurns(3);
   const turn = (i) => ({ playing: playing === i, onPlay: () => setPlaying(i), onEnd: () => setPlaying(-1) });
@@ -134,7 +132,8 @@ export function Home() {
   const tiles = tileLayout(TILE_ROWS, audience);
   // on a desktop the games are a grid of equal columns that always fits the width, with no scroll: two rows of six (the family of the audience first, then the others in their order); the games that do not fit are left out
   const mobile = useMedia('(max-width: 767px)');
-  const gridTiles = [0, 1].flatMap((i) => [...(tiles.group[i] || []), ...(tiles.rows[i] || [])].slice(0, DESKTOP_COLUMNS));
+  const [gamesRef, gamesWidth] = useWidth();
+  const fitted = gamesWidth ? fitTiles(tiles, gamesWidth) : null;
   // the products of the game of the audience come first; the products of the other games take turns, so the first screen is varied
   const products = (() => {
     const [own, rest] = splitOffers(OFFERS.filter((o) => (category === 'all' || o.game === category) && (kind === 'all' || o.service === kind)), audience);
@@ -194,8 +193,16 @@ export function Home() {
               </div>
             </Bleed>
           ) : (
-            <div className="og-tilegrid" data-test-id="home-games">
-              {gridTiles.map(([slug]) => <GameChip key={slug} slug={slug} width="100%" />)}
+            <div className="og-tiles og-tiles--fit" ref={gamesRef} data-test-id="home-games">
+              {fitted?.blocks.map(({ rows, length }, b) => (
+                <div key={b} className="og-grows" style={{ flex: `${length} 1 0` }} data-test-id="home-games-block">
+                  {rows.map((row, i) => (
+                    <div key={i} className="og-grow">
+                      {row.map(([slug, width]) => <GameChip key={slug} slug={slug} grow={width} />)}
+                    </div>
+                  ))}
+                </div>
+              ))}
             </div>
           )}
         </section>

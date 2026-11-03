@@ -701,8 +701,9 @@ a { color: inherit; }
 .og-tx__state[data-state="completed"] { color: var(--baseui-extensions-text-and-icon-success); }
 .og-tx__side { align-items: flex-end; text-align: end; }
 .og-tx__empty { text-align: center; }
-/* the games of the home page on a desktop: equal columns, always in the width (six, four on a narrower screen), no scroll */
-.og-tilegrid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--baseui-spacing-2); }
-@media (max-width: 1100px) { .og-tilegrid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+/* the games of the home page on a desktop: blocks of two rows of tiles of different widths that always fit the width with no scroll (the widths are proportions, see fitTiles); the rows of a block grow to its width */
+.og-tiles--fit { width: auto; }
+.og-tiles--fit .og-grows { width: auto; min-width: 0; }
+.og-tiles--fit .og-grow { min-width: 0; }
 /* the number of the orders in the title: secondary, at its side */
 .og-title__count { margin-inline-start: var(--baseui-spacing-2); color: var(--baseui-text-and-icon-secondary); }

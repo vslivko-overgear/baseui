@@ -11,6 +11,19 @@ export const useMedia = (query) => {
   return on;
 };
 
+/** The width of an element, kept up to date: [ref, width] (0 until it is measured). */
+export const useWidth = () => {
+  const [width, setWidth] = useState(0);
+  const [node, setNode] = useState(null);
+  useEffect(() => {
+    if (!node) return undefined;
+    const ro = new ResizeObserver(([e]) => setWidth(Math.floor(e.contentRect.width)));
+    ro.observe(node);
+    return () => ro.disconnect();
+  }, [node]);
+  return [setNode, width];
+};
+
 /** A small hash router: #/study/s1/results → { parts: ['study', 's1', 'results'], query }. */
 const read = () => {
   const [path, qs = ''] = (location.hash.replace(/^#/, '') || '/').split('?');

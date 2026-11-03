@@ -78,6 +78,30 @@ export function tileLayout(rows, audience) {
   return { group, rows: levelRows(rows.map((row) => row.filter(([slug]) => !taken.has(slug)))) };
 }
 
+/**
+ * The tiles of the home page on a desktop, fitted into `width` px with no scroll: blocks (the group of the audience, then the rest), each a rectangle of two rows of tiles of different widths,
+ * and every row of every block ends at the same place, so the first row is as long as the second. The widths only give the proportions (the page grows the tiles by them); a gap is a gap.
+ * When the tiles would be squeezed by more than `1 - min`, the last tile of the longer row of the rest is left out and the rows are levelled again, until they fit. The group is never cut.
+ * Returns { blocks: [{ rows, length }], scale }: the rows of each block, the sum of the widths of its row (its share of the line), and the share the widths were squeezed to.
+ */
+export function fitTiles(layout, width, { min = 0.8 } = {}) {
+  let rest = layout.rows;
+  const blocksOf = (r) => (layout.group.length ? [layout.group, r] : [r]);
+  const scaleOf = (r) => {
+    const rows = blocksOf(r);
+    const count = rows.reduce((n, b) => n + b[0].length, 0);
+    const sum = rows.reduce((n, b) => n + b[0].reduce((m, [, w]) => m + w, 0), 0);
+    return (width - (count - 1) * TILE_GAP) / sum;
+  };
+  while (scaleOf(rest) < min && rest.flat().length > 2) {
+    const from = lengthOf(rest[0]) >= lengthOf(rest[1]) ? 0 : 1;
+    const cut = rest.map((row, i) => (i === from ? row.slice(0, -1) : row));
+    rest = levelRows(cut);
+  }
+  const blocks = blocksOf(rest).map((rows) => ({ rows, length: rows[0].reduce((n, [, w]) => n + w, 0) + (rows[0].length - 1) * TILE_GAP }));
+  return { blocks, scale: scaleOf(rest) };
+}
+
 /** The offers split for an audience: [those of its game, the rest]. The page lists the first part first and mixes the games of the second. */
 export function splitOffers(offers, audience) {
   if (audience === AUDIENCE_DEFAULT) return [[], offers];

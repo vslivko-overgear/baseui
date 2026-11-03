@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { OFFERS, SERVICES, kindLabel, kindsOf, GAMES, TILE_ROWS, gameOf } from '../example/data.js';
 import { LIMITS, matchGames, matchOffers, popularGames, suggest, withRecent } from '../example/suggest.js';
-import { AUDIENCES, AUDIENCE_DEFAULT, AUDIENCE_GROUP, TILE_GAP, gameNameOf, audienceOf, tileRows, tileLayout, levelRows, splitOffers, gameTabs } from '../audience.js';
+import { AUDIENCES, AUDIENCE_DEFAULT, AUDIENCE_GROUP, TILE_GAP, gameNameOf, audienceOf, tileRows, tileLayout, fitTiles, levelRows, splitOffers, gameTabs } from '../audience.js';
 
 describe('kinds', () => {
   // The kinds of offers, the second level of tabs of the listing on the home page: every offer has a label for its kind, and a game's kinds come in a known order.
@@ -259,3 +259,42 @@ describe('audience', () => {
     });
   });
 });
+
+// The tiles of a desktop: fitted into the width, in blocks of two rows of different widths that end at the same place.
+describe('fitTiles', () => {
+  const rowLength = (block, i) => block.rows[i].reduce((n, [, w]) => n + w, 0) + (block.rows[i].length - 1) * TILE_GAP;
+  const widths = [1232, 1100, 960, 800];
+
+  test.each(AUDIENCES.flatMap(([slug]) => widths.map((w) => [slug, w])))('%s at %ipx: every block is two rows of one length, and the tiles are squeezed by no more than a fifth', (audience, width) => {
+    const { blocks, scale } = fitTiles(tileLayout(TILE_ROWS, audience), width);
+    expect(scale).toBeGreaterThanOrEqual(0.8);
+    for (const b of blocks) {
+      expect(b.rows).toHaveLength(2);
+      expect(Math.abs(rowLength(b, 0) - rowLength(b, 1)), `${audience}: ${b.rows.map((r) => r.map(([s]) => s))}`).toBeLessThan(0.5);
+    }
+  });
+
+  test('the tiles of one line are not all of one width', () => {
+    for (const [audience] of AUDIENCES) for (const b of fitTiles(tileLayout(TILE_ROWS, audience), 1232).blocks) expect(new Set(b.rows.flat().map(([, w]) => Math.round(w))).size, audience).toBeGreaterThan(1);
+  });
+
+  test('World of Warcraft is a block of its four games, and the others are a block of their own, with no game lost or doubled while they fit', () => {
+    const { blocks } = fitTiles(tileLayout(TILE_ROWS, 'wow'), 1232);
+    expect(blocks).toHaveLength(2);
+    expect(blocks[0].rows.flat().map(([s]) => s).sort()).toEqual(['wow', 'wow-classic-era', 'wow-forever', 'wow-20th-anniversary'].sort());
+    const all = blocks.flatMap((b) => b.rows.flat().map(([s]) => s));
+    expect(new Set(all).size).toBe(all.length);
+  });
+
+  test('an audience without a family has one block', () => {
+    expect(fitTiles(tileLayout(TILE_ROWS, 'all'), 1232).blocks).toHaveLength(1);
+  });
+
+  test('a width that is too narrow leaves tiles out of the rest, and never out of the group', () => {
+    const wide = fitTiles(tileLayout(TILE_ROWS, 'wow'), 1232).blocks.flatMap((b) => b.rows.flat()).length;
+    const narrow = fitTiles(tileLayout(TILE_ROWS, 'wow'), 700);
+    expect(narrow.blocks.flatMap((b) => b.rows.flat()).length).toBeLessThan(wide);
+    expect(narrow.blocks[0].rows.flat()).toHaveLength(4);
+  });
+});
+

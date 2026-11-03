@@ -63,10 +63,10 @@ export function Section({ title, action, close, wide, children }) {
 }
 
 /** A tile of the games block: a light card with the name of the game and its picture on the right, fading into the card. */
-export function GameChip({ slug, width, tag }) {
+export function GameChip({ slug, width, grow, tag }) {
   const game = gameOf(slug);
   return (
-    <ClickableCard label={game.name} variant="default" padding={0} onClick={() => go(`/games/${slug}`)} style={{ width, flex: 'none' }}>
+    <ClickableCard label={game.name} variant="default" padding={0} onClick={() => go(`/games/${slug}`)} style={grow ? { flex: `${grow} 1 0`, minWidth: 0 } : { width, flex: 'none' }}>
       <span className="og-gchip">
         <span className="og-gchip__name">{game.name}</span>
         {tag && <span className="og-gchip__tag"><Badge variant="primary" size="sm" label={tag} icon={tag === 'Popular' ? <img src={EMOJI('Fire')} alt="" width="12" height="12" draggable="false" /> : undefined} /></span>}
