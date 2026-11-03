@@ -3,7 +3,7 @@
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
 - **Overgear, the wallet page, "Your terms":** 16px from the edge of the surface to the icon and to the chevron (it was 28px), and 12px between the rows (it was 4px). Overgear checks were not run.
-- **Overgear, the wallet page: a question mark next to "OG Coins"** (the standard `Hint`: a tooltip, a sheet on a phone) with the explanation of the coin, **and the balance, the OG Coins and the top-up are on one background (secondary):** the wrapper has 24px radius and 8px padding, what is inside has 16px radius and 8px gaps. Overgear checks were not run.
+- **Overgear, the wallet page: a question mark next to "OG Coins"** (the standard `Hint`: a tooltip, a sheet on a phone) with the explanation of the coin, **and the balance, the OG Coins and the top-up are on one background (secondary):** the wrapper has 16px padding and 28px radius, what is inside has 12px radius and 12px gaps. Overgear checks were not run.
 - **Overgear, the wallet page: "1 OG Coin = $1.00" is gone, and the balance, the OG Coins and the top-up are one group with the title,** 16px from "Wallet" (the rest of the page stays 56px apart). Overgear checks were not run.
 - **Overgear, the wallet page has more air:** 56px between its main blocks on a desktop (it was 40), and "Your terms" has a bigger space round the rows (the padding of the surface 16px, the rows of the `lg` spacing). Overgear checks were not run.
 - **Overgear, the wallet page: the line under "Get 10 OG Coins for subscriptions" is 8px from the title** (it was a section gap, 16px) and stands with it as one group. Overgear checks were not run.

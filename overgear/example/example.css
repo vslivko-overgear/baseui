@@ -673,11 +673,10 @@ a { color: inherit; }
 .og-sub__head .bui-badge { flex: none; }
 /* the wallet page: more air between its main blocks (56px on a desktop) */
 .og:not(.og--mobile) .og-wpage { gap: calc(var(--baseui-spacing-12) + var(--baseui-spacing-2)); }
-/* the amounts and the top-up on one background (secondary): the wrapper 24px, 8px of padding, so what is inside has 16px */
-.og-wwrap { padding: var(--baseui-spacing-2); border-radius: var(--baseui-radius-3xl); background: var(--baseui-background-secondary); }
-.og-wwrap { gap: var(--baseui-spacing-2); }
-.og-wwrap .og-amounts-grid { gap: var(--baseui-spacing-2); }
-.og-wwrap .bui-card { border-radius: var(--baseui-radius-2xl); }
+/* the amounts and the top-up on one background (secondary): 16px of padding, the wrapper 28px, what is inside 12px (28 - 16), 12px gaps */
+.og-wwrap { padding: var(--baseui-spacing-4); border-radius: var(--baseui-radius-custom-28); background: var(--baseui-background-secondary); gap: var(--baseui-spacing-3); }
+.og-wwrap .og-amounts-grid { gap: var(--baseui-spacing-3); }
+.og-wwrap .bui-card, .og-wwrap .bui-button { border-radius: var(--baseui-radius-xl); }
 .og-wamount__label { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); }
 /* the terms: 16px from the edge of the surface to the icon (the list bleeds 12px, so 4px of side padding) and a bigger gap between the rows */
 .og-terms [data-slot="list"] { gap: var(--baseui-spacing-3); }
