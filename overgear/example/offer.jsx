@@ -6,10 +6,14 @@ import { SegmentedControl } from '../../src/components/SegmentedControl.jsx';
 import { RadioGroup } from '../../src/components/RadioGroup.jsx';
 import { CheckboxGroup } from '../../src/components/CheckboxGroup.jsx';
 import { Selector } from '../../src/components/Selector.jsx';
+import { TextInput } from '../../src/components/TextInput.jsx';
 import { NumberInput } from '../../src/components/NumberInput.jsx';
 import { Status } from '../../src/components/Status.jsx';
+import { Avatar } from '../../src/components/Avatar.jsx';
+import { List, ListItem } from '../../src/components/List.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
-import { go, useMedia } from './util.js';
+import { Bleed } from '../../src/components/Layout.jsx';
+import { go } from './util.js';
 import { OFFERS, REVIEWS, SERVICES, money, offerOf, gameOf, sold } from './data.js';
 import { useAddedToCart, Page, PageHead, Section, OfferListing, Stars, WishButton, CashbackTag, CASHBACK, PaymentLogos, PAY_OFFER } from './ui.jsx';
 import { useStore } from './store.jsx';
@@ -17,6 +21,11 @@ import { Faq } from './games.jsx';
 
 const MODES = [{ value: 'piloted', label: 'Piloted' }, { value: 'self', label: 'Self-play' }, { value: 'remote', label: 'Remote control' }];
 const EXTRAS = [{ value: 'express', label: 'Express start, +$12', price: 12 }, { value: 'stream', label: 'Live stream, +$8', price: 8 }, { value: 'loot', label: 'Priority loot, +$20', price: 20 }];
+const TRUST = [
+  ['UserCheck01', 'ID-verified pros', 'Every player passes our selection and checks'],
+  ['Lock01', 'Secure payment', 'Cards and wallets are processed by certified providers'],
+  ['LifeBuoy01', '24/7 support', 'A human answers in the order chat at any hour'],
+];
 /** "Why Players Choose Overgear": the four promises of the real pages (the same on every product). */
 const WHY = [
   ['UserCheck01', 'In-House Boosters', 'Verified pros under full control. Top skill — no random freelancers'],
@@ -41,7 +50,7 @@ export function Offer({ id }) {
   const [difficulty, setDifficulty] = useState('heroic');
   const [extras, setExtras] = useState([]);
   const [qty, setQty] = useState(1);
-  const mobile = useMedia('(max-width: 767px)');
+  const [note, setNote] = useState('');
   if (!offer) return <Page><Status status="neutral" title="Offer not found" actionLabel="All games" onAction={() => go('/catalog')} /></Page>;
   const game = gameOf(offer.game);
   const k = DIFFICULTY.find((d) => d.value === difficulty).k;
@@ -53,59 +62,29 @@ export function Offer({ id }) {
     addedToCart();
   };
   const related = OFFERS.filter((o) => o.service === offer.service && o.id !== offer.id).slice(0, 3);
-  const crumbs = [{ label: 'Home', href: '#/' }, { label: game.name, href: `#/games/${game.slug}` }, { label: service.label, href: `#/games/wow?s=${service.id}` }, { label: offer.title }];
   const [first, ...rest] = offer.bullets;
-  const buy = (
-    <Card variant="surface" padding={0} className="og-buy">
-      <div className="og-buy__art" style={offer.image ? { backgroundImage: `url(${offer.image})` } : undefined} data-test-id="offer-art">
-        <span className="og-buy__heart"><WishButton id={offer.id} /></span>
-        <div className="og-stack og-stack--lg og-buy__opts">
-          <SegmentedControl label="Difficulty" fullWidth size="sm" value={difficulty} onValueChange={setDifficulty} items={DIFFICULTY.map((d) => ({ value: d.value, label: d.label }))} />
-          <RadioGroup title="How it is played" value={mode} onValueChange={setMode} options={MODES} />
-          <CheckboxGroup title="Extras" value={extras} onValueChange={setExtras} options={EXTRAS.map((e) => ({ value: e.value, label: e.label }))} />
-          <NumberInput label="Quantity" min={1} max={10} value={qty} onValueChange={(v) => setQty(v ?? 1)} />
-        </div>
-      </div>
-      <div className="og-stack og-buy__pay">
-        <div className="og-stack">
-          <div className="og-pricerow">
-            <p className="og-price og-price--lg">{money(unit * qty)}</p>
-            <CashbackTag size="lg" label={`Cashback ${CASHBACK}%`} />
-          </div>
-          {qty > 1 && <p className="og-meta">{`${money(unit)} each`}</p>}
-        </div>
-        <ul className="og-facts" data-test-id="offer-facts">
-          <li><Icon name="Clock" size={20} /><span><b>15 minutes</b> average start time</span></li>
-          <li><Icon name="Clock" size={20} /><span><b>3 hours 15 minutes</b> order completion</span></li>
-        </ul>
-        <div className="og-stack">
-          <Button variant="primary" size="lg" width="100%" label="Add to cart" icon={<Icon name="ShoppingCart01" size={24} />} onClick={add} />
-          <div className="og-offer-pay"><PaymentLogos items={PAY_OFFER} /></div>
-          <p className="og-guarantee" data-test-id="offer-guarantee"><Icon name="ShieldTick" size={20} />100% moneyback guarantee</p>
-        </div>
-      </div>
-    </Card>
-  );
   return (
     <Page>
+      <PageHead crumbs={[{ label: 'Home', href: '#/' }, { label: game.name, href: `#/games/${game.slug}` }, { label: service.label, href: `#/games/wow?s=${service.id}` }, { label: offer.title }]} title={offer.title} media={<div className="og-art og-art--square" role="img" aria-label={offer.title}>{offer.image ? <img className="og-art__img" src={offer.image} alt="" /> : <Icon name="Image01" size={32} />}</div>}>
+        <div className="og-row">
+          {offer.badge && <Badge variant="info" label={offer.badge} />}
+          <Stars value={offer.rating} reviews={offer.reviews} size="md" />
+          <span className="og-rate__text og-rate__text--md"><span className="og-rate__count">{`${sold(offer.sold)} sold`}</span></span>
+          <WishButton id={offer.id} text />
+        </div>
+      </PageHead>
       <div className="og-split og-split--right">
-        <div className="og-stack og-stack--xl og-offer-info">
-          <div className="og-stack og-stack--related" data-test-id="offer-head">
-            <PageHead crumbs={crumbs} title={offer.title}>
-              <div className="og-row og-row--wrap">
-                {offer.badge && <Badge variant="info" label={offer.badge} />}
-                <Stars value={offer.rating} reviews={offer.reviews} size="md" />
-                <span className="og-rate__text og-rate__text--md"><span className="og-rate__count">{`${sold(offer.sold)} sold`}</span></span>
-              </div>
-            </PageHead>
-            <div className="og-row og-row--wrap" data-test-id="offer-pills">
-              <Badge variant="secondary" size="lg" icon={<Icon name="Clock" size={16} />} label={`Start in 15 minutes`} />
-              <Badge variant="secondary" size="lg" icon={<Icon name="UserCheck01" size={16} />} label="Verified pro players" />
-              <Badge variant="secondary" size="lg" icon={<Icon name="ShieldTick" size={16} />} label="Your loot stays with you" />
+        <div className="og-stack og-stack--xl">
+          <Card variant="surface" padding={5}>
+            <div className="og-stack og-stack--lg">
+                <SegmentedControl label="Difficulty" fullWidth size="sm" value={difficulty} onValueChange={setDifficulty} items={DIFFICULTY.map((d) => ({ value: d.value, label: d.label }))} />
+                <RadioGroup title="How it is played" value={mode} onValueChange={setMode} options={MODES} />
+                <CheckboxGroup title="Extras" value={extras} onValueChange={setExtras} options={EXTRAS.map((e) => ({ value: e.value, label: e.label }))} />
+                <NumberInput label="Quantity" min={1} max={10} value={qty} onValueChange={(v) => setQty(v ?? 1)} />
+                <TextInput label="Note for the booster" multiline minRows={2} value={note} onChange={(e) => setNote(e.target.value)} />
             </div>
-            <p className="og-text">{`${offer.title} on ${game.name}: a verified pro player does it by hand on your account, `}<strong className="og-accent">{first}</strong></p>
-          </div>
-          {mobile && buy}
+          </Card>
+          <div className="og-stack og-stack--xl og-offer-info">
           <Section title="Your wins">
             <ul className="og-wins" data-test-id="offer-wins">
               <li><Icon name="Check" size={20} /><span><strong className="og-accent">{first}</strong></span></li>
@@ -171,10 +150,38 @@ export function Offer({ id }) {
               <li><span>A pro player on your order within 15 minutes, with a VPN on every login</span></li>
             </ol>
           </Section>
-          <Section title="Questions"><Faq /></Section>
+              </div>
         </div>
         <div className="og-stack og-sticky">
-          {!mobile && buy}
+          <Card variant="surface" padding={5}>
+            <div className="og-stack">
+              <div className="og-stack">
+                <div className="og-pricerow">
+                  <p className="og-price og-price--lg">{money(unit * qty)}</p>
+                  <CashbackTag size="lg" label={`Cashback ${CASHBACK}%`} />
+                </div>
+                {qty > 1 && <p className="og-meta">{`${money(unit)} each`}</p>}
+              </div>
+              <ul className="og-facts" data-test-id="offer-facts">
+                <li><Icon name="Clock" size={20} /><span><b>15 minutes</b> average start time</span></li>
+                <li><Icon name="Clock" size={20} /><span><b>3 hours 15 minutes</b> order completion</span></li>
+              </ul>
+              <div className="og-stack">
+                <Button variant="primary" size="lg" width="100%" label="Add to cart" icon={<Icon name="ShoppingCart01" size={24} />} onClick={add} />
+                <div className="og-offer-pay"><PaymentLogos items={PAY_OFFER} /></div>
+                <p className="og-guarantee" data-test-id="offer-guarantee"><Icon name="ShieldTick" size={20} />100% moneyback guarantee</p>
+              </div>
+            </div>
+          </Card>
+          <Card variant="surface" padding={5}>
+            <div className="og-stack og-stack--lg">
+              <ul className="og-trust">
+                {TRUST.map(([icon, t, d]) => (
+                  <li key={t}><Icon name={icon} size={24} /><div className="og-stack og-stack--hair"><p className="og-trust__title">{t}</p><p className="og-meta">{d}</p></div></li>
+                ))}
+              </ul>
+            </div>
+          </Card>
         </div>
       </div>
     </Page>

@@ -646,9 +646,3 @@ a { color: inherit; }
 .og-custom__act { align-items: center; }
 .og-custom__reply { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); }
 .og-custom__reply b { color: var(--baseui-text-and-icon-primary); font: var(--baseui-typography-text-14-semi-bold); }
-.og-buy { overflow: hidden; }
-.og-buy__art { position: relative; background-size: cover; background-position: top center; }
-.og-buy__art::before { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, color-mix(in srgb, var(--baseui-background-secondary) 20%, transparent), var(--baseui-background-secondary) 55%); }
-.og-buy__heart { position: absolute; z-index: 2; top: var(--baseui-spacing-3); right: var(--baseui-spacing-3); }
-.og-buy__opts { position: relative; z-index: 1; padding: 140px var(--baseui-spacing-5) var(--baseui-spacing-5); }
-.og-buy__pay { padding: var(--baseui-spacing-5); border-top: 1px solid var(--baseui-border-primary); }
