@@ -10,6 +10,7 @@ import { Link } from '../../src/components/Link.jsx';
 import { List, ListItem } from '../../src/components/List.jsx';
 import { ProgressBar } from '../../src/components/ProgressBar.jsx';
 import { Status } from '../../src/components/Status.jsx';
+import { Table, pixel, proportional } from '../../src/components/Table.jsx';
 import { go, href } from './util.js';
 import { money } from './data.js';
 import { Page, PageHead, Section } from './ui.jsx';
@@ -50,23 +51,15 @@ function Flag({ on }) {
   return on ? <span className="og-rflag og-rflag--on" aria-label="Yes"><Icon name="CheckCircle" size={24} filled /></span> : <span className="og-rflag" aria-label="No"><Icon name="Lock01" size={24} /></span>;
 }
 
-/** The perks: what the rank gives now, and what the next one will. */
+/** The perks: what the rank gives now, and what the next one will (the Table of the design system). */
 function BenefitsTable({ grade, next }) {
   const cell = (b, g) => (b.kind === 'percent' ? <strong>{benefitValue(b, g)}</strong> : <Flag on={benefitValue(b, g)} />);
-  return (
-    <table className="og-rtable" data-test-id="rank-benefits">
-      <thead><tr><th scope="col">Benefits</th><th scope="col" className="og-rtable__now">Now</th>{next && <th scope="col">Next</th>}</tr></thead>
-      <tbody>
-        {BENEFITS.map((b) => (
-          <tr key={b.uid}>
-            <th scope="row"><span className="og-rtable__name">{b.name}{b.hint && <Hint label={`About ${b.name}`} content={b.hint} />}</span></th>
-            <td className="og-rtable__now">{cell(b, grade)}</td>
-            {next && <td>{cell(b, next)}</td>}
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
+  const columns = [
+    { key: 'name', header: 'Benefits', width: proportional(1, { minWidth: 100 }), renderCell: (b) => <span className="og-rtable__name">{b.name}{b.hint && <Hint label={`About ${b.name}`} content={b.hint} />}</span> },
+    { key: 'now', header: 'Now', align: 'center', width: pixel(72), renderCell: (b) => cell(b, grade) },
+    ...(next ? [{ key: 'next', header: 'Next', align: 'center', width: pixel(72), renderCell: (b) => cell(b, next) }] : []),
+  ];
+  return <Table data={BENEFITS} columns={columns} rowKey="uid" caption="Benefits of the rank" data-test-id="rank-benefits" />;
 }
 
 export function RankPage({ onLogin }) {
@@ -112,11 +105,13 @@ export function RankPage({ onLogin }) {
           </div>
         </Card>
         <Section title="How do ranks work?">
-          <ol className="og-bullets og-bullets--num">
+          <Card variant="surface" padding={5}>
+            <ol className="og-bullets og-bullets--num og-rank__how">
             <li><span>Ranks are recalculated and updated automatically once a day to ensure the information remains accurate</span></li>
             <li><span>Your rank depends on how much you spend. You can learn more about ranks <Link href="https://loyalty.overgear.com/ranks" target="_blank" rel="noopener noreferrer">here</Link></span></li>
             <li><span>Your rank is based on your spending over the last 365 days. You can review completed orders in <Link href={href('/orders')}>my orders page</Link></span></li>
-          </ol>
+            </ol>
+          </Card>
         </Section>
       </div>
       <HistoryDialog open={history} onOpenChange={setHistory} history={rank.history} />
