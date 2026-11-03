@@ -625,3 +625,11 @@ a { color: inherit; }
 .og-ostatus__foot { display: flex; flex-direction: column; gap: var(--baseui-spacing-2); }
 /* the guarantee under the button of the offer: one green line with a shield */
 .og-guarantee { margin: 0; display: flex; align-items: center; justify-content: center; gap: var(--baseui-spacing-2); font: var(--baseui-typography-text-14-regular); color: var(--baseui-extensions-text-and-icon-success); }
+/* the two facts under the price: the average start and the completion time */
+.og-facts { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--baseui-spacing-4); }
+.og-facts div { display: flex; flex-direction: column-reverse; gap: var(--baseui-spacing-1); }
+.og-facts dt, .og-facts dd { margin: 0; }
+.og-facts dd { font: var(--baseui-typography-text-16-semi-bold); color: var(--baseui-text-and-icon-primary); }
+/* the payment logos under the button of the offer: one row, smaller than in the footer */
+.og-offer-pay .og-pay { flex-wrap: nowrap; gap: var(--baseui-spacing-2); }
+.og-offer-pay .og-pay img { height: 18px; }

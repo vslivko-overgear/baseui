@@ -15,7 +15,7 @@ import { Icon } from '../../src/components/Icon.jsx';
 import { Bleed } from '../../src/components/Layout.jsx';
 import { go } from './util.js';
 import { OFFERS, REVIEWS, SERVICES, money, offerOf, gameOf, sold } from './data.js';
-import { useAddedToCart, Page, PageHead, Section, OfferListing, Stars, WishButton, CashbackTag, CASHBACK } from './ui.jsx';
+import { useAddedToCart, Page, PageHead, Section, OfferListing, Stars, WishButton, CashbackTag, CASHBACK, PaymentLogos, PAY_MAIN } from './ui.jsx';
 import { useStore } from './store.jsx';
 import { Faq } from './games.jsx';
 
@@ -93,9 +93,14 @@ export function Offer({ id }) {
                 </div>
                 {qty > 1 && <p className="og-meta">{`${money(unit)} each`}</p>}
               </div>
+              <dl className="og-facts" data-test-id="offer-facts">
+                <div><dt className="og-meta">Average start time</dt><dd>15 minutes</dd></div>
+                <div><dt className="og-meta">Order completion</dt><dd>3 hours 15 minutes</dd></div>
+              </dl>
               <div className="og-stack">
                 <Button variant="primary" size="lg" width="100%" label="Add to cart" icon={<Icon name="ShoppingCart01" size={24} />} onClick={add} />
                 <p className="og-guarantee" data-test-id="offer-guarantee"><Icon name="ShieldTick" size={20} />100% moneyback guarantee</p>
+                <div className="og-offer-pay"><PaymentLogos items={PAY_MAIN.slice(0, 5)} /></div>
               </div>
             </div>
           </Card>
