@@ -564,3 +564,4 @@ a { color: inherit; }
 .og-topup__coins { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); }
 .og-topup__brackets { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--baseui-spacing-3) var(--baseui-spacing-5); }
 .og-topup__brackets li { display: inline-flex; align-items: center; gap: var(--baseui-spacing-2); }
+.bui-button__label:has(> .og-amounts) { display: flex; align-items: center; }   /* the amounts are centered in the button: as an inline box they sat on the baseline of a taller line */
