@@ -3,6 +3,7 @@
 import { Badge } from '../../src/components/Badge.jsx';
 import { Button } from '../../src/components/Button.jsx';
 import { Card } from '../../src/components/Card.jsx';
+import { Hint } from '../../src/components/Hint.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
 import { List, ListItem } from '../../src/components/List.jsx';
 import { Status } from '../../src/components/Status.jsx';
@@ -53,10 +54,10 @@ function Subscription({ item }) {
 }
 
 /** One amount of the wallet on its own card, from the left edge. */
-const Amount = ({ label, children, testId }) => (
+const Amount = ({ label, hint, children, testId }) => (
   <Card variant="surface" padding={5}>
     <div className="og-stack og-stack--hair og-wamount" data-test-id={testId}>
-      <p className="og-meta">{label}</p>
+      <p className="og-meta og-wamount__label">{label}{hint && <Hint label={`About ${label}`} content={hint} />}</p>
       <p className="og-balance__money">{children}</p>
     </div>
   </Card>
@@ -75,10 +76,10 @@ export function WalletPage({ onLogin }) {
       <div className="og-stack og-stack--xl og-wpage" data-test-id="wallet-page">
         <div className="og-stack">
           <PageHead crumbs={[{ label: 'Home', href: '#/' }, { label: 'Account', href: '#/account' }, { label: 'Wallet' }]} title="Wallet" />
-          <div className="og-stack">
+          <div className="og-stack og-wwrap" data-test-id="wallet-wrap">
             <div className="og-amounts-grid">
               <Amount label="Balance" testId="wallet-balance">{money(store.balance)}</Amount>
-              <Amount label="OG Coins" testId="wallet-coins"><span className="og-balance__coin"><CashbackMark />{coinsText(store.coins)}</span></Amount>
+              <Amount label="OG Coins" hint="1 OG Coin is $1. Coins come back as cashback and as rewards, and they can pay a part of a purchase" testId="wallet-coins"><span className="og-balance__coin"><CashbackMark />{coinsText(store.coins)}</span></Amount>
             </div>
             <Button variant="primary" size="lg" width="100%" label="Top up" icon={<Icon name="Plus" size={20} />} onClick={openTopUp} data-test-id="wallet-top-up-page" />
           </div>
