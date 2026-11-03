@@ -294,9 +294,6 @@ a { color: inherit; }
 .og-rate__text--md { display: inline-flex; font: var(--baseui-typography-text-16-regular); }
 
 /* the second row of the purchase card: the cart button stretched up to the heart */
-.og-buyrow { display: flex; gap: var(--baseui-spacing-2); align-items: center; }
-.og-buyrow > :first-child { flex: 1; min-width: 0; }
-.og-buyrow > :last-child { flex: none; }
 
 .og-stars { display: inline-flex; gap: var(--baseui-spacing-1); color: var(--baseui-extensions-text-and-icon-warning); }
 .og-arrows { display: flex; gap: var(--baseui-spacing-2); }

@@ -15,7 +15,6 @@ import { Icon } from '../../src/components/Icon.jsx';
 import { Bleed } from '../../src/components/Layout.jsx';
 import { go } from './util.js';
 import { OFFERS, REVIEWS, SERVICES, money, offerOf, gameOf, sold } from './data.js';
-import { ControlRow } from '../../src/components/Layout.jsx';
 import { useAddedToCart, Page, PageHead, Section, OfferListing, Stars, WishButton, CashbackTag, CASHBACK } from './ui.jsx';
 import { useStore } from './store.jsx';
 import { Faq } from './games.jsx';
@@ -46,10 +45,9 @@ export function Offer({ id }) {
   const extra = extras.reduce((n, e) => n + EXTRAS.find((x) => x.value === e).price, 0);
   const unit = +(offer.price * k + extra + (mode === 'self' ? -offer.price * 0.1 : 0)).toFixed(2);
   const service = SERVICES.find((s) => s.id === offer.service) || { id: offer.service, label: 'Services' };
-  const add = (buy) => {
+  const add = () => {
     store.add({ key: `${offer.id}-${mode}-${difficulty}-${extras.join()}`, id: offer.id, image: offer.image, eta: offer.eta, title: offer.title, sub: `${MODES.find((m) => m.value === mode).label}, ${difficulty}${extras.length ? `, ${extras.length} extras` : ''}`, price: unit, qty });
-    if (buy) go('/checkout');
-    else addedToCart();
+    addedToCart();
   };
   const related = OFFERS.filter((o) => o.service === offer.service && o.id !== offer.id).slice(0, 3);
   return (
@@ -59,6 +57,7 @@ export function Offer({ id }) {
           {offer.badge && <Badge variant="info" label={offer.badge} />}
           <Stars value={offer.rating} reviews={offer.reviews} size="md" />
           <span className="og-rate__text og-rate__text--md"><span className="og-rate__count">{`${sold(offer.sold)} sold`}</span></span>
+          <WishButton id={offer.id} text />
         </div>
       </PageHead>
       <div className="og-split og-split--right">
@@ -96,11 +95,7 @@ export function Offer({ id }) {
                 {qty > 1 && <p className="og-meta">{`${money(unit)} each`}</p>}
               </div>
               <div className="og-stack">
-                <Button variant="primary" size="lg" width="100%" label="Buy now" icon={<Icon name="ShieldTick" size={24} />} onClick={() => add(true)} />
-                <ControlRow size="md" className="og-buyrow">
-                  <Button variant="secondary" width="100%" label="Add to cart" icon={<Icon name="ShoppingCart01" size={24} />} onClick={() => add(false)} />
-                  <WishButton id={offer.id} variant="secondary" />
-                </ControlRow>
+                <Button variant="primary" size="lg" width="100%" label="Add to cart" icon={<Icon name="ShoppingCart01" size={24} />} onClick={add} />
               </div>
             </div>
           </Card>

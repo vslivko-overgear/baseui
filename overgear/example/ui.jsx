@@ -5,7 +5,7 @@ import { ProductListing } from '../../src/components/ProductListing.jsx';
 import { Breadcrumbs } from '../../src/components/Breadcrumbs.jsx';
 import { Badge } from '../../src/components/Badge.jsx';
 import { Hint } from '../../src/components/Hint.jsx';
-import { IconButton } from '../../src/components/Button.jsx';
+import { Button, IconButton } from '../../src/components/Button.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
 import { Token } from '../../src/components/Token.jsx';
 import { Dropdown } from '../../src/components/Dropdown.jsx';
@@ -98,12 +98,14 @@ export const Stars = ({ value, reviews, size = 'sm' }) => (
   </span>
 );
 
-export function WishButton({ id, compact, variant = 'ghost' }) {
+export function WishButton({ id, compact, variant = 'ghost', text = false }) {
   const store = useStore();
   const on = store.wishlist.includes(id);
   // the heart plays a short move when it is tapped: a pop when it fills, a quiet shrink when it empties
   const [move, setMove] = useState('');
-  const icon = <span className={`og-heart${move ? ` is-${move}` : ''}`} onAnimationEnd={() => setMove('')}><Icon name="Heart" size={24} filled={on} /></span>;
+  const icon = <span className={`og-heart${move ? ` is-${move}` : ''}`} onAnimationEnd={() => setMove('')}><Icon name="Heart" size={text ? 20 : 24} filled={on} /></span>;
+  // with `text`: a line heart and the words, in a row of information (the offer page)
+  if (text) return <Button variant="ghost" size="sm" icon={icon} label={on ? 'In favorites' : 'Add to favorites'} aria-pressed={on} onClick={(e) => { e.stopPropagation(); setMove(on ? 'off' : 'on'); store.toggleWish(id); }} />;
   return <IconButton variant={variant} size={compact ? 'xsm' : 'md'} tooltip={false} label={on ? 'Remove from favorites' : 'Add to favorites'} icon={icon} onClick={(e) => { e.stopPropagation(); setMove(on ? 'off' : 'on'); store.toggleWish(id); }} />;
 }
 
