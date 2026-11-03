@@ -14,7 +14,7 @@ import { useStore } from './store.jsx';
 import { money } from './data.js';
 import { Badge } from '../../src/components/Badge.jsx';
 import { CashbackMark } from './ui.jsx';
-import { OPEN_TOP_UP, openTopUp, parseAmount, amountError, coinsText, bonusFor, bonusRateFor, lowestBonusAmount, SUGGESTIONS, PURCHASE_LIMIT } from './wallet-core.js';
+import { OPEN_TOP_UP, BONUS_RULES, openTopUp, parseAmount, amountError, coinsText, bonusFor, bonusRateFor, lowestBonusAmount, SUGGESTIONS, PURCHASE_LIMIT } from './wallet-core.js';
 
 /** The money and the OG Coins of the visitor, side by side. */
 export function Amounts({ plus = true }) {
@@ -56,7 +56,7 @@ export function WalletButton() {
   );
 }
 
-/** The balance in the account tab of a phone: what is on the account, and the button to top it up. */
+/** The balance on the page of the wallet: what is on the account, the brackets of the top-up bonus, and the button to top it up. */
 export function BalanceCard() {
   const store = useStore();
   return (
@@ -65,6 +65,10 @@ export function BalanceCard() {
         <div className="og-balance">
           <div className="og-stack og-stack--hair"><p className="og-meta">Balance</p><p className="og-balance__money">{money(store.balance)}</p></div>
           <div className="og-stack og-stack--hair og-balance__coins"><p className="og-meta">OG Coins</p><p className="og-balance__coin"><CashbackMark />{coinsText(store.coins)}</p></div>
+        </div>
+        <div className="og-row og-row--wrap" data-test-id="wallet-bonuses">
+          <span className="og-meta">Top-up bonus</span>
+          {BONUS_RULES.map((r) => <Badge key={r.refillAmount} variant="warning-light" size="md" label={`+${r.percentage}% from ${money(r.refillAmount).replace('.00', '')}`} />)}
         </div>
         <Button variant="primary" size="md" width="100%" label="Top up" icon={<Icon name="Plus" size={20} />} onClick={openTopUp} />
       </div>

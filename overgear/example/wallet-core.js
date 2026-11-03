@@ -54,3 +54,21 @@ export const lowestBonusAmount = (rules = BONUS_RULES) => rules.reduce((min, r) 
 /** The top-up dialog opens on this event, so any place can open it without owning its state. */
 export const OPEN_TOP_UP = 'og:open-top-up';
 export const openTopUp = () => window.dispatchEvent(new Event(OPEN_TOP_UP));
+
+/** The rewards for subscriptions (the real service: "Get 10 Coins for subscriptions"): the Discord notifications and the email updates give 5 coins each, once. The email has a sub-setting, the notifications about the wishlist. */
+export const SUBSCRIPTIONS = [
+  { id: 'discord', title: 'Discord notifications', text: 'Join our Discord for exclusive chats, tips, and much more', coins: 5 },
+  { id: 'email', title: 'Email Updates', text: 'Subscribe to get the latest updates, tips, and exclusive offers', coins: 5, sub: { id: 'wishlist', label: 'Notifications about wishlist items' } },
+];
+export const NO_SUBS = { discord: false, email: false, wishlist: false, paid: {} };
+
+/** Turns a subscription on or off. The reward is given the first time it is turned on, and never twice; turning the email off turns its sub-setting off. Returns the new settings and the coins to credit. */
+export function withSubscription(subs, id, on) {
+  const next = { ...NO_SUBS, ...subs, paid: { ...(subs?.paid || {}) } };
+  next[id] = on;
+  if (id === 'email' && !on) next.wishlist = false;
+  const coins = SUBSCRIPTIONS.find((s) => s.id === id)?.coins ?? 0;
+  const reward = on && coins && !next.paid[id] ? coins : 0;
+  if (reward) next.paid[id] = true;
+  return { subs: next, reward };
+}

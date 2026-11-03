@@ -2,7 +2,7 @@ import { createContext, useContext, useMemo, useCallback } from '../../src/react
 import { useStored } from './util.js';
 import { seedOrders } from './order-seed.js';
 import { normalizeOrder } from './order-core.js';
-import { WALLET_START, withTopUp, withCoins } from './wallet-core.js';
+import { WALLET_START, withTopUp, withCoins, withSubscription, NO_SUBS } from './wallet-core.js';
 
 const Ctx = createContext(null);
 export const useStore = () => useContext(Ctx);
@@ -43,7 +43,10 @@ export function StoreProvider({ children }) {
         return orders;
       },
       updateOrder: (link, change) => patch((s) => ({ orders: s.orders.map((o) => (o.link === link ? (typeof change === 'function' ? change(o) : { ...o, ...change }) : o)) })),
-      joinDiscord: () => patch(() => ({ discord: true })),
+      // the subscriptions of the wallet: each pays its reward once
+      subs: { ...NO_SUBS, ...(state.subs || {}), discord: !!state.discord || !!state.subs?.discord },
+      setSubscription: (id, on) => patch((s) => { const { subs, reward } = withSubscription({ ...(s.subs || {}), discord: !!s.discord || !!s.subs?.discord }, id, on); return { subs, discord: id === 'discord' ? on : s.discord, wallet: reward ? withCoins(s.wallet || WALLET_START, reward) : s.wallet }; }),
+      joinDiscord: () => patch((s) => { const { subs, reward } = withSubscription(s.subs, 'discord', true); return { subs, discord: true, wallet: reward ? withCoins(s.wallet || WALLET_START, reward) : s.wallet }; }),
       // a payment that waits for its provider: the orders it will make once it settles
       setPending: (pending) => patch(() => ({ pending })),
       settlePending: () => patch((s) => (s.pending ? { orders: [...s.pending.orders, ...(s.orders || [])], cart: [], promo: '', pending: null, temp: s.user ? s.temp : { email: s.pending.info?.email || '' }, wallet: withCoins(s.wallet || WALLET_START, s.pending.info?.cashback ?? 0) } : {})),
