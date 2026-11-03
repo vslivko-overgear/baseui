@@ -72,11 +72,3 @@ export function withSubscription(subs, id, on) {
   if (reward) next.paid[id] = true;
   return { subs: next, reward };
 }
-
-/** The checks of the subscription flow: the email, and the name of the Discord account (2 to 32 letters, digits, dots or underscores, the leading @ is allowed). An empty text is the answer for a valid value. */
-export const emailError = (value) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(value || '').trim()) ? '' : 'Enter an email we can send the code to');
-export const discordError = (value) => {
-  const name = String(value || '').trim().replace(/^@/, '');
-  if (!name) return 'Enter your Discord username';
-  return /^[a-z0-9_.]{2,32}$/i.test(name) ? '' : 'Use 2 to 32 letters, digits, dots or underscores';
-};
