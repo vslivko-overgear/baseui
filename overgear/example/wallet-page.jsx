@@ -83,6 +83,11 @@ export function WalletPage({ onLogin }) {
             </div>
             <Button variant="primary" size="lg" width="100%" label="Top up" icon={<Icon name="Plus" size={20} />} onClick={openTopUp} data-test-id="wallet-top-up-page" />
           </div>
+          <Card variant="surface" padding={4} className="og-terms" style={{ paddingInline: 'var(--baseui-spacing-1)' }}>
+            <List aria-label="History">
+              <ListItem avatar={<Pic><Icon name="ClockRewind" size={24} /></Pic>} subtitle="Top-ups, payments, cashback and bonuses" onClick={() => go('/wallet/history')} details={<Icon name="ChevronRight" size={20} />} data-test-id="wallet-history-link">Payment History</ListItem>
+            </List>
+          </Card>
         </div>
         <Section title="Your terms">
           <Card variant="surface" padding={4} className="og-terms" style={{ paddingInline: 'var(--baseui-spacing-1)' }}>

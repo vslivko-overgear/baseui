@@ -17,6 +17,7 @@ import { Orders, OrdersBar } from './orders.jsx';
 import { OrderPage } from './order-page.jsx';
 import { RankPage } from './rank.jsx';
 import { WalletPage } from './wallet-page.jsx';
+import { TransactionsPage } from './transactions.jsx';
 import { CheckoutResult } from './order-result.jsx';
 import { Account } from './account.jsx';
 import { Info } from './info.jsx';
@@ -39,7 +40,7 @@ function Body({ route, onLogin, mobile }) {
   if (first === 'cart') return <Cart />;
   if (first === 'checkout') return second === 'result' ? <CheckoutResult result={third} orderLink={route.query.orderLink} transaction={route.query.transaction} /> : <Checkout />;
   if (first === 'rank') return <RankPage onLogin={onLogin} />;
-  if (first === 'wallet') return <WalletPage onLogin={onLogin} />;
+  if (first === 'wallet') return second === 'history' ? <TransactionsPage onLogin={onLogin} /> : <WalletPage onLogin={onLogin} />;
   if (first === 'orders') return <Orders onLogin={onLogin} demo={route.query.demo} />;
   if (first === 'order') return <OrderPage link={second} onLogin={onLogin} />;
   if (first === 'account') return <Account tab={route.query.tab} onLogin={onLogin} />;

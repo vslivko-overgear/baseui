@@ -692,3 +692,18 @@ a { color: inherit; }
 .og-related { --bui-listing-min: 280px; }
 /* in the line under the bar of the rank the subtitles stand close to their titles */
 .og-rank__goal .og-stack--hair { gap: 0; }
+
+/* the payment history: the filters in a row, the amount and the state of a transaction */
+.og-txfilters { display: flex; align-items: center; gap: var(--baseui-spacing-6); flex-wrap: wrap; }
+.og-txfilters > :first-child { width: min(100%, 328px); }
+.og--mobile .og-txfilters { flex-direction: column; align-items: stretch; gap: var(--baseui-spacing-3); }
+.og-tx__title { font: var(--baseui-typography-text-16-regular); color: var(--baseui-text-and-icon-primary); }
+.og-tx__link { color: var(--baseui-text-and-icon-link, var(--baseui-text-and-icon-primary)); text-decoration: none; }
+.og-tx__link:hover { text-decoration: underline; }
+.og-tx__amount { font: var(--baseui-typography-text-16-regular); color: var(--baseui-text-and-icon-primary); white-space: nowrap; }
+.og-tx__amount[data-direction="incoming"] { color: var(--baseui-extensions-text-and-icon-success); }
+.og-tx__amount[data-direction="outgoing"] { color: var(--baseui-extensions-text-and-icon-error); }
+.og-tx__state { font: var(--baseui-typography-text-16-regular); color: var(--baseui-text-and-icon-secondary); }
+.og-tx__state[data-state="completed"] { color: var(--baseui-extensions-text-and-icon-success); }
+.og-tx__side { align-items: flex-end; text-align: end; }
+.og-tx__empty { text-align: center; }

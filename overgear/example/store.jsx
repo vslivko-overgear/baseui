@@ -3,6 +3,7 @@ import { useStored } from './util.js';
 import { seedOrders } from './order-seed.js';
 import { normalizeOrder } from './order-core.js';
 import { WALLET_START, withTopUp, withCoins, withSubscription, NO_SUBS } from './wallet-core.js';
+import { seedLog, refillEntry, bonusEntry, giftEntry } from './transactions-core.js';
 
 const Ctx = createContext(null);
 export const useStore = () => useContext(Ctx);
@@ -22,7 +23,9 @@ export function StoreProvider({ children }) {
       // a browser that kept its state before the wallet existed starts with the wallet of a new one
       balance: (state.wallet || WALLET_START).balance,
       coins: (state.wallet || WALLET_START).coins,
-      topUp: (amount, coins = 0) => patch((s) => ({ wallet: withCoins(withTopUp(s.wallet || WALLET_START, amount), coins) })),
+      // the log of the wallet (top-ups, bonuses, gifts); a browser that has none starts with a few entries, so each state can be seen
+      txlog: state.txlog || seedLog(Date.now()),
+      topUp: (amount, coins = 0) => patch((s) => { const now = Date.now(); return { wallet: withCoins(withTopUp(s.wallet || WALLET_START, amount), coins), txlog: [...(s.txlog || seedLog(now)), refillEntry(amount, now), ...(coins > 0 ? [bonusEntry(coins, now)] : [])] }; }),
       count: state.cart.reduce((n, i) => n + i.qty, 0),
       subtotal: total,
       discount,
@@ -45,8 +48,8 @@ export function StoreProvider({ children }) {
       updateOrder: (link, change) => patch((s) => ({ orders: s.orders.map((o) => (o.link === link ? (typeof change === 'function' ? change(o) : { ...o, ...change }) : o)) })),
       // the subscriptions of the wallet: each pays its reward once
       subs: { ...NO_SUBS, ...(state.subs || {}), discord: !!state.discord || !!state.subs?.discord },
-      setSubscription: (id, on, extra = {}) => patch((s) => { const { subs: done, reward } = withSubscription({ ...(s.subs || {}), discord: !!s.discord || !!s.subs?.discord }, id, on); const subs = { ...done, ...extra }; return { subs, discord: id === 'discord' ? on : s.discord, wallet: reward ? withCoins(s.wallet || WALLET_START, reward) : s.wallet }; }),
-      joinDiscord: () => patch((s) => { const { subs, reward } = withSubscription(s.subs, 'discord', true); return { subs, discord: true, wallet: reward ? withCoins(s.wallet || WALLET_START, reward) : s.wallet }; }),
+      setSubscription: (id, on, extra = {}) => patch((s) => { const { subs: done, reward } = withSubscription({ ...(s.subs || {}), discord: !!s.discord || !!s.subs?.discord }, id, on); const subs = { ...done, ...extra }; return { subs, discord: id === 'discord' ? on : s.discord, wallet: reward ? withCoins(s.wallet || WALLET_START, reward) : s.wallet, ...(reward ? { txlog: [...(s.txlog || seedLog(Date.now())), giftEntry(reward, Date.now(), id === 'discord' ? 'Reward for the Discord notifications' : 'Reward for the email updates')] } : {}) }; }),
+      joinDiscord: () => patch((s) => { const { subs, reward } = withSubscription(s.subs, 'discord', true); return { subs, discord: true, wallet: reward ? withCoins(s.wallet || WALLET_START, reward) : s.wallet, ...(reward ? { txlog: [...(s.txlog || seedLog(Date.now())), giftEntry(reward, Date.now(), 'Reward for the Discord notifications')] } : {}) }; }),
       // a payment that waits for its provider: the orders it will make once it settles
       setPending: (pending) => patch(() => ({ pending })),
       settlePending: () => patch((s) => (s.pending ? { orders: [...s.pending.orders, ...(s.orders || [])], cart: [], promo: '', pending: null, temp: s.user ? s.temp : { email: s.pending.info?.email || '' }, wallet: withCoins(s.wallet || WALLET_START, s.pending.info?.cashback ?? 0) } : {})),

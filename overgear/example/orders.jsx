@@ -138,5 +138,6 @@ export function OrdersBar({ route }) {
   const first = route.parts[0];
   const list = first === 'orders' || first === 'rank' || first === 'wallet';
   const under = useTitleUnderBar('.og-title', route.path);
-  return <Navbar title={first === 'rank' ? 'Your Rank' : first === 'wallet' ? 'Wallet' : list ? 'My orders' : 'Order'} titleVisible={under} onBack={() => go(list ? '/account' : '/orders')} />;
+  const history = first === 'wallet' && route.parts[1] === 'history';   // the payment history is behind the wallet
+  return <Navbar title={history ? 'Payment History' : first === 'rank' ? 'Your Rank' : first === 'wallet' ? 'Wallet' : list ? 'My orders' : 'Order'} titleVisible={under} onBack={() => go(history ? '/wallet' : list ? '/account' : '/orders')} />;
 }
