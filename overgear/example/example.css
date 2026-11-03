@@ -618,3 +618,9 @@ a { color: inherit; }
 .og-bullets--num li { counter-increment: og-n; }
 .og-bullets--num li::before { content: counter(og-n) "."; flex: none; min-width: 2ch; }
 .og--mobile .og-rank__now { flex-wrap: wrap; }
+
+/* the account on a desktop: the menu on the left, the active page on the right */
+.og-acc { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: var(--baseui-spacing-10); align-items: start; padding-block: var(--baseui-spacing-8) var(--baseui-spacing-16); }
+.og-acc__menu { position: sticky; top: calc(var(--og-header-h, 72px) + var(--baseui-spacing-4)); }
+.og-acc__page { min-width: 0; }
+.og-acc .og-page, .og-acc .og-page--crumbs { padding-block: 0; }
