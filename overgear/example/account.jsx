@@ -1,9 +1,7 @@
 import { useState } from '../../src/react.js';
-import { Breadcrumbs } from '../../src/components/Breadcrumbs.jsx';
 import { Button } from '../../src/components/Button.jsx';
 import { ButtonGroup } from '../../src/components/ButtonGroup.jsx';
 import { Card } from '../../src/components/Card.jsx';
-import { Badge } from '../../src/components/Badge.jsx';
 import { Avatar } from '../../src/components/Avatar.jsx';
 import { TextInput } from '../../src/components/TextInput.jsx';
 import { Switch } from '../../src/components/Switch.jsx';
@@ -11,16 +9,13 @@ import { Status } from '../../src/components/Status.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
 import { List, ListItem } from '../../src/components/List.jsx';
 import { usePrefs } from './prefs.jsx';
-import { Bleed } from '../../src/components/Layout.jsx';
 import { go } from './util.js';
-import { money, OFFERS, offerOf } from './data.js';
+import { offerOf } from './data.js';
 import { Page, PageHead, OfferListing } from './ui.jsx';
 import { useStore } from './store.jsx';
 import { BalanceCard } from './wallet.jsx';
 import { useMedia } from './util.js';
 
-const STATUS = { Paid: 'info', Completed: 'success', 'In progress': 'warning' };
-const dateOf = (t) => new Date(t).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
 /** The value on the right of a row and the chevron after it. */
 const Value = ({ children }) => <span className="og-row og-row--nowrap">{children}<Icon name="ChevronRight" size={20} /></span>;
@@ -72,7 +67,7 @@ export function Account({ tab, onLogin }) {
             <ListItem avatar={<Avatar name={store.user.name} size="lg" />} subtitle={store.user.email} onClick={() => go('/account?tab=settings')} details={<Value />}>{store.user.name}</ListItem>
           </List>
           <Preferences before={<>
-            <ListItem icon={<Icon name="ShoppingBag01" size={24} />} onClick={() => go('/account?tab=orders')} details={<Value>{store.orders.length}</Value>}>My orders</ListItem>
+            <ListItem icon={<Icon name="ShoppingBag01" size={24} />} onClick={() => go('/orders')} details={<Value>{store.orders.length}</Value>}>My orders</ListItem>
             <ListItem icon={<Icon name="Heart" size={24} />} onClick={() => go('/account?tab=wishlist')} details={<Value>{wished.length}</Value>}>Favorites</ListItem>
             <ListItem icon={<Icon name="Settings01" size={24} />} onClick={() => go('/account?tab=settings')} details={<Value />}>Settings</ListItem>
           </>}>
@@ -86,19 +81,10 @@ export function Account({ tab, onLogin }) {
   if (tab === 'wishlist' && !wished.length) {
     return <Page fill><Status status="neutral" icon={<Icon name="Heart" size={28} />} title="Your favorites are empty" description="Tap the heart on an offer to keep it here" actionLabel="Browse games" onAction={() => go('/catalog')} /></Page>;
   }
-  const titles = { orders: 'My orders', wishlist: 'Favorites', settings: 'Settings' };
+  const titles = { wishlist: 'Favorites', settings: 'Settings' };
   return (
     <Page>
       <PageHead crumbs={tab === 'wishlist' ? undefined : [{ label: 'Account', href: '#/account' }, { label: titles[tab] || 'Account' }]} title={titles[tab] || 'Account'} />
-      {tab === 'orders' && (
-        store.orders.length ? (
-          <List aria-label="Orders">
-            {store.orders.map((o) => (
-              <ListItem key={o.id} overline={`${o.id} · ${dateOf(o.date)}`} subtitle={o.items.map((i) => i.title).join(', ')} details={<Badge variant={STATUS[o.status] || 'secondary'} label={o.status} />}>{money(o.total)}</ListItem>
-            ))}
-          </List>
-        ) : <Status status="neutral" title="No orders yet" description="Your orders will be here" actionLabel="Browse games" onAction={() => go('/catalog')} />
-      )}
       {tab === 'wishlist' && (
         <OfferListing offers={wished} />
       )}

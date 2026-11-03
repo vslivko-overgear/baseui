@@ -136,6 +136,9 @@ export const tipsOpen = (order, now) => order.status === S.COMPLETED && now - (o
 
 // ---- what the buyer reads about a status ----
 
+/** The last sentence of a text has no period (rule C6); a question mark, an exclamation mark and an ellipsis stay. The real service keeps the period: the words are its words, this is the one change. */
+export const noFinalPeriod = (text) => String(text).replace(/(?<!\.)\.\s*$/, '');
+
 // The texts of a status for the buyer (`order.status.*.buyer`): a title and a description. The status "waiting for screenshots" reads as completed for the buyer: the buyer has confirmed.
 const BUYER = {
   [S.NEW]: ['Order Placed', 'We are all set! Your payment has been accepted and the seller will reply as soon as possible.'],
@@ -164,7 +167,7 @@ export const statusText = (order, now, completedForBuyer = order.status === S.WA
     : isKYC(status) ? S.UNDER_REVIEW
     : status;
   const [title, description] = BUYER[key] || ['', ''];
-  return { title, description };
+  return { title, description: noFinalPeriod(description) };
 };
 
 /** The tint of the status panel: green for a good moment, orange for a wait or a pause, red for an order that did not happen, none for an order in progress. */
@@ -255,7 +258,7 @@ export const buyerActions = (order, now) => {
 
 /** The blocks under the status that belong to the status: the review and the tips once the order is done, the Discord panel while it is open and the buyer has not joined. */
 export const showReview = (order) => order.status === S.COMPLETED || order.status === S.WAIT_SCREENSHOTS;
-export const showJoinPanel = (user, order) => !!user && !user.isTemporary ? !user.discordJoined && !isClosed(order.status) : !isClosed(order.status);
+export const showJoinPanel = (joinedDiscord, order) => !joinedDiscord && !isClosed(order.status);
 /** The review and the tips go above the chat once the order is completed. */
 export const reviewFirst = (order) => showReview(order);
 
@@ -287,15 +290,15 @@ export const resultView = (result, { single = false, joinedDiscord = true } = {}
     check: { overline: 'HOLD ON FOR A FEW MOMENTS', title: single ? 'We\'re verifying your payment' : 'Verifying your payment...', text: 'Please allow the payment provider some time to confirm your payment. It usually takes no more than 3 minutes.\n\nIn rare cases, it may take up to 15 min for them to confirm. If you experience a longer delay, please contact Overgear Support.' },
   }[result] || null;
   if (!R) return null;
-  const view = { status: result, overline: R.overline, title: R.title, text: R.text, note: '', buttons: [] };
+  const view = { status: result, overline: R.overline, title: R.title, text: noFinalPeriod(R.text), note: '', buttons: [] };
   if (discord) {
     view.title = 'Thank you for your order!';
     view.text = 'Please join our Discord server for faster communication with our team and get access to secret deals available to our Discord members only!';
-    view.note = 'Now you can access secret deals on our strictly anonymous server.';
+    view.note = 'Now you can access secret deals on our strictly anonymous server';
     view.buttons = [{ id: 'discord', label: 'Join Discord', variant: 'primary', external: true }, { id: 'view', label: single ? 'View the order' : 'View "My orders"', variant: 'secondary' }];
   } else if (result === 'success') {
     view.buttons = [{ id: 'view', label: single ? 'View the order' : 'View "My orders"', variant: 'primary' }];
-    if (single) view.text = 'You have successfully placed your order.';
+    if (single) view.text = 'You have successfully placed your order';
   } else if (result === 'error') {
     view.buttons = [{ id: 'again', label: 'Try Again', variant: 'primary' }, { id: 'home', label: 'Back to Overgear', variant: 'secondary' }];
   }
@@ -309,6 +312,16 @@ export const outcomeOf = (method) => PAYMENT_OUTCOME[method] || 'success';
 export const POLL_MS = 3000;
 
 // ---- the list ----
+
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+/** The date of a card of the list: "9 Jun, 4:05", no leading zero on the hour and no time zone (as the real service writes it). */
+export const cardDate = (ms) => {
+  const d = new Date(ms);
+  return Number.isNaN(d.getTime()) ? '' : `${d.getDate()} ${MONTHS[d.getMonth()]}, ${d.getHours()}:${String(d.getMinutes()).padStart(2, '0')}`;
+};
+/** "12 orders", "1 order". */
+export const ordersCount = (n) => `${n} order${n === 1 ? '' : 's'}`;
+
 
 export const PAGE_SIZE = 20;
 export const STATE_FILTERS = [
@@ -349,6 +362,7 @@ export const ordersFromCart = (cart, { now, seed = 0, method = 'card', fee = 0, 
   cart.map((line, i) => {
     const n = 170000 + ((seed + i * 7919) % 90000);
     const price = +(line.price * line.qty * (1 - discountRate)).toFixed(2);
+    const productType = line.productType || (/gold/i.test(line.title) ? 'currency' : 'service');
     return {
       link: `${1201 + (i % 7)}_${n}`,
       id: `${n}`,
@@ -356,7 +370,7 @@ export const ordersFromCart = (cart, { now, seed = 0, method = 'card', fee = 0, 
       sub: line.sub || '',
       offerId: line.id,
       game: line.game || 'wow',
-      productType: line.productType || 'service',
+      productType,
       og: true,
       qty: line.qty,
       price: +(price + (i === 0 ? fee : 0)).toFixed(2),
@@ -374,8 +388,9 @@ export const ordersFromCart = (cart, { now, seed = 0, method = 'card', fee = 0, 
       method,
       email,
       userId,
+      seller: { id: 'overgear', name: 'Overgear', online: true },
       region: 'EU',
-      delivery: delivery ? { fields: delivery, values: {}, filled: false } : null,
+      delivery: delivery ? { fields: typeof delivery === 'function' ? delivery(line) : delivery, values: {}, filled: false } : null,
       files: [],
       review: null,
       tip: null,
@@ -446,6 +461,6 @@ export const normalizeOrder = (o, seed = 0) => {
   return {
     link: `1201_${n}`, id: String(n), title: first.title || 'Order', sub: '', offerId: undefined, game: 'wow', productType: 'service', og: true, qty: first.qty || 1,
     price: o.total ?? first.price ?? 0, currency: 'USD', image: undefined, status, state: stateOfStatus(status), createdAt: o.date || 0, statusAt: o.date || 0, acceptedAt: null, deliveredAt: null,
-    completedAt: done ? o.date : null, duration: 7200, boosterAssigned: done, method: 'card', email: '', userId: 'me', region: 'EU', delivery: null, files: [], review: null, tip: null, ticket: null, messages: [],
+    completedAt: done ? o.date : null, duration: 7200, boosterAssigned: done, method: 'card', email: '', userId: 'me', seller: { id: 'overgear', name: 'Overgear', online: true }, region: 'EU', delivery: null, files: [], review: null, tip: null, ticket: null, messages: [],
   };
 };

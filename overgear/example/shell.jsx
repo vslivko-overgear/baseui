@@ -88,7 +88,7 @@ function Account({ onLogin }) {
   // the profile menu opens on hover (and on a click) with the rows of the account list of the phone
   const hover = (on) => { clearTimeout(timer.current); timer.current = setTimeout(() => setMenu(on), on ? 0 : 160); };
   const choose = (v) => {
-    if (v === 'logout') { store.logout(); go('/'); } else if (v === 'currency' || v === 'language') open(v); else if (v === 'support') go('/info/contact'); else go(`/account?tab=${v}`);
+    if (v === 'logout') { store.logout(); go('/'); } else if (v === 'currency' || v === 'language') open(v); else if (v === 'support') go('/info/contact'); else if (v === 'orders') go('/orders'); else go(`/account?tab=${v}`);
   };
   return (
     <>
@@ -162,7 +162,7 @@ export function Header({ route, onLogin }) {
           </ControlRow>
           <ControlRow className="og-actions" gap={1}>
             {store.user && <WalletButton />}
-            {store.user && <IconButton variant="ghost" label="My orders" icon={<Icon name="ShoppingBag01" size={24} />} onClick={() => go('/account?tab=orders')} />}
+            {store.user && <IconButton variant="ghost" label="My orders" icon={<Icon name="ShoppingBag01" size={24} />} onClick={() => go('/orders')} />}
             <span title="Favorites" style={{ position: 'relative', display: 'inline-flex' }}>
               <IconButton variant="ghost" label={store.wishlist.length ? `Favorites, ${store.wishlist.length} items` : 'Favorites'} icon={<Icon name="Heart" size={24} />} onClick={() => go('/account?tab=wishlist')} />
               {store.wishlist.length > 0 && <span style={{ position: 'absolute', top: 2, right: 2, pointerEvents: 'none' }}><Badge type="counter" variant="red" size="sm" label={store.wishlist.length} /></span>}
@@ -208,7 +208,7 @@ export function MobileBar({ route }) {
   // the bottom bar keeps its own floating and glass unless the Theme page hands it back to the theme
   const own = document.documentElement.dataset.ogBottombar !== 'theme';
   const first = route.parts[0] || 'home';
-  const value = first === 'account' ? (route.query.tab === 'wishlist' ? 'favorites' : 'account') : ['home', 'cart'].includes(first) ? first : ['catalog', 'games', 'offer'].includes(first) ? 'catalog' : 'home';
+  const value = first === 'account' || first === 'orders' || first === 'order' ? (route.query.tab === 'wishlist' ? 'favorites' : 'account') : ['home', 'cart'].includes(first) ? first : ['catalog', 'games', 'offer'].includes(first) ? 'catalog' : 'home';
   const path = { home: '/', catalog: '/catalog', favorites: '/account?tab=wishlist', cart: '/cart', account: '/account' };
   return (
     <div className="og-bottom">

@@ -12,7 +12,10 @@ import { Home } from './home.jsx';
 import { Offers, Game, Gold, SearchResults } from './games.jsx';
 import { Catalog, CatalogDesktop, CatalogGame, CatalogGroup, CatalogBar } from './catalog.jsx';
 import { Offer } from './offer.jsx';
-import { Cart, CartDrawer, Checkout, OrderDone } from './cart.jsx';
+import { Cart, CartDrawer, Checkout } from './cart.jsx';
+import { Orders, OrdersBar } from './orders.jsx';
+import { OrderPage } from './order-page.jsx';
+import { CheckoutResult } from './order-result.jsx';
 import { Account } from './account.jsx';
 import { Info } from './info.jsx';
 
@@ -32,8 +35,9 @@ function Body({ route, onLogin, mobile }) {
   if (first === 'search') return <SearchResults q={route.query.q} />;
   if (first === 'offer') return <Offer id={second} />;
   if (first === 'cart') return <Cart />;
-  if (first === 'checkout') return <Checkout />;
-  if (first === 'order') return <OrderDone id={second} />;
+  if (first === 'checkout') return second === 'result' ? <CheckoutResult result={third} orderLink={route.query.orderLink} transaction={route.query.transaction} /> : <Checkout />;
+  if (first === 'orders') return <Orders onLogin={onLogin} demo={route.query.demo} />;
+  if (first === 'order') return <OrderPage link={second} onLogin={onLogin} />;
   if (first === 'account') return <Account tab={route.query.tab} onLogin={onLogin} />;
   if (first === 'info') return <Info id={second} />;
   return <Page404 />;
@@ -51,10 +55,11 @@ function Shell() {
   // on a phone the tabs of the bottom bar (Catalog, Favorites, Cart, Account) are screens of their own: no header and no footer
   const step2 = mobile && route.parts[0] === 'catalog' && !!route.parts[1];
   const bare = route.parts[0] === 'checkout';   // the checkout has a slim top bar and no footer of its own shop
-  const tab = mobile && (route.parts[0] === 'catalog' || ['cart', 'account'].includes(route.parts[0]));
+  const orders = mobile && ['orders', 'order'].includes(route.parts[0]);   // behind the account: a bar with back, and no header and no footer of the shop
+  const tab = orders || (mobile && (route.parts[0] === 'catalog' || ['cart', 'account'].includes(route.parts[0])));
   return (
     <div className={cx('og', mobile && 'og--mobile', tab && 'og--tab')}>
-      {bare ? null : step2 ? <CatalogBar slug={route.parts[1]} group={route.parts[2]} /> : tab ? null : mobile ? <MobileHeader route={route} onLogin={() => setLogin(true)} /> : <Header route={route} onLogin={() => setLogin(true)} />}
+      {bare ? null : step2 ? <CatalogBar slug={route.parts[1]} group={route.parts[2]} /> : orders ? <OrdersBar route={route} /> : tab ? null : mobile ? <MobileHeader route={route} onLogin={() => setLogin(true)} /> : <Header route={route} onLogin={() => setLogin(true)} />}
       <main className={bare ? 'og-bare' : 'og-wrap'} key={route.path + (route.query.c || '') + (route.query.s || '')}>
         <Body route={route} onLogin={() => setLogin(true)} mobile={mobile} />
       </main>

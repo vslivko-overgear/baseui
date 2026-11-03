@@ -44,6 +44,14 @@ export const RULES = [
     source: 'The product chose it; an exception to U6, where the current place is marked in the navigation: here the title of the page marks it', check: 'tool', tool: 'overgear/tools/check/breadcrumbs.mjs',
     signals: ['breadcrumbs', 'the trail of the page', 'show the current page in the trail', 'where am I on the page'],
   },
+  {
+    id: 'OG6', category: 'U', level: 'should', title: 'The orders follow the real service',
+    do: 'Build what comes after a purchase on the rules of the real service, kept in one pure module (`overgear/example/order-core.js`): the statuses and the states, the words and the tint of each status for the buyer, the steps, the buttons of the buyer by the status (and the 30-minute lock of the confirmation), the result page of a payment (one order opens its page, several open the result page, a payment that is verified waits), the list (20 to a page, a filter by the state, a sort, its states) and the guest account that has no history',
+    dont: 'Do not invent a status, a text, a button or a lock for the example, show the history to a guest account, or draw the same rule on two pages by hand: the pages draw what the module says',
+    why: 'The pages are the picture of a service that works by these rules; a status that reads differently here than there, or a button that is on when the service has it off, makes the example useless as a base for the real pages',
+    source: 'og-frontend-4: orders-listing-widget, order-page-widget, checkout-result-widget; the module has tests for every rule', check: 'tool', tool: 'overgear/tools/check/orders.mjs',
+    signals: ['order page', 'my orders', 'order status', 'after the purchase', 'payment result', 'confirm delivery', 'cancel the order', 'repeat order'],
+  },
 ];
 
 // Explicit opt-in: the shared library never imports this module.

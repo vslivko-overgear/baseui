@@ -21,7 +21,7 @@ const open = async (viewport, hash) => {
   await page.waitForTimeout(1500);
   return { page, errors };
 };
-const bar = (page) => page.evaluate(() => { const p = document.querySelector('.og-paybar'); if (!p) return null; const r = p.getBoundingClientRect(); const tabs = document.querySelector('.og-bottom'); return { top: Math.round(r.top), bottom: Math.round(r.bottom), vh: innerHeight, tabsTop: tabs ? Math.round(tabs.getBoundingClientRect().top) : null, text: p.textContent, button: p.querySelector('button')?.textContent.trim() }; });
+const bar = (page) => page.evaluate(() => { const p = document.querySelector('.og-paybar'); if (!p) return null; const r = p.getBoundingClientRect(); const tabs = document.querySelector('.og-bottom'); return { top: Math.round(r.top), bottom: Math.round(r.bottom), vh: innerHeight, tabsTop: tabs ? Math.round(tabs.getBoundingClientRect().top) : null, text: p.textContent, button: p.querySelector('.bui-button')?.textContent.trim() }; });
 const primaries = (page, name) => page.evaluate((n) => [...document.querySelectorAll('.bui-button[data-variant="primary"]')].filter((b) => b.textContent.trim() === n && b.getBoundingClientRect().width > 0).length, name);
 
 for (const [hash, action, label, tabs] of [['#/cart', 'Secure checkout', 'Subtotal', true], ['#/checkout', 'Pay', 'Amount to pay', false]]) {
@@ -46,7 +46,7 @@ for (const [hash, action, label, tabs] of [['#/cart', 'Secure checkout', 'Subtot
   if (hash === '#/checkout' && first) {
     await page.getByRole('button', { name: 'Pay', exact: true }).click();
     await page.waitForTimeout(800);
-    expectThat(/#\/order\//.test(await page.evaluate(() => location.hash)), 'phone #/checkout: the button of the bar does not pay');
+    expectThat(/#\/(order\/|checkout\/result\/success)/.test(await page.evaluate(() => location.hash)), 'phone #/checkout: the button of the bar does not pay');
   }
   expectThat(!errors.length, `phone ${hash}: errors ${errors.join('; ')}`);
   await page.close();

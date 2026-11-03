@@ -10,7 +10,10 @@ overgear/example/games.js
 overgear/example/home.js
 overgear/example/info.js
 overgear/example/offer.js
+overgear/example/order-page.js
+overgear/example/order-result.js
 overgear/example/order.js
+overgear/example/orders.js
 overgear/example/prefs.js
 overgear/example/search.js
 overgear/example/shell.js

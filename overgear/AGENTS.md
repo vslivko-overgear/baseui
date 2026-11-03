@@ -16,3 +16,10 @@ This directory is the Overgear sublibrary, showcase and store. Read the root `AG
 - The checkout (`cart.jsx`) is the latest base: when a surface differs from it in a shared part, the checkout is right. The cart page and the mini-cart pass their own labels and handlers (`label`, `action`, `onAction`, `pinned`), not their own markup
 - "Add to cart" opens the mini-cart on a desktop and on a phone (`useAddedToCart`, the mini-cart is mounted in the shell); on a phone it is the standard `Dialog` (a sheet) with the pay bar as its footer. The mini-cart has the lines and the promo code card in its list, and the pay bar pinned at the bottom; it has no summary block
 - `overgear/tools/check/order.mjs` compares the look of every shared part across the three on a desktop and on a phone, and fails when one of them drifts
+
+## After the purchase: the orders
+
+- The rules of the real service (og-frontend-4: orders listing, order page, payment result) are in one pure module, `overgear/example/order-core.js`, with its tests in `overgear/tests/order-core.test.mjs`. Change a status, a text, a button, a lock or the way a payment ends there, and in the tests; the pages (`orders.jsx`, `order-page.jsx`, `order-result.jsx`) only draw it
+- The orders a browser starts with are `order-seed.js`: a few of every status, so each state can be seen. The way an order moves on in the demo ("What happens next") is `nextEvents` and `applyEvent`
+- The page /orders, /order/:link and /checkout/result/:result are the ones of the real service; a guest buyer becomes a temporary account (`store.temp`): it has the page of its order, not a history
+- `overgear/tools/check/orders.mjs` plays the list, the page of an order in every status, the buyer's flows and the way from a payment, in a browser

@@ -8,11 +8,12 @@ import { Status } from '../../src/components/Status.jsx';
 import { Divider } from '../../src/components/Divider.jsx';
 import { Navbar } from '../../src/components/MobileNavigation.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
-import { useToast } from '../../src/components/Toast.jsx';
 import { go, href, useMedia, useTitleUnderBar } from './util.js';
 import { OrderHead, ItemLines, OrderSummary, PayBar, PayBarContent, PromoCard } from './order.jsx';
 import { Dialog } from '../../src/components/Dialog.jsx';
 import { money } from './data.js';
+import { ordersFromCart, outcomeOf } from './order-core.js';
+import { deliveryFor } from './order-seed.js';
 import { Page, PaymentLogos, PAY_BADGES, cashbackOf } from './ui.jsx';
 import { useStore } from './store.jsx';
 
@@ -121,7 +122,6 @@ function MethodTiles({ value, onChange, methods }) {
 
 export function Checkout() {
   const store = useStore();
-  const { toast } = useToast();
   const [method, setMethod] = useState('card');
   const [more, setMore] = useState(false)
   const scrolled = useTitleUnderBar('.og-order__title');   // the bar shows the title only once the heading of the page has scrolled under it
@@ -135,9 +135,20 @@ export function Checkout() {
   const pay = () => {
     setTried(true);
     if (badEmail) return;
-    const order = store.placeOrder({ email: store.user?.email || email, method, total: amount, cashback: +cashbackOf(amount) });
-    toast({ message: 'Payment received', status: 'success' });
-    go(`/order/${order.id}`);
+    // the payment method decides what the provider answers (outcomeOf): paid, to be verified, or declined
+    const outcome = outcomeOf(method);
+    const info = { email: store.user?.email || email, cashback: +cashbackOf(amount) };
+    if (outcome === 'error') { go('/checkout/result/error'); return; }
+    const orders = ordersFromCart(store.cart, { now: Date.now(), seed: Math.floor(Math.random() * 1e6), method, fee, discountRate: store.subtotal ? store.discount / store.subtotal : 0, email: info.email, delivery: (line) => deliveryFor(/gold/i.test(line.title) ? 'currency' : 'service') });
+    const next = (orders.length === 1 ? `?orderLink=${orders[0].link}` : '');
+    if (outcome === 'check') {
+      const id = `tx${Date.now()}`;
+      store.setPending({ id, orders, info, createdAt: Date.now() });
+      go(`/checkout/result/check?transaction=${id}`);
+      return;
+    }
+    store.placeOrders(orders, info);
+    go(`/checkout/result/success${next}`);
   };
   return (
     <div className="og-checkout">
@@ -183,24 +194,5 @@ export function Checkout() {
         </div>
       </div>
     </div>
-  );
-}
-
-export function OrderDone({ id }) {
-  const store = useStore();
-  const order = store.orders.find((o) => o.id === id);
-  if (!order) return <Page><Status status="neutral" title="Order not found" actionLabel="My orders" onAction={() => go('/account?tab=orders')} /></Page>;
-  return (
-    <Page>
-      <Status status="success" title={`Thank you! Order ${order.id} is paid`} description="A booster will start within the hour. You can follow it in the order chat" actionLabel="My orders" onAction={() => go('/account?tab=orders')} />
-      <Card variant="surface" padding={5}>
-        <div className="og-stack">
-          <h2 className="og-h3">What you bought</h2>
-          <ul className="og-bullets">{order.items.map((i) => <li key={i.title}>{`${i.qty} × ${i.title}, ${money(i.price * i.qty)}`}</li>)}</ul>
-          <Divider />
-          <div className="og-row og-row--between"><strong className="og-text">Total</strong><strong className="og-price">{money(order.total)}</strong></div>
-        </div>
-      </Card>
-    </Page>
   );
 }

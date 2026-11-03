@@ -1,11 +1,12 @@
 import { createContext, useContext, useMemo, useCallback } from '../../src/react.js';
 import { useStored } from './util.js';
-import { SEED_ORDERS } from './data.js';
+import { seedOrders } from './order-seed.js';
+import { normalizeOrder } from './order-core.js';
 import { WALLET_START, withTopUp, withCoins } from './wallet-core.js';
 
 const Ctx = createContext(null);
 export const useStore = () => useContext(Ctx);
-const initial = () => ({ cart: [], wishlist: ['venomous-abyss-heroic', 'power-leveling'], orders: SEED_ORDERS, user: null, promo: '', wallet: WALLET_START });
+const initial = () => ({ cart: [], wishlist: ['venomous-abyss-heroic', 'power-leveling'], orders: seedOrders(Date.now()), user: null, temp: null, discord: false, pending: null, promo: '', wallet: WALLET_START });
 
 /** The shop of this browser: the cart, the wishlist, the orders and the account. It lives in localStorage; nothing leaves the device. */
 export function StoreProvider({ children }) {
@@ -16,6 +17,8 @@ export function StoreProvider({ children }) {
     const discount = state.promo === 'WELCOME10' ? +(total * 0.1).toFixed(2) : 0;
     return {
       ...state,
+      // a browser that kept its orders in an older shape gets them in this one
+      orders: (state.orders || []).map((o, i) => normalizeOrder(o, i * 7919)),
       // a browser that kept its state before the wallet existed starts with the wallet of a new one
       balance: (state.wallet || WALLET_START).balance,
       coins: (state.wallet || WALLET_START).coins,
@@ -34,11 +37,16 @@ export function StoreProvider({ children }) {
       toggleWish: (id) => patch((s) => ({ wishlist: s.wishlist.includes(id) ? s.wishlist.filter((x) => x !== id) : [...s.wishlist, id] })),
       login: (user) => patch(() => ({ user })),
       logout: () => patch(() => ({ user: null })),
-      placeOrder: (info) => {
-        const order = { id: `OG-${Math.floor(100000 + Math.random() * 899999)}`, date: Date.now(), status: 'Paid', items: state.cart.map((i) => ({ title: i.title, qty: i.qty, price: i.price })), total: info?.total ?? total, discount, info };
-        patch((s) => ({ orders: [order, ...s.orders], cart: [], promo: '', wallet: withCoins(s.wallet || WALLET_START, info?.cashback ?? 0) }));
-        return order;
+      // a payment makes the orders (see ordersFromCart); a buyer who is not signed in becomes a temporary (guest) account: it has the page of each of its orders but no history
+      placeOrders: (orders, info) => {
+        patch((s) => ({ orders: [...orders, ...(s.orders || [])], cart: [], promo: '', temp: s.user ? s.temp : { email: info?.email || '' }, wallet: withCoins(s.wallet || WALLET_START, info?.cashback ?? 0) }));
+        return orders;
       },
+      updateOrder: (link, change) => patch((s) => ({ orders: s.orders.map((o) => (o.link === link ? (typeof change === 'function' ? change(o) : { ...o, ...change }) : o)) })),
+      joinDiscord: () => patch(() => ({ discord: true })),
+      // a payment that waits for its provider: the orders it will make once it settles
+      setPending: (pending) => patch(() => ({ pending })),
+      settlePending: () => patch((s) => (s.pending ? { orders: [...s.pending.orders, ...(s.orders || [])], cart: [], promo: '', pending: null, temp: s.user ? s.temp : { email: s.pending.info?.email || '' }, wallet: withCoins(s.wallet || WALLET_START, s.pending.info?.cashback ?? 0) } : {})),
       reset: () => setState(initial()),
     };
   }, [state, patch, setState]);

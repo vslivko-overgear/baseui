@@ -3,7 +3,7 @@ import { describe, expect, test } from 'vitest';
 import {
   AUTO_COMPLETE, CONFIRM_LOCK, ORDER_STATE, ORDER_STATUS as S, PAGE_SIZE, applyEvent, askTrustpilot, autoCompleteAt, buyerActions, cancelOrder, confirmDelivery, confirmLockLeft, durationPart,
   filterOrders, isDelayed, isPaused, listState, nextEvents, normalizeOrder, openDispute, orderSteps, ordersFromCart, outcomeOf, pageOf, panelTone, progressTone, resultView, reviewError, reviewReady,
-  sortOrders, stateOfStatus, statusBadge, statusText, tipsOpen,
+  showJoinPanel, sortOrders, stateOfStatus, statusBadge, statusText, tipsOpen,
 } from '../example/order-core.js';
 
 const NOW = 1_700_000_000_000;
@@ -222,6 +222,15 @@ describe('what happens to an order', () => {
     const o = normalizeOrder({ id: 'OG-1', date: NOW, status: 'Completed', items: [{ title: 'Gold', qty: 2, price: 12 }], total: 24 }, 3);
     expect(o).toMatchObject({ status: S.COMPLETED, state: ORDER_STATE.COMPLETED, title: 'Gold', qty: 2, price: 24 });
     expect(normalizeOrder(o)).toBe(o);
+  });
+});
+
+describe('the Discord panel', () => {
+  test('is for a buyer who has not joined, on an order that is not closed', () => {
+    expect(showJoinPanel(false, base({ status: S.IN_PROGRESS }))).toBe(true);
+    expect(showJoinPanel(true, base({ status: S.IN_PROGRESS }))).toBe(false);
+    expect(showJoinPanel(false, base({ status: S.COMPLETED }))).toBe(false);
+    expect(showJoinPanel(false, base({ status: S.RESOLVED }))).toBe(false);
   });
 });
 

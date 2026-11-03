@@ -26,6 +26,8 @@ export function useRoute() {
   return route;
 }
 export const go = (path) => { location.hash = path; };
+/** Goes to a page and leaves no step in the history for the one it replaces (the real service's `router.replace`): the back button does not return to a page that sends you on. */
+export const goReplace = (path) => location.replace(`${location.pathname}${location.search}#${path}`);
 export const href = (path) => `#${path}`;
 
 /** A seeded random generator: the same study always gets the same responses. */
