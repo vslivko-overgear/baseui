@@ -2,6 +2,7 @@
 
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
+- **Overgear, the profile row of the account menu:** 12px above and below the avatar, equal to the space at its side (the row is 64px high); the avatar corner is 4px (concentric: the row 16px minus the 12px of space). Overgear checks were not run.
 - **Overgear, the wallet page, "Your terms":** 16px from the edge of the surface to the icon and to the chevron (it was 28px), and 12px between the rows (it was 4px). Overgear checks were not run.
 - **Overgear, the wallet page: a question mark next to "OG Coins"** (the standard `Hint`: a tooltip, a sheet on a phone) with the explanation of the coin, **and the balance, the OG Coins and the top-up are on one background (secondary):** the wrapper has 16px padding and 28px radius, what is inside has 12px radius and 12px gaps. Overgear checks were not run.
 - **Overgear, the wallet page: "1 OG Coin = $1.00" is gone, and the balance, the OG Coins and the top-up are one group with the title,** 16px from "Wallet" (the rest of the page stays 56px apart). Overgear checks were not run.
