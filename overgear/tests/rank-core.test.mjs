@@ -23,7 +23,7 @@ describe('rank-core', () => {
     expect(progressTo(20000, GRADES[6]).isMax).toBe(true);
   });
   it('builds the history, newest first, with a fall back when old orders leave the year', () => {
-    const h = rankHistory([done(120, 300)], now);
+    const h = rankHistory([done(120, 400)], now);
     expect(h.map((e) => e.grade.code)).toEqual(['guardian', 'gladiator']);
   });
   it('writes the line of the account', () => {
