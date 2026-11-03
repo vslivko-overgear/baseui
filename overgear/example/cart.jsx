@@ -103,21 +103,27 @@ const MORE_METHODS = [
 const methodLabel = (m) => (
   <span className="og-method">
     {m.tile}
-    <span className="og-stack og-stack--hair"><b className="og-method__name">{m.name}</b><span className="og-meta">{m.fee ? `+${money(m.fee)} service fee` : 'No service fee'}</span></span>
+    <span className="og-stack og-stack--hair"><b className="og-method__name">{m.name}</b><span className="og-meta">{m.fee ? `${money(m.fee)} service fee` : 'No service fee'}</span></span>
   </span>
 );
 
 /** The checkout: the order, the payment method and the summary; it has a slim top bar of its own and no footer of the shop. */
 /** The payment methods as tiles in a grid: each is a radio in an outline, the chosen one with a 2px outline in the selected color and the others with the standard one. */
-function MethodTiles({ value, onChange, methods }) {
+function MethodTiles({ value, onChange, methods, extra, open }) {
+  const tile = (m) => (
+    <label key={m.id} className="og-methodcard" data-checked={value === m.id || undefined}>
+      <input type="radio" name="og-method" value={m.id} checked={value === m.id} onChange={() => onChange(m.id)} />
+      {methodLabel(m)}
+      <span className="og-methodcard__check" aria-hidden="true"><Icon name="CheckCircle" size={24} filled /></span>
+    </label>
+  );
   return (
-    <div className="og-methods" role="radiogroup" aria-label="Payment method">
-      {methods.map((m) => (
-        <label key={m.id} className="og-methodcard" data-checked={value === m.id || undefined}>
-          <input type="radio" name="og-method" value={m.id} checked={value === m.id} onChange={() => onChange(m.id)} />
-          {methodLabel(m)}
-        </label>
-      ))}
+    <div role="radiogroup" aria-label="Payment method">
+      <div className="og-methods">{methods.map(tile)}</div>
+      {/* the other methods open and close with a movement (the row of the grid grows from 0 to its height); closed, they cannot be reached */}
+      <div className="og-collapse" id="og-more-methods" data-open={open || undefined} inert={!open || undefined}>
+        <div className="og-collapse__in"><div className="og-methods og-methods--more">{extra.map(tile)}</div></div>
+      </div>
     </div>
   );
 }
@@ -178,8 +184,8 @@ export function Checkout() {
               </div>
               <div className="og-stack og-co__pay">
                 <h2 className="og-h2">Payment method</h2>
-                <MethodTiles value={method} onChange={setMethod} methods={more ? [...METHODS, ...MORE_METHODS] : METHODS} />
-                <Button variant="secondary" width="100%" label={more ? 'Show fewer payment methods' : 'Show other payment methods'} icon={<Icon name={more ? 'ArrowUp' : 'ArrowDown'} size={20} />} onClick={() => setMore((v) => !v)} />
+                <MethodTiles value={method} onChange={setMethod} methods={METHODS} extra={MORE_METHODS} open={more} />
+                <Button variant="secondary" width="100%" label={more ? 'Less' : 'More'} endContent={<Icon name={more ? 'ArrowUp' : 'ArrowDown'} size={20} />} aria-expanded={more} aria-controls="og-more-methods" onClick={() => setMore((v) => !v)} />
               </div>
             </div>
             <div className="og-stack og-sticky">

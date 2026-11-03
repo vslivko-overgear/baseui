@@ -2,6 +2,7 @@
 
 ## Overgear: the checkout, payment methods as outlined tiles, the items apart
 
+- **Overgear, the payment methods of the checkout:** the fee has no plus ("$1.47 service fee"); the chosen method has a filled check at the right; the button under the tiles is "More" with an arrow at the right ("Less" when open); the other methods open and close with a movement (the grid row grows from 0 to its height, 300 ms), and closed they are inert. Reduced motion and the animation setting of the theme turn it off.
 - **Overgear, the pay bar (the price and the bonus tag) is larger everywhere it appears:** the price is 28px (it was 20) and the bonus tag is large; it is one component (`PayBarContent`), so the mini-cart of a desktop, the sheet of a phone, and the pinned bar of the cart and the checkout follow. The pinned bar is 8px taller (`--og-paybar-h` 136px).
 - **Overgear, the offer page:** "Buy now" is gone, the button is "Add to cart" (the whole width); the favorites moved to the row with the badge, the rating and "sold", as a line heart with "Add to favorites" ("In favorites" with a filled heart once it is added).
 - **Overgear, the mini-cart of a desktop slides in from the right and slides out to it** (300 ms in, 280 ms out; the scrim fades). It stays mounted while it leaves (`usePresence`); the animation setting of the theme stops it, and so does a system setting of reduced motion.

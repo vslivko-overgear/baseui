@@ -58,7 +58,7 @@ for (const [width, phone] of [[1440, false], [390, true]]) {
   const qty = await page.evaluate(() => [...document.querySelectorAll('.og-lines--surface > .og-line')].map((l) => { const q = l.querySelector('.og-line__qty'); const meta = [...l.querySelectorAll('.og-line__meta')].at(-1).getBoundingClientRect();  const body = l.querySelector('.og-line__body').getBoundingClientRect(); const price = l.querySelector('.og-line__price').getBoundingClientRect(); const bin = l.querySelector('[data-slot=icon-button]').getBoundingClientRect(); const r = q?.getBoundingClientRect(); return { has: !!q, after: !!r && r.top >= meta.bottom && r.left >= body.left - 1 && r.right <= body.right + 1, priceTop: price.top - l.getBoundingClientRect().top < 40 && bin.top >= price.bottom && Math.abs(bin.right - price.right) <= 8 && l.getBoundingClientRect().bottom - bin.bottom <= 20 }; }));
   expectThat(qty.every((x) => x.priceTop) && qty.filter((x) => x.has).length === 1 && qty.at(-1).has && qty.at(-1).after, `${where}: the price is not on top and the bin at the bottom of a right column as high as the line (no empty row under the text), or the quantity is not a row after the delivery time, only on the line of several units (${JSON.stringify(qty)})`);
   const strip = await page.evaluate(() => {
-    const tiles = [...document.querySelectorAll('.og-methodcard')];
+    const tiles = [...document.querySelectorAll('.og-methodcard')].filter((t) => !t.closest('[inert]'));   // the other methods are in the page, closed and inert
     const items = [...document.querySelectorAll('.og-lines--surface > .og-line')];
     const heading = [...document.querySelectorAll('h2')].find((h) => h.textContent === 'Payment method');
     const look = (el) => { const c = getComputedStyle(el); return { width: parseFloat(c.borderTopWidth), color: c.borderTopColor, shadow: c.boxShadow }; };
@@ -86,9 +86,10 @@ for (const [width, phone] of [[1440, false], [390, true]]) {
     expectThat(strip.gapOut >= 40 && strip.gapIn >= 20, `desktop: the heading is not spaced from the items (${strip.gapOut}px) and from the methods (${strip.gapIn}px)`);
   }
   expectThat(strip.headed, `${where}: the payment methods have no heading "Payment method" of their own after the items`);
-  await page.getByRole('button', { name: 'Show other payment methods' }).click();
+  await page.getByRole('button', { name: 'More' }).click();
   await page.waitForTimeout(200);
-  expectThat((await page.locator('.og-methodcard').count()) === 8, `${where}: the button does not show the other payment methods`);
+  await page.waitForTimeout(400);
+  expectThat((await page.locator('.og-methodcard:not([inert] *)').count()) === 8, `${where}: the button does not show the other payment methods`);
   expectThat(sum(strip.on) === 2 && strip.on.color === strip.selected, `${where}: the chosen method does not have a 2px outline in the selected color (${JSON.stringify(strip.on)})`);
   expectThat(sum(strip.off) === 1 && strip.off.color === strip.standard, `${where}: a method that is not chosen does not have the standard 1px outline (${JSON.stringify(strip.off)})`);
   expectThat(strip.items.length >= 2 && strip.items.every((it, i, all) => it.radius >= 12 && it.background !== 'rgba(0, 0, 0, 0)' && (i === 0 || it.top > all[i - 1].bottom)), `${where}: the items are not cards of their own, apart from each other`);

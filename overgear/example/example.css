@@ -580,3 +580,14 @@ a { color: inherit; }
 .og-scrim:not(.og-scrim--search) { animation: og-scrim-in var(--baseui-duration-300, 300ms) var(--baseui-ease-out, ease-out); }
 .og-scrim[data-closing] { animation: og-scrim-out 280ms var(--baseui-ease-out, ease-out) forwards; pointer-events: none; }
 @media (prefers-reduced-motion: reduce) { .og-drawer, .og-scrim { animation: none !important; } }
+
+/* the payment methods: the chosen one has a filled check at the right; the other methods open and close with a movement */
+.og-methodcard .og-method { flex: 1; min-width: 0; }
+.og-methodcard__check { display: none; flex: none; color: var(--baseui-text-and-icon-primary); }
+.og-methodcard[data-checked] .og-methodcard__check { display: inline-flex; }
+.og-collapse { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows var(--baseui-duration-300, 300ms) var(--baseui-ease-out, ease-out), opacity var(--baseui-duration-300, 300ms) var(--baseui-ease-out, ease-out); }
+.og-collapse[data-open] { grid-template-rows: 1fr; opacity: 1; }
+.og-collapse__in { overflow: hidden; min-height: 0; }
+.og-methods--more { padding-top: var(--baseui-spacing-2); }
+@media (prefers-reduced-motion: reduce) { .og-collapse { transition: none; } }
+[data-motion="off"] .og-collapse { transition: none; }
