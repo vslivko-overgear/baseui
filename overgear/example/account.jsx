@@ -1,10 +1,6 @@
-import { useState } from '../../src/react.js';
 import { Button } from '../../src/components/Button.jsx';
-import { ButtonGroup } from '../../src/components/ButtonGroup.jsx';
 import { Card } from '../../src/components/Card.jsx';
 import { Avatar } from '../../src/components/Avatar.jsx';
-import { TextInput } from '../../src/components/TextInput.jsx';
-import { Switch } from '../../src/components/Switch.jsx';
 import { Status } from '../../src/components/Status.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
 import { Divider } from '../../src/components/Divider.jsx';
@@ -15,6 +11,7 @@ import { offerOf } from './data.js';
 import { Page, PageHead, OfferListing } from './ui.jsx';
 import { useStore } from './store.jsx';
 import { Amounts } from './wallet.jsx';
+import { Settings } from './settings.jsx';
 import { RankBadge, useRank } from './rank.jsx';
 import { rankLine } from './rank-core.js';
 
@@ -69,8 +66,6 @@ export function AccountMenu({ active, hide = [], prefs, onPick, ...rest }) {
 /** The account: a list like the profile of the real service. The orders, the favorites and the settings are screens behind its rows. */
 export function Account({ tab, onLogin }) {
   const store = useStore();
-  const [name, setName] = useState(store.user?.name || '');
-  const [mail, setMail] = useState(true);
   // the wishlist is kept on the device, so it opens without a login
   if (!store.user && tab !== 'wishlist') {
     return (
@@ -84,7 +79,6 @@ export function Account({ tab, onLogin }) {
     );
   }
   const wished = store.wishlist.map(offerOf).filter(Boolean);
-  const out = () => { store.logout(); go('/'); };
   if (!tab) {
     return (
       <Page>
@@ -106,16 +100,7 @@ export function Account({ tab, onLogin }) {
       {tab === 'wishlist' && (
         <OfferListing offers={wished} />
       )}
-      {tab === 'settings' && (
-        <Card variant="surface" padding={5}>
-          <div className="og-stack" style={{ maxWidth: 480 }}>
-            <TextInput label="Name" value={name} onChange={(e) => setName(e.target.value)} />
-            <TextInput label="Email" value={store.user?.email || ''} disabled />
-            <Switch label="Email me about my orders" checked={mail} onCheckedChange={setMail} />
-            <ButtonGroup stackOnMobile><Button variant="primary" label="Save" onClick={() => store.login({ ...store.user, name })} /><Button variant="secondary" label="Log out" onClick={out} /></ButtonGroup>
-          </div>
-        </Card>
-      )}
+      {tab === 'settings' && <Settings />}
     </Page>
   );
 }
