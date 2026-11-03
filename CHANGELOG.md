@@ -2,6 +2,7 @@
 
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
+- **Overgear, the locked "Confirm Order Completion" has no hint icon:** the reason is a line of text in the secondary color under the button (the buttons of the status are aligned at the top). Overgear checks were not run.
 - **Overgear, the timeline of an order works to the end (the rules of the real StatePanel):** while the order is new or in progress, the steps are drawn and "Completed" follows them (not reached); a completed order is one full green bar (before, it stayed on "In progress" with an empty bar), a failed or cancelled one is red, one in arbitration or pending is orange (`orderTimeline`, tested in `order-timeline.test.mjs`). In the demo the seller works at most 2 minutes, so the bar of "In progress" moves, and "View" and "Accept" are not offered until the buyer has filled in the delivery details (the page says so), which was the way to get stuck on the second step. Overgear checks were not run except the new test.
 - **Overgear, the head of the page of an order is built like the head of an offer:** the picture of the order on the left (square), the title, and under it one row with the status tag and "Order ID · Created", then the steps; it uses `PageHead` with `media` (which now takes `titleTestId`). Overgear checks were not run.
 - **Overgear, the social buttons of the footer have no tooltip on hover** (the name stays as the accessible label). Overgear checks were not run.

@@ -95,7 +95,7 @@ function StatusPanel({ order, now, actions }) {
         <div className="og-ostatus__foot">
           <ButtonGroup orientation="horizontal" stackOnMobile>
             {actions.map((a) => (a.hint
-              ? <span key={a.id} className="og-ostatus__locked"><Button variant={a.variant} size="lg" label={a.label} disabled data-test-id={`order-action-${a.id}`} /><Hint label="Why it is locked" content={a.hint} /></span>
+              ? <span key={a.id} className="og-ostatus__locked"><Button variant={a.variant} size="lg" label={a.label} disabled data-test-id={`order-action-${a.id}`} /><span className="og-meta" data-test-id={`order-action-${a.id}-note`}>{a.hint}</span></span>
               : <Button key={a.id} variant={a.variant} size="lg" label={a.label} disabled={a.disabled} onClick={a.run} data-test-id={`order-action-${a.id}`} />))}
           </ButtonGroup>
         </div>
