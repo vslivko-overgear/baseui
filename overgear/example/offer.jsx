@@ -70,6 +70,12 @@ export function Offer({ id }) {
   const rank = (o) => (o.service === offer.service ? 0 : o.game === offer.game ? 1 : 2);
   const related = [...others].sort((a, b) => rank(a) - rank(b) || (rank(a) === 2 ? b.sold - a.sold : 0)).slice(0, 10);
   const [first, ...rest] = offer.bullets;
+  // the selling points: separate tags on a surface, each as wide as its text (on a phone the row scrolls sideways)
+  const usp = (
+    <ul className="og-usp" data-test-id="offer-usp">
+      {offer.bullets.slice(0, 3).map((b, i) => <li key={b} className="og-usp__tag"><Icon name={USP_ICONS[i]} size={20} /><span>{b}</span></li>)}
+    </ul>
+  );
   return (
     <Page>
       <PageHead crumbs={[{ label: 'Home', href: '#/' }, { label: game.name, href: `#/games/${game.slug}` }, { label: service.label, href: `#/games/wow?s=${service.id}` }, { label: offer.title }]} title={offer.title} media={<div className="og-art og-art--square" role="img" aria-label={offer.title}>{offer.image ? <img className="og-art__img" src={offer.image} alt="" /> : <Icon name="Image01" size={32} />}</div>}>
@@ -83,19 +89,7 @@ export function Offer({ id }) {
         <div className="og-split og-split--right">
           <div className="og-stack og-stack--xl">
             <div className="og-stack">
-            {mobile ? <Bleed scroll>
-            <Card variant="surface" padding={3} className="og-uspcard" data-test-id="offer-usp">
-              <ul className="og-usp">
-                {offer.bullets.slice(0, 3).map((b, i) => <li key={b}><Icon name={USP_ICONS[i]} size={20} /><span>{b}</span></li>)}
-              </ul>
-            </Card>
-            </Bleed> : (
-            <Card variant="surface" padding={3} className="og-uspcard" data-test-id="offer-usp">
-              <ul className="og-usp">
-                {offer.bullets.slice(0, 3).map((b, i) => <li key={b}><Icon name={USP_ICONS[i]} size={20} /><span>{b}</span></li>)}
-              </ul>
-            </Card>
-            )}
+            {mobile ? <Bleed scroll>{usp}</Bleed> : usp}
             <Card variant="surface" padding={5}>
               <div className="og-stack og-stack--lg">
                   <SegmentedControl label="Difficulty" fullWidth size="sm" value={difficulty} onValueChange={setDifficulty} items={DIFFICULTY.map((d) => ({ value: d.value, label: d.label }))} />

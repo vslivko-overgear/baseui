@@ -650,25 +650,8 @@ a { color: inherit; }
 .og-custom__act { align-items: center; }
 .og-custom__reply { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); }
 .og-custom__reply b { color: var(--baseui-text-and-icon-primary); font: var(--baseui-typography-text-14-semi-bold); }
-/* the selling points of the offer, between the head and the form */
-.og-usp { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--baseui-spacing-3) var(--baseui-spacing-6); font: var(--baseui-typography-text-16-semi-bold); color: var(--baseui-text-and-icon-primary); }
-.og-usp li { display: flex; align-items: center; gap: var(--baseui-spacing-2); }
-.og-usp svg { flex: none; }
-/* dividers between the selling points: vertical in a row, horizontal in a column on a phone */
-.og-usp li + li { padding-inline-start: var(--baseui-spacing-6); border-inline-start: 1px solid var(--baseui-border-primary); }
-/* on a phone the capsule itself scrolls sideways (it is inside a Bleed), each point as wide as its text; the dividers stay vertical */
-.og--mobile .og-usp { flex-wrap: nowrap; gap: 0; font: var(--baseui-typography-text-14-semi-bold); }
-.og--mobile .og-uspcard { width: max-content; }   /* the capsule is as wide as its points and scrolls as a whole */
-.og--mobile .og-usp li { flex: none; white-space: nowrap; }
-.og--mobile .og-usp li + li { margin-inline-start: var(--baseui-spacing-4); padding-inline-start: var(--baseui-spacing-4); }
-/* on a desktop the three points are three columns of one width, with the dividers between them */
-.og:not(.og--mobile) .og-usp { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
-.og:not(.og--mobile) .og-usp li { padding-inline: var(--baseui-spacing-6); }
-.og:not(.og--mobile) .og-usp li:first-child { padding-inline-start: 0; }
-.og:not(.og--mobile) .og-usp li:last-child { padding-inline-end: 0; }
-/* each point stands in the middle of its column */
-.og:not(.og--mobile) .og-usp li { justify-content: center; text-align: center; }
-.og:not(.og--mobile) .og-usp li:first-child, .og:not(.og--mobile) .og-usp li:last-child { padding-inline: var(--baseui-spacing-6); }
-/* on a desktop the points stay on one line: a smaller text and a smaller side space in each column */
-.og:not(.og--mobile) .og-usp { font: var(--baseui-typography-text-14-semi-bold); }
-.og:not(.og--mobile) .og-usp li, .og:not(.og--mobile) .og-usp li:first-child, .og:not(.og--mobile) .og-usp li:last-child { padding-inline: var(--baseui-spacing-4); }
+/* the selling points of the offer, between the head and the form: separate tags on a surface, each as wide as its text; on a phone the row (inside a Bleed) scrolls sideways */
+.og-usp { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--baseui-spacing-2); font: var(--baseui-typography-text-14-semi-bold); color: var(--baseui-text-and-icon-primary); }
+.og-usp__tag { display: flex; align-items: center; gap: var(--baseui-spacing-2); padding: var(--baseui-spacing-3) var(--baseui-spacing-4); border-radius: var(--baseui-radius-2xl); background: var(--baseui-background-secondary); white-space: nowrap; }
+.og-usp__tag svg { flex: none; }
+.og--mobile .og-usp { flex-wrap: nowrap; width: max-content; }
