@@ -650,3 +650,7 @@ a { color: inherit; }
 .og-usp { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--baseui-spacing-3) var(--baseui-spacing-6); font: var(--baseui-typography-text-16-semi-bold); color: var(--baseui-text-and-icon-primary); }
 .og-usp li { display: flex; align-items: center; gap: var(--baseui-spacing-2); }
 .og-usp svg { flex: none; }
+/* dividers between the selling points: vertical in a row, horizontal in a column on a phone */
+.og-usp li + li { padding-inline-start: var(--baseui-spacing-6); border-inline-start: 1px solid var(--baseui-border-primary); }
+.og--mobile .og-usp { flex-direction: column; gap: var(--baseui-spacing-3); }
+.og--mobile .og-usp li + li { padding-inline-start: 0; padding-top: var(--baseui-spacing-3); border-inline-start: 0; border-top: 1px solid var(--baseui-border-primary); }
