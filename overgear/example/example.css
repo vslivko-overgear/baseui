@@ -680,7 +680,11 @@ a { color: inherit; }
 .og-wamount__label { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); }
 /* the terms: 16px from the edge of the surface to the icon (the list bleeds 12px, so 4px of side padding) and a bigger gap between the rows */
 .og-terms [data-slot="list"] { gap: var(--baseui-spacing-3); }
-/* a passed step: the bar of the current white, but disabled (dimmed), and a check before its text */
-.og-osteps__step[data-look="done"] .bui-progress { opacity: 0.4; }
+/* a passed step: the bar in the disabled color of the system, and a check before its text */
+.og-osteps__step[data-look="done"] .bui-progress { --bui-progress-color: var(--baseui-text-and-icon-disabled); }
 .og-osteps__title { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); }
 .og-osteps__step[data-look="done"] .og-osteps__title { color: var(--baseui-text-and-icon-secondary); }
+/* the stage where the work goes on: the whole bar is filled, and a soft light moves over it (nothing moves with reduced motion) */
+.og-osteps__step[data-look="run"] .bui-progress__track::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--baseui-background-secondary) 55%, transparent), transparent); transform: translateX(-100%); animation: og-run 2.2s var(--baseui-ease-out, ease-in-out) infinite; }
+@keyframes og-run { to { transform: translateX(100%); } }
+@media (prefers-reduced-motion: reduce) { .og-osteps__step[data-look="run"] .bui-progress__track::after { animation: none; } }
