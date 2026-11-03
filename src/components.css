@@ -2905,7 +2905,7 @@ textarea.bui-input {
 .bui-product-card__eyebrow { font: var(--baseui-typography-text-12-regular); color: var(--baseui-text-and-icon-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .bui-product-card__price { font: var(--baseui-typography-text-20-semi-bold); font-weight: 700; font-family: var(--baseui-typography-headline-font-family); }
 .bui-product-card__title { font: var(--baseui-typography-text-14-regular); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.8em; text-align: start; }
-.bui-product-card__points { display: flex; flex-direction: column; gap: var(--baseui-spacing-1); min-width: 0; font: var(--baseui-typography-text-12-regular); }
+.bui-product-card__points { display: flex; flex-direction: column; gap: var(--baseui-spacing-1); min-width: 0; padding-block: calc(var(--baseui-spacing-1) / 2); font: var(--baseui-typography-text-12-regular); }
 .bui-product-card__point { display: flex; align-items: center; gap: var(--baseui-spacing-1); min-width: 0; }
 .bui-product-card__point svg { flex: none; }
 .bui-product-card__body:has(.bui-product-card__points) .bui-product-card__title { -webkit-line-clamp: 1; min-height: 0; }
