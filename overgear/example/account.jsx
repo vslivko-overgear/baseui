@@ -7,6 +7,7 @@ import { TextInput } from '../../src/components/TextInput.jsx';
 import { Switch } from '../../src/components/Switch.jsx';
 import { Status } from '../../src/components/Status.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
+import { Divider } from '../../src/components/Divider.jsx';
 import { List, ListItem } from '../../src/components/List.jsx';
 import { usePrefs } from './prefs.jsx';
 import { go, goReplace } from './util.js';
@@ -45,8 +46,13 @@ export function AccountMenu({ active, hide = [], prefs, onPick, ...rest }) {
   const row = (id, icon, label, props) => !hide.includes(id) && <ListItem key={id} icon={<Icon name={icon} size={24} />} active={active === id} data-test-id={`account-menu-${id}`} {...props}>{label}</ListItem>;
   return (
     <>
+      {store.user && !hide.includes('profile') && (
+        <>
+          <List aria-label="Profile"><ProfileRow active={active === 'rank'} onPick={onPick} /></List>
+          <Divider className="og-acc__div" />
+        </>
+      )}
       <List aria-label="Account menu" {...rest}>
-        {store.user && !hide.includes('profile') && <ProfileRow active={active === 'rank'} onPick={onPick} />}
         {store.user && row('orders', 'ShoppingBag01', 'My orders', { onClick: pick(() => go('/orders')), details: <Value>{store.orders.length}</Value> })}
         {store.user && row('wishlist', 'Heart', 'Favorites', { onClick: pick(() => go('/account?tab=wishlist')), details: <Value>{wished.length}</Value> })}
         {store.user && row('settings', 'Settings01', 'Settings', { onClick: pick(() => go('/account?tab=settings')), details: <Value /> })}
