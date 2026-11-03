@@ -38,7 +38,7 @@ export function WalletButton() {
   useEffect(() => () => clearTimeout(timer.current), []);
   return (
     <Popover open={open} onOpenChange={(o) => { clearTimeout(timer.current); setOpen(o); }} placement="bottom-end" label="Your balance" trigger={(props) => (
-      <Button {...props} variant="secondary" size="md" textSize={14} aria-label={`Balance ${money(store.balance)} and ${coinsText(store.coins)} OG Coins`} onMouseEnter={() => hover(true)} onMouseLeave={() => hover(false)}>
+      <Button {...props} className="og-wallet-btn" variant="ghost" size="md" textSize={14} aria-label={`Balance ${money(store.balance)} and ${coinsText(store.coins)} OG Coins`} onMouseEnter={() => hover(true)} onMouseLeave={() => hover(false)}>
         <Amounts />
       </Button>
     )}>

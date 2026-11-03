@@ -565,3 +565,4 @@ a { color: inherit; }
 .og-topup__brackets { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--baseui-spacing-3) var(--baseui-spacing-5); }
 .og-topup__brackets li { display: inline-flex; align-items: center; gap: var(--baseui-spacing-2); }
 .bui-button__label:has(> .og-amounts) { display: flex; align-items: center; }   /* the amounts are centered in the button: as an inline box they sat on the baseline of a taller line */
+.og-wallet-btn { box-shadow: inset 0 0 0 1px var(--baseui-border-primary); }   /* the balance in the header has an outline, not a gray fill; it stands from the search as the catalog button does (the gap of the row) */
