@@ -12,6 +12,7 @@ import { Icon } from '../../src/components/Icon.jsx';
 import { useToast } from '../../src/components/Toast.jsx';
 import { useStore } from './store.jsx';
 import { money } from './data.js';
+import { go } from './util.js';
 import { Badge } from '../../src/components/Badge.jsx';
 import { CashbackMark } from './ui.jsx';
 import { OPEN_TOP_UP, BONUS_RULES, openTopUp, parseAmount, amountError, coinsText, bonusFor, bonusRateFor, lowestBonusAmount, SUGGESTIONS, PURCHASE_LIMIT } from './wallet-core.js';
@@ -28,7 +29,7 @@ export function Amounts({ plus = true }) {
 }
 
 /** The balance in the header of a desktop: the amounts in one button. With a mouse a card opens (after 200 ms, and stays 150 ms after the mouse leaves) with the balance, the OG Coins, the top-up and what the coins are;
- *  a click on the button itself opens the top-up at once (the card has the same button). */
+ *  a click on the button itself opens the page of the wallet (the card has the button of the top-up). */
 export function WalletButton() {
   const store = useStore();
   const [open, setOpen] = useState(false);
@@ -37,7 +38,7 @@ export function WalletButton() {
   useEffect(() => () => clearTimeout(timer.current), []);
   return (
     <Popover open={open} onOpenChange={(o) => { clearTimeout(timer.current); setOpen(o); }} placement="bottom-end" label="Your balance" trigger={(props) => (
-      <Button {...props} className="og-wallet-btn" variant="ghost" size="md" textSize={14} aria-label={`Balance ${money(store.balance)} and ${coinsText(store.coins)} OG Coins`} onMouseEnter={() => hover(true)} onMouseLeave={() => hover(false)} onClick={() => { clearTimeout(timer.current); setOpen(false); openTopUp(); }}>
+      <Button {...props} className="og-wallet-btn" variant="ghost" size="md" textSize={14} aria-label={`Balance ${money(store.balance)} and ${coinsText(store.coins)} OG Coins`} onMouseEnter={() => hover(true)} onMouseLeave={() => hover(false)} onClick={() => { clearTimeout(timer.current); setOpen(false); go('/wallet'); }}>
         <Amounts />
       </Button>
     )}>

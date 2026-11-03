@@ -2,6 +2,7 @@
 
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
+- **Overgear, a click on the balance in the header opens the page Wallet** (not the top-up at once; the card on hover keeps its button "Top Up Balance"), and the profile popup of a desktop has no row "Wallet" (it stays in the account menu of a phone). Overgear checks were not run.
 - **Overgear, the selling points of an offer open more information:** with a mouse a tooltip (on hover and on focus), on a phone the standard sheet of the `Hint` (a tap opens it, "Close" closes it). Overgear checks were not run.
 - **Overgear, the selling points of an offer are separate tags, not one capsule:** each is a block on the same surface with the text 14px regular, a filled icon (20px), as wide as its text, with 8px between them (36px high). On a phone the row of tags scrolls sideways as a whole (a `Bleed`), on a desktop they stand in a row from the left. Overgear checks were not run.
 - **Overgear, the offer page: "Questions" is in the width of the left column, and "You may also like" is full width at the very bottom:** the listing has ten offers and shows one whole row (five on a desktop, so the row is full at any width), the button "Discover more" adds the next rows. Overgear checks were not run.

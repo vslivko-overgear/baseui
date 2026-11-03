@@ -94,7 +94,7 @@ function Account({ onLogin }) {
         <IconButton {...props} variant="ghost" label="Profile" tooltip={false} icon={<Icon name="User01" size={24} />} onMouseEnter={() => hover(true)} onMouseLeave={() => hover(false)} />
       )}>
         <div onMouseEnter={() => hover(true)} onMouseLeave={() => hover(false)} data-test-id="profile-popup">
-          <AccountMenu prefs={prefs} onPick={() => setMenu(false)} />
+          <AccountMenu prefs={prefs} hide={['wallet']} onPick={() => setMenu(false)} />
         </div>
       </Popover>
       {prefs.sheets}
