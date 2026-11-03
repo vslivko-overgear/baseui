@@ -207,7 +207,7 @@ export function Home() {
                 aria-label="Game"
                 value={[category]}
                 onValueChange={(v) => v.length && setCategory(v[v.length - 1])}
-                options={[{ value: 'all', label: 'All Games' }, ...gameTabs(audience, TILE_ROWS.flat().map(([slug]) => slug), OFFERS.map((o) => o.game)).slice(0, -2).map((slug) => ({ value: slug, label: gameOf(slug).name }))]}
+                options={[{ value: 'all', label: 'All Games' }, ...gameTabs(audience, TILE_ROWS.flat().map(([slug]) => slug), OFFERS.map((o) => o.game)).slice(0, -2).filter((slug) => slug !== 'cs2').map((slug) => ({ value: slug, label: gameOf(slug).name }))]}
               />
             </Bleed>
             {kinds.length > 1 && (
