@@ -553,8 +553,8 @@ a { color: inherit; }
 
 /* the balance of the header: the card that opens on hover (the balance, the coins, the top-up, what the coins are) and the top-up with its bonus */
 .og-wallet .og-info { gap: var(--baseui-spacing-2); }
-.og-wallet .og-info dt, .og-wallet .og-info dd { margin: 0; font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-primary); }   /* the name and the value of a row are one size */
-.og-wallet .og-info dd { font: var(--baseui-typography-text-14-semi-bold); }
+.og-wallet .og-info dt, .og-wallet .og-info dd { margin: 0; font: var(--baseui-typography-text-16-regular); color: var(--baseui-text-and-icon-primary); }   /* the name and the value of a row are one size */
+.og-wallet .og-info dd { font: var(--baseui-typography-text-16-semi-bold); }
 .og-wallet__note { font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-secondary); }   /* what a coin is and the way to the loyalty program: 14px, secondary */
 .og-wallet__note p { margin: 0; }
 .og-wallet__note a { font: inherit; color: inherit; }
