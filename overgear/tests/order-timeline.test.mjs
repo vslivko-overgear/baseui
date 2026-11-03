@@ -18,10 +18,10 @@ describe('orderTimeline', () => {
     const mid = orderTimeline(o, now + 60000).steps.find((s) => s.name === 'inProgress');
     expect(mid.value).toBeCloseTo(0.5, 1);
   });
-  it('reaches "confirmation" after the delivery, and ends in one green bar when the buyer confirms', () => {
+  it('reaches "confirmation" after the delivery, and has no progress at all when the buyer confirms', () => {
     const o = applyEvent(applyEvent(applyEvent(fresh(), 'view', now), 'accept', now), 'deliver', now + 1000);
     expect(names(orderTimeline(o, now + 2000)).at(-1)).toBe('confirmation');
-    expect(orderTimeline(confirmDelivery(o, now + 3000), now + 4000)).toEqual({ kind: 'bar', tone: 'success' });
+    expect(orderTimeline(confirmDelivery(o, now + 3000), now + 4000)).toBeNull();
   });
   it('has the step "Completed" after the steps, not reached', () => {
     const last = orderTimeline(fresh(), now).steps.at(-1);

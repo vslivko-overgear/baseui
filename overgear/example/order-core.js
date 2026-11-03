@@ -224,7 +224,7 @@ export const orderSteps = (order, now) => {
   return { steps: steps.map(({ name, title, value, active }) => ({ name, title, value, active })), current };
 };
 /**
- * What the page draws above the status (the real service, StatePanel): while the order is new or in progress, the steps and after them "Completed" (not reached); a completed order is one full green bar; a failed or cancelled one is a
+ * What the page draws above the status (the real service, StatePanel): while the order is new or in progress, the steps and after them "Completed" (not reached); a completed order has none; a failed or cancelled one is a
  * red bar; one in arbitration or pending is an orange bar.
  */
 export const orderTimeline = (order, now) => {
@@ -233,7 +233,7 @@ export const orderTimeline = (order, now) => {
     const { steps, current } = orderSteps(order, now);
     return { kind: 'steps', steps: [...steps, { name: 'completed', title: 'Completed', value: 0, active: false }], current };
   }
-  if (state === T.COMPLETED) return { kind: 'bar', tone: 'success' };
+  if (state === T.COMPLETED) return null;   // a completed order has no progress (the real service draws one full bar; the example does not)
   if ([T.FAILED, T.CANCELLED].includes(state)) return { kind: 'bar', tone: 'error' };
   if ([T.ARBITRAGE, T.PENDING].includes(state)) return { kind: 'bar', tone: 'warning' };
   return null;
