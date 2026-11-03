@@ -5,7 +5,7 @@ import { TokenGroup } from '../../src/components/TokenGroup.jsx';
 import { Skeleton } from '../../src/components/Skeleton.jsx';
 import { Avatar } from '../../src/components/Avatar.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
-import { go } from './util.js';
+import { go, useMedia } from './util.js';
 import { loadTheme } from '../../site/theme.js';
 import { COOKIE } from '../theme.js';
 import { audienceOf, tileLayout, splitOffers, gameTabs, TILE_GAP } from '../audience.js';
@@ -117,6 +117,8 @@ function Reviews() {
   );
 }
 
+const DESKTOP_COLUMNS = 6;
+
 export function Home() {
   const [playing, setPlaying] = useTakeTurns(3);
   const turn = (i) => ({ playing: playing === i, onPlay: () => setPlaying(i), onEnd: () => setPlaying(-1) });
@@ -130,6 +132,9 @@ export function Home() {
   // who the page is made for (the Theme setting of the showcase): its game leads the tiles and the listing
   const audience = audienceOf(loadTheme(COOKIE));
   const tiles = tileLayout(TILE_ROWS, audience);
+  // on a desktop the games are a grid of equal columns that always fits the width, with no scroll: two rows of six (the family of the audience first, then the others in their order); the games that do not fit are left out
+  const mobile = useMedia('(max-width: 767px)');
+  const gridTiles = [0, 1].flatMap((i) => [...(tiles.group[i] || []), ...(tiles.rows[i] || [])].slice(0, DESKTOP_COLUMNS));
   // the products of the game of the audience come first; the products of the other games take turns, so the first screen is varied
   const products = (() => {
     const [own, rest] = splitOffers(OFFERS.filter((o) => (category === 'all' || o.game === category) && (kind === 'all' || o.service === kind)), audience);
@@ -167,26 +172,32 @@ export function Home() {
           </div>
         </div>
         <section className="og-section" aria-label="Games">
-          <Bleed scroll>
-            <div className="og-tiles">
-              {tiles.group.length > 0 && (
+          {mobile ? (
+            <Bleed scroll>
+              <div className="og-tiles">
+                {tiles.group.length > 0 && (
+                  <div className="og-grows">
+                    {tiles.group.map((row, i) => (
+                      <div key={i} className="og-grow">
+                        {row.map(([slug, width]) => <GameChip key={slug} slug={slug} width={width} />)}
+                      </div>
+                    ))}
+                  </div>
+                )}
                 <div className="og-grows">
-                  {tiles.group.map((row, i) => (
+                  {tiles.rows.map((row, i) => (
                     <div key={i} className="og-grow">
                       {row.map(([slug, width]) => <GameChip key={slug} slug={slug} width={width} />)}
                     </div>
                   ))}
                 </div>
-              )}
-              <div className="og-grows">
-                {tiles.rows.map((row, i) => (
-                  <div key={i} className="og-grow">
-                    {row.map(([slug, width]) => <GameChip key={slug} slug={slug} width={width} />)}
-                  </div>
-                ))}
               </div>
+            </Bleed>
+          ) : (
+            <div className="og-tilegrid" data-test-id="home-games">
+              {gridTiles.map(([slug]) => <GameChip key={slug} slug={slug} width="100%" />)}
             </div>
-          </Bleed>
+          )}
         </section>
         <Section title="Popular products" close>
           <div className="og-stack og-stack--tight">
@@ -196,7 +207,7 @@ export function Home() {
                 aria-label="Game"
                 value={[category]}
                 onValueChange={(v) => v.length && setCategory(v[v.length - 1])}
-                options={[{ value: 'all', label: 'All Games' }, ...gameTabs(audience, TILE_ROWS.flat().map(([slug]) => slug), OFFERS.map((o) => o.game)).map((slug) => ({ value: slug, label: gameOf(slug).name }))]}
+                options={[{ value: 'all', label: 'All Games' }, ...gameTabs(audience, TILE_ROWS.flat().map(([slug]) => slug), OFFERS.map((o) => o.game)).slice(0, -2).map((slug) => ({ value: slug, label: gameOf(slug).name }))]}
               />
             </Bleed>
             {kinds.length > 1 && (
