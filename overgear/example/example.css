@@ -654,3 +654,8 @@ a { color: inherit; }
 .og-usp li + li { padding-inline-start: var(--baseui-spacing-6); border-inline-start: 1px solid var(--baseui-border-primary); }
 .og--mobile .og-usp { flex-direction: column; gap: var(--baseui-spacing-3); }
 .og--mobile .og-usp li + li { padding-inline-start: 0; padding-top: var(--baseui-spacing-3); border-inline-start: 0; border-top: 1px solid var(--baseui-border-primary); }
+/* on a desktop the three points are three columns of one width, with the dividers between them */
+.og:not(.og--mobile) .og-usp { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
+.og:not(.og--mobile) .og-usp li { padding-inline: var(--baseui-spacing-6); }
+.og:not(.og--mobile) .og-usp li:first-child { padding-inline-start: 0; }
+.og:not(.og--mobile) .og-usp li:last-child { padding-inline-end: 0; }
