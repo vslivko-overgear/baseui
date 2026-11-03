@@ -101,7 +101,7 @@ export function PayBar({ amount, action, onClick, above, inline = false }) {
 export function PayBarContent({ amount, action, onClick }) {
   return (
     <div className="og-paybar__in">
-      <p className="og-paybar__sum"><span className="og-paybar__amount">{money(amount)}</span><CashbackTag label={`+${cashbackOf(amount)}`} /></p>
+      <p className="og-paybar__sum"><span className="og-paybar__amount">{money(amount)}</span><CashbackTag size="lg" label={`+${cashbackOf(amount)}`} /></p>
       <Button variant="primary" size="lg" textSize={16} label={action} onClick={onClick} />
     </div>
   );

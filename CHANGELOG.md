@@ -2,6 +2,7 @@
 
 ## Overgear: the checkout, payment methods as outlined tiles, the items apart
 
+- **Overgear, the pay bar (the price and the bonus tag) is larger everywhere it appears:** the price is 28px (it was 20) and the bonus tag is large; it is one component (`PayBarContent`), so the mini-cart of a desktop, the sheet of a phone, and the pinned bar of the cart and the checkout follow. The pinned bar is 8px taller (`--og-paybar-h` 136px).
 - **Overgear, the offer page:** "Buy now" is gone, the button is "Add to cart" (the whole width); the favorites moved to the row with the badge, the rating and "sold", as a line heart with "Add to favorites" ("In favorites" with a filled heart once it is added).
 - **Overgear, the mini-cart of a desktop slides in from the right and slides out to it** (300 ms in, 280 ms out; the scrim fades). It stays mounted while it leaves (`usePresence`); the animation setting of the theme stops it, and so does a system setting of reduced motion.
 - **`Dialog` header, systemically:** the middle of the close glyph is the middle of the first line of the title (the box of the button stood 2px higher); the edge of the glyph, not of its 24px box, stands on the edge of the content (it begins 4.75px inside the box); and the content starts 8px lower under the header (it started at the edge of it).
