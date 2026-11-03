@@ -73,13 +73,15 @@ export function WalletPage({ onLogin }) {
   return (
     <Page bar>
       <div className="og-stack og-stack--xl og-wpage" data-test-id="wallet-page">
-        <PageHead crumbs={[{ label: 'Home', href: '#/' }, { label: 'Account', href: '#/account' }, { label: 'Wallet' }]} title="Wallet" meta="1 OG Coin = $1.00" />
         <div className="og-stack">
-          <div className="og-amounts-grid">
-            <Amount label="Balance" testId="wallet-balance">{money(store.balance)}</Amount>
-            <Amount label="OG Coins" testId="wallet-coins"><span className="og-balance__coin"><CashbackMark />{coinsText(store.coins)}</span></Amount>
+          <PageHead crumbs={[{ label: 'Home', href: '#/' }, { label: 'Account', href: '#/account' }, { label: 'Wallet' }]} title="Wallet" />
+          <div className="og-stack">
+            <div className="og-amounts-grid">
+              <Amount label="Balance" testId="wallet-balance">{money(store.balance)}</Amount>
+              <Amount label="OG Coins" testId="wallet-coins"><span className="og-balance__coin"><CashbackMark />{coinsText(store.coins)}</span></Amount>
+            </div>
+            <Button variant="primary" size="lg" width="100%" label="Top up" icon={<Icon name="Plus" size={20} />} onClick={openTopUp} data-test-id="wallet-top-up-page" />
           </div>
-          <Button variant="primary" size="lg" width="100%" label="Top up" icon={<Icon name="Plus" size={20} />} onClick={openTopUp} data-test-id="wallet-top-up-page" />
         </div>
         <Section title="Your terms">
           <Card variant="surface" padding={4}>
