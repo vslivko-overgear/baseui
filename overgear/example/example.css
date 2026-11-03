@@ -631,6 +631,24 @@ a { color: inherit; }
 .og-facts svg { flex: none; }
 .og-facts b { font: var(--baseui-typography-text-14-semi-bold); color: var(--baseui-text-and-icon-primary); }
 /* the payment logos under the button of the offer: one row, smaller than in the footer */
-.og-offer-pay .og-pay { flex-wrap: nowrap; gap: var(--baseui-spacing-2); }
+.og-offer-pay .og-pay { flex-wrap: wrap; justify-content: center; gap: var(--baseui-spacing-2) var(--baseui-spacing-3); }
 .og-offer-pay .og-pay img { height: 16px; }
 .og--mobile .og-offer-pay .og-pay { flex-wrap: wrap; justify-content: center; gap: var(--baseui-spacing-2) var(--baseui-spacing-3); }
+
+/* the offer page, in the order of the real pages: the head and the lead, the wins, the steps, why Overgear, reviews, more offers, the custom offer, the texts; the purchase card on the right has the picture with the options on it */
+.og-wins { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--baseui-spacing-3); font: var(--baseui-typography-text-16-regular); color: var(--baseui-text-and-icon-primary); }
+.og-wins li { display: flex; gap: var(--baseui-spacing-2); align-items: flex-start; }
+.og-wins svg { flex: none; margin-top: 2px; }
+.og-reviewgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--baseui-spacing-3); }
+.og--mobile .og-reviewgrid { grid-template-columns: minmax(0, 1fr); }
+.og-stars { display: inline-flex; gap: 2px; color: var(--baseui-extensions-text-and-icon-info, var(--baseui-text-and-icon-primary)); }
+.og-custom { display: flex; align-items: center; justify-content: space-between; gap: var(--baseui-spacing-4); flex-wrap: wrap; }
+.og-custom__act { align-items: center; }
+.og-custom__reply { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); }
+.og-custom__reply b { color: var(--baseui-text-and-icon-primary); font: var(--baseui-typography-text-14-semi-bold); }
+.og-buy { overflow: hidden; }
+.og-buy__art { position: relative; background-size: cover; background-position: top center; }
+.og-buy__art::before { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, color-mix(in srgb, var(--baseui-background-secondary) 20%, transparent), var(--baseui-background-secondary) 55%); }
+.og-buy__heart { position: absolute; z-index: 2; top: var(--baseui-spacing-3); right: var(--baseui-spacing-3); }
+.og-buy__opts { position: relative; z-index: 1; padding: 140px var(--baseui-spacing-5) var(--baseui-spacing-5); }
+.og-buy__pay { padding: var(--baseui-spacing-5); border-top: 1px solid var(--baseui-border-primary); }
