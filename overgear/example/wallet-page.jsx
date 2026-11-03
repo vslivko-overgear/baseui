@@ -40,10 +40,8 @@ function Subscription({ item }) {
         <Reward coins={item.coins} paid={paid} />
         {on ? (
           <div className="og-stack og-stack--related">
-            <div className="og-row og-row--between og-row--wrap">
-              <p className="og-text og-subs__on" data-test-id="subscription-on"><Icon name="CheckCircle" size={20} filled />{to ? `Subscribed · ${to}` : 'Subscribed'}</p>
-              <Button variant="ghost" size="sm" label="Unsubscribe" onClick={() => store.setSubscription(item.id, false)} />
-            </div>
+            <span className="og-subscribed" role="status" data-test-id="subscription-on"><Icon name="CheckCircle" size={24} filled />Subscribed</span>
+            {to && <p className="og-meta">{to}</p>}
             {item.sub && <Switch label={item.sub.label} checked={store.subs[item.sub.id]} onCheckedChange={(v) => store.setSubscription(item.sub.id, v)} data-test-id={`subscription-${item.sub.id}`} />}
           </div>
         ) : (
@@ -95,7 +93,7 @@ export function WalletPage({ onLogin }) {
         <Section title={`Get ${total} OG Coins for subscriptions`}>
           <div className="og-stack">
             <p className="og-text">Stay in the loop with updates and get rewards</p>
-            {SUBSCRIPTIONS.map((item) => <Subscription key={item.id} item={item} />)}
+            <div className="og-subs-grid">{SUBSCRIPTIONS.map((item) => <Subscription key={item.id} item={item} />)}</div>
           </div>
         </Section>
       </div>
