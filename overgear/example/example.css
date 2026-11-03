@@ -280,7 +280,8 @@ a { color: inherit; }
 
 .og-trust { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--bui-rel-related); }
 .og-trust li { display: flex; gap: var(--baseui-spacing-3); align-items: flex-start; }
-.og-trust svg { flex: none; color: var(--baseui-extensions-text-and-icon-success); }   /* the icons of the trust block are green */
+.og-trust svg { flex: none; color: var(--baseui-text-and-icon-primary); }   /* the icons of the trust block are white (the primary color) */
+.og-trust li:first-child svg, .og-trust li:first-child .og-trust__title { color: var(--baseui-extensions-text-and-icon-success); }   /* the guarantee, the first line, is green: its icon and its title */
 .og-trust .og-stack--hair { gap: 0; }   /* the title and its line stand together */
 .og-trust__title { margin: 0; font: var(--baseui-typography-text-14-semi-bold); color: var(--baseui-text-and-icon-primary); }
 .og-art__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
