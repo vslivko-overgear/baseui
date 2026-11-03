@@ -110,7 +110,7 @@ Store-specific rules live in the [Overgear sublibrary](overgear/README.md), with
 
 ## Tokens
 
-Every custom property is `--baseui-` plus lowercase kebab-case, with no exceptions and no aliases; `tests/token-names.test.js` fails on a capital letter and on a `var(--baseui-…)` that nothing defines.
+Every custom property is `--baseui-` plus lowercase kebab-case, with no exceptions and no aliases; `tests/tokens.test.js` fails on a capital letter and on a `var(--baseui-…)` that nothing defines.
 
 | Group | Names |
 |---|---|

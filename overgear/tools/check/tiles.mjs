@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // The games of the home page on a desktop are a grid of equal columns that fits the width with no scroll, for every audience: twelve tiles in two rows, all of one width, and the grid is not wider than its box.
-// It reads the rendered page, so it catches what the lists in overgear/tests/audience.test.mjs cannot: a width that did not apply, a tile that wrapped, a scroll that came back. A phone is not measured: there the rows scroll on purpose.
+// It reads the rendered page, so it catches what the lists in overgear/tests/catalog.test.mjs cannot: a width that did not apply, a tile that wrapped, a scroll that came back. A phone is not measured: there the rows scroll on purpose.
 //
 //   node overgear/tools/check/tiles.mjs http://localhost:8000
 import { launch } from '../../../tools/lib/sweep.mjs';
