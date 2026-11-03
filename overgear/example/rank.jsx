@@ -13,7 +13,7 @@ import { Status } from '../../src/components/Status.jsx';
 import { Table, pixel, proportional } from '../../src/components/Table.jsx';
 import { go, href } from './util.js';
 import { money } from './data.js';
-import { Page, PageHead, Section } from './ui.jsx';
+import { Page, PageHead } from './ui.jsx';
 import { useStore } from './store.jsx';
 import { spentLastYear, gradeFor, progressTo, BENEFITS, benefitValue, rankHistory } from './rank-core.js';
 
@@ -104,15 +104,16 @@ export function RankPage({ onLogin }) {
             <Button variant="secondary" size="lg" width="100%" label="Continue shopping" onClick={() => go('/')} />
           </div>
         </Card>
-        <Section title="How do ranks work?">
-          <Card variant="surface" padding={5}>
+        <Card variant="surface" padding={5}>
+          <div className="og-stack og-stack--lg" data-test-id="rank-how">
+            <h2 className="og-h2">How do ranks work?</h2>
             <ol className="og-bullets og-bullets--num og-rank__how">
             <li><span>Ranks are recalculated and updated automatically once a day to ensure the information remains accurate</span></li>
             <li><span>Your rank depends on how much you spend. You can learn more about ranks <Link href="https://loyalty.overgear.com/ranks" target="_blank" rel="noopener noreferrer">here</Link></span></li>
             <li><span>Your rank is based on your spending over the last 365 days. You can review completed orders in <Link href={href('/orders')}>my orders page</Link></span></li>
             </ol>
-          </Card>
-        </Section>
+          </div>
+        </Card>
       </div>
       <HistoryDialog open={history} onOpenChange={setHistory} history={rank.history} />
     </Page>
