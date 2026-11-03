@@ -52,6 +52,7 @@ export function Offer({ id }) {
   const [difficulty, setDifficulty] = useState('heroic');
   const [extras, setExtras] = useState([]);
   const [qty, setQty] = useState(1);
+  const [reviewsShown, setReviewsShown] = useState(4);
   const [note, setNote] = useState('');
   if (!offer) return <Page><Status status="neutral" title="Offer not found" actionLabel="All games" onAction={() => go('/catalog')} /></Page>;
   const game = gameOf(offer.game);
@@ -119,9 +120,9 @@ export function Offer({ id }) {
             </Card>
             <Section title="What players say about Overgear">
               <ul className="og-reviewlist" data-test-id="offer-reviews">
-                {REVIEWS.slice(0, 4).map(([n, t]) => (
+                {REVIEWS.slice(0, reviewsShown).map(([n, t]) => (
                   <li key={n} className="og-review">
-                    <Avatar alt={n} />
+                    <Avatar alt={n} shape="rounded" />
                     <div className="og-review__body">
                       <strong className="og-review__name">{n}</strong>
                       <span className="og-stars" aria-label="5 stars">{[0, 1, 2, 3, 4].map((i) => <Icon key={i} name="Star01" size={16} filled />)}</span>
@@ -130,6 +131,7 @@ export function Offer({ id }) {
                   </li>
                 ))}
               </ul>
+              {reviewsShown < REVIEWS.length && <Button variant="secondary" size="lg" width="100%" label="Show more reviews" onClick={() => setReviewsShown((n) => n + 4)} data-test-id="offer-reviews-more" />}
             </Section>
             {related.length > 0 && (
               <Section title="You may also like">
