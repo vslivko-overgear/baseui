@@ -101,7 +101,6 @@ export function Offer({ id }) {
           </Card>
           <Card variant="surface" padding={5}>
             <div className="og-stack og-stack--lg">
-              <h2 className="og-h3">Trust and safety</h2>
               <ul className="og-trust">
                 {TRUST.map(([icon, t, d]) => (
                   <li key={t}><Icon name={icon} size={24} /><div className="og-stack og-stack--hair"><p className="og-trust__title">{t}</p><p className="og-meta">{d}</p></div></li>
