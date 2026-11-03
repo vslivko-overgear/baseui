@@ -124,7 +124,7 @@ export function TopUpDialog() {
         </div>
         <p className="og-topup__rules">{`One coin is equal to $1. Pay up to ${PURCHASE_LIMIT}% of shop products and currencies. Cannot be applied with discounted items and promotional codes`}</p>
         </div>
-        <Button variant="primary" size="lg" textSize={16} width="100%" type="submit" loading={paying} label={amount != null && !error ? `Top up ${money(amount)}` : 'Top up'} data-test-id="topup-submit" />
+        <Button variant="primary" size="lg" textSize={16} width="100%" type="submit" loading={paying} label="Top up" data-test-id="topup-submit" />
       </form>
     </Dialog>
   );
