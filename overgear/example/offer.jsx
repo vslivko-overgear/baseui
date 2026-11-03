@@ -153,7 +153,7 @@ export function Offer({ id }) {
               <div className="og-custom" data-test-id="offer-custom">
                 <div className="og-stack og-stack--hair">
                   <h2 className="og-h3">Create Your Custom Offer!</h2>
-                  <p className="og-meta">If you can't find what you need, let's customize! Click to create your perfect offer now</p>
+                  <p className="og-text">If you can't find what you need, let's customize! Click to create your perfect offer now</p>
                 </div>
                 <div className="og-stack og-stack--close og-custom__act">
                   <Button variant="primary" size="lg" label="Request custom offer" onClick={() => go('/info/contact')} />

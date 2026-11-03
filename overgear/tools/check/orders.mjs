@@ -7,7 +7,7 @@
 //
 //   node overgear/tools/check/orders.mjs http://localhost:8000
 import { launch } from '../../../tools/lib/sweep.mjs';
-import { ORDER_STATUS as S, buyerActions, orderSteps, panelTone, statusText, STATE_FILTERS, PAGE_SIZE, filterOrders, sortOrders, statusLabel } from '../../example/order-core.js';
+import { ORDER_STATUS as S, buyerActions, orderTimeline, panelTone, statusText, STATE_FILTERS, PAGE_SIZE, filterOrders, sortOrders, statusLabel } from '../../example/order-core.js';
 
 const base = (process.argv[2] || 'http://localhost:8000').replace(/\/$/, '');
 const APP = `${base}/overgear/example/index.html`;
@@ -44,7 +44,7 @@ const choose = async (page, index, option) => { await page.getByRole('combobox')
   const orders = (await stored(page)).orders;
   await visit(page, '/orders');
   const cards = () => page.locator('[data-test-id="order-card"]').count();
-  expectThat((await text(page, 'orders-listing'))?.includes(`${orders.length} orders`), `the list does not say how many orders there are (${orders.length})`);
+  expectThat((await page.locator('[data-test-id="orders-count"]').textContent()) === String(orders.length), `the title does not say how many orders there are (${orders.length})`);
   expectThat((await cards()) === PAGE_SIZE, `desktop: the first page has ${await cards()} cards, not ${PAGE_SIZE}`);
   const first = await page.evaluate(() => ({ title: document.querySelector('[data-test-id="order-card-title"]').textContent, status: document.querySelector('[data-test-id="order-card-status"]').textContent, href: document.querySelector('[data-test-id="order-card"] a, a[data-test-id="order-card"]')?.getAttribute('href') || document.querySelector('[data-test-id="order-card"]').querySelector('a')?.getAttribute('href') }));
   const newest = sortOrders(orders, 'new')[0];
@@ -62,7 +62,7 @@ const choose = async (page, index, option) => { await page.getByRole('combobox')
   await choose(page, idx.game, 'Diablo 4');
   const d4 = orders.filter((o) => o.game === 'diablo-4');
   expectThat((await cards()) === Math.min(d4.length, PAGE_SIZE) && (await shown()).every((c) => c.game === 'Diablo 4'), `the filter by the game "Diablo 4" shows ${await cards()} cards, not the ${d4.length} orders of the game`);
-  expectThat((await text(page, 'orders-listing'))?.includes(`${d4.length} orders`), 'the count does not follow the filter by the game');
+  expectThat((await page.locator('[data-test-id="orders-count"]').textContent()) === String(d4.length), 'the count does not follow the filter by the game');
   await choose(page, idx.state, 'Cancelled');
   const d4c = filterOrders(orders, { game: 'diablo-4', state: STATE_FILTERS.find((f) => f.label === 'Cancelled').value });
   expectThat((await cards()) === d4c.length, `a game and a state together show ${await cards()} cards, not ${d4c.length}`);
@@ -141,7 +141,9 @@ const choose = async (page, index, option) => { await page.getByRole('combobox')
     const wantIds = buyerActions(o, now).map((a) => a.id);
     expectThat(JSON.stringify(ids) === JSON.stringify(wantIds), `${where}: the buttons are ${ids.join(', ') || 'none'}, not ${wantIds.join(', ') || 'none'}`);
     const steps = await page.locator('[data-test-id^="order-step-"]').count();
-    expectThat(steps === orderSteps(o, now).steps.length, `${where}: ${steps} steps, not ${orderSteps(o, now).steps.length}`);
+    const line = orderTimeline(o, now);
+    const wantSteps = line?.kind === 'steps' ? line.steps.length : 0;   // a completed order has none, a failed or cancelled one is one bar
+    expectThat(steps === wantSteps, `${where}: ${steps} steps, not ${wantSteps}`);
     const bars = await page.evaluate(() => [...document.querySelectorAll('.og-osteps .bui-progress__track')].every((b) => b.getBoundingClientRect().width > 20));
     expectThat(bars, `${where}: the bars of the steps are not drawn`);
   }

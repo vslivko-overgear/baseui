@@ -1,6 +1,6 @@
 // Store-specific documents are generated here, never by importing store rules into baseui.
 import { writeFile } from 'node:fs/promises';
-import { RULES, CONSTITUTION_VERSION } from '../../constitution/rules.js';
+import { RULES, RETIRED, CONSTITUTION_VERSION } from '../../constitution/rules.js';
 import { ruleMarkdown } from '../../../tools/build/constitution-markdown.mjs';
 
 const md = [
@@ -29,6 +29,12 @@ const md = [
   ...RULES.filter((r) => r.legacyId).map((r) => `- \`${r.legacyId}\` → \`${r.id}\`: ${r.title}`),
   '',
   'The old ids are retired from baseui; update declared violations to the local ids and use the Overgear banner. Shared rule ids are not renumbered.',
+  '',
+  '## Retired ids',
+  '',
+  'These ids were rules and are not any more; an id is never reused.',
+  '',
+  ...Object.entries(RETIRED).map(([id, why]) => `- \`${id}\`: ${why}`),
   '',
   '## Store rules',
   '',

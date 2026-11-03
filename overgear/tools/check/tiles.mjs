@@ -1,7 +1,6 @@
 #!/usr/bin/env node
-// The game tiles of the home page end in a rectangle: for every audience, the first level and the second level of tiles end at the same place (the right edge of their last tile),
-// in the group of an audience and in the rest. It reads the rendered page, so it catches what the lengths in overgear/tests/audience.test.mjs cannot: a width that did not apply,
-// a tile that wrapped. A phone is not measured: there the group is narrower than the screen on purpose and the rest is a swipe away.
+// The games of the home page on a desktop are a grid of equal columns that fits the width with no scroll, for every audience: twelve tiles in two rows, all of one width, and the grid is not wider than its box.
+// It reads the rendered page, so it catches what the lists in overgear/tests/audience.test.mjs cannot: a width that did not apply, a tile that wrapped, a scroll that came back. A phone is not measured: there the rows scroll on purpose.
 //
 //   node overgear/tools/check/tiles.mjs http://localhost:8000
 import { launch } from '../../../tools/lib/sweep.mjs';
@@ -17,21 +16,21 @@ for (const [audience] of AUDIENCES) {
   const page = await context.newPage();
   await page.goto(`${base}/overgear/example/index.html`);
   await page.waitForTimeout(1500);
-  const sections = await page.evaluate(() => [...document.querySelectorAll('.og-tiles > .og-grows')].map((block) => [...block.querySelectorAll('.og-grow')].map((row) => {
-    const tiles = [...row.children].map((t) => t.getBoundingClientRect());
-    return { left: Math.min(...tiles.map((t) => t.left)), right: Math.max(...tiles.map((t) => t.right)), count: tiles.length, wrapped: new Set(tiles.map((t) => Math.round(t.top))).size > 1 };
-  })));
-  sections.forEach((levels, s) => {
-    const where = `${audience} ${sections.length > 1 && s === 0 ? '(group)' : '(rest)'}`;
-    if (levels.length !== 2) problems.push(`${where}: ${levels.length} levels instead of two`);
-    else if (Math.abs(levels[0].right - levels[1].right) > 1) problems.push(`${where}: the levels end ${levels[0].right.toFixed(1)} and ${levels[1].right.toFixed(1)}px`);
-    if (levels.some((l) => l.wrapped)) problems.push(`${where}: a tile wrapped to another line`);
+  const grid = await page.evaluate(() => {
+    const el = document.querySelector('[data-test-id=home-games]');
+    if (!el) return null;
+    const tiles = [...el.children].map((t) => t.getBoundingClientRect());
+    return { count: tiles.length, widths: tiles.map((t) => Math.round(t.width)), rows: new Set(tiles.map((t) => Math.round(t.top))).size, scrolls: el.scrollWidth > el.clientWidth + 1 };
   });
-  if (!sections.length) problems.push(`${audience}: no tiles found`);
-  // the group and the rest are a tile gap apart, 8px, as any two tiles are
-  if (sections.length === 2) { const gap = sections[1][0].left - Math.max(...sections[0].map((l) => l.right)); if (Math.abs(gap - 8) > 0.5) problems.push(`${audience}: the group is ${gap.toFixed(1)}px from the rest, not 8px`); }
+  if (!grid) problems.push(`${audience}: no grid of games found`);
+  else {
+    if (grid.rows !== 2) problems.push(`${audience}: ${grid.rows} rows instead of two`);
+    if (grid.count !== 12) problems.push(`${audience}: ${grid.count} tiles instead of twelve`);
+    if (Math.max(...grid.widths) - Math.min(...grid.widths) > 1) problems.push(`${audience}: the tiles are not of one width (${[...new Set(grid.widths)].join(', ')}px)`);
+    if (grid.scrolls) problems.push(`${audience}: the grid scrolls sideways`);
+  }
   await context.close();
 }
 await browser.close();
 if (problems.length) { for (const p of problems) console.log(p); console.log(`\nTiles: ${problems.length} problem${problems.length === 1 ? '' : 's'}.`); process.exit(1); }
-console.log(`Tiles: ${AUDIENCES.length} audiences, both levels end at the same place.`);
+console.log(`Tiles: ${AUDIENCES.length} audiences, twelve tiles of one width in two rows, no scroll.`);

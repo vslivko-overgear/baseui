@@ -43,7 +43,6 @@ const CHECKS = [
   ['breadcrumbs', 'tools/check/breadcrumbs.mjs'],
   ['overgear-order', 'overgear/tools/check/order.mjs'],
   ['overgear-orders', 'overgear/tools/check/orders.mjs'],
-  ['overgear-breadcrumbs', 'overgear/tools/check/breadcrumbs.mjs'],
 ];
 const only = process.argv[2];
 let failed = 0;
