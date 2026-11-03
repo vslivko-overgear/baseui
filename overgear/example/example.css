@@ -688,3 +688,5 @@ a { color: inherit; }
 .og-osteps__step[data-look="run"] .bui-progress__track::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--baseui-background-secondary) 55%, transparent), transparent); transform: translateX(-100%); animation: og-run 2.2s var(--baseui-ease-out, ease-in-out) infinite; }
 @keyframes og-run { to { transform: translateX(100%); } }
 @media (prefers-reduced-motion: reduce) { .og-osteps__step[data-look="run"] .bui-progress__track::after { animation: none; } }
+/* the current stage and the stage where the work goes on are white in any theme (the primary text color), not the color of the brand, which is blue in the theme of Overgear */
+.og-osteps__step:is([data-look="current"], [data-look="run"]) .bui-progress { --bui-progress-color: var(--baseui-text-and-icon-primary); }
