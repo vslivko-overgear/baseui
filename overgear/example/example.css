@@ -624,5 +624,7 @@ a { color: inherit; }
 .og-acc__menu { position: sticky; top: calc(var(--og-header-h, 72px) + var(--baseui-spacing-4)); }
 .og-acc__page { min-width: 0; }
 .og-acc .og-page, .og-acc .og-page--crumbs { padding-block: 0; }
-.og-acc__pop { width: 360px; max-width: calc(100vw - 2 * var(--baseui-spacing-4)); }
+.og-acc__pop { width: 360px; max-width: calc(100vw - 2 * var(--baseui-spacing-3)); }
 .og-acc__div { margin-block: var(--baseui-spacing-2); }
+/* the profile row: the space above and below the avatar equals the space at its side (12px) */
+.og-profilerow .bui-list__header { min-height: calc(40px + 2 * var(--baseui-spacing-3)); }
