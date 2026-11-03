@@ -78,14 +78,14 @@ export function Offer({ id }) {
           <WishButton id={offer.id} text />
         </div>
       </PageHead>
-      <div className="og-stack">
-        <Card variant="surface" padding={4} data-test-id="offer-usp">
-          <ul className="og-usp">
-            {offer.bullets.slice(0, 3).map((b, i) => <li key={b}><Icon name={USP_ICONS[i]} size={20} /><span>{b}</span></li>)}
-          </ul>
-        </Card>
         <div className="og-split og-split--right">
           <div className="og-stack og-stack--xl">
+            <div className="og-stack">
+            <Card variant="surface" padding={4} data-test-id="offer-usp">
+              <ul className="og-usp">
+                {offer.bullets.slice(0, 3).map((b, i) => <li key={b}><Icon name={USP_ICONS[i]} size={20} /><span>{b}</span></li>)}
+              </ul>
+            </Card>
             <Card variant="surface" padding={5}>
               <div className="og-stack og-stack--lg">
                   <SegmentedControl label="Difficulty" fullWidth size="sm" value={difficulty} onValueChange={setDifficulty} items={DIFFICULTY.map((d) => ({ value: d.value, label: d.label }))} />
@@ -95,6 +95,7 @@ export function Offer({ id }) {
                   <TextInput label="Note for the booster" multiline minRows={2} value={note} onChange={(e) => setNote(e.target.value)} />
               </div>
             </Card>
+            </div>
             <div className="og-stack og-stack--xl og-offer-info">
             <Section title="Your wins">
               <ul className="og-wins" data-test-id="offer-wins">
@@ -194,7 +195,6 @@ export function Offer({ id }) {
             </Card>
           </div>
         </div>
-      </div>
     </Page>
   );
 }
