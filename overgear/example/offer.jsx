@@ -61,7 +61,10 @@ export function Offer({ id }) {
     store.add({ key: `${offer.id}-${mode}-${difficulty}-${extras.join()}`, id: offer.id, image: offer.image, eta: offer.eta, title: offer.title, sub: `${MODES.find((m) => m.value === mode).label}, ${difficulty}${extras.length ? `, ${extras.length} extras` : ''}`, price: unit, qty });
     addedToCart();
   };
-  const related = OFFERS.filter((o) => o.service === offer.service && o.id !== offer.id).slice(0, 4);
+  // four, so the row is full: the same service first, then the other offers of the game, then the most sold ones of the other games
+  const others = OFFERS.filter((o) => o.id !== offer.id);
+  const rank = (o) => (o.service === offer.service ? 0 : o.game === offer.game ? 1 : 2);
+  const related = [...others].sort((a, b) => rank(a) - rank(b) || (rank(a) === 2 ? b.sold - a.sold : 0)).slice(0, 4);
   const [first, ...rest] = offer.bullets;
   return (
     <Page>
