@@ -72,10 +72,10 @@ export function Offer({ id }) {
     store.add({ key: `${offer.id}-${mode}-${difficulty}-${extras.join()}`, id: offer.id, image: offer.image, eta: offer.eta, title: offer.title, sub: `${MODES.find((m) => m.value === mode).label}, ${difficulty}${extras.length ? `, ${extras.length} extras` : ''}`, price: unit, qty });
     addedToCart();
   };
-  // ten, so that the first row is full at any width (the listing shows whole rows): the same service first, then the other offers of the game, then the most sold ones of the other games
+  // all the other offers, closest first (the listing shows whole rows and goes on as it is scrolled): the same service first, then the other offers of the game, then the most sold ones of the other games
   const others = OFFERS.filter((o) => o.id !== offer.id);
   const rank = (o) => (o.service === offer.service ? 0 : o.game === offer.game ? 1 : 2);
-  const related = [...others].sort((a, b) => rank(a) - rank(b) || (rank(a) === 2 ? b.sold - a.sold : 0)).slice(0, 10);
+  const related = [...others].sort((a, b) => rank(a) - rank(b) || (rank(a) === 2 ? b.sold - a.sold : 0));
   const [first, ...rest] = offer.bullets;
   // the selling points: separate tags on a surface, each as wide as its text (on a phone the row scrolls sideways)
   const usp = (
@@ -210,7 +210,7 @@ export function Offer({ id }) {
       {related.length > 0 && (
         <Section title="You may also like">
           <div data-test-id="offer-more">
-            <OfferListing offers={related} rows={1} more="button" moreLabel="Discover more" />
+            <OfferListing offers={related} rows={2} more="infinite" className="og-related" />
           </div>
         </Section>
       )}
