@@ -142,7 +142,7 @@ const choose = async (page, index, option) => { await page.getByRole('combobox')
     expectThat(JSON.stringify(ids) === JSON.stringify(wantIds), `${where}: the buttons are ${ids.join(', ') || 'none'}, not ${wantIds.join(', ') || 'none'}`);
     const steps = await page.locator('[data-test-id^="order-step-"]').count();
     expectThat(steps === orderSteps(o, now).steps.length, `${where}: ${steps} steps, not ${orderSteps(o, now).steps.length}`);
-    const bars = await page.evaluate(() => [...document.querySelectorAll('.og-steps .bui-progress__track')].every((b) => b.getBoundingClientRect().width > 20));
+    const bars = await page.evaluate(() => [...document.querySelectorAll('.og-osteps .bui-progress__track')].every((b) => b.getBoundingClientRect().width > 20));
     expectThat(bars, `${where}: the bars of the steps are not drawn`);
   }
   expectThat(seen.size >= 14, `the seed shows ${seen.size} statuses, not at least 14`);

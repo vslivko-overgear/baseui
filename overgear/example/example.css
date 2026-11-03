@@ -519,10 +519,10 @@ a { color: inherit; }
 
 /* the page of an order */
 .og-order { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: var(--baseui-spacing-6); align-items: start; }
-.og-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(var(--steps, 3), minmax(0, 1fr)); gap: var(--baseui-spacing-2); }
-.og-steps__step { display: flex; flex-direction: column; gap: var(--baseui-spacing-1-5, 6px); }
-.og-steps__title { font: var(--baseui-typography-text-12-regular); color: var(--baseui-text-and-icon-secondary); text-transform: uppercase; letter-spacing: 0.04em; }
-.og-steps__step[data-active] .og-steps__title { color: var(--baseui-text-and-icon-primary); font: var(--baseui-typography-text-12-semi-bold); }
+.og-osteps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(var(--steps, 3), minmax(0, 1fr)); gap: var(--baseui-spacing-2); }
+.og-osteps__step { display: flex; flex-direction: column; gap: var(--baseui-spacing-1-5, 6px); }
+.og-osteps__title { font: var(--baseui-typography-text-12-regular); color: var(--baseui-text-and-icon-secondary); text-transform: uppercase; letter-spacing: 0.04em; }
+.og-osteps__step[data-active] .og-osteps__title { color: var(--baseui-text-and-icon-primary); font: var(--baseui-typography-text-12-semi-bold); }
 .og-ostatus { overflow: hidden; }
 .og-ostatus__head { padding: var(--baseui-spacing-5); }   /* the tint is the head of the panel: the buttons stand on the surface under it, not on a color (D11) */
 .og-ostatus__foot { padding: var(--baseui-spacing-5); }
@@ -546,7 +546,7 @@ a { color: inherit; }
 .og-next { border: 1px dashed var(--baseui-border-primary); display: flex; flex-direction: column; gap: var(--baseui-spacing-4); }
 .og-next__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--baseui-spacing-2); }
 .og-next__list li { align-items: center; gap: var(--baseui-spacing-3); }
-.og-steps__step .bui-progress { width: 100%; }
+.og-osteps__step .bui-progress { width: 100%; }
 .og-next__list li { display: grid; grid-template-columns: 88px auto; justify-content: start; }
 .og-result__block .bui-status__text { white-space: pre-line; }
-.og-steps .bui-progress__track { width: 100%; }
+.og-osteps .bui-progress__track { width: 100%; }

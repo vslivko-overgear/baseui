@@ -46,11 +46,11 @@ function Steps({ order, now }) {
   const { steps, current } = orderSteps(order, now);
   const tone = progressTone(order, now);
   return (
-    <ol className="og-steps" aria-label="Order progress" data-test-id="order-steps" style={{ '--steps': steps.length }}>
+    <ol className="og-osteps" aria-label="Order progress" data-test-id="order-steps" style={{ '--steps': steps.length }}>
       {steps.map((s) => (
-        <li key={s.name} className="og-steps__step" data-active={s.active || undefined} aria-current={s.name === current ? 'step' : undefined} data-test-id={`order-step-${s.name}`}>
+        <li key={s.name} className="og-osteps__step" data-active={s.active || undefined} aria-current={s.name === current ? 'step' : undefined} data-test-id={`order-step-${s.name}`}>
           <ProgressBar size="sm" color={tone} value={Math.round(s.value * 100)} aria-label={s.title} />
-          <span className="og-steps__title">{s.title}</span>
+          <span className="og-osteps__title">{s.title}</span>
         </li>
       ))}
     </ol>
