@@ -663,5 +663,9 @@ a { color: inherit; }
 /* the subscriptions side by side on a desktop; the status "Subscribed" looks like a button: a light green background and a filled green icon (it is not pressed) */
 .og-subs-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--baseui-spacing-3); align-items: stretch; }
 .og--mobile .og-subs-grid { grid-template-columns: minmax(0, 1fr); }
-.og-subscribed { display: flex; align-items: center; justify-content: center; gap: var(--baseui-spacing-2); min-height: 56px; padding-inline: var(--baseui-spacing-5); border-radius: var(--baseui-radius-2xl); background: var(--baseui-extensions-background-light-success); color: var(--baseui-text-and-icon-primary); font: var(--baseui-typography-text-16-semi-bold); }
+.og-subscribed { display: flex; align-items: center; justify-content: center; gap: var(--baseui-spacing-2); min-height: 56px; padding-inline: var(--baseui-spacing-5); border-radius: var(--baseui-radius-2xl); background: var(--baseui-background-secondary); color: var(--baseui-text-and-icon-primary); font: var(--baseui-typography-text-16-semi-bold); }
 .og-subscribed svg { color: var(--baseui-extensions-text-and-icon-success); }
+/* the card of a subscription fills the height of its row, and its button is always at the bottom, so the two buttons stand on one line */
+.og-subs-grid > .bui-card { display: flex; flex-direction: column; }
+.og-sub { flex: 1; }
+.og-sub__act { margin-top: auto; padding-top: var(--baseui-spacing-2); display: flex; flex-direction: column; }

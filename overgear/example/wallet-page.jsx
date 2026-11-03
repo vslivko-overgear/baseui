@@ -24,7 +24,6 @@ function Subscription({ item }) {
   const { toast } = useToast();
   const on = store.subs[item.id];
   const paid = !!store.subs.paid[item.id];
-  const to = item.id === 'email' ? store.user?.email : undefined;
   const turnOn = () => {
     const gets = !paid;
     store.setSubscription(item.id, true);
@@ -32,21 +31,20 @@ function Subscription({ item }) {
   };
   return (
     <Card variant="surface" padding={5} data-test-id={`subscription-${item.id}`}>
-      <div className="og-stack og-stack--related">
+      <div className="og-stack og-stack--related og-sub">
         <div className="og-stack og-stack--hair">
           <h3 className="og-h3">{item.title}</h3>
           <p className="og-meta">{item.text}</p>
         </div>
         <Reward coins={item.coins} paid={paid} />
-        {on ? (
-          <div className="og-stack og-stack--related">
+        {item.sub && <Switch label={item.sub.label} checked={on && store.subs[item.sub.id]} disabled={!on} onCheckedChange={(v) => store.setSubscription(item.sub.id, v)} data-test-id={`subscription-${item.sub.id}`} />}
+        <div className="og-sub__act">
+          {on ? (
             <span className="og-subscribed" role="status" data-test-id="subscription-on"><Icon name="CheckCircle" size={24} filled />Subscribed</span>
-            {to && <p className="og-meta">{to}</p>}
-            {item.sub && <Switch label={item.sub.label} checked={store.subs[item.sub.id]} onCheckedChange={(v) => store.setSubscription(item.sub.id, v)} data-test-id={`subscription-${item.sub.id}`} />}
-          </div>
-        ) : (
-          <Button variant="primary" size="lg" label={item.id === 'email' ? 'Subscribe' : 'Connect Discord'} onClick={turnOn} data-test-id={`subscription-start-${item.id}`} />
-        )}
+          ) : (
+            <Button variant="primary" size="lg" width="100%" label={item.id === 'email' ? 'Subscribe' : 'Connect Discord'} onClick={turnOn} data-test-id={`subscription-start-${item.id}`} />
+          )}
+        </div>
       </div>
     </Card>
   );
