@@ -14,7 +14,7 @@ import { go, goReplace } from './util.js';
 import { offerOf } from './data.js';
 import { Page, PageHead, OfferListing } from './ui.jsx';
 import { useStore } from './store.jsx';
-import { BalanceCard, Amounts } from './wallet.jsx';
+import { Amounts } from './wallet.jsx';
 import { RankBadge, useRank } from './rank.jsx';
 import { rankLine } from './rank-core.js';
 import { useMedia } from './util.js';
@@ -53,8 +53,8 @@ export function AccountMenu({ active, hide = [], prefs, onPick, ...rest }) {
         </>
       )}
       <List aria-label="Account menu" {...rest}>
-        {store.user && row('orders', 'ShoppingBag01', 'My orders', { onClick: pick(() => go('/orders')), details: <Value>{store.orders.length}</Value> })}
         {store.user && row('wallet', 'Wallet01', 'Wallet', { onClick: pick(() => go('/wallet')), details: <span className="og-row og-row--nowrap"><Amounts plus={false} /><Icon name="ChevronRight" size={20} /></span> })}
+        {store.user && row('orders', 'ShoppingBag01', 'My orders', { onClick: pick(() => go('/orders')), details: <Value>{store.orders.length}</Value> })}
         {store.user && row('wishlist', 'Heart', 'Favorites', { onClick: pick(() => go('/account?tab=wishlist')), details: <Value>{wished.length}</Value> })}
         {store.user && row('settings', 'Settings01', 'Settings', { onClick: pick(() => go('/account?tab=settings')), details: <Value /> })}
         {row('currency', 'CoinsHand', 'Currency', { onClick: pick(() => open('currency')), details: <Value>{currency}</Value> })}
@@ -109,7 +109,6 @@ export function Account({ tab, onLogin }) {
       <Page>
         <div className="og-stack og-stack--related">
           <h1 className="og-title">Account</h1>
-          {mobile && <BalanceCard />}
           <AccountMenu />
         </div>
       </Page>
