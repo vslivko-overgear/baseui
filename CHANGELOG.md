@@ -2,6 +2,7 @@
 
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
+- **Checkbox, the enhanced motion:** the box no longer grows (the pop of the box is removed), and the check mark is drawn from the left to the right (its path in the built-in icons now starts at the left end; the look of the mark is the same). The three snapshots of the stories that draw the mark are updated for the new path. Checked: tests, radii, sizes, fixtures, sheets, dialog focus, hint, breadcrumbs.
 - **Overgear, the page "My orders" has no "Show the state" links at the bottom** (The list, Loading, An error, Empty, Guest account); the states still open by the address (`?demo=`). Overgear checks were not run.
 - **Overgear, the page "My orders":** the number of the orders is in the title ("My orders 34", the number in the secondary color, at its side; the line "34 orders" under the title is gone); the title, the filters and the orders stand closer (16px, were 40px); the filters have no pinned label (the value shows, as a placeholder does), the three filters fill the row and the sorting hugs its value. Overgear checks were not run.
 - **Overgear, the tabs of "Popular products" lose Counter Strike 2** (its tile among the games stays). Overgear checks were not run.
