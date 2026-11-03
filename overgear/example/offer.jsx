@@ -61,7 +61,7 @@ export function Offer({ id }) {
     store.add({ key: `${offer.id}-${mode}-${difficulty}-${extras.join()}`, id: offer.id, image: offer.image, eta: offer.eta, title: offer.title, sub: `${MODES.find((m) => m.value === mode).label}, ${difficulty}${extras.length ? `, ${extras.length} extras` : ''}`, price: unit, qty });
     addedToCart();
   };
-  const related = OFFERS.filter((o) => o.service === offer.service && o.id !== offer.id).slice(0, 3);
+  const related = OFFERS.filter((o) => o.service === offer.service && o.id !== offer.id).slice(0, 4);
   const [first, ...rest] = offer.bullets;
   return (
     <Page>
@@ -119,13 +119,12 @@ export function Offer({ id }) {
             </div>
           </Section>
           {related.length > 0 && (
-            <Card variant="surface" padding={5}>
-              <div className="og-stack og-stack--lg" data-test-id="offer-more">
-                <h2 className="og-h2">You may also like</h2>
+            <Section title="You may also like">
+              <div className="og-stack" data-test-id="offer-more">
                 <OfferListing offers={related} />
                 <Button variant="secondary" size="lg" width="100%" label="Discover all" onClick={() => go(`/games/wow?s=${service.id}`)} />
               </div>
-            </Card>
+            </Section>
           )}
           <Card variant="surface" padding={5}>
             <div className="og-custom" data-test-id="offer-custom">
