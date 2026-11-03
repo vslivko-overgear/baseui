@@ -659,3 +659,6 @@ a { color: inherit; }
 .og:not(.og--mobile) .og-usp li { padding-inline: var(--baseui-spacing-6); }
 .og:not(.og--mobile) .og-usp li:first-child { padding-inline-start: 0; }
 .og:not(.og--mobile) .og-usp li:last-child { padding-inline-end: 0; }
+/* each point stands in the middle of its column */
+.og:not(.og--mobile) .og-usp li { justify-content: center; text-align: center; }
+.og:not(.og--mobile) .og-usp li:first-child, .og:not(.og--mobile) .og-usp li:last-child { padding-inline: var(--baseui-spacing-6); }
