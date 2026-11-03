@@ -591,3 +591,4 @@ a { color: inherit; }
 .og-methods--more { padding-top: var(--baseui-spacing-2); }
 @media (prefers-reduced-motion: reduce) { .og-collapse { transition: none; } }
 [data-motion="off"] .og-collapse { transition: none; }
+.og-methodcard .og-stack--hair { gap: 0; }   /* the name of the method and its fee stand together */
