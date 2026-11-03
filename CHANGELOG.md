@@ -2,6 +2,7 @@
 
 ## Overgear: the checkout, payment methods as outlined tiles, the items apart
 
+- **Overgear, the balance button in the header:** a click on it opens the top-up at once; the hover card with the details stays on hover.
 - **Overgear, the top-up:** the bonus block is 72px high with a bonus and without (the height of the block without one is the base), so the dialog does not jump when the amount crosses $100; the rules of the coins stand 8px under it.
 - **Overgear, the top-up:** the suggestions are $100, $200 and $500, 8px under the field, each with its bonus tag inside (+5%, +5%, +10%).
 - **Overgear, the top-up:** the bonus is 5% from $100 and 10% from $500; no "From $5 to $1,000" under the field. The order is the field, the suggestions of the amount ($25 to $1,000, the ones that open a bracket say "+5%" and "+10%"), then a secondary block with the coins on the left and the percent on the right (below $100 it offers "Get bonus"), then the rules of the coins in 14px secondary with no heading.
