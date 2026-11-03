@@ -2,6 +2,7 @@
 
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
+- **Overgear, the block of the selling points of an offer is lower and scrolls sideways on a phone:** 44px high on a desktop (72 before; a smaller padding, the text 14px, one line); on a phone each point is as wide as its text and the row scrolls sideways, with vertical dividers. Overgear checks were not run.
 - **Overgear, the offer page: "Questions" is in the width of the left column, and "You may also like" is full width at the very bottom:** the listing has ten offers and shows one whole row (five on a desktop, so the row is full at any width), the button "Discover more" adds the next rows. Overgear checks were not run.
 - **Overgear, the offer page has "Questions" (the FAQ) at the bottom again,** full width under the two columns. Overgear checks were not run.
 - **Overgear, the reviews of the offer page:** the avatar is rounded (not a circle), and the button "Show more reviews" adds four more each time (twelve reviews in all); it is gone when all are shown. Overgear checks were not run.

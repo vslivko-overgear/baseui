@@ -82,7 +82,7 @@ export function Offer({ id }) {
         <div className="og-split og-split--right">
           <div className="og-stack og-stack--xl">
             <div className="og-stack">
-            <Card variant="surface" padding={4} data-test-id="offer-usp">
+            <Card variant="surface" padding={3} data-test-id="offer-usp">
               <ul className="og-usp">
                 {offer.bullets.slice(0, 3).map((b, i) => <li key={b}><Icon name={USP_ICONS[i]} size={20} /><span>{b}</span></li>)}
               </ul>
