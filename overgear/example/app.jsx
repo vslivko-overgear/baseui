@@ -16,6 +16,7 @@ import { Cart, CartDrawer, Checkout } from './cart.jsx';
 import { Orders, OrdersBar } from './orders.jsx';
 import { OrderPage } from './order-page.jsx';
 import { RankPage } from './rank.jsx';
+import { WalletPage } from './wallet-page.jsx';
 import { CheckoutResult } from './order-result.jsx';
 import { Account, AccountShell } from './account.jsx';
 import { Info } from './info.jsx';
@@ -26,7 +27,7 @@ startOvergearTheme();
 /** The pages behind the account on a desktop sit in its menu layout. */
 function Body({ route, onLogin, mobile }) {
   const page = <Pages route={route} onLogin={onLogin} mobile={mobile} />;
-  return !mobile && ['account', 'orders', 'order', 'rank'].includes(route.parts[0]) ? <AccountShell route={route}>{page}</AccountShell> : page;
+  return !mobile && ['account', 'orders', 'order', 'rank', 'wallet'].includes(route.parts[0]) ? <AccountShell route={route}>{page}</AccountShell> : page;
 }
 
 function Pages({ route, onLogin, mobile }) {
@@ -44,6 +45,7 @@ function Pages({ route, onLogin, mobile }) {
   if (first === 'cart') return <Cart />;
   if (first === 'checkout') return second === 'result' ? <CheckoutResult result={third} orderLink={route.query.orderLink} transaction={route.query.transaction} /> : <Checkout />;
   if (first === 'rank') return <RankPage onLogin={onLogin} />;
+  if (first === 'wallet') return <WalletPage onLogin={onLogin} />;
   if (first === 'orders') return <Orders onLogin={onLogin} demo={route.query.demo} />;
   if (first === 'order') return <OrderPage link={second} onLogin={onLogin} />;
   if (first === 'account') return <Account tab={route.query.tab} onLogin={onLogin} />;
@@ -63,7 +65,7 @@ function Shell() {
   // on a phone the tabs of the bottom bar (Catalog, Favorites, Cart, Account) are screens of their own: no header and no footer
   const step2 = mobile && route.parts[0] === 'catalog' && !!route.parts[1];
   const bare = route.parts[0] === 'checkout';   // the checkout has a slim top bar and no footer of its own shop
-  const orders = mobile && ['orders', 'order', 'rank'].includes(route.parts[0]);   // behind the account: a bar with back, and no header and no footer of the shop
+  const orders = mobile && ['orders', 'order', 'rank', 'wallet'].includes(route.parts[0]);   // behind the account: a bar with back, and no header and no footer of the shop
   const tab = orders || (mobile && (route.parts[0] === 'catalog' || ['cart', 'account'].includes(route.parts[0])));
   return (
     <div className={cx('og', mobile && 'og--mobile', tab && 'og--tab')}>

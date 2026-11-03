@@ -136,7 +136,7 @@ export function Orders({ onLogin, demo = '' }) {
 /** The top bar of the orders pages on a phone: back (the list goes back to the account, an order to the list), no title at the start, the title when the heading scrolls under the bar. */
 export function OrdersBar({ route }) {
   const first = route.parts[0];
-  const list = first === 'orders' || first === 'rank';
+  const list = first === 'orders' || first === 'rank' || first === 'wallet';
   const under = useTitleUnderBar('.og-title', route.path);
-  return <Navbar title={first === 'rank' ? 'Your Rank' : list ? 'My orders' : 'Order'} titleVisible={under} onBack={() => go(list ? '/account' : '/orders')} />;
+  return <Navbar title={first === 'rank' ? 'Your Rank' : first === 'wallet' ? 'Wallet' : list ? 'My orders' : 'Order'} titleVisible={under} onBack={() => go(list ? '/account' : '/orders')} />;
 }

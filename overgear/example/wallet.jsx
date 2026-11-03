@@ -17,11 +17,11 @@ import { CashbackMark } from './ui.jsx';
 import { OPEN_TOP_UP, openTopUp, parseAmount, amountError, coinsText, bonusFor, bonusRateFor, lowestBonusAmount, SUGGESTIONS, PURCHASE_LIMIT } from './wallet-core.js';
 
 /** The money and the OG Coins of the visitor, side by side. */
-export function Amounts() {
+export function Amounts({ plus = true }) {
   const store = useStore();
   return (
     <span className="og-amounts">
-      <span className="og-amounts__coins"><Icon name="PlusCircle" size={20} filled />{money(store.balance)}</span>
+      <span className="og-amounts__coins">{plus && <Icon name="PlusCircle" size={20} filled />}{money(store.balance)}</span>
       <span className="og-amounts__coins"><CashbackMark />{coinsText(store.coins)}</span>
     </span>
   );

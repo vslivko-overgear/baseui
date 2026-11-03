@@ -1,7 +1,6 @@
 // The rank of a buyer, as the real service shows it. The rank is in the menu of the profile (a desktop) and in the account tab (a phone), under the nick; a click opens the page of the rank (/rank): the rank, the way to the next
 // one, the perks now and in the next rank, all ranks, how ranks work, and the history. The rules are in rank-core.js.
 import { useMemo, useState } from '../../src/react.js';
-import { Badge } from '../../src/components/Badge.jsx';
 import { Button } from '../../src/components/Button.jsx';
 import { Card } from '../../src/components/Card.jsx';
 import { Dialog } from '../../src/components/Dialog.jsx';
@@ -9,14 +8,12 @@ import { Hint } from '../../src/components/Hint.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
 import { Link } from '../../src/components/Link.jsx';
 import { List, ListItem } from '../../src/components/List.jsx';
-import { useToast } from '../../src/components/Toast.jsx';
 import { ProgressBar } from '../../src/components/ProgressBar.jsx';
 import { Status } from '../../src/components/Status.jsx';
 import { go, href, useMedia } from './util.js';
 import { money } from './data.js';
-import { Page, PageHead, Section, CashbackMark } from './ui.jsx';
+import { Page, PageHead, Section } from './ui.jsx';
 import { useStore } from './store.jsx';
-import { coinsText, BONUS_RULES, openTopUp } from './wallet-core.js';
 import { spentLastYear, gradeFor, progressTo, BENEFITS, benefitValue, rankHistory } from './rank-core.js';
 
 /** The rank of the buyer now: the spending of the last 365 days, the rank, the way to the next one and the history. */
@@ -77,7 +74,6 @@ export function RankPage({ onLogin }) {
   const rank = useRank();
   const [history, setHistory] = useState(false);
   const mobile = useMedia('(max-width: 767px)');
-  const toast = useToast();
   if (!store.user) return <Page fill><Status status="neutral" icon={<Icon name="Star01" size={28} />} title="Sign in to see your rank" description="Your rank depends on what you spend" actionLabel="Sign in" onAction={onLogin} /></Page>;
   const { grade, paid, progress } = rank;
   const { next } = progress;
@@ -116,43 +112,6 @@ export function RankPage({ onLogin }) {
             <Button variant="secondary" size="lg" width="100%" label="Continue shopping" onClick={() => go('/')} />
           </div>
         </Card>
-        <Section title="OG Coins">
-          <div className="og-stack og-stack--lg" data-test-id="rank-coins">
-            <div className="og-stack og-stack--hair">
-              <strong className="og-rank__coins"><CashbackMark />{`${coinsText(store.coins)} OG Coins`}</strong>
-              <span className="og-meta">1 OG Coin = $1.00</span>
-            </div>
-            <div className="og-stack og-stack--close">
-              <h3 className="og-h3">How can I acquire OG Coins?</h3>
-              <ul className="og-bullets">
-                <li><span>{`Top up your Overgear Wallet: ${BONUS_RULES.map((r) => `+${r.percentage}% bonus on deposits over ${money(r.refillAmount).replace('.00', '')}`).join(', ')}`}</span></li>
-                <li><span>{`Earn ${grade.cashbackPercentage}% cashback in OG Coin on all purchases, credited after order completion`}</span></li>
-              </ul>
-            </div>
-            <div className="og-stack og-stack--close">
-              <h3 className="og-h3">How can I use it?</h3>
-              <p className="og-text">{`OG Coins can cover up to ${grade.purchaseLimitPercentage}% of your purchase costs`}</p>
-            </div>
-          </div>
-        </Section>
-        <Section title="Ways to get OG Coins">
-          <div className="og-stack">
-            <Card variant="surface" padding={5}>
-              <div className="og-stack og-stack--related" data-test-id="rank-way-topup">
-                <div className="og-stack og-stack--hair"><h3 className="og-h3">Receive up to 10%</h3><span className="og-meta">when you top up</span></div>
-                <div className="og-row">{BONUS_RULES.map((r) => <Badge key={r.refillAmount} variant="warning-light" size="md" label={`${r.percentage}% for ${money(r.refillAmount).replace('.00', '')}+`} />)}</div>
-                <Button variant="primary" size="lg" width="100%" label="Top up" onClick={() => openTopUp()} />
-              </div>
-            </Card>
-            <Card variant="surface" padding={5}>
-              <div className="og-stack og-stack--related" data-test-id="rank-way-subscribe">
-                <div className="og-stack og-stack--hair"><h3 className="og-h3">Gain 10 OG Coins</h3><span className="og-meta">for newsletter subscription</span></div>
-                <div className="og-row"><Badge variant="warning-light" size="md" label="$5 for Discord" /><Badge variant="warning-light" size="md" label="$5 for email" /></div>
-                <Button variant="secondary" size="lg" width="100%" label="Subscribe" onClick={() => toast({ message: 'You are subscribed (a demo: nothing was sent)', status: 'success' })} />
-              </div>
-            </Card>
-          </div>
-        </Section>
         <Section title="How do ranks work?">
           <ol className="og-bullets og-bullets--num">
             <li><span>Ranks are recalculated and updated automatically once a day to ensure the information remains accurate</span></li>
