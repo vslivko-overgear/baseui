@@ -103,7 +103,7 @@ export function Offer({ id }) {
             <div className="og-stack og-stack--lg">
               <ul className="og-trust">
                 {TRUST.map(([icon, t, d]) => (
-                  <li key={t}><span className="og-trust__ico" aria-hidden="true"><Icon name={icon} size={24} /></span><div className="og-stack og-stack--hair"><p className="og-trust__title">{t}</p><p className="og-meta">{d}</p></div></li>
+                  <li key={t}><Icon name={icon} size={24} /><div className="og-stack og-stack--hair"><p className="og-trust__title">{t}</p><p className="og-meta">{d}</p></div></li>
                 ))}
               </ul>
             </div>
