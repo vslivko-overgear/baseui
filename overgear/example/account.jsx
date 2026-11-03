@@ -45,7 +45,7 @@ export function AccountMenu({ active, hide = [], prefs, onPick, ...rest }) {
   const pick = (fn) => () => { onPick?.(); fn(); };
   const row = (id, icon, label, props) => !hide.includes(id) && <ListItem key={id} icon={<Icon name={icon} size={24} />} active={active === id} data-test-id={`account-menu-${id}`} {...props}>{label}</ListItem>;
   return (
-    <>
+    <div className="og-accmenu">
       {store.user && !hide.includes('profile') && (
         <>
           <List aria-label="Profile"><ProfileRow active={active === 'rank'} onPick={onPick} /></List>
@@ -62,7 +62,7 @@ export function AccountMenu({ active, hide = [], prefs, onPick, ...rest }) {
         {store.user && row('logout', 'LogOut01', 'Log out', { onClick: pick(() => { store.logout(); go('/'); }), details: <Value /> })}
       </List>
       {!prefs && own.sheets}
-    </>
+    </div>
   );
 }
 
