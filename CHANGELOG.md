@@ -2,6 +2,7 @@
 
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
+- **Overgear, the wallet page has more air:** 56px between its main blocks on a desktop (it was 40), and "Your terms" has a bigger space round the rows (the padding of the surface 16px, the rows of the `lg` spacing). Overgear checks were not run.
 - **Overgear, the wallet page: the line under "Get 10 OG Coins for subscriptions" is 8px from the title** (it was a section gap, 16px) and stands with it as one group. Overgear checks were not run.
 - **Overgear, a click on the balance in the header opens the page Wallet** (not the top-up at once; the card on hover keeps its button "Top Up Balance"), and the profile popup of a desktop has no row "Wallet" (it stays in the account menu of a phone). Overgear checks were not run.
 - **Overgear, the selling points of an offer open more information:** with a mouse a tooltip (on hover and on focus), on a phone the standard sheet of the `Hint` (a tap opens it, "Close" closes it). Overgear checks were not run.

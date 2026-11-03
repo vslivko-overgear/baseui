@@ -671,3 +671,5 @@ a { color: inherit; }
 .og-sub__act { margin-top: auto; padding-top: var(--baseui-spacing-2); display: flex; flex-direction: column; }
 .og-sub__head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--baseui-spacing-3); }
 .og-sub__head .bui-badge { flex: none; }
+/* the wallet page: more air between its main blocks (56px on a desktop) */
+.og:not(.og--mobile) .og-wpage { gap: calc(var(--baseui-spacing-12) + var(--baseui-spacing-2)); }

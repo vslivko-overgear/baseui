@@ -72,7 +72,7 @@ export function WalletPage({ onLogin }) {
   const total = SUBSCRIPTIONS.reduce((n, s) => n + s.coins, 0);
   return (
     <Page bar>
-      <div className="og-stack og-stack--xl" data-test-id="wallet-page">
+      <div className="og-stack og-stack--xl og-wpage" data-test-id="wallet-page">
         <PageHead crumbs={[{ label: 'Home', href: '#/' }, { label: 'Account', href: '#/account' }, { label: 'Wallet' }]} title="Wallet" meta="1 OG Coin = $1.00" />
         <div className="og-stack">
           <div className="og-amounts-grid">
@@ -82,8 +82,8 @@ export function WalletPage({ onLogin }) {
           <Button variant="primary" size="lg" width="100%" label="Top up" icon={<Icon name="Plus" size={20} />} onClick={openTopUp} data-test-id="wallet-top-up-page" />
         </div>
         <Section title="Your terms">
-          <Card variant="surface" padding={2}>
-            <List aria-label="Your terms" data-test-id="wallet-terms">
+          <Card variant="surface" padding={4}>
+            <List aria-label="Your terms" spacing="lg" data-test-id="wallet-terms">
               <ListItem avatar={<Pic><Icon name="Coins01" size={24} /></Pic>} subtitle="of every purchase comes back as OG Coins once the order is completed">{`${grade.cashbackPercentage}% cashback`}</ListItem>
               <ListItem avatar={<Pic><Icon name="Wallet01" size={24} /></Pic>} subtitle="of a purchase can be paid with OG Coins">{`Up to ${grade.purchaseLimitPercentage}%`}</ListItem>
               <ListItem avatar={<Pic><RankBadge grade={grade} size={28} /></Pic>} subtitle="The terms depend on your rank" onClick={() => go('/rank')} details={<Icon name="ChevronRight" size={20} />}>{`${grade.name} rank`}</ListItem>
