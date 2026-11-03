@@ -669,3 +669,5 @@ a { color: inherit; }
 .og-subs-grid > .bui-card { display: flex; flex-direction: column; }
 .og-sub { flex: 1; }
 .og-sub__act { margin-top: auto; padding-top: var(--baseui-spacing-2); display: flex; flex-direction: column; }
+.og-sub__head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--baseui-spacing-3); }
+.og-sub__head .bui-badge { flex: none; }

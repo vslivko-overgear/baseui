@@ -16,7 +16,7 @@ import { useRank, RankBadge } from './rank.jsx';
 import { SUBSCRIPTIONS, coinsText, openTopUp } from './wallet-core.js';
 
 /** The reward of a subscription: the coins it pays, big, in the tag of the bonuses. */
-const Reward = ({ coins, paid }) => <Badge variant="warning-light" size="lg" icon={<CashbackMark />} label={paid ? `${coins} OG Coins received` : `+${coins} OG Coins`} data-test-id="subscription-reward" />;
+const Reward = ({ coins, paid }) => <Badge variant="warning-light" size="lg" icon={<CashbackMark />} label={paid ? `+${coins} received` : `+${coins}`} data-test-id="subscription-reward" />;
 
 /** A subscription: what it is, the reward, and the button that turns it on; the button becomes the status "Subscribed" (to whom, for the email), and the reward is paid once. The email has a switch for the wishlist notifications. */
 function Subscription({ item }) {
@@ -32,11 +32,13 @@ function Subscription({ item }) {
   return (
     <Card variant="surface" padding={5} data-test-id={`subscription-${item.id}`}>
       <div className="og-stack og-stack--related og-sub">
-        <div className="og-stack og-stack--hair">
-          <h3 className="og-h3">{item.title}</h3>
-          <p className="og-meta">{item.text}</p>
+        <div className="og-sub__head">
+          <div className="og-stack og-stack--hair">
+            <h3 className="og-h3">{item.title}</h3>
+            <p className="og-meta">{item.text}</p>
+          </div>
+          <Reward coins={item.coins} paid={paid} />
         </div>
-        <Reward coins={item.coins} paid={paid} />
         {item.sub && <Switch label={item.sub.label} checked={on && store.subs[item.sub.id]} disabled={!on} onCheckedChange={(v) => store.setSubscription(item.sub.id, v)} data-test-id={`subscription-${item.sub.id}`} />}
         <div className="og-sub__act">
           {on ? (
