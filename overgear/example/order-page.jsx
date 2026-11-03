@@ -41,8 +41,8 @@ const dateTime = (t) => new Date(t).toLocaleString('en-US', { month: 'short', da
 // ---- the steps ----
 
 /** The timeline of the order: a segment for each step, filled as far as the step is done, in the color of the state of the order. */
-/** The look of a step by its state: passed is green, the current stage is white, the stage where the work goes on is white and moves, the stage with a problem is yellow, the rest is empty. */
-const STEP_BAR = { done: { color: 'success', value: 100 }, current: { color: 'brand', value: 100 }, run: { color: 'brand' }, problem: { color: 'warning', value: 100 }, todo: { color: 'brand', value: 0 } };
+/** The look of a step by its state: passed is a dimmed (disabled) white bar with a check at its text, the current stage is white, the stage where the work goes on is white and moves, the stage with a problem is yellow, the rest is empty. */
+const STEP_BAR = { done: { color: 'brand', value: 100 }, current: { color: 'brand', value: 100 }, run: { color: 'brand' }, problem: { color: 'warning', value: 100 }, todo: { color: 'brand', value: 0 } };
 
 function Steps({ order, now }) {
   const line = stepLooks(order, now);
@@ -54,7 +54,7 @@ function Steps({ order, now }) {
       {steps.map((s) => (
         <li key={s.name} className="og-osteps__step" data-active={s.active || undefined} data-look={s.look} aria-current={s.name === current ? 'step' : undefined} data-test-id={`order-step-${s.name}`}>
           <ProgressBar size="sm" color={STEP_BAR[s.look].color} value={STEP_BAR[s.look].value} aria-label={s.title} />
-          <span className="og-osteps__title">{s.title}</span>
+          <span className="og-osteps__title">{s.look === 'done' && <Icon name="Check" size={14} />}{s.title}</span>
         </li>
       ))}
     </ol>

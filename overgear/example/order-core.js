@@ -239,7 +239,7 @@ export const orderTimeline = (order, now) => {
   return null;
 };
 /**
- * How each step of the timeline looks: `done` (passed, green), `current` (the stage the order is at, white), `run` (the stage where the work goes on, white and moving: searching for a booster, in progress), `problem` (the
+ * How each step of the timeline looks: `done` (passed, a dimmed white bar with a check), `current` (the stage the order is at, white), `run` (the stage where the work goes on, white and moving: searching for a booster, in progress), `problem` (the
  * stage the order is stuck at: a pause or a delay, yellow, on that stage only) and `todo` (not reached, empty). Bars (a failed, a cancelled order) and an order with no timeline come out as they are.
  */
 export const stepLooks = (order, now) => {

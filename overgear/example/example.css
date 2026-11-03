@@ -680,3 +680,7 @@ a { color: inherit; }
 .og-wamount__label { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); }
 /* the terms: 16px from the edge of the surface to the icon (the list bleeds 12px, so 4px of side padding) and a bigger gap between the rows */
 .og-terms [data-slot="list"] { gap: var(--baseui-spacing-3); }
+/* a passed step: the bar of the current white, but disabled (dimmed), and a check before its text */
+.og-osteps__step[data-look="done"] .bui-progress { opacity: 0.4; }
+.og-osteps__title { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); }
+.og-osteps__step[data-look="done"] .og-osteps__title { color: var(--baseui-text-and-icon-secondary); }
