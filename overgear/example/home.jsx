@@ -106,8 +106,8 @@ function Reviews() {
         {REVIEWS.map(([name, text]) => (
           <Card key={name} variant="surface" padding={5}>
             <div className="og-stack">
-              <div className="og-row"><Avatar alt={name} size="sm" /><span className="og-text">{name}</span></div>
-              <span className="og-stars" role="img" aria-label="5 out of 5">{[0, 1, 2, 3, 4].map((i) => <Icon key={i} name="Star01" size={16} filled aria-hidden="true" />)}</span>
+              <div className="og-row"><Avatar alt={name} size="sm" shape="rounded" /><span className="og-text">{name}</span></div>
+              <span className="og-stars" role="img" aria-label="5 out of 5">{[0, 1, 2, 3, 4].map((i) => <Icon key={i} name="Star01" size={20} filled aria-hidden="true" />)}</span>
               <p className="og-text" data-user-content>{text}</p>
             </div>
           </Card>
