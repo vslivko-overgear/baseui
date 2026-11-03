@@ -2,6 +2,7 @@
 
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
+- **Overgear, the page "My orders" has no "Show the state" links at the bottom** (The list, Loading, An error, Empty, Guest account); the states still open by the address (`?demo=`). Overgear checks were not run.
 - **Overgear, the page "My orders":** the number of the orders is in the title ("My orders 34", the number in the secondary color, at its side; the line "34 orders" under the title is gone); the title, the filters and the orders stand closer (16px, were 40px); the filters have no pinned label (the value shows, as a placeholder does), the three filters fill the row and the sorting hugs its value. Overgear checks were not run.
 - **Overgear, the tabs of "Popular products" lose Counter Strike 2** (its tile among the games stays). Overgear checks were not run.
 - **Overgear, the settings of the account:** the log out button is gone; the block "Notifications" (switches: Discord notifications, Email updates, Notifications about wishlist items, the last one needs the email; they are the subscriptions of the wallet, so the first time one is turned on it pays its reward) and the block "Change password" (the current one, the new one with its rule, the repeat; each field has its error after a try, a toast when it is changed). The checks are in `settings-core.js` (tested in `settings-core.test.mjs`); the page is `settings.jsx`. Overgear checks were not run except that test.

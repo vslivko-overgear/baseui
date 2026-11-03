@@ -66,8 +66,6 @@ const Skeletons = () => (
   </div>
 );
 
-/** The states of the page the example lets you open (`?demo=`): the real ones come from the network. */
-const DEMO = [['', 'The list'], ['loading', 'Loading'], ['error', 'An error'], ['empty', 'Empty'], ['temporary', 'Guest account']];
 
 export function Orders({ onLogin, demo = '' }) {
   const store = useStore();
@@ -124,10 +122,6 @@ export function Orders({ onLogin, demo = '' }) {
           </div>
         )}
         {body}
-        <nav className="og-result__demo" aria-label="States of this page">
-          <span className="og-meta">Show the state</span>
-          {DEMO.map(([d, label]) => <a key={label} href={href(`/orders${d ? `?demo=${d}` : ''}`)} onClick={(e) => { e.preventDefault(); go(`/orders${d ? `?demo=${d}` : ''}`); }}>{label}</a>)}
-        </nav>
       </div>
     </Page>
   );
