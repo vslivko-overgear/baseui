@@ -164,7 +164,7 @@ export function Header({ route, onLogin }) {
             {store.user && <IconButton variant="ghost" label="My orders" icon={<Icon name="ShoppingBag01" size={24} />} onClick={() => go('/orders')} />}
             <span title="Favorites" style={{ position: 'relative', display: 'inline-flex' }}>
               <IconButton variant="ghost" label={store.wishlist.length ? `Favorites, ${store.wishlist.length} items` : 'Favorites'} icon={<Icon name="Heart" size={24} />} onClick={() => go('/account?tab=wishlist')} />
-              {store.wishlist.length > 0 && <span style={{ position: 'absolute', top: 2, right: 2, pointerEvents: 'none' }}><Badge type="counter" variant="red" size="sm" label={store.wishlist.length} /></span>}
+              {store.wishlist.length > 0 && <span style={{ position: 'absolute', top: 2, right: 2, pointerEvents: 'none' }}><Badge type="counter" variant="primary" size="sm" label={store.wishlist.length} /></span>}
             </span>
             <span style={{ position: 'relative', display: 'inline-flex' }}>
               <IconButton variant="ghost" label={`Cart, ${store.count} items`} icon={<Icon name="ShoppingCart01" size={24} />} onClick={openMiniCart} />
@@ -207,6 +207,8 @@ export function MobileBar({ route }) {
   const store = useStore();
   // the bottom bar keeps its own floating and glass unless the Theme page hands it back to the theme
   const own = document.documentElement.dataset.ogBottombar !== 'theme';
+  // the badge of the favorites is white (primary), not red: it is drawn here, in the icon, in the place of the badge of the bar
+  const wishBadge = store.wishlist.length > 0 && <Badge type="counter" variant="primary" size="sm" label={store.wishlist.length} className="bui-bottombar__badge" />;
   const first = route.parts[0] || 'home';
   const value = first === 'account' || first === 'orders' || first === 'order' ? (route.query.tab === 'wishlist' ? 'favorites' : 'account') : ['home', 'cart'].includes(first) ? first : ['catalog', 'games', 'offer'].includes(first) ? 'catalog' : 'home';
   const path = { home: '/', catalog: '/catalog', favorites: '/account?tab=wishlist', cart: '/cart', account: '/account' };
@@ -222,7 +224,7 @@ export function MobileBar({ route }) {
         items={[
           { value: 'home', label: 'Home', icon: <Icon name="Home01" size={24} />, activeIcon: <Icon name="Home01" size={24} filled /> },
           { value: 'catalog', label: 'Catalog', icon: <Icon name="Menu02" size={24} />, activeIcon: <Icon name="Menu02" size={24} filled /> },
-          { value: 'favorites', label: 'Favorites', icon: <Icon name="Heart" size={24} />, activeIcon: <Icon name="Heart" size={24} filled />, badge: store.wishlist.length || undefined },
+          { value: 'favorites', label: 'Favorites', icon: <>{<Icon name="Heart" size={24} />}{wishBadge}</>, activeIcon: <>{<Icon name="Heart" size={24} filled />}{wishBadge}</> },
           { value: 'cart', label: 'Cart', icon: <Icon name="ShoppingCart01" size={24} />, activeIcon: <Icon name="ShoppingCart01" size={24} filled />, badge: store.count || undefined },
           { value: 'account', label: 'Account', icon: <Icon name="User01" size={24} />, activeIcon: <Icon name="User01" size={24} filled /> },
         ]}
