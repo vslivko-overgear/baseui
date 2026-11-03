@@ -245,7 +245,7 @@ export function Footer() {
           </svg>
           <img className="og-footer__logo" src={LOGO_FULL} alt="Overgear" />
           <ul className="og-social" aria-label="Social networks">
-            {SOCIAL.map(([n, label, url, icon]) => <li key={n}><IconButton variant="secondary" size="sm" label={label} icon={icon} href={url} target="_blank" rel="noreferrer" /></li>)}
+            {SOCIAL.map(([n, label, url, icon]) => <li key={n}><IconButton variant="secondary" size="sm" tooltip={false} label={label} icon={icon} href={url} target="_blank" rel="noreferrer" /></li>)}
           </ul>
         </div>
         <div className="og-footer__cols">
