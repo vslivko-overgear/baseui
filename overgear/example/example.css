@@ -496,8 +496,10 @@ a { color: inherit; }
 .og--mobile .og-ocard__head { grid-column: 1 / -1; display: flex; align-items: center; gap: var(--baseui-spacing-3); }
 .og--mobile .og-ocard__pic { flex: none; }
 .og--mobile .og-ocard__row > .bui-button { width: 100%; }   /* the price and Reorder share the last row */
-.og-ofilters { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--baseui-spacing-3); }
-.og--mobile .og-ofilters { grid-template-columns: 1fr 1fr; }
+.og-ofilters { display: flex; flex-wrap: wrap; gap: var(--baseui-spacing-2); }
+.og-ofilters > .bui-field, .og-ofilters > [data-slot] { flex: 1 1 160px; min-width: 0; }   /* the filters fill the row, the sorting hugs its value */
+.og-ofilters__sort { flex: none; width: max-content; min-width: 0; }
+.og--mobile .og-ofilters > :not(.og-ofilters__sort) { flex: 1 1 calc(50% - 4px); }
 
 /* the states of a page are opened from a line of links at its end (the demo) */
 .og-result__demo { display: flex; flex-wrap: wrap; align-items: center; gap: var(--baseui-spacing-3); padding-top: var(--baseui-spacing-4); }
@@ -710,3 +712,5 @@ a { color: inherit; }
 /* the games of the home page on a desktop: equal columns, always in the width (six, four on a narrower screen), no scroll */
 .og-tilegrid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--baseui-spacing-2); }
 @media (max-width: 1100px) { .og-tilegrid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+/* the number of the orders in the title: secondary, at its side */
+.og-title__count { margin-inline-start: var(--baseui-spacing-2); color: var(--baseui-text-and-icon-secondary); }

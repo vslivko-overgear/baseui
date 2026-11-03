@@ -113,14 +113,14 @@ export function Orders({ onLogin, demo = '' }) {
   const showControls = phase === 'list' || phase === 'loading' || (phase === 'empty' && filtering);
   return (
     <Page bar>
-      <div className="og-stack og-stack--xl" data-test-id="orders-listing">
-        <PageHead title="My orders" meta={phase === 'list' || phase === 'empty' ? ordersCount(filtered.length) : undefined} />
+      <div className="og-stack" data-test-id="orders-listing">
+        <PageHead title={<>My orders{(phase === 'list' || phase === 'empty') && <span className="og-title__count" data-test-id="orders-count">{filtered.length}</span>}</>} />
         {showControls && (
           <div className="og-ofilters" data-test-id="orders-filters">
-            <Selector size="sm" label="Game" value={game} onValueChange={setGame} options={gameFilters(store.orders, (g) => gameOf(g)?.name)} />
-            <Selector size="sm" label="State" value={state} onValueChange={setState} options={STATE_FILTERS} />
-            <Selector size="sm" label="Status" value={status} onValueChange={setStatus} options={STATUS_FILTERS} />
-            <Selector size="sm" label="Sort by" value={sort} onValueChange={setSort} options={SORTS} data-test-id="orders-sort" />
+            <Selector size="sm" label="Game" floatingLabel={false} value={game} onValueChange={setGame} options={gameFilters(store.orders, (g) => gameOf(g)?.name)} />
+            <Selector size="sm" label="State" floatingLabel={false} value={state} onValueChange={setState} options={STATE_FILTERS} />
+            <Selector size="sm" label="Status" floatingLabel={false} value={status} onValueChange={setStatus} options={STATUS_FILTERS} />
+            <div className="og-ofilters__sort"><Selector size="sm" label="Sort by" floatingLabel={false} value={sort} onValueChange={setSort} options={SORTS} data-test-id="orders-sort" /></div>
           </div>
         )}
         {body}
