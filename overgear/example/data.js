@@ -275,7 +275,7 @@ export const FAQ = [
 ];
 
 export const PAYMENTS = ['Mastercard', 'Visa', 'PayPal', 'Apple Pay', 'Google Pay', 'Stripe', 'SEPA'];
-export const money = (n) => `$${(+n).toFixed(2)}`;
+export const money = (n) => `$${(+n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 export const SEED_ORDERS = [
   { id: 'OG-482913', date: Date.now() - 86400000 * 9, status: 'Completed', items: [{ title: 'Venomous Abyss Heroic', qty: 1, price: 89 }], total: 89 },
   { id: 'OG-479221', date: Date.now() - 86400000 * 31, status: 'Completed', items: [{ title: 'WoW Gold, 500K', qty: 1, price: 24.5 }], total: 24.5 },

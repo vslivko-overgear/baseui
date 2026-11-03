@@ -592,3 +592,29 @@ a { color: inherit; }
 @media (prefers-reduced-motion: reduce) { .og-collapse { transition: none; } }
 [data-motion="off"] .og-collapse { transition: none; }
 .og-methodcard .og-stack--hair { gap: 0; }   /* the name of the method and its fee stand together */
+
+/* the rank: the picture of the shield, the line in the menu and in the account, the page */
+.og-rankbadge { flex: none; display: block; }
+.og-rankmenu { display: flex; flex-direction: column; gap: 0; min-width: 0; }
+.og-rankmenu .og-meta { font: var(--baseui-typography-text-14-regular); }
+.og-avatarrank { position: relative; display: inline-flex; }
+.og-avatarrank__badge { position: absolute; right: -6px; bottom: -4px; display: inline-flex; }
+.og-rank__now { display: flex; align-items: center; gap: var(--baseui-spacing-4); }
+.og-rank__now > .bui-button { margin-inline-start: auto; }
+.og-rank__goal { align-items: flex-end; }
+.og-rank__next { display: flex; align-items: center; gap: var(--baseui-spacing-3); text-align: right; }
+.og-rank__nextname { align-items: flex-end; }
+.og-rtable { width: 100%; border-collapse: collapse; font: var(--baseui-typography-text-14-regular); }
+.og-rtable th, .og-rtable td { padding: var(--baseui-spacing-3) var(--baseui-spacing-2); text-align: center; vertical-align: middle; border-bottom: 1px solid var(--baseui-border-primary); }
+.og-rtable th:first-child, .og-rtable td:first-child { text-align: left; }
+.og-rtable thead th { font: var(--baseui-typography-text-14-semi-bold); }
+.og-rtable tbody th { font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-secondary); }
+.og-rtable td strong { font: var(--baseui-typography-text-16-semi-bold); }
+.og-rtable__now { background: var(--baseui-background-secondary); }
+.og-rtable__name { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); }
+.og-rflag { display: inline-flex; color: var(--baseui-text-and-icon-secondary); }
+.og-rflag--on { color: var(--baseui-extensions-text-and-icon-success); }
+.og-bullets--num { counter-reset: og-n; }
+.og-bullets--num li { counter-increment: og-n; }
+.og-bullets--num li::before { content: counter(og-n) "."; flex: none; min-width: 2ch; }
+.og--mobile .og-rank__now { flex-wrap: wrap; }

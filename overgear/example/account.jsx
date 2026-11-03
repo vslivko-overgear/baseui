@@ -14,6 +14,8 @@ import { offerOf } from './data.js';
 import { Page, PageHead, OfferListing } from './ui.jsx';
 import { useStore } from './store.jsx';
 import { BalanceCard } from './wallet.jsx';
+import { RankBadge, useRank } from './rank.jsx';
+import { rankLine } from './rank-core.js';
 import { useMedia } from './util.js';
 
 
@@ -34,6 +36,15 @@ function Preferences({ before, children }) {
       </List>
       {sheets}
     </>
+  );
+}
+
+/** The profile row: the avatar with the picture of the rank at its corner, the nick, and the rank under it ("Rank: Knight"); a click opens the page of the rank. */
+function ProfileRow() {
+  const store = useStore();
+  const { grade } = useRank();
+  return (
+    <ListItem avatar={<span className="og-avatarrank"><Avatar name={store.user.name} size="lg" /><span className="og-avatarrank__badge"><RankBadge grade={grade} size={22} /></span></span>} subtitle={rankLine(grade)} onClick={() => go('/rank')} details={<Value />} data-test-id="profile-rank-row">{store.user.name}</ListItem>
   );
 }
 
@@ -64,7 +75,8 @@ export function Account({ tab, onLogin }) {
           <h1 className="og-title">Account</h1>
           {mobile && <BalanceCard />}
           <List aria-label="Profile">
-            <ListItem avatar={<Avatar name={store.user.name} size="lg" />} subtitle={store.user.email} onClick={() => go('/account?tab=settings')} details={<Value />}>{store.user.name}</ListItem>
+            <ProfileRow />
+
           </List>
           <Preferences before={<>
             <ListItem icon={<Icon name="ShoppingBag01" size={24} />} onClick={() => go('/orders')} details={<Value>{store.orders.length}</Value>}>My orders</ListItem>

@@ -15,6 +15,7 @@ import { usePrefs } from './prefs.jsx';
 import { CatalogColumns } from './catalog.jsx';
 import { Search } from './search.jsx';
 import { WalletButton } from './wallet.jsx';
+import { RankBadge, useRank } from './rank.jsx';
 import { go, href, openMiniCart } from './util.js';
 import { GAMES } from './data.js';
 import { PaymentLogos, PAY_MAIN, PAY_BADGES } from './ui.jsx';
@@ -84,11 +85,12 @@ function Account({ onLogin }) {
   const { currency, language, open, sheets } = usePrefs();
   const [menu, setMenu] = useState(false);
   const timer = useRef(null);
+  const { grade } = useRank();
   if (!store.user) return <Button variant="secondary" size="md" textSize={14} label="Log in" onClick={onLogin} />;
   // the profile menu opens on hover (and on a click) with the rows of the account list of the phone
   const hover = (on) => { clearTimeout(timer.current); timer.current = setTimeout(() => setMenu(on), on ? 0 : 160); };
   const choose = (v) => {
-    if (v === 'logout') { store.logout(); go('/'); } else if (v === 'currency' || v === 'language') open(v); else if (v === 'support') go('/info/contact'); else if (v === 'orders') go('/orders'); else go(`/account?tab=${v}`);
+    if (v === 'logout') { store.logout(); go('/'); } else if (v === 'currency' || v === 'language') open(v); else if (v === 'support') go('/info/contact'); else if (v === 'orders') go('/orders'); else if (v === 'rank') go('/rank'); else go(`/account?tab=${v}`);
   };
   return (
     <>
@@ -103,6 +105,8 @@ function Account({ onLogin }) {
         trigger={<IconButton variant="ghost" label="Profile" tooltip={false} icon={<Icon name="User01" size={24} />} />}
         value={null}
         options={[
+          { value: 'rank', label: <span className="og-rankmenu"><strong>{store.user.name}</strong><span className="og-meta" data-test-id="profile-popup-rank">{`Rank • ${grade.name}`}</span></span>, icon: <RankBadge grade={grade} size={36} /> },
+          { type: 'divider' },
           { value: 'orders', label: 'My orders', icon: <Icon name="ShoppingBag01" size={20} /> },
           { value: 'wishlist', label: 'Favorites', icon: <Icon name="Heart" size={20} /> },
           { value: 'settings', label: 'Settings', icon: <Icon name="Settings01" size={20} /> },
