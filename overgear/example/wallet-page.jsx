@@ -90,9 +90,12 @@ export function WalletPage({ onLogin }) {
             </List>
           </Card>
         </Section>
-        <Section title={`Get ${total} OG Coins for subscriptions`}>
+        <Section>
           <div className="og-stack">
-            <p className="og-text">Stay in the loop with updates and get rewards</p>
+            <div className="og-stack og-stack--close">
+              <h2 className="og-h2">{`Get ${total} OG Coins for subscriptions`}</h2>
+              <p className="og-text">Stay in the loop with updates and get rewards</p>
+            </div>
             <div className="og-subs-grid">{SUBSCRIPTIONS.map((item) => <Subscription key={item.id} item={item} />)}</div>
           </div>
         </Section>
