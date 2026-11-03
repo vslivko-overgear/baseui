@@ -623,3 +623,5 @@ a { color: inherit; }
 
 .og-rank__how { font: var(--baseui-typography-text-16-regular); color: var(--baseui-text-and-icon-primary); }
 .og-ostatus__foot { display: flex; flex-direction: column; gap: var(--baseui-spacing-2); }
+/* the guarantee under the button of the offer: one green line with a shield */
+.og-guarantee { margin: 0; display: flex; align-items: center; justify-content: center; gap: var(--baseui-spacing-2); font: var(--baseui-typography-text-14-regular); color: var(--baseui-extensions-text-and-icon-success); }

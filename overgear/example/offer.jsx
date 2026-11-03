@@ -22,7 +22,6 @@ import { Faq } from './games.jsx';
 const MODES = [{ value: 'piloted', label: 'Piloted' }, { value: 'self', label: 'Self-play' }, { value: 'remote', label: 'Remote control' }];
 const EXTRAS = [{ value: 'express', label: 'Express start, +$12', price: 12 }, { value: 'stream', label: 'Live stream, +$8', price: 8 }, { value: 'loot', label: 'Priority loot, +$20', price: 20 }];
 const TRUST = [
-  ['ShieldTick', '100% moneyback guarantee', 'The money is held until you confirm the result'],
   ['UserCheck01', 'ID-verified pros', 'Every player passes our selection and checks'],
   ['Lock01', 'Secure payment', 'Cards and wallets are processed by certified providers'],
   ['LifeBuoy01', '24/7 support', 'A human answers in the order chat at any hour'],
@@ -96,6 +95,7 @@ export function Offer({ id }) {
               </div>
               <div className="og-stack">
                 <Button variant="primary" size="lg" width="100%" label="Add to cart" icon={<Icon name="ShoppingCart01" size={24} />} onClick={add} />
+                <p className="og-guarantee" data-test-id="offer-guarantee"><Icon name="ShieldTick" size={20} />100% moneyback guarantee</p>
               </div>
             </div>
           </Card>
