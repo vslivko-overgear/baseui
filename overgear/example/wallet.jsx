@@ -108,6 +108,7 @@ export function TopUpDialog() {
           <TextInput id="og-topup-amount" label="Amount, USD" inputMode="decimal" autoComplete="off" prefix="$" value={text} onChange={(e) => setText(e.target.value)} status={tried && error ? 'error' : undefined} caption={tried && error ? error : undefined} />
           <TokenGroup size="sm" aria-label="Amount suggestions" value={SUGGESTIONS.includes(amount) ? [String(amount)] : []} onValueChange={(v) => v.length && setText(v[v.length - 1])} options={SUGGESTIONS.map((n) => ({ value: String(n), label: <span className="og-topup__chip">{`$${n}`}<Badge variant="warning-light" size="sm" label={`+${bonusRateFor(n)}%`} icon={<CashbackMark />} /></span> }))} />
         </div>
+        <div className="og-stack og-stack--close">
         <div className="og-topup__box" data-test-id="topup-bonus">
           {bonus ? (
             <>
@@ -122,6 +123,7 @@ export function TopUpDialog() {
           )}
         </div>
         <p className="og-topup__rules">{`One coin is equal to $1. Pay up to ${PURCHASE_LIMIT}% of shop products and currencies. Cannot be applied with discounted items and promotional codes`}</p>
+        </div>
         <Button variant="primary" size="lg" textSize={16} width="100%" type="submit" loading={paying} label={amount != null && !error ? `Top up ${money(amount)}` : 'Top up'} data-test-id="topup-submit" />
       </form>
     </Dialog>
