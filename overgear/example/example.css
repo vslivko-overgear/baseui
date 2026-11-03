@@ -707,5 +707,6 @@ a { color: inherit; }
 /* the number of the orders in the title: secondary, at its side */
 .og-title__count { margin-inline-start: var(--baseui-spacing-2); color: var(--baseui-text-and-icon-secondary); }
 
-/* the listings of products have four cards in a row on a desktop (a card is 280px at least) */
+/* the listings of products have four cards in a row on a desktop (a card is 280px at least); the compact one of the home page has five */
 .og { --bui-listing-min: 280px; }
+.og .og-listing--five { --bui-listing-min: 200px; }

@@ -229,7 +229,7 @@ export function Home() {
               </Bleed>
             )}
           </div>
-          <OfferListing showGame={category === 'all'} more="button" offers={Array.from({ length: loaded }, (_, i) => ({ ...products[i % products.length], listKey: `${category}-${kind}-${i}` }))} hasMore={loaded < MAX_LOADED} loading={loadingMore} onLoadMore={loadMore} />
+          <OfferListing compact showGame={category === 'all'} more="button" offers={Array.from({ length: loaded }, (_, i) => ({ ...products[i % products.length], listKey: `${category}-${kind}-${i}` }))} hasMore={loaded < MAX_LOADED} loading={loadingMore} onLoadMore={loadMore} />
         </Section>
 
       </div>

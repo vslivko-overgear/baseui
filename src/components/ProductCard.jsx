@@ -3,6 +3,7 @@ import { describe } from '../doc.js';
 import { ClickableCard } from './Card.jsx';
 import { Badge } from './Badge.jsx';
 import { Icon } from './Icon.jsx';
+import { BuiltinIcon } from '../builtin-icons.jsx';
 import { IconButton } from './Button.jsx';
 
 /** The heart over the picture of a card: a button of its own (it sits next to the card, not inside it), with a short move when it is tapped. */
@@ -55,15 +56,12 @@ export function ProductCard({ title, price, image, imageAlt = '', fallbackIcon =
             <span className="bui-product-card__title">{title}</span>
             {points?.length > 0 && (
               <span className="bui-product-card__points">
-                {points.map((point) => {
-                  const { text, icon } = typeof point === 'string' ? { text: point } : point;
-                  return (
-                    <span key={text} className="bui-product-card__point" title={text}>
-                      {icon && <Icon name={icon} size={16} filled />}
-                      <span>{text}</span>
-                    </span>
-                  );
-                })}
+                {points.map((point) => (
+                  <span key={point} className="bui-product-card__point" title={point}>
+                    <BuiltinIcon name="check" size={16} strokeWidth={2.5} />
+                    <span>{point}</span>
+                  </span>
+                ))}
               </span>
             )}
             {(rating != null || meta) && (
@@ -96,7 +94,7 @@ describe(ProductCard, 'The card of a product in a listing: a picture with a badg
   badge: ['string', null, 'A mark over the top left corner of the picture: Sale, Hot offer'],
   badgeVariant: ["'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'", "'secondary'", 'Color of the badge'],
   eyebrow: ['ReactNode', null, 'A line above the price in 12px Secondary: the game or the category the product belongs to'],
-  points: ["Array<string | { text: string, icon?: string }>", null, 'The selling points under the title, up to three, one line each (a point that does not fit ends with an ellipsis): a text, or a text with an icon of the catalog shown filled'],
+  points: ['string[]', null, 'The selling points under the title, up to three, each a line with a check (a point that does not fit ends with an ellipsis). With points the title takes one line, so the points stand close under it'],
   rating: ['number', null, 'Rating, shown with a star'],
   meta: ['ReactNode', null, 'The line on the right of the rating: sold, delivery time'],
   favorite: ['{ active?: boolean, onToggle?: (active: boolean) => void, label?: string }', null, 'The heart over the top right corner of the picture: filled when active; tapping it plays a short move'],

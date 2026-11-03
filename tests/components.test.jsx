@@ -452,12 +452,11 @@ describe('Card padding and Stack relation', () => {
 });
 
 describe('ProductCard points', () => {
-  test('the points are lines under the title, with an icon when given', () => {
-    const { container } = render(<ProductCard title="Gift" price="$5" points={['Fast', { text: 'Safe', icon: 'ShieldTick' }]} />);
+  test('the points are lines under the title, each with a check', () => {
+    const { container } = render(<ProductCard title="Gift" price="$5" points={['Fast', 'Safe']} />);
     const points = [...container.querySelectorAll('.bui-product-card__point')];
     expect(points.map((p) => p.textContent)).toEqual(['Fast', 'Safe']);
-    expect(points[0].querySelector('svg')).toBeNull();
-    expect(points[1].querySelector('svg')).not.toBeNull();
+    for (const point of points) expect(point.querySelector('svg')).not.toBeNull();
     const body = container.querySelector('.bui-product-card__body').children;
     expect([...body].findIndex((c) => c.className.includes('__points'))).toBe([...body].findIndex((c) => c.className.includes('__title')) + 1);
   });

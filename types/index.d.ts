@@ -1917,9 +1917,9 @@ export interface ProductCardProps {
    */
   eyebrow?: ReactNode;
   /**
-   * The selling points under the title, up to three, one line each (a point that does not fit ends with an ellipsis): a text, or a text with an icon of the catalog shown filled
+   * The selling points under the title, up to three, each a line with a check (a point that does not fit ends with an ellipsis). With points the title takes one line, so the points stand close under it
    */
-  points?: Array<string | { text: string, icon?: string }>;
+  points?: string[];
   /**
    * Rating, shown with a star
    */

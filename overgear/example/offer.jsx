@@ -16,7 +16,7 @@ import { Hint } from '../../src/components/Hint.jsx';
 import { Bleed } from '../../src/components/Layout.jsx';
 import { go, useMedia } from './util.js';
 import { OFFERS, REVIEWS, SERVICES, money, offerOf, gameOf, sold } from './data.js';
-import { useAddedToCart, Page, PageHead, Section, OfferListing, Stars, WishButton, CashbackTag, CASHBACK, PaymentLogos, PAY_OFFER, USP_ICONS } from './ui.jsx';
+import { useAddedToCart, Page, PageHead, Section, OfferListing, Stars, WishButton, CashbackTag, CASHBACK, PaymentLogos, PAY_OFFER } from './ui.jsx';
 import { useStore } from './store.jsx';
 import { Faq } from './games.jsx';
 
@@ -47,6 +47,7 @@ const USP_MORE = [
   (b) => `${b}. The clock starts when the booster begins, and you follow the progress in the order chat until the job is done`,
   (b) => `${b}. Your loot, gold and progress stay with you, and the money is released only when you confirm the result`,
 ];
+const USP_ICONS = ['Zap', 'Star01', 'ShieldTick'];
 const DIFFICULTY = [{ value: 'normal', label: 'Normal', k: 0.6 }, { value: 'heroic', label: 'Heroic', k: 1 }, { value: 'mythic', label: 'Mythic', k: 2.2 }];
 
 /** An offer: what it gives, the options that change the price, the purchase panel, details and reviews. */

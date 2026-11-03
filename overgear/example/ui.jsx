@@ -109,9 +109,6 @@ export function WishButton({ id, compact, variant = 'ghost', text = false }) {
   return <IconButton variant={variant} size={compact ? 'xsm' : 'md'} tooltip={false} label={on ? 'Remove from favorites' : 'Add to favorites'} icon={icon} onClick={(e) => { e.stopPropagation(); setMove(on ? 'off' : 'on'); store.toggleWish(id); }} />;
 }
 
-/** The icons of the three selling points of an offer (the tags of its page and the lines of its card). */
-export const USP_ICONS = ['Zap', 'Star01', 'ShieldTick'];
-
 /** The props of a ProductCard for an offer (the card of the design system), with the heart of the favorites. */
 export function offerProps(o, store, key = o.id, showGame = false) {
   const game = gameOf(o.game);
@@ -120,7 +117,7 @@ export function offerProps(o, store, key = o.id, showGame = false) {
     title: o.title,
     price: money(o.price),
     eyebrow: showGame ? game.name : undefined,
-    points: o.bullets.slice(0, 3).map((text, i) => ({ text, icon: USP_ICONS[i] })),
+    points: o.bullets.slice(0, 3),
     image: o.image,
     imageAlt: `${game.name}: ${o.title}`,
     badge: o.badge,
@@ -133,9 +130,11 @@ export function offerProps(o, store, key = o.id, showGame = false) {
 }
 
 /** The offers as a listing of the design system: whole rows, "Show more" after the first two (the setting of the example). */
-export function OfferListing({ offers, showGame = false, ...rest }) {
+export function OfferListing({ offers, showGame = false, compact = false, className, ...rest }) {
   const store = useStore();
-  return <ProductListing more="infinite" items={offers.map((o, i) => offerProps(o, store, o.listKey ?? `${o.id}~${i}`, showGame))} {...rest} />;
+  // `compact`: five cards in a row and no selling points (the home page); the others have four, each with its three points
+  const items = offers.map((o, i) => { const props = offerProps(o, store, o.listKey ?? `${o.id}~${i}`, showGame); return compact ? { ...props, points: undefined } : props; });
+  return <ProductListing more="infinite" items={items} className={compact ? `og-listing--five ${className ?? ''}` : className} {...rest} />;
 }
 
 export const Link = ({ to, children, ...rest }) => <a href={href(to)} {...rest}>{children}</a>;
