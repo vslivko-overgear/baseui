@@ -23,7 +23,7 @@ import { Bleed } from '../../src/components/Layout.jsx';
 import { go } from './util.js';
 import { GAMES, CATEGORIES, OFFERS, SERVICES, SELLERS, REGIONS, REALMS, FACTIONS, FAQ, WOW_VERSIONS, money, gameOf } from './data.js';
 import { matchGames, matchOffers } from './suggest.js';
-import { useAddedToCart, Page, PageHead, Section, GameTile, OfferListing, Stars, SortChip } from './ui.jsx';
+import { useAddedToCart, Page, PageHead, Section, GameTile, OfferListing, Stars, SortChip, CARD_X } from './ui.jsx';
 import { useStore } from './store.jsx';
 
 /** The offers of all the games: a listing like the page of a game, filtered by the group of games and sorted. */
@@ -160,7 +160,7 @@ export function Gold() {
             />
           </div>
         </div>
-        <Card variant="surface" padding={5}>
+        <Card variant="surface" padding={5} style={CARD_X}>
           <div className="og-stack og-stack--lg og-sticky">
             <h2 className="og-h3">{seller.name}</h2>
             <Slider label="Gold, thousands" min={50} max={Math.max(100, seller.stock)} step={50} value={Math.min(amount, seller.stock)} onValueChange={(v) => setAmount(v)} showValue />

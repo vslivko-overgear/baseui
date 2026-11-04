@@ -14,7 +14,7 @@ import { Status } from '../../src/components/Status.jsx';
 import { Table, pixel, proportional } from '../../src/components/Table.jsx';
 import { go, href, useMedia } from './util.js';
 import { money } from './data.js';
-import { Page, PageHead } from './ui.jsx';
+import { Page, PageHead, CARD_X } from './ui.jsx';
 import { useStore } from './store.jsx';
 import { spentLastYear, gradeFor, progressTo, BENEFITS, benefitValue, rankHistory } from './rank-core.js';
 
@@ -75,7 +75,7 @@ export function RankPage({ onLogin }) {
     <Page bar>
       <div className="og-stack og-stack--xl" data-test-id="rank-page" data-rank={grade.code}>
         <PageHead crumbs={[{ label: 'Home', href: '#/' }, { label: 'Account', href: '#/account' }, { label: 'Your Rank' }]} media={<Avatar name={store.user.name} src={store.user.avatar} size={64} shape="rounded" />} title={store.user.name} titleTestId="rank-user" titleGap={0} action={<IconButton variant="secondary" size="sm" label="Settings" icon={<Icon name="Settings01" size={24} />} onClick={() => go('/account?tab=settings')} data-test-id="rank-edit" />}><p className="og-text" data-test-id="rank-email">{store.user.email}</p></PageHead>
-        <Card variant="surface" padding={5}>
+        <Card variant="surface" padding={5} style={CARD_X}>
           <div className="og-stack og-stack--lg">
             <div className="og-rank__now">
               <RankBadge grade={grade} size={64} />
@@ -106,7 +106,7 @@ export function RankPage({ onLogin }) {
             </div>
           </div>
         </Card>
-        <Card variant="surface" padding={5}>
+        <Card variant="surface" padding={5} style={CARD_X}>
           <div className="og-stack og-stack--lg" data-test-id="rank-how">
             <h2 className="og-h2">How do ranks work?</h2>
             <ol className="og-bullets og-bullets--num og-rank__how">

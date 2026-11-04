@@ -5,7 +5,7 @@ import { Card } from '../../src/components/Card.jsx';
 import { Switch } from '../../src/components/Switch.jsx';
 import { TextInput } from '../../src/components/TextInput.jsx';
 import { useToast } from '../../src/components/Toast.jsx';
-import { Section } from './ui.jsx';
+import { Section, CARD_X } from './ui.jsx';
 import { useStore } from './store.jsx';
 import { SUBSCRIPTIONS } from './wallet-core.js';
 import { passwordErrors, passwordValid, avatarError } from './settings-core.js';
@@ -22,7 +22,7 @@ function Notifications() {
     if (gets) toast({ message: `${SUBSCRIPTIONS.find((s) => s.id === id).coins} OG Coins credited`, status: 'success' });
   };
   return (
-    <Card variant="surface" padding={5}>
+    <Card variant="surface" padding={5} style={CARD_X}>
       <div className="og-stack" data-test-id="settings-notifications">
         <Switch label="Discord notifications" checked={store.subs.discord} onCheckedChange={(v) => toggle('discord', v)} data-test-id="settings-notify-discord" />
         <Switch label="Email updates" checked={store.subs.email} onCheckedChange={(v) => toggle('email', v)} data-test-id="settings-notify-email" />
@@ -49,7 +49,7 @@ function Password() {
   };
   const field = (key, label, caption) => <TextInput label={label} type="password" autoComplete={key === 'current' ? 'current-password' : 'new-password'} value={values[key]} {...form.field(key, { caption, onChange: set(key) })} data-test-id={`settings-password-${key}`} />;
   return (
-    <Card variant="surface" padding={5}>
+    <Card variant="surface" padding={5} style={CARD_X}>
       <form className="og-stack" noValidate onSubmit={save} style={{ maxWidth: 480 }} data-test-id="settings-password">
         {field('current', 'Current password')}
         {field('next', 'New password', 'At least 8 characters, with a letter and a digit')}
@@ -109,7 +109,7 @@ export function Settings() {
   const [name, setName] = useState(store.user?.name || '');
   return (
     <div className="og-stack og-stack--xl" data-test-id="settings-page">
-      <Card variant="surface" padding={5}>
+      <Card variant="surface" padding={5} style={CARD_X}>
         <div className="og-stack" style={{ maxWidth: 480 }}>
           <AvatarEditor />
           <TextInput label="Name" value={name} onChange={(e) => setName(e.target.value)} />

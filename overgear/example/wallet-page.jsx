@@ -11,7 +11,7 @@ import { Switch } from '../../src/components/Switch.jsx';
 import { useToast } from '../../src/components/Toast.jsx';
 import { go } from './util.js';
 import { money } from './data.js';
-import { Page, PageHead, Section, CashbackMark } from './ui.jsx';
+import { Page, PageHead, Section, CashbackMark, CARD_X } from './ui.jsx';
 import { useStore } from './store.jsx';
 import { useRank, RankBadge } from './rank.jsx';
 import { SUBSCRIPTIONS, coinsText, openTopUp } from './wallet-core.js';
@@ -31,7 +31,7 @@ function Subscription({ item }) {
     toast({ message: gets ? `${item.coins} OG Coins credited` : `${item.title} is on`, status: 'success' });
   };
   return (
-    <Card variant="surface" padding={5} data-test-id={`subscription-${item.id}`}>
+    <Card variant="surface" padding={5} style={CARD_X} data-test-id={`subscription-${item.id}`}>
       <div className="og-stack og-stack--related og-sub">
         <div className="og-sub__head">
           <div className="og-stack og-stack--hair">
@@ -55,7 +55,7 @@ function Subscription({ item }) {
 
 /** One amount of the wallet on its own card, from the left edge. */
 const Amount = ({ label, hint, children, testId }) => (
-  <Card variant="surface" padding={5} className="bui-nested">
+  <Card variant="surface" padding={5} style={CARD_X} className="bui-nested">
     <div className="og-stack og-stack--pair og-wamount" data-test-id={testId}>
       <p className="og-meta og-wamount__label">{label}{hint && <Hint label={`About ${label}`} content={hint} />}</p>
       <p className="og-balance__money">{children}</p>

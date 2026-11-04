@@ -15,6 +15,8 @@ import { go, href, useMedia, openMiniCart } from './util.js';
 import { money, gameOf, GAME_TILES, EMOJI, sold } from './data.js';
 
 const CARD_TONE = { blue: 'blue', 'blue-light': 'blue', green: 'green', orange: 'orange', pink: 'pink', red: 'red' };
+/** The side padding of a card of the pages (the page sets `--og-card-x`: 24 on a desktop, 20 on a phone); the top and the bottom stay 20. */
+export const CARD_X = { paddingInline: 'var(--og-card-x)' };
 export const BADGE_VARIANT = { 'Hot Offer': 'critical', Sale: 'success', 'Save More': 'accent', Bundle: 'accent', Seasonal: 'warning' };
 
 /** The head of a page: breadcrumbs, then the title with its line under it as one group. `media` stands at the start of the head (an avatar; with `mediaTop` it is level with the top of the title, not centered), `action` at its end, on the right edge of the block (an edit button). */

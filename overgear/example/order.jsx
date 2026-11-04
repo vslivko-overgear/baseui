@@ -14,7 +14,7 @@ import { Icon } from '../../src/components/Icon.jsx';
 import { useToast } from '../../src/components/Toast.jsx';
 import { href } from './util.js';
 import { money } from './data.js';
-import { CashbackMark, CashbackTag, CASHBACK_HINT, cashbackOf } from './ui.jsx';
+import { CashbackMark, CashbackTag, CASHBACK_HINT, cashbackOf, CARD_X } from './ui.jsx';
 import { useStore } from './store.jsx';
 
 
@@ -113,7 +113,7 @@ export function OrderSummary({ fee, label = 'Amount to pay', amount, action, onA
   const store = useStore();
   return (
     <>
-      <Card variant="surface" padding={5} radius="var(--bui-radius-custom-28)">
+      <Card variant="surface" padding={5} style={CARD_X} radius="var(--bui-radius-custom-28)">
         <div className="og-stack og-stack--lg">
           <div className="og-stack">
             <div className="og-sum__row"><span className="og-sum__label">Item(s)</span><span className="og-sum__value">{money(store.subtotal)}</span></div>

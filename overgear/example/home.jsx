@@ -11,7 +11,7 @@ import { COOKIE } from '../theme.js';
 import { audienceOf, tileLayout, splitOffers, gameTabs, TILE_GAP, fitTiles } from '../audience.js';
 import { GAMES, OFFERS, REVIEWS, TILE_ROWS, gameOf, kindsOf } from './data.js';
 import { Bleed } from '../../src/components/Layout.jsx';
-import { Page, Section, GameTile, GameChip, OfferListing } from './ui.jsx';
+import { Page, Section, GameTile, GameChip, OfferListing, CARD_X } from './ui.jsx';
 
 // the 3D icons of the headline: the blue ones of Overgear (assets/hero), 160 px for a 50 px icon, so they stay sharp on a screen of 3x
 const ART = './assets/hero';
@@ -104,7 +104,7 @@ function Reviews() {
     >
       <div className="og-scroller" ref={row}>
         {REVIEWS.map(([name, text]) => (
-          <Card key={name} variant="surface" padding={5}>
+          <Card key={name} variant="surface" padding={5} style={CARD_X}>
             <div className="og-stack">
               <div className="og-row"><Avatar alt={name} size="sm" shape="rounded" /><span className="og-text">{name}</span></div>
               <span className="og-stars" role="img" aria-label="5 out of 5">{[0, 1, 2, 3, 4].map((i) => <Icon key={i} name="Star01" size={20} filled aria-hidden="true" />)}</span>
@@ -239,7 +239,7 @@ export function Home() {
           <ol className="og-steps">
             {STEPS.map(([t, d], i) => (
               <li key={t}>
-                <Card variant="surface" padding={5}>
+                <Card variant="surface" padding={5} style={CARD_X}>
                   <span className="og-step-n" aria-hidden="true">{i + 1}</span>
                   <div className="og-stack og-stack--tight"><h3 className="og-h3">{t}</h3><p className="og-text">{d}</p></div>
                 </Card>
@@ -250,7 +250,7 @@ export function Home() {
         <Section title="Gamers trust Overgear to supply everything they're looking for in online games">
           <div className="og-grid og-grid--three">
             {BENEFITS.map(([img, t, d]) => (
-              <Card key={t} variant="surface" padding={5}>
+              <Card key={t} variant="surface" padding={5} style={CARD_X}>
                 <div className="og-stack og-stack--related og-center"><img src={`./assets/benefits/${img}.png`} alt="" width="96" height="96" loading="lazy" /><div className="og-stack og-stack--tight"><h3 className="og-h3">{t}</h3><p className="og-text">{d}</p></div></div>
               </Card>
             ))}

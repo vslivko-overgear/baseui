@@ -14,7 +14,7 @@ import { useStore } from './store.jsx';
 import { money } from './data.js';
 import { go } from './util.js';
 import { Badge } from '../../src/components/Badge.jsx';
-import { CashbackMark } from './ui.jsx';
+import { CashbackMark, CARD_X } from './ui.jsx';
 import { useFieldErrors } from '../../src/use-field-errors.js';
 import { OPEN_TOP_UP, BONUS_RULES, openTopUp, parseAmount, amountError, coinsText, bonusFor, bonusRateFor, lowestBonusAmount, SUGGESTIONS, PURCHASE_LIMIT } from './wallet-core.js';
 
@@ -62,7 +62,7 @@ export function WalletButton() {
 export function BalanceCard() {
   const store = useStore();
   return (
-    <Card variant="surface" padding={5}>
+    <Card variant="surface" padding={5} style={CARD_X}>
       <div className="og-stack og-stack--related">
         <div className="og-balance">
           <div className="og-stack og-stack--hair"><p className="og-meta">Balance</p><p className="og-balance__money">{money(store.balance)}</p></div>

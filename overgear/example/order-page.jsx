@@ -20,7 +20,7 @@ import { TextInput } from '../../src/components/TextInput.jsx';
 import { useToast } from '../../src/components/Toast.jsx';
 import { go, href, useMedia } from './util.js';
 import { money, gameOf } from './data.js';
-import { Page, PageHead } from './ui.jsx';
+import { Page, PageHead, CARD_X } from './ui.jsx';
 import { useFieldErrors } from '../../src/use-field-errors.js';
 import { useStore } from './store.jsx';
 import { reorderPath } from './orders.jsx';
@@ -124,7 +124,7 @@ function DeliveryDetails({ order, onSave }) {
   };
   if (unfilled) {
     return (
-      <Card variant="surface" padding={5} data-test-id="order-delivery-form">
+      <Card variant="surface" padding={5} style={CARD_X} data-test-id="order-delivery-form">
         <Form onSubmit={submit} noValidate>
           <FormSection title="Fill Delivery Details" titleAs="h2">
             <p className="og-text">Please provide your delivery details—we can’t start your order until they’re submitted. Rest assured, your information is safe and private with us. Please note, after submission any changes can be made through manager</p>
@@ -138,7 +138,7 @@ function DeliveryDetails({ order, onSave }) {
     );
   }
   return (
-    <Card variant="surface" padding={5} data-test-id="order-delivery-details">
+    <Card variant="surface" padding={5} style={CARD_X} data-test-id="order-delivery-details">
       <div className="og-stack">
         <h2 className="og-h3">Delivery details</h2>
         <List aria-label="Delivery details">
@@ -204,7 +204,7 @@ function ReviewAndTips({ order, now, onReview, onTip }) {
   const submit = (rate, text) => { onReview(rate, text); setReviewOpen(false); if (askTrustpilot(rate)) setTrust(true); };
   return (
     <>
-      <Card variant="surface" padding={5} data-test-id="order-review">
+      <Card variant="surface" padding={5} style={CARD_X} data-test-id="order-review">
         {order.review ? (
           <div className="og-stack">
             <h2 className="og-h3">Your review</h2>
@@ -222,7 +222,7 @@ function ReviewAndTips({ order, now, onReview, onTip }) {
           </div>
         )}
       </Card>
-      <Card variant="surface" padding={5} data-test-id="order-tips">
+      <Card variant="surface" padding={5} style={CARD_X} data-test-id="order-tips">
         <div className="og-stack">
           <div className="og-stack og-stack--close">
             <h2 className="og-h3">Did you enjoy the experience?</h2>
@@ -242,7 +242,7 @@ function ReviewAndTips({ order, now, onReview, onTip }) {
 
 function JoinPanel({ onJoin }) {
   return (
-    <Card variant="surface" padding={5} data-test-id="order-join">
+    <Card variant="surface" padding={5} style={CARD_X} data-test-id="order-join">
       <div className="og-stack">
         <div className="og-stack og-stack--close">
           <h2 className="og-h3">Fast and handy Discord messages</h2>
@@ -271,7 +271,7 @@ function InfoPanel({ order }) {
     ['Payment method', METHOD[order.method] || 'Card'],
   ].filter(([, v]) => v);
   return (
-    <Card variant="surface" padding={5} data-test-id="order-info">
+    <Card variant="surface" padding={5} style={CARD_X} data-test-id="order-info">
       <div className="og-stack">
         <h2 className="og-h3">Order info</h2>
         <dl className="og-info">{rows.map(([k, v]) => <div key={k} className="og-info__row"><dt className="og-meta">{k}</dt><dd>{v}</dd></div>)}</dl>
@@ -289,7 +289,7 @@ function Conversation({ order, onSend }) {
   const send = (e) => { e.preventDefault(); if (!text.trim()) return; onSend(text.trim()); setText(''); };
   const messages = [{ from: 'system', text: 'The order was placed', at: order.createdAt }, ...order.messages];
   return (
-    <Card variant="surface" padding={5} data-test-id="order-chat">
+    <Card variant="surface" padding={5} style={CARD_X} data-test-id="order-chat">
       <div className="og-stack">
         <h2 className="og-h3">{`Chat with ${who}`}</h2>
         <ul className="og-chat" aria-label="Messages">
@@ -310,7 +310,7 @@ const WHO = { seller: 'Seller', time: 'Time', support: 'Support', system: 'Syste
 function Next({ order, now, onEvent }) {
   const events = nextEvents(order, now);
   return (
-    <Card variant="surface" padding={5} className="og-next" data-test-id="order-next">
+    <Card variant="surface" padding={5} style={CARD_X} className="og-next" data-test-id="order-next">
       <div className="og-stack og-stack--close">
         <h2 className="og-h3">What happens next</h2>
         <p className="og-text">A demo: the seller, the time and the support move the order on by themselves. Play them here</p>

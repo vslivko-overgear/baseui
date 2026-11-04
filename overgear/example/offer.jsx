@@ -15,7 +15,7 @@ import { Bleed } from '../../src/components/Layout.jsx';
 import { go, useMedia } from './util.js';
 import { OFFERS, REVIEWS, SERVICES, money, offerOf, gameOf, sold } from './data.js';
 import { PayBar } from './order.jsx';
-import { useAddedToCart, Page, PageHead, Section, OfferListing, BADGE_VARIANT, Stars, WishButton, CashbackTag, CASHBACK, PaymentLogos, PAY_OFFER } from './ui.jsx';
+import { useAddedToCart, Page, PageHead, Section, OfferListing, BADGE_VARIANT, Stars, WishButton, CashbackTag, CASHBACK, PaymentLogos, PAY_OFFER, CARD_X } from './ui.jsx';
 import { useStore } from './store.jsx';
 import { Faq } from './games.jsx';
 
@@ -100,8 +100,8 @@ export function Offer({ id }) {
   );
   // the price and the buttons, the facts and the payment methods, and the reasons to trust: a column at the right on a desktop; on a phone under the form of the order
   const aside = (
-  <div className="og-stack og-sticky">
-    <Card variant="surface" padding={5} style={{ paddingInline: 'var(--bui-spacing-6)' }}>
+  <div className="og-stack og-sticky og-aside">
+    <Card variant="surface" padding={5} style={CARD_X}>
       <div className="og-stack">
         {(
           <div className="og-stack">
@@ -122,7 +122,7 @@ export function Offer({ id }) {
         </div>
       </div>
     </Card>
-    <Card variant="surface" padding={5} style={{ paddingInline: 'var(--bui-spacing-6)' }}>
+    <Card variant="surface" padding={5} style={CARD_X}>
       <div className="og-stack og-stack--lg">
         <ul className="og-trust">
           {TRUST.map(([icon, t, d]) => (
@@ -153,7 +153,7 @@ export function Offer({ id }) {
             <div className="og-stack">
             {!mobile && head}
             {mobile ? <Bleed scroll>{usp}</Bleed> : usp}
-            <Card variant="surface" padding={5}>
+            <Card variant="surface" padding={5} style={CARD_X}>
               <div className="og-stack og-stack--lg og-offerform">
                 <TokenGroup title="Region" options={REGIONS} value={[region]} onValueChange={(v) => v[0] && setRegion(v[0])} />
                 <Selector label="Loot options" labelPlacement="outside" placeholder="Choose" options={LOOT} value={loot} onValueChange={setLoot} />
@@ -183,7 +183,7 @@ export function Offer({ id }) {
             <Section title="How does it work?">
               <ol className="og-bullets og-bullets--num og-rank__how">{STEPS.map((t) => <li key={t}><span>{t}</span></li>)}</ol>
             </Section>
-            <Card variant="surface" padding={5}>
+            <Card variant="surface" padding={5} style={CARD_X}>
               <div className="og-stack og-stack--lg" data-test-id="offer-why">
                 <h2 className="og-h2">Why Players Choose Overgear</h2>
                 <ul className="og-trust og-trust--cols">
@@ -208,7 +208,7 @@ export function Offer({ id }) {
               </ul>
               {reviewsShown < REVIEWS.length && <Button variant="secondary" size="lg" width="100%" label="Show more reviews" onClick={() => setReviewsShown((n) => n + 4)} data-test-id="offer-reviews-more" />}
             </Section>
-            <Card variant="surface" padding={5}>
+            <Card variant="surface" padding={5} style={CARD_X}>
               <div className="og-custom" data-test-id="offer-custom">
                 <div className="og-stack og-stack--hair">
                   <h2 className="og-h3">Create Your Custom Offer!</h2>
