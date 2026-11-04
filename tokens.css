@@ -53,7 +53,6 @@
 
   /* Extensions / Background */
   --bui-extensions-background-surface: #ffffff;
-  --bui-extensions-background-popup: #ffffff;
   --bui-extensions-background-inverse-primary: #171717;
   --bui-extensions-background-overlay-dark: rgba(0, 0, 0, 0.5);
   --bui-extensions-background-overlay-light: rgba(255, 255, 255, 0.7);
@@ -170,7 +169,6 @@
 
   /* Extensions / Background */
   --bui-extensions-background-surface: #1b1b1b;
-  --bui-extensions-background-popup: #252525;
   --bui-extensions-background-inverse-primary: #ffffff;
   --bui-extensions-background-overlay-dark: rgba(0, 0, 0, 0.7);
   --bui-extensions-background-overlay-light: rgba(18, 18, 18, 0.7);
@@ -256,7 +254,7 @@
   --bui-on-surface-muted: var(--bui-text-and-icon-secondary);
   --bui-muted: var(--bui-background-secondary);
   --bui-on-muted: var(--bui-text-and-icon-primary);
-  --bui-popover: var(--bui-extensions-background-popup);
+  --bui-popover: var(--bui-extensions-background-surface);
   --bui-on-popover: var(--bui-text-and-icon-primary);
   --bui-accent: var(--bui-background-accent);
   --bui-on-accent: var(--bui-extensions-text-and-icon-on-color);
