@@ -80,4 +80,10 @@ export const FullWidth = example({
   render: () => <SegmentedControl items={plain} fullWidth label="Range" />,
   source: `<SegmentedControl fullWidth items={items} />`,
 });
-export const __namedExportsOrder = ['Playground', 'Item', 'IconsOnly', 'CounterAndBadge', 'FullWidth'];
+export const OutsideLabel = example({
+  name: 'Outside Label',
+  description: 'The label is a semi-bold title above the control, as the title of a group of radios, checkboxes or tags',
+  render: () => <SegmentedControl label="Difficulty" labelPlacement="outside" items={[{ value: 'normal', label: 'Normal' }, { value: 'heroic', label: 'Heroic' }, { value: 'mythic', label: 'Mythic' }]} defaultValue="heroic" />,
+  source: `<SegmentedControl label="Difficulty" labelPlacement="outside" items={items} />`,
+});
+export const __namedExportsOrder = ['Playground', 'Item', 'IconsOnly', 'CounterAndBadge', 'FullWidth', 'OutsideLabel'];

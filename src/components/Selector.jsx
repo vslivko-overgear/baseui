@@ -102,6 +102,7 @@ export function Selector({
   label,
   placeholder,
   floatingLabel = true,
+  labelPlacement,
   caption,
   status,
   value,
@@ -248,6 +249,7 @@ export function Selector({
       size={size}
       label={label}
       floatingLabel={floatingLabel}
+      labelPlacement={labelPlacement}
       caption={caption}
       captionId={captionId}
       status={status}
@@ -283,6 +285,7 @@ describe(
     ],
     label: ['ReactNode', null, 'Field label'],
     placeholder: ['string', null, 'Shown when nothing is selected; by default the label'],
+  labelPlacement: ["'inside' | 'outside'", "'inside'", 'Where the label stands: `inside` is the floating label in the box; `outside` is a semi-bold title above the box, as the title of a group of radios, checkboxes or tags (the box then has no label of its own: set `placeholder`)'],
     floatingLabel: [
       'boolean',
       'true',

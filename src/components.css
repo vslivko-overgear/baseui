@@ -362,7 +362,9 @@
 }
 .bui-checkbox-group__title,
 .bui-radio-group__title,
-.bui-token-group__title {
+.bui-token-group__title,
+.bui-field__title,
+.bui-segmented-field__title {
   font: var(--bui-typography-text-16-semi-bold);
   color: var(--bui-text-and-icon-primary);
 }
@@ -2383,8 +2385,12 @@
   flex-direction: column;
   gap: var(--bui-spacing-1);
   width: 100%;
+  max-width: 480px;   /* a field is not stretched across a wide column: 480 at most */
   display: flex;
 }
+.bui-field[data-label="outside"] { gap: var(--bui-spacing-2); }   /* the title and the box: as the title of a group of tokens and its items */
+.bui-segmented-field { display: flex; flex-direction: column; gap: var(--bui-spacing-2); }
+.bui-segmented-field:has(> .bui-segmented--full) { width: 100%; }
 .bui-field__medium {
   --fs-height: 56px;
   --fs-float-top: 4px;

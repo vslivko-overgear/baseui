@@ -155,7 +155,7 @@ export function Offer({ id }) {
             <Card variant="surface" padding={5}>
               <div className="og-stack og-stack--lg og-offerform">
                 <TokenGroup title="Region" options={REGIONS} value={[region]} onValueChange={(v) => v[0] && setRegion(v[0])} />
-                <Selector label="Loot options" options={LOOT} value={loot} onValueChange={setLoot} />
+                <Selector label="Loot options" labelPlacement="outside" placeholder="Choose" options={LOOT} value={loot} onValueChange={setLoot} />
                 <TokenGroup title="Number of bosses" options={BOSSES.map((d) => ({ value: d.value, label: <>{d.label} <span className="og-pill__price">{money(offer.price * d.k)}</span></> }))} value={[bosses]} onValueChange={(v) => v[0] && setBosses(v[0])} />
                 <TokenGroup title="Boost method" options={MODES.map((m) => ({ value: m.value, label: <>{m.label}{m.note && <> <span className="og-pill__price">{m.note}</span></>}</> }))} value={[mode]} onValueChange={(v) => v[0] && setMode(v[0])} />
                 <CheckboxGroup title="Additional options" value={extras} onValueChange={setExtras} options={EXTRAS.map((e) => ({ value: e.value, label: <span className="og-extra"><span>{e.label}</span>{e.was ? <span className="og-extra__price"><s>{money(e.was)}</s> <b>{money(e.price)}</b></span> : <span className="og-extra__price">{`+${money(e.price)}`}</span>}</span> }))} />

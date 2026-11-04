@@ -114,6 +114,17 @@ export const PlaceholderLabel = example({
   ),
   source: `<TextInput label="Label" floatingLabel={false} />`,
 });
+export const OutsideLabel = example({
+  name: 'Outside Label',
+  description: 'The label is a title above the box, as the title of a group of radios or tags; the box takes a placeholder. A field is 480px wide at most',
+  render: () => (
+    <Col>
+      <TextInput label="Full name" labelPlacement="outside" placeholder="As on the passport" />
+      <TextInput label="Email" labelPlacement="outside" placeholder="name@example.com" caption="We send the receipt here" />
+    </Col>
+  ),
+  source: `<TextInput label="Full name" labelPlacement="outside" placeholder="As on the passport" />`,
+});
 export const WithIcon = example({
   name: 'With Icon',
   render: () => (
@@ -163,6 +174,7 @@ export const __namedExportsOrder = [
   'Actions',
   'Multiline',
   'PlaceholderLabel',
+  'OutsideLabel',
   'WithIcon',
   'Search', 'Caption',
   'PrefixSuffix',

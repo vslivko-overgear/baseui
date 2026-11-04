@@ -1,4 +1,4 @@
-import { cx, useControllable, useRef } from '../react.js';
+import { cx, useControllable, useRef, useId } from '../react.js';
 import { useAppear, useReady, themeAttrs } from '../theme-flags.js';
 import { useHighlight } from '../highlight.js';
 import { describe } from '../doc.js';
@@ -18,6 +18,7 @@ export function SegmentedControl({
   shape = 'rounded',
   motion,
   label,
+  labelPlacement = 'inside',
   className,
   ...rest
 }) {
@@ -57,11 +58,14 @@ export function SegmentedControl({
     ref.current.querySelector(`[data-value="${CSS.escape(String(next.value))}"]`)?.focus();
   };
   useAppear(thumbRef, ref, thumb && `${thumb.x}/${thumb.y}/${thumb.w}`);
-  return (
+  const titleId = useId();
+  const outside = labelPlacement === 'outside' && !!label;
+  const control = (
     <div
       {...themeAttrs({ motion })}
       role="radiogroup"
-      aria-label={label}
+      aria-label={outside ? undefined : label}
+      aria-labelledby={outside ? titleId : undefined}
       ref={ref}
       onKeyDown={onKeyDown}
       data-slot="segmented"
@@ -120,6 +124,13 @@ export function SegmentedControl({
       ))}
     </div>
   );
+  if (!outside) return control;
+  return (
+    <div className="bui-segmented-field">
+      <span id={titleId} className="bui-segmented-field__title">{label}</span>
+      {control}
+    </div>
+  );
 }
 describe(SegmentedControl, 'A control for switching between a few exclusive options', {
   items: [
@@ -142,5 +153,6 @@ describe(SegmentedControl, 'A control for switching between a few exclusive opti
     'Animations of this control: off, basic, or enhanced (the highlight slides); by default the Animations setting of the theme',
   ],
   shape: ["'rounded' | 'circle'", "'rounded'", 'circle makes the control and its items pills; rounded follows the theme radius'],
-  label: ['string', null, 'Accessible name'],
+  label: ['string', null, 'Accessible name; with `labelPlacement="outside"` also the visible title'],
+  labelPlacement: ["'inside' | 'outside'", "'inside'", 'With `outside` the label is a semi-bold title above the control, as the title of a group of radios, checkboxes or tags; `inside` keeps it as the accessible name only'],
 });

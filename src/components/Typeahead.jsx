@@ -109,6 +109,7 @@ export function Typeahead({
   label,
   placeholder,
   floatingLabel = true,
+  labelPlacement,
   caption,
   status,
   value,
@@ -205,6 +206,7 @@ export function Typeahead({
       label={multiple ? undefined : label}
       labelId={labelId}
       floatingLabel={floatingLabel}
+      labelPlacement={labelPlacement}
       caption={caption}
       captionId={captionId}
       status={status}
@@ -286,6 +288,7 @@ describe(
     onValueChange: ['(value) => void', null, 'Called when the selection changes'],
     label: ['ReactNode', null, 'Field label (a single field only; a multiple field shows tokens)'],
     placeholder: ['string', null, 'Placeholder of the search input'],
+  labelPlacement: ["'inside' | 'outside'", "'inside'", 'Where the label stands: `inside` is the floating label in the box; `outside` is a semi-bold title above the box, as the title of a group of radios, checkboxes or tags (the box then has no label of its own: set `placeholder`)'],
     floatingLabel: ['boolean', 'true', 'Label behavior on focus/value: true floats it up in small text, false works like a placeholder'],
     variant: ["'filled' | 'standard'", "'filled'", 'Visual variant: `filled` has a background (the main one), `standard` has none'],
     size: ["'md' | 'sm'", "'md'", 'Size: md is 56px with 16px text, sm is 48px with 14px text; the list follows it'],

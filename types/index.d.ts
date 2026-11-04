@@ -2356,9 +2356,14 @@ export interface SegmentedControlProps {
    */
   shape?: 'rounded' | 'circle';
   /**
-   * Accessible name
+   * Accessible name; with `labelPlacement="outside"` also the visible title
    */
   label?: string;
+  /**
+   * With `outside` the label is a semi-bold title above the control, as the title of a group of radios, checkboxes or tags; `inside` keeps it as the accessible name only
+   * @default 'inside'
+   */
+  labelPlacement?: 'inside' | 'outside';
   children?: ReactNode;
   [dataAttribute: `data-${string}`]: string | number | boolean | undefined;
   [ariaAttribute: `aria-${string}`]: string | number | boolean | undefined;
@@ -2459,6 +2464,11 @@ export interface SelectorProps {
    * Shown when nothing is selected; by default the label
    */
   placeholder?: string;
+  /**
+   * Where the label stands: `inside` is the floating label in the box; `outside` is a semi-bold title above the box, as the title of a group of radios, checkboxes or tags (the box then has no label of its own: set `placeholder`)
+   * @default 'inside'
+   */
+  labelPlacement?: 'inside' | 'outside';
   /**
    * Label behavior on focus/value: true floats it up in small text, false works like a placeholder and hides when a value is entered
    * @default true
@@ -3011,6 +3021,11 @@ export interface TextInputProps {
    */
   label?: ReactNode;
   /**
+   * Where the label stands: `inside` is the floating label in the box; `outside` is a semi-bold title above the box, as the title of a group of radios, checkboxes or tags (the box then has no label of its own: set `placeholder`)
+   * @default 'inside'
+   */
+  labelPlacement?: 'inside' | 'outside';
+  /**
    * Label behavior on focus/value: true floats it up in small text, false works like a placeholder and hides when a value is entered
    * @default true (false for type="search")
    */
@@ -3348,6 +3363,11 @@ export interface TypeaheadProps {
    * Placeholder of the search input
    */
   placeholder?: string;
+  /**
+   * Where the label stands: `inside` is the floating label in the box; `outside` is a semi-bold title above the box, as the title of a group of radios, checkboxes or tags (the box then has no label of its own: set `placeholder`)
+   * @default 'inside'
+   */
+  labelPlacement?: 'inside' | 'outside';
   /**
    * Label behavior on focus/value: true floats it up in small text, false works like a placeholder
    * @default true

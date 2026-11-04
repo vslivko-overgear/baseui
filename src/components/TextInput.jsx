@@ -15,6 +15,7 @@ export function TextInput({
   size,
   label,
   floatingLabel,
+  labelPlacement,
   caption,
   status,
   loading = false,
@@ -102,6 +103,7 @@ export function TextInput({
       control="text"
       label={label}
       floatingLabel={search ? false : (floatingLabel ?? true)}
+      labelPlacement={labelPlacement}
       caption={caption}
       status={status}
       disabled={disabled}
@@ -131,6 +133,7 @@ describe(TextInput, 'A single-line or multi-line text field with a floating labe
   ],
   size: ["'md' | 'sm'", "'md'", 'Size: md is 56px with 16px text, sm is 48px with 14px text'],
   label: ['ReactNode', null, 'Field label. An empty field shows it centered like a placeholder; on focus or value it floats up (see floatingLabel)'],
+  labelPlacement: ["'inside' | 'outside'", "'inside'", 'Where the label stands: `inside` is the floating label in the box; `outside` is a semi-bold title above the box, as the title of a group of radios, checkboxes or tags (the box then has no label of its own: set `placeholder`)'],
   floatingLabel: [
     'boolean',
     'true (false for type="search")',

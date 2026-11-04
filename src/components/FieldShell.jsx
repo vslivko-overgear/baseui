@@ -18,6 +18,7 @@ export function FieldShell({
   label,
   labelId,
   floatingLabel = true,
+  labelPlacement = 'inside',
   caption,
   captionId,
   status,
@@ -53,6 +54,7 @@ export function FieldShell({
     return () => form.removeEventListener('submit', again);
   }, []);
   const shownStatus = dismissed ? undefined : status;
+  const outside = labelPlacement === 'outside' && !!label;
   const hasCaption = !loading && !!caption && !(dismissed && status === 'error');
   return (
     <Field.Root
@@ -69,7 +71,8 @@ export function FieldShell({
         className,
       )}
       data-control={control}
-      data-float={label ? (floatingLabel ? 'floating' : 'placeholder') : 'none'}
+      data-float={label && !outside ? (floatingLabel ? 'floating' : 'placeholder') : 'none'}
+      data-label={outside ? 'outside' : undefined}
       data-multiple={multiple || undefined}
       ref={root}
       data-status={shownStatus}
@@ -77,6 +80,11 @@ export function FieldShell({
       invalid={shownStatus === 'error'}
       aria-busy={loading || undefined}
     >
+      {outside && (
+        <Field.Label id={labelId} data-slot="textinput-title" className="bui-field__title">
+          {label}
+        </Field.Label>
+      )}
       <span
         ref={cellRef}
         data-slot="textinput-cell"
@@ -106,7 +114,7 @@ export function FieldShell({
           </span>
         )}
         <span data-slot="textinput-inner" className="bui-field__inner">
-          {label && (
+          {label && !outside && (
             <Field.Label id={labelId} data-slot="textinput-label" className="bui-field__label">
               {label}
             </Field.Label>
