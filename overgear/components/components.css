@@ -3,6 +3,7 @@
 /* the cashback tag and the pay bar */
 .og-cbtag { display: inline-flex; align-items: center; gap: var(--bui-spacing-1); }   /* the amount and the mark of the coins right after it */
 .og-paybar { position: fixed; left: 0; right: 0; bottom: var(--og-paybar-bottom, 0px); z-index: var(--bui-z-index-30); background: var(--bui-background-primary); padding: var(--bui-spacing-3) var(--bui-spacing-4) var(--bui-sheet-bottom); border-radius: var(--bui-radius-custom-28) var(--bui-radius-custom-28) 0 0; }   /* the top corners are round, as the top of a sheet */
+.og-paybar[data-above] { padding-bottom: var(--bui-spacing-1); }   /* over the bottom bar of the tabs: 4px under the button, then the bar, flush with it */
 .og-paybar__in { display: flex; flex-direction: column; gap: var(--bui-spacing-3); }
 .og-paybar__sum { margin: 0; display: flex; align-items: center; gap: var(--bui-spacing-2); min-width: 0; }
 .og-paybar__amount { font: var(--bui-typography-header-28); font-family: var(--bui-typography-headline-font-family); }

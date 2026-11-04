@@ -48,7 +48,7 @@ const looks = (page, phone, scope) => page.evaluate(({ SHARED, LOOK, phone, scop
     if (!el) { out[name] = null; continue; }
     const cs = getComputedStyle(el); const o = {};
     for (const k of LOOK) o[k] = k === 'height' ? Math.round(el.getBoundingClientRect().height) : cs[k];
-    if (name === 'summary' || name === 'sumRow' || name === 'sumBig' || name === 'sumSoft' || name === 'coupon' || name === 'couponText' || name === 'title' || name === 'count') delete o.height;
+    if (name === 'paybar' || name === 'summary' || name === 'sumRow' || name === 'sumBig' || name === 'sumSoft' || name === 'coupon' || name === 'couponText' || name === 'title' || name === 'count') delete o.height;   // the pay bar of the cart stands over the bottom bar of the tabs (4px under its button), the one of the checkout over the screen edge: its height differs by that room
     out[name] = o;
   }
   const c = root.querySelector('.og-coupon');

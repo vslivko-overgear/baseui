@@ -25,7 +25,7 @@ export function PayBar({ amount, action, onClick, above, inline = false }) {
   const ref = useRef(null);
   useRoom(ref, !inline);
   return (
-    <div ref={ref} className={inline ? 'og-paybar og-paybar--inline' : 'og-paybar'} data-pinned={inline ? undefined : ''} style={inline ? undefined : { '--og-paybar-bottom': above ? 'var(--og-bottom)' : '0px' }}>
+    <div ref={ref} className={inline ? 'og-paybar og-paybar--inline' : 'og-paybar'} data-pinned={inline ? undefined : ''} data-above={!inline && above ? '' : undefined} style={inline ? undefined : { '--og-paybar-bottom': above ? 'var(--og-bottom)' : '0px' }}>
       <PayBarContent amount={amount} action={action} onClick={onClick} />
     </div>
   );
