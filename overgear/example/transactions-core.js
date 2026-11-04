@@ -20,7 +20,11 @@ export const purchaseState = (order) => {
   return TX_STATES.COMPLETED;
 };
 
-/** The payments for the orders (outgoing, in dollars) and the cashback for the completed ones (incoming, in OG Coins, 1% of the price). */
+/**
+ * The payments for the orders (outgoing, in dollars) and the cashback for the completed ones (incoming, in OG Coins, 1% of the price).
+ * @param {Array<any>} orders
+ * @param {(game: string) => string} [gameName] the name of a game by its slug
+ */
 export const fromOrders = (orders, gameName = () => '') => orders.flatMap((o) => {
   const out = [{ id: `pay-${o.link}`, type: TX_TYPES.PURCHASE, direction: 'outgoing', state: purchaseState(o), amount: o.price, currency: 'USD', orderLink: o.link, description: [gameName(o.game), o.title].filter(Boolean).join(' · '), date: o.createdAt }];
   if ([S.COMPLETED, S.RESOLVED].includes(o.status)) out.push({ id: `cash-${o.link}`, type: TX_TYPES.CASHBACK, direction: 'incoming', state: TX_STATES.COMPLETED, amount: +(o.price * 0.01).toFixed(2), currency: 'COINS', orderLink: o.link, description: o.title, date: o.completedAt ?? o.createdAt });

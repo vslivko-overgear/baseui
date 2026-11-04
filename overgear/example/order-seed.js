@@ -21,7 +21,12 @@ const COD_RANK = other('cod-rank', 'call-of-duty', 'Call of Duty: Rank Boost to 
 const TORCH_START = other('torch-start', 'torchlight-infinite', 'Torchlight: Infinite Season Starter', 29, '3 hours');
 const AION_KINAH = other('aion-kinah', 'aion-2', 'AION 2: Kinah, 10M', 19, '15 minutes', 'currency');
 
+/**
+ * @typedef {{ id: string, game?: string, title: string, price: number, eta: string, productType?: string, image?: string }} SeedOffer
+ * @typedef {{ og?: boolean, started?: number, delivered?: number, completed?: number, frozen?: number, filled?: boolean, late?: boolean, ticket?: string, review?: { rate: number, text: string } }} SeedExtras
+ */
 // [offer, status, hours ago it was placed, extras]: the order of the list is the newest first
+/** @type {Array<[string | SeedOffer, string, number, SeedExtras]>} */
 const PLAN = [
   ['venomous-abyss-heroic', S.NEW, 0.2, { og: true }],
   ['tidebound-grotto', S.NEW, 0.4, {}],
@@ -61,7 +66,7 @@ const PLAN = [
 
 /** The starting orders, for the moment `now`. */
 export const seedOrders = (now) => PLAN.map(([ref, status, ago, x], i) => {
-  const offer = typeof ref === 'string' ? pick(ref) : ref;
+  const offer = /** @type {SeedOffer} */ (typeof ref === 'string' ? pick(ref) : ref);   // an offer of the shop, or one of the other games made here
   const productType = offer.productType || 'service';
   const createdAt = now - ago * HOUR;
   const at = (h) => (h == null ? null : now - h * HOUR);

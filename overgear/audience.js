@@ -39,6 +39,7 @@ export function levelRows(rows, keep) {
   for (let step = 0; step < 6; step++) {
     const [a, b] = level.map(lengthOf);
     const from = a > b ? 0 : 1;
+    /** @type {{ i: number, after: number } | null} */
     let best = null;
     level[from].forEach(([slug, width], i) => {
       const after = Math.abs(Math.abs(a - b) - 2 * (width + TILE_GAP));
