@@ -130,10 +130,10 @@ export function offerProps(o, store, key = o.id, showGame = false) {
 }
 
 /** The offers as a listing of the design system: whole rows, "Show more" after the first two (the setting of the example). */
-export function OfferListing({ offers, showGame = false, compact = false, className, ...rest }) {
+export function OfferListing({ offers, showGame = false, compact = false, points = !compact, className, ...rest }) {
   const store = useStore();
-  // `compact`: five cards in a row and no selling points (the home page); the others have four, each with its three points
-  const items = offers.map((o, i) => { const props = offerProps(o, store, o.listKey ?? `${o.id}~${i}`, showGame); return compact ? { ...props, points: undefined } : props; });
+  // `compact`: five cards in a row and no selling points (the home page); the others have four, each with its three points unless `points` is off (the favorites)
+  const items = offers.map((o, i) => { const props = offerProps(o, store, o.listKey ?? `${o.id}~${i}`, showGame); return points ? props : { ...props, points: undefined }; });
   return <ProductListing more="infinite" items={items} className={compact ? `og-listing--five ${className ?? ''}` : className} {...rest} />;
 }
 

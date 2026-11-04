@@ -98,7 +98,7 @@ export function Account({ tab, onLogin }) {
     <Page>
       <PageHead crumbs={tab === 'wishlist' ? undefined : [{ label: 'Account', href: '#/account' }, { label: titles[tab] || 'Account' }]} title={titles[tab] || 'Account'} />
       {tab === 'wishlist' && (
-        <OfferListing offers={wished} />
+        <OfferListing offers={wished} points={false} />
       )}
       {tab === 'settings' && <Settings />}
     </Page>
