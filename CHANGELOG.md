@@ -2,6 +2,7 @@
 
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
+- The color of a floating layer (`--bui-extensions-background-popup`) is calmer: in the dark theme `#252525` (the secondary background, it was `#2c2c2c`), in Overgear its `secondary` (it was `tertiary`, a blue that read as an accent); white in the light theme as before. Not run: the browser checks beyond the plan
 - Overgear, the payment and the bonus history: a row is two lines always: the title (the product, or the words of the entry: "Bonus for the top-up", "Welcome gift") and under it the kind and the date; a title that opens the order has a chevron after it, so a link is told from a plain title before the hover. Not run: the browser checks beyond the plan
 - Overgear, the payment and the bonus history: a row that belongs to an order has the name of the product as its title (a link to the order), and under it the kind and the date ("Cashback · 02 Nov 2026 08:38"), with no separate line for the name; the line under the title of the bonus page is gone; the list stands 16 from the title (it was 40). Not run: the browser checks beyond the plan
 - Overgear, the wallet: the bonuses (OG Coins) leave the Payment History (it keeps the money: top-ups, payments, refunds) and have a page of their own in the same block, "Bonus History" (`/wallet/bonuses`): the accruals (cashback, bonuses for a top-up, gifts) each with the day it burns (180 days after it is credited), and the spendings. Not run: the browser checks beyond the plan
