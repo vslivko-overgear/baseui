@@ -964,6 +964,10 @@
    The viewport of the dialog has the padding on top, so the sheet takes all the room inside it. */
 @media (width <= 767px) {
   [data-slot="dialog-viewport"] { padding-top: var(--baseui-spacing-3); }
+  /* a sheet: 4px less above the title (16px from the top edge) and 4px less between the content and the buttons (12px above them) */
+  .bui-dialog__title-block { padding-top: var(--baseui-spacing-3); }
+  .bui-dialog__icon-button { margin-top: calc(var(--baseui-spacing-1) + 2px); }
+  .bui-dialog__actions { padding-top: var(--baseui-spacing-3); }
   /* room for the home indicator of a phone under the last control of the sheet */
   [data-slot="dialog-footer"] { padding-bottom: var(--bui-sheet-bottom); }
   [data-slot="dialog-content"]:not(:has(+ [data-slot="dialog-footer"])) { padding-bottom: var(--bui-sheet-bottom); }
