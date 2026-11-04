@@ -12,7 +12,7 @@ const matches = (option, query) => optionLabel(option, option.value).toLocaleLow
 
 /**
  * The mobile list of a Selector or a Typeahead: a bottom sheet with the options (and a search for a Typeahead), which picks the value
- * at once (`commitOnSelect`) or on Apply. It is a Dialog; the options are plain buttons, so the page keeps its own scroll and keyboard.
+ * at once (`commitOnSelect`) or on Apply. It is a Dialog; the options are plain buttons, so the page keeps its own scroll and keyboard. An option may have an `icon` or an `avatar` (a picture) before its label, as in the Dropdown.
  */
 export function ChoiceSheet({
   open,
@@ -124,6 +124,15 @@ export function ChoiceSheet({
                   data-selected={on || undefined}
                   onClick={() => choose(o.value)}
                 >
+                  {o.avatar ? (
+                    <img data-slot="choice-avatar" className="bui-dropdown__avatar" src={o.avatar} alt="" aria-hidden="true" />
+                  ) : (
+                    o.icon && (
+                      <span data-slot="choice-icon" className="bui-dropdown__icon" aria-hidden="true">
+                        {o.icon}
+                      </span>
+                    )
+                  )}
                   <span id={labelId} className="bui-choice-popup__item-text">
                     {o.label}
                   </span>

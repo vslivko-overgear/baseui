@@ -2,7 +2,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, test, vi } from 'vitest';
-import { Breadcrumbs, Button, Card, ProductCard, Stack, ButtonGroup, Form, FormRow, FormSection, IconButton, ControlRow, Checkbox, Dialog, OtpInput, Pagination, ProgressBar, Slider, Rating, Selector, Dropdown, Switch, Tabs, TextInput } from '../src/index.jsx';
+import { Breadcrumbs, Button, ChoiceSheet, Card, ProductCard, Stack, ButtonGroup, Form, FormRow, FormSection, IconButton, ControlRow, Checkbox, Dialog, OtpInput, Pagination, ProgressBar, Slider, Rating, Selector, Dropdown, Switch, Tabs, TextInput } from '../src/index.jsx';
 
 describe('Switch', () => {
   test('toggles and reports', async () => {
@@ -465,3 +465,14 @@ describe('ProductCard points', () => {
     expect(container.querySelector('.bui-product-card__points')).toBeNull();
   });
 });
+
+describe('ChoiceSheet option pictures', () => {
+  test('an option shows its icon or its avatar before the label', () => {
+    render(<ChoiceSheet open title="Language" onOpenChange={() => {}} options={[{ value: 'a', label: 'Alpha', icon: <svg data-testid="i" /> }, { value: 'b', label: 'Beta', avatar: 'flag.svg' }, { value: 'c', label: 'Gamma' }]} />);
+    const options = screen.getAllByRole('option');
+    expect(options[0].querySelector('[data-slot="choice-icon"] [data-testid="i"]')).not.toBeNull();
+    expect(options[1].querySelector('img[data-slot="choice-avatar"]')?.getAttribute('src')).toBe('flag.svg');
+    expect(options[2].querySelector('[data-slot="choice-icon"], [data-slot="choice-avatar"]')).toBeNull();
+  });
+});
+

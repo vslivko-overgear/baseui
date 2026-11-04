@@ -712,3 +712,6 @@ a { color: inherit; }
 /* the listings of products have four cards in a row on a desktop (a card is 280px at least); the compact one of the home page has five */
 .og { --bui-listing-min: 280px; }
 .og .og-listing--five { --bui-listing-min: 200px; }
+
+/* the sign of a currency in the list of currencies: a round chip like the flag of a language */
+.og-cursign { display: inline-grid; place-items: center; box-sizing: border-box; width: 24px; height: 24px; border-radius: var(--baseui-radius-full); background: var(--baseui-background-tertiary); color: var(--baseui-text-and-icon-primary); font: var(--baseui-typography-text-12-regular); font-weight: 700; }

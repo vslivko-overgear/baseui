@@ -3,8 +3,12 @@
 import { useState, useEffect } from '../../src/react.js';
 import { ChoiceSheet } from '../../src/components/ChoiceSheet.jsx';
 
-export const CURRENCIES = ['USD', 'EUR', 'GBP', 'PLN', 'UAH'].map((v) => ({ value: v, label: v }));
-export const LANGUAGES = ['English', 'Deutsch', 'Español', 'Français', 'Polski', 'Українська'].map((v) => ({ value: v, label: v }));
+/** The sign of a currency in a round chip, for the lists: an icon, not an emoji (the catalog has no sign for the zloty and the hryvnia). */
+const sign = (s) => <span className="og-cursign">{s}</span>;
+export const CURRENCIES = [['USD', '$'], ['EUR', '€'], ['GBP', '£'], ['PLN', 'zł'], ['UAH', '₴']].map(([v, s]) => ({ value: v, label: v, icon: sign(s) }));
+/** The flag of a language is a picture of the flag (an image of the country), not an emoji. */
+const flag = (code) => `https://flagcdn.com/${code}.svg`;
+export const LANGUAGES = [['English', 'gb'], ['Deutsch', 'de'], ['Español', 'es'], ['Français', 'fr'], ['Polski', 'pl'], ['Українська', 'ua']].map(([v, c]) => ({ value: v, label: v, avatar: flag(c) }));
 
 const kept = (key, fallback) => { try { return localStorage.getItem(`baseui-overgear-${key}`) || fallback; } catch { return fallback; } };
 const keep = (key, v) => { try { localStorage.setItem(`baseui-overgear-${key}`, v); } catch { /* storage unavailable */ } };
