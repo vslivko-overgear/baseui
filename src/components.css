@@ -593,7 +593,7 @@
 
 /* ---------- Collapsible ---------- */
 /* An island: a section on the secondary background with its content inside, not a row between dividers. A group is islands 8px apart. */
-.bui-collapsible { background: var(--bui-background-secondary); border-radius: var(--bui-radius-2xl); padding-inline: var(--bui-spacing-4); }
+.bui-collapsible { background: var(--bui-background-secondary); border-radius: var(--bui-radius-2xl); padding-inline: var(--bui-spacing-6); }
 .bui-collapsible-group { display: flex; flex-direction: column; gap: var(--bui-spacing-2); }
 .bui-collapsible__heading { margin: 0; font: inherit; }
 .bui-collapsible__trigger {
