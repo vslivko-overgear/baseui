@@ -447,7 +447,7 @@ export const RULES = [
 
   {
     id: 'D21', category: 'D', level: 'should', title: 'A corner follows the size of the object',
-    do: 'Round an object by its mass: the smaller side of a big surface gives a bigger corner than a small one (a card of 100px is rounder than one of 20px, and a row of five cards has smaller corners than a row of two). A `Card` does it by itself (`radius="fit"`: 1.6 × the root of the smaller side, an even number from 12 to 32px); what stands inside takes `var(--bui-card-radius)` minus the padding (D4). For something that is not a card, take the named step whose size is near',
+    do: 'Round an object by its mass: the smaller side of a big surface gives a bigger corner than a small one (a card of 100px is rounder than one of 20px, and a row of five cards has smaller corners than a row of two). A `Card` does it by itself (`radius="fit"`: a curve of the smaller side, rounder in proportion on small sizes, an even number from 12 to 32px); what stands inside takes `var(--bui-card-radius)` minus the padding (D4). For something that is not a card, take the named step whose size is near',
     dont: 'Do not give every background of a kind one fixed radius whatever its size, and do not round a big surface and a small one the same',
     why: 'A corner is judged against the size of the shape: a radius that is right on a 100px card looks sharp on a page-wide one and swollen on a small one',
     source: 'baseui Card, src/fit-radius.js', check: 'review',

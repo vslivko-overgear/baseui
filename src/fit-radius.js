@@ -1,15 +1,16 @@
 import { useCallback, useRef } from './react.js';
 
 /**
- * The corner of a surface follows its mass: a big card is rounder than a small one, so a row of five cards and a row of two
- * are both in proportion. The radius is `K × √(the smaller side)` between `MIN` and `MAX` (px), always an even number: 100px is 16, 177px is 22, 240px is 24, 300px is 28, a page-wide card is 32.
+ * The corner of a surface follows its mass, and the small ones are rounder in proportion: the radius is `reach × s / (s + half)` for the smaller side `s`,
+ * a curve that rises fast on small sizes and flattens on big ones, kept between `min` and `max` (px) and always an even number.
+ * A chip of 76px has 20, a card of 100px 22, a card of 177px 26, 240px 28, a page-wide one 32 (a field of 56px is 16 by its own size).
  */
-export const FIT = { min: 12, max: 32, k: 1.6 };
+export const FIT = { min: 12, max: 32, reach: 36, half: 60 };
 export const radiusFor = (width, height) => {
   const side = Math.min(width, height);
   if (!(side > 0)) return FIT.max;
   // even only: 2 × a whole half
-  return Math.max(FIT.min, Math.min(FIT.max, 2 * Math.round((FIT.k * Math.sqrt(side)) / 2)));
+  return Math.max(FIT.min, Math.min(FIT.max, 2 * Math.round((FIT.reach * side) / (side + FIT.half) / 2)));
 };
 
 /**
