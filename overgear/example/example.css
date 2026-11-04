@@ -39,15 +39,17 @@ a { color: inherit; }
 .og-actions { display: flex; align-items: center; gap: var(--baseui-spacing-1); margin-inline-start: auto; }
 .og-cats { padding-bottom: 0; }
 .og-page { display: flex; flex-direction: column; gap: var(--baseui-spacing-10); padding-block: var(--baseui-spacing-8) var(--baseui-spacing-16); min-width: 0; }
-.og-stack { display: flex; flex-direction: column; gap: var(--baseui-spacing-4); min-width: 0; }
-.og-stack--lg { gap: var(--baseui-spacing-6); }
-.og-stack--xl { gap: var(--baseui-spacing-8); }
-.og-stack--related { gap: var(--bui-rel-related); }
-.og-stack--pair { gap: var(--bui-rel-pair); }   /* a title and the line that describes it */
-.og-stack--snug { gap: var(--baseui-spacing-2); }
-.og-stack--tight { gap: var(--baseui-spacing-3); }
-.og-stack--close { gap: var(--baseui-spacing-2); }
+.og-page { display: flex; flex-direction: column; gap: var(--bui-rel-section); padding-block: var(--baseui-spacing-8) var(--baseui-spacing-16); min-width: 0; }
+/* The gaps between blocks are the relation scale of baseui (--bui-rel-*), by how closely the blocks belong together; a page names the relation and has no gap of its own:
+   pair 0 (a title and the line that describes it), hair 4 (inside an element), tight 8 (a heading and its content), related 16 (the cards of a stack, the default),
+   group 24 (a group of blocks), section 40 (the big blocks of a page, the groups of a description). Change the token, not the page. */
+.og-stack { display: flex; flex-direction: column; gap: var(--bui-rel-related); min-width: 0; }
+.og-stack--pair { gap: var(--bui-rel-pair); }
 .og-stack--hair { gap: var(--baseui-spacing-1); }
+.og-stack--tight, .og-stack--close, .og-stack--snug { gap: var(--bui-rel-tight); }
+.og-stack--related { gap: var(--bui-rel-related); }
+.og-stack--lg, .og-stack--group { gap: var(--bui-rel-group); }
+.og-stack--xl, .og-stack--2xl, .og-stack--section { gap: var(--bui-rel-section); }
 .og-row { display: flex; align-items: center; gap: var(--baseui-spacing-3); flex-wrap: wrap; min-width: 0; }
 .og-row--between { justify-content: space-between; }
 .og-row--nowrap { flex-wrap: nowrap; }
@@ -114,7 +116,6 @@ a { color: inherit; }
 }
 .og-grid > .bui-card, .og-scroller > .bui-card { height: 100%; }
 
-.og-stack--2xl { gap: var(--baseui-spacing-10); }
 .og-cart { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--baseui-spacing-6); }
 .og-cart__item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--baseui-spacing-3) var(--baseui-spacing-4); align-items: start; }
 .og-cart__qty { grid-column: 1 / -1; max-width: 240px; }
@@ -318,7 +319,7 @@ a { color: inherit; }
 .og--mobile .og-hire { gap: var(--bui-rel-related); }
 
 /* a page that starts with breadcrumbs: the crumbs are 4px higher, and the title is 16px under them (it was 8px) */
-.og-stack--crumbs { gap: var(--baseui-spacing-4); }
+.og-stack--crumbs { gap: var(--bui-rel-related); }
 .og-page--crumbs { padding-top: calc(var(--baseui-spacing-8) - 4px); }
 .og--mobile .og-page--crumbs { padding-top: calc(var(--baseui-spacing-4) - 4px); }
 /* a page that starts under a bar on a phone (the navbar with back, or the search of the catalog): its content starts right under the bar, 0 from it */
@@ -361,7 +362,6 @@ a { color: inherit; }
 .og-block__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--baseui-spacing-2); font: var(--baseui-typography-text-14-regular); }
 .og-block__list a { color: var(--baseui-text-and-icon-secondary); text-decoration: none; }
 .og-block a:hover { color: var(--baseui-text-and-icon-primary); }
-.og-stack--group { gap: var(--bui-rel-group); }
 .og-catalog__right.og-stack { gap: var(--baseui-spacing-8); }
 
 /* desktop header: the Catalog and Log in buttons and the search have 16px text (a phone keeps its sizes) */
@@ -714,5 +714,3 @@ a { color: inherit; }
 
 /* the footer of a phone ends above the bottom bar of the tabs; a page without the tabs (an offer, the pages behind the account) has the usual padding (the pay bar keeps its own room) */
 .og--mobile:not(:has(.og-bottom)) .og-footer { padding-bottom: var(--baseui-spacing-8); }
-/* the offer on a phone: the groups of the description are 40px apart (the cards of the order, the purchase and the trust stay 16px, as the other cards) */
-.og--mobile .og-split--right .og-stack--xl { gap: var(--bui-rel-section); }

@@ -69,4 +69,17 @@ describe('decisions of the product', () => {
       expect(text, `${file}: the form ${id}`).toMatch(new RegExp(`<form id="${id}"`));
     }
   });
+
+  test('the gaps between blocks are the relation scale: the stack classes are made of --bui-rel-* (and the hair), and the pages have no stack class of their own', () => {
+    const stack = [...css.matchAll(/^\.og-stack(--[\w, .-]+)? \{ ([^}]*) \}/gm)];
+    expect(stack.length).toBeGreaterThanOrEqual(7);
+    for (const [line, , body] of stack) {
+      if (/display: flex/.test(body)) continue;   // the base class: its gap is checked below
+      expect(body, line).toMatch(/gap: var\(--(bui-rel-(pair|tight|related|group|section)|baseui-spacing-1)\)/);
+    }
+    expect(css).toMatch(/^\.og-stack \{ display: flex; flex-direction: column; gap: var\(--bui-rel-related\)/m);
+    expect(css).toMatch(/^\.og-page \{ display: flex; flex-direction: column; gap: var\(--bui-rel-section\)/m);
+    // a page asks for a relation; the names that were a size (lg, xl, 2xl) stay as the names of the relations they are
+    for (const [f, text] of sources) expect(text, `${f}: a gap of its own in the style of a stack`).not.toMatch(/className="og-stack[^"]*"[^>]*style=\{\{[^}]*gap/);
+  });
 });
