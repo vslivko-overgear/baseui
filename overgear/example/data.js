@@ -92,7 +92,7 @@ export const GAME_TILES = {
 export const GAME_TAGS = { wow: 'Popular' };
 export const TILE_ROWS = [
   [['wow', 200], ['diablo-4', 140], ['poe-2', 190], ['ffxiv', 160], ['lost-ark', 130], ['last-epoch', 180], ['genshin-impact', 160]],
-  [['call-of-duty', 150], ['d2', 190], ['valorant', 140], ['cs2', 170], ['fortnite', 210], ['apex', 140], ['eft', 160]],
+  [['call-of-duty', 150], ['d2', 190], ['valorant', 140], ['cs2', 170], ['fortnite', 170], ['apex', 180], ['eft', 160]],
 ];
 export const EMOJI = (name) => `https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/${name.replace(/ /g, '%20')}/3D/${name.toLowerCase().replace(/ /g, '_')}_3d.png`;
 

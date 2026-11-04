@@ -2,6 +2,7 @@
 
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
+- Overgear, the home page: the tile of Fortnite is narrower (170, it was 210) and the tile of Apex Legends is wider (180, it was 140); the row keeps its length. Not run: the browser checks beyond the plan
 - Overgear, the home page with the World of Warcraft audience: Valorant and Escape from Tarkov are left out of the tiles of games (`AUDIENCE_LEAVES`), and the tiles that stay are stretched over the two rows by their widths, as the rows are levelled; the other audiences are as before. Not run: the browser checks beyond the plan
 - Overgear, the offer page: the colored tag of the offer (Hot Offer, Sale, Save More) has its color again (the classes of the tag still had the old names `info` and `error` after the Badge was renamed, so it fell back to the secondary); a decision test holds that every color of the tags has its class. Not run: the browser checks beyond the plan
 - Overgear, the offer page: the cards of the price column have the side padding of 24 (it was 20) and the column is 376px wide (it was 360). Not run: the browser checks beyond the plan
