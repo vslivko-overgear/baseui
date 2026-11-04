@@ -96,6 +96,17 @@
 .bui-badge--primary { background: var(--baseui-extensions-background-inverse-primary); color: var(--baseui-extensions-text-and-icon-on-color); }
 .bui-badge--pink { background: var(--baseui-accent-colors-pink); color: var(--baseui-extensions-text-and-icon-always-dark); }
 .bui-badge--red { background: var(--baseui-accent-colors-red); color: var(--baseui-extensions-text-and-icon-always-dark); }
+/* light: the color of the variant as a tint, with the main text color, where a bright tag would shout. The semantic colors have tokens of their own (light in both themes); an accent color is mixed into the page */
+.bui-badge--light { color: var(--baseui-text-and-icon-primary); }
+.bui-badge--light.bui-badge--info { background: var(--baseui-extensions-background-light-accent); }
+.bui-badge--light.bui-badge--success { background: var(--baseui-extensions-background-light-success); }
+.bui-badge--light.bui-badge--warning { background: var(--baseui-extensions-background-light-warning); }
+.bui-badge--light.bui-badge--error { background: var(--baseui-extensions-background-light-error); }
+.bui-badge--light.bui-badge--blue, .bui-badge--light.bui-badge--blue-light { background: color-mix(in oklab, var(--baseui-accent-colors-blue) 32%, var(--baseui-background-primary)); }
+.bui-badge--light.bui-badge--green, .bui-badge--light.bui-badge--green-light { background: color-mix(in oklab, var(--baseui-accent-colors-green) 32%, var(--baseui-background-primary)); }
+.bui-badge--light.bui-badge--orange { background: color-mix(in oklab, var(--baseui-accent-colors-orange) 32%, var(--baseui-background-primary)); }
+.bui-badge--light.bui-badge--pink { background: color-mix(in oklab, var(--baseui-accent-colors-pink) 32%, var(--baseui-background-primary)); }
+.bui-badge--light.bui-badge--red { background: color-mix(in oklab, var(--baseui-accent-colors-red) 32%, var(--baseui-background-primary)); }
 .bui-badge--disabled { background: var(--baseui-background-disabled); color: var(--baseui-text-and-icon-disabled); }
 /* Badge: counter and dot */
 .bui-badge--counter { justify-content: center; min-width: 22px; padding: 0 var(--baseui-spacing-1-5); }

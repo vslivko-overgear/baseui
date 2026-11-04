@@ -3,7 +3,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, test, vi } from 'vitest';
 import { useState } from 'react';
-import { Breadcrumbs, Button, useFieldErrors, ChoiceSheet, Hint, Typeahead, Card, ProductCard, Stack, ButtonGroup, Form, FormRow, FormSection, IconButton, ControlRow, Checkbox, Dialog, OtpInput, Pagination, ProgressBar, Slider, Rating, Selector, Dropdown, Switch, Tabs, TextInput } from '../src/index.jsx';
+import { Breadcrumbs, Badge, Button, useFieldErrors, ChoiceSheet, Hint, Typeahead, Card, ProductCard, Stack, ButtonGroup, Form, FormRow, FormSection, IconButton, ControlRow, Checkbox, Dialog, OtpInput, Pagination, ProgressBar, Slider, Rating, Selector, Dropdown, Switch, Tabs, TextInput } from '../src/index.jsx';
 
 describe('Switch', () => {
   test('toggles and reports', async () => {
@@ -657,6 +657,22 @@ describe('an error goes at the first change of the value, in any field (no help 
     await userEvent.click(screen.getByRole('combobox'));
     await userEvent.click(await screen.findByRole('option', { name: 'Beta' }));
     expect(screen.queryByText('Pick one')).toBeNull();
+  });
+});
+
+describe('Badge light', () => {
+  test('light adds the light class to a label and to a dot, and leaves the variant', () => {
+    const { container } = render(<><Badge variant="success" light label="Done" /><Badge variant="error" light type="dot" label="Failed" /><Badge variant="success" label="Plain" /></>);
+    const [a, b, c] = [...container.querySelectorAll('[data-slot="badge"]')];
+    expect(a.className).toContain('bui-badge--success');
+    expect(a.className).toContain('bui-badge--light');
+    expect(b.className).toContain('bui-badge--light');
+    expect(c.className).not.toContain('bui-badge--light');
+  });
+  test('every color has a light version in the styles', async () => {
+    const { readFileSync } = await import('node:fs');
+    const css = readFileSync('src/components.css', 'utf8');
+    for (const v of ['info', 'success', 'warning', 'error', 'blue', 'green', 'orange', 'pink', 'red']) expect(css, v).toMatch(new RegExp(`\\.bui-badge--light\\.bui-badge--${v}[ ,{]`));
   });
 });
 

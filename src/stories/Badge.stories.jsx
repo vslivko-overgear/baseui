@@ -32,6 +32,18 @@ export const Variants = example({
   ),
   source: `<Badge variant="info" label="info" />`,
 });
+export const Light = example({
+  name: 'Light',
+  description: 'The light version of a color: a tint with the main text, for a list or a table where bright tags would shout',
+  render: () => (
+    <Row>
+      {VARIANTS.filter((v) => !['primary', 'secondary'].includes(v)).map((v) => (
+        <Badge key={v} variant={v} light label={v} />
+      ))}
+    </Row>
+  ),
+  source: `<Badge variant="success" light label="Completed" />`,
+});
 export const Sizes = example({
   name: 'Sizes',
   render: () => (

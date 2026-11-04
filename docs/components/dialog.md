@@ -32,7 +32,7 @@ A modal window for focused content. On small screens it becomes a bottom sheet
 | `height` | `'content' \| 'viewport'` | `'content'` | Height by content or the whole available viewport |
 | `floating` | `boolean` | `theme` | A floating sheet on small screens: margins at the bottom and the sides, rounded on every side; by default it follows the Floating setting of the theme. On a wide screen the dialog already floats in the middle |
 | `children` | `ReactNode` | — | Main content of the window |
-| `primaryAction` | `ReactNode` | — | The primary action, usually a Button with variant="primary"; the buttons of the actions are large (56px, text 16) by default |
+| `primaryAction` | `ReactNode` | — | The primary action, usually a Button with variant="primary"; the buttons of the actions are large (56px, text 16) by default. The footer stays above the keyboard of a phone while the content scrolls, so the submit button of a form with fields belongs here (`type="submit" form="the-id-of-the-form"`), not at the end of the content, where the keyboard covers it |
 | `secondaryAction` | `ReactNode` | — | The secondary action, usually a Button with variant="secondary" |
 | `onBack` | `() => void` | — | Handler of the back button for header="close-and-back" |
 | `swipeToClose` | `boolean` | `true` | Swipe down on the header to close the bottom sheet (touch and mouse drag, narrow screens only) |
