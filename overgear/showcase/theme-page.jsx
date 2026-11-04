@@ -64,15 +64,17 @@ export function Theme() {
           <Row title="Floating" hint="Bars and dialogs float as separate rounded pieces over a gradient. It is the theme setting: it reaches every element that has no setting of its own">
             <SegmentedControl label="Floating" items={seg(['off', 'on'])} value={onOff(theme.floating === true)} onValueChange={(v) => set({ floating: v === 'on' })} />
           </Row>
-          <Row title="Glass" hint="Translucent surfaces that blur what is behind them. It is the theme setting: menus, popovers, dialogs, toasts and bars follow it">
-            <SegmentedControl label="Glass" items={seg(['off', 'on'])} value={onOff(theme.glass === true)} onValueChange={(v) => set({ glass: v === 'on' })} />
-          </Row>
           <Row title="Blue cast" hint="How much blue the grays of the dark theme carry, in five steps: 1 is neutral gray, 5 is the deep navy of overgear.com. The accent blue does not change">
             <SegmentedControl label="Blue cast" items={['1', '2', '3', '4', '5'].map((v) => ({ value: v, label: v }))} value={String((theme.tint ?? TINT_DEFAULT) + 1)} onValueChange={(v) => set({ tint: Number(v) - 1 })} />
           </Row>
-          <Row title="Brand" hint="The color of primary buttons and of the current step; the default is white in the dark theme">
-            <SegmentedControl label="Brand" items={seg(['default', 'blue', 'green', 'orange'])} value={['default', 'blue', 'green', 'orange'].includes(theme.brand) ? theme.brand : 'default'} onValueChange={(brand) => set({ brand })} />
+          <Row title="Brand" hint="The color of primary buttons and of the current step; the default is white in the dark theme. Custom takes any color">
+            <SegmentedControl label="Brand" items={seg(BRAND_OPTIONS)} value={BRAND_OPTIONS.includes(theme.brand) ? theme.brand : 'default'} onValueChange={(brand) => set({ brand })} />
           </Row>
+          {theme.brand === 'custom' && (
+            <Row title="Brand color" hint="Your own color for the brand: primary buttons and the current step">
+              <TextInput type="color" label="Brand color" value={theme.brandColor || DEFAULT.brandColor} onChange={(e) => set({ brandColor: e.target.value })} />
+            </Row>
+          )}
         </div>
         <ButtonGroup><Button variant="secondary" label="Reset" onClick={() => setTheme({ ...START })} /></ButtonGroup>
       </section>
@@ -99,7 +101,7 @@ export function Theme() {
           <Row title="Dropdowns" hint="Glass: the menus of dropdowns are translucent and blurred">
             <Switch label="Own settings" checked={local.dropdowns} onCheckedChange={(dropdowns) => setLocal({ dropdowns })} />
           </Row>
-          <Row title="Header" hint="Blur: the page fades out and blurs under the header as it scrolls, on a desktop and on a phone. Off, the header is solid unless the theme glass is on">
+          <Row title="Header" hint="Blur: the page fades out and blurs under the header as it scrolls, on a desktop and on a phone. Off, the header is solid">
             <Switch label="Own settings" checked={local.header} onCheckedChange={(header) => setLocal({ header })} />
           </Row>
         </div>

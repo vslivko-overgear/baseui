@@ -121,7 +121,7 @@ function Changes() {
 
 /** The pages of the showcase, by the hash of the address: #/theme, #/typography and #/colors. Each has its heading and its lead, which are shown inside its panel, under the tabs. */
 const PAGES = [
-  ['theme', 'Theme', 'The local theme of Overgear: the shape, the radius, the animation, floating, glass, the blue cast of the dark theme and the brand. The bottom bar and the dropdowns have settings of their own, which can be switched off. It applies to this showcase and to the example only'],
+  ['theme', 'Theme', 'The local theme of Overgear: the shape, the radius, the animation, floating, the blue cast of the dark theme and the brand. The bottom bar and the dropdowns have settings of their own, which can be switched off. It applies to this showcase and to the example only'],
   ['typography', 'Typography', 'The type of the Overgear example: Apfel Grotezk by Collletttivo (SIL Open Font License), the heading font and the text font of these pages only. The scale below is the scale of the system, set in it'],
   ['colors', 'Colors', 'The palette of the Overgear example. The dark theme leans to the deep navy of overgear.com, with a blue cast that is set on the Theme page, from none to full: a deep ground, bluish layers and a soft cool-white text. The light theme is off for now. It applies only to the pages of this showcase and of the example'],
 ];
