@@ -9,11 +9,11 @@ describe('order-core', () => {
 
   describe('the status of an order', () => {
     test('has the colors of the real service: blue, grey, green, orange, red', () => {
-      expect([S.NEW, S.SELLER_RECEIVED, S.REFUNDED].map(statusBadge)).toEqual(['info', 'info', 'info']);
+      expect([S.NEW, S.SELLER_RECEIVED, S.REFUNDED].map(statusBadge)).toEqual(['accent-light', 'accent-light', 'accent-light']);
       expect([S.CANCELLED, S.REJECTED].map(statusBadge)).toEqual(['secondary', 'secondary']);
-      expect([S.COMPLETED, S.RESOLVED].map(statusBadge)).toEqual(['success', 'success']);
-      expect([S.IN_PROGRESS, S.WAIT_SCREENSHOTS, S.CONFIRM_DELIVERY].map(statusBadge)).toEqual(['warning', 'warning', 'warning']);
-      expect([S.ERROR, S.UNPAID, S.UNDER_REVIEW, S.KYC_LOCK].map(statusBadge)).toEqual(['error', 'error', 'error', 'error']);
+      expect([S.COMPLETED, S.RESOLVED].map(statusBadge)).toEqual(['success-light', 'success-light']);
+      expect([S.IN_PROGRESS, S.WAIT_SCREENSHOTS, S.CONFIRM_DELIVERY].map(statusBadge)).toEqual(['warning-light', 'warning-light', 'warning-light']);
+      expect([S.ERROR, S.UNPAID, S.UNDER_REVIEW, S.KYC_LOCK].map(statusBadge)).toEqual(['critical-light', 'critical-light', 'critical-light', 'critical-light']);
     });
     test('belongs to a state, and the filter finds it with or without the prefix', () => {
       expect(stateOfStatus(S.CONFIRM_DELIVERY)).toBe(ORDER_STATE.IN_PROGRESS);

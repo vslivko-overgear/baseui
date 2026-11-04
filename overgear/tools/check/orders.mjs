@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // The orders after the purchase, in a real browser, against the rules of the real service (example/order-core.js):
-//  - the list: 20 cards to a page with numbered pages on a desktop, "Show More" on a phone, the filter by the state and the sort, and the states of the list (loading, an error with a retry, empty, a guest account);
+//  - the list: 20 cards at a time with an endless scroll (on a desktop and on a phone), the filter by the state and the sort, and the states of the list (loading, an error with a retry, empty, a guest account);
 //  - the page of an order: for each status the words, the tint, the steps and the buttons of the buyer are the ones the rules give; the flows: confirm a delivery (with the warning), cancel, a dispute, the delivery details,
 //    the review (and Trustpilot after the top rate), the tips, the Discord panel, and what happens next;
 //  - the way there: a payment makes an order for each line; one opens its own page, several open the result page; a declined payment, a payment that is verified, a guest buyer; and "View My orders".
@@ -52,11 +52,11 @@ blocks.push(async () => {
   const newest = sortOrders(orders, 'new')[0];
   expectThat(first.title === newest.title && first.status === statusLabel(newest.status), `the first card is not the newest order (${first.title} / ${first.status})`);
   expectThat(!!first.href && first.href.includes(newest.link), `the card does not open its order (${first.href})`);
-  const pages = await page.getByRole('navigation', { name: 'Pagination' }).count();
-  expectThat(pages === 1, 'desktop: there are no numbered pages');
-  await page.getByRole('button', { name: 'Page 2' }).click();
-  await page.waitForTimeout(400);
-  expectThat((await cards()) === orders.length - PAGE_SIZE, `desktop: the second page has ${await cards()} cards`);
+  expectThat((await page.getByRole('navigation', { name: 'Pagination' }).count()) === 0, 'desktop: there are numbered pages (the list scrolls without end instead)');
+  await page.locator('[data-test-id="orders-end"]').scrollIntoViewIfNeeded();
+  await page.waitForTimeout(600);
+  expectThat((await cards()) === orders.length, `desktop: the scroll shows ${await cards()} cards, not all ${orders.length}`);
+  expectThat((await page.locator('[data-test-id="orders-end"]').count()) === 0, 'desktop: the end of the list is still watched when every order is shown');
   // the filters: a game, a state and a status, which work together
   await visit(page, '/orders');
   const idx = { game: 1, state: 2, status: 3, sort: 4 };
@@ -105,11 +105,11 @@ blocks.push(async () => {
   const total = (await stored(page)).orders.length;
   await visit(page, '/orders');
   const cards = () => page.locator('[data-test-id="order-card"]').count();
-  expectThat((await cards()) === PAGE_SIZE && (await page.getByRole('navigation', { name: 'Pagination' }).count()) === 0, 'phone: the list has numbered pages');
-  await page.getByRole('button', { name: 'Show More' }).click();
-  await page.waitForTimeout(400);
-  expectThat((await cards()) === total, `phone: "Show More" shows ${await cards()} cards, not all ${total}`);
-  expectThat((await page.getByRole('button', { name: 'Show More' }).count()) === 0, 'phone: "Show More" stays when everything is shown');
+  expectThat((await cards()) === PAGE_SIZE && (await page.getByRole('navigation', { name: 'Pagination' }).count()) === 0, 'phone: the list does not start with a page of 20 cards or has numbered pages');
+  await page.locator('[data-test-id="orders-end"]').scrollIntoViewIfNeeded();
+  await page.waitForTimeout(600);
+  expectThat((await cards()) === total, `phone: the scroll shows ${await cards()} cards, not all ${total}`);
+  expectThat((await page.getByRole('button', { name: 'Show More' }).count()) === 0, 'phone: there is a Show More button');
   await page.context().close();
 });
 // a buyer who is not signed in, and a guest

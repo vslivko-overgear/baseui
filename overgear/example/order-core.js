@@ -77,13 +77,13 @@ export const STATUS_LABEL = {
 export const statusLabel = (status) => STATUS_LABEL[status] || 'Unknown';
 
 // The color of a status on a card of the list, by the groups of the real service: blue (new, received, refunded), grey (rejected, cancelled), green (completed, resolved), orange (in progress, screenshots,
-// confirmation), red (error, unpaid, under review, KYC lock). The real one colors the text; here it is the variant of a Badge that has the same meaning.
+// confirmation), red (error, unpaid, under review, KYC lock). The real one colors the text; here it is the light variant of a Badge that has the same meaning (the tags of a list are light, as in the payment history).
 const BLUE = [S.NEW, S.SELLER_RECEIVED, S.REFUNDED];
 const GREY = [S.REJECTED, S.CANCELLED];
 const GREEN = [S.COMPLETED, S.RESOLVED];
 const ORANGE = [S.IN_PROGRESS, S.WAIT_SCREENSHOTS, S.CONFIRM_DELIVERY];
 const RED = [S.ERROR, S.UNPAID, S.UNDER_REVIEW, S.KYC_LOCK];
-export const statusBadge = (status) => (BLUE.includes(status) ? 'info' : GREEN.includes(status) ? 'success' : ORANGE.includes(status) ? 'warning' : RED.includes(status) ? 'error' : GREY.includes(status) ? 'secondary' : 'secondary');
+export const statusBadge = (status) => (BLUE.includes(status) ? 'accent-light' : GREEN.includes(status) ? 'success-light' : ORANGE.includes(status) ? 'warning-light' : RED.includes(status) ? 'critical-light' : GREY.includes(status) ? 'secondary' : 'secondary');
 
 export const isKYC = (status) => status === S.KYC_LOCK || status === S.KYC_WATCH;
 const PAUSED = [S.ORDER_PAUSED_NEW, S.ORDER_PAUSED_IN_PROGRESS, S.KYC_LOCK, S.KYC_WATCH];
@@ -395,7 +395,7 @@ export const sortOrders = (orders, sort) => {
   const by = { new: (a, b) => b.createdAt - a.createdAt, old: (a, b) => a.createdAt - b.createdAt, 'price-high': (a, b) => b.price - a.price, 'price-low': (a, b) => a.price - b.price, eta: (a, b) => (a.duration || 0) - (b.duration || 0) }[sort] || ((a, b) => b.createdAt - a.createdAt);
   return [...orders].sort(by);
 };
-/** A page of the list: numbered pages on a desktop (one page), "Show more" on a phone (everything up to the page). */
+/** A page of the list: with `cumulative` everything up to the page (an endless scroll asks for the next page as the end comes into view), without it one numbered page. */
 export const pageOf = (orders, page, cumulative) => {
   const totalPages = Math.max(Math.ceil(orders.length / PAGE_SIZE), 1);
   const at = Math.min(Math.max(page, 1), totalPages);

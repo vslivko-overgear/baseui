@@ -1,13 +1,12 @@
 // The list of the orders of a buyer (/orders), as the real service has it (orders-listing-widget): a title with the count, a filter by the state and a sort, a card for each order (the title, the status, the date, the game,
-// the seller, the price, Reorder; the whole card opens the order), 20 to a page (numbered pages on a desktop, "Show more" on a phone), and the states of the list: loading, an error with a retry, empty, and the guest
+// the seller, the price, Reorder; the whole card opens the order), 20 at a time (an endless scroll: the next 20 come when the end is near), and the states of the list: loading, an error with a retry, empty, and the guest
 // (temporary) account, which has no history. The rules are in order-core.js.
-import { useEffect, useState } from '../../src/react.js';
+import { useEffect, useRef, useState } from '../../src/react.js';
 import { Button, IconButton } from '../../src/components/Button.jsx';
 import { Dialog } from '../../src/components/Dialog.jsx';
 import { Badge } from '../../src/components/Badge.jsx';
 import { ClickableCard } from '../../src/components/Card.jsx';
 import { Selector } from '../../src/components/Selector.jsx';
-import { Pagination } from '../../src/components/Pagination.jsx';
 import { Skeleton } from '../../src/components/Skeleton.jsx';
 import { Status } from '../../src/components/Status.jsx';
 import { Avatar } from '../../src/components/Avatar.jsx';
@@ -79,6 +78,7 @@ export function Orders({ onLogin, demo = '' }) {
   const [loading, setLoading] = useState(true);
   const [attempt, setAttempt] = useState(0);
   const [sheet, setSheet] = useState(false);   // the filters in a sheet, on a phone
+  const endRef = useRef(null);
   useEffect(() => { const open = () => setSheet(true); window.addEventListener(OPEN_ORDER_FILTERS, open); return () => window.removeEventListener(OPEN_ORDER_FILTERS, open); }, []);
   useEffect(() => { if (!mobile) setSheet(false); }, [mobile]);
   // the list is asked for when the page opens: a short wait with the skeleton, as on the network
@@ -90,7 +90,16 @@ export function Orders({ onLogin, demo = '' }) {
   const filtered = sortOrders(filterOrders(mine, { game, state, status }), sort);
   const filtering = game !== 'all' || state !== 'all' || status !== 'all';
   const reset = () => { setGame('all'); setState('all'); setStatus('all'); };
-  const view = pageOf(filtered, page, mobile);
+  const view = pageOf(filtered, page, true);   // an endless scroll: everything up to the page
+  // the next page comes when the end of the list is near (400px before it), until every order is shown
+  const more = view.nodes.length < filtered.length;
+  useEffect(() => {
+    const node = endRef.current;
+    if (!more || !node || typeof IntersectionObserver === 'undefined') return undefined;
+    const io = new IntersectionObserver((entries) => { if (entries.some((e) => e.isIntersecting)) setPage((p) => p + 1); }, { rootMargin: '400px' });
+    io.observe(node);
+    return () => io.disconnect();
+  }, [more, view.nodes.length, loading]);
   const phase = listState({ temporary: demo === 'temporary' || (!store.user && !!store.temp), loading: loading || demo === 'loading', error: demo === 'error', count: filtered.length });
 
   if (!store.user && !store.temp && demo !== 'temporary') {
@@ -105,9 +114,7 @@ export function Orders({ onLogin, demo = '' }) {
     list: (
       <div className="og-stack" data-test-id="orders-list">
         <div className="og-stack og-stack--cards">{view.nodes.map((o) => <OrderCard key={o.link} order={o} />)}</div>
-        {mobile
-          ? view.nodes.length < filtered.length && <Button variant="secondary" size="lg" width="100%" label="Show More" onClick={() => setPage(view.page + 1)} data-test-id="orders-show-more" />
-          : view.totalPages > 1 && <Pagination page={view.page} total={view.totalPages} onPageChange={setPage} />}
+        {view.nodes.length < filtered.length && <div ref={endRef} className="og-orders__end" data-test-id="orders-end" aria-hidden="true" />}
       </div>
     ),
   }[phase];
