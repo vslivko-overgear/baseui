@@ -61,4 +61,12 @@ describe('decisions of the product', () => {
     expect(orders).toMatch(/orders-filters-sheet/);
     expect(orders).toMatch(/first === 'orders' && under/);
   });
+
+  test('the submit of a form with a field in a sheet is in its footer, above the keyboard of a phone, not at the end of the content', () => {
+    for (const [file, id] of [['order.jsx', 'og-promo-form'], ['wallet.jsx', 'og-topup-form']]) {
+      const text = sources.find(([f]) => f === file)[1];
+      expect(text, `${file}: the footer button of ${id}`).toMatch(new RegExp(`primaryAction=\\{<Button[^>]*type="submit" form="${id}"`));
+      expect(text, `${file}: the form ${id}`).toMatch(new RegExp(`<form id="${id}"`));
+    }
+  });
 });

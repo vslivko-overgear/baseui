@@ -65,10 +65,9 @@ function Promo() {
           <ListItem onClick={show} details={<Icon name="ChevronRight" size={20} />}>Apply promo code</ListItem>
         )}
       </List>
-      <Dialog open={open} onOpenChange={setOpen} title="Promo code">
-        <form className="og-stack og-stack--lg" noValidate onSubmit={(e) => { e.preventDefault(); apply(); }}>
+      <Dialog open={open} onOpenChange={setOpen} title="Promo code" primaryAction={<Button variant="primary" type="submit" form="og-promo-form" label="Apply" />}>
+        <form id="og-promo-form" className="og-stack og-stack--lg" noValidate onSubmit={(e) => { e.preventDefault(); apply(); }}>
           <TextInput id="og-promo-code" label="Promo code" autoComplete="off" value={code} onChange={(e) => { setCode(e.target.value); setBad(false); }} status={bad ? 'error' : undefined} caption={bad ? 'This code does not work' : 'Try WELCOME10'} />
-          <Button variant="primary" size="lg" textSize={16} width="100%" type="submit" label="Apply" />
         </form>
       </Dialog>
     </>

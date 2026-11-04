@@ -1035,7 +1035,7 @@ export interface DialogProps {
    */
   children?: ReactNode;
   /**
-   * The primary action, usually a Button with variant="primary"; the buttons of the actions are large (56px, text 16) by default
+   * The primary action, usually a Button with variant="primary"; the buttons of the actions are large (56px, text 16) by default. The footer stays above the keyboard of a phone while the content scrolls, so the submit button of a form with fields belongs here (`type="submit" form="the-id-of-the-form"`), not at the end of the content, where the keyboard covers it
    */
   primaryAction?: ReactNode;
   /**

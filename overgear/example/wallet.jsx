@@ -108,8 +108,8 @@ export function TopUpDialog() {
     }, 700);
   };
   return (
-    <Dialog open={open} onOpenChange={(o) => !paying && setOpen(o)} title="Top Up Balance">
-      <form className="og-stack og-stack--lg og-topup" noValidate onSubmit={(e) => { e.preventDefault(); pay(); }}>
+    <Dialog open={open} onOpenChange={(o) => !paying && setOpen(o)} title="Top Up Balance" primaryAction={<Button variant="primary" type="submit" form="og-topup-form" loading={paying} label="Top up" data-test-id="topup-submit" />}>
+      <form id="og-topup-form" className="og-stack og-stack--lg og-topup" noValidate onSubmit={(e) => { e.preventDefault(); pay(); }}>
         <div className="og-stack og-stack--close">
           <TextInput id="og-topup-amount" label="Amount, USD" inputMode="decimal" autoComplete="off" prefix="$" value={text} {...form.field('amount', { onChange: (e) => setText(e.target.value) })} />
           <TokenGroup size="sm" aria-label="Amount suggestions" value={SUGGESTIONS.includes(amount) ? [String(amount)] : []} onValueChange={(v) => v.length && setText(v[v.length - 1])} options={SUGGESTIONS.map((n) => ({ value: String(n), label: <span className="og-topup__chip">{`$${n}`}<Badge variant="warning-light" size="sm" label={`+${bonusRateFor(n)}%`} icon={<CashbackMark />} /></span> }))} />
@@ -130,7 +130,6 @@ export function TopUpDialog() {
         </div>
         <p className="og-topup__rules">{`One coin is equal to $1. Pay up to ${PURCHASE_LIMIT}% of shop products and currencies. Cannot be applied with discounted items and promotional codes`}</p>
         </div>
-        <Button variant="primary" size="lg" textSize={16} width="100%" type="submit" loading={paying} label="Top up" data-test-id="topup-submit" />
       </form>
     </Dialog>
   );
