@@ -26,7 +26,7 @@ const DAYS = [{ value: 'today', label: 'Today' }, { value: 'tomorrow', label: 'T
 const TIMES = ['22:30', '22:45', '23:00', '23:30', '23:45'].map((v) => ({ value: v, label: v }));
 const EXTRAS = [{ value: 'grotto', label: 'Add Tidebound Grotto at 30% OFF', price: 10.95, was: 15.64 }, { value: 'kithix', label: "Add Kith'ix", price: 11.17 }];
 const TRUST = [
-  ['in-house-boosters', 'ID-verified pros', 'Every player passes our selection and checks'],
+  ['UserCheck01', 'ID-verified pros', 'Every player passes our selection and checks'],
   ['Lock01', 'Secure payment', 'Cards and wallets are processed by certified providers'],
   ['LifeBuoy01', '24/7 support', 'A human answers in the order chat at any hour'],
 ];
