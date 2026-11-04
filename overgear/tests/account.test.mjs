@@ -1,6 +1,6 @@
 import { describe, expect, test, it } from 'vitest';
 import { MAX_AMOUNT, MIN_AMOUNT, PRESETS, WALLET_START, amountError, coinsText, parseAmount, withCoins, withTopUp, withSubscription, NO_SUBS } from '../example/wallet-core.js';
-import { passwordErrors, passwordValid, newError } from '../example/settings-core.js';
+import { passwordErrors, passwordValid, newError, avatarError, AVATAR_MAX_BYTES } from '../example/settings-core.js';
 import { transactionsOf, filterTransactions, pagesOf, pageOf, titleOf, signOf, amountText, shownDirection, purchaseState, refillEntry, seedLog, TX_STATES } from '../example/transactions-core.js';
 import { ORDER_STATUS as S } from '../example/order-core.js';
 import { GRADES, spentLastYear, gradeFor, progressTo, rankHistory, rankLine } from '../example/rank-core.js';
@@ -181,3 +181,14 @@ describe('rank-core', () => {
     });
   });
 });
+
+describe('avatar of the account', () => {
+  test('an image up to 5 MB will do, anything else gets a reason', () => {
+    expect(avatarError({ type: 'image/png', size: 1000 })).toBe('');
+    expect(avatarError({ type: 'image/jpeg', size: AVATAR_MAX_BYTES })).toBe('');
+    expect(avatarError({ type: 'image/png', size: AVATAR_MAX_BYTES + 1 })).toMatch(/larger/);
+    expect(avatarError({ type: 'application/pdf', size: 10 })).toMatch(/image/);
+    expect(avatarError(undefined)).toMatch(/Choose/);
+  });
+});
+

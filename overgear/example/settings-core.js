@@ -18,3 +18,13 @@ export const repeatError = (next, repeat) => (String(repeat || '') === String(ne
 /** The errors of the three fields of the form: { current, next, repeat }, each an empty text when the field is right. */
 export const passwordErrors = ({ current, next, repeat }) => ({ current: currentError(current), next: newError(next, current), repeat: repeatError(next, repeat) });
 export const passwordValid = (values) => Object.values(passwordErrors(values)).every((e) => !e);
+
+export const AVATAR_MAX_BYTES = 5 * 1024 * 1024;
+/** The problem of a file chosen for the avatar, or an empty text when it will do: an image of 5 MB at most. */
+export const avatarError = (file) => {
+  if (!file) return 'Choose a picture';
+  if (!String(file.type || '').startsWith('image/')) return 'Choose an image file';
+  if (file.size > AVATAR_MAX_BYTES) return 'The picture is larger than 5 MB';
+  return '';
+};
+
