@@ -476,3 +476,11 @@ describe('ChoiceSheet option pictures', () => {
   });
 });
 
+describe('Dialog actions', () => {
+  test('the buttons of the actions are large unless one says otherwise', () => {
+    render(<Dialog open title="T" onOpenChange={() => {}} primaryAction={<Button variant="primary">Yes</Button>} secondaryAction={<Button size="sm">No</Button>} />);
+    expect(screen.getByRole('button', { name: 'Yes' }).getAttribute('data-size')).toBe('lg');
+    expect(screen.getByRole('button', { name: 'No' }).getAttribute('data-size')).toBe('sm');
+  });
+});
+

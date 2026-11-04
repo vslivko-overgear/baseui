@@ -1035,7 +1035,7 @@ export interface DialogProps {
    */
   children?: ReactNode;
   /**
-   * The primary action, usually a Button with variant="primary"
+   * The primary action, usually a Button with variant="primary"; the buttons of the actions are large (56px, text 16) by default
    */
   primaryAction?: ReactNode;
   /**

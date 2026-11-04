@@ -61,7 +61,7 @@ export function ChoiceSheet({
       data-testid="choice-field-mobile-action"
       data-dialog-close
       variant={action === 'close' ? 'secondary' : 'primary'}
-      size="md"
+      size="lg"
       onClick={action === 'apply' ? () => onCommit(picked) : undefined}
     >
       {action === 'close' ? 'Close' : 'Apply'}

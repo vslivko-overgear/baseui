@@ -459,7 +459,7 @@ a { color: inherit; }
 .og-balance__coins { align-items: flex-end; text-align: end; }
 
 /* the pay bar pinned to the bottom of the screen of a phone, in the cart (over the bottom bar of the tabs) and in the checkout: what is to pay on the left, the button that pays on the right */
-.og-paybar { position: fixed; left: 0; right: 0; bottom: var(--og-paybar-bottom, 0px); z-index: var(--baseui-z-index-30); background: var(--baseui-background-primary); padding: var(--baseui-spacing-3) var(--baseui-spacing-4) max(var(--baseui-spacing-3), env(safe-area-inset-bottom)); }
+.og-paybar { position: fixed; left: 0; right: 0; bottom: var(--og-paybar-bottom, 0px); z-index: var(--baseui-z-index-30); background: var(--baseui-background-primary); padding: var(--baseui-spacing-3) var(--baseui-spacing-4) var(--bui-sheet-bottom); }
 .og-paybar__in { display: flex; flex-direction: column; gap: var(--baseui-spacing-3); }
 .og-paybar__sum { margin: 0; display: flex; align-items: center; gap: var(--baseui-spacing-2); min-width: 0; }
 .og-paybar__amount { font: var(--baseui-typography-header-28); font-family: var(--baseui-typography-headline-font-family); }

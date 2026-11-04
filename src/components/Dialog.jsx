@@ -3,6 +3,7 @@ import { Dialog as BaseDialog } from '@base-ui/react/dialog';
 import { BuiltinIcon } from '../builtin-icons.jsx';
 import { useFloating } from '../theme-flags.js';
 import { describe } from '../doc.js';
+import { ControlSizeContext } from '../control-size.js';
 
 export const DIALOG_HEADER = { close: 'close', closeAndBack: 'close-and-back', titleOnly: 'title-only' };
 const WITH_CLOSE = [DIALOG_HEADER.close, DIALOG_HEADER.closeAndBack];
@@ -219,16 +220,19 @@ export function Dialog({
             </div>
             {hasActions && (
               <footer data-slot="dialog-footer" className="bui-dialog__actions">
-                {primaryAction !== undefined && (
-                  <div data-slot="dialog-action" className="bui-dialog__action">
-                    {primaryAction}
-                  </div>
-                )}
-                {secondaryAction !== undefined && (
-                  <div data-slot="dialog-action" className="bui-dialog__action">
-                    {secondaryAction}
-                  </div>
-                )}
+                {/* the buttons of a sheet are large (56px, text 16) unless one says otherwise */}
+                <ControlSizeContext.Provider value="lg">
+                  {primaryAction !== undefined && (
+                    <div data-slot="dialog-action" className="bui-dialog__action">
+                      {primaryAction}
+                    </div>
+                  )}
+                  {secondaryAction !== undefined && (
+                    <div data-slot="dialog-action" className="bui-dialog__action">
+                      {secondaryAction}
+                    </div>
+                  )}
+                </ControlSizeContext.Provider>
               </footer>
             )}
           </BaseDialog.Popup>
@@ -254,7 +258,7 @@ describe(
       'A floating sheet on small screens: margins at the bottom and the sides, rounded on every side; by default it follows the Floating setting of the theme. On a wide screen the dialog already floats in the middle',
     ],
     children: ['ReactNode', null, 'Main content of the window'],
-    primaryAction: ['ReactNode', null, 'The primary action, usually a Button with variant="primary"'],
+    primaryAction: ['ReactNode', null, 'The primary action, usually a Button with variant="primary"; the buttons of the actions are large (56px, text 16) by default'],
     secondaryAction: ['ReactNode', null, 'The secondary action, usually a Button with variant="secondary"'],
     onBack: ['() => void', null, 'Handler of the back button for header="close-and-back"'],
     swipeToClose: ['boolean', 'true', 'Swipe down on the header to close the bottom sheet (touch and mouse drag, narrow screens only)'],

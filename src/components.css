@@ -953,8 +953,8 @@
 @media (width <= 767px) {
   [data-slot="dialog-viewport"] { padding-top: var(--baseui-spacing-3); }
   /* room for the home indicator of a phone under the last control of the sheet */
-  [data-slot="dialog-footer"] { padding-bottom: calc(var(--baseui-layout-margin-mobile) + max(var(--baseui-spacing-2), env(safe-area-inset-bottom, 0px))); }
-  [data-slot="dialog-content"]:not(:has(+ [data-slot="dialog-footer"])) { padding-bottom: calc(var(--baseui-layout-margin-mobile) + max(var(--baseui-spacing-2), env(safe-area-inset-bottom, 0px))); }
+  [data-slot="dialog-footer"] { padding-bottom: var(--bui-sheet-bottom); }
+  [data-slot="dialog-content"]:not(:has(+ [data-slot="dialog-footer"])) { padding-bottom: var(--bui-sheet-bottom); }
   .bui-dialog--floating [data-slot="dialog-footer"], .bui-dialog--floating [data-slot="dialog-content"] { padding-bottom: var(--baseui-layout-margin-mobile); }
   [data-slot="dialog"] { max-height: 100%; }
   [data-slot="dialog"][data-height="viewport"] { height: 100%; }
@@ -1167,6 +1167,7 @@
 .bui-grid { display: grid; }
 .bui-section { box-sizing: border-box; width: 100%; margin-inline: auto; }
 /* the levels of relation between blocks (rule H3): 8 / 16 / 24 / 40; on a phone only the page padding is smaller */
+:root { --bui-sheet-bottom: calc(var(--baseui-spacing-2) + max(var(--baseui-spacing-2), env(safe-area-inset-bottom, 0px))); }   /* the room under the last button of a sheet or of a bar pinned to the bottom of a phone: the same for both, so a button does not jump between them */
 :root { --bui-rel-pair: 0px; --bui-rel-tight: var(--baseui-spacing-2); --bui-rel-related: var(--baseui-spacing-4); --bui-rel-group: var(--baseui-spacing-6); --bui-rel-section: var(--baseui-spacing-10); --bui-page-pad: var(--baseui-spacing-6); }
 @media (max-width: 767px) { :root { --bui-page-pad: var(--baseui-spacing-4); } }
 /* A form: one gap (--bui-form-gap) between rows and between columns, so the distance is the same in both directions. The form is a container: its rows stack when it is narrow. */
