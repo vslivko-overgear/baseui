@@ -3,9 +3,11 @@
 // Pure functions: the page (transactions.jsx) draws them. The real list comes from the network; here it is made of the orders (the payments for them, the cashback) and of a log that the wallet keeps (top-ups, bonuses, gifts).
 import { ORDER_STATUS as S } from './order-core.js';
 
-export const TX_TYPES = { REFILL: 'ACCOUNT_REFILL', PURCHASE: 'PRODUCT_PURCHASE', CASHBACK: 'CASHBACK', GIFT: 'GIFT', COUPON: 'COUPON', REFUND: 'ACCOUNT_REFUND' };
+export const TX_TYPES = { REFILL: 'ACCOUNT_REFILL', PURCHASE: 'PRODUCT_PURCHASE', CASHBACK: 'CASHBACK', GIFT: 'GIFT', COUPON: 'COUPON', REFUND: 'ACCOUNT_REFUND', SPEND: 'BONUS_SPEND' };
 export const TX_STATES = { COMPLETED: 'completed', PENDING: 'pending', FAILED: 'failed', CANCELLED: 'cancelled', ARBITRAGE: 'arbitrage', HOLD: 'hold' };
 export const PAGE_SIZE = 20;
+/** How long a bonus (OG Coins) lives from the day it is credited, in days: then it burns. */
+export const BONUS_LIFETIME_DAYS = 180;
 /** The states with no money movement (the real service: failed, cancelled, arbitration): the row has no sign and no color of a direction. */
 const TERMINAL = [TX_STATES.FAILED, TX_STATES.CANCELLED, TX_STATES.ARBITRAGE];
 
@@ -34,6 +36,8 @@ export const fromOrders = (orders, gameName = () => '') => orders.flatMap((o) =>
 /** The entries the wallet writes to its log: a top-up (incoming dollars), the bonus coins of it (a coupon) and a reward (a gift). */
 export const refillEntry = (amount, now, state = TX_STATES.COMPLETED) => ({ id: `refill-${now}`, type: TX_TYPES.REFILL, direction: 'incoming', state, amount, currency: 'USD', description: '', date: now });
 export const bonusEntry = (coins, now, text = 'Bonus for the top-up') => ({ id: `bonus-${now}`, type: TX_TYPES.COUPON, direction: 'incoming', state: TX_STATES.COMPLETED, amount: coins, currency: 'COINS', description: text, date: now });
+/** The coins spent on a part of a payment (outgoing, in OG Coins). */
+export const spendEntry = (coins, now, text = 'Part of the payment for an order') => ({ id: `spend-${now}`, type: TX_TYPES.SPEND, direction: 'outgoing', state: TX_STATES.COMPLETED, amount: coins, currency: 'COINS', description: text, date: now });
 export const giftEntry = (coins, now, text) => ({ id: `gift-${now}-${text}`, type: TX_TYPES.GIFT, direction: 'incoming', state: TX_STATES.COMPLETED, amount: coins, currency: 'COINS', description: text, date: now });
 
 const DAY = 864e5;
@@ -44,10 +48,21 @@ export const seedLog = (now) => [
   { ...refillEntry(50, now - 12 * DAY, TX_STATES.FAILED), id: 'seed-refill-2' },
   { ...refillEntry(25, now - 2 * DAY, TX_STATES.PENDING), id: 'seed-refill-3' },
   { ...giftEntry(3, now - 20 * DAY, 'Welcome gift'), id: 'seed-gift-1' },
+  { ...spendEntry(2, now - 8 * DAY), id: 'seed-spend-1' },
 ];
 
-/** The whole list: the log and what the orders make, the newest first. */
-export const transactionsOf = (orders, log, gameName) => [...fromOrders(orders, gameName), ...(log || [])].sort((a, b) => b.date - a.date);
+const all = (orders, log, gameName) => [...fromOrders(orders, gameName), ...(log || [])].sort((a, b) => b.date - a.date);
+/** The payment history: the money only (top-ups, payments, refunds), the newest first. The coins are in the bonus history. */
+export const transactionsOf = (orders, log, gameName) => all(orders, log, gameName).filter((t) => t.currency !== 'COINS');
+/**
+ * The bonus history: what was credited in OG Coins (cashback, bonuses for a top-up, gifts), each with the day it burns, and what was spent, the newest first.
+ * A spending has no expiry.
+ */
+export const bonusesOf = (orders, log, gameName) => all(orders, log, gameName)
+  .filter((t) => t.currency === 'COINS' && t.state === TX_STATES.COMPLETED)
+  .map((t) => (t.direction === 'incoming' ? { ...t, expiresAt: t.date + BONUS_LIFETIME_DAYS * DAY } : t));
+/** An accrual whose day has passed: the coins are burnt. */
+export const isBurnt = (t, now) => t.expiresAt != null && t.expiresAt < now;
 
 /** The filter of the page: the direction, and whether the transactions that are not completed are shown (they are by default). The incomplete ones are every state but completed. */
 export const filterTransactions = (list, { direction = 'all', showIncomplete = true } = {}) => list.filter((t) => (direction === 'all' || t.direction === direction) && (showIncomplete || t.state === TX_STATES.COMPLETED));
@@ -61,6 +76,7 @@ export const titleOf = (t) => {
     case TX_TYPES.GIFT: return 'Gift';
     case TX_TYPES.COUPON: return 'Coupon';
     case TX_TYPES.REFUND: return 'Account refund';
+    case TX_TYPES.SPEND: return 'Spent on an order';
     case TX_TYPES.CASHBACK: return t.orderLink ? 'Cashback for order #' : 'Cashback';
     case TX_TYPES.PURCHASE: return t.state === TX_STATES.ARBITRAGE ? 'Arbitrage' : 'Payment for the order';
     default: return 'Transaction';
@@ -90,3 +106,6 @@ export const dateText = (time) => {
   const pad = (n) => String(n).padStart(2, '0');
   return `${pad(d.getDate())} ${MONTHS[d.getMonth()]} ${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
 };
+
+/** A date without the time: "02 May 2027" (the day a bonus burns). */
+export const dayText = (time) => dateText(time).slice(0, 11);

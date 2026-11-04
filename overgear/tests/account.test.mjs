@@ -1,7 +1,7 @@
 import { describe, expect, test, it } from 'vitest';
 import { MAX_AMOUNT, MIN_AMOUNT, PRESETS, WALLET_START, amountError, coinsText, parseAmount, withCoins, withTopUp, withSubscription, NO_SUBS } from '../example/wallet-core.js';
 import { passwordErrors, passwordValid, newError, avatarError, AVATAR_MAX_BYTES } from '../example/settings-core.js';
-import { transactionsOf, filterTransactions, pagesOf, pageOf, titleOf, signOf, amountText, shownDirection, purchaseState, refillEntry, seedLog, TX_STATES } from '../example/transactions-core.js';
+import { bonusesOf, isBurnt, BONUS_LIFETIME_DAYS, transactionsOf, filterTransactions, pagesOf, pageOf, titleOf, signOf, amountText, shownDirection, purchaseState, refillEntry, seedLog, TX_STATES } from '../example/transactions-core.js';
 import { ORDER_STATUS as S } from '../example/order-core.js';
 import { GRADES, spentLastYear, gradeFor, progressTo, rankHistory, rankLine } from '../example/rank-core.js';
 
@@ -112,10 +112,22 @@ describe('transactions-core', () => {
   const order = (link, status, price = 10, createdAt = now) => ({ link, status, price, title: 'Order', game: 'wow', createdAt, completedAt: status === S.COMPLETED ? createdAt + 1 : null });
 
   describe('the payment history', () => {
-    it('makes a payment for each order, and a cashback for a completed one', () => {
-      const list = transactionsOf([order('a', S.COMPLETED, 200), order('b', S.IN_PROGRESS)], [], () => 'Game');
-      expect(list.map((t) => t.type).sort()).toEqual(['CASHBACK', 'PRODUCT_PURCHASE', 'PRODUCT_PURCHASE']);
-      expect(list.find((t) => t.type === 'CASHBACK').amount).toBe(2);
+    it('makes a payment for each order; the coins (cashback, bonuses, gifts) are not in it', () => {
+      const list = transactionsOf([order('a', S.COMPLETED, 200), order('b', S.IN_PROGRESS)], seedLog(now), () => 'Game');
+      expect(list.map((t) => t.type).filter((t) => t === 'PRODUCT_PURCHASE')).toHaveLength(2);
+      expect(list.some((t) => t.currency === 'COINS')).toBe(false);
+    });
+    it('the bonus history has the accruals with the day they burn, and the spendings with none', () => {
+      const list = bonusesOf([order('a', S.COMPLETED, 200), order('b', S.IN_PROGRESS)], seedLog(now), () => 'Game');
+      expect(list.every((t) => t.currency === 'COINS')).toBe(true);
+      const cashback = list.find((t) => t.type === 'CASHBACK');
+      expect(cashback.amount).toBe(2);
+      expect(cashback.expiresAt).toBe(cashback.date + BONUS_LIFETIME_DAYS * 864e5);
+      expect(list.filter((t) => t.direction === 'incoming').every((t) => t.expiresAt > t.date)).toBe(true);
+      expect(list.filter((t) => t.direction === 'outgoing').length).toBeGreaterThan(0);
+      expect(list.filter((t) => t.direction === 'outgoing').every((t) => t.expiresAt == null)).toBe(true);
+      expect(isBurnt({ expiresAt: now - 1 }, now)).toBe(true);
+      expect(isBurnt({ expiresAt: now + 1 }, now)).toBe(false);
     });
     it('gives the state of a payment by the order', () => {
       expect(purchaseState(order('a', S.ERROR))).toBe('failed');

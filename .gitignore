@@ -6,6 +6,7 @@ overgear/components/cashback.js
 overgear/components/paybar.js
 overgear/example/account.js
 overgear/example/app.js
+overgear/example/bonuses.js
 overgear/example/cart.js
 overgear/example/catalog.js
 overgear/example/games.js

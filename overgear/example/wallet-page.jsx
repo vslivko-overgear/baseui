@@ -84,7 +84,8 @@ export function WalletPage({ onLogin }) {
         </div>
         <Card variant="surface" padding="list" className="og-terms">
           <List aria-label="History">
-            <ListItem avatar={<Pic><Icon name="ClockRewind" size={24} /></Pic>} subtitle="Top-ups, payments, cashback and bonuses" onClick={() => go('/wallet/history')} details={<Icon name="ChevronRight" size={20} />} data-test-id="wallet-history-link">Payment History</ListItem>
+            <ListItem avatar={<Pic><Icon name="ClockRewind" size={24} /></Pic>} subtitle="Top-ups and payments" onClick={() => go('/wallet/history')} details={<Icon name="ChevronRight" size={20} />} data-test-id="wallet-history-link">Payment History</ListItem>
+            <ListItem avatar={<Pic><Icon name="Coins01" size={24} /></Pic>} subtitle="Accruals with the day they burn, and spendings" onClick={() => go('/wallet/bonuses')} details={<Icon name="ChevronRight" size={20} />} data-test-id="wallet-bonuses-link">Bonus History</ListItem>
           </List>
         </Card>
       </div>
