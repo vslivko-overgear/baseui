@@ -23,16 +23,16 @@ import { Faq } from './games.jsx';
 const MODES = [{ value: 'piloted', label: 'Piloted' }, { value: 'self', label: 'Self-play' }, { value: 'remote', label: 'Remote control' }];
 const EXTRAS = [{ value: 'express', label: 'Express start, +$12', price: 12 }, { value: 'stream', label: 'Live stream, +$8', price: 8 }, { value: 'loot', label: 'Priority loot, +$20', price: 20 }];
 const TRUST = [
-  ['UserCheck01', 'ID-verified pros', 'Every player passes our selection and checks'],
+  ['in-house-boosters', 'ID-verified pros', 'Every player passes our selection and checks'],
   ['Lock01', 'Secure payment', 'Cards and wallets are processed by certified providers'],
   ['LifeBuoy01', '24/7 support', 'A human answers in the order chat at any hour'],
 ];
-/** "Why Players Choose Overgear": the four promises of the real pages (the same on every product). */
+/** "Why Players Choose Overgear": the four promises (an icon of its own each, in assets/why) of the real pages (the same on every product). */
 const WHY = [
-  ['UserCheck01', 'In-House Boosters', 'Verified pros under full control. Top skill — no random freelancers'],
-  ['Clock', 'Time-First Priority', 'Fast start. Streamlined process. Every minute counts — yours first'],
-  ['Tag01', 'Fair Price Promise', 'Premium results. Fair cost. No cheap tricks, no shortcuts'],
-  ['ShieldTick', 'Zero-Ban Protocol', 'Manual boosting only. Smart VPN routes. No bots or cheats'],
+  ['in-house-boosters', 'In-House Boosters', 'Verified pros under full control. Top skill — no random freelancers'],
+  ['time-first', 'Time-First Priority', 'Fast start. Streamlined process. Every minute counts — yours first'],
+  ['fair-price', 'Fair Price Promise', 'Premium results. Fair cost. No cheap tricks, no shortcuts'],
+  ['zero-ban', 'Zero-Ban Protocol', 'Manual boosting only. Smart VPN routes. No bots or cheats'],
 ];
 /** "How does it work?": the steps of the real pages (the same on every product). */
 const STEPS = [
@@ -172,8 +172,8 @@ export function Offer({ id }) {
               <div className="og-stack og-stack--lg" data-test-id="offer-why">
                 <h2 className="og-h2">Why Players Choose Overgear</h2>
                 <ul className="og-trust">
-                  {WHY.map(([icon, t, d]) => (
-                    <li key={t}><Icon name={icon} size={24} /><div className="og-stack og-stack--pair"><p className="og-trust__title">{t}</p><p className="og-meta">{d}</p></div></li>
+                  {WHY.map(([img, t, d]) => (
+                    <li key={t}><img src={`./assets/why/${img}.svg`} alt="" width="32" height="32" /><div className="og-stack og-stack--pair"><p className="og-trust__title">{t}</p><p className="og-meta">{d}</p></div></li>
                   ))}
                 </ul>
               </div>
