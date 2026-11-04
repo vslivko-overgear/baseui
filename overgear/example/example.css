@@ -603,7 +603,7 @@ a { color: inherit; }
 .og-acc__pop { width: 360px; max-width: calc(100vw - 2 * var(--baseui-spacing-3)); padding: var(--baseui-spacing-1) var(--baseui-spacing-4); border-radius: var(--baseui-radius-custom-20); }
 .og-acc__div { margin-block: var(--baseui-spacing-3); }   /* 12px above and below the divider of the profile */
 /* the profile row: 12px above and below the avatar, as at its side; its corners are concentric with the row (16px - 12px = 4px) */
-.og-profilerow .bui-list__header { min-height: calc(40px + 2 * var(--baseui-spacing-3)); }
+.og-profilerow .bui-list__header { min-height: calc(48px + 2 * var(--baseui-spacing-3)); }
 .og-profilerow__avatar { border-radius: var(--baseui-radius-sm); }
 
 .og-rank__links { display: flex; flex-wrap: wrap; align-items: center; gap: var(--baseui-spacing-2) var(--baseui-spacing-6); }   /* the two links under the button: text with an underline, on the left */

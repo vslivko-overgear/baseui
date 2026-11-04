@@ -24,7 +24,7 @@ export function ProfileRow({ active, onPick }) {
   const store = useStore();
   const { grade } = useRank();
   return (
-    <ListItem avatar={<span className="og-avatarrank"><Avatar name={store.user.name} src={store.user.avatar} size={40} shape="rounded" className="og-profilerow__avatar" /><span className="og-avatarrank__badge"><RankBadge grade={grade} size={20} /></span></span>} subtitle={rankLine(grade)} onClick={() => { onPick?.(); go('/rank'); }} active={active} details={<Value />} className="og-profilerow" data-test-id="profile-rank-row">{store.user.name}</ListItem>
+    <ListItem avatar={<span className="og-avatarrank"><Avatar name={store.user.name} src={store.user.avatar} size={48} shape="rounded" className="og-profilerow__avatar" /><span className="og-avatarrank__badge"><RankBadge grade={grade} size={24} /></span></span>} subtitle={rankLine(grade)} onClick={() => { onPick?.(); go('/rank'); }} active={active} details={<Value />} className="og-profilerow" data-test-id="profile-rank-row">{store.user.name}</ListItem>
   );
 }
 
