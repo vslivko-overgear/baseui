@@ -2,7 +2,6 @@
 
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
-- The side padding of the blocks on the secondary background is 24 (it was 16): the Collapsible (a baseui island), the review bodies and the help line of the raid slot on the offer page of Overgear. Not run: the browser checks beyond the plan
 - Tooltip and Hint animate in and out with the same motion as the menus: basic is a quick fade in and out (it only faded in before and vanished at once), enhanced grows the bubble from the side it hangs on and plays it out, off and reduced motion show and hide it at once; the bubble stays drawn while it leaves (`data-closing`). The protocol for agents shows a real rule id (`H2`) in its example of the banner, not the removed `A1`; the Brand of the Theme page of Overgear is a group of chips, so its six options wrap on a phone and the page does not scroll sideways. Not run: the browser checks beyond the plan
 - Overgear, the Theme page: the global Floating setting is removed as Glass was: the theme has neither; the bottom bar keeps its own floating and glass, and the dropdowns their glass, as local settings. Not run: the browser checks beyond the plan
 - Overgear, the Theme page: the global Glass setting is removed (the theme has no glass; only the elements with settings of their own keep theirs, the menus of dropdowns and the bottom bar), and the Brand has Red and Custom (a color field appears for it), as the documentation site has. Not run: the browser checks beyond the plan
