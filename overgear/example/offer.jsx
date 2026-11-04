@@ -126,9 +126,9 @@ export function Offer({ id }) {
     </Card>
   </div>
   );
-  return (
-    <Page>
-      <PageHead crumbs={[{ label: 'Home', href: '#/' }, { label: game.name, href: `#/games/${game.slug}` }, { label: service.label, href: `#/games/wow?s=${service.id}` }, { label: offer.title }]} title={offer.title} mediaTop media={<div className="og-art og-art--square" role="img" aria-label={offer.title}>{offer.image ? <img className="og-art__img" src={offer.image} alt="" /> : <Icon name="Image01" size={32} />}</div>}>
+  // on a desktop the head stands in the left column, so the right one starts level with the breadcrumbs; on a phone it is the first block of the page
+  const head = (
+    <PageHead crumbs={[{ label: 'Home', href: '#/' }, { label: game.name, href: `#/games/${game.slug}` }, { label: service.label, href: `#/games/wow?s=${service.id}` }, { label: offer.title }]} title={offer.title} mediaTop media={<div className="og-art og-art--square" role="img" aria-label={offer.title}>{offer.image ? <img className="og-art__img" src={offer.image} alt="" /> : <Icon name="Image01" size={32} />}</div>}>
         <div className="og-row og-offer-meta">
           <Stars value={offer.rating} reviews={offer.reviews} size="md" />
           <span className="og-dot" aria-hidden="true">·</span>
@@ -136,10 +136,15 @@ export function Offer({ id }) {
           <span className="og-dot" aria-hidden="true">·</span>
           <WishButton id={offer.id} text />
         </div>
-      </PageHead>
+    </PageHead>
+  );
+  return (
+    <Page crumbs>
+      {mobile && head}
         <div className="og-split og-split--right">
           <div className="og-stack og-stack--xl">
             <div className="og-stack">
+            {!mobile && head}
             {mobile ? <Bleed scroll>{usp}</Bleed> : usp}
             <Card variant="surface" padding={5}>
               <div className="og-stack og-stack--lg">

@@ -2,6 +2,7 @@
 
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
+- Overgear, the offer page on a desktop: the right column starts level with the breadcrumbs (the head of the page stands in the left column); on a phone the head is the first block of the page as before. Not run: the browser checks beyond the plan
 - Overgear, the offer page on a desktop: the right column sticks 24px under the header (it was 48px), by the height of the header (`--og-header-h`); at the start it stands level with the row of tags, as before
 - Overgear, the offer page: the colored tag of the offer has the color it has in the listing (red, green, blue, yellow), it was always blue
 - Overgear, the offer page: the subtitle line is 4px lower under the title (4 instead of 0); the rating, the sales and the favorites are parted by dots; "Add to favorites" is underlined on hover
