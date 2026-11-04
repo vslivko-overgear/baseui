@@ -13,22 +13,34 @@ import { useRef, useState } from './react.js';
  *
  * `field(name, { caption, onChange })` gives a TextInput (or any field that takes them) the `status`, the `caption` (the error while it is shown, otherwise `caption`),
  * an `onFocus` and an `onChange` that hide the error (and call yours). `shown(name)` says whether the error of a field is on screen.
- * A form that moves the focus to the wrong field itself, right after `reveal()`, keeps that field's error: the focus that `reveal()` causes does not hide it, the next one does.
+ * `reveal()` also puts the focus on the first wrong field (in the order of the page), so the person can type at once and the keyboard of a phone is already there; the error of that
+ * field stays while the focus arrives and goes with the next edit. A form that moves the focus itself right after `reveal()` keeps the error the same way.
  */
 /** @param {Record<string, string>} [errors] */
 export function useFieldErrors(errors = {}) {
   const [on, setOn] = useState(() => new Set());
   const revealing = useRef(false);
+  const nodes = useRef(new Map());   // the field elements by name (the `ref` that `field()` gives)
   const hide = (name) => setOn((set) => (set.has(name) ? new Set([...set].filter((n) => n !== name)) : set));
   const shown = (name) => on.has(name) && !!errors[name];
   return {
     /** Show the errors of the fields that are wrong now (call it on Submit). */
-    reveal: () => { revealing.current = true; setTimeout(() => { revealing.current = false; }, 0); setOn(new Set(Object.keys(errors).filter((name) => errors[name]))); },
+    reveal: () => {
+      const wrong = Object.keys(errors).filter((name) => errors[name]);
+      revealing.current = true;
+      setTimeout(() => { revealing.current = false; }, 0);
+      setOn(new Set(wrong));
+      // the first wrong field in the order of the page gets the focus (without scrolling it under the bar: the browser brings it into view)
+      const els = wrong.map((name) => nodes.current.get(name)).filter((el) => el && el.isConnected);
+      els.sort((a, b) => (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1));
+      els[0]?.focus();
+    },
     /** Hide every error (the form was sent, or reset). */
     reset: () => setOn(new Set()),
     shown,
-    /** The props of a field: status and caption by whether its error is shown, and the handlers that hide the error. */
+    /** The props of a field: its `ref` (for the focus), status and caption by whether its error is shown, and the handlers that hide the error. */
     field: (name, /** @type {{ caption?: any, onChange?: (e: any) => void, onFocus?: (e: any) => void }} */ { caption, onChange, onFocus } = {}) => ({
+      ref: (el) => { if (el) nodes.current.set(name, el); else nodes.current.delete(name); },
       status: shown(name) ? 'error' : undefined,
       caption: shown(name) ? errors[name] : caption,
       onFocus: (e) => { if (!revealing.current) hide(name); onFocus?.(e); },

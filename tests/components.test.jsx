@@ -592,14 +592,15 @@ describe('useFieldErrors', () => {
     expect(errorsOnScreen()).toBe(2);
     expect(screen.getByText('Fill A')).toBeInTheDocument();
   });
-  test('an error goes when its field is focused again, the others stay', async () => {
+  test('an error goes when its field is focused again (the focus Submit put on the first wrong field is the first of those)', async () => {
     render(<Form />);
     await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+    await userEvent.click(screen.getByLabelText('B'));   // the focus was on A after Submit: leave it, then come back
     await userEvent.click(screen.getByLabelText('A'));
-    expect(errorsOnScreen()).toBe(1);
+    expect(errorsOnScreen()).toBe(0);
     expect(screen.queryByText('Fill A')).toBeNull();
     expect(screen.getByText('hint A')).toBeInTheDocument();
-    expect(screen.getByText('B is short')).toBeInTheDocument();
+    expect(screen.queryByText('B is short')).toBeNull();
   });
   test('an error goes when the value changes, and comes back with the next Submit if the field is still wrong', async () => {
     render(<Form />);
@@ -608,6 +609,16 @@ describe('useFieldErrors', () => {
     expect(screen.queryByText('B is short')).toBeNull();
     await userEvent.click(screen.getByRole('button', { name: 'Send' }));
     expect(screen.getByText('B is short')).toBeInTheDocument();
+  });
+  test('Submit puts the focus on the first wrong field and keeps its error, which goes with the next edit', async () => {
+    render(<Form />);
+    await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+    expect(screen.getByLabelText('A')).toHaveFocus();
+    expect(screen.getByText('Fill A')).toBeInTheDocument();
+    await userEvent.keyboard('x');
+    expect(screen.queryByText('Fill A')).toBeNull();
+    await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+    expect(screen.getByLabelText('B')).toHaveFocus();
   });
   test('reset hides every error', async () => {
     render(<Form />);
