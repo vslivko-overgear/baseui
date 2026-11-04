@@ -16,7 +16,7 @@ import { Bleed } from '../../src/components/Layout.jsx';
 import { go, useMedia } from './util.js';
 import { OFFERS, REVIEWS, SERVICES, money, offerOf, gameOf, sold } from './data.js';
 import { PayBar } from './order.jsx';
-import { useAddedToCart, Page, PageHead, Section, OfferListing, Stars, WishButton, CashbackTag, CASHBACK, PaymentLogos, PAY_OFFER } from './ui.jsx';
+import { useAddedToCart, Page, PageHead, Section, OfferListing, BADGE_VARIANT, Stars, WishButton, CashbackTag, CASHBACK, PaymentLogos, PAY_OFFER } from './ui.jsx';
 import { useStore } from './store.jsx';
 import { Faq } from './games.jsx';
 
@@ -80,7 +80,7 @@ export function Offer({ id }) {
   // the selling points: separate tags on a surface, each as wide as its text (on a phone the row scrolls sideways)
   const usp = (
     <ul className="og-usp" data-test-id="offer-usp">
-      {offer.badge && <li><span className="og-usp__tag og-usp__tag--badge" data-test-id="offer-badge">{offer.badge}</span></li>}
+      {offer.badge && <li><span className={`og-usp__tag og-usp__tag--${BADGE_VARIANT[offer.badge] || 'secondary'}`} data-test-id="offer-badge">{offer.badge}</span></li>}
       {offer.bullets.slice(0, 3).map((b, i) => (
         <li key={b}>
           <Hint label={`More about: ${b}`} content={USP_MORE[i](b)}>

@@ -15,7 +15,7 @@ import { go, href, useMedia, openMiniCart } from './util.js';
 import { money, gameOf, GAME_TILES, EMOJI, sold } from './data.js';
 
 const CARD_TONE = { blue: 'blue', 'blue-light': 'blue', green: 'green', orange: 'orange', pink: 'pink', red: 'red' };
-const BADGE_VARIANT = { 'Hot Offer': 'error', Sale: 'success', 'Save More': 'info', Bundle: 'info', Seasonal: 'warning' };
+export const BADGE_VARIANT = { 'Hot Offer': 'error', Sale: 'success', 'Save More': 'info', Bundle: 'info', Seasonal: 'warning' };
 
 /** The head of a page: breadcrumbs, then the title with its line under it as one group. `media` stands at the start of the head (an avatar; with `mediaTop` it is level with the top of the title, not centered), `action` at its end, on the right edge of the block (an edit button). */
 export function PageHead({ crumbs, title, meta, action, media, mediaTop = false, titleTestId, titleGap, children }) {
