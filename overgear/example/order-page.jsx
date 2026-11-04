@@ -60,7 +60,7 @@ const STEP_ICON = { placed: 'ReceiptCheck', addDeliveryDetails: 'Edit03', search
 
 /**
  * The tracker of the order, as the delivery of a parcel has it: a circle for each step on a line. The steps that are passed are filled with a check, the step the order is at is the large one with its
- * icon and the only one with words (its name under it), the steps to come are empty circles with their icons; the names of the others are for the screen reader and the tooltip. A failed, a cancelled
+ * icon (its name is the heading under the tracker), the steps to come are empty circles with their icons; the names of the others are for the screen reader and the tooltip. A failed, a cancelled
  * or an arbitrated order has a bar in the color of its state instead.
  */
 function Tracker({ order, now }) {
@@ -75,7 +75,7 @@ function Tracker({ order, now }) {
         return (
           <li key={s.name} className="og-track__step" data-look={s.look} aria-current={now_ ? 'step' : undefined} title={s.title} data-test-id={`order-step-${s.name}`}>
             <span className="og-track__dot" aria-hidden="true"><Icon name={s.look === 'done' ? 'Check' : STEP_ICON[s.name] || 'Play'} size={s.look === 'done' ? 18 : 20} /></span>
-            <span className={now_ ? 'og-track__label' : 'bui-visually-hidden'}>{s.title}</span>
+            <span className="bui-visually-hidden">{s.title}</span>
           </li>
         );
       })}

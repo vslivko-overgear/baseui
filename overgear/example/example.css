@@ -509,11 +509,12 @@ a { color: inherit; }
 .og-order > :last-child { position: sticky; top: calc(var(--og-header-h) + var(--bui-spacing-6)); }   /* the order info stays in view while the chat and the forms scroll */
 .og--mobile .og-order > :last-child { position: static; }
 .og-ostatus { overflow: hidden; }
-.og-ostatus__head { padding: var(--bui-spacing-5); }   /* the tint is the head of the panel: the buttons stand on the surface under it, not on a color (D11) */
+.og-ostatus__head { padding: var(--bui-spacing-4) var(--bui-spacing-5) var(--bui-spacing-5); align-items: center; text-align: center; }   /* no tint: the tracker, then the status and its words, centered */
+.og-ostatus__head .og-stack { align-items: center; }
+.og-ostatus__time { justify-content: center; }
+.og-ostatus__foot { align-items: stretch; text-align: center; }
+.og:not(.og--mobile) .og-ostatus__foot .bui-button-group { justify-content: center; }
 .og-ostatus__foot { padding: var(--bui-spacing-5); }
-.og-ostatus[data-tone="success"] .og-ostatus__head { background: var(--bui-extensions-background-light-success); }
-.og-ostatus[data-tone="warning"] .og-ostatus__head { background: var(--bui-extensions-background-light-warning); }
-.og-ostatus[data-tone="error"] .og-ostatus__head { background: var(--bui-extensions-background-light-critical); }
 .og-ostatus__text { margin: 0; white-space: pre-wrap; font: var(--bui-typography-text-14-regular); color: var(--bui-text-and-icon-primary); }
 .og-ostatus__time { margin: 0; display: flex; align-items: center; gap: var(--bui-spacing-2); font: var(--bui-typography-text-14-semi-bold); }
 .og-ostatus__note { margin: 0; font: var(--bui-typography-text-14-regular); }
@@ -722,20 +723,22 @@ a { color: inherit; }
 .og { --og-card-x: var(--bui-spacing-6); }
 .og.og--mobile { --og-card-x: var(--bui-spacing-5); }
 
-/* the tracker of an order, as a parcel has it: circles on a line, the passed ones filled with a check, the one the order is at large with its name, the ones to come empty */
-.og-ostatus__track { padding: var(--bui-spacing-5) var(--bui-spacing-3) var(--bui-spacing-1); }
+/* the tracker of an order, as a parcel has it: circles on one unbroken line, the passed ones in the light success, the one the order is at solid, the ones to come empty */
+.og-ostatus__track { padding: var(--bui-spacing-5) var(--bui-spacing-3) 0; }
 .og-track { list-style: none; margin: 0; padding: 0; display: flex; align-items: flex-start; }
-.og-track__step { position: relative; flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: var(--bui-spacing-2); }
-.og-track__step:not(:last-child)::after { content: ""; position: absolute; top: 17px; left: calc(50% + 22px); right: calc(-50% + 22px); height: 2px; border-radius: 1px; background: var(--bui-background-tertiary); }
-.og-track__step[data-look="done"]:not(:last-child)::after { background: var(--bui-extensions-background-success); }
+.og-track__step { position: relative; flex: 1 1 0; min-width: 0; display: flex; justify-content: center; }
+.og-track__step::before, .og-track__step::after { content: ""; position: absolute; top: 17px; height: 2px; width: 50%; background: var(--bui-background-tertiary); }
+.og-track__step::before { left: 0; }
+.og-track__step::after { right: 0; }
+.og-track__step:first-child::before, .og-track__step:last-child::after { content: none; }
+.og-track__step:is([data-look="done"], [data-look="current"], [data-look="run"], [data-look="problem"])::before { background: var(--bui-extensions-background-light-success); }
+.og-track__step[data-look="done"]::after { background: var(--bui-extensions-background-light-success); }
 .og-track__dot { position: relative; z-index: 1; width: 36px; height: 36px; box-sizing: border-box; border-radius: var(--bui-radius-full); display: grid; place-items: center; border: 2px solid var(--bui-background-tertiary); color: var(--bui-text-and-icon-disabled); background: var(--bui-extensions-background-surface); }
-.og-track__step[data-look="done"] .og-track__dot { border-color: transparent; background: var(--bui-extensions-background-success); color: var(--bui-extensions-text-and-icon-always-dark); }
+.og-track__step[data-look="done"] .og-track__dot { border-color: transparent; background: var(--bui-extensions-background-light-success); color: var(--bui-extensions-text-and-icon-success); }
 .og-track__step[data-look="current"] .og-track__dot, .og-track__step[data-look="run"] .og-track__dot { width: 44px; height: 44px; margin-top: -4px; border-color: transparent; background: var(--bui-extensions-background-success); color: var(--bui-extensions-text-and-icon-always-dark); }
 .og-track__step[data-look="problem"] .og-track__dot { width: 44px; height: 44px; margin-top: -4px; border-color: transparent; background: var(--bui-extensions-background-warning); color: var(--bui-extensions-text-and-icon-always-dark); }
 .og-track__step[data-look="run"] .og-track__dot { animation: og-track-pulse 2s var(--bui-ease-out) infinite; }
 @keyframes og-track-pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--bui-extensions-background-success) 45%, transparent); } 70%, 100% { box-shadow: 0 0 0 10px transparent; } }
 @media (prefers-reduced-motion: reduce) { .og-track__step[data-look="run"] .og-track__dot { animation: none; } }
-.og-track__label { width: max-content; max-width: 112px; font: var(--bui-typography-text-14-semi-bold); color: var(--bui-text-and-icon-primary); text-align: center; text-wrap: balance; }
-.og-track__step[data-look="problem"] .og-track__label { color: var(--bui-extensions-text-and-icon-warning); }
 
 .og-meta__text { font: var(--bui-typography-text-16-regular); }   /* the line under the title of an order is 16, not a small note under a big heading */

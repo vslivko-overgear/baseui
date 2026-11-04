@@ -148,8 +148,8 @@ blocks.push(async () => {
     expectThat(steps === wantSteps, `${where}: ${steps} steps, not ${wantSteps}`);
     const dots = await page.evaluate(() => [...document.querySelectorAll('.og-track__dot')].every((b) => b.getBoundingClientRect().width >= 36));
     expectThat(dots, `${where}: the circles of the steps are not drawn`);
-    const named = await page.evaluate(() => [...document.querySelectorAll('.og-track__label')].length);
-    expectThat(named === (wantSteps ? 1 : 0), `${where}: ${named} steps have words, only the current one has`);
+    const named = await page.evaluate(() => [...document.querySelectorAll('.og-track__step .og-track__label')].length);
+    expectThat(named === 0, `${where}: a step of the tracker has words under it, the heading of the status has them`);
   }
   expectThat(seen.size >= 14, `the seed shows ${seen.size} statuses, not at least 14`);
   expectThat(!page.errors.length, `the page of an order: errors ${page.errors.join('; ')}`);
