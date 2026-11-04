@@ -744,3 +744,5 @@ a { color: inherit; }
 @media (prefers-reduced-motion: reduce) { .og-track__step[data-look="run"] .og-track__dot { animation: none; } }
 .og-track__label { width: max-content; max-width: 112px; font: var(--bui-typography-text-14-semi-bold); color: var(--bui-text-and-icon-primary); text-align: center; text-wrap: balance; }
 .og-track__step[data-look="problem"] .og-track__label { color: var(--bui-extensions-text-and-icon-warning); }
+
+.og-meta__text { font: var(--bui-typography-text-16-regular); }   /* the line under the title of an order is 16, not a small note under a big heading */

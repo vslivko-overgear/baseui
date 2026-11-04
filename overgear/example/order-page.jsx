@@ -48,9 +48,8 @@ const OrderHead = memo(function OrderHead({ title, image, link, createdAt }) {
       titleTestId="order-title"
       titleGap="var(--bui-spacing-2)"
       media={<div className="og-art og-art--square" role="img" aria-label={title}>{image ? <img className="og-art__img" src={image} alt="" /> : <Icon name="Image01" size={32} />}</div>}
-    >
-      <span className="og-meta" data-test-id="order-meta">{`Order ID ${link} · Created ${dateTime(createdAt)}`}</span>
-    </PageHead>
+      meta={<span className="og-meta__text" data-test-id="order-meta">{`Order ID ${link} · Created ${dateTime(createdAt)}`}</span>}
+    />
   );
 });
 
