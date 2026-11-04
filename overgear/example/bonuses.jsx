@@ -4,26 +4,20 @@ import { Icon } from '../../src/components/Icon.jsx';
 import { Card } from '../../src/components/Card.jsx';
 import { Pagination } from '../../src/components/Pagination.jsx';
 import { Status } from '../../src/components/Status.jsx';
-import { go, href } from './util.js';
 import { gameOf } from './data.js';
 import { Page, PageHead, CashbackMark } from './ui.jsx';
 import { useStore } from './store.jsx';
-import { bonusesOf, isBurnt, pagesOf, pageOf, titleOf, kindOf, numberText, dateText, dayText } from './transactions-core.js';
+import { TxMain } from './transactions.jsx';
+import { bonusesOf, isBurnt, pagesOf, pageOf, numberText, dayText } from './transactions-core.js';
 
 /** A bonus: a card of its own. On the left what it is (the title, what it was for, the date), on the right the coins and the day they burn (a spending has none). */
 function Bonus({ t, now }) {
   const burnt = isBurnt(t, now);
   const sign = t.direction === 'incoming' ? '+' : '-';
-  const title = titleOf(t);
   return (
     <Card variant="surface" padding={4} data-test-id={`bonus-${t.id}`}>
       <div className="og-tx">
-        <div className="og-tx__main">
-          {t.orderLink
-            ? <a className="og-tx__title og-tx__link" href={href(`/order/${t.orderLink}`)} onClick={(e) => { e.preventDefault(); go(`/order/${t.orderLink}`); }}>{t.product || t.description || kindOf(t)}</a>
-            : <span className="og-tx__title">{title}</span>}
-          {t.orderLink ? <span className="og-tx__sub">{`${kindOf(t)} · ${dateText(t.date)}`}</span> : (<>{t.description && <span className="og-tx__sub">{t.description}</span>}<span className="og-tx__sub">{dateText(t.date)}</span></>)}
-        </div>
+        <TxMain t={t} />
         <div className="og-tx__side">
           <span className="og-tx__amount" data-direction={t.direction} aria-label={`${sign} ${numberText(t)} OG Coins`}>{`${sign} `}<span className="og-cbtag">{numberText(t)}<CashbackMark /></span></span>
           {t.expiresAt != null && <span className="og-tx__sub" data-test-id={`bonus-expiry-${t.id}`}>{burnt ? `Burnt ${dayText(t.expiresAt)}` : `Burns ${dayText(t.expiresAt)}`}</span>}

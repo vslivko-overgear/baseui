@@ -700,6 +700,8 @@ a { color: inherit; }
 .og-tx__title { font: var(--bui-typography-text-16-regular); color: var(--bui-text-and-icon-primary); overflow-wrap: anywhere; }
 .og-tx__link { text-decoration: none; }   /* the title is a link to the order, but it reads as a title: the color of the text */
 .og-tx__link:hover { text-decoration: underline; }
+.og-tx__link { display: inline-flex; align-items: center; gap: var(--bui-spacing-1); }
+.og-tx__go { flex: none; color: var(--bui-text-and-icon-secondary); }   /* the mark of a title that opens the order: it is there before the hover, so a link is told from a plain title */
 .og-tx__sub { font: var(--bui-typography-text-14-regular); color: var(--bui-text-and-icon-secondary); overflow-wrap: anywhere; }
 .og-tx__amount { font: var(--bui-typography-text-16-regular); font-weight: 700; color: var(--bui-text-and-icon-primary); white-space: nowrap; }   /* the main color for every direction: the sign says it */
 .og-tx__side { display: flex; flex-direction: column; align-items: flex-end; gap: var(--bui-spacing-1); text-align: end; flex: none; }

@@ -14,10 +14,19 @@ import { Page, PageHead, CashbackMark } from './ui.jsx';
 import { useStore } from './store.jsx';
 import { DIRECTION_OPTIONS, STATE_LABEL, transactionsOf, filterTransactions, pagesOf, pageOf, titleOf, kindOf, shownDirection, signOf, amountText, numberText, dateText } from './transactions-core.js';
 
-/** The title of a row: a payment or a cashback for an order is a link to the order. */
-function Title({ t }) {
-  if (!t.orderLink) return <span className="og-tx__title">{titleOf(t)}</span>;
-  return <a className="og-tx__title og-tx__link" href={href(`/order/${t.orderLink}`)} onClick={(e) => { e.preventDefault(); go(`/order/${t.orderLink}`); }} data-test-id={`transaction-order-link-${t.id}`}>{t.product || t.description || kindOf(t)}</a>;
+/** The text of a row: the title is what it is about (the product of an order, or the words of the entry), and under it the kind and the date, so a row is two lines. A title that opens the order has the mark of a link after it. */
+export function TxMain({ t }) {
+  const title = t.product || t.description || titleOf(t);
+  const kind = kindOf(t);
+  const sub = kind === title ? dateText(t.date) : `${kind} · ${dateText(t.date)}`;
+  return (
+    <div className="og-tx__main">
+      {t.orderLink
+        ? <a className="og-tx__title og-tx__link" href={href(`/order/${t.orderLink}`)} onClick={(e) => { e.preventDefault(); go(`/order/${t.orderLink}`); }} data-test-id={`transaction-order-link-${t.id}`}>{title}<Icon name="ChevronRight" size={16} className="og-tx__go" aria-hidden="true" /></a>
+        : <span className="og-tx__title">{title}</span>}
+      <span className="og-tx__sub">{sub}</span>
+    </div>
+  );
 }
 
 /** The amount, in the main color: the sign says the direction (a plus comes in, a minus goes out), the color does not shout it. Coins are the number and the mark of the coins, not the words. */
@@ -36,10 +45,7 @@ function Transaction({ t }) {
   return (
     <Card variant="surface" padding={4} data-test-id={`transaction-${t.id}`}>
       <div className="og-tx">
-        <div className="og-tx__main">
-          <Title t={t} />
-          {t.orderLink ? <span className="og-tx__sub">{`${kindOf(t)} · ${dateText(t.date)}`}</span> : (<>{t.description && <span className="og-tx__sub">{t.description}</span>}<span className="og-tx__sub">{dateText(t.date)}</span></>)}
-        </div>
+        <TxMain t={t} />
         <div className="og-tx__side"><Amount t={t} /><Status_ t={t} /></div>
       </div>
     </Card>
