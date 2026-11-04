@@ -811,7 +811,7 @@
   }
 }
 .bui-dialog__content {
-  padding-top: var(--baseui-spacing-3);   /* 8px more than the 4px that the header gave: the first thing under the title is not close to it */
+  padding-top: var(--baseui-spacing-2);   /* 4px more than the 4px that the header gave: the first thing under the title is a little apart from it */
   margin-top: calc(var(--baseui-spacing-1) * -1);
   position: relative;
 }
@@ -2330,6 +2330,7 @@
   width: calc(100% + 16px);
   margin-inline: calc(var(--baseui-spacing-2) * var(--baseui-spacing-negative));
 }
+.bui-choice-sheet__option .bui-dropdown__icon, .bui-choice-sheet__option .bui-dropdown__avatar { width: 32px; height: 32px; }   /* the picture of an option in a sheet is 32px (a menu keeps 24px): a finger sees it, and every picture is one size */
 .bui-choice-sheet__option:focus-visible {
   outline: var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color);
   outline-offset: calc(var(--baseui-focus-outline-width) * -1);
