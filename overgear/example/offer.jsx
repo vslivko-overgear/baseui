@@ -186,7 +186,7 @@ export function Offer({ id }) {
             <Card variant="surface" padding={5}>
               <div className="og-stack og-stack--lg" data-test-id="offer-why">
                 <h2 className="og-h2">Why Players Choose Overgear</h2>
-                <ul className="og-trust">
+                <ul className="og-trust og-trust--cols">
                   {WHY.map(([img, t, d]) => (
                     <li key={t}><img src={`./assets/why/${img}.svg`} alt="" width="32" height="32" /><div className="og-stack og-stack--pair"><p className="og-trust__title">{t}</p><p className="og-meta">{d}</p></div></li>
                   ))}

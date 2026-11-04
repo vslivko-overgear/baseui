@@ -286,6 +286,7 @@ a { color: inherit; }
 .og--mobile .og-footer__brand { row-gap: var(--bui-spacing-6); }
 
 .og-trust { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--bui-rel-related); }
+.og:not(.og--mobile) .og-trust--cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--bui-rel-related) var(--bui-rel-group); }   /* the promises of the offer: two columns on a desktop, one on a phone */
 .og-trust li { display: flex; gap: var(--bui-spacing-3); align-items: flex-start; }
 .og-trust svg, .og-trust img { flex: none; }   /* the icons of the trust block are white (the primary color) */
 .og-trust__title { margin: 0; font: var(--bui-typography-text-14-semi-bold); color: var(--bui-text-and-icon-primary); }
