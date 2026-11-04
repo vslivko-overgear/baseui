@@ -74,7 +74,7 @@ export function RankPage({ onLogin }) {
   return (
     <Page bar>
       <div className="og-stack og-stack--xl" data-test-id="rank-page" data-rank={grade.code}>
-        <PageHead crumbs={[{ label: 'Home', href: '#/' }, { label: 'Account', href: '#/account' }, { label: 'Your Rank' }]} media={<Avatar name={store.user.name} src={store.user.avatar} size={64} shape="rounded" />} title={store.user.name} titleTestId="rank-user" action={<IconButton variant="ghost" size="sm" label="Edit profile" icon={<Icon name="Edit01" size={24} />} onClick={() => go('/account?tab=settings')} data-test-id="rank-edit" />}><p className="og-text" data-test-id="rank-email">{store.user.email}</p></PageHead>
+        <PageHead crumbs={[{ label: 'Home', href: '#/' }, { label: 'Account', href: '#/account' }, { label: 'Your Rank' }]} media={<Avatar name={store.user.name} src={store.user.avatar} size={64} shape="rounded" />} title={store.user.name} titleTestId="rank-user" titleGap={0} action={<IconButton variant="ghost" size="sm" label="Edit profile" icon={<Icon name="Edit01" size={24} />} onClick={() => go('/account?tab=settings')} data-test-id="rank-edit" />}><p className="og-text" data-test-id="rank-email">{store.user.email}</p></PageHead>
         <Card variant="surface" padding={5}>
           <div className="og-stack og-stack--lg">
             <div className="og-rank__now">

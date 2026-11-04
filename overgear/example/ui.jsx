@@ -17,18 +17,19 @@ import { money, gameOf, GAME_TILES, EMOJI, sold } from './data.js';
 const CARD_TONE = { blue: 'blue', 'blue-light': 'blue', green: 'green', orange: 'orange', pink: 'pink', red: 'red' };
 const BADGE_VARIANT = { 'Hot Offer': 'error', Sale: 'success', 'Save More': 'info', Bundle: 'info', Seasonal: 'warning' };
 
-/** The head of a page: breadcrumbs, then the title with its line under it as one group. `action` stands next to the title (an edit button); `media` at the start of the head (an avatar). */
+/** The head of a page: breadcrumbs, then the title with its line under it as one group. `media` stands at the start of the head (an avatar), `action` at its end, on the right edge of the block (an edit button). */
 export function PageHead({ crumbs, title, meta, action, media, titleTestId, titleGap, children }) {
   return (
     <div className={`og-stack ${crumbs ? 'og-stack--crumbs' : 'og-stack--close'}`}>
       {crumbs && <Breadcrumbs items={crumbs} />}
-      <div className={media ? 'og-head-row' : undefined}>
+      <div className={media || action ? 'og-head-row' : undefined}>
         {media}
         <div className="og-stack og-stack--hair" style={titleGap === undefined ? undefined : { gap: titleGap }}>
-          {action ? <div className="og-title-row"><h1 className="og-title" data-test-id={titleTestId}>{title}</h1>{action}</div> : <h1 className="og-title" data-test-id={titleTestId}>{title}</h1>}
+          <h1 className="og-title" data-test-id={titleTestId}>{title}</h1>
           {meta && <p className="og-meta">{meta}</p>}
           {children}
         </div>
+        {action && <div className="og-head-row__action">{action}</div>}
       </div>
     </div>
   );

@@ -106,7 +106,7 @@ a { color: inherit; }
 .og--mobile.og--tab .og-wrap { padding-bottom: var(--og-bottom); }
 
 .og--mobile .og-hero h1 { font: var(--baseui-typography-header-32); }
-.og-title-row { display: flex; align-items: center; gap: var(--baseui-spacing-2); min-width: 0; }
+.og-head-row__action { margin-inline: auto calc(var(--baseui-spacing-2) * -1 - 2px); flex: none; }   /* at the right edge of the head: the frame of the icon button is moved out of the block (its 8px of padding and the 2px the pencil is drawn inside), so the pencil itself ends on the edge */
 .og--mobile .og-title { font: var(--baseui-typography-header-28); }
 @media (max-width: 767px) {
   .og-split, .og-split--right { display: contents; }
