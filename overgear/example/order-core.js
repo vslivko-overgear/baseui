@@ -166,6 +166,12 @@ export const statusText = (order, now, completedForBuyer = order.status === S.WA
     : status === S.IN_PROGRESS && isDelayed(order, now) ? 'PAST_DEADLINE'
     : isKYC(status) ? S.UNDER_REVIEW
     : status;
+  // an order of the shop that has not started says what the step it is at is: the details to add, the booster to find (not the words of a placed order, which is true of the payment only)
+  if (key === S.NEW && order.og) {
+    const step = orderSteps(order, now).current;
+    if (step === 'addDeliveryDetails') return { title: 'Add delivery details', description: noFinalPeriod('Your payment has been accepted. The seller needs a few details to start your order: fill them in below.') };
+    if (step === 'searchingForBooster') return { title: 'Searching for a booster', description: noFinalPeriod('We are looking for the best available booster for your order. It usually takes a few minutes, and the booster will write to you in the chat as soon as the order is accepted.') };
+  }
   const [title, description] = BUYER[key] || ['', ''];
   return { title, description: noFinalPeriod(description) };
 };

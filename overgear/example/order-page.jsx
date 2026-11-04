@@ -86,7 +86,7 @@ function Tracker({ order, now }) {
 // ---- the status ----
 
 /** The status of the order for the buyer: its title and words, the time left, the buttons. */
-function StatusPanel({ order, now, actions, track }) {
+function StatusPanel({ order, now, actions, track, extra = [] }) {
   const { title, description } = statusText(order, now);
   const tone = panelTone(order, now);
   const paused = isPaused(order.status, order.state);
@@ -96,12 +96,18 @@ function StatusPanel({ order, now, actions, track }) {
   const waiting = order.status === S.CONFIRM_DELIVERY;
   return (
     <Card variant="surface" padding={0} className="og-ostatus" data-tone={tone} data-test-id="order-status" data-status={order.status}>
-      {track && <div className="og-ostatus__track">{track}</div>}
+      {track && stepLooks(order, now) ? <div className="og-ostatus__track">{track}</div> : isClosed(order.status) && <div className="og-ostatus__done" aria-hidden="true"><span className="og-ostatus__done-dot"><Icon name="CheckCircle" size={32} /></span></div>}
       <div className="og-ostatus__head og-stack og-stack--lg">
         <div className="og-stack og-stack--close">
           <h2 className="og-h3" data-test-id="order-status-title">{title}</h2>
           <p className="og-ostatus__text" data-test-id="order-status-text">{description}</p>
         </div>
+        {order.review && (
+          <div className="og-stack og-stack--close og-ostatus__review" data-test-id="order-review">
+            <RatingDisplay value={order.review.rate} size="md" />
+            {order.review.text && <p className="og-ostatus__text" data-test-id="order-review-shown">{order.review.text}</p>}
+          </div>
+        )}
         {showTime && (
           <p className="og-ostatus__time" data-test-id="order-time">
             <Icon name="Clock" size={20} />
@@ -116,10 +122,11 @@ function StatusPanel({ order, now, actions, track }) {
           </p>
         )}
       </div>
-      {actions.length > 0 && (
+      {(extra.length > 0 || actions.length > 0) && (
         <div className="og-ostatus__foot">
           <ButtonGroup orientation="horizontal" stackOnMobile>
-            {actions.map((a) => <Button key={a.id} variant={a.variant} size="lg" label={a.label} disabled={a.disabled} onClick={a.run} data-test-id={`order-action-${a.id}`} />)}
+            {extra.map((a) => <Button key={a.id} variant={a.variant} size="lg" label={a.label} disabled={a.disabled} onClick={a.run} data-test-id={a.testId} />)}
+            {actions.map((a) => <Button key={a.id} variant={extra.length ? 'secondary' : a.variant} size="lg" label={a.label} disabled={a.disabled} onClick={a.run} data-test-id={`order-action-${a.id}`} />)}
           </ButtonGroup>
           {actions.filter((a) => a.hint).map((a) => <p key={a.id} className="og-meta" data-test-id={`order-action-${a.id}-note`}>{a.hint}</p>)}
         </div>
@@ -217,42 +224,12 @@ function TipsModal({ open, onOpenChange, onTip }) {
   );
 }
 
-/** The review and the tips, once the order is done: ask for a review, then show it; the tips are open for 72 hours. */
-function ReviewAndTips({ order, now, onReview, onTip }) {
-  const [reviewOpen, setReviewOpen] = useState(false);
-  const [trust, setTrust] = useState(false);
-  const [tipOpen, setTipOpen] = useState(false);
-  const open = tipsOpen(order, now);
+/** The windows of the review and the tips: they open from the buttons of the status block (the buyer rates and tips in the block where the order is done). */
+function ReviewWindows({ order, state, onReview, onTip }) {
+  const { reviewOpen, setReviewOpen, trust, setTrust, tipOpen, setTipOpen } = state;
   const submit = (rate, text) => { onReview(rate, text); setReviewOpen(false); if (askTrustpilot(rate)) setTrust(true); };
   return (
     <>
-      <Card variant="surface" padding={5} style={CARD_X} data-test-id="order-review">
-        {order.review ? (
-          <div className="og-stack">
-            <h2 className="og-h3">Your review</h2>
-            <RatingDisplay value={order.review.rate} size="md" />
-            {order.review.text && <p className="og-text" data-test-id="order-review-shown">{order.review.text}</p>}
-            <Button variant="secondary" size="lg" label="Update review" onClick={() => setReviewOpen(true)} />
-          </div>
-        ) : (
-          <div className="og-stack">
-            <div className="og-stack og-stack--close">
-              <h2 className="og-h3">How was your order?</h2>
-              <p className="og-text">Tell the community how it went. One honest review can carry a lot</p>
-            </div>
-            <Button variant="primary" size="lg" label="Rate this order" onClick={() => setReviewOpen(true)} data-test-id="order-rate" />
-          </div>
-        )}
-      </Card>
-      <Card variant="surface" padding={5} style={CARD_X} data-test-id="order-tips">
-        <div className="og-stack">
-          <div className="og-stack og-stack--close">
-            <h2 className="og-h3">Did you enjoy the experience?</h2>
-            <p className="og-text">{open || order.tip ? 'Thank the booster. He will be grateful. The tipping option will be available for 72 hours after completing the order' : 'Complete your order to thank the booster'}</p>
-          </div>
-          <Button variant="secondary" size="lg" label={order.tip ? `Tipped ${money(order.tip)}` : 'Leave Tips'} disabled={!open || !!order.tip} onClick={() => setTipOpen(true)} data-test-id="order-tip" />
-        </div>
-      </Card>
       <ReviewModal open={reviewOpen} onOpenChange={setReviewOpen} existing={order.review} onSubmit={submit} />
       <TrustpilotModal open={trust} onOpenChange={setTrust} text={order.review?.text || ''} />
       <TipsModal open={tipOpen} onOpenChange={setTipOpen} onTip={(a) => { onTip(a); setTipOpen(false); }} />
@@ -403,6 +380,9 @@ export function OrderPage({ link, onLogin }) {
   const mobile = useMedia('(max-width: 767px)');
   const now = useNow();
   const [tab, setTab] = useState('status');
+  const [reviewOpen, setReviewOpen] = useState(false);
+  const [trust, setTrust] = useState(false);
+  const [tipOpen, setTipOpen] = useState(false);
   const [dialog, setDialog] = useState('');
   const order = store.orders.find((o) => o.link === link);
 
@@ -419,15 +399,19 @@ export function OrderPage({ link, onLogin }) {
     similar: () => go(`/games/${order.game || 'wow'}`),
   };
   const actions = buyerActions(order, now).map((a) => ({ ...a, run: run[a.id] }));
+  // once the order is done the buyer rates and tips in the block of the status: the rating first (the main button), the tips and the others secondary
+  const extra = showReview(order) ? [
+    { id: 'rate', testId: 'order-rate', label: order.review ? 'Update review' : 'Rate this order', variant: 'primary', run: () => setReviewOpen(true) },
+    { id: 'tips', testId: 'order-tip', label: order.tip ? `Tipped ${money(order.tip)}` : 'Leave Tips', variant: 'secondary', disabled: !tipsOpen(order, now) || !!order.tip, run: () => setTipOpen(true) },
+  ] : [];
   const close = () => setDialog('');
   const kyc = isKYC(order.status);
 
   const left = (
     <>
-      <StatusPanel order={order} now={now} actions={actions} track={<Tracker order={order} now={now} />} />
+      <StatusPanel order={order} now={now} actions={actions} extra={extra} track={<Tracker order={order} now={now} />} />
       {kyc && order.status === S.KYC_LOCK && <p className="og-text" data-test-id="order-kyc">The seller waits for your identity verification. The real service opens the verification page here</p>}
       {order.delivery && <DeliveryDetails key={order.delivery.filled ? 'filled' : 'form'} order={order} onSave={(values) => { update(fillDelivery(order, values)); toast({ message: 'Delivery details saved', status: 'success' }); }} />}
-      {showReview(order) && <ReviewAndTips order={order} now={now} onReview={(rate, text) => { update(addReview(order, rate, text, Date.now())); toast({ message: 'Thank you for your review', status: 'success' }); }} onTip={(a) => { update(addTip(order, a)); toast({ message: `Tip sent: ${money(a)}`, status: 'success' }); }} />}
       {showJoinPanel(store.discord, order) && <JoinPanel onJoin={() => { store.joinDiscord(); toast({ message: 'You joined the Discord server (a demo: nothing was opened)', status: 'success' }); }} />}
     </>
   );
@@ -450,6 +434,7 @@ export function OrderPage({ link, onLogin }) {
         )}
         <Next order={order} now={now} onEvent={(id) => update((o) => applyEvent(o, id, Date.now()))} />
       </div>
+      {showReview(order) && <ReviewWindows order={order} state={{ reviewOpen, setReviewOpen, trust, setTrust, tipOpen, setTipOpen }} onReview={(rate, text) => { update(addReview(order, rate, text, Date.now())); toast({ message: 'Thank you for your review', status: 'success' }); }} onTip={(a) => { update(addTip(order, a)); toast({ message: `Tip sent: ${money(a)}`, status: 'success' }); }} />}
       <ConfirmDialog open={dialog === 'confirm'} onOpenChange={(o) => !o && close()} onConfirm={() => { update(confirmDelivery(order, Date.now())); close(); toast({ message: 'Delivery confirmed', status: 'success' }); }} />
       <CancelDialog open={dialog === 'cancel'} onOpenChange={(o) => !o && close()} onConfirm={() => { update(cancelOrder(order, Date.now())); close(); toast({ message: 'Order canceled', status: 'success' }); }} />
       <HelpDialog open={dialog === 'help'} onOpenChange={(o) => !o && close()} onSubmit={(text) => { update(openDispute(order, Date.now(), text)); close(); toast({ message: 'A dispute is open', status: 'success' }); }} />

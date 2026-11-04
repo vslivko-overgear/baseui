@@ -57,6 +57,9 @@ describe('order-core', () => {
   describe('what the buyer reads', () => {
     test('is the text of the status, and a delayed order reads "Delivery delayed"', () => {
       expect(statusText(base(), NOW).title).toBe('Order Placed');
+      const shop = { og: true, productType: 'service', delivery: { filled: false, fields: [{ key: 'name', required: true }], values: {} } };
+      expect(statusText(base(shop), NOW).title, 'the details are not filled').toBe('Add delivery details');
+      expect(statusText(base({ ...shop, delivery: { filled: true, fields: [{ key: 'name', required: true }], values: { name: 'x' } } }), NOW).title, 'a booster is searched for').toBe('Searching for a booster');
       expect(statusText(base({ status: S.IN_PROGRESS, acceptedAt: NOW - 1000_000 }), NOW).title).toBe('In Progress');
       expect(statusText(base({ status: S.IN_PROGRESS, acceptedAt: NOW - 8000_000 }), NOW).title).toBe('Delivery delayed');
     });

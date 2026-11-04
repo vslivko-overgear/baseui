@@ -191,7 +191,8 @@ blocks.push(async () => {
   expectThat((await status(moving.link)) === S.COMPLETED, 'confirm: the order is not completed');
   expectThat((await text(page, 'order-status-title')) === 'Order Completed', 'confirm: the status does not read "Order Completed"');
   // the review: a short text is refused, the top rate asks for Trustpilot, the review is shown and can be updated
-  expectThat((await page.locator('[data-test-id="order-tips"]').count()) === 1 && (await page.locator('[data-test-id="order-tip"]').isEnabled()), 'the tips are not open after the completion');
+  expectThat((await page.locator('[data-test-id="order-tip"]').isEnabled()), 'the tips are not open after the completion');
+  expectThat((await page.locator('[data-test-id="order-review"], [data-test-id="order-tips"]').count()) === 0, 'the review and the tips have blocks of their own again: they are buttons of the status');
   await click('order-rate');
   await page.getByRole('group', { name: 'Your rate' }).getByRole('button').nth(4).click();
   await page.locator('[data-test-id="order-review-text"] textarea, textarea[data-test-id="order-review-text"]').first().fill('abc');

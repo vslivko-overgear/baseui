@@ -735,8 +735,8 @@ a { color: inherit; }
 .og-track__step[data-look="done"]::after { background: var(--bui-extensions-background-light-success); }
 .og-track__dot { position: relative; z-index: 1; width: 36px; height: 36px; box-sizing: border-box; border-radius: var(--bui-radius-full); display: grid; place-items: center; border: 2px solid var(--bui-background-tertiary); color: var(--bui-text-and-icon-disabled); background: var(--bui-extensions-background-surface); }
 .og-track__step[data-look="done"] .og-track__dot { border-color: transparent; background: var(--bui-extensions-background-light-success); color: var(--bui-extensions-text-and-icon-success); }
-.og-track__step[data-look="current"] .og-track__dot, .og-track__step[data-look="run"] .og-track__dot { width: 44px; height: 44px; margin-top: -4px; border-color: transparent; background: var(--bui-extensions-background-success); color: var(--bui-extensions-text-and-icon-always-dark); }
-.og-track__step[data-look="problem"] .og-track__dot { width: 44px; height: 44px; margin-top: -4px; border-color: transparent; background: var(--bui-extensions-background-warning); color: var(--bui-extensions-text-and-icon-always-dark); }
+.og-track__step[data-look="current"] .og-track__dot, .og-track__step[data-look="run"] .og-track__dot { border-color: transparent; background: var(--bui-extensions-background-success); color: var(--bui-extensions-text-and-icon-always-dark); }
+.og-track__step[data-look="problem"] .og-track__dot { border-color: transparent; background: var(--bui-extensions-background-warning); color: var(--bui-extensions-text-and-icon-always-dark); }
 .og-track__step[data-look="run"] .og-track__dot { animation: og-track-pulse 2s var(--bui-ease-out) infinite; }
 @keyframes og-track-pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--bui-extensions-background-success) 45%, transparent); } 70%, 100% { box-shadow: 0 0 0 10px transparent; } }
 @media (prefers-reduced-motion: reduce) { .og-track__step[data-look="run"] .og-track__dot { animation: none; } }
@@ -746,3 +746,8 @@ a { color: inherit; }
 /* the page of an order: the text is 16 everywhere (the status, the words, the info, the chat, the notes); the headings and the components keep their own sizes */
 [data-test-id="order-page"] :is(.og-meta, .og-ostatus__text, .og-ostatus__note, .og-chat__msg) { font: var(--bui-typography-text-16-regular); }
 [data-test-id="order-page"] :is(.og-ostatus__time, .og-info__row dd) { font: var(--bui-typography-text-16-semi-bold); }
+
+/* a done order: the success icon stands where the tracker was (a circle in the light success), and the rating and the tips are the buttons of the block */
+.og-ostatus__done { display: grid; place-items: center; padding: var(--bui-spacing-5) var(--bui-spacing-3) 0; }
+.og-ostatus__done-dot { width: 56px; height: 56px; border-radius: var(--bui-radius-full); display: grid; place-items: center; background: var(--bui-extensions-background-light-success); color: var(--bui-extensions-text-and-icon-success); }
+.og-ostatus__review { align-items: center; }
