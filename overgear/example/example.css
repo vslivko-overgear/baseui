@@ -342,6 +342,9 @@ a { color: inherit; }
 
 /* the picture of an offer is a square before the title; the title and its line stay together at its right */
 .og-head-row { display: flex; align-items: center; gap: var(--bui-rel-related); }
+.og-head-row--top { align-items: flex-start; font: var(--baseui-typography-header-40); font-family: var(--baseui-typography-headline-font-family); }   /* the font of the title, so 1lh and 1cap below are the title's */
+.og--mobile .og-head-row--top { font: var(--baseui-typography-header-28); font-family: var(--baseui-typography-headline-font-family); }
+.og-head-row--top > .og-art--square { margin-top: calc((1lh - 1cap) / 2); }   /* the picture starts where the letters of the title start, not at its line box */
 .og-art--square { flex: none; width: 80px; height: 80px; aspect-ratio: 1; border-radius: var(--baseui-radius-xl); }
 .og--mobile .og-art--square { width: 60px; height: 60px; border-radius: var(--baseui-radius-lg); }
 
@@ -715,3 +718,8 @@ a { color: inherit; }
 
 /* the sign of a currency in the list of currencies: a round chip like the flag of a language */
 .og-cursign { display: inline-grid; place-items: center; box-sizing: border-box; width: 24px; height: 24px; border-radius: var(--baseui-radius-full); background: var(--baseui-background-tertiary); color: var(--baseui-text-and-icon-primary); font: var(--baseui-typography-text-12-regular); font-weight: 700; }
+
+/* the line under the title of an offer (the mark, the rating, the sold, the favorites) is one line that scrolls sideways on a phone, out to the edge of the screen, and never wraps */
+.og--mobile .og-offer-meta { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline-end: calc(var(--bui-page-pad) * -1); padding-inline-end: var(--bui-page-pad); }
+.og--mobile .og-offer-meta::-webkit-scrollbar { display: none; }
+.og--mobile .og-offer-meta > * { flex: none; }
