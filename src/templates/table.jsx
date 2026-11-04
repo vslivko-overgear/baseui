@@ -92,7 +92,7 @@ export function CollapsibleTable() {
         items={[
           { value: 'orders', title: 'Orders', content: <Table data={orders} caption="Orders" columns={[{ key: 'item', header: 'Item' }, { key: 'qty', header: 'Qty' }, { key: 'total', header: 'Total', renderCell: (r) => money(r.total) }]} /> },
           { value: 'invoices', title: 'Invoices', content: <Table data={invoices} caption="Invoices" columns={[{ key: 'no', header: 'Number' }, { key: 'due', header: 'Due' }, { key: 'total', header: 'Total', renderCell: (r) => money(r.total) }]} /> },
-          { value: 'tickets', title: 'Support tickets', content: <Table data={tickets} caption="Tickets" columns={[{ key: 'topic', header: 'Topic' }, { key: 'owner', header: 'Owner' }, { key: 'state', header: 'State', renderCell: (r) => <Badge variant="info" label={r.state} /> }]} /> },
+          { value: 'tickets', title: 'Support tickets', content: <Table data={tickets} caption="Tickets" columns={[{ key: 'topic', header: 'Topic' }, { key: 'owner', header: 'Owner' }, { key: 'state', header: 'State', renderCell: (r) => <Badge variant="accent" label={r.state} /> }]} /> },
         ]}
       />
     </Page>
@@ -149,7 +149,7 @@ export function ComparisonTable() {
         columns={[
           { key: 'feature', header: 'Feature', width: proportional(2, { minWidth: 140 }) },
           { key: 'a', header: head('Starter', '$0'), width: proportional(1, { minWidth: 100 }) },
-          { key: 'b', header: head('Team', '$12'), width: proportional(1, { minWidth: 100 }), renderCell: (r) => <Badge variant="info" label={r.b} /> },
+          { key: 'b', header: head('Team', '$12'), width: proportional(1, { minWidth: 100 }), renderCell: (r) => <Badge variant="accent" label={r.b} /> },
           { key: 'c', header: head('Business', '$29'), width: proportional(1, { minWidth: 100 }) },
         ]}
       />

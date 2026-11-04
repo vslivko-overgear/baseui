@@ -151,7 +151,7 @@ export function Header({ route, onLogin }) {
             </span>
             <span style={{ position: 'relative', display: 'inline-flex' }}>
               <IconButton variant="ghost" label={`Cart, ${store.count} items`} icon={<Icon name="ShoppingCart01" size={24} />} onClick={openMiniCart} />
-              {store.count > 0 && <span style={{ position: 'absolute', top: 2, right: 2, pointerEvents: 'none' }}><Badge type="counter" variant="red" size="sm" label={store.count} /></span>}
+              {store.count > 0 && <span style={{ position: 'absolute', top: 2, right: 2, pointerEvents: 'none' }}><Badge type="counter" variant="critical" size="sm" label={store.count} /></span>}
             </span>
             <Account onLogin={onLogin} />
             </ControlRow>

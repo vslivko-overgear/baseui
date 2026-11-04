@@ -171,12 +171,12 @@ export function AvatarStatusDot(props: AvatarStatusDotProps): ReactElement | nul
 
 export interface BadgeProps {
   /**
-   * primary is the inverse of the page, secondary a soft gray; the rest are semantic and accent colors, solid (with `light`, a tint)
+   * primary is the inverse of the page, secondary a soft gray; accent, success, warning and critical are solid colors (with `light`, a tint)
    * @default 'secondary'
    */
-  variant?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'warning-light' | 'error' | 'blue' | 'blue-light' | 'green' | 'green-light' | 'orange' | 'pink' | 'red';
+  variant?: 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'critical';
   /**
-   * The light version of the color of the variant: a tint of it with the main text color, for places where a bright tag shouts (a list, a table, many tags in a row). Every color has it; primary and secondary are not colors and ignore it
+   * The light version of the color of the variant: a tint of it with the main text color, for places where a bright tag shouts (a list, a table, many tags in a row). Accent, success, warning and critical have it; primary and secondary are not colors and ignore it
    * @default false
    */
   light?: boolean;
@@ -1966,7 +1966,7 @@ export interface ProductCardProps {
    * Color of the badge
    * @default 'secondary'
    */
-  badgeVariant?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
+  badgeVariant?: 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'critical';
   /**
    * A line above the price in 12px Secondary: the game or the category the product belongs to
    */

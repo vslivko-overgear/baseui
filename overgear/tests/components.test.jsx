@@ -35,7 +35,7 @@ describe('PayBar', () => {
 describe('CashbackTag', () => {
   test('it explains itself (it is a hint) and the mark of the coins comes after the amount', () => {
     const { container } = render(<CashbackTag label="+0.89" />);
-    const tag = container.querySelector('[data-slot="hint"] .bui-badge--warning-light .og-cbtag');
+    const tag = container.querySelector('[data-slot="hint"] .bui-badge--warning .og-cbtag');
     expect(tag).not.toBeNull();
     expect(tag.firstChild.nodeType).toBe(Node.TEXT_NODE);
     expect(tag.lastChild.tagName.toLowerCase()).toBe('svg');

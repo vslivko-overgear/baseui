@@ -507,7 +507,7 @@ a { color: inherit; }
 .og-result__block .bui-status { width: 100%; }
 .og-result__overline { display: block; margin-bottom: var(--bui-spacing-3); font: var(--bui-typography-text-12-bold, var(--bui-typography-text-12-semi-bold)); letter-spacing: 0.08em; text-transform: uppercase; }
 .og-result__overline--success { color: var(--bui-extensions-text-and-icon-success, var(--bui-text-and-icon-primary)); }
-.og-result__overline--error { color: var(--bui-extensions-text-and-icon-error, var(--bui-text-and-icon-primary)); }
+.og-result__overline--error { color: var(--bui-extensions-text-and-icon-critical, var(--bui-text-and-icon-primary)); }
 .og-result__overline--warning { color: var(--bui-extensions-text-and-icon-warning, var(--bui-text-and-icon-primary)); }
 .og-result__spin { position: relative; display: inline-grid; place-items: center; }
 .og-result__spin .bui-spinner { position: absolute; inset: -14px; margin: auto; }
@@ -523,7 +523,7 @@ a { color: inherit; }
 .og-ostatus__foot { padding: var(--bui-spacing-5); }
 .og-ostatus[data-tone="success"] .og-ostatus__head { background: var(--bui-extensions-background-light-success); }
 .og-ostatus[data-tone="warning"] .og-ostatus__head { background: var(--bui-extensions-background-light-warning); }
-.og-ostatus[data-tone="error"] .og-ostatus__head { background: var(--bui-extensions-background-light-error); }
+.og-ostatus[data-tone="error"] .og-ostatus__head { background: var(--bui-extensions-background-light-critical); }
 .og-ostatus__text { margin: 0; white-space: pre-wrap; font: var(--bui-typography-text-14-regular); color: var(--bui-text-and-icon-primary); }
 .og-ostatus__time { margin: 0; display: flex; align-items: center; gap: var(--bui-spacing-2); font: var(--bui-typography-text-14-semi-bold); }
 .og-ostatus__note { margin: 0; font: var(--bui-typography-text-14-regular); }
@@ -649,7 +649,7 @@ a { color: inherit; }
 .og-usp__tag--info { background: var(--bui-background-accent); color: var(--bui-extensions-text-and-icon-on-color); }   /* the colored tag of the offer leads the row, in the shape of the others and in the color it has in the listing */
 .og-usp__tag--success { background: var(--bui-extensions-background-success); color: var(--bui-extensions-text-and-icon-always-dark); }
 .og-usp__tag--warning { background: var(--bui-extensions-background-warning); color: var(--bui-extensions-text-and-icon-always-dark); }
-.og-usp__tag--error { background: var(--bui-extensions-background-error); color: var(--bui-extensions-text-and-icon-always-dark); }
+.og-usp__tag--error { background: var(--bui-extensions-background-critical); color: var(--bui-extensions-text-and-icon-always-dark); }
 .og-wishlink { display: inline-flex; align-items: center; gap: var(--bui-spacing-2); padding: 0; border: 0; background: none; cursor: pointer; font: var(--bui-typography-text-16-regular); color: var(--bui-text-and-icon-primary); }   /* the heart and the words: a link of the row of information, in its type */
 .og-wishlink:hover span { text-decoration: underline; }
 .og-offer-meta { gap: var(--bui-spacing-2); }   /* the dots between the facts sit 8 from each of them */

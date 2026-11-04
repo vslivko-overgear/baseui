@@ -8,7 +8,7 @@ const COLORS = {
   accent: 'var(--bui-text-and-icon-accent)',
   success: 'var(--bui-extensions-text-and-icon-success)',
   warning: 'var(--bui-extensions-text-and-icon-warning)',
-  error: 'var(--bui-extensions-text-and-icon-error)',
+  error: 'var(--bui-extensions-text-and-icon-critical)',
   'on-color': 'var(--bui-extensions-text-and-icon-on-color)',
   inherit: 'currentColor',
 };

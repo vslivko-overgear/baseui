@@ -148,7 +148,7 @@ export function PortfolioDashboard() {
           columns={[
             { key: 'name', header: 'Holding', width: proportional(2, { minWidth: 160 }), sortable: { sortKey: 'name' } },
             { key: 'value', header: 'Value', width: proportional(1, { minWidth: 100 }), sortable: { sortKey: 'value' }, renderCell: (r) => money(r.value) },
-            { key: 'change', header: 'Change', width: proportional(1, { minWidth: 100 }), renderCell: (r) => <Badge variant={r.change > 0 ? 'success' : r.change < 0 ? 'error' : 'secondary'} label={`${r.change > 0 ? '+' : ''}${r.change}%`} /> },
+            { key: 'change', header: 'Change', width: proportional(1, { minWidth: 100 }), renderCell: (r) => <Badge variant={r.change > 0 ? 'success' : r.change < 0 ? 'critical' : 'secondary'} label={`${r.change > 0 ? '+' : ''}${r.change}%`} /> },
           ]}
         />
       </Panel>

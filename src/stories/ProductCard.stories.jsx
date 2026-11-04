@@ -9,9 +9,9 @@ export const art = (hue, hue2 = hue + 60) =>
 export default meta({
   title: 'Components/Product Card',
   component: ProductCard,
-  args: { title: 'Mythic+ Bundle, 3+1 keys', price: '$149.00', badge: 'Hot offer', badgeVariant: 'error', rating: 4.9, meta: '2.1K sold' },
+  args: { title: 'Mythic+ Bundle, 3+1 keys', price: '$149.00', badge: 'Hot offer', badgeVariant: 'critical', rating: 4.9, meta: '2.1K sold' },
   argTypes: {
-    badgeVariant: { control: 'select', options: ['primary', 'secondary', 'success', 'warning', 'error', 'info'] },
+    badgeVariant: { control: 'select', options: ['primary', 'secondary', 'accent', 'success', 'warning', 'critical'] },
     rating: { control: { type: 'range', min: 0, max: 5, step: 0.1 } },
   },
 });

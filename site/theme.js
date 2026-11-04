@@ -3,7 +3,7 @@
 
 const BRANDS = {
   default: null,
-  blue: 'var(--bui-background-accent)', green: 'var(--bui-extensions-background-success)', orange: 'var(--bui-extensions-background-warning)', red: 'var(--bui-extensions-background-error)',
+  blue: 'var(--bui-background-accent)', green: 'var(--bui-extensions-background-success)', orange: 'var(--bui-extensions-background-warning)', red: 'var(--bui-extensions-background-critical)',
 };
 export const BRAND_OPTIONS = [...Object.keys(BRANDS), 'custom'];
 

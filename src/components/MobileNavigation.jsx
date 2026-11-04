@@ -111,9 +111,9 @@ export function BottomBar({
           const active = it.value === current;
           const badge =
             it.badge === true ? (
-              <Badge type="dot" variant="red" size="lg" label="New" className="bui-bottombar__badge" />
+              <Badge type="dot" variant="critical" size="lg" label="New" className="bui-bottombar__badge" />
             ) : (
-              it.badge != null && <Badge type="counter" variant="red" size="sm" label={it.badge} className="bui-bottombar__badge" />
+              it.badge != null && <Badge type="counter" variant="critical" size="sm" label={it.badge} className="bui-bottombar__badge" />
             );
           return (
             <button

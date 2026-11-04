@@ -23,7 +23,7 @@
   --color-border-primary: var(--bui-border-primary);
   --color-border-accent: var(--bui-border-accent);
   --color-border-disabled: var(--bui-border-disabled);
-  --color-fg-error: var(--bui-extensions-text-and-icon-error);
+  --color-fg-critical: var(--bui-extensions-text-and-icon-critical);
   --color-fg-warning: var(--bui-extensions-text-and-icon-warning);
   --color-fg-success: var(--bui-extensions-text-and-icon-success);
   --color-fg-always-dark: var(--bui-extensions-text-and-icon-always-dark);
@@ -36,18 +36,18 @@
   --color-bg-overlay-light: var(--bui-extensions-background-overlay-light);
   --color-bg-always-dark: var(--bui-extensions-background-always-dark);
   --color-bg-always-light: var(--bui-extensions-background-always-light);
-  --color-bg-error: var(--bui-extensions-background-error);
+  --color-bg-critical: var(--bui-extensions-background-critical);
   --color-bg-warning: var(--bui-extensions-background-warning);
   --color-bg-success: var(--bui-extensions-background-success);
   --color-bg-light-success: var(--bui-extensions-background-light-success);
   --color-bg-light-accent: var(--bui-extensions-background-light-accent);
-  --color-bg-light-error: var(--bui-extensions-background-light-error);
+  --color-bg-light-critical: var(--bui-extensions-background-light-critical);
   --color-bg-light-warning: var(--bui-extensions-background-light-warning);
   --color-border-selected: var(--bui-extensions-border-selected);
   --color-border-selected-always-dark: var(--bui-extensions-border-selected-always-dark);
   --color-border-selected-always-light: var(--bui-extensions-border-selected-always-light);
   --color-border-accent-ext: var(--bui-extensions-border-accent);
-  --color-border-error: var(--bui-extensions-border-error);
+  --color-border-critical: var(--bui-extensions-border-critical);
   --color-border-warning: var(--bui-extensions-border-warning);
   --color-border-success: var(--bui-extensions-border-success);
   --color-bg-primary-hover: var(--bui-background-primary-hover);
@@ -57,7 +57,7 @@
   --color-bg-brand-hover: var(--bui-background-brand-hover);
   --color-bg-transparent-hover: var(--bui-background-transparent-hover);
   --color-bg-surface-hover: var(--bui-extensions-background-surface-hover);
-  --color-bg-error-hover: var(--bui-extensions-background-error-hover);
+  --color-bg-critical-hover: var(--bui-extensions-background-critical-hover);
   --color-bg-warning-hover: var(--bui-extensions-background-warning-hover);
   --color-bg-success-hover: var(--bui-extensions-background-success-hover);
   --color-bg-light-accent-hover: var(--bui-extensions-background-light-accent-hover);
@@ -71,7 +71,7 @@
   --color-border-primary-hover: var(--bui-border-primary-hover);
   --color-border-accent-hover: var(--bui-border-accent-hover);
   --color-border-disabled-hover: var(--bui-border-disabled-hover);
-  --color-fg-error-hover: var(--bui-extensions-text-and-icon-error-hover);
+  --color-fg-critical-hover: var(--bui-extensions-text-and-icon-critical-hover);
   --color-fg-warning-hover: var(--bui-extensions-text-and-icon-warning-hover);
   --color-fg-success-hover: var(--bui-extensions-text-and-icon-success-hover);
   --color-fg-always-dark-hover: var(--bui-extensions-text-and-icon-always-dark-hover);
@@ -82,13 +82,13 @@
   --color-bg-always-dark-hover: var(--bui-extensions-background-always-dark-hover);
   --color-bg-always-light-hover: var(--bui-extensions-background-always-light-hover);
   --color-bg-light-success-hover: var(--bui-extensions-background-light-success-hover);
-  --color-bg-light-error-hover: var(--bui-extensions-background-light-error-hover);
+  --color-bg-light-critical-hover: var(--bui-extensions-background-light-critical-hover);
   --color-bg-light-warning-hover: var(--bui-extensions-background-light-warning-hover);
   --color-border-selected-hover: var(--bui-extensions-border-selected-hover);
   --color-border-selected-always-dark-hover: var(--bui-extensions-border-selected-always-dark-hover);
   --color-border-selected-always-light-hover: var(--bui-extensions-border-selected-always-light-hover);
   --color-border-accent-hover-ext: var(--bui-extensions-border-accent-hover);
-  --color-border-error-hover: var(--bui-extensions-border-error-hover);
+  --color-border-critical-hover: var(--bui-extensions-border-critical-hover);
   --color-border-warning-hover: var(--bui-extensions-border-warning-hover);
   --color-border-success-hover: var(--bui-extensions-border-success-hover);
 

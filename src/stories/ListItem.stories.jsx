@@ -151,7 +151,7 @@ export const Trailing = example({
         </ListItem>
       </List>,
     ),
-  source: `<ListItem details={<Badge type="counter" variant="red" label={3} />}>Badge</ListItem>\n<ListItem control={<Switch size="md" aria-label="Notifications" />}>Switch</ListItem>`,
+  source: `<ListItem details={<Badge type="counter" variant="critical" label={3} />}>Badge</ListItem>\n<ListItem control={<Switch size="md" aria-label="Notifications" />}>Switch</ListItem>`,
 });
 function Folders() {
   const [open, setOpen] = useState(true);

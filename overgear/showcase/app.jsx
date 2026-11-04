@@ -74,7 +74,7 @@ function Mode({ theme, title }) {
         <p className="ov-note">In use</p>
         <Card variant="surface" padding={4}>
           <div className="ov-preview">
-            <div className="ov-row"><Button variant="primary" label="Buy now" /><Button variant="secondary" label="Add to cart" /><Badge variant="info" label="Hot Offer" /></div>
+            <div className="ov-row"><Button variant="primary" label="Buy now" /><Button variant="secondary" label="Add to cart" /><Badge variant="accent" label="Hot Offer" /></div>
             <TextInput label="Email" defaultValue="name@example.com" />
             <Switch label="Seller online" defaultChecked />
           </div>

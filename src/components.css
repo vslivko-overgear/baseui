@@ -66,7 +66,7 @@
 .bui-avatar-dot--success { background: var(--bui-extensions-background-success); color: var(--bui-extensions-text-and-icon-always-dark); }
 .bui-avatar-dot--neutral { background: var(--bui-extensions-background-surface); color: var(--bui-text-and-icon-secondary); }
 .bui-avatar-dot--neutral::before { content: ""; position: absolute; inset: 15%; border-radius: 9999px; box-shadow: inset 0 0 0 max(1px, 12%) currentColor; }
-.bui-avatar-dot--error { background: var(--bui-extensions-background-error); color: var(--bui-extensions-text-and-icon-always-dark); }
+.bui-avatar-dot--error { background: var(--bui-extensions-background-critical); color: var(--bui-extensions-text-and-icon-always-dark); }
 .bui-avatar-dot__bar { width: 50%; height: 12%; min-height: 2px; border-radius: 9999px; background: currentColor; }
 .bui-avatar-dot__icon { display: inline-flex; width: 60%; height: 60%; }
 .bui-avatar-dot__icon > * { width: 100%; height: 100%; }
@@ -83,30 +83,17 @@
 .bui-badge__icon { display: inline-flex; flex: none; width: 12px; height: 12px; }
 .bui-badge__icon > * { width: 100%; height: 100%; }
 .bui-badge__label { overflow: hidden; text-overflow: ellipsis; }
-.bui-badge--info { background: var(--bui-background-accent); color: var(--bui-extensions-text-and-icon-on-color); }
+.bui-badge--accent { background: var(--bui-background-accent); color: var(--bui-extensions-text-and-icon-always-light); }
 .bui-badge--success { background: var(--bui-extensions-background-success); color: var(--bui-extensions-text-and-icon-always-dark); }
 .bui-badge--warning { background: var(--bui-extensions-background-warning); color: var(--bui-extensions-text-and-icon-always-dark); }
-.bui-badge--warning-light { background: var(--bui-extensions-background-light-warning); color: var(--bui-text-and-icon-primary); }
-.bui-badge--error { background: var(--bui-extensions-background-error); color: var(--bui-extensions-text-and-icon-always-dark); }
-.bui-badge--blue { background: var(--bui-background-accent); color: var(--bui-extensions-text-and-icon-on-color); }
-.bui-badge--blue-light { background: var(--bui-extensions-background-light-accent); color: var(--bui-text-and-icon-primary); }
-.bui-badge--green { background: var(--bui-extensions-background-success); color: var(--bui-extensions-text-and-icon-always-dark); }
-.bui-badge--green-light { background: var(--bui-extensions-background-light-success); color: var(--bui-text-and-icon-primary); }
-.bui-badge--orange { background: var(--bui-extensions-background-warning); color: var(--bui-extensions-text-and-icon-always-dark); }
+.bui-badge--critical { background: var(--bui-extensions-background-critical); color: var(--bui-extensions-text-and-icon-always-dark); }
 .bui-badge--primary { background: var(--bui-extensions-background-inverse-primary); color: var(--bui-extensions-text-and-icon-on-color); }
-.bui-badge--pink { background: var(--bui-extensions-background-light-error); color: var(--bui-text-and-icon-primary); }
-.bui-badge--red { background: var(--bui-extensions-background-error); color: var(--bui-extensions-text-and-icon-always-dark); }
-/* light: the color of the variant as a tint, with the main text color, where a bright tag would shout. The semantic colors have tokens of their own (light in both themes); an accent color is mixed into the page */
+/* light: the color of the variant as a tint, with the main text color, where a bright tag would shout (a list, a table, many tags in a row) */
 .bui-badge--light { color: var(--bui-text-and-icon-primary); }
-.bui-badge--light.bui-badge--info { background: var(--bui-extensions-background-light-accent); }
+.bui-badge--light.bui-badge--accent { background: var(--bui-extensions-background-light-accent); }
 .bui-badge--light.bui-badge--success { background: var(--bui-extensions-background-light-success); }
 .bui-badge--light.bui-badge--warning { background: var(--bui-extensions-background-light-warning); }
-.bui-badge--light.bui-badge--error { background: var(--bui-extensions-background-light-error); }
-.bui-badge--light.bui-badge--blue, .bui-badge--light.bui-badge--blue-light { background: var(--bui-extensions-background-light-accent); }
-.bui-badge--light.bui-badge--green, .bui-badge--light.bui-badge--green-light { background: var(--bui-extensions-background-light-success); }
-.bui-badge--light.bui-badge--orange { background: var(--bui-extensions-background-light-warning); }
-.bui-badge--light.bui-badge--pink { background: var(--bui-extensions-background-light-error); }
-.bui-badge--light.bui-badge--red { background: var(--bui-extensions-background-light-error); }
+.bui-badge--light.bui-badge--critical { background: var(--bui-extensions-background-light-critical); }
 .bui-badge--disabled { background: var(--bui-background-disabled); color: var(--bui-text-and-icon-disabled); }
 /* Badge: counter and dot */
 .bui-badge--counter { justify-content: center; min-width: 22px; padding: 0 var(--bui-spacing-1-5); }
@@ -137,8 +124,8 @@
 .bui-banner--success .bui-banner__icon { color: var(--bui-extensions-text-and-icon-success); }
 .bui-banner--warning { background: var(--bui-extensions-background-light-warning); }
 .bui-banner--warning .bui-banner__icon { color: var(--bui-extensions-text-and-icon-warning); }
-.bui-banner--error { background: var(--bui-extensions-background-light-error); }
-.bui-banner--error .bui-banner__icon { color: var(--bui-extensions-text-and-icon-error); }
+.bui-banner--error { background: var(--bui-extensions-background-light-critical); }
+.bui-banner--error .bui-banner__icon { color: var(--bui-extensions-text-and-icon-critical); }
 
 /* ---------- Breadcrumbs ---------- */
 .bui-breadcrumbs { overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }   /* one line that scrolls sideways */
@@ -192,12 +179,12 @@
 /* variants */
 .bui-button[data-variant="primary"] { background-color: var(--bui-background-brand); color: var(--bui-extensions-text-and-icon-on-brand); }
 .bui-button[data-variant="ghost"] { background-color: transparent; }
-.bui-button[data-variant="destructive"] { background-color: var(--bui-extensions-background-error); color: var(--bui-extensions-text-and-icon-always-dark); }
+.bui-button[data-variant="destructive"] { background-color: var(--bui-extensions-background-critical); color: var(--bui-extensions-text-and-icon-always-dark); }
 @media (hover) {
   .bui-button[data-variant="primary"]:hover:not(:disabled):not([data-disabled]) { background-color: var(--bui-background-brand-hover); }
   .bui-button[data-variant="secondary"]:hover:not(:disabled):not([data-disabled]) { background-color: var(--bui-background-secondary-hover); }
   .bui-button[data-variant="ghost"]:hover:not(:disabled):not([data-disabled]) { background-color: var(--bui-background-transparent-hover); }
-  .bui-button[data-variant="destructive"]:hover:not(:disabled):not([data-disabled]) { background-color: var(--bui-extensions-background-error-hover); }
+  .bui-button[data-variant="destructive"]:hover:not(:disabled):not([data-disabled]) { background-color: var(--bui-extensions-background-critical-hover); }
 }
 /* disabled; a loading button keeps its look and shows the progress cursor */
 .bui-button:disabled:not([data-loading]), .bui-button[data-disabled]:not([data-loading]), .bui-button[data-loading-disabled] { background-color: var(--bui-background-disabled); color: var(--bui-text-and-icon-disabled); cursor: not-allowed; background-image: none; }
@@ -266,8 +253,8 @@
 .bui-card--blue { background: var(--bui-extensions-background-light-accent); }
 .bui-card--green { background: var(--bui-extensions-background-light-success); }
 .bui-card--orange { background: var(--bui-extensions-background-light-warning); }
-.bui-card--pink { background: var(--bui-extensions-background-light-error); }
-.bui-card--red { background: var(--bui-extensions-background-light-error); }
+.bui-card--pink { background: var(--bui-extensions-background-light-critical); }
+.bui-card--red { background: var(--bui-extensions-background-light-critical); }
 .bui-card__content { position: relative; z-index: 1; pointer-events: none; display: flex; flex-direction: column; flex: 1; min-width: 0; }
 .bui-card__content a, .bui-card__content button, .bui-card__content input, .bui-card__content select, .bui-card__content textarea, .bui-card__content [role="button"] { pointer-events: auto; }
 .bui-card__hit { all: unset; position: absolute; inset: 0; z-index: 0; border-radius: inherit; cursor: pointer; }
@@ -353,7 +340,7 @@
 .bui-radio-group__error,
 .bui-token-group__error {
   font: var(--bui-typography-text-14-regular);
-  color: var(--bui-extensions-text-and-icon-error);
+  color: var(--bui-extensions-text-and-icon-critical);
 }
 .bui-checkbox-group__field {
   align-items: flex-start;
@@ -572,7 +559,7 @@
   background-color: var(--bui-extensions-background-light-success);
 }
 .bui-token__filled.bui-token__error {
-  background-color: var(--bui-extensions-background-light-error);
+  background-color: var(--bui-extensions-background-light-critical);
 }
 .bui-token__filled[data-pressed] {
   background-color: var(--bui-extensions-background-inverse-primary);
@@ -1540,9 +1527,9 @@
 }
 .bui-otp__cell::selection { background: transparent; }
 .bui-otp__cell:disabled { cursor: not-allowed; background-color: var(--bui-background-disabled); color: var(--bui-text-and-icon-disabled); }
-.bui-otp__cell[aria-invalid="true"] { box-shadow: 0 0 0 2px var(--bui-extensions-border-error); }
+.bui-otp__cell[aria-invalid="true"] { box-shadow: 0 0 0 2px var(--bui-extensions-border-critical); }
 .bui-otp__separator { flex: none; width: 8px; height: 2px; border-radius: var(--bui-radius-full); background: var(--bui-text-and-icon-disabled); }
-.bui-otp__error { margin-top: var(--bui-spacing-2); font: var(--bui-typography-text-14-regular); color: var(--bui-extensions-text-and-icon-error); }
+.bui-otp__error { margin-top: var(--bui-spacing-2); font: var(--bui-typography-text-14-regular); color: var(--bui-extensions-text-and-icon-critical); }
 /* verifying: the cells pulse as a wave (a dimmed row when animations are off); success: the code turns green */
 .bui-otp[data-status="verifying"] .bui-otp__cell { opacity: 0.6; }
 .bui-otp[data-status="success"] .bui-otp__cell { color: var(--bui-extensions-text-and-icon-success); }
@@ -1593,14 +1580,14 @@
 .bui-progress[data-color="accent"] { --bui-progress-color: var(--bui-background-accent); }
 .bui-progress[data-color="success"] { --bui-progress-color: var(--bui-extensions-background-success); }
 .bui-progress[data-color="warning"] { --bui-progress-color: var(--bui-extensions-background-warning); }
-.bui-progress[data-color="error"] { --bui-progress-color: var(--bui-extensions-background-error); }
+.bui-progress[data-color="error"] { --bui-progress-color: var(--bui-extensions-background-critical); }
 .bui-progress[data-color="blue"] { --bui-progress-color: var(--bui-background-accent); }
 .bui-progress[data-color="blue-light"] { --bui-progress-color: var(--bui-extensions-background-light-accent); }
 .bui-progress[data-color="green"] { --bui-progress-color: var(--bui-extensions-background-success); }
 .bui-progress[data-color="green-light"] { --bui-progress-color: var(--bui-extensions-background-light-success); }
 .bui-progress[data-color="orange"] { --bui-progress-color: var(--bui-extensions-background-warning); }
-.bui-progress[data-color="pink"] { --bui-progress-color: var(--bui-extensions-background-light-error); }
-.bui-progress[data-color="red"] { --bui-progress-color: var(--bui-extensions-background-error); }
+.bui-progress[data-color="pink"] { --bui-progress-color: var(--bui-extensions-background-light-critical); }
+.bui-progress[data-color="red"] { --bui-progress-color: var(--bui-extensions-background-critical); }
 /* sections: equal parts with a gap, each its own small track */
 .bui-progress__section .bui-progress__fill { display: block; }
 .bui-progress__track--sections { display: flex; gap: var(--bui-spacing-1); overflow: visible; background: none; }
@@ -1855,7 +1842,7 @@
 .bui-status__icon--accent { background: var(--bui-extensions-background-light-accent); }
 .bui-status__icon--success { background: var(--bui-extensions-background-light-success); }
 .bui-status__icon--warning { background: var(--bui-extensions-background-light-warning); }
-.bui-status__icon--error { background: var(--bui-extensions-background-light-error); }
+.bui-status__icon--error { background: var(--bui-extensions-background-light-critical); }
 .bui-status__title { font: var(--bui-typography-header-20); color: var(--bui-text-and-icon-primary); }
 .bui-status__text { margin: 0; max-width: 420px; font: var(--bui-typography-text-16-regular); color: var(--bui-text-and-icon-primary); }
 .bui-status__action { margin-top: var(--bui-spacing-3); }
@@ -1886,7 +1873,7 @@
 .bui-switch__track[data-checked] .bui-switch__thumb { transform: translateX(calc(var(--sw-w) - 8px - var(--sw-thumb-w))); }
 .bui-switch__track[data-checked]:not([data-disabled]) .bui-switch__thumb { background-color: var(--bui-extensions-text-and-icon-on-color); }
 .bui-switch__track[data-disabled] .bui-switch__thumb { background-color: var(--bui-text-and-icon-disabled); }
-.bui-switch__error { font: var(--bui-typography-text-14-regular); color: var(--bui-extensions-text-and-icon-error); }
+.bui-switch__error { font: var(--bui-typography-text-14-regular); color: var(--bui-extensions-text-and-icon-critical); }
 
 /* ---------- Table ---------- */
 .bui-table-wrap { overflow-x: auto; border: 1px solid var(--bui-border-primary); border-radius: var(--bui-radius-block); background: var(--bui-background-primary); }
@@ -2436,11 +2423,11 @@
   height: auto;
 }
 .bui-field[data-status="error"] .bui-field__cell {
-  box-shadow: 0 0 0 2px var(--bui-extensions-border-error);
+  box-shadow: 0 0 0 2px var(--bui-extensions-border-critical);
 }
 /* an error stays red while the field has focus (a form that puts focus on the first wrong field): the focus ring takes the error color */
 .bui-field[data-status="error"]:not([data-control="select"]) .bui-field__cell:has(:is(input, textarea):focus),
-.bui-field[data-status="error"][data-control="select"] .bui-field__cell:has(:focus-visible) { outline-color: var(--bui-extensions-border-error); }
+.bui-field[data-status="error"][data-control="select"] .bui-field__cell:has(:focus-visible) { outline-color: var(--bui-extensions-border-critical); }
 .bui-field[data-status="success"] .bui-field__cell {
   box-shadow: 0 0 0 2px var(--bui-extensions-border-success);
 }
@@ -2546,7 +2533,7 @@
   margin: 0;
 }
 .bui-field[data-status="error"] .bui-field__caption {
-  color: var(--bui-extensions-text-and-icon-error);
+  color: var(--bui-extensions-text-and-icon-critical);
 }
 .bui-field[data-status="warning"] .bui-field__caption {
   color: var(--bui-extensions-text-and-icon-warning);

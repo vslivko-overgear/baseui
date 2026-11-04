@@ -51,7 +51,7 @@ export function rowProps({ leading, caption, details, control }, size = 'md', i 
     ...(caption === 'below' && { subtitle: 'Caption' }),
     ...(caption === 'above' && { overline: 'Caption' }),
     ...(details === 'text' && { details: '12 min' }),
-    ...(details === 'badge' && { details: <Badge variant="red" type="counter" size="sm" label={i + 2} /> }),
+    ...(details === 'badge' && { details: <Badge variant="critical" type="counter" size="sm" label={i + 2} /> }),
     ...(control === 'switch' && { control: <Switch size="md" aria-label={`Row ${i + 1}`} /> }),
     ...(control === 'checkbox' && { control: <Checkbox aria-label={`Row ${i + 1}`} /> }),
   };

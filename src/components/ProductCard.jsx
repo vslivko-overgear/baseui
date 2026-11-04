@@ -92,7 +92,7 @@ describe(ProductCard, 'The card of a product in a listing: a picture with a badg
   imageAlt: ['string', "''", 'Alternative text of the picture (empty when the title says the same)'],
   fallbackIcon: ['string', "'Image01'", 'Icon of the catalog shown when there is no picture'],
   badge: ['string', null, 'A mark over the top left corner of the picture: Sale, Hot offer'],
-  badgeVariant: ["'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'", "'secondary'", 'Color of the badge'],
+  badgeVariant: ["'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'critical'", "'secondary'", 'Color of the badge'],
   eyebrow: ['ReactNode', null, 'A line above the price in 12px Secondary: the game or the category the product belongs to'],
   points: ['string[]', null, 'The selling points under the title, up to three, each a line with a check (a point that does not fit ends with an ellipsis). With points the title takes one line, so the points stand close under it'],
   rating: ['number', null, 'Rating, shown with a star'],

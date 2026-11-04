@@ -70,7 +70,7 @@ export function BalanceCard() {
         </div>
         <div className="og-row og-row--wrap" data-test-id="wallet-bonuses">
           <span className="og-meta">Top-up bonus</span>
-          {BONUS_RULES.map((r) => <Badge key={r.refillAmount} variant="warning-light" size="md" label={`+${r.percentage}% from ${money(r.refillAmount).replace('.00', '')}`} />)}
+          {BONUS_RULES.map((r) => <Badge key={r.refillAmount} variant="warning" light size="md" label={`+${r.percentage}% from ${money(r.refillAmount).replace('.00', '')}`} />)}
         </div>
         <Button variant="primary" size="md" width="100%" label="Top up" icon={<Icon name="Plus" size={20} />} onClick={openTopUp} />
       </div>
@@ -112,7 +112,7 @@ export function TopUpDialog() {
       <form id="og-topup-form" className="og-stack og-stack--lg og-topup" noValidate onSubmit={(e) => { e.preventDefault(); pay(); }}>
         <div className="og-stack og-stack--close">
           <TextInput id="og-topup-amount" label="Amount, USD" inputMode="decimal" autoComplete="off" prefix="$" value={text} {...form.field('amount', { onChange: (e) => setText(e.target.value) })} />
-          <TokenGroup size="sm" aria-label="Amount suggestions" value={SUGGESTIONS.includes(amount) ? [String(amount)] : []} onValueChange={(v) => v.length && setText(v[v.length - 1])} options={SUGGESTIONS.map((n) => ({ value: String(n), label: <span className="og-topup__chip">{`$${n}`}<Badge variant="warning-light" size="sm" label={`+${bonusRateFor(n)}%`} icon={<CashbackMark />} /></span> }))} />
+          <TokenGroup size="sm" aria-label="Amount suggestions" value={SUGGESTIONS.includes(amount) ? [String(amount)] : []} onValueChange={(v) => v.length && setText(v[v.length - 1])} options={SUGGESTIONS.map((n) => ({ value: String(n), label: <span className="og-topup__chip">{`$${n}`}<Badge variant="warning" light size="sm" label={`+${bonusRateFor(n)}%`} icon={<CashbackMark />} /></span> }))} />
         </div>
         <div className="og-stack og-stack--close">
         <div className="og-topup__box" data-test-id="topup-bonus">

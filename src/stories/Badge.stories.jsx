@@ -2,7 +2,8 @@ import { Badge } from '../components/Badge.jsx';
 import { Heart } from './_ui.jsx';
 import { meta, playground, example, Row } from './_helpers.jsx';
 
-const VARIANTS = ['primary', 'secondary', 'info', 'success', 'warning', 'error', 'blue', 'blue-light', 'green', 'green-light', 'orange', 'pink', 'red'];
+const VARIANTS = ['primary', 'secondary', 'accent', 'success', 'warning', 'critical'];
+const COLORS = ['accent', 'success', 'warning', 'critical'];
 export default meta({
   title: 'Components/Badge',
   component: Badge,
@@ -28,16 +29,20 @@ export const Variants = example({
       {VARIANTS.map((v) => (
         <Badge key={v} variant={v} label={v} />
       ))}
+      {COLORS.map((v) => (
+        <Badge key={`${v}-light`} variant={v} light label={`${v} light`} />
+      ))}
     </Row>
   ),
-  source: `<Badge variant="info" label="info" />`,
+  source: `<Badge variant="accent" label="accent" />
+<Badge variant="accent" light label="accent light" />`,
 });
 export const Light = example({
   name: 'Light',
   description: 'The light version of a color: a tint with the main text, for a list or a table where bright tags would shout',
   render: () => (
     <Row>
-      {VARIANTS.filter((v) => !['primary', 'secondary'].includes(v)).map((v) => (
+      {COLORS.map((v) => (
         <Badge key={v} variant={v} light label={v} />
       ))}
     </Row>
@@ -59,32 +64,32 @@ export const Disabled = example({
   name: 'Disabled',
   render: () => (
     <Row>
-      {['primary', 'secondary', 'info', 'red'].map((v) => (
+      {['primary', 'secondary', 'accent', 'critical'].map((v) => (
         <Badge key={v} variant={v} disabled label={v} />
       ))}
     </Row>
   ),
-  source: `<Badge variant="red" disabled label="red" />`,
+  source: `<Badge variant="critical" disabled label="critical" />`,
 });
 export const Types = example({
   name: 'Types',
   render: () => (
     <Row>
-      <Badge variant="red" label="New" />
-      <Badge type="counter" variant="red" label={3} />
-      <Badge type="counter" variant="red" label={120} />
-      <Badge type="dot" variant="red" label="New" />
+      <Badge variant="critical" label="New" />
+      <Badge type="counter" variant="critical" label={3} />
+      <Badge type="counter" variant="critical" label={120} />
+      <Badge type="dot" variant="critical" label="New" />
     </Row>
   ),
-  source: `<Badge variant="red" label="New" />
-<Badge type="counter" variant="red" label={3} />
-<Badge type="dot" variant="red" label="New" />`,
+  source: `<Badge variant="critical" label="New" />
+<Badge type="counter" variant="critical" label={3} />
+<Badge type="dot" variant="critical" label="New" />`,
 });
 export const WithIcon = example({
   name: 'With Icon',
   render: () => (
     <Row>
-      <Badge variant="pink" label="Favorite" icon={<Heart size={12} />} />
+      <Badge variant="accent" label="Favorite" icon={<Heart size={12} />} />
     </Row>
   ),
   source: `<Badge label="Favorite" icon={<HeartIcon />} />`,

@@ -36,7 +36,7 @@
   /* Accent Colors */
 
   /* Extensions / Text and Icon */
-  --bui-extensions-text-and-icon-error: #e8634c;
+  --bui-extensions-text-and-icon-critical: #e8634c;
   --bui-extensions-text-and-icon-warning: #f5ba44;
   --bui-extensions-text-and-icon-success: #44cf5e;
   --bui-extensions-text-and-icon-always-dark: #171717;
@@ -51,12 +51,12 @@
   --bui-extensions-background-overlay-light: rgba(255, 255, 255, 0.7);
   --bui-extensions-background-always-dark: #171717;
   --bui-extensions-background-always-light: #ffffff;
-  --bui-extensions-background-error: #e8634c;
+  --bui-extensions-background-critical: #e8634c;
   --bui-extensions-background-warning: #f5ba44;
   --bui-extensions-background-success: #44cf5e;
   --bui-extensions-background-light-success: #dff7e3;
   --bui-extensions-background-light-accent: #e7e8fe;
-  --bui-extensions-background-light-error: #f9d8d2;
+  --bui-extensions-background-light-critical: #f9d8d2;
   --bui-extensions-background-light-warning: #fbe2b2;
 
   /* Extensions / Border */
@@ -64,7 +64,7 @@
   --bui-extensions-border-selected-always-dark: #171717;
   --bui-extensions-border-selected-always-light: #ffffff;
   --bui-extensions-border-accent: #575df6;
-  --bui-extensions-border-error: #e8634c;
+  --bui-extensions-border-critical: #e8634c;
   --bui-extensions-border-warning: #f5ba44;
   --bui-extensions-border-success: #44cf5e;
 
@@ -76,7 +76,7 @@
   --bui-background-brand-hover: #3b3b3b;
   --bui-background-transparent-hover: rgba(88, 122, 172, 0.06);
   --bui-extensions-background-surface-hover: #f5f7fa;
-  --bui-extensions-background-error-hover: #d9523b;
+  --bui-extensions-background-critical-hover: #d9523b;
   --bui-extensions-background-warning-hover: #e7a92c;
   --bui-extensions-background-success-hover: #37bd51;
   --bui-extensions-background-light-accent-hover: #dcdefd;
@@ -90,7 +90,7 @@
   --bui-border-primary-hover: #c9cbcf;
   --bui-border-accent-hover: #b6bdca;
   --bui-border-disabled-hover: #c8c9cb;
-  --bui-extensions-text-and-icon-error-hover: #c84630;
+  --bui-extensions-text-and-icon-critical-hover: #c84630;
   --bui-extensions-text-and-icon-warning-hover: #d79d19;
   --bui-extensions-text-and-icon-success-hover: #15b241;
   --bui-extensions-text-and-icon-always-dark-hover: #2c2c2c;
@@ -101,13 +101,13 @@
   --bui-extensions-background-always-dark-hover: #252525;
   --bui-extensions-background-always-light-hover: #f2f2f2;
   --bui-extensions-background-light-success-hover: #d2ead6;
-  --bui-extensions-background-light-error-hover: #eccbc5;
+  --bui-extensions-background-light-critical-hover: #eccbc5;
   --bui-extensions-background-light-warning-hover: #eed5a5;
   --bui-extensions-border-selected-hover: #272727;
   --bui-extensions-border-selected-always-dark-hover: #272727;
   --bui-extensions-border-selected-always-light-hover: #e8e8e8;
   --bui-extensions-border-accent-hover: #4645dd;
-  --bui-extensions-border-error-hover: #cf4c37;
+  --bui-extensions-border-critical-hover: #cf4c37;
   --bui-extensions-border-warning-hover: #dea425;
   --bui-extensions-border-success-hover: #23b847;
 
@@ -138,7 +138,7 @@
   /* Accent Colors */
 
   /* Extensions / Text and Icon */
-  --bui-extensions-text-and-icon-error: #e8634c;
+  --bui-extensions-text-and-icon-critical: #e8634c;
   --bui-extensions-text-and-icon-warning: #f5ba44;
   --bui-extensions-text-and-icon-success: #44cf5e;
   --bui-extensions-text-and-icon-always-dark: #171717;
@@ -153,12 +153,12 @@
   --bui-extensions-background-overlay-light: rgba(18, 18, 18, 0.7);
   --bui-extensions-background-always-dark: #171717;
   --bui-extensions-background-always-light: #ffffff;
-  --bui-extensions-background-error: #e8634c;
+  --bui-extensions-background-critical: #e8634c;
   --bui-extensions-background-warning: #f5ba44;
   --bui-extensions-background-success: #44cf5e;
   --bui-extensions-background-light-success: #114119;
   --bui-extensions-background-light-accent: #24276a;
-  --bui-extensions-background-light-error: #51150a;
+  --bui-extensions-background-light-critical: #51150a;
   --bui-extensions-background-light-warning: #503806;
 
   /* Extensions / Border */
@@ -166,7 +166,7 @@
   --bui-extensions-border-selected-always-dark: #171717;
   --bui-extensions-border-selected-always-light: #ffffff;
   --bui-extensions-border-accent: #575df6;
-  --bui-extensions-border-error: #e8634c;
+  --bui-extensions-border-critical: #e8634c;
   --bui-extensions-border-warning: #f5ba44;
   --bui-extensions-border-success: #44cf5e;
 
@@ -178,7 +178,7 @@
   --bui-background-brand-hover: #e0e0e0;
   --bui-background-transparent-hover: rgba(255, 255, 255, 0.05);
   --bui-extensions-background-surface-hover: #222222;
-  --bui-extensions-background-error-hover: #ee7561;
+  --bui-extensions-background-critical-hover: #ee7561;
   --bui-extensions-background-warning-hover: #f8c866;
   --bui-extensions-background-success-hover: #5bda73;
   --bui-extensions-background-light-accent-hover: #2d3180;
@@ -192,7 +192,7 @@
   --bui-border-primary-hover: #3b3b3b;
   --bui-border-accent-hover: #555555;
   --bui-border-disabled-hover: #404040;
-  --bui-extensions-text-and-icon-error-hover: #fe8871;
+  --bui-extensions-text-and-icon-critical-hover: #fe8871;
   --bui-extensions-text-and-icon-warning-hover: #d79d19;
   --bui-extensions-text-and-icon-success-hover: #15b241;
   --bui-extensions-text-and-icon-always-dark-hover: #2c2c2c;
@@ -203,13 +203,13 @@
   --bui-extensions-background-always-dark-hover: #252525;
   --bui-extensions-background-always-light-hover: #f2f2f2;
   --bui-extensions-background-light-success-hover: #235129;
-  --bui-extensions-background-light-error-hover: #63261a;
+  --bui-extensions-background-light-critical-hover: #63261a;
   --bui-extensions-background-light-warning-hover: #634508;
   --bui-extensions-border-selected-hover: #e8e8e8;
   --bui-extensions-border-selected-always-dark-hover: #272727;
   --bui-extensions-border-selected-always-light-hover: #e8e8e8;
   --bui-extensions-border-accent-hover: #6c7aff;
-  --bui-extensions-border-error-hover: #fd7d65;
+  --bui-extensions-border-critical-hover: #fd7d65;
   --bui-extensions-border-warning-hover: #dea425;
   --bui-extensions-border-success-hover: #23b847;
 
@@ -232,7 +232,7 @@
   --bui-on-accent: var(--bui-extensions-text-and-icon-on-color);
   --bui-brand: var(--bui-background-brand);
   --bui-on-brand: var(--bui-extensions-text-and-icon-on-brand);
-  --bui-destructive: var(--bui-extensions-background-error);
+  --bui-destructive: var(--bui-extensions-background-critical);
   --bui-on-destructive: var(--bui-extensions-text-and-icon-on-color);
   --bui-border: var(--bui-border-primary);
   --bui-disabled: var(--bui-background-disabled);

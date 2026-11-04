@@ -119,7 +119,7 @@ export function SegmentedControl({
               {it.counter}
             </span>
           )}
-          {showBadge && it.badge != null && (typeof it.badge === 'object' ? it.badge : <Badge label={it.badge} variant="red" />)}
+          {showBadge && it.badge != null && (typeof it.badge === 'object' ? it.badge : <Badge label={it.badge} variant="critical" />)}
         </button>
       ))}
     </div>

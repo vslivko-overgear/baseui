@@ -23,7 +23,7 @@ export function CenteredHero() {
     <Page width={880}>
       <div className="tpl-hero">
         <Stack gap={4} align="center">
-          <Badge variant="info" label="New in 3.0" />
+          <Badge variant="accent" label="New in 3.0" />
           <Stack gap={3} align="center">
             <h1>Plan, build and ship in one place</h1>
             <p className="tpl-text">One workspace for your roadmap, your tasks and your releases, so the whole team looks at the same page</p>
@@ -75,7 +75,7 @@ export function DocumentationDesign() {
       <Panel title="Preview"><Stack direction="row" gap={3} wrap><Button label="Primary" variant="primary" /><Button label="Secondary" variant="secondary" /><Button label="Ghost" variant="ghost" /></Stack></Panel>
       <Fluid min={300}>
         <Card variant="surface" padding={5}><Stack gap={2}><Badge variant="success" label="Do" /><p className="tpl-text">Use one primary button for the main action of a view</p></Stack></Card>
-        <Card variant="surface" padding={5}><Stack gap={2}><Badge variant="error" label="Don't" /><p className="tpl-text">Put several primary buttons side by side</p></Stack></Card>
+        <Card variant="surface" padding={5}><Stack gap={2}><Badge variant="critical" label="Don't" /><p className="tpl-text">Put several primary buttons side by side</p></Stack></Card>
       </Fluid>
     </Page>
   );
@@ -109,7 +109,7 @@ export function OrderDetail() {
   const steps = [['Ordered', 'Oct 24'], ['Packed', 'Oct 25'], ['Shipped', 'Oct 26'], ['Delivered', 'Expected Oct 29']];
   return (
     <Page width={960}>
-      <PageHeader title="Order 10482" subtitle="Placed on Oct 24 by Amelia Brooks" actions={<><Badge variant="info" label="Shipped" /><Button label="Track package" variant="primary" size="sm" /></>} />
+      <PageHeader title="Order 10482" subtitle="Placed on Oct 24 by Amelia Brooks" actions={<><Badge variant="accent" label="Shipped" /><Button label="Track package" variant="primary" size="sm" /></>} />
       <div className="tpl-split">
         <Stack gap={4}>
           <Panel title="Items">
@@ -170,7 +170,7 @@ export function WorkItemDetail() {
         </Stack>
         <Panel title="Details">
           <Stack gap={3}>
-            {[['Status', <Badge key="s" variant="info" label="In progress" />], ['Assignee', <Stack key="a" direction="row" gap={2} align="center"><Avatar alt="Oliver Grant" size="sm" /><span className="tpl-text">Oliver Grant</span></Stack>], ['Priority', <Badge key="p" variant="warning" label="High" />], ['Due', <span key="d" className="tpl-text">Nov 3</span>]].map(([k, v]) => <Stack key={k} direction="row" justify="space-between" align="center"><span className="tpl-meta">{k}</span>{v}</Stack>)}
+            {[['Status', <Badge key="s" variant="accent" label="In progress" />], ['Assignee', <Stack key="a" direction="row" gap={2} align="center"><Avatar alt="Oliver Grant" size="sm" /><span className="tpl-text">Oliver Grant</span></Stack>], ['Priority', <Badge key="p" variant="warning" label="High" />], ['Due', <span key="d" className="tpl-text">Nov 3</span>]].map(([k, v]) => <Stack key={k} direction="row" justify="space-between" align="center"><span className="tpl-meta">{k}</span>{v}</Stack>)}
           </Stack>
         </Panel>
       </div>

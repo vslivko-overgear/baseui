@@ -231,7 +231,7 @@ function Tab({ value, icon, counter, badge, disabled = false, children, classNam
         </span>
         {showBadge &&
           badge != null &&
-          (typeof badge === 'object' ? badge : <Badge label={badge} variant="red" size={size === 'sm' || size === 'md' ? 'sm' : 'md'} disabled={disabled} />)}
+          (typeof badge === 'object' ? badge : <Badge label={badge} variant="critical" size={size === 'sm' || size === 'md' ? 'sm' : 'md'} disabled={disabled} />)}
       </span>
       <span data-slot="tab-line" className="bui-tab__line" aria-hidden="true" />
     </button>

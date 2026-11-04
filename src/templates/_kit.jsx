@@ -167,7 +167,7 @@ export const PEOPLE = [
   { id: 8, name: 'Oliver Grant', role: 'Support', email: 'oliver@acme.com', status: 'Active', city: 'Dublin', amount: 1670 },
 ];
 
-export const STATUS_TONE = { Active: 'success', Away: 'warning', Invited: 'info', Paused: 'secondary', Blocked: 'error' };
+export const STATUS_TONE = { Active: 'success', Away: 'warning', Invited: 'accent', Paused: 'secondary', Blocked: 'critical' };
 
 export const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((label, i) => ({ label, value: [42, 51, 47, 63, 58, 72, 69, 81, 77, 90, 86, 98][i] }));
 
