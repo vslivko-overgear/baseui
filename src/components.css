@@ -811,7 +811,7 @@
   }
 }
 .bui-dialog__content {
-  padding-top: var(--baseui-spacing-2);   /* 4px more than the 4px that the header gave: the first thing under the title is a little apart from it */
+  padding-top: var(--baseui-spacing-1);   /* the content starts right under the header (the header's own 4px at the bottom are the gap, and the -4px below takes them back): 4px less than before, and 8px less than the first version */
   margin-top: calc(var(--baseui-spacing-1) * -1);
   position: relative;
 }
@@ -964,9 +964,7 @@
    The viewport of the dialog has the padding on top, so the sheet takes all the room inside it. */
 @media (width <= 767px) {
   [data-slot="dialog-viewport"] { padding-top: var(--baseui-spacing-3); }
-  /* a sheet: 4px less above the title (16px from the top edge) and 4px less between the content and the buttons (12px above them) */
-  .bui-dialog__title-block { padding-top: var(--baseui-spacing-3); }
-  .bui-dialog__icon-button { margin-top: calc(var(--baseui-spacing-1) + 2px); }
+  /* a sheet: 4px less between the content and the buttons (12px above them) */
   .bui-dialog__actions { padding-top: var(--baseui-spacing-3); }
   /* room for the home indicator of a phone under the last control of the sheet */
   [data-slot="dialog-footer"] { padding-bottom: var(--bui-sheet-bottom); }
