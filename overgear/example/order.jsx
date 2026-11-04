@@ -113,7 +113,7 @@ export function OrderSummary({ fee, label = 'Amount to pay', amount, action, onA
   const store = useStore();
   return (
     <>
-      <Card variant="surface" padding={5}>
+      <Card variant="surface" padding={5} radius="var(--bui-radius-custom-28)">
         <div className="og-stack og-stack--lg">
           <div className="og-stack">
             <div className="og-sum__row"><span className="og-sum__label">Item(s)</span><span className="og-sum__value">{money(store.subtotal)}</span></div>

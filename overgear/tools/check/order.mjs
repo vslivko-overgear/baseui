@@ -39,20 +39,22 @@ const SHARED = {
   title: '.og-order__title',
   count: '.og-order__title + .og-caption',
 };
-const looks = (page, phone) => page.evaluate(({ SHARED, LOOK, phone }) => {
+const looks = (page, phone, scope) => page.evaluate(({ SHARED, LOOK, phone, scope }) => {
   const out = {};
+  // the mini-cart is looked at inside its panel: the page behind it has parts of the same names (the price card of an offer)
+  const root = (scope && document.querySelector(scope)) || document;
   for (const [name, sel] of Object.entries(SHARED)) {
-    const el = [...document.querySelectorAll(sel)].find((e) => e.getBoundingClientRect().width > 0);
+    const el = [...root.querySelectorAll(sel)].find((e) => e.getBoundingClientRect().width > 0);
     if (!el) { out[name] = null; continue; }
     const cs = getComputedStyle(el); const o = {};
     for (const k of LOOK) o[k] = k === 'height' ? Math.round(el.getBoundingClientRect().height) : cs[k];
     if (name === 'summary' || name === 'sumRow' || name === 'sumBig' || name === 'sumSoft' || name === 'coupon' || name === 'couponText' || name === 'title' || name === 'count') delete o.height;
     out[name] = o;
   }
-  const c = document.querySelector('.og-coupon');
+  const c = root.querySelector('.og-coupon');
   out._couponHeight = c ? Math.round(c.getBoundingClientRect().height) : null;
   return out;
-}, { SHARED, LOOK, phone });
+}, { SHARED, LOOK, phone, scope });
 
 let barBase = {};   // the look of the pay bar in the checkout of a phone
 for (const [width, phone] of [[390, true], [1440, false]]) {
@@ -77,7 +79,7 @@ for (const [width, phone] of [[390, true], [1440, false]]) {
   const PANEL = '.og-drawer, .bui-dialog__popup';   // the mini-cart: a side panel on a desktop, the standard dialog on a phone
   const opened = await home.locator(PANEL).count();
   if (!opened) problems.push(`${where}: "Add to cart" does not open the mini-cart`);
-  const miniLooks = opened ? await looks(home, phone) : {};
+  const miniLooks = opened ? await looks(home, phone, PANEL) : {};
   for (const [name, mine] of [['cart', cartLooks], ['mini-cart', miniLooks]]) {
     for (const part of Object.keys(SHARED)) {
       if (part.startsWith('_')) continue;
