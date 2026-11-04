@@ -1,6 +1,6 @@
 # baseui design constitution
 
-Version 1.2. 59 rules in 6 groups (36 must, 23 should): what to do and what not to do so that an interface is at least acceptable. Generated from `src/constitution/rules.js`; the same rules are on the Foundations / Constitution page.
+Version 1.2. 60 rules in 6 groups (36 must, 24 should): what to do and what not to do so that an interface is at least acceptable. Generated from `src/constitution/rules.js`; the same rules are on the Foundations / Constitution page.
 
 A **must** protects people and is always reported. A **should** is a strong default: keep it, or say why not.
 
@@ -511,6 +511,14 @@ The interface is made of the system, not next to it
 - **Why:** The eye follows the left edge of the text: a list whose text is inset from the heading above it looks misaligned, and a highlight with a cut edge looks broken
 - **Source:** baseui List; the text of a list on the edge of the content; found by `auditConstitution()`
 - **Requests that lead here:** the list is not aligned with the title; the highlight is cut; the hover is cut off at the edge; the active row sticks out; the text of the list is indented; a list in a scrolling box
+
+### D20 A background is rounded by its role (should)
+
+- **Do:** Take the corner of a background from its role: `--bui-radius-surface` (28) for a large background (a card, a panel, a tile), `--bui-radius-block` (20) for a block on a page or inside a surface (an island, a banner, a quote, a table, a picture). Controls and chips keep the radii of their size (12 or 16). What stands inside takes the radius of the background minus the gap (D4)
+- **Don't:** pick a radius for a background by eye on every page, and do not leave a large background with the radius of a button
+- **Why:** A large surface with small corners looks sharp next to its round controls, and the same kind of background with a different radius on every page looks accidental
+- **Source:** baseui Radius, tokens.css (roles); needs a review
+- **Requests that lead here:** the cards are not round enough; round the backgrounds more; the blocks are too sharp; the radius of the cards
 
 ## Copy
 

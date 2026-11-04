@@ -2,6 +2,7 @@
 
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
+- Backgrounds are rounder and the corner is by role: two new tokens, `--bui-radius-surface` (28: a card, a panel, a tile, the item cards of Overgear) and `--bui-radius-block` (20: an island, a banner, a table, the picture of a product card, the quotes and the help line of the offer page); the Card was 20, the Collapsible, the Banner and the table 16. The text Skeleton has the radius 12 (it was 6) so it stays concentric in a rounder card. Rule D20 holds it. Controls and chips are as before. Not run: the browser checks beyond the plan
 - Overgear, the offer page on a desktop: the four promises of "Why Players Choose Overgear" stand in two columns (one on a phone)
 - Date Picker: the calendar panel is 320px wide at least (it was 280), up to 480
 - Date Picker: the calendar panel follows its control between 280 and 480px (`Popover matchWidth` takes `{ min, max }`); a fluid Calendar fits any width, its day buttons shrink. New `appearance="token"`: the trigger is a chip with the date (or the label) and a chevron, selected once a date is chosen; the raid slot of the offer page of Overgear has it in the row of Today and Tomorrow. Not run: the browser checks beyond the plan

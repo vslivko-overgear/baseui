@@ -120,6 +120,8 @@
   --radius-custom-14: var(--bui-radius-custom-14);
   --radius-custom-20: var(--bui-radius-custom-20);
   --radius-custom-28: var(--bui-radius-custom-28);
+  --radius-surface: var(--bui-radius-surface);
+  --radius-block: var(--bui-radius-block);
 
   --shadow-sm: var(--bui-shadow-sm);
   --shadow-md: var(--bui-shadow-md);

@@ -119,7 +119,7 @@
 /* ---------- Banner ---------- */
 .bui-banner {
   display: grid; grid-template-columns: auto 1fr auto; align-items: start; gap: var(--bui-spacing-3);
-  padding: var(--bui-spacing-4); border-radius: var(--bui-radius-2xl);
+  padding: var(--bui-spacing-4); border-radius: var(--bui-radius-block);
   font: var(--bui-typography-text-14-regular); color: var(--bui-text-and-icon-primary);
 }
 .bui-banner__icon { margin-top: -1px; }
@@ -257,7 +257,7 @@
 @media (prefers-reduced-motion: reduce) { .bui-calendar__day, .bui-calendar__nav { transition: none; } }
 
 /* ---------- Card ---------- */
-.bui-card { --bui-card-radius: var(--bui-radius-custom-20); position: relative; box-sizing: border-box; display: flex; flex-direction: column; border-radius: var(--bui-card-radius); color: var(--bui-text-and-icon-primary); font: var(--bui-typography-text-16-regular); }
+.bui-card { --bui-card-radius: var(--bui-radius-surface); position: relative; box-sizing: border-box; display: flex; flex-direction: column; border-radius: var(--bui-card-radius); color: var(--bui-text-and-icon-primary); font: var(--bui-typography-text-16-regular); }
 .bui-card--default { background: var(--bui-background-secondary); }
 .bui-card--transparent { background: transparent; }
 .bui-card--surface { background: var(--bui-extensions-background-surface); box-shadow: var(--bui-shadow-sm); }
@@ -606,7 +606,7 @@
 
 /* ---------- Collapsible ---------- */
 /* An island: a section on the secondary background with its content inside, not a row between dividers. A group is islands 8px apart. */
-.bui-collapsible { background: var(--bui-background-secondary); border-radius: var(--bui-radius-2xl); padding-inline: var(--bui-spacing-4); }
+.bui-collapsible { background: var(--bui-background-secondary); border-radius: var(--bui-radius-block); padding-inline: var(--bui-spacing-4); }
 .bui-collapsible-group { display: flex; flex-direction: column; gap: var(--bui-spacing-2); }
 .bui-collapsible__heading { margin: 0; font: inherit; }
 .bui-collapsible__trigger {
@@ -1791,7 +1791,7 @@
   background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--bui-background-tertiary) 70%, transparent) 50%, transparent 100%);
   opacity: 0.55; transform: translateX(-100%); animation: bui-shimmer 2.4s ease-in-out infinite;
 }
-.bui-skeleton--text { height: 1em; width: 100%; border-radius: var(--bui-radius-md); }
+.bui-skeleton--text { height: 1em; width: 100%; border-radius: var(--bui-radius-xl); }   /* 12: a line is thin, so the corner is a full half of its height whatever the card round it */
 .bui-skeleton--rect { width: 100%; height: 96px; border-radius: var(--bui-radius-xl); }
 .bui-skeleton--circle { width: 40px; height: 40px; border-radius: var(--bui-radius-full); }
 .bui-skeleton-lines { display: flex; flex-direction: column; gap: var(--bui-spacing-2); font: var(--bui-typography-text-16-regular); }
@@ -1889,7 +1889,7 @@
 .bui-switch__error { font: var(--bui-typography-text-14-regular); color: var(--bui-extensions-text-and-icon-error); }
 
 /* ---------- Table ---------- */
-.bui-table-wrap { overflow-x: auto; border: 1px solid var(--bui-border-primary); border-radius: var(--bui-radius-2xl); background: var(--bui-background-primary); }
+.bui-table-wrap { overflow-x: auto; border: 1px solid var(--bui-border-primary); border-radius: var(--bui-radius-block); background: var(--bui-background-primary); }
 .bui-table-wrap--scroll { overflow: auto; }
 .bui-table { width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 0; font: var(--bui-typography-text-14-regular); color: var(--bui-text-and-icon-primary); }
 .bui-table th { text-align: start; vertical-align: middle; padding: var(--bui-pad-y) var(--bui-spacing-4); font: var(--bui-typography-text-14-semi-bold); color: var(--bui-text-and-icon-secondary); background: var(--bui-background-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -2928,7 +2928,7 @@ textarea.bui-input {
 .bui-product-card { position: relative; min-width: 0; height: 100%; }
 .bui-product-card > .bui-card { height: 100%; }
 .bui-product-card__inner { display: flex; flex-direction: column; gap: var(--bui-spacing-2); min-width: 0; }
-.bui-product-card__art { position: relative; overflow: hidden; aspect-ratio: 1 / 1; border-radius: var(--bui-radius-xl); display: grid; place-items: center; background: var(--bui-background-tertiary); color: var(--bui-text-and-icon-primary); }
+.bui-product-card__art { position: relative; overflow: hidden; aspect-ratio: 1 / 1; border-radius: var(--bui-radius-block); display: grid; place-items: center; background: var(--bui-background-tertiary); color: var(--bui-text-and-icon-primary); }
 .bui-product-card__art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 /* the picture grows a little when the pointer is over the card (only where hover exists, and not with reduced motion) */
 .bui-product-card__art img { transition: transform var(--bui-duration-300) var(--bui-ease-out); }

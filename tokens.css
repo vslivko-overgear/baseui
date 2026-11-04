@@ -333,6 +333,10 @@
   --bui-radius-custom-20: 20px;
   --bui-radius-custom-28: 28px;
 
+  /* By role: the corner of a background follows what it is, not a number picked per page */
+  --bui-radius-surface: var(--bui-radius-custom-28);   /* a large background: a card, a panel, a tile */
+  --bui-radius-block: var(--bui-radius-custom-20);     /* a block on a page or inside a surface: an island, a banner, a quote, a table, a picture */
+
   /* Scale factor */
   --bui-radius-scale: 1;
 }

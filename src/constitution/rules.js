@@ -445,6 +445,15 @@ export const RULES = [
     signals: ['the list is not aligned with the title', 'the highlight is cut', 'the hover is cut off at the edge', 'the active row sticks out', 'the text of the list is indented', 'a list in a scrolling box'],
   },
 
+  {
+    id: 'D20', category: 'D', level: 'should', title: 'A background is rounded by its role',
+    do: 'Take the corner of a background from its role: `--bui-radius-surface` (28) for a large background (a card, a panel, a tile), `--bui-radius-block` (20) for a block on a page or inside a surface (an island, a banner, a quote, a table, a picture). Controls and chips keep the radii of their size (12 or 16). What stands inside takes the radius of the background minus the gap (D4)',
+    dont: 'Do not pick a radius for a background by eye on every page, and do not leave a large background with the radius of a button',
+    why: 'A large surface with small corners looks sharp next to its round controls, and the same kind of background with a different radius on every page looks accidental',
+    source: 'baseui Radius, tokens.css (roles)', check: 'review',
+    signals: ['the cards are not round enough', 'round the backgrounds more', 'the blocks are too sharp', 'the radius of the cards'],
+  },
+
   // ---------------------------------------------------------------- Copy
   {
     id: 'C1', category: 'C', level: 'must', title: 'Buttons say the action',

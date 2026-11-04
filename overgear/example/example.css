@@ -82,7 +82,7 @@ a { color: inherit; }
 .og-split--right { grid-template-columns: minmax(0, 1fr) 360px; }
 .og-sticky { position: sticky; top: calc(var(--og-header-h) + var(--bui-spacing-6)); }   /* under the sticky header (72) and 24 from it */
 .og-tile { display: flex; flex-direction: column; gap: var(--bui-spacing-3); min-height: 96px; justify-content: flex-end; }
-.og-art { aspect-ratio: 16 / 9; border-radius: var(--bui-radius-2xl); display: grid; place-items: center; color: var(--bui-text-and-icon-primary); background: var(--bui-background-tertiary); }
+.og-art { aspect-ratio: 16 / 9; border-radius: var(--bui-radius-block); display: grid; place-items: center; color: var(--bui-text-and-icon-primary); background: var(--bui-background-tertiary); }
 .og-art--lg { aspect-ratio: 4 / 3; border-radius: var(--bui-radius-3xl); }
 .og-bullets { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: var(--bui-spacing-1); font: var(--bui-typography-text-14-regular); color: var(--bui-text-and-icon-primary); }
 .og-bullets li { display: flex; gap: var(--bui-spacing-2); align-items: flex-start; }
@@ -129,7 +129,7 @@ a { color: inherit; }
 .og-login__legal { margin: 0; font: var(--bui-typography-text-14-regular); color: var(--bui-text-and-icon-secondary); }
 
 /* a game cover: a gradient of the tone of the game with soft shapes, a scrim under the name; an image url on the game replaces it */
-.og-cover { --c1: #3b3f8f; --c2: #151a4a; position: relative; display: flex; align-items: flex-end; aspect-ratio: 2 / 1; border-radius: var(--bui-radius-2xl); overflow: hidden; background: radial-gradient(circle at 78% 28%, color-mix(in srgb, var(--c1) 80%, white) 0, transparent 34%), radial-gradient(circle at 22% 80%, var(--c1) 0, transparent 52%), linear-gradient(135deg, var(--c1), var(--c2)); background-size: cover; background-position: center; }
+.og-cover { --c1: #3b3f8f; --c2: #151a4a; position: relative; display: flex; align-items: flex-end; aspect-ratio: 2 / 1; border-radius: var(--bui-radius-block); overflow: hidden; background: radial-gradient(circle at 78% 28%, color-mix(in srgb, var(--c1) 80%, white) 0, transparent 34%), radial-gradient(circle at 22% 80%, var(--c1) 0, transparent 52%), linear-gradient(135deg, var(--c1), var(--c2)); background-size: cover; background-position: center; }
 .og-cover[data-tone="red"] { --c1: #a3262a; --c2: #2a0b0d; }
 .og-cover[data-tone="orange"] { --c1: #b8661d; --c2: #2c1608; }
 .og-cover[data-tone="green"] { --c1: #2d7d4f; --c2: #0c2216; }
@@ -247,7 +247,7 @@ a { color: inherit; }
 .og--mobile .og-footer__games { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .og-caps { margin: 0; font: 700 12px / 16px var(--bui-typography-font-family); letter-spacing: 0.12em; text-transform: uppercase; color: var(--bui-text-and-icon-secondary); }
 .og-caption { margin: 0; font: var(--bui-typography-text-14-regular); color: var(--bui-text-and-icon-secondary); }
-.og-coupon { overflow: hidden; border-radius: var(--bui-radius-2xl); }   /* the radius of the item card and of the large button (the same in the checkout, the cart and the mini-cart) */
+.og-coupon { overflow: hidden; border-radius: var(--bui-radius-block); }   /* the radius of the item card and of the large button (the same in the checkout, the cart and the mini-cart) */
 .og-coupon .bui-list__row { padding-inline: var(--bui-spacing-5); min-height: 56px; }   /* as high as the large button of the page (56px) */   /* the fields at the sides as in the summary above; the whole row is the button */
 .og-coupon, .og-coupon :is([data-slot=list-item-header], [data-slot=list-item-title]) { color: var(--bui-text-and-icon-secondary); }   /* the promo code row: secondary, no card around it, under the summary */
 .og-caption--legal { font: var(--bui-typography-text-12-regular); }   /* the terms under the pay button: 12px, 8px from the button */
@@ -433,7 +433,7 @@ a { color: inherit; }
 /* the cart panel: the count after the title is secondary and regular; every line lies on a card; the left corners of the panel are round */
 .og-h3__count { font-weight: 400; color: var(--bui-text-and-icon-secondary); }
 .og-lines--cards { gap: var(--bui-rel-tight); }   /* cards in a list: 8, the tight relation, the same as the stack of cards */
-.og-lines--cards > .og-line { padding: var(--bui-spacing-4); border-radius: var(--bui-radius-2xl); background: var(--bui-background-tertiary); }
+.og-lines--cards > .og-line { padding: var(--bui-spacing-4); border-radius: var(--bui-radius-surface); background: var(--bui-background-tertiary); }
 .og-lines--surface > .og-line { background: var(--bui-extensions-background-surface); }   /* the items of the checkout: each its own card, as the cards of the page */
 .og:not(.og--mobile) .og-drawer { border-radius: var(--bui-radius-3xl) 0 0 var(--bui-radius-3xl); overflow: hidden; }
 
@@ -635,7 +635,7 @@ a { color: inherit; }
 .og-reviewlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--bui-spacing-3); }
 .og-review { display: flex; align-items: flex-start; gap: var(--bui-spacing-3); }
 .og-review > [data-slot="avatar"], .og-review > .bui-avatar { flex: none; }
-.og-review__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--bui-spacing-2); padding: var(--bui-spacing-4); border-radius: var(--bui-radius-2xl); background: var(--bui-background-secondary); }
+.og-review__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--bui-spacing-2); padding: var(--bui-spacing-4); border-radius: var(--bui-radius-block); background: var(--bui-background-secondary); }
 .og-review__name { font: var(--bui-typography-text-14-semi-bold); color: var(--bui-text-and-icon-primary); }
 .og-stars { display: inline-flex; gap: 2px; color: var(--bui-extensions-text-and-icon-info, var(--bui-text-and-icon-primary)); }
 .og-custom { display: flex; align-items: center; justify-content: space-between; gap: var(--bui-spacing-4); flex-wrap: wrap; }
@@ -733,5 +733,5 @@ a { color: inherit; }
 .og-extra__price { color: var(--bui-text-and-icon-secondary); white-space: nowrap; }
 .og-extra__price s { margin-inline-end: var(--bui-spacing-1); }
 .og-extra__price b { color: var(--bui-extensions-text-and-icon-success, var(--bui-text-and-icon-primary)); font-weight: inherit; }
-.og-slothelp { display: flex; align-items: center; justify-content: space-between; gap: var(--bui-spacing-3); padding: var(--bui-spacing-3) var(--bui-spacing-4); border-radius: var(--bui-radius-xl); background: var(--bui-background-secondary); }
+.og-slothelp { display: flex; align-items: center; justify-content: space-between; gap: var(--bui-spacing-3); padding: var(--bui-spacing-3) var(--bui-spacing-4); border-radius: var(--bui-radius-block); background: var(--bui-background-secondary); }
 .og-slothelp p { margin: 0; }
