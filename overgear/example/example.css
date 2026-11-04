@@ -106,6 +106,7 @@ a { color: inherit; }
 .og--mobile.og--tab .og-wrap { padding-bottom: var(--og-bottom); }
 
 .og--mobile .og-hero h1 { font: var(--baseui-typography-header-32); }
+.og-title-row { display: flex; align-items: center; gap: var(--baseui-spacing-2); min-width: 0; }
 .og--mobile .og-title { font: var(--baseui-typography-header-28); }
 @media (max-width: 767px) {
   .og-split, .og-split--right { display: contents; }

@@ -1,7 +1,7 @@
 // The rank of a buyer, as the real service shows it. The rank is in the menu of the profile (a desktop) and in the account tab (a phone), under the nick; a click opens the page of the rank (/rank): the rank, the way to the next
 // one, the perks now and in the next rank, all ranks, how ranks work, and the history. The rules are in rank-core.js.
 import { useMemo, useState } from '../../src/react.js';
-import { Button } from '../../src/components/Button.jsx';
+import { Button, IconButton } from '../../src/components/Button.jsx';
 import { Avatar } from '../../src/components/Avatar.jsx';
 import { Card } from '../../src/components/Card.jsx';
 import { Dialog } from '../../src/components/Dialog.jsx';
@@ -74,7 +74,7 @@ export function RankPage({ onLogin }) {
   return (
     <Page bar>
       <div className="og-stack og-stack--xl" data-test-id="rank-page" data-rank={grade.code}>
-        <PageHead crumbs={[{ label: 'Home', href: '#/' }, { label: 'Account', href: '#/account' }, { label: 'Your Rank' }]} media={<Avatar name={store.user.name} src={store.user.avatar} size={64} shape="rounded" />} title={store.user.name} meta={store.user.email} titleTestId="rank-user" />
+        <PageHead crumbs={[{ label: 'Home', href: '#/' }, { label: 'Account', href: '#/account' }, { label: 'Your Rank' }]} media={<Avatar name={store.user.name} src={store.user.avatar} size={64} shape="rounded" />} title={store.user.name} titleTestId="rank-user" action={<IconButton variant="ghost" size="sm" label="Edit profile" icon={<Icon name="Edit01" size={24} />} onClick={() => go('/account?tab=settings')} data-test-id="rank-edit" />}><p className="og-text" data-test-id="rank-email">{store.user.email}</p></PageHead>
         <Card variant="surface" padding={5}>
           <div className="og-stack og-stack--lg">
             <div className="og-rank__now">
