@@ -742,3 +742,7 @@ a { color: inherit; }
 @media (prefers-reduced-motion: reduce) { .og-track__step[data-look="run"] .og-track__dot { animation: none; } }
 
 .og-meta__text { font: var(--bui-typography-text-16-regular); }   /* the line under the title of an order is 16, not a small note under a big heading */
+
+/* the page of an order: the text is 16 everywhere (the status, the words, the info, the chat, the notes); the headings and the components keep their own sizes */
+[data-test-id="order-page"] :is(.og-meta, .og-ostatus__text, .og-ostatus__note, .og-chat__msg) { font: var(--bui-typography-text-16-regular); }
+[data-test-id="order-page"] :is(.og-ostatus__time, .og-info__row dd) { font: var(--bui-typography-text-16-semi-bold); }

@@ -2,6 +2,7 @@
 
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
+- Overgear, the page of an order: the passed steps of the tracker keep their own icons (no check); the text of the page is 16 everywhere (the words of the status, the time, the info, the chat and the notes were 14), the headings and the components keep their sizes. Not run: the browser checks beyond the plan
 - Overgear, the status of an order: the line of the tracker is unbroken (it was in pieces between the circles), the passed steps are the light success (the circles and the line) and the step the order is at is the solid one; the colored banner of the status is gone: the block is the tracker, then the current status as the heading in the center, then its words in the center, then the time and the buttons. The steps have no words of their own any more (the heading says the status). Not run: the browser checks beyond the plan
 - Overgear, the pay bar over the bottom bar of the tabs (the offer and the cart on a phone): it is 4px under the button (it was 16 and more), and it stands flush on the bottom bar. Not run: the browser checks beyond the plan
 - Overgear has no glass, no floating bars and no blur: the bottom bar of the tabs is a plain bar, the menus of dropdowns are solid, and the header is solid (the blurred layer under it is gone). Not run: the browser checks beyond the plan
