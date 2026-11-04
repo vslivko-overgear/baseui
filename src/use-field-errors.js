@@ -2,7 +2,7 @@ import { useRef, useState } from './react.js';
 
 /**
  * The errors of the fields of a form, shown the way a person expects: nothing is red while they fill the form; Submit shows the errors of the fields that are wrong;
- * an error goes the moment its field is focused again or its value changes, and comes back with the next Submit if the field is still wrong.
+ * an error goes at the first character changed or typed in its field (focusing the field does not clear it), and comes back with the next Submit if the field is still wrong.
  *
  * `errors` is `{ [name]: text }` (an empty text or nothing: the field is right), computed from the values on every render, so it is always current.
  *
@@ -11,15 +11,14 @@ import { useRef, useState } from './react.js';
  *   <form onSubmit={(e) => { e.preventDefault(); form.reveal(); if (!valid) return; … form.reset(); }}>
  *     <TextInput label="New password" value={v} {...form.field('next', { caption: 'At least 8 characters', onChange: set('next') })} />
  *
- * `field(name, { caption, onChange })` gives a TextInput (or any field that takes them) the `status`, the `caption` (the error while it is shown, otherwise `caption`),
- * an `onFocus` and an `onChange` that hide the error (and call yours). `shown(name)` says whether the error of a field is on screen.
- * `reveal()` also puts the focus on the first wrong field (in the order of the page), so the person can type at once and the keyboard of a phone is already there; the error of that
- * field stays while the focus arrives and goes with the next edit. A form that moves the focus itself right after `reveal()` keeps the error the same way.
+ * `field(name, { caption, onChange })` gives a TextInput (or any field that takes them) the `ref`, the `status`, the `caption` (the error while it is shown, otherwise `caption`)
+ * and an `onChange` that hides the error (and calls yours). `shown(name)` says whether the error of a field is on screen.
+ * `reveal()` also puts the focus on the first wrong field (in the order of the page), so the person can type at once and the keyboard of a phone is already there; its error stays
+ * until the first character is typed.
  */
 /** @param {Record<string, string>} [errors] */
 export function useFieldErrors(errors = {}) {
   const [on, setOn] = useState(() => new Set());
-  const revealing = useRef(false);
   const nodes = useRef(new Map());   // the field elements by name (the `ref` that `field()` gives)
   const hide = (name) => setOn((set) => (set.has(name) ? new Set([...set].filter((n) => n !== name)) : set));
   const shown = (name) => on.has(name) && !!errors[name];
@@ -27,8 +26,6 @@ export function useFieldErrors(errors = {}) {
     /** Show the errors of the fields that are wrong now (call it on Submit). */
     reveal: () => {
       const wrong = Object.keys(errors).filter((name) => errors[name]);
-      revealing.current = true;
-      setTimeout(() => { revealing.current = false; }, 0);
       setOn(new Set(wrong));
       // the first wrong field in the order of the page gets the focus (without scrolling it under the bar: the browser brings it into view)
       const els = wrong.map((name) => nodes.current.get(name)).filter((el) => el && el.isConnected);
@@ -38,12 +35,11 @@ export function useFieldErrors(errors = {}) {
     /** Hide every error (the form was sent, or reset). */
     reset: () => setOn(new Set()),
     shown,
-    /** The props of a field: its `ref` (for the focus), status and caption by whether its error is shown, and the handlers that hide the error. */
-    field: (name, /** @type {{ caption?: any, onChange?: (e: any) => void, onFocus?: (e: any) => void }} */ { caption, onChange, onFocus } = {}) => ({
+    /** The props of a field: its `ref` (for the focus), status and caption by whether its error is shown, and the handler that hides the error. */
+    field: (name, /** @type {{ caption?: any, onChange?: (e: any) => void }} */ { caption, onChange } = {}) => ({
       ref: (el) => { if (el) nodes.current.set(name, el); else nodes.current.delete(name); },
       status: shown(name) ? 'error' : undefined,
       caption: shown(name) ? errors[name] : caption,
-      onFocus: (e) => { if (!revealing.current) hide(name); onFocus?.(e); },
       onChange: (e) => { hide(name); onChange?.(e); },
     }),
   };

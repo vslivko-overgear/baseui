@@ -592,17 +592,19 @@ describe('useFieldErrors', () => {
     expect(errorsOnScreen()).toBe(2);
     expect(screen.getByText('Fill A')).toBeInTheDocument();
   });
-  test('an error goes when its field is focused again (the focus Submit put on the first wrong field is the first of those)', async () => {
+  test('focusing a field does not clear its error: only a changed or typed character does', async () => {
     render(<Form />);
     await userEvent.click(screen.getByRole('button', { name: 'Send' }));
-    await userEvent.click(screen.getByLabelText('B'));   // the focus was on A after Submit: leave it, then come back
+    await userEvent.click(screen.getByLabelText('B'));
     await userEvent.click(screen.getByLabelText('A'));
-    expect(errorsOnScreen()).toBe(0);
+    expect(errorsOnScreen()).toBe(2);
+    await userEvent.keyboard('x');
+    expect(errorsOnScreen()).toBe(1);
     expect(screen.queryByText('Fill A')).toBeNull();
     expect(screen.getByText('hint A')).toBeInTheDocument();
-    expect(screen.queryByText('B is short')).toBeNull();
+    expect(screen.getByText('B is short')).toBeInTheDocument();
   });
-  test('an error goes when the value changes, and comes back with the next Submit if the field is still wrong', async () => {
+  test('an error goes at the first typed character, and comes back with the next Submit if the field is still wrong', async () => {
     render(<Form />);
     await userEvent.click(screen.getByRole('button', { name: 'Send' }));
     await userEvent.type(screen.getByLabelText('B'), 'x');
@@ -610,7 +612,7 @@ describe('useFieldErrors', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Send' }));
     expect(screen.getByText('B is short')).toBeInTheDocument();
   });
-  test('Submit puts the focus on the first wrong field and keeps its error, which goes with the next edit', async () => {
+  test('Submit puts the focus on the first wrong field and keeps its error until the first typed character', async () => {
     render(<Form />);
     await userEvent.click(screen.getByRole('button', { name: 'Send' }));
     expect(screen.getByLabelText('A')).toHaveFocus();
