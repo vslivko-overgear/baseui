@@ -354,8 +354,6 @@
   font: var(--bui-typography-text-14-regular);
   color: var(--bui-extensions-text-and-icon-error);
 }
-/* a checkbox, a radio and their groups are 480px wide at most, as the fields */
-.bui-checkbox__field, .bui-checkbox-group__field, .bui-radio-group__field, .bui-radio { max-width: 480px; }
 .bui-checkbox-group__field {
   align-items: flex-start;
   gap: var(--bui-spacing-3);
@@ -2387,7 +2385,6 @@
   flex-direction: column;
   gap: var(--bui-spacing-1);
   width: 100%;
-  max-width: 480px;   /* a field is not stretched across a wide column: 480 at most */
   display: flex;
 }
 .bui-field[data-label="outside"] { gap: var(--bui-spacing-2); }   /* the title and the box: as the title of a group of tokens and its items */

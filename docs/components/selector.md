@@ -30,6 +30,7 @@ A field, or any element, that opens a list of options
 | `trigger` | `ReactNode` | — | Any element that opens the list: a button, an icon button or text. Without it the field itself is the trigger. A string becomes a plain button; an element gets the trigger props and a ref |
 | `label` | `ReactNode` | — | Field label |
 | `placeholder` | `string` | — | Shown when nothing is selected; by default the label |
+| `labelPlacement` | `'inside' \| 'outside'` | `'inside'` | Where the label stands: `inside` is the floating label in the box; `outside` is a semi-bold title above the box, as the title of a group of radios, checkboxes or tags (the box then has no label of its own: set `placeholder`) |
 | `floatingLabel` | `boolean` | `true` | Label behavior on focus/value: true floats it up in small text, false works like a placeholder and hides when a value is entered |
 | `variant` | `'filled' \| 'standard'` | `'filled'` | Visual variant: `filled` has a background (the main one), `standard` has none |
 | `size` | `'md' \| 'sm'` | `'md'` | Size: md is 56px with 16px text, sm is 48px with 14px text; the list follows it |

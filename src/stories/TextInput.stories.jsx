@@ -116,7 +116,7 @@ export const PlaceholderLabel = example({
 });
 export const OutsideLabel = example({
   name: 'Outside Label',
-  description: 'The label is a title above the box, as the title of a group of radios or tags; the box takes a placeholder. A field is 480px wide at most',
+  description: 'The label is a title above the box, as the title of a group of radios or tags; the box takes a placeholder.',
   render: () => (
     <Col>
       <TextInput label="Full name" labelPlacement="outside" placeholder="As on the passport" />

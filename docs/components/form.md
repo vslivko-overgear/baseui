@@ -29,6 +29,7 @@ The layout of a form: fields in rows with one gap in both directions
 ## Examples
 
 - Combinations
+- Errors
 - One Gap
 
 Live page: https://baseuikit.vercel.app/#/components/form

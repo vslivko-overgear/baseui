@@ -26,6 +26,7 @@ A single-line or multi-line text field with a floating label
 | `variant` | `'filled' \| 'standard'` | `'filled'` | Visual variant: `filled` has a background (the main one), `standard` has none (specific scenarios, for example a chat) |
 | `size` | `'md' \| 'sm'` | `'md'` | Size: md is 56px with 16px text, sm is 48px with 14px text |
 | `label` | `ReactNode` | — | Field label. An empty field shows it centered like a placeholder; on focus or value it floats up (see floatingLabel) |
+| `labelPlacement` | `'inside' \| 'outside'` | `'inside'` | Where the label stands: `inside` is the floating label in the box; `outside` is a semi-bold title above the box, as the title of a group of radios, checkboxes or tags (the box then has no label of its own: set `placeholder`) |
 | `floatingLabel` | `boolean` | `true (false for type="search")` | Label behavior on focus/value: true floats it up in small text, false works like a placeholder and hides when a value is entered |
 | `caption` | `ReactNode` | — | The only text under the field: a gray hint, and with `status` a colored message. Swapping “hint → error” is up to the caller |
 | `status` | `'error' \| 'warning' \| 'success'` | — | Validation status: `error` is a red outline and caption plus `aria-invalid`; `warning` is amber; `success` is green |
@@ -53,6 +54,7 @@ A single-line or multi-line text field with a floating label
 - Actions
 - Caption
 - Multiline
+- Outside Label
 - Placeholder Label
 - Prefix Suffix
 - Search

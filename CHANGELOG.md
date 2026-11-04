@@ -2,6 +2,7 @@
 
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
+- The limit of 480px on the width of fields, checkboxes, radios and their groups is removed again: they fill their container as before (the decision was reversed). `labelPlacement="outside"` stays
 - Checkboxes, radios and their groups are 480px wide at most, as the fields; on the offer page of Overgear the price of an extra stands 4px from its text (it was at the right end of the line)
 - Overgear, the offer page: the first point of the trust block (ID-verified pros) has its icon back (it was lost when the icons of "Why Players Choose Overgear" were replaced)
 - Fields (Text Input, Selector, Typeahead, Date Picker, Number Input) are 480px wide at most; they no longer stretch across a wide column. New prop `labelPlacement="outside"` on the fields and on Segmented Control: the label is a semi-bold title above the control, as the title of a group of radios, checkboxes or tags (a field then takes a `placeholder`). The offer form of Overgear uses it for Loot options. Not run: the browser checks beyond the plan

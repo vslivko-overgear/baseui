@@ -30,7 +30,8 @@ A control for switching between a few exclusive options
 | `showBadge` | `boolean` | `true` | Show the item badges |
 | `motion` | `'off' \| 'basic' \| 'enhanced'` | `theme` | Animations of this control: off, basic, or enhanced (the highlight slides); by default the Animations setting of the theme |
 | `shape` | `'rounded' \| 'circle'` | `'rounded'` | circle makes the control and its items pills; rounded follows the theme radius |
-| `label` | `string` | — | Accessible name |
+| `label` | `string` | — | Accessible name; with `labelPlacement="outside"` also the visible title |
+| `labelPlacement` | `'inside' \| 'outside'` | `'inside'` | With `outside` the label is a semi-bold title above the control, as the title of a group of radios, checkboxes or tags; `inside` keeps it as the accessible name only |
 
 ## Examples
 
@@ -38,5 +39,6 @@ A control for switching between a few exclusive options
 - Full Width
 - Icons Only
 - Item
+- Outside Label
 
 Live page: https://baseuikit.vercel.app/#/components/segmented-control

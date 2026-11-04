@@ -26,6 +26,7 @@ A text field that suggests options as you type
 | `onValueChange` | `(value) => void` | — | Called when the selection changes |
 | `label` | `ReactNode` | — | Field label (a single field only; a multiple field shows tokens) |
 | `placeholder` | `string` | — | Placeholder of the search input |
+| `labelPlacement` | `'inside' \| 'outside'` | `'inside'` | Where the label stands: `inside` is the floating label in the box; `outside` is a semi-bold title above the box, as the title of a group of radios, checkboxes or tags (the box then has no label of its own: set `placeholder`) |
 | `floatingLabel` | `boolean` | `true` | Label behavior on focus/value: true floats it up in small text, false works like a placeholder |
 | `variant` | `'filled' \| 'standard'` | `'filled'` | Visual variant: `filled` has a background (the main one), `standard` has none |
 | `size` | `'md' \| 'sm'` | `'md'` | Size: md is 56px with 16px text, sm is 48px with 14px text; the list follows it |
