@@ -2,6 +2,7 @@
 
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
+- Overgear, the offer page: the colored tag of the offer (Hot Offer, Sale, Save More) has its color again (the classes of the tag still had the old names `info` and `error` after the Badge was renamed, so it fell back to the secondary); a decision test holds that every color of the tags has its class. Not run: the browser checks beyond the plan
 - Overgear, the offer page: the cards of the price column have the side padding of 24 (it was 20) and the column is 376px wide (it was 360). Not run: the browser checks beyond the plan
 - Tooltip and Hint animate in and out with the same motion as the menus: basic is a quick fade in and out (it only faded in before and vanished at once), enhanced grows the bubble from the side it hangs on and plays it out, off and reduced motion show and hide it at once; the bubble stays drawn while it leaves (`data-closing`). The protocol for agents shows a real rule id (`H2`) in its example of the banner, not the removed `A1`; the Brand of the Theme page of Overgear is a group of chips, so its six options wrap on a phone and the page does not scroll sideways. Not run: the browser checks beyond the plan
 - Overgear, the Theme page: the global Floating setting is removed as Glass was: the theme has neither; the bottom bar keeps its own floating and glass, and the dropdowns their glass, as local settings. Not run: the browser checks beyond the plan

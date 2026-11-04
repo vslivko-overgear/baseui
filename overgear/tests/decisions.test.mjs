@@ -88,4 +88,11 @@ describe('decisions of the product', () => {
     // a page asks for a relation; the names that were a size (lg, xl, 2xl) stay as the names of the relations they are
     for (const [f, text] of sources) expect(text, `${f}: a gap of its own in the style of a stack`).not.toMatch(/className="og-stack[^"]*"[^>]*style=\{\{[^}]*gap/);
   });
+
+  test('every color of an offer tag has its class in the style of the tag (a color without one falls back to the secondary)', () => {
+    const ui = sources.find(([n]) => n === 'ui.jsx')[1];
+    const colors = [...ui.match(/BADGE_VARIANT = \{([^}]*)\}/)[1].matchAll(/:\s*'([a-z-]+)'/g)].map((m) => m[1]);
+    expect(colors.length).toBeGreaterThan(2);
+    for (const c of colors) expect(css, c).toMatch(new RegExp(`\\.og-usp__tag--${c}\\b`));
+  });
 });
