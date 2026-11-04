@@ -99,6 +99,7 @@ describe(Avatar, 'A person or entity shown as an image, initials or a placeholde
   src: ['string', null, 'Image URL'],
   fallbackSrc: ['string', null, 'Used when `src` fails; if it fails too, initials are shown'],
   alt: ['string', null, 'Accessible name; defaults to `name`'],
+  rel: ['string', null, 'The rel of the link when `href` is set'],
   size: ["'xsm' | 'sm' | 'md' | 'lg' | 'xl' | number", "'md'", 'Size: 20 / 24 / 36 / 48 / 128 px, or a number in px'],
   shape: ["'circle' | 'rounded' | 'square'", "'circle'", 'Corner shape'],
   status: ['ReactNode', null, 'Corner content, usually an `AvatarStatusDot`'],

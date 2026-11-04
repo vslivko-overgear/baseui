@@ -10,6 +10,7 @@ const CARD_DOC = {
   width: ['number | string', null, 'Number is px'],
   height: ['number | string', null, 'Number is px'],
   maxWidth: ['number | string', null, 'Number is px'],
+  minHeight: ['number | string', null, 'Number is px'],
   children: ['ReactNode', null, 'Card content'],
 };
 

@@ -91,6 +91,7 @@ describe(ControlRow, 'A row of controls with one height, one text size and one i
   size: ["'xsm' | 'sm' | 'md' | 'lg'", "'md'", 'The tier of the row: 32 / 40 / 48 / 56 px. A field has 48 and 56 only, so with a field use md or lg'],
   gap: ['number', '2', 'Gap between the controls in steps of 4px'],
   align: ["'start' | 'center' | 'end' | 'stretch'", "'center'", 'Alignment across the row'],
+  as: ['ElementType', "'div'", 'The HTML tag to render'],
   children: ['ReactNode', null, 'Buttons, icon buttons, fields, chips'],
 });
 
@@ -123,10 +124,12 @@ describe(HStack, 'A horizontal Stack', { gap: ['number', '4', 'Gap in gaps (1 ga
 describe(VStack, 'A vertical Stack', { gap: ['number', '4', 'Gap in gaps (1 gap = 4px), a step of the spacing scale'] });
 describe(Center, 'Centers its content', { as: ['ElementType', "'div'", 'HTML tag'] });
 describe(Grid, 'A CSS grid with equal columns', {
+  as: ['ElementType', "'div'", 'The HTML tag to render'],
   columns: ['number | string', '2', 'Number of columns or a template string'],
   gap: ['number', '4', 'Gap in gaps (1 gap = 4px), a step of the spacing scale: 4 is 16px'],
 });
 describe(Section, 'A padded block with an optional maximum width', {
+  as: ['ElementType', "'section'", 'The HTML tag to render'],
   padding: ['number', '6', 'Padding in gaps (1 gap = 4px), a step of the spacing scale: 6 is 24px'],
   maxWidth: ['number | string', null, 'Maximum width'],
 });

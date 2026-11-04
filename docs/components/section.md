@@ -17,6 +17,7 @@ A padded block with an optional maximum width
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
+| `as` | `ElementType` | `'section'` | The HTML tag to render |
 | `padding` | `number` | `6` | Padding in gaps (1 gap = 4px), a step of the spacing scale: 6 is 24px |
 | `maxWidth` | `number \| string` | — | Maximum width |
 

@@ -456,6 +456,7 @@ describe(
     defaultValue: ['ISODateString | { start, end } | null', null, 'Initial selection (uncontrolled)'],
     onValueChange: ['(value) => void', null, 'Called when a date (or a complete range) is chosen'],
     mode: ["'single' | 'range'", "'single'", 'One date or a range of two'],
+    label: ['string', "'Date'", 'Accessible name and label of the field'],
     presentation: ["'auto' | 'popover' | 'dialog'", "'auto'", 'Where the calendar opens: auto uses the dialog below 768px'],
     confirmLabel: ['string', "'Apply'", 'Dialog apply button text'],
     cancelLabel: ['string', "'Cancel'", 'Dialog cancel button text'],

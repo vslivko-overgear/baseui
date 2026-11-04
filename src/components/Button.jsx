@@ -121,6 +121,8 @@ describe(Button, 'Triggers an action or navigates. A label that does not fit in 
   textSize: ["12 | 14 | 16 | 20", 'the first of the size', 'Text size inside the size: xsm 12; sm 14 or 12; md 16 or 14; lg 16 or 20. Another value falls back to the default of the size. A button in a row with an input takes the input text size and height'],
   disabled: ['boolean', 'false', 'Disables the button'],
   loading: ['boolean', 'false', 'Shows a spinner and blocks interaction'],
+  iconOnly: ['boolean', 'false', 'A square button with only the icon; `label` becomes its accessible name (IconButton sets it)'],
+  rel: ['string', null, 'The rel of the link when `href` is set'],
   icon: ['ReactNode', null, 'Icon before the label'],
   endContent: ['ReactNode', null, 'Content after the label, e.g. a chevron'],
   shape: [

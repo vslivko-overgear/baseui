@@ -71,6 +71,10 @@ export interface AvatarProps {
    */
   alt?: string;
   /**
+   * The rel of the link when `href` is set
+   */
+  rel?: string;
+  /**
    * Size: 20 / 24 / 36 / 48 / 128 px, or a number in px
    * @default 'md'
    */
@@ -368,6 +372,15 @@ export interface ButtonProps {
    */
   loading?: boolean;
   /**
+   * A square button with only the icon; `label` becomes its accessible name (IconButton sets it)
+   * @default false
+   */
+  iconOnly?: boolean;
+  /**
+   * The rel of the link when `href` is set
+   */
+  rel?: string;
+  /**
    * Icon before the label
    */
   icon?: ReactNode;
@@ -569,6 +582,10 @@ export interface CardProps {
    * Number is px
    */
   maxWidth?: number | string;
+  /**
+   * Number is px
+   */
+  minHeight?: number | string;
   /**
    * Card content
    */
@@ -786,6 +803,10 @@ export interface ClickableCardProps {
    */
   maxWidth?: number | string;
   /**
+   * Number is px
+   */
+  minHeight?: number | string;
+  /**
    * Card content
    */
   children?: ReactNode;
@@ -928,6 +949,11 @@ export interface ControlRowProps {
    */
   align?: 'start' | 'center' | 'end' | 'stretch';
   /**
+   * The HTML tag to render
+   * @default 'div'
+   */
+  as?: ElementType;
+  /**
    * Buttons, icon buttons, fields, chips
    */
   children?: ReactNode;
@@ -955,6 +981,11 @@ export interface DatePickerProps {
    * @default 'single'
    */
   mode?: 'single' | 'range';
+  /**
+   * Accessible name and label of the field
+   * @default 'Date'
+   */
+  label?: string;
   /**
    * Where the calendar opens: auto uses the dialog below 768px
    * @default 'auto'
@@ -1285,6 +1316,11 @@ export interface FormSectionProps {
 export function FormSection(props: FormSectionProps): ReactElement | null;
 
 export interface GridProps {
+  /**
+   * The HTML tag to render
+   * @default 'div'
+   */
+  as?: ElementType;
   /**
    * Number of columns or a template string
    * @default 2
@@ -1848,6 +1884,10 @@ export interface PopoverProps {
    */
   children?: ReactNode;
   /**
+   * Class of the floating panel (it is drawn in the body, so a class on the trigger does not reach it)
+   */
+  panelClassName?: string;
+  /**
    * Open state
    */
   open?: boolean;
@@ -2238,6 +2278,11 @@ export function rule(...args: any[]): any;
 export function ruleText(...args: any[]): any;
 export interface SectionProps {
   /**
+   * The HTML tag to render
+   * @default 'section'
+   */
+  as?: ElementType;
+  /**
    * Padding in gaps (1 gap = 4px), a step of the spacing scale: 6 is 24px
    * @default 6
    */
@@ -2371,6 +2416,10 @@ export interface SelectableCardProps {
    * Number is px
    */
   maxWidth?: number | string;
+  /**
+   * Number is px
+   */
+  minHeight?: number | string;
   /**
    * Card content
    */

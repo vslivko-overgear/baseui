@@ -18,6 +18,7 @@ A CSS grid with equal columns
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
+| `as` | `ElementType` | `'div'` | The HTML tag to render |
 | `columns` | `number \| string` | `2` | Number of columns or a template string |
 | `gap` | `number` | `4` | Gap in gaps (1 gap = 4px), a step of the spacing scale: 4 is 16px |
 

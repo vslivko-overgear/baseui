@@ -23,6 +23,7 @@ A person or entity shown as an image, initials or a placeholder
 | `src` | `string` | — | Image URL |
 | `fallbackSrc` | `string` | — | Used when `src` fails; if it fails too, initials are shown |
 | `alt` | `string` | — | Accessible name; defaults to `name` |
+| `rel` | `string` | — | The rel of the link when `href` is set |
 | `size` | `'xsm' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| number` | `'md'` | Size: 20 / 24 / 36 / 48 / 128 px, or a number in px |
 | `shape` | `'circle' \| 'rounded' \| 'square'` | `'circle'` | Corner shape |
 | `status` | `ReactNode` | — | Corner content, usually an `AvatarStatusDot` |

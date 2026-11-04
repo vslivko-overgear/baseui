@@ -60,6 +60,7 @@ describe(
   {
     trigger: ['(props) => ReactElement', null, 'Render function that receives the trigger props'],
     children: ['ReactNode', null, 'Panel content'],
+    panelClassName: ['string', null, 'Class of the floating panel (it is drawn in the body, so a class on the trigger does not reach it)'],
     open: ['boolean', null, 'Open state'],
     defaultOpen: ['boolean', 'false', 'Initially open'],
     onOpenChange: ['(open: boolean) => void', null, 'Called when it opens or closes'],

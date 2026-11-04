@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Form, FormRow } from '../components/Form.jsx';
 import { TextInput } from '../components/TextInput.jsx';
 import { Selector } from '../components/Selector.jsx';
@@ -7,6 +8,7 @@ import { CheckboxGroup } from '../components/CheckboxGroup.jsx';
 import { RadioGroup } from '../components/RadioGroup.jsx';
 import { Switch } from '../components/Switch.jsx';
 import { FormSection } from '../components/Form.jsx';
+import { useFieldErrors } from '../use-field-errors.js';
 import { meta, playground, example } from './_helpers.jsx';
 
 const countries = ['Germany', 'Japan', 'Spain', 'United States'].map((v) => ({ value: v, label: v }));
@@ -42,6 +44,28 @@ export const OneGap = example({
   description: 'The distance between two rows and between two columns is the same gap of the form: it cannot differ',
   render: () => frame(<Form as="div"><FormRow><TextInput label="First name" /><TextInput label="Last name" /></FormRow><TextInput label="Email" /></Form>),
   source: `<Form>…</Form>`,
+});
+
+function ErrorsDemo() {
+  const [v, setV] = useState({ name: '', email: '' });
+  const errors = { name: v.name ? '' : 'Enter your name', email: /.+@.+/.test(v.email) ? '' : 'Enter a valid email' };
+  const errs = useFieldErrors(errors);
+  return frame(
+    <Form onSubmit={(e) => { e.preventDefault(); if (Object.values(errors).some(Boolean)) errs.reveal(); else errs.reset(); }}>
+      <TextInput label="Name" value={v.name} {...errs.field('name', { onChange: (e) => setV({ ...v, name: e.target.value }) })} />
+      <TextInput label="Email" value={v.email} {...errs.field('email', { onChange: (e) => setV({ ...v, email: e.target.value }) })} />
+      <Button type="submit" variant="primary" label="Send" width="100%" />
+    </Form>,
+  );
+}
+export const Errors = example({
+  name: 'Errors on submit',
+  description: '`useFieldErrors(errors)` keeps the errors quiet until `reveal()` (on submit): then they show and the first wrong field gets focus. An error goes away at the first typed character',
+  render: () => <ErrorsDemo />,
+  source: `const errs = useFieldErrors({ name: name ? '' : 'Enter your name' });
+<Form onSubmit={(e) => { e.preventDefault(); errs.reveal(); }}>
+  <TextInput label="Name" value={name} {...errs.field('name', { onChange: (e) => setName(e.target.value) })} />
+</Form>`,
 });
 
 const choices = ['Email', 'SMS', 'Push'].map((v) => ({ value: v, label: v }));

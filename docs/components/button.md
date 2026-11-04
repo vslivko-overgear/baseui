@@ -30,6 +30,8 @@ Triggers an action or navigates. A label that does not fit in the width of the b
 | `textSize` | `12 \| 14 \| 16 \| 20` | `the first of the size` | Text size inside the size: xsm 12; sm 14 or 12; md 16 or 14; lg 16 or 20. Another value falls back to the default of the size. A button in a row with an input takes the input text size and height |
 | `disabled` | `boolean` | `false` | Disables the button |
 | `loading` | `boolean` | `false` | Shows a spinner and blocks interaction |
+| `iconOnly` | `boolean` | `false` | A square button with only the icon; `label` becomes its accessible name (IconButton sets it) |
+| `rel` | `string` | — | The rel of the link when `href` is set |
 | `icon` | `ReactNode` | — | Icon before the label |
 | `endContent` | `ReactNode` | — | Content after the label, e.g. a chevron |
 | `shape` | `'rounded' \| 'circle'` | `'rounded'` | circle makes a pill (a circle for an icon button); rounded follows the theme radius. `data-shape="circle"` on a parent does it for all buttons inside |

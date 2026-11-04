@@ -28,6 +28,7 @@ A container that groups related content
 | `width` | `number \| string` | — | Number is px |
 | `height` | `number \| string` | — | Number is px |
 | `maxWidth` | `number \| string` | — | Number is px |
+| `minHeight` | `number \| string` | — | Number is px |
 | `children` | `ReactNode` | — | Card content |
 
 ## Examples
