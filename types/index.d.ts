@@ -582,6 +582,11 @@ export interface CardProps {
    */
   minHeight?: number | string;
   /**
+   * The corner: `fit` follows the size of the card (the smaller side: a big card is rounder than a small one, 12 to 32px), a number is px, a string is any CSS length. What stands inside takes `var(--bui-card-radius)` minus the padding
+   * @default 'fit'
+   */
+  radius?: 'fit' | number | string;
+  /**
    * Card content
    */
   children?: ReactNode;
@@ -801,6 +806,11 @@ export interface ClickableCardProps {
    * Number is px
    */
   minHeight?: number | string;
+  /**
+   * The corner: `fit` follows the size of the card (the smaller side: a big card is rounder than a small one, 12 to 32px), a number is px, a string is any CSS length. What stands inside takes `var(--bui-card-radius)` minus the padding
+   * @default 'fit'
+   */
+  radius?: 'fit' | number | string;
   /**
    * Card content
    */
@@ -2430,6 +2440,11 @@ export interface SelectableCardProps {
    * Number is px
    */
   minHeight?: number | string;
+  /**
+   * The corner: `fit` follows the size of the card (the smaller side: a big card is rounder than a small one, 12 to 32px), a number is px, a string is any CSS length. What stands inside takes `var(--bui-card-radius)` minus the padding
+   * @default 'fit'
+   */
+  radius?: 'fit' | number | string;
   /**
    * Card content
    */

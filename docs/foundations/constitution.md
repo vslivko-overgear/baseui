@@ -512,13 +512,13 @@ The interface is made of the system, not next to it
 - **Source:** baseui List; the text of a list on the edge of the content; found by `auditConstitution()`
 - **Requests that lead here:** the list is not aligned with the title; the highlight is cut; the hover is cut off at the edge; the active row sticks out; the text of the list is indented; a list in a scrolling box
 
-### D20 A background is rounded by its role (should)
+### D21 A corner follows the size of the object (should)
 
-- **Do:** Take the corner of a background from its role: `--bui-radius-surface` (28) for a large background (a card, a panel, a tile), `--bui-radius-block` (20) for a block on a page or inside a surface (an island, a banner, a quote, a table, a picture). Controls and chips keep the radii of their size (12 or 16). What stands inside takes the radius of the background minus the gap (D4)
-- **Don't:** pick a radius for a background by eye on every page, and do not leave a large background with the radius of a button
-- **Why:** A large surface with small corners looks sharp next to its round controls, and the same kind of background with a different radius on every page looks accidental
-- **Source:** baseui Radius, tokens.css (roles); needs a review
-- **Requests that lead here:** the cards are not round enough; round the backgrounds more; the blocks are too sharp; the radius of the cards
+- **Do:** Round an object by its mass: the smaller side of a big surface gives a bigger corner than a small one (a card of 100px is rounder than one of 20px, and a row of five cards has smaller corners than a row of two). A `Card` does it by itself (`radius="fit"`: 1.6 × the root of the smaller side, 12 to 32px); what stands inside takes `var(--bui-card-radius)` minus the padding (D4). For something that is not a card, take the named step whose size is near
+- **Don't:** give every background of a kind one fixed radius whatever its size, and do not round a big surface and a small one the same
+- **Why:** A corner is judged against the size of the shape: a radius that is right on a 100px card looks sharp on a page-wide one and swollen on a small one
+- **Source:** baseui Card, src/fit-radius.js; needs a review
+- **Requests that lead here:** the cards are not round enough; round the backgrounds more; the corners do not fit the size; the radius of the cards in the listing
 
 ## Copy
 
@@ -599,6 +599,7 @@ These ids were rules and are not any more; an id is never reused.
 - `D5`: Merged into D2 (one pattern for one job, one word for one thing)
 - `C4`: Merged into U5 (a confirmation names the action and the object)
 - `M1`: Merged into M3 (motion tokens, reduced motion, no flashing)
+- `D20`: Replaced by D21 (a corner follows the size of the object, not a role: the fixed radii of the surface and the block were removed)
 
 
 Live page: https://baseuikit.vercel.app/#/foundations/constitution

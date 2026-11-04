@@ -123,6 +123,11 @@
           "target": "~/baseui/src/doc.js"
         },
         {
+          "path": "src/fit-radius.js",
+          "type": "registry:lib",
+          "target": "~/baseui/src/fit-radius.js"
+        },
+        {
           "path": "src/floating.js",
           "type": "registry:lib",
           "target": "~/baseui/src/floating.js"

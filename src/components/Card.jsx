@@ -1,4 +1,5 @@
 import { cx, useControllable } from '../react.js';
+import { useFitRadius } from '../fit-radius.js';
 import { describe } from '../doc.js';
 
 const px = (v) => (typeof v === 'number' ? `${v}px` : v);
@@ -11,6 +12,7 @@ const CARD_DOC = {
   height: ['number | string', null, 'Number is px'],
   maxWidth: ['number | string', null, 'Number is px'],
   minHeight: ['number | string', null, 'Number is px'],
+  radius: ["'fit' | number | string", "'fit'", 'The corner: `fit` follows the size of the card (the smaller side: a big card is rounder than a small one, 12 to 32px), a number is px, a string is any CSS length. What stands inside takes `var(--bui-card-radius)` minus the padding'],
   children: ['ReactNode', null, 'Card content'],
 };
 
@@ -32,9 +34,10 @@ function cardProps({ variant = 'default', padding = 4, elevation, width, height,
   };
 }
 
-export function Card({ variant, padding, elevation, width, height, maxWidth, minHeight, className, style, children, ...rest }) {
+export function Card({ variant, padding, elevation, width, height, maxWidth, minHeight, radius, className, style, children, ref, ...rest }) {
+  const fit = useFitRadius(radius, ref);
   return (
-    <div {...cardProps({ variant, padding, elevation, width, height, maxWidth, minHeight, className, style })} {...rest}>
+    <div {...cardProps({ variant, padding, elevation, width, height, maxWidth, minHeight, className, style })} {...rest} ref={fit}>
       {children}
     </div>
   );
@@ -54,11 +57,14 @@ export function ClickableCard({
   height,
   maxWidth,
   minHeight,
+  radius,
   className,
   style,
   children,
+  ref,
   ...rest
 }) {
+  const fit = useFitRadius(radius, ref);
   const Hit = href ? 'a' : 'button';
   const hit = (
     <Hit
@@ -84,6 +90,7 @@ export function ClickableCard({
         cx('bui-card--clickable', disabled && 'bui-card--disabled'),
       )}
       {...rest}
+      ref={fit}
     >
       {hit}
       <div data-slot="card-content" className="bui-card__content">
@@ -113,11 +120,14 @@ export function SelectableCard({
   height,
   maxWidth,
   minHeight,
+  radius,
   className,
   style,
   children,
+  ref,
   ...rest
 }) {
+  const fit = useFitRadius(radius, ref);
   const [selected, setSelected] = useControllable(checked, defaultChecked, onCheckedChange);
   return (
     <div
@@ -127,6 +137,7 @@ export function SelectableCard({
       )}
       data-checked={selected || undefined}
       {...rest}
+      ref={fit}
     >
       <input
         type="checkbox"

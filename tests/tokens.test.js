@@ -157,7 +157,7 @@ describe('the Collapsible is an island', () => {
     const css = readFileSync('src/components.css', 'utf8');
     const block = (sel) => css.slice(css.indexOf(sel), css.indexOf('}', css.indexOf(sel)));
     expect(block('.bui-collapsible {')).toMatch(/background: var\(--bui-background-secondary\)/);
-    expect(block('.bui-collapsible {')).toMatch(/border-radius: var\(--bui-radius-block\)/);
+    expect(block('.bui-collapsible {')).toMatch(/border-radius: var\(--bui-radius-2xl\)/);
     expect(block('.bui-collapsible {')).not.toMatch(/box-shadow/);
     expect(block('.bui-collapsible-group {')).toMatch(/gap: var\(--bui-spacing-2\)/);
     expect(block('.bui-collapsible-group {')).not.toMatch(/box-shadow/);

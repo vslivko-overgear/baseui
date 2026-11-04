@@ -446,12 +446,12 @@ export const RULES = [
   },
 
   {
-    id: 'D20', category: 'D', level: 'should', title: 'A background is rounded by its role',
-    do: 'Take the corner of a background from its role: `--bui-radius-surface` (28) for a large background (a card, a panel, a tile), `--bui-radius-block` (20) for a block on a page or inside a surface (an island, a banner, a quote, a table, a picture). Controls and chips keep the radii of their size (12 or 16). What stands inside takes the radius of the background minus the gap (D4)',
-    dont: 'Do not pick a radius for a background by eye on every page, and do not leave a large background with the radius of a button',
-    why: 'A large surface with small corners looks sharp next to its round controls, and the same kind of background with a different radius on every page looks accidental',
-    source: 'baseui Radius, tokens.css (roles)', check: 'review',
-    signals: ['the cards are not round enough', 'round the backgrounds more', 'the blocks are too sharp', 'the radius of the cards'],
+    id: 'D21', category: 'D', level: 'should', title: 'A corner follows the size of the object',
+    do: 'Round an object by its mass: the smaller side of a big surface gives a bigger corner than a small one (a card of 100px is rounder than one of 20px, and a row of five cards has smaller corners than a row of two). A `Card` does it by itself (`radius="fit"`: 1.6 × the root of the smaller side, 12 to 32px); what stands inside takes `var(--bui-card-radius)` minus the padding (D4). For something that is not a card, take the named step whose size is near',
+    dont: 'Do not give every background of a kind one fixed radius whatever its size, and do not round a big surface and a small one the same',
+    why: 'A corner is judged against the size of the shape: a radius that is right on a 100px card looks sharp on a page-wide one and swollen on a small one',
+    source: 'baseui Card, src/fit-radius.js', check: 'review',
+    signals: ['the cards are not round enough', 'round the backgrounds more', 'the corners do not fit the size', 'the radius of the cards in the listing'],
   },
 
   // ---------------------------------------------------------------- Copy
@@ -529,6 +529,7 @@ export const RETIRED = {
   D5: 'Merged into D2 (one pattern for one job, one word for one thing)',
   C4: 'Merged into U5 (a confirmation names the action and the object)',
   M1: 'Merged into M3 (motion tokens, reduced motion, no flashing)',
+  D20: 'Replaced by D21 (a corner follows the size of the object, not a role: the fixed radii of the surface and the block were removed)',
 };
 
 export const RULES_BY_ID = Object.fromEntries(RULES.map((r) => [r.id, r]));
