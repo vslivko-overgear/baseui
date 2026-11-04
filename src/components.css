@@ -2207,6 +2207,7 @@
   align-items: center;
   display: flex;
 }
+.bui-datepicker__chevron { display: flex; color: var(--bui-text-and-icon-primary); pointer-events: none; }   /* the mark of a field that opens a list, as in a Selector */
 .bui-selector__chevron svg {
   width: 24px;
   height: 24px;

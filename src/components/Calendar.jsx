@@ -381,6 +381,7 @@ export function DatePicker({
         value={text}
         onChange={() => {}}
         startIcon={<BuiltinIcon name="calendar" size={field.size === 'sm' ? 20 : 24} />}
+        action={<span className="bui-datepicker__chevron" aria-hidden="true"><BuiltinIcon name="chevronDown" size={field.size === 'sm' ? 20 : 24} /></span>}
         floatingLabel={field.floatingLabel !== false && !!text}
         aria-haspopup="dialog"
         aria-expanded={extra['aria-expanded']}
