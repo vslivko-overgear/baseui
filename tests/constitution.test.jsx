@@ -3,7 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, test } from 'vitest';
 import { AGENT_DEFAULTS, AGENT_PROTOCOL, CATEGORIES, RULES, RULES_BY_ID, rule } from '../src/constitution/rules.js';
-import { auditConstitution, contrastRatio } from '../src/constitution/audit.js';
+import { auditConstitution } from '../src/constitution/audit.js';
 import { auditTabs } from '../src/constitution/audit-tabs.js';
 import { Button, ConstitutionBanner, Tabs } from '../src/index.jsx';
 import { useState } from 'react';
@@ -29,7 +29,7 @@ describe('constitution', () => {
       for (const r of RULES.filter((x) => x.check === 'tool')) expect(existsSync(r.tool), r.tool).toBe(true);
     });
     test('rule() throws on an unknown id', () => {
-      expect(rule('A1').title).toBe('Text contrast');
+      expect(rule('A2').title).toBe('Contrast of controls and graphics');
       expect(() => rule('Z9')).toThrow(/Unknown/);
     });
     test('the protocol asks for an answer warning, a banner at the top and no refusal', () => {
@@ -38,13 +38,6 @@ describe('constitution', () => {
       expect(text).toMatch(/ConstitutionBanner/);
       expect(text).toMatch(/at the very top/);
       expect(text).toMatch(/do not refuse/);
-    });
-  });
-
-  describe('contrastRatio', () => {
-    test('black on white is 21:1, same color is 1:1', () => {
-      expect(contrastRatio({ r: 0, g: 0, b: 0 }, { r: 255, g: 255, b: 255 })).toBeCloseTo(21, 0);
-      expect(contrastRatio({ r: 9, g: 9, b: 9 }, { r: 9, g: 9, b: 9 })).toBe(1);
     });
   });
 
@@ -57,18 +50,9 @@ describe('constitution', () => {
       host.remove();
       return Object.fromEntries(found.map((f) => [f.id, f]));
     };
-    test('finds light gray text on white (A1) and tiny text (H2)', () => {
-      const found = audit('<p style="color:#bbbbbb;font-size:16px">Faint</p><p style="color:#171717;font-size:10px">Tiny</p>');
-      expect(found.A1.note).toMatch(/contrast 1\.\d:1/);
+    test('finds tiny text (H2)', () => {
+      const found = audit('<p style="color:#171717;font-size:16px">Fine</p><p style="color:#171717;font-size:10px">Tiny</p>');
       expect(found.H2.note).toMatch(/10px/);
-    });
-    test('accepts text with enough contrast, large text at 3:1 and disabled text', () => {
-      const found = audit('<p style="color:#5f6877">Secondary</p><h2 style="color:#8a8f99;font-size:28px">Large</h2><button disabled style="color:#babfca">Off</button>');
-      expect(found.A1).toBeUndefined();
-    });
-    test('uses the background behind the text', () => {
-      expect(audit('<div style="background:#171717"><p style="color:#ffffff">On dark</p></div>').A1).toBeUndefined();
-      expect(audit('<div style="background:#171717"><p style="color:#222222">Dark on dark</p></div>').A1).toBeDefined();
     });
     test('finds an image without alt (A7) and accepts an empty alt', () => {
       expect(audit('<img src="a.png">').A7).toBeDefined();
@@ -164,10 +148,10 @@ describe('constitution', () => {
       expect(container).toBeEmptyDOMElement();
     });
     test('names the rules and links to the constitution', () => {
-      render(<ConstitutionBanner violations={['A1', { id: 'H2', note: 'Captions are 10px' }]} />);
+      render(<ConstitutionBanner violations={['A2', { id: 'H2', note: 'Captions are 10px' }]} />);
       const banner = screen.getByRole('region', { name: 'Design constitution warning' });
       expect(banner).toHaveTextContent('2 rules of the design constitution are broken');
-      expect(banner).toHaveTextContent('A1 · H2');
+      expect(banner).toHaveTextContent('A2 · H2');
       expect(screen.getByRole('link', { name: 'Read the constitution' })).toHaveAttribute('href', expect.stringContaining('constitution'));
     });
     test('details open to the Do and Don’t lines and the note', async () => {
@@ -179,7 +163,7 @@ describe('constitution', () => {
       expect(screen.getByRole('button', { name: 'Hide details' })).toHaveAttribute('aria-expanded', 'true');
     });
     test('cannot be dismissed: there is no close button', () => {
-      render(<ConstitutionBanner violations={['A1']} defaultOpen />);
+      render(<ConstitutionBanner violations={['A2']} defaultOpen />);
       expect(screen.queryByRole('button', { name: /close|dismiss/i })).toBeNull();
     });
     test('an unknown id is an error', () => {

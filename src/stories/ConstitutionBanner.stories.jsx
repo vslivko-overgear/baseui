@@ -4,11 +4,11 @@ import { meta, playground, example } from './_helpers.jsx';
 export default meta({
   title: 'Components/Constitution Banner',
   component: ConstitutionBanner,
-  args: { sticky: false, defaultOpen: false, audit: false, violations: [{ id: 'A1', note: 'Body text is #bbbbbb on white (1.9:1)' }, { id: 'H2', note: 'Captions are 10px' }] },
+  args: { sticky: false, defaultOpen: false, audit: false, violations: [{ id: 'A2', note: 'The border of the field is #dddddd on white (1.4:1)' }, { id: 'H2', note: 'Captions are 10px' }] },
   argTypes: { sticky: { control: 'boolean' }, defaultOpen: { control: 'boolean' }, audit: { control: 'boolean' } },
 });
 export const Playground = {
-  ...playground({ source: `<ConstitutionBanner violations={[{ id: 'A1', note: 'Body text is #bbb on white' }]} />` }),
+  ...playground({ source: `<ConstitutionBanner violations={[{ id: 'A2', note: 'The border of the field is #ddd on white' }]} />` }),
   render: (args) => <ConstitutionBanner {...args} />,
 };
 export const Open = example({

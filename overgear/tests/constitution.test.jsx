@@ -16,7 +16,7 @@ describe('rules', () => {
   test('Overgear adds its rules to the shared ones and keeps the old ids it took over', () => {
     expect(RULES.filter((r) => r.legacyId).map((r) => [r.legacyId, r.id])).toEqual([['U12', 'OG1'], ['U13', 'OG2'], ['U14', 'OG3']]);
     expect(APPLICABLE_RULES).toEqual([...BASE_RULES, ...RULES]);
-    expect(rule('A1')).toBe(baseRule('A1'));
+    expect(rule('A2')).toBe(baseRule('A2'));
     expect(rule('OG3').title).toBe('Catalog and listing are two things');
     expect(() => rule('OG9999')).toThrow(/Unknown/);
     expect(new Set(APPLICABLE_RULES.map((r) => r.id)).size).toBe(APPLICABLE_RULES.length);
@@ -98,8 +98,8 @@ describe('rules', () => {
 describe('banner', () => {
   describe('Overgear constitution banner', () => {
     test('shows shared and store violations with the store documentation link', () => {
-      render(<ConstitutionBanner defaultOpen violations={['A1', 'OG3']} />);
-      expect(screen.getByText(rule('A1').do)).toBeInTheDocument();
+      render(<ConstitutionBanner defaultOpen violations={['A2', 'OG3']} />);
+      expect(screen.getByText(rule('A2').do)).toBeInTheDocument();
       expect(screen.getByText(rule('OG3').do)).toBeInTheDocument();
       expect(screen.getByRole('link', { name: 'Read the constitution' })).toHaveAttribute('href', 'https://baseuikit.vercel.app/overgear/CONSTITUTION.md');
     });

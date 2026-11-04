@@ -52,5 +52,5 @@ export { Hint } from './components/Hint.jsx';
 export { Typeahead } from './components/Typeahead.jsx';
 
 export { RULES, CATEGORIES, AGENT_PROTOCOL, AGENT_DEFAULTS, CONSTITUTION_VERSION, rule, ruleText, dontBody } from './constitution/rules.js';
-export { auditConstitution, contrastRatio } from './constitution/audit.js';
+export { auditConstitution } from './constitution/audit.js';
 export { auditTabs } from './constitution/audit-tabs.js';

@@ -25,7 +25,7 @@ const inner = {
 
 /** Two nested surfaces: the outer radius 24 and the inset 8, so the inner radius must be 16. */
 const Nested = ({ radius, label }) => (
-  <div style={{ ...box, borderRadius: 24, width: 220 }}>
+  <div style={{ ...box, borderRadius: 'var(--bui-radius-3xl)', width: 220 }}>
     <div style={{ ...inner, borderRadius: radius }}>{label}</div>
   </div>
 );

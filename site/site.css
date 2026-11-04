@@ -163,8 +163,8 @@ code.val { background: none; padding: 0; color: var(--bui-text-and-icon-secondar
 .shape-box { height: 80px; background: var(--bui-background-tertiary); }
 .shadow-box { height: 96px; border-radius: var(--bui-radius-2xl); background: var(--bui-extensions-background-surface); }
 .shadow-item figcaption, .shape-item figcaption { display: flex; flex-direction: column; gap: var(--bui-spacing-0-5); font: var(--bui-typography-text-12-regular); color: var(--bui-text-and-icon-secondary); }
-.concentric-outer { padding: var(--bui-spacing-2); width: 240px; border-radius: 24px; background: var(--bui-background-secondary); }
-.concentric-inner { padding: var(--bui-spacing-6) var(--bui-spacing-4); border-radius: calc(24px - 8px); background: var(--bui-background-tertiary); font: var(--bui-typography-text-14-semi-bold); text-align: center; }
+.concentric-outer { padding: var(--bui-spacing-2); width: 240px; border-radius: var(--bui-radius-3xl); background: var(--bui-background-secondary); }
+.concentric-inner { padding: var(--bui-spacing-6) var(--bui-spacing-4); border-radius: calc(var(--bui-radius-3xl) - 8px); background: var(--bui-background-tertiary); font: var(--bui-typography-text-14-semi-bold); text-align: center; }
 .motion-demo { display: flex; flex-direction: column; gap: var(--bui-spacing-4); max-width: 620px; margin-bottom: var(--bui-spacing-8); }
 .motion-row { display: grid; grid-template-columns: 200px 1fr; gap: var(--bui-spacing-4); align-items: center; }
 .motion-row .val { display: block; font: var(--bui-typography-text-12-regular); color: var(--bui-text-and-icon-secondary); }

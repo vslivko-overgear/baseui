@@ -25,14 +25,6 @@ export const CATEGORIES = [
 export const RULES = [
   // ---------------------------------------------------------------- Accessibility
   {
-    id: 'A1', category: 'A', level: 'must', title: 'Text contrast',
-    do: 'Keep text at 4.5:1 against its background (3:1 for large text, 24px or 18.66px bold). Use text-and-icon-primary or Secondary on background-primary or Secondary',
-    dont: 'Do not set light gray text on white or text on a photo or a gradient without a scrim. Disabled controls are the only exception',
-    why: 'Low contrast is the most common barrier: people with low vision, and anyone outdoors, cannot read it',
-    source: 'WCAG 1.4.3', check: 'auto',
-    signals: ['light gray text', 'faint or subtle text', 'low contrast', 'text over an image without overlay', 'pale text on white'],
-  },
-  {
     id: 'A2', category: 'A', level: 'must', title: 'Contrast of controls and graphics',
     do: 'Give borders of inputs, icons that carry meaning and chart marks 3:1 against what is behind them',
     dont: 'Do not draw a field or a button with a border or a fill so faint that its edge cannot be seen',
@@ -529,6 +521,7 @@ export const RETIRED = {
   D5: 'Merged into D2 (one pattern for one job, one word for one thing)',
   C4: 'Merged into U5 (a confirmation names the action and the object)',
   M1: 'Merged into M3 (motion tokens, reduced motion, no flashing)',
+  A1: 'Removed: text contrast is not a rule of this system (and the audit of it is gone)',
   D20: 'Replaced by D21 (a corner follows the size of the object, not a role: the fixed radii of the surface and the block were removed)',
 };
 

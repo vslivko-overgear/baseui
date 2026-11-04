@@ -19,7 +19,7 @@ export default {
 
 const card = {
   background: 'var(--bui-extensions-background-surface)',
-  borderRadius: 16,
+  borderRadius: 'var(--bui-radius-2xl)',
   padding: 16,
   display: 'flex',
   gap: 8,

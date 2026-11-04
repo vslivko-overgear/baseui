@@ -86,7 +86,7 @@ npx shadcn@latest add @baseui/select @baseui/modal
 **For agents that build prototypes.** If a request breaks a rule, the agent builds what was asked, begins its answer with a warning that quotes the broken rules (id, Do, Don't), and puts a `ConstitutionBanner` across the top of the prototype:
 
 ```jsx
-<ConstitutionBanner violations={[{ id: 'A1', note: 'Body text is #bbbbbb on white' }]} />
+<ConstitutionBanner violations={[{ id: 'H2', note: 'Captions are 10px' }]} />
 ```
 
 The banner is not dismissible and stays while a rule is broken; `<ConstitutionBanner audit />` also runs `auditConstitution()` (contrast, touch targets, labels, alt text, headings, one primary action, font size, sideways scroll) and adds what it finds. The full protocol is in `CONSTITUTION.md` and `AGENTS.md`; in your own project, point your `AGENTS.md` at the installed `baseui/CONSTITUTION.md` (`npx shadcn@latest add https://baseuikit.vercel.app/r/baseui-constitution.json`).

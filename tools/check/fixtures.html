@@ -91,13 +91,5 @@
   <div role="dialog" aria-label="Sort"><div role="listbox" class="bui-choice-popup__list bui-choice-sheet__list"><button type="button" role="option" aria-selected="true" class="bui-choice-popup__item bui-choice-sheet__option">By popularity</button></div></div>
 </section>
 
-<!-- A1: the colors a browser answers with in oklab are read, so text on a dark card in oklab is judged on its real background -->
-<section data-case="A1 green text on a dark oklab background (it was judged on white)" data-expect="">
-  <div style="background: oklab(0.2 0 0); padding: 8px"><span style="color: rgb(68, 207, 94); font-size: 16px">Promo WELCOME10 −$49.00</span></div>
-</section>
-<section data-case="A1 dark text on a dark oklab background (it was judged on white and passed)" data-expect="A1">
-  <div style="background: oklab(0.2 0 0); padding: 8px"><span style="color: rgb(40, 40, 40); font-size: 16px">Hard to read</span></div>
-</section>
-
 </body>
 </html>

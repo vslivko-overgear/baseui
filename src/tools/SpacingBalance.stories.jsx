@@ -10,7 +10,7 @@ export default {
   parameters: { docs: { description: { component: 'Checks proximity: things that belong together sit closer than things that do not' } } },
 };
 
-const card = { background: 'var(--bui-background-secondary)', borderRadius: 16, padding: 16, width: 220 };
+const card = { background: 'var(--bui-background-secondary)', borderRadius: 'var(--bui-radius-2xl)', padding: 16, width: 220 };
 const line = { margin: 0, font: 'var(--bui-typography-text-16-regular)', lineHeight: '16px' }; // no leading, so the box gaps are the drawn gaps
 
 /** Two groups of lines: `inner` is the gap inside a group, `outer` the gap between the groups. */

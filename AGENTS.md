@@ -2,7 +2,7 @@
 
 This repository is the baseui design system. When you build an interface or a prototype with it:
 
-1. Read `CONSTITUTION.md` (the design rules, with ids such as `A1`).
+1. Read `CONSTITUTION.md` (the design rules, with ids such as `H2`).
 2. Use the components and tokens of the system (`README.md`, `llms.txt`, `types/index.d.ts`, `registry.json`).
 3. Follow the constitution protocol:
 

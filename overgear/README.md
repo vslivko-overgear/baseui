@@ -30,7 +30,7 @@ import { ConstitutionBanner } from 'baseui-kit/overgear';
 
 <ConstitutionBanner violations={[
   { id: 'OG3', note: 'The Catalog button opens a product listing' },
-  { id: 'A1', note: 'Body text has insufficient contrast' },
+  { id: 'H2', note: 'Captions are 10px' },
 ]} />
 ```
 

@@ -1,6 +1,6 @@
 # baseui design constitution
 
-Version 1.2. 60 rules in 6 groups (36 must, 24 should): what to do and what not to do so that an interface is at least acceptable. Generated from `src/constitution/rules.js`; the same rules are on the Foundations / Constitution page.
+Version 1.2. 59 rules in 6 groups (35 must, 24 should): what to do and what not to do so that an interface is at least acceptable. Generated from `src/constitution/rules.js`; the same rules are on the Foundations / Constitution page.
 
 A **must** protects people and is always reported. A **should** is a strong default: keep it, or say why not.
 
@@ -76,29 +76,19 @@ A **must** protects people and is always reported. A **should** is a strong defa
 import { ConstitutionBanner } from 'baseui-kit';
 
 <ConstitutionBanner violations={[
-  { id: 'A1', note: 'Body text is #bbbbbb on white' },
   { id: 'H2', note: 'Captions are 10px' },
 ]} />
 ```
 
 The warning in the answer follows this shape:
 
-> **Design constitution: this request breaks 2 rules.**
-> - **A1 Text contrast** — Do: keep text at 4.5:1 against its background. Don’t: set light gray text on white. Light gray (#bbb) on white is 1.9:1.
+> **Design constitution: this request breaks 1 rule.**
 > - **H2 Readable type** — Do: body text 14px or more, 12px is the floor. Don’t: set text below 12px. The captions are 10px.
 > I built it as asked and put a banner across the top of the prototype. Compliant version: …
 
 ## Accessibility
 
 Everyone can see, reach and operate the interface. Based on WCAG 2.1 AA
-
-### A1 Text contrast (must)
-
-- **Do:** Keep text at 4.5:1 against its background (3:1 for large text, 24px or 18.66px bold). Use text-and-icon-primary or Secondary on background-primary or Secondary
-- **Don't:** set light gray text on white or text on a photo or a gradient without a scrim. Disabled controls are the only exception
-- **Why:** Low contrast is the most common barrier: people with low vision, and anyone outdoors, cannot read it
-- **Source:** WCAG 1.4.3; found by `auditConstitution()`
-- **Requests that lead here:** light gray text; faint or subtle text; low contrast; text over an image without overlay; pale text on white
 
 ### A2 Contrast of controls and graphics (must)
 
@@ -599,5 +589,6 @@ These ids were rules and are not any more; an id is never reused.
 - `D5`: Merged into D2 (one pattern for one job, one word for one thing)
 - `C4`: Merged into U5 (a confirmation names the action and the object)
 - `M1`: Merged into M3 (motion tokens, reduced motion, no flashing)
+- `A1`: Removed: text contrast is not a rule of this system (and the audit of it is gone)
 - `D20`: Replaced by D21 (a corner follows the size of the object, not a role: the fixed radii of the surface and the block were removed)
 

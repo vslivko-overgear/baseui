@@ -15,7 +15,7 @@ export const radiusFor = (width, height) => {
 
 /**
  * A callback ref that keeps `--bui-card-radius` of the element in step with its size (it is not a re-render: the property is set on the node).
- * An explicit `radius` (a number of px or any CSS length) wins and is not measured. `outer` is the ref of the caller, if any.
+ * An explicit `radius` (a number of px or any CSS length) wins and is not measured. The measured radius is in px at the base radius of the theme and follows `--bui-radius-scale`. `outer` is the ref of the caller, if any.
  */
 export function useFitRadius(radius, outer) {
   const observer = useRef(null);
@@ -30,7 +30,8 @@ export function useFitRadius(radius, outer) {
         node.style.setProperty('--bui-card-radius', typeof radius === 'number' ? `${radius}px` : String(radius));
         return;
       }
-      const set = () => node.style.setProperty('--bui-card-radius', `${radiusFor(node.offsetWidth, node.offsetHeight)}px`);
+      // in px at the base radius of the theme, and scaled with it: the setting of the base radius moves it as it moves every radius token
+      const set = () => node.style.setProperty('--bui-card-radius', `calc(${radiusFor(node.offsetWidth, node.offsetHeight)}px * var(--bui-radius-scale, 1))`);
       set();
       if (typeof ResizeObserver === 'function') {
         observer.current = new ResizeObserver(set);

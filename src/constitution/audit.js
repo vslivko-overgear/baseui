@@ -28,35 +28,6 @@ function viaCanvas(value) {
     return { r, g, b, a: a / 255 };
   } catch { return null; }
 }
-const over = (top, under) => {
-  const a = top.a + under.a * (1 - top.a);
-  if (a === 0) return { r: 0, g: 0, b: 0, a: 0 };
-  const mix = (t, u) => (t * top.a + u * under.a * (1 - top.a)) / a;
-  return { r: mix(top.r, under.r), g: mix(top.g, under.g), b: mix(top.b, under.b), a };
-};
-const luminance = ({ r, g, b }) => {
-  const f = (v) => { const s = v / 255; return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4; };
-  return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
-};
-export const contrastRatio = (a, b) => {
-  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
-  return (hi + 0.05) / (lo + 0.05);
-};
-
-/** The color behind an element: its ancestors' backgrounds laid over each other. null when an image or a gradient is behind it. */
-function backgroundOf(el, win) {
-  const layers = [];
-  for (let node = el; node && node.nodeType === 1; node = node.parentElement) {
-    const cs = win.getComputedStyle(node);
-    if (cs.backgroundImage && cs.backgroundImage !== 'none') return null;
-    const c = parseColor(cs.backgroundColor);
-    if (c && c.a > 0) { layers.push(c); if (c.a === 1) break; }
-  }
-  let base = { r: 255, g: 255, b: 255, a: 1 };
-  for (const layer of layers.reverse()) base = over(layer, base);
-  return base;
-}
-
 const visible = (el, win) => {
   for (let node = el; node && node.nodeType === 1; node = node.parentElement) {
     const cs = win.getComputedStyle(node);
@@ -131,17 +102,8 @@ export function auditConstitution(root = typeof document === 'undefined' ? null 
       const size = cs.fontSize.endsWith('px') ? parseFloat(cs.fontSize) : NaN;
       // H5: a sentence or more of main-size text in Secondary is main text set too quiet
       if (secondaryColor && cs.color === secondaryColor && size >= 14 && own.length >= 70 && !el.closest('[data-constitution-example], [data-slot*="caption"], [class*="caption"], [class*="details"], [class*="muted"], [class*="subtitle"], [class*="description"], [class*="hint"], small, figcaption, label, [role="tooltip"]')) add('H5', el, `${describeEl(el)} sets ${own.length} characters of main text in Secondary`);
-      // A1 contrast, H2 size
+      // H2 size
       if (size < MIN_FONT) add('H2', el, `${describeEl(el)} is ${size}px`);
-      const fg = parseColor(cs.color);
-      const bg = backgroundOf(el, win);
-      if (fg && bg && !isDisabled(el)) {
-        const solid = fg.a < 1 ? over(fg, bg) : fg;
-        const ratio = contrastRatio(solid, bg);
-        const large = size >= 24 || (size >= 18.66 && Number(cs.fontWeight) >= 700);
-        const need = large ? 3 : 4.5;
-        if (ratio < need) add('A1', el, `${describeEl(el)} has contrast ${ratio.toFixed(1)}:1, needs ${need}:1`);
-      }
     }
 
     // C6: a leaf of text that ends with a period (the last sentence of a piece of text has none)

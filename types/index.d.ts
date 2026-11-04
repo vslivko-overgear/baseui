@@ -896,7 +896,7 @@ export function CollapsibleGroup(props: CollapsibleGroupProps): ReactElement | n
 
 export interface ConstitutionBannerProps {
   /**
-   * The broken rules by id (`A1`), each with an optional note on where it is broken. With none (and no audit) nothing renders
+   * The broken rules by id (`H2`), each with an optional note on where it is broken. With none (and no audit) nothing renders
    * @default []
    */
   violations?: Array<string | { id: string; note?: string }>;
@@ -936,7 +936,6 @@ export interface ConstitutionBannerProps {
 /** A strip across the top of a prototype that warns it breaks the design constitution: which rules, where, and what each one asks for. It is not dismissible */
 export function ConstitutionBanner(props: ConstitutionBannerProps): ReactElement | null;
 
-export function contrastRatio(...args: any[]): any;
 export interface ControlRowProps {
   /**
    * The tier of the row: 32 / 40 / 48 / 56 px. A field has 48 and 56 only, so with a field use md or lg

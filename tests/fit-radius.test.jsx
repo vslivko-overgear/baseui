@@ -33,6 +33,16 @@ describe('Card radius', () => {
   });
   test('by default the card measures itself', () => {
     const { container } = render(<Card>x</Card>);
-    expect(container.firstChild.style.getPropertyValue('--bui-card-radius')).toMatch(/px$/);
+    expect(container.firstChild.style.getPropertyValue('--bui-card-radius')).toMatch(/^calc\(\d+px \* var\(--bui-radius-scale/);
+  });
+});
+
+describe('the radius follows the base radius', () => {
+  test('every radius in the styles comes from a token, and the measured one is scaled', async () => {
+    const { readFileSync } = await import('node:fs');
+    const css = readFileSync('src/components.css', 'utf8');
+    // a literal radius in px is a radius that the base radius does not move (50% and 9999px are shapes, 0 is square)
+    const literal = [...css.matchAll(/border-radius:\s*([^;}]*)/g)].map((m) => m[1].trim()).filter((v) => /(^|[^-\w])\d+(\.\d+)?px/.test(v) && !/var\(|9999px/.test(v));
+    expect(literal).toEqual([]);
   });
 });

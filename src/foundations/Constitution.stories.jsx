@@ -108,14 +108,14 @@ export function page() {
       <Block title="The banner">
         <p className="doc-p">It stretches across the full width, lists the rules by id, opens to show what each one asks for, and cannot be closed</p>
         <div className="const-demo">
-          <ConstitutionBanner sticky={false} defaultOpen violations={[{ id: 'A1', note: 'Body text is #bbbbbb on white (1.9:1)' }, { id: 'H2', note: 'Captions are 10px' }, 'D1']} />
+          <ConstitutionBanner sticky={false} defaultOpen violations={[{ id: 'A2', note: 'The border of the field is #dddddd on white (1.4:1)' }, { id: 'H2', note: 'Captions are 10px' }, 'D1']} />
         </div>
         <pre className="const-code">{`<ConstitutionBanner violations={[
-  { id: 'A1', note: 'Body text is #bbbbbb on white' },
+  { id: 'A2', note: 'The border of the field is #dddddd on white' },
   { id: 'H2', note: 'Captions are 10px' },
 ]} />`}</pre>
         <p className="doc-p">
-          <code>auditConstitution()</code> finds the rules marked “Found by the audit” in a rendered page (contrast, touch targets, labels, alt text, headings, one primary action, font size, sideways scroll). <code>{'<ConstitutionBanner audit />'}</code> runs it and adds what it finds
+          <code>auditConstitution()</code> finds the rules marked “Found by the audit” in a rendered page (touch targets, labels, alt text, headings, one primary action, font size, sideways scroll). <code>{'<ConstitutionBanner audit />'}</code> runs it and adds what it finds
                 </p>
       </Block>
     </>
