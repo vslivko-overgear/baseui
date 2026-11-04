@@ -3,12 +3,12 @@
 import { useEffect, useMemo, useState } from '../../src/react.js';
 import { Checkbox } from '../../src/components/Checkbox.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
-import { List, ListItem } from '../../src/components/List.jsx';
+import { Card } from '../../src/components/Card.jsx';
+import { Badge } from '../../src/components/Badge.jsx';
 import { Pagination } from '../../src/components/Pagination.jsx';
 import { Selector } from '../../src/components/Selector.jsx';
 import { Status } from '../../src/components/Status.jsx';
-import { Table, proportional, pixel } from '../../src/components/Table.jsx';
-import { go, href, useMedia } from './util.js';
+import { go, href } from './util.js';
 import { gameOf } from './data.js';
 import { Page, PageHead } from './ui.jsx';
 import { useStore } from './store.jsx';
@@ -21,14 +21,33 @@ function Title({ t }) {
   return <a className="og-tx__title og-tx__link" href={href(`/order/${t.orderLink}`)} onClick={(e) => { e.preventDefault(); go(`/order/${t.orderLink}`); }} data-test-id={`transaction-order-link-${t.id}`}>{`${text} ${t.orderLink}`}</a>;
 }
 
-/** The amount: green with a plus for an incoming one, red with a minus for an outgoing one, plain for a row that moved no money. */
+/** The amount, in the main color: the sign says the direction (a plus comes in, a minus goes out), the color does not shout it. */
 const Amount = ({ t }) => <span className="og-tx__amount" data-direction={shownDirection(t)}>{`${signOf(t)}${signOf(t) ? ' ' : ''}${amountText(t)}`}</span>;
 
-const Status_ = ({ t }) => <span className="og-tx__state" data-state={t.state}>{STATE_LABEL[t.state] || t.state}</span>;
+// the state: a completed payment is a quiet word; only what is not completed is marked (a badge marks an exception)
+const BADGE = { pending: 'warning-light', hold: 'warning-light', failed: 'error', cancelled: 'secondary', arbitrage: 'secondary' };
+const Status_ = ({ t }) => (t.state === 'completed'
+  ? <span className="og-tx__state" data-state={t.state}>{STATE_LABEL[t.state]}</span>
+  : <Badge variant={BADGE[t.state] || 'secondary'} size="sm" label={STATE_LABEL[t.state] || t.state} data-state={t.state} />);
+
+/** A transaction: a card of its own. On the left what it is (the title, what it was for, the date), on the right how much and the state. */
+function Transaction({ t }) {
+  return (
+    <Card variant="surface" padding={4} data-test-id={`transaction-${t.id}`}>
+      <div className="og-tx">
+        <div className="og-tx__main">
+          <Title t={t} />
+          {t.description && <span className="og-tx__sub">{t.description}</span>}
+          <span className="og-tx__sub">{dateText(t.date)}</span>
+        </div>
+        <div className="og-tx__side"><Amount t={t} /><Status_ t={t} /></div>
+      </div>
+    </Card>
+  );
+}
 
 export function TransactionsPage({ onLogin }) {
   const store = useStore();
-  const mobile = useMedia('(max-width: 767px)');
   const [direction, setDirection] = useState('all');
   const [showIncomplete, setShowIncomplete] = useState(true);
   const [page, setPage] = useState(1);
@@ -40,12 +59,6 @@ export function TransactionsPage({ onLogin }) {
   if (!store.user && store.temp) return <Page fill><Status status="neutral" icon={<Icon name="Wallet01" size={28} />} title="Payment history is not available for a temporary account" description="It was created at the checkout. Sign in with your email to see your payments" actionLabel="Sign in with email" onAction={onLogin} /></Page>;
   if (!store.user) return <Page fill><Status status="neutral" icon={<Icon name="Wallet01" size={28} />} title="Sign in to see your payments" description="Your payment history is kept in your account" actionLabel="Sign in" onAction={onLogin} /></Page>;
   const shown = pageOf(list, page);
-  const columns = [
-    { key: 'details', header: 'Details', width: proportional(2, { minWidth: 220 }), renderCell: (t) => <div className="og-stack og-stack--hair"><Title t={t} />{t.description && <span className="og-meta">{t.description}</span>}</div> },
-    { key: 'status', header: 'Status', width: pixel(140), renderCell: (t) => <Status_ t={t} /> },
-    { key: 'amount', header: 'Amount', width: pixel(180), renderCell: (t) => <Amount t={t} /> },
-    { key: 'date', header: 'Date', width: pixel(220), renderCell: (t) => <span className="og-meta">{dateText(t.date)}</span> },
-  ];
   return (
     <Page bar>
       <div className="og-stack og-stack--xl" data-test-id="transactions-page">
@@ -56,14 +69,10 @@ export function TransactionsPage({ onLogin }) {
         </div>
         {!list.length ? (
           <p className="og-text og-tx__empty" data-test-id="transactions-empty">You have not any transactions yet</p>
-        ) : mobile ? (
-          <List aria-label="Transactions" data-test-id="transactions-list">
-            {shown.map((t) => (
-              <ListItem key={t.id} subtitle={<span className="og-stack og-stack--hair">{t.description && <span>{t.description}</span>}<span>{dateText(t.date)}</span></span>} details={<span className="og-stack og-stack--hair og-tx__side"><Amount t={t} /><Status_ t={t} /></span>} data-test-id={`transaction-row-${t.id}`}>{titleOf(t) + (t.orderLink ? ` ${t.orderLink}` : '')}</ListItem>
-            ))}
-          </List>
         ) : (
-          <Table data={shown} columns={columns} rowKey="id" caption="Transactions" data-test-id="transactions-table" />
+          <div className="og-stack og-stack--tight" data-test-id="transactions-list">
+            {shown.map((t) => <Transaction key={t.id} t={t} />)}
+          </div>
         )}
         {pages > 1 && <Pagination page={page} total={pages} onPageChange={(p) => { setPage(p); window.scrollTo({ top: 0 }); }} />}
       </div>

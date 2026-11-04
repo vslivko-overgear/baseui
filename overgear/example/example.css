@@ -681,15 +681,15 @@ a { color: inherit; }
 .og-txfilters { display: flex; align-items: center; gap: var(--baseui-spacing-6); flex-wrap: wrap; }
 .og-txfilters > :first-child { width: min(100%, 328px); }
 .og--mobile .og-txfilters { flex-direction: column; align-items: stretch; gap: var(--baseui-spacing-3); }
-.og-tx__title { font: var(--baseui-typography-text-16-regular); color: var(--baseui-text-and-icon-primary); }
-.og-tx__link { color: var(--baseui-text-and-icon-link, var(--baseui-text-and-icon-primary)); text-decoration: none; }
+.og-tx { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--baseui-spacing-4); }
+.og-tx__main { display: flex; flex-direction: column; gap: var(--baseui-spacing-1); min-width: 0; }
+.og-tx__title { font: var(--baseui-typography-text-16-regular); color: var(--baseui-text-and-icon-primary); overflow-wrap: anywhere; }
+.og-tx__link { text-decoration: none; }   /* the title is a link to the order, but it reads as a title: the color of the text */
 .og-tx__link:hover { text-decoration: underline; }
-.og-tx__amount { font: var(--baseui-typography-text-16-regular); color: var(--baseui-text-and-icon-primary); white-space: nowrap; }
-.og-tx__amount[data-direction="incoming"] { color: var(--baseui-extensions-text-and-icon-success); }
-.og-tx__amount[data-direction="outgoing"] { color: var(--baseui-extensions-text-and-icon-error); }
-.og-tx__state { font: var(--baseui-typography-text-16-regular); color: var(--baseui-text-and-icon-secondary); }
-.og-tx__state[data-state="completed"] { color: var(--baseui-extensions-text-and-icon-success); }
-.og-tx__side { align-items: flex-end; text-align: end; }
+.og-tx__sub { font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-secondary); overflow-wrap: anywhere; }
+.og-tx__amount { font: var(--baseui-typography-text-16-regular); font-weight: 700; color: var(--baseui-text-and-icon-primary); white-space: nowrap; }   /* the main color for every direction: the sign says it */
+.og-tx__state { font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-secondary); }   /* a completed payment is a quiet word */
+.og-tx__side { display: flex; flex-direction: column; align-items: flex-end; gap: var(--baseui-spacing-1); text-align: end; flex: none; }
 .og-tx__empty { text-align: center; }
 /* the games of the home page on a desktop: blocks of two rows of tiles of different widths that always fit the width with no scroll (the widths are proportions, see fitTiles); the rows of a block grow to its width */
 .og-tiles--fit { width: auto; }
