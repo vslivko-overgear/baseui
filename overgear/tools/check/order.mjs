@@ -4,7 +4,7 @@
 // on a desktop and on a phone; and it expects "Add to cart" to open the mini-cart on a phone too. A part restyled in one place only (a class of a surface, a copy of a component) fails here.
 //
 //   node overgear/tools/check/order.mjs http://localhost:8000
-import { launch } from '../../../tools/lib/sweep.mjs';
+import { launch, ready } from '../../../tools/lib/sweep.mjs';
 
 const base = (process.argv[2] || 'http://localhost:8000').replace(/\/$/, '');
 const line = (key, title, price) => ({ key, id: 'venomous-abyss-heroic', title, sub: 'Piloted, heroic', price, qty: 1, eta: '3 hours' });
@@ -57,12 +57,12 @@ const looks = (page, phone) => page.evaluate(({ SHARED, LOOK, phone }) => {
 let barBase = {};   // the look of the pay bar in the checkout of a phone
 for (const [width, phone] of [[390, true], [1440, false]]) {
   const where = phone ? 'phone' : 'desktop';
-  const ctx = await browser.newContext({ viewport: { width, height: 900 }, hasTouch: phone });
+  const ctx = await browser.newContext({ viewport: { width, height: 900 }, hasTouch: phone, reducedMotion: 'reduce' });
   const open = async (hash) => {
     const page = await ctx.newPage();
     await page.addInitScript((s) => { if (!localStorage.getItem('baseui-overgear')) localStorage.setItem('baseui-overgear', s); }, STATE);
     await page.goto(`${base}/overgear/example/index.html${hash}`);
-    await page.waitForTimeout(1300);
+    await ready(page);
     return page;
   };
   const checkout = await open('#/checkout');

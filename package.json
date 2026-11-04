@@ -100,9 +100,10 @@
     "check:spacing": "node tools/check/spacing.mjs",
     "check:overgear:spacing": "node overgear/tools/check/spacing.mjs",
     "check": "node tools/check/all.mjs",
-    "verify": "npm run typecheck && npm test && npm run check",
+    "verify": "node tools/check/plan.mjs --run",
     "check:generated": "npm run build && git diff --exit-code -- registry.json r types tailwind.css CONSTITUTION.md AGENTS.md CLAUDE.md overgear/CONSTITUTION.md overgear/AGENTS.md overgear/CLAUDE.md",
     "plan": "node tools/check/plan.mjs",
-    "verify:changed": "node tools/check/plan.mjs --run"
+    "verify:changed": "node tools/check/plan.mjs --run",
+    "verify:full": "node tools/check/plan.mjs --full --run"
   }
 }

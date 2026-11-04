@@ -9,7 +9,7 @@
 // The exit code is 1 when something is found, so it can run in CI.
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import { launch, docsLinks, sweep, report, arg } from '../lib/sweep.mjs';
+import { launch, docsLinks, sweep, report, arg, ready } from '../lib/sweep.mjs';
 
 const base = arg(2, 'http://localhost:8000');
 const source = await readFile(fileURLToPath(new URL('../audits/radius-check.js', import.meta.url)), 'utf8');
@@ -17,10 +17,10 @@ const source = await readFile(fileURLToPath(new URL('../audits/radius-check.js',
 const browser = await launch().catch((e) => { console.error(e.message); process.exit(2); });
 const hrefs = await docsLinks(browser, base);
 const found = await sweep({
-  browser, base, paths: hrefs, settle: 700,
+  browser, base, paths: hrefs, spa: true,
   audit: async (page) => {
     const trigger = page.locator('.canvas [aria-haspopup], .canvas [role=combobox]').first();
-    if (await trigger.count()) { await trigger.click().catch(() => {}); await page.waitForTimeout(400); }
+    if (await trigger.count()) { await trigger.click().catch(() => {}); await ready(page, 100); }
     return page.evaluate(async (src) => {
       const m = await import(`data:text/javascript,${encodeURIComponent(src)}`);
       return m.checkRadii(document.body).map((f) => ({ selector: f.selector, corner: f.corner, outer: f.outer, inset: f.inset, expected: f.expected, actual: f.actual }));

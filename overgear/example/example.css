@@ -391,8 +391,6 @@ a { color: inherit; }
 .og-drawer__head { display: flex; align-items: center; justify-content: space-between; gap: var(--baseui-spacing-3); padding: var(--baseui-spacing-5); }
 .og-drawer__body { flex: 1; min-height: 0; overflow-y: auto; padding: 0 var(--baseui-spacing-5) var(--baseui-spacing-5); }
 .og-drawer__foot { background: var(--baseui-background-primary); }   /* the pay bar of the phone, pinned at the bottom of the panel: the price, the bonus, the button */
-.og-paybar.og-paybar--inline { position: static; background: transparent; padding: var(--baseui-spacing-4) var(--baseui-spacing-5) max(var(--baseui-spacing-5), env(safe-area-inset-bottom)); }
-.og-paybar--inline::before { content: none; }
 
 /* the checkout: a slim top bar, the order and the payment on the left, the summary on the right */
 .og-checkout { min-height: 100vh; display: flex; flex-direction: column; }
@@ -462,18 +460,7 @@ a { color: inherit; }
 .og-balance__coins { align-items: flex-end; text-align: end; }
 
 /* the pay bar pinned to the bottom of the screen of a phone, in the cart (over the bottom bar of the tabs) and in the checkout: what is to pay on the left, the button that pays on the right */
-.og-cbtag { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); }   /* the amount and the mark of the coins right after it */
-.og-paybar { position: fixed; left: 0; right: 0; bottom: var(--og-paybar-bottom, 0px); z-index: var(--baseui-z-index-30); background: var(--baseui-background-primary); padding: var(--baseui-spacing-3) var(--baseui-spacing-4) var(--bui-sheet-bottom); border-radius: var(--baseui-radius-custom-28) var(--baseui-radius-custom-28) 0 0; }   /* the top corners are round, as the top of a sheet */
-.og-paybar__in { display: flex; flex-direction: column; gap: var(--baseui-spacing-3); }
-.og-paybar__sum { margin: 0; display: flex; align-items: center; gap: var(--baseui-spacing-2); min-width: 0; }
-.og-paybar__amount { font: var(--baseui-typography-header-28); font-family: var(--baseui-typography-headline-font-family); }
-.og-paybar__in .bui-button { flex: 1; min-width: 0; }
-:root { --og-paybar-h: 136px; }   /* the price is 28px and the bonus tag is large: the bar is 8px taller */
 /* the content leaves room for the bar: it is not hidden behind it */
-.og--mobile .og-wrap:has(.og-paybar) { padding-bottom: calc(var(--og-paybar-h) + var(--baseui-spacing-4)); }
-.og--mobile.og--tab .og-wrap:has(.og-paybar) { padding-bottom: calc(var(--og-bottom) + var(--og-paybar-h) + var(--baseui-spacing-4)); }
-.og--mobile:has(.og-paybar) .og-footer { padding-bottom: calc(var(--og-paybar-h) + var(--baseui-spacing-8)); }   /* the footer ends above the pay bar pinned at the bottom */
-.og--mobile .og-checkout:has(.og-paybar) .og-checkout__foot { padding-bottom: calc(var(--og-paybar-h) + var(--baseui-spacing-4)); }
 
 
 /* the pictures of the games in the rows: rounded squares, 1:1 */
@@ -722,3 +709,6 @@ a { color: inherit; }
 .og--mobile .og-offer-meta { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline-end: calc(var(--bui-page-pad) * -1); padding-inline-end: var(--bui-page-pad); }
 .og--mobile .og-offer-meta::-webkit-scrollbar { display: none; }
 .og--mobile .og-offer-meta > * { flex: none; }
+
+/* the footer of a phone ends above the bottom bar of the tabs; a page without the tabs (an offer, the pages behind the account) has the usual padding (the pay bar keeps its own room) */
+.og--mobile:not(:has(.og-bottom)) .og-footer { padding-bottom: var(--baseui-spacing-8); }

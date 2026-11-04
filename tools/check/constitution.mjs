@@ -20,7 +20,7 @@ const audit = (page) => page.evaluate(async () => {
   return [...m.auditConstitution(document.body), ...(await tabs.auditTabs(document.body))].map((v) => ({ id: v.id, note: v.note }));
 });
 const key = (r) => `${r.id.padEnd(4)} ${r.note}`;
-const found = await sweep({ browser, base, paths, widths: [1500, 390], settle: 1800, audit, key });
+const found = await sweep({ browser, base, paths, widths: [1500, 390], spa: true, audit, key });
 
 // The pages of the example as a logged-in visitor with a cart (the header has a balance, the cart and the checkout have lines): the pages above have a visitor with nothing in them.
 // Only when no path was given on the command line.
@@ -35,7 +35,7 @@ let more = 0;
 if (!process.argv.slice(3).length) {
   const line = (key, title, price) => ({ key, id: 'venomous-abyss-heroic', title, sub: 'Piloted, heroic', price, qty: 1, eta: '3 hours' });
   const state = JSON.stringify({ cart: [line('a', 'Venomous Abyss Heroic', 89), line('b', 'Mythic+ Bundle', 149)], wishlist: [], orders: SEED, user: { name: 'Dana', email: 'dana@example.com' }, promo: '' });
-  const again = await sweep({ browser, base, paths: LOGGED_IN, widths: [1500, 390], settle: 1800, audit, key, init: [(s) => { if (!localStorage.getItem('baseui-overgear')) localStorage.setItem('baseui-overgear', s); }, state] });
+  const again = await sweep({ browser, base, paths: LOGGED_IN, widths: [1500, 390], spa: true, audit, key, init: [(s) => { if (!localStorage.getItem('baseui-overgear')) localStorage.setItem('baseui-overgear', s); }, state] });
   for (const [k, where] of again) { if (!found.has(k)) found.set(k, new Set()); for (const w of where) found.get(k).add(`${w} (logged in)`); }
   more = LOGGED_IN.length;
 }

@@ -27,14 +27,34 @@ await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
 const base = `http://127.0.0.1:${server.address().port}`;
 
 const only = process.argv[2];
-let failed = 0;
 // `only` is a word, or several words with commas (the names of tools/check/manifest.mjs): one word: the checks whose name contains it; several: exactly those names
 const words = only ? only.split(',') : [];
-for (const { name, script } of CHECKS.filter((c) => !words.length || (words.length === 1 ? c.name.includes(words[0]) : words.includes(c.name)))) {
-  console.log(`\n== ${name}`);
-  const code = await new Promise((resolve) => spawn('node', [script, base], { cwd: root, stdio: 'inherit' }).on('exit', resolve));
-  if (code) { failed++; console.log(`-- ${name} failed (exit ${code})`); }
-}
+const chosen = CHECKS.filter((c) => !words.length || (words.length === 1 ? c.name.includes(words[0]) : words.includes(c.name)));
+// several checks at a time (CHECK_JOBS, 3 by default): each prints when it ends, so the output of one is not mixed with another
+const JOBS = Math.max(1, Number(process.env.CHECK_JOBS) || 3);
+const started = Date.now();
+const results = [];
+let next = 0;
+const runOne = ({ name, script }) => new Promise((resolve) => {
+  const t0 = Date.now();
+  let out = '';
+  const child = spawn('node', [script, base], { cwd: root, env: { ...process.env, CHECK_CONCURRENCY: process.env.CHECK_CONCURRENCY || '3' } });
+  child.stdout.on('data', (d) => { out += d; });
+  child.stderr.on('data', (d) => { out += d; });
+  child.on('exit', (code) => {
+    const seconds = (Date.now() - t0) / 1000;
+    console.log(`\n== ${name} (${seconds.toFixed(1)}s)\n${out.trimEnd()}`);
+    if (code) console.log(`-- ${name} failed (exit ${code})`);
+    results.push({ name, code, seconds });
+    resolve();
+  });
+});
+// the slowest first, so they do not end the run alone
+const queue = [...chosen].sort((a, b) => b.cost - a.cost);
+await Promise.all(Array.from({ length: Math.min(JOBS, queue.length) }, async () => { while (next < queue.length) await runOne(queue[next++]); }));
 server.close();
-console.log(failed ? `\n${failed} check${failed === 1 ? '' : 's'} failed` : '\nAll checks passed');
-process.exit(failed ? 1 : 0);
+const failed = results.filter((r) => r.code);
+const total = ((Date.now() - started) / 1000).toFixed(1);
+console.log(`\n${results.sort((a, b) => b.seconds - a.seconds).map((r) => `${r.name} ${r.seconds.toFixed(1)}s${r.code ? ' FAILED' : ''}`).join(', ')}`);
+console.log(failed.length ? `\n${failed.length} check${failed.length === 1 ? '' : 's'} failed (${total}s)` : `\nAll checks passed (${total}s)`);
+process.exit(failed.length ? 1 : 0);

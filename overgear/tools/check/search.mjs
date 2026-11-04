@@ -3,7 +3,7 @@
 // dropdown and leaves the text; the suggestions are one list, with no group titles; the page behind is dimmed and the dropdown has no outline. A phone: the field opens a screen of its own that covers the bottom bar, with the field in focus and no ring round it, as rule OG4 says; typing fills it with suggestions, Enter runs the search and closes it.
 //
 //   node overgear/tools/check/search.mjs http://localhost:8000
-import { launch } from '../../../tools/lib/sweep.mjs';
+import { launch, ready } from '../../../tools/lib/sweep.mjs';
 
 const base = (process.argv[2] || 'http://localhost:8000').replace(/\/$/, '');
 const url = `${base}/overgear/example/index.html`;
@@ -14,11 +14,11 @@ const oneList = (page) => page.evaluate(() => document.querySelectorAll('.og-sg'
 const expectThat = (ok, what) => { if (!ok) problems.push(what); };
 
 {
-  const page = await (await browser.newContext({ viewport: { width: 1440, height: 800 } })).newPage();
+  const page = await (await browser.newContext({ viewport: { width: 1440, height: 800 }, reducedMotion: 'reduce' })).newPage();
   const errors = [];
   page.on('pageerror', (e) => errors.push(e.message));
   await page.goto(url);
-  await page.waitForTimeout(1500);
+  await ready(page);
   const field = page.getByRole('combobox', { name: 'Search' });
   await field.click();
   await page.waitForTimeout(200);
@@ -42,7 +42,7 @@ const expectThat = (ok, what) => { if (!ok) problems.push(what); };
   await page.waitForTimeout(500);
   expectThat(/#\/games\/diablo/.test(await page.evaluate(() => location.hash)), 'desktop: Enter on a game suggestion does not open the game');
   await page.goto(`${url}#/`);
-  await page.waitForTimeout(1200);
+  await ready(page);
   await field.click();
   await field.fill('raid');
   await field.press('Escape');
@@ -55,11 +55,11 @@ const expectThat = (ok, what) => { if (!ok) problems.push(what); };
 }
 
 {
-  const page = await (await browser.newContext({ viewport: { width: 390, height: 800 }, hasTouch: true })).newPage();
+  const page = await (await browser.newContext({ viewport: { width: 390, height: 800 }, hasTouch: true, reducedMotion: 'reduce' })).newPage();
   const errors = [];
   page.on('pageerror', (e) => errors.push(e.message));
   await page.goto(url);
-  await page.waitForTimeout(1500);
+  await ready(page);
   const rect = (selector) => page.evaluate((q) => { const r = document.querySelector(q).getBoundingClientRect(); return [r.x, r.y, r.width, r.height].map((v) => Math.round(v * 10) / 10); }, selector);
   const headerLook = await page.evaluate(() => { const cell = document.querySelector('.og-header .og-search .bui-field__cell'); return { background: getComputedStyle(cell).backgroundColor, text: getComputedStyle(document.querySelector('.og-header .og-search input')).fontSize }; });
   const logo = await rect('.og-brand__mark');

@@ -88,24 +88,8 @@ function CashbackRow({ amount }) {
   );
 }
 
-/** The bar that is pinned to the bottom of the screen of a phone: what is to pay and the button that pays. `above` lifts it over the bottom bar of the tabs (the cart); the checkout has none. */
-export function PayBar({ amount, action, onClick, above, inline = false }) {
-  return (
-    <div className={inline ? 'og-paybar og-paybar--inline' : 'og-paybar'} style={inline ? undefined : { '--og-paybar-bottom': above ? 'var(--og-bottom)' : '0px' }}>
-      <PayBarContent amount={amount} action={action} onClick={onClick} />
-    </div>
-  );
-}
-
-/** What is in the pay bar: the price with the bonus tag next to it, then the button. The footer of the dialog of the mini-cart on a phone holds it as well. */
-export function PayBarContent({ amount, action, onClick }) {
-  return (
-    <div className="og-paybar__in">
-      <p className="og-paybar__sum"><span className="og-paybar__amount">{money(amount)}</span><CashbackTag size="lg" label={`+${cashbackOf(amount)}`} /></p>
-      <Button variant="primary" size="lg" textSize={16} label={action} onClick={onClick} />
-    </div>
-  );
-}
+// the pay bar is a component of the sublibrary (overgear/components): it keeps the room it takes at the bottom of the page by itself
+export { PayBar, PayBarContent } from '../components/paybar.jsx';
 
 /** The title of an order page and, under it, how many items there are (secondary): the checkout and the cart have the same. */
 export function OrderHead({ title, count, className = '' }) {

@@ -4,7 +4,7 @@
 // and opens the same page; the header of a phone has no balance of its own.
 //
 //   node overgear/tools/check/wallet.mjs http://localhost:8000
-import { launch } from '../../../tools/lib/sweep.mjs';
+import { launch, ready } from '../../../tools/lib/sweep.mjs';
 
 const base = (process.argv[2] || 'http://localhost:8000').replace(/\/$/, '');
 const url = `${base}/overgear/example/index.html`;
@@ -19,7 +19,7 @@ const open = async (viewport, hash = '') => {
   page.on('pageerror', (e) => errors.push(e.message));
   await page.addInitScript((s) => { if (!localStorage.getItem('baseui-overgear')) localStorage.setItem('baseui-overgear', s); }, STATE);
   await page.goto(`${url}${hash}`);
-  await page.waitForTimeout(1500);
+  await ready(page);
   return { page, errors };
 };
 

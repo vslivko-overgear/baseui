@@ -7,10 +7,11 @@
 const text = (range) => range.toString().replace(/\s+/g, ' ').trim();
 const nameOf = (tab) => (tab.textContent || tab.getAttribute('aria-label') || tab.dataset.value || 'a tab').trim().slice(0, 30);
 
-/** @param {Element} root @param {{ settle?: number }} [options] ms to wait after a press for the page to settle (default 150) */
-export async function auditTabs(root = document.body, { settle = 150 } = {}) {
+/** @param {Element} root @param {{ settle?: number }} [options] ms to wait after a press for the page to settle (default 0: two frames, which is when a tab has drawn its panel) */
+export async function auditTabs(root = document.body, { settle = 0 } = {}) {
   const doc = root.ownerDocument;
-  const wait = () => new Promise((r) => setTimeout(r, settle));
+  const frames = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+  const wait = () => (settle ? new Promise((r) => setTimeout(r, settle)) : frames());
   const out = [];
   for (const list of /** @type {HTMLElement[]} */ ([...root.querySelectorAll('[role="tablist"]')])) {
     const tabs = /** @type {HTMLElement[]} */ ([...list.querySelectorAll('[role="tab"]:not([disabled])')]);

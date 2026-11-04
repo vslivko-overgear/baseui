@@ -6,7 +6,7 @@
 //  - the way there: a payment makes an order for each line; one opens its own page, several open the result page; a declined payment, a payment that is verified, a guest buyer; and "View My orders".
 //
 //   node overgear/tools/check/orders.mjs http://localhost:8000
-import { launch } from '../../../tools/lib/sweep.mjs';
+import { launch, ready } from '../../../tools/lib/sweep.mjs';
 import { ORDER_STATUS as S, buyerActions, orderTimeline, panelTone, statusText, STATE_FILTERS, PAGE_SIZE, filterOrders, sortOrders, statusLabel } from '../../example/order-core.js';
 
 const base = (process.argv[2] || 'http://localhost:8000').replace(/\/$/, '');
@@ -17,12 +17,12 @@ const expectThat = (ok, what) => { if (!ok) problems.push(what); };
 
 /** A buyer who is signed in (or a guest, or nobody): the app starts, then its stored state is made from the seed of the orders and what the test asks for. */
 const open = async (width, patch = {}) => {
-  const ctx = await browser.newContext({ viewport: { width, height: 900 }, hasTouch: width < 500 });
+  const ctx = await browser.newContext({ viewport: { width, height: 900 }, hasTouch: width < 500, reducedMotion: 'reduce' });
   const page = await ctx.newPage();
   page.errors = [];
   page.on('pageerror', (e) => page.errors.push(e.message));
   await page.goto(`${APP}#/`);
-  await page.waitForTimeout(900);
+  await ready(page, 0);
   await page.evaluate(async (patch) => {
     const { seedOrders } = await import('/overgear/example/order-seed.js');
     const { WALLET_START } = await import('/overgear/example/wallet-core.js');
@@ -31,7 +31,7 @@ const open = async (width, patch = {}) => {
   }, patch);
   return page;
 };
-const visit = async (page, hash) => { await page.goto(`${APP}#${hash}`); await page.reload(); await page.waitForTimeout(1300); };
+const visit = async (page, hash) => { await page.goto(`${APP}#${hash}`); await page.reload(); await ready(page, 100); };
 const stored = (page) => page.evaluate(() => JSON.parse(localStorage.getItem('baseui-overgear')));
 const hashOf = (page) => page.evaluate(() => location.hash);
 const line = (key, title, price, eta = '3 hours') => ({ key, id: 'venomous-abyss-heroic', title, sub: 'Piloted, heroic', price, qty: 1, eta });
@@ -39,7 +39,9 @@ const text = (page, id) => page.locator(`[data-test-id="${id}"]`).first().textCo
 const choose = async (page, index, option) => { await page.getByRole('combobox').nth(index).click(); await page.waitForTimeout(250); await page.getByRole('option', { name: option, exact: true }).first().click(); await page.waitForTimeout(350); };
 
 // ---------------------------------------------------------------- the list
-{
+// the parts below are independent (each opens its own context), so they run at the same time
+const blocks = [];
+blocks.push(async () => {
   const page = await open(1440);
   const orders = (await stored(page)).orders;
   await visit(page, '/orders');
@@ -97,8 +99,8 @@ const choose = async (page, index, option) => { await page.getByRole('combobox')
   expectThat((await hashOf(page)) === '#/orders' && (await cards()) > 0, 'the retry of the list does not bring the list back');
   expectThat(!page.errors.length, `the list: errors ${page.errors.join('; ')}`);
   await page.context().close();
-}
-{
+});
+blocks.push(async () => {
   const page = await open(390);
   const total = (await stored(page)).orders.length;
   await visit(page, '/orders');
@@ -109,9 +111,9 @@ const choose = async (page, index, option) => { await page.getByRole('combobox')
   expectThat((await cards()) === total, `phone: "Show More" shows ${await cards()} cards, not all ${total}`);
   expectThat((await page.getByRole('button', { name: 'Show More' }).count()) === 0, 'phone: "Show More" stays when everything is shown');
   await page.context().close();
-}
+});
 // a buyer who is not signed in, and a guest
-{
+blocks.push(async () => {
   const page = await open(1440, { user: null });
   await visit(page, '/orders');
   expectThat((await page.getByText('Sign in to see your orders').count()) === 1, 'a visitor who is not signed in does not get the sign-in prompt on the list');
@@ -120,10 +122,10 @@ const choose = async (page, index, option) => { await page.getByRole('combobox')
   await visit(guest, '/orders');
   expectThat((await guest.getByText('Orders are not available for a temporary account').count()) === 1, 'a guest account does not read that it has no history');
   await guest.context().close();
-}
+});
 
 // ---------------------------------------------------------------- the page of an order, status by status
-{
+blocks.push(async () => {
   const page = await open(1440);
   const orders = (await stored(page)).orders;
   const seen = new Set();
@@ -152,11 +154,11 @@ const choose = async (page, index, option) => { await page.getByRole('combobox')
   await visit(page, '/order/none');
   expectThat((await page.getByText('Order not found').count()) === 1, 'an order that does not exist is not "Order not found"');
   await page.context().close();
-}
+});
 
 // ---------------------------------------------------------------- the flows of the buyer
 const find = (orders, status, og) => orders.find((o) => o.status === status && (og === undefined || !!o.og === og));
-{
+blocks.push(async () => {
   const page = await open(1440);
   const orders = (await stored(page)).orders;
   const click = async (id) => { await page.locator(`[data-test-id="${id}"]`).first().click(); await page.waitForTimeout(400); };
@@ -235,9 +237,9 @@ const find = (orders, status, og) => orders.find((o) => o.status === status && (
   expectThat((await page.locator('[data-test-id="order-join"]').count()) === 0 && (await stored(page)).discord === true, 'the Discord panel stays after the buyer joined');
   expectThat(!page.errors.length, `the flows: errors ${page.errors.join('; ')}`);
   await page.context().close();
-}
+});
 // the steps and the tabs of a phone
-{
+blocks.push(async () => {
   const page = await open(390);
   const o = find((await stored(page)).orders, S.IN_PROGRESS, true);
   await visit(page, `/order/${o.link}`);
@@ -249,7 +251,7 @@ const find = (orders, status, og) => orders.find((o) => o.status === status && (
   expectThat(await chatShown(), 'phone: the Chat tab does not show the chat');
   expectThat(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1), 'phone: the page of an order scrolls sideways');
   await page.context().close();
-}
+});
 
 // ---------------------------------------------------------------- the way there: a payment
 const pay = async (page, method) => {
@@ -258,7 +260,7 @@ const pay = async (page, method) => {
   await page.waitForTimeout(200);
   await page.locator('.og-sticky .bui-button[data-variant="primary"]').first().click();
 };
-{
+blocks.push(async () => {
   // one line: one order, which opens its own page
   const page = await open(1440, { cart: [line('a', 'Venomous Abyss Heroic', 89)] });
   const before = (await stored(page)).orders.length;
@@ -269,8 +271,8 @@ const pay = async (page, method) => {
   expectThat(/^#\/order\/\d+_\d+/.test(await hashOf(page)), `a payment of one line does not open its order (${await hashOf(page)})`);
   expectThat(after.orders[0].status === S.NEW && after.orders[0].delivery && !after.orders[0].delivery.filled, 'the new order is not "New", waiting for the delivery details');
   await page.context().close();
-}
-{
+});
+blocks.push(async () => {
   // two lines: two orders and the result page, which leads to the list
   const page = await open(1440, { cart: [line('a', 'Venomous Abyss Heroic', 89), line('b', 'Mythic+ Bundle', 149)] });
   const before = (await stored(page)).orders.length;
@@ -285,8 +287,8 @@ const pay = async (page, method) => {
   const top = await page.evaluate(() => [...document.querySelectorAll('[data-test-id="order-card-status"]')].slice(0, 2).map((s) => s.textContent));
   expectThat(top.join() === 'New,New', `the new orders are not the first two cards of the list (${top.join()})`);
   await page.context().close();
-}
-{
+});
+blocks.push(async () => {
   // a declined payment: the error page, Try Again, and the cart is still full
   const page = await open(1440, { cart: [line('a', 'Venomous Abyss Heroic', 89)] });
   await pay(page, 'neteller');
@@ -297,8 +299,8 @@ const pay = async (page, method) => {
   await page.waitForTimeout(800);
   expectThat((await hashOf(page)) === '#/checkout' && (await stored(page)).cart.length === 1, 'Try Again does not lead back to the checkout with the cart');
   await page.context().close();
-}
-{
+});
+blocks.push(async () => {
   // a payment that the provider verifies: the page waits, then goes on to the order
   const page = await open(1440, { cart: [line('a', 'Venomous Abyss Heroic', 89)] });
   const before = (await stored(page)).orders.length;
@@ -309,8 +311,8 @@ const pay = async (page, method) => {
   await page.waitForFunction(() => /#\/order\//.test(location.hash), null, { timeout: 15000 }).catch(() => {});
   expectThat(/#\/order\//.test(await hashOf(page)) && (await stored(page)).orders.length === before + 1, `the waiting page does not settle into an order (${await hashOf(page)})`);
   await page.context().close();
-}
-{
+});
+blocks.push(async () => {
   // a guest buyer: the order has its page, but the account has no history
   const page = await open(1440, { user: null, cart: [line('a', 'Venomous Abyss Heroic', 89)] });
   await visit(page, '/checkout');
@@ -321,8 +323,8 @@ const pay = async (page, method) => {
   await visit(page, '/orders');
   expectThat((await page.getByText('Orders are not available for a temporary account').count()) === 1, 'a guest buyer sees a history');
   await page.context().close();
-}
-{
+});
+blocks.push(async () => {
   // the result pages: the Discord version asks to join, and joining changes the page; the waiting page and the failure have no buttons of success
   const page = await open(1440);
   await visit(page, '/checkout/result/success');
@@ -335,8 +337,9 @@ const pay = async (page, method) => {
   await visit(page, '/checkout/result/warning');
   expectThat((await page.getByText('Something went wrong').count()) >= 1, 'the failure page does not say that something went wrong');
   await page.context().close();
-}
+});
 
+await Promise.all(blocks.map((b) => b()));
 await browser.close();
 if (problems.length) { for (const p of problems) console.log(p); console.log(`\nOrders: ${problems.length} problem${problems.length === 1 ? '' : 's'}.`); process.exit(1); }
 console.log('Orders: the list, the page of an order for every status, the flows of the buyer and the way from the payment work as the real service has them.');

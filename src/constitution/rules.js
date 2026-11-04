@@ -53,7 +53,7 @@ export const RULES = [
     do: 'Leave the focus ring of the system (2px, 2px offset) on every interactive element',
     dont: 'Do not write outline: none, or restyle the ring so that it disappears on a background',
     why: 'Without it a keyboard user does not know where they are',
-    source: 'WCAG 2.4.7', check: 'review', tools: ['tools/check/dialog-focus.mjs'],   // the ring is for the keyboard: a dialog opened with a finger or by code puts none on its first control
+    source: 'WCAG 2.4.7', check: 'review',   // the ring is for the keyboard: Dialog decides it (a dialog opened with a finger or by code puts none on its first control), tests/components.test.jsx holds it
     signals: ['remove the outline', 'hide the focus ring', 'no focus styles', 'outline none'],
   },
   {
@@ -200,7 +200,7 @@ export const RULES = [
     do: 'Use a tooltip for a short hint, such as the name of an icon-only button. Anything a person needs to finish the task goes in the interface. For a question mark beside a label use Hint: a tooltip with a mouse, a dialog with the text on a touch screen',
     dont: 'Do not put links, buttons or required information in a tooltip, or explain a disabled control only in a tooltip',
     why: 'A tooltip needs a hover, which touch screens do not have, and disabled controls ignore it',
-    source: 'WCAG 1.4.13; Astryx guidelines (adapted)', check: 'partial', tools: ['tools/check/hint.mjs'],
+    source: 'WCAG 1.4.13; Astryx guidelines (adapted)', check: 'partial',   // Hint decides it (a dialog on a touch screen or a phone, a tooltip with a mouse), tests/components.test.jsx holds it
     signals: ['a question mark with a tooltip', 'an info icon with a tooltip', 'explain it in a tooltip', 'a link in a tooltip', 'hide the instructions in a tooltip', 'tooltip on a disabled button as the explanation'],
   },
 
@@ -510,7 +510,7 @@ export const RULES = [
     do: 'On a phone (below 768px) open every list of options (`Selector`, `Typeahead`, `Dropdown`) as a bottom sheet, which the components do by themselves; leave `sheet` on in `Dropdown`. A menu over the page is for a desktop',
     dont: 'Do not draw a list of options with a menu of your own that floats over the page on a phone, and do not turn the sheet off (`sheet={false}`) to keep a menu on a phone',
     why: 'A menu over a phone page is small, hides behind the thumb and the keyboard and gets cut by the edge of the screen; a sheet is as wide as the screen and its rows are easy to reach',
-    source: 'baseui ChoiceSheet; mobile patterns: a bottom sheet for a choice', check: 'auto', tools: ['tools/check/sheets.mjs'],
+    source: 'baseui ChoiceSheet; mobile patterns: a bottom sheet for a choice', check: 'auto',   // the lists decide it (useMediaQuery(SHEET_QUERY) in Selector, Dropdown and Typeahead), tests/components.test.jsx holds it
     signals: ['a dropdown on a phone', 'a menu opens over the page on mobile', 'a popup list on a phone', 'a sort menu on mobile', 'a select on mobile'],
   },
 ];

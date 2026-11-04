@@ -6,7 +6,7 @@
 // color and the others with the standard outline (a button shows the other methods); the items are cards of their own; the summary sticks 24px from the top, not further.
 //
 //   node overgear/tools/check/checkout.mjs http://localhost:8000
-import { launch } from '../../../tools/lib/sweep.mjs';
+import { launch, ready } from '../../../tools/lib/sweep.mjs';
 
 const base = (process.argv[2] || 'http://localhost:8000').replace(/\/$/, '');
 const line = (key, title, price) => ({ key, id: 'venomous-abyss-heroic', title, sub: 'Piloted, heroic', price, qty: 1, eta: '3 hours' });
@@ -16,12 +16,12 @@ const problems = [];
 const expectThat = (ok, what) => { if (!ok) problems.push(what); };
 
 for (const [width, phone] of [[1440, false], [390, true]]) {
-  const page = await (await browser.newContext({ viewport: { width, height: 900 }, hasTouch: phone })).newPage();
+  const page = await (await browser.newContext({ viewport: { width, height: 900 }, hasTouch: phone, reducedMotion: 'reduce' })).newPage();
   const errors = [];
   page.on('pageerror', (e) => errors.push(e.message));
   await page.addInitScript((s) => { if (!localStorage.getItem('baseui-overgear')) localStorage.setItem('baseui-overgear', s); }, STATE);
   await page.goto(`${base}/overgear/example/index.html#/checkout`);
-  await page.waitForTimeout(1500);
+  await ready(page);
   const where = phone ? 'phone' : 'desktop';
   if (!phone) {
     const layout = await page.evaluate(() => {

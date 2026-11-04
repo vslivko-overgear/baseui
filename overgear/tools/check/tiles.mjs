@@ -5,7 +5,7 @@
 // A phone is not measured: there the rows scroll on purpose.
 //
 //   node overgear/tools/check/tiles.mjs http://localhost:8000
-import { launch } from '../../../tools/lib/sweep.mjs';
+import { launch, ready, pool, CONCURRENCY } from '../../../tools/lib/sweep.mjs';
 import { AUDIENCES, AUDIENCE_GROUP, TILE_GAP } from '../../audience.js';
 import { COOKIE } from '../../theme.js';
 
@@ -14,13 +14,13 @@ const WIDTHS = [1500, 1280, 1000];
 const browser = await launch().catch((e) => { console.error(e.message); process.exit(2); });
 const problems = [];
 const near = (a, b) => Math.abs(a - b) <= 1.5;
-for (const [audience] of AUDIENCES) for (const width of WIDTHS) {
+await pool(AUDIENCES.flatMap(([audience]) => WIDTHS.map((width) => [audience, width])), CONCURRENCY, async ([audience, width]) => {
   const at = `${audience} at ${width}px`;
-  const context = await browser.newContext({ viewport: { width, height: 900 } });
+  const context = await browser.newContext({ viewport: { width, height: 900 }, reducedMotion: 'reduce' });
   await context.addCookies([{ name: COOKIE, value: encodeURIComponent(JSON.stringify({ audience })), url: base }]);
   const page = await context.newPage();
   await page.goto(`${base}/overgear/example/index.html`);
-  await page.waitForTimeout(1500);
+  await ready(page);
   const line = await page.evaluate(() => {
     const el = document.querySelector('[data-test-id=home-games]');
     if (!el) return null;
@@ -31,7 +31,7 @@ for (const [audience] of AUDIENCES) for (const width of WIDTHS) {
     };
   });
   await context.close();
-  if (!line || !line.blocks.length) { problems.push(`${at}: no tiles found`); continue; }
+  if (!line || !line.blocks.length) { problems.push(`${at}: no tiles found`); return; }
   const { box, blocks } = line;
   if (line.scrolls) problems.push(`${at}: the tiles scroll sideways`);
   if (!near(blocks[0].left, box.left) || !near(blocks.at(-1).right, box.right)) problems.push(`${at}: the tiles do not fill the width (${Math.round(blocks[0].left - box.left)}px from the start, ${Math.round(box.right - blocks.at(-1).right)}px from the end)`);
@@ -49,7 +49,7 @@ for (const [audience] of AUDIENCES) for (const width of WIDTHS) {
     const count = blocks[0]?.rows.flatMap((row) => row.tiles).length;
     if (blocks.length < 2 || count !== family.flat().length) problems.push(`${at}: the family is not a block of its own with its ${family.flat().length} games (${count} tiles in the first block of ${blocks.length})`);
   } else if (blocks.length !== 1) problems.push(`${at}: ${blocks.length} blocks for an audience without a family`);
-}
+});
 await browser.close();
 if (problems.length) { for (const p of problems) console.log(p); console.log(`\nTiles: ${problems.length} problem${problems.length === 1 ? '' : 's'}.`); process.exit(1); }
 console.log(`Tiles: ${AUDIENCES.length} audiences at ${WIDTHS.join(', ')}px, blocks of two rows of different widths that fill the width, no scroll.`);

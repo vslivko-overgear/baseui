@@ -1,0 +1,13 @@
+/* The components of the Overgear sublibrary (overgear/components/*.jsx). They depend on baseui (tokens.css, src/components.css); a product loads this file through overgear.css. */
+
+/* the cashback tag and the pay bar */
+.og-cbtag { display: inline-flex; align-items: center; gap: var(--baseui-spacing-1); }   /* the amount and the mark of the coins right after it */
+.og-paybar { position: fixed; left: 0; right: 0; bottom: var(--og-paybar-bottom, 0px); z-index: var(--baseui-z-index-30); background: var(--baseui-background-primary); padding: var(--baseui-spacing-3) var(--baseui-spacing-4) var(--bui-sheet-bottom); border-radius: var(--baseui-radius-custom-28) var(--baseui-radius-custom-28) 0 0; }   /* the top corners are round, as the top of a sheet */
+.og-paybar__in { display: flex; flex-direction: column; gap: var(--baseui-spacing-3); }
+.og-paybar__sum { margin: 0; display: flex; align-items: center; gap: var(--baseui-spacing-2); min-width: 0; }
+.og-paybar__amount { font: var(--baseui-typography-header-28); font-family: var(--baseui-typography-headline-font-family); }
+.og-paybar__in .bui-button { flex: 1; min-width: 0; }
+.og-paybar.og-paybar--inline { position: static; background: transparent; padding: var(--baseui-spacing-4) var(--baseui-spacing-5) max(var(--baseui-spacing-5), env(safe-area-inset-bottom)); }
+.og-paybar--inline::before { content: none; }
+/* the room a pinned pay bar takes at the bottom of the page: the bar measures its height and puts it here while it is there (PayBar, useRoom) */
+body { padding-bottom: var(--og-paybar-room, 0px); }

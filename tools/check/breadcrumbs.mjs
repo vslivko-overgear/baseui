@@ -3,7 +3,7 @@
 // It opens the pages of the example that have a trail on a phone (390px) and on a narrow one (320px).
 //
 //   node tools/check/breadcrumbs.mjs http://localhost:8000
-import { launch, arg } from '../lib/sweep.mjs';
+import { launch, arg, ready } from '../lib/sweep.mjs';
 
 const base = arg(2, 'http://localhost:8000');
 const PAGES = ['overgear/example/index.html#/offer/venomous-abyss-heroic', 'overgear/example/index.html#/games/wow'];
@@ -12,9 +12,9 @@ const problems = [];
 
 for (const hash of PAGES) {
   for (const width of [390, 320]) {
-    const page = await (await browser.newContext({ viewport: { width, height: 800 }, hasTouch: true })).newPage();
+    const page = await (await browser.newContext({ viewport: { width, height: 800 }, hasTouch: true, reducedMotion: 'reduce' })).newPage();
     await page.goto(`${base}/${hash}`);
-    await page.waitForTimeout(1500);
+    await ready(page);
     const trail = await page.evaluate(() => {
       const nav = document.querySelector('[data-slot="breadcrumbs"]');
       if (!nav) return null;

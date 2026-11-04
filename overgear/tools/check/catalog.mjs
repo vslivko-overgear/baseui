@@ -4,16 +4,16 @@
 // On a phone the catalog is that column as a page: a search and a sort, one row for each game, a rounded square picture 1:1 in every row, no chips, the list scrolls with the page, and a row opens the game.
 //
 //   node overgear/tools/check/catalog.mjs http://localhost:8000
-import { launch } from '../../../tools/lib/sweep.mjs';
+import { launch, ready } from '../../../tools/lib/sweep.mjs';
 
 const base = (process.argv[2] || 'http://localhost:8000').replace(/\/$/, '');
 const browser = await launch().catch((e) => { console.error(e.message); process.exit(2); });
 const problems = [];
 for (const height of [900, 620]) {
   for (const place of ['page', 'panel']) {
-    const page = await (await browser.newContext({ viewport: { width: 1440, height } })).newPage();
+    const page = await (await browser.newContext({ viewport: { width: 1440, height }, reducedMotion: 'reduce' })).newPage();
     await page.goto(`${base}/overgear/example/index.html#/${place === 'page' ? 'catalog' : ''}`);
-    await page.waitForTimeout(1500);
+    await ready(page);
     if (place === 'panel') { await page.getByRole('button', { name: 'Catalog' }).first().click(); await page.waitForTimeout(800); }
     const list = await page.$('.og-catalog__games');
     if (!list) { problems.push(`${place} @${height}: no list of games`); await page.close(); continue; }
@@ -28,11 +28,11 @@ for (const height of [900, 620]) {
   }
 }
 {
-  const page = await (await browser.newContext({ viewport: { width: 390, height: 800 }, hasTouch: true })).newPage();
+  const page = await (await browser.newContext({ viewport: { width: 390, height: 800 }, hasTouch: true, reducedMotion: 'reduce' })).newPage();
   const errors = [];
   page.on('pageerror', (e) => errors.push(e.message));
   await page.goto(`${base}/overgear/example/index.html#/catalog`);
-  await page.waitForTimeout(1500);
+  await ready(page);
   const state = await page.evaluate(() => ({ tiles: document.querySelectorAll('.og-grid--games, .og-chips, [data-slot=game-tile]').length, rows: document.querySelectorAll('.og-catalog__games [data-slot=list-item]').length, overflow: getComputedStyle(document.querySelector('.og-catalog__games')).overflowY, pics: [...document.querySelectorAll('.og-catalog__games [data-slot=list-item]')].map((r) => { const p = r.querySelector('.og-gpic'); const b = p?.getBoundingClientRect(); return !!b && Math.abs(b.width - b.height) < 0.5 && parseFloat(getComputedStyle(p).borderTopLeftRadius) >= 8 && !!p.querySelector('img'); }) }));
   if (state.tiles) problems.push('phone: the catalog has picture tiles or chips of groups');
   if (!state.pics.length || !state.pics.every(Boolean)) problems.push('phone: not every row of the catalog has a rounded square picture');
@@ -42,10 +42,10 @@ for (const height of [900, 620]) {
   const bar = () => page.evaluate(() => { const f = document.querySelector('.og-header .og-search .bui-field, .og-catalog__left .bui-field'); const r = f.getBoundingClientRect(); return { top: Math.round(r.top), height: Math.round(r.height), text: getComputedStyle(f.querySelector('input')).fontSize }; });
   const onCatalog = await bar();
   await page.goto(`${base}/overgear/example/index.html#/`);
-  await page.waitForTimeout(1200);
+  await ready(page);
   const onHome = await bar();
   await page.goto(`${base}/overgear/example/index.html#/catalog`);
-  await page.waitForTimeout(1200);
+  await ready(page);
   if (onCatalog.top !== onHome.top || onCatalog.height !== onHome.height || onCatalog.text !== onHome.text) problems.push(`phone: the bar of the catalog (top ${onCatalog.top}, ${onCatalog.height} high, text ${onCatalog.text}) is not where the bar of the header is (top ${onHome.top}, ${onHome.height} high, text ${onHome.text})`);
   // the search and the sort stay at the top while the list scrolls
   await page.evaluate(() => window.scrollTo(0, 600));
@@ -56,7 +56,7 @@ for (const height of [900, 620]) {
   // steps: a game opens its groups under a title of its own (the bar has none at the start), a group opens its kinds laid out the same way, the bar shows the title when it scrolls under it
   const step = async (name) => page.evaluate(() => { const t = document.querySelector('.og-step__title'); const bt = document.querySelector('.bui-navbar__title'); return { title: t?.textContent, hasCollapsible: !!document.querySelector('.bui-collapsible'), rows: document.querySelectorAll('main [data-slot=list-item]').length, bar: +getComputedStyle(bt).opacity, gap: t ? Math.round(t.getBoundingClientRect().top - document.querySelector('.bui-navbar').getBoundingClientRect().bottom) : null }; });
   await page.goto(`${base}/overgear/example/index.html#/catalog/wow`);
-  await page.waitForTimeout(1200);
+  await ready(page);
   const s2 = await step();
   if (s2.title !== 'World of Warcraft' || s2.hasCollapsible || s2.rows < 5 || s2.bar !== 0 || s2.gap > 8) problems.push(`phone: step 2 is not a title (4px from the bar, the bar has none) and a list of groups (${JSON.stringify(s2)})`);
   await page.getByRole('button', { name: 'Raids' }).click();
@@ -71,7 +71,7 @@ for (const height of [900, 620]) {
   await page.waitForTimeout(600);
   if (!/#\/catalog\/wow$/.test(await page.evaluate(() => location.hash))) problems.push('phone: back from step 3 does not go to step 2');
   await page.goto(`${base}/overgear/example/index.html#/catalog`);
-  await page.waitForTimeout(1200);
+  await ready(page);
   await page.getByLabel('Find a game').fill('dia');
   await page.waitForTimeout(300);
   const found = await page.locator('.og-catalog__games [data-slot=list-item]').allTextContents();

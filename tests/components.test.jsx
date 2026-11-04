@@ -2,7 +2,8 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, test, vi } from 'vitest';
-import { Breadcrumbs, Button, ChoiceSheet, Card, ProductCard, Stack, ButtonGroup, Form, FormRow, FormSection, IconButton, ControlRow, Checkbox, Dialog, OtpInput, Pagination, ProgressBar, Slider, Rating, Selector, Dropdown, Switch, Tabs, TextInput } from '../src/index.jsx';
+import { useState } from 'react';
+import { Breadcrumbs, Button, ChoiceSheet, Hint, Typeahead, Card, ProductCard, Stack, ButtonGroup, Form, FormRow, FormSection, IconButton, ControlRow, Checkbox, Dialog, OtpInput, Pagination, ProgressBar, Slider, Rating, Selector, Dropdown, Switch, Tabs, TextInput } from '../src/index.jsx';
 
 describe('Switch', () => {
   test('toggles and reports', async () => {
@@ -497,6 +498,74 @@ describe('TextInput clear button by default', () => {
   test('it is named for a screen reader', () => {
     render(<TextInput label="Name" defaultValue="a" />);
     expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument();
+  });
+});
+
+// What tools/check/dialog-focus.mjs, hint.mjs and sheets.mjs used to check in a browser: the components decide it themselves, so it is tested here.
+const media = (match) => {
+  const original = window.matchMedia;
+  window.matchMedia = (q) => ({ matches: match(q), media: q, addEventListener() {}, removeEventListener() {}, addListener() {}, removeListener() {} });
+  return () => { window.matchMedia = original; };
+};
+
+describe('Dialog focus (rule A5): the ring is for the keyboard', () => {
+  function Opener() {
+    const [open, setOpen] = useState(false);
+    return (
+      <>
+        <button type="button" onClick={() => setOpen(true)}>Open</button>
+        <Dialog open={open} onOpenChange={setOpen} title="Cart" primaryAction={<Button variant="primary">Pay</Button>}><p>Lines</p></Dialog>
+      </>
+    );
+  }
+  const onControlInside = () => { const d = document.querySelector('[role="dialog"]'); const a = document.activeElement; return !!d && d.contains(a) && a !== d && a.matches('button, input, a, [tabindex]:not([tabindex="-1"])'); };
+
+  test('opened with a finger or a mouse, the focus is not put on a control of the dialog', async () => {
+    render(<Opener />);
+    await userEvent.click(screen.getByRole('button', { name: 'Open' }));
+    await screen.findByRole('dialog');
+    await waitFor(() => expect(onControlInside()).toBe(false));
+  });
+  test('opened with the keyboard, the focus goes into the dialog', async () => {
+    render(<Opener />);
+    screen.getByRole('button', { name: 'Open' }).focus();
+    await userEvent.keyboard('{Enter}');
+    await screen.findByRole('dialog');
+    await waitFor(() => expect(onControlInside()).toBe(true));
+  });
+});
+
+describe('Hint (rule U10): a dialog where there is no hover, a tooltip with a mouse', () => {
+  test('on a phone a tap opens a dialog with the text, no header and a Close button that closes it', async () => {
+    const restore = media((q) => q.includes('767'));
+    render(<Hint content="Cashback is credited later" label="About the bonus" />);
+    await userEvent.click(screen.getByRole('button', { name: 'About the bonus' }));
+    const dialog = await screen.findByRole('dialog');
+    expect(dialog).toHaveTextContent('Cashback is credited later');
+    expect(dialog.querySelector('.bui-dialog__header')).toBeNull();
+    await userEvent.click(screen.getAllByRole('button', { name: 'Close' }).at(-1));
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+    restore();
+  });
+  test('with a mouse it opens no dialog: it is a tooltip', async () => {
+    const restore = media(() => false);
+    render(<Hint content="Cashback is credited later" label="About the bonus" />);
+    const trigger = screen.getByRole('button', { name: 'About the bonus' });
+    expect(trigger.getAttribute('aria-haspopup')).toBeNull();
+    await userEvent.click(trigger);
+    expect(screen.queryByRole('dialog')).toBeNull();
+    restore();
+  });
+});
+
+describe('Typeahead (rule M4): a sheet on a phone', () => {
+  test('on a phone the list opens in a dialog', async () => {
+    const restore = media((q) => q.includes('767'));
+    render(<Typeahead label="Game" options={[{ value: 'a', label: 'Alpha' }, { value: 'b', label: 'Beta' }]} />);
+    await userEvent.click(screen.getByRole('combobox'));
+    const dialog = await screen.findByRole('dialog');
+    expect(dialog.querySelector('[role="listbox"], [role="option"]')).not.toBeNull();
+    restore();
   });
 });
 

@@ -142,8 +142,9 @@ Every custom property is `--baseui-` plus lowercase kebab-case, with no exceptio
 ## Checks
 
 - `npm test` rebuilds the generated files first (`pretest`), then runs vitest and the Overgear tests. Every story must render, with no duplicate ids and a name on every button and link; the markup of ten complex components is also a snapshot.
-- `npm run typecheck` checks the `.jsx` sources (the built `.js` files are output and are not judged).
-- `npm run check` starts its own static server and runs the browser checks (radius, size ladder, constitution audit, spacing of the templates and of Overgear); it needs Playwright and takes a few minutes. `npm run verify` runs all three.
+- `npm run typecheck` checks the `.jsx` sources (the built `.js` files are output and are not judged); it is incremental, a second run takes a few seconds.
+- `npm run check` starts its own static server and runs the browser checks (`tools/check/manifest.mjs`), three at a time, each opening its pages several at a time and waiting for a page to be ready, not for a fixed time; all of them take about two minutes. It needs Playwright.
+- `npm run verify` runs what the changed files call for (`tools/check/plan.mjs`: a page of the example about 20 seconds, baseui under two minutes); `npm run verify:full` runs everything.
 - `npm run check:generated` rebuilds and fails if `registry.json`, `r/`, `types/` or the constitution files differ from what is committed. They stay in git on purpose: the registry is served from the repository and agents read `CONSTITUTION.md` and `AGENTS.md` from it.
 
 ## Add a component

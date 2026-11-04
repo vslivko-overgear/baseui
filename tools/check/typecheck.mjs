@@ -28,6 +28,8 @@ await writeFile(config, JSON.stringify({
     allowJs: true, checkJs: true, noEmit: true, jsx: 'react-jsx', module: 'esnext', moduleResolution: 'bundler', target: 'es2022',
     lib: ['es2023', 'dom', 'dom.iterable'], skipLibCheck: true, strict: false, noImplicitAny: false, allowImportingTsExtensions: true,
     types: [], maxNodeModuleJsDepth: 0,
+    // a second run checks only what changed since the first (the state of tsc is kept in node_modules/.cache)
+    incremental: true, tsBuildInfoFile: 'node_modules/.cache/baseui-typecheck.tsbuildinfo',
   },
   files,
 }));
