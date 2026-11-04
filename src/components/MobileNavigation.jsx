@@ -12,7 +12,7 @@ export function Navbar({ title, subtitle, showBack = true, titleVisible = true, 
   return (
     <header data-slot="navbar" className={cx('bui-navbar', isFloating && 'bui-navbar--floating', className)} {...themeAttrs({ glass })} {...rest}>
       <div data-slot="navbar-side" className="bui-navbar__side">
-        {showBack && <IconButton variant="ghost" size="md" className="bui-navbar__back" label={backLabel} tooltip={false} icon={<BuiltinIcon name="chevronLeft" size={24} />} onClick={onBack} />}
+        {showBack && <IconButton variant="ghost" size="md" className="bui-navbar__back" label={backLabel} tooltip={false} icon={<BuiltinIcon name="arrowLeft" size={24} />} onClick={onBack} />}
       </div>
       <div data-slot="navbar-heading" className="bui-navbar__heading">
         <h1 data-slot="navbar-title" className="bui-navbar__title" data-hidden={titleVisible ? undefined : ''} aria-hidden={titleVisible ? undefined : true}>

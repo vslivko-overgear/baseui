@@ -165,7 +165,7 @@ export function Checkout() {
       ) : (
         <>
           <div className="og-wrap og-checkout__top">
-            <IconButton variant="secondary" size="sm" label="Back" icon={<Icon name="ChevronLeft" size={20} />} onClick={() => window.history.back()} />
+            <IconButton variant="secondary" size="sm" label="Back" icon={<Icon name="ArrowLeft" size={20} />} onClick={() => window.history.back()} />
             <a className="og-checkout__logo" href={href('/')} aria-label="Overgear"><img src={LOGO_FULL} alt="" width="145" height="32" /></a>
           </div>
           <Divider />
