@@ -62,6 +62,8 @@ function Shell() {
   const bare = route.parts[0] === 'checkout';   // the checkout has a slim top bar and no footer of its own shop
   const settings = mobile && route.parts[0] === 'account' && route.query.tab === 'settings';
   const orders = settings || (mobile && ['orders', 'order', 'rank', 'wallet'].includes(route.parts[0]));   // behind the account: a bar with back, and no header and no footer of the shop
+  // no bottom bar on the pages behind the account (they have the navbar with back) and on an offer (it has the pay bar pinned at the bottom instead)
+  const hideTabs = orders || (mobile && route.parts[0] === 'offer');
   const tab = orders || (mobile && (route.parts[0] === 'catalog' || ['cart', 'account'].includes(route.parts[0])));
   return (
     <div className={cx('og', mobile && 'og--mobile', tab && 'og--tab')}>
@@ -70,7 +72,7 @@ function Shell() {
         <Body route={route} onLogin={() => setLogin(true)} mobile={mobile} />
       </main>
       {!tab && !bare && <Footer />}
-      {mobile && !bare && <MobileBar route={route} />}
+      {mobile && !bare && !hideTabs && <MobileBar route={route} />}
       <CartDrawer open={mini} onClose={() => setMini(false)} />
       <LoginDialog open={login} onClose={() => setLogin(false)} />
       <TopUpDialog />

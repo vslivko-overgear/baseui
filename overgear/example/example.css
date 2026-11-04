@@ -468,6 +468,7 @@ a { color: inherit; }
 /* the content leaves room for the bar: it is not hidden behind it */
 .og--mobile .og-wrap:has(.og-paybar) { padding-bottom: calc(var(--og-paybar-h) + var(--baseui-spacing-4)); }
 .og--mobile.og--tab .og-wrap:has(.og-paybar) { padding-bottom: calc(var(--og-bottom) + var(--og-paybar-h) + var(--baseui-spacing-4)); }
+.og--mobile:has(.og-paybar) .og-footer { padding-bottom: calc(var(--og-paybar-h) + var(--baseui-spacing-8)); }   /* the footer ends above the pay bar pinned at the bottom */
 .og--mobile .og-checkout:has(.og-paybar) .og-checkout__foot { padding-bottom: calc(var(--og-paybar-h) + var(--baseui-spacing-4)); }
 
 

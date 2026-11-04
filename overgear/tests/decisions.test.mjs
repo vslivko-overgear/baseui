@@ -44,4 +44,12 @@ describe('decisions of the product', () => {
     const app = sources.find(([f]) => f === 'app.jsx')[1];
     expect(app, 'the settings have the bar with back on a phone').toMatch(/route\.query\.tab === 'settings'/);
   });
+
+  test('on a phone the pages behind the account and the offer have no bottom bar, and the offer pins its pay bar', () => {
+    const app = sources.find(([f]) => f === 'app.jsx')[1];
+    expect(app).toMatch(/const hideTabs = orders \|\| \(mobile && route\.parts\[0\] === 'offer'\)/);
+    expect(app).toMatch(/!hideTabs && <MobileBar/);
+    const offer = sources.find(([f]) => f === 'offer.jsx')[1];
+    expect(offer).toMatch(/\{mobile && <PayBar amount=/);
+  });
 });

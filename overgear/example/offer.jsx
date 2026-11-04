@@ -16,6 +16,7 @@ import { Hint } from '../../src/components/Hint.jsx';
 import { Bleed } from '../../src/components/Layout.jsx';
 import { go, useMedia } from './util.js';
 import { OFFERS, REVIEWS, SERVICES, money, offerOf, gameOf, sold } from './data.js';
+import { PayBar } from './order.jsx';
 import { useAddedToCart, Page, PageHead, Section, OfferListing, Stars, WishButton, CashbackTag, CASHBACK, PaymentLogos, PAY_OFFER } from './ui.jsx';
 import { useStore } from './store.jsx';
 import { Faq } from './games.jsx';
@@ -178,19 +179,21 @@ export function Offer({ id }) {
           <div className="og-stack og-sticky">
             <Card variant="surface" padding={5}>
               <div className="og-stack">
-                <div className="og-stack">
-                  <div className="og-pricerow">
-                    <p className="og-price og-price--lg">{money(unit * qty)}</p>
-                    <CashbackTag size="lg" label={`Cashback ${CASHBACK}%`} />
+                {!mobile && (
+                  <div className="og-stack">
+                    <div className="og-pricerow">
+                      <p className="og-price og-price--lg">{money(unit * qty)}</p>
+                      <CashbackTag size="lg" label={`Cashback ${CASHBACK}%`} />
+                    </div>
+                    {qty > 1 && <p className="og-meta">{`${money(unit)} each`}</p>}
                   </div>
-                  {qty > 1 && <p className="og-meta">{`${money(unit)} each`}</p>}
-                </div>
+                )}
                 <ul className="og-facts" data-test-id="offer-facts">
                   <li><Icon name="Clock" size={20} /><span><b>15 minutes</b> average start time</span></li>
                   <li><Icon name="Clock" size={20} /><span><b>3 hours 15 minutes</b> order completion</span></li>
                 </ul>
                 <div className="og-stack">
-                  <Button variant="primary" size="lg" width="100%" label="Add to cart" icon={<Icon name="ShoppingCart01" size={24} />} onClick={add} />
+                  {!mobile && <Button variant="primary" size="lg" width="100%" label="Add to cart" icon={<Icon name="ShoppingCart01" size={24} />} onClick={add} />}
                   <div className="og-offer-pay"><PaymentLogos items={PAY_OFFER} /></div>
                   <p className="og-guarantee" data-test-id="offer-guarantee"><Icon name="ShieldTick" size={20} />100% moneyback guarantee</p>
                 </div>
@@ -214,6 +217,7 @@ export function Offer({ id }) {
           </div>
         </Section>
       )}
+      {mobile && <PayBar amount={unit * qty} action="Add to cart" onClick={add} />}
     </Page>
   );
 }
