@@ -101,7 +101,7 @@ export function Offer({ id }) {
   // the price and the buttons, the facts and the payment methods, and the reasons to trust: a column at the right on a desktop; on a phone under the form of the order
   const aside = (
   <div className="og-stack og-sticky">
-    <Card variant="surface" padding={5}>
+    <Card variant="surface" padding={5} style={{ paddingInline: 'var(--bui-spacing-6)' }}>
       <div className="og-stack">
         {(
           <div className="og-stack">
@@ -122,7 +122,7 @@ export function Offer({ id }) {
         </div>
       </div>
     </Card>
-    <Card variant="surface" padding={5}>
+    <Card variant="surface" padding={5} style={{ paddingInline: 'var(--bui-spacing-6)' }}>
       <div className="og-stack og-stack--lg">
         <ul className="og-trust">
           {TRUST.map(([icon, t, d]) => (

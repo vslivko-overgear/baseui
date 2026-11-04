@@ -79,7 +79,7 @@ a { color: inherit; }
 .og-grid--cards { --og-min: 260px; }
 .og-grid--three { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
 .og-split { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: var(--bui-spacing-8); align-items: start; }
-.og-split--right { grid-template-columns: minmax(0, 1fr) 360px; }
+.og-split--right { grid-template-columns: minmax(0, 1fr) 376px; }   /* the column of the price: a little wider, with the side padding of 24 */
 .og-sticky { position: sticky; top: calc(var(--og-header-h) + var(--bui-spacing-6)); }   /* under the sticky header (72) and 24 from it */
 .og-tile { display: flex; flex-direction: column; gap: var(--bui-spacing-3); min-height: 96px; justify-content: flex-end; }
 .og-art { aspect-ratio: 16 / 9; border-radius: var(--bui-radius-custom-14); display: grid; place-items: center; color: var(--bui-text-and-icon-primary); background: var(--bui-background-tertiary); }
