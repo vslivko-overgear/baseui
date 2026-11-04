@@ -2830,7 +2830,7 @@ textarea.bui-input {
 .bui-tooltip { position: relative; display: inline-flex; }
 .bui-tooltip__bubble {
   position: fixed; z-index: var(--bui-z-index-50); width: max-content; max-width: 280px; pointer-events: none;
-  padding: var(--bui-spacing-1-5) var(--bui-spacing-3); border-radius: var(--bui-radius-xl);
+  padding: calc(var(--bui-spacing-1-5) + var(--bui-spacing-1)) calc(var(--bui-spacing-3) + var(--bui-spacing-1)); border-radius: var(--bui-radius-xl);   /* the room round the text: 4 more on every side (10 / 16) */
   background: var(--bui-extensions-background-inverse-primary); color: var(--bui-extensions-text-and-icon-on-color);
   font: var(--bui-typography-text-14-regular); animation: bui-fade var(--bui-duration-150) var(--bui-ease-out);
 }
@@ -2855,7 +2855,7 @@ html[data-motion="off"] .bui-tooltip__bubble, html[data-motion="off"] .bui-toolt
 .bui-hint:focus-visible { outline: var(--bui-focus-outline-width) var(--bui-focus-outline-style) var(--bui-focus-outline-color); outline-offset: var(--bui-focus-outline-offset); }
 @media (hover: hover) { .bui-hint:hover { color: var(--bui-text-and-icon-primary); } }
 .bui-hint--wrap { display: inline-flex; color: inherit; border-radius: inherit; }
-.bui-hint__text { margin: 0; font: var(--bui-typography-text-16-regular); color: var(--bui-text-and-icon-primary); }
+.bui-hint__text { margin: 0; padding: var(--bui-spacing-1); font: var(--bui-typography-text-16-regular); color: var(--bui-text-and-icon-primary); }
 
 /* ---------- Glass ----------
    Translucent surfaces that blur what is behind them. [data-glass="on"] on <html> turns it on for the theme ([data-glass="dropdowns"] only for the menus of dropdowns); the glass prop of a component
