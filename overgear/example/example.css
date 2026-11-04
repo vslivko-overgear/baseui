@@ -402,8 +402,10 @@ a { color: inherit; }
 .og-order__title { padding: 0; }   /* lower than it was, and close to the blocks under it (the padding of .og-co is the rest) */
    /* 4px under the bar of the phone */
 .og-co__main { gap: var(--baseui-spacing-12); }   /* the sections of the left column (the items, the payment method, the promo code) are further apart than the items are from each other */
-.og--mobile .og-co__main { gap: var(--baseui-spacing-8); }
+.og--mobile .og-co__main { gap: var(--baseui-spacing-6); }   /* the sections of the checkout on a phone: 24px apart (a group), it was 32px */
 .og-co__pay > .og-h2 { margin-bottom: var(--baseui-spacing-2); }   /* the heading of the methods stands 24px from them */
+.og--mobile .og-co__pay > .og-h2 { margin-bottom: 0; }   /* on a phone 16px: a heading is at least 16 and at most 60% of its size from what it names */
+.og--mobile .og-checkout .og-co { padding-top: var(--bui-rel-related); }   /* the checkout: 16px between the title and the first card (it was 0) */
 .og-co { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: var(--baseui-spacing-12); align-items: start; padding-block: var(--baseui-spacing-6) var(--baseui-spacing-16); }
 .og-checkout__main { flex: 1; }
 .og-checkout .og-sticky { top: var(--baseui-spacing-6); }   /* the checkout has no header that sticks: the summary stays 24px from the top, not under a header that is not there */
