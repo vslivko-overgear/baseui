@@ -714,7 +714,5 @@ a { color: inherit; }
 
 /* the footer of a phone ends above the bottom bar of the tabs; a page without the tabs (an offer, the pages behind the account) has the usual padding (the pay bar keeps its own room) */
 .og--mobile:not(:has(.og-bottom)) .og-footer { padding-bottom: var(--baseui-spacing-8); }
-/* the offer on a phone: the big blocks are 8px further apart (the form, the purchase and the trust cards 24px, the tags above the form stay 16px from it, the groups of the description and the listing under them 40px) */
+/* the offer on a phone: the groups of the description are 40px apart (the cards of the order, the purchase and the trust stay 16px, as the other cards) */
 .og--mobile .og-split--right .og-stack--xl { gap: var(--bui-rel-section); }
-.og--mobile .og-split--right > .og-stack > .og-stack:first-child > .og-sticky { margin-top: var(--baseui-spacing-2); }   /* the tags and the form stay 16px apart; the form and the cards under it are 24px (16 and 8) */
-.og--mobile .og-split--right .og-sticky { gap: var(--bui-rel-group); }
