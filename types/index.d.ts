@@ -171,12 +171,12 @@ export function AvatarStatusDot(props: AvatarStatusDotProps): ReactElement | nul
 
 export interface BadgeProps {
   /**
-   * primary is the inverse of the page, secondary a soft gray; accent, success, warning and critical are solid colors (with `light`, a tint)
+   * primary is the inverse of the page, secondary a soft gray; accent, success, warning and critical are solid colors, and each has a light version (`accent-light`, …), the tint of it in the Extensions backgrounds with the main text color, for a list, a table or many tags in a row
    * @default 'secondary'
    */
-  variant?: 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'critical';
+  variant?: 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'critical' | 'accent-light' | 'success-light' | 'warning-light' | 'critical-light';
   /**
-   * The light version of the color of the variant: a tint of it with the main text color, for places where a bright tag shouts (a list, a table, many tags in a row). Accent, success, warning and critical have it; primary and secondary are not colors and ignore it
+   * The same as a `-light` variant: `<Badge variant="warning" light />` is `<Badge variant="warning-light" />`. Primary and secondary ignore it
    * @default false
    */
   light?: boolean;

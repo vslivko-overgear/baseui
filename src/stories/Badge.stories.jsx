@@ -2,8 +2,8 @@ import { Badge } from '../components/Badge.jsx';
 import { Heart } from './_ui.jsx';
 import { meta, playground, example, Row } from './_helpers.jsx';
 
-const VARIANTS = ['primary', 'secondary', 'accent', 'success', 'warning', 'critical'];
 const COLORS = ['accent', 'success', 'warning', 'critical'];
+const VARIANTS = ['primary', 'secondary', ...COLORS, ...COLORS.map((c) => `${c}-light`)];
 export default meta({
   title: 'Components/Badge',
   component: Badge,
@@ -29,13 +29,10 @@ export const Variants = example({
       {VARIANTS.map((v) => (
         <Badge key={v} variant={v} label={v} />
       ))}
-      {COLORS.map((v) => (
-        <Badge key={`${v}-light`} variant={v} light label={`${v} light`} />
-      ))}
     </Row>
   ),
   source: `<Badge variant="accent" label="accent" />
-<Badge variant="accent" light label="accent light" />`,
+<Badge variant="accent-light" label="accent-light" />`,
 });
 export const Light = example({
   name: 'Light',
@@ -43,11 +40,11 @@ export const Light = example({
   render: () => (
     <Row>
       {COLORS.map((v) => (
-        <Badge key={v} variant={v} light label={v} />
+        <Badge key={v} variant={`${v}-light`} label={`${v}-light`} />
       ))}
     </Row>
   ),
-  source: `<Badge variant="success" light label="Completed" />`,
+  source: `<Badge variant="success-light" label="Completed" />`,
 });
 export const Sizes = example({
   name: 'Sizes',

@@ -1,7 +1,10 @@
 import { cx } from '../react.js';
 import { describe } from '../doc.js';
 
-export function Badge({ variant = 'secondary', size = 'md', type = 'label', max = 99, disabled = false, light = false, label, icon, className, ...rest }) {
+export function Badge({ variant = 'secondary', size = 'md', type = 'label', max = 99, disabled = false, light: lightProp = false, label, icon, className, ...rest }) {
+  // `accent-light` is `accent` with `light`: the tint of the color, in the Extensions backgrounds
+  const light = lightProp || /-light$/.test(variant);
+  const color = variant.replace(/-light$/, '');
   if (type === 'dot')
     return (
       <span
@@ -14,7 +17,7 @@ export function Badge({ variant = 'secondary', size = 'md', type = 'label', max 
         className={cx(
           'bui-badge',
           'bui-badge--dot',
-          `bui-badge--${variant}`,
+          `bui-badge--${color}`,
           size !== 'md' && `bui-badge--${size}`,
           light && 'bui-badge--light',
           disabled && 'bui-badge--disabled',
@@ -33,7 +36,7 @@ export function Badge({ variant = 'secondary', size = 'md', type = 'label', max 
       className={cx(
         'bui-badge',
         type === 'counter' && 'bui-badge--counter',
-        `bui-badge--${variant}`,
+        `bui-badge--${color}`,
         size !== 'md' && `bui-badge--${size}`,
         light && 'bui-badge--light',
         disabled && 'bui-badge--disabled',
@@ -55,11 +58,11 @@ export function Badge({ variant = 'secondary', size = 'md', type = 'label', max 
 }
 describe(Badge, 'A compact label for a status, category or count', {
   variant: [
-    "'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'critical'",
+    "'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'critical' | 'accent-light' | 'success-light' | 'warning-light' | 'critical-light'",
     "'secondary'",
-    'primary is the inverse of the page, secondary a soft gray; accent, success, warning and critical are solid colors (with `light`, a tint)',
+    'primary is the inverse of the page, secondary a soft gray; accent, success, warning and critical are solid colors, and each has a light version (`accent-light`, …), the tint of it in the Extensions backgrounds with the main text color, for a list, a table or many tags in a row',
   ],
-  light: ['boolean', 'false', 'The light version of the color of the variant: a tint of it with the main text color, for places where a bright tag shouts (a list, a table, many tags in a row). Accent, success, warning and critical have it; primary and secondary are not colors and ignore it'],
+  light: ['boolean', 'false', 'The same as a `-light` variant: `<Badge variant="warning" light />` is `<Badge variant="warning-light" />`. Primary and secondary ignore it'],
   size: ["'sm' | 'md' | 'lg'", "'md'", 'Badge height: 18, 22 or 28px; the dot is 6, 8 or 10px'],
   type: ["'label' | 'counter' | 'dot'", "'label'", 'label is a text pill; counter is a round number; dot is a small mark with no text'],
   max: ['number', '99', 'Counter only: numbers above it show as `99+`'],
