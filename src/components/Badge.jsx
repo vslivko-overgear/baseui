@@ -1,9 +1,9 @@
 import { cx } from '../react.js';
 import { describe } from '../doc.js';
 
-export function Badge({ variant = 'secondary', size = 'md', type = 'label', max = 99, disabled = false, light: lightProp = false, label, icon, className, ...rest }) {
-  // `accent-light` is `accent` with `light`: the tint of the color, in the Extensions backgrounds
-  const light = lightProp || /-light$/.test(variant);
+export function Badge({ variant = 'secondary', size = 'md', type = 'label', max = 99, disabled = false, label, icon, className, ...rest }) {
+  // `accent-light` is the tint of `accent` (the light color of the Extensions backgrounds): the class says so, the color is the variant without the suffix
+  const light = /-light$/.test(variant);
   const color = variant.replace(/-light$/, '');
   if (type === 'dot')
     return (
@@ -62,7 +62,6 @@ describe(Badge, 'A compact label for a status, category or count', {
     "'secondary'",
     'primary is the inverse of the page, secondary a soft gray; accent, success, warning and critical are solid colors, and each has a light version (`accent-light`, …), the tint of it in the Extensions backgrounds with the main text color, for a list, a table or many tags in a row',
   ],
-  light: ['boolean', 'false', 'The same as a `-light` variant: `<Badge variant="warning" light />` is `<Badge variant="warning-light" />`. Primary and secondary ignore it'],
   size: ["'sm' | 'md' | 'lg'", "'md'", 'Badge height: 18, 22 or 28px; the dot is 6, 8 or 10px'],
   type: ["'label' | 'counter' | 'dot'", "'label'", 'label is a text pill; counter is a round number; dot is a small mark with no text'],
   max: ['number', '99', 'Counter only: numbers above it show as `99+`'],

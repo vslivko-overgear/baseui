@@ -23,7 +23,6 @@ A compact label for a status, category or count
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `variant` | `'primary' \| 'secondary' \| 'accent' \| 'success' \| 'warning' \| 'critical' \| 'accent-light' \| 'success-light' \| 'warning-light' \| 'critical-light'` | `'secondary'` | primary is the inverse of the page, secondary a soft gray; accent, success, warning and critical are solid colors, and each has a light version (`accent-light`, …), the tint of it in the Extensions backgrounds with the main text color, for a list, a table or many tags in a row |
-| `light` | `boolean` | `false` | The same as a `-light` variant: `<Badge variant="warning" light />` is `<Badge variant="warning-light" />`. Primary and secondary ignore it |
 | `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Badge height: 18, 22 or 28px; the dot is 6, 8 or 10px |
 | `type` | `'label' \| 'counter' \| 'dot'` | `'label'` | label is a text pill; counter is a round number; dot is a small mark with no text |
 | `max` | `number` | `99` | Counter only: numbers above it show as `99+` |

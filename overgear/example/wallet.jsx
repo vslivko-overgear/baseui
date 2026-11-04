@@ -70,7 +70,7 @@ export function BalanceCard() {
         </div>
         <div className="og-row og-row--wrap" data-test-id="wallet-bonuses">
           <span className="og-meta">Top-up bonus</span>
-          {BONUS_RULES.map((r) => <Badge key={r.refillAmount} variant="warning" light size="md" label={`+${r.percentage}% from ${money(r.refillAmount).replace('.00', '')}`} />)}
+          {BONUS_RULES.map((r) => <Badge key={r.refillAmount} variant="warning-light" size="md" label={`+${r.percentage}% from ${money(r.refillAmount).replace('.00', '')}`} />)}
         </div>
         <Button variant="primary" size="md" width="100%" label="Top up" icon={<Icon name="Plus" size={20} />} onClick={openTopUp} />
       </div>

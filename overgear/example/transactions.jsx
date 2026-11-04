@@ -36,9 +36,9 @@ const Amount = ({ t }) => (
   </span>
 );
 
-// the state is a colored tag, in its light version: green is done, yellow waits, red failed, the others are neutral or orange
-const TAG = { completed: 'success', pending: 'warning', hold: 'warning', failed: 'critical', cancelled: 'secondary', arbitrage: 'accent' };
-const Status_ = ({ t }) => <Badge variant={TAG[t.state] || 'secondary'} light size="sm" label={STATE_LABEL[t.state] || t.state} data-state={t.state} />;
+// the state is a colored tag, in its light version: green is done, yellow waits, red failed, blue is in arbitration, the others are neutral
+const TAG = { completed: 'success-light', pending: 'warning-light', hold: 'warning-light', failed: 'critical-light', cancelled: 'secondary', arbitrage: 'accent-light' };
+const Status_ = ({ t }) => <Badge variant={TAG[t.state] || 'secondary'} size="sm" label={STATE_LABEL[t.state] || t.state} data-state={t.state} />;
 
 /** A transaction: a card of its own. On the left what it is (the title, what it was for, the date), on the right how much and the state. */
 function Transaction({ t }) {

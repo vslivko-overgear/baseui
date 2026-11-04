@@ -661,8 +661,8 @@ describe('an error goes at the first change of the value, in any field (no help 
 });
 
 describe('Badge light', () => {
-  test('light adds the light class to a label and to a dot, and leaves the variant', () => {
-    const { container } = render(<><Badge variant="success" light label="Done" /><Badge variant="critical" light type="dot" label="Failed" /><Badge variant="success" label="Plain" /></>);
+  test('a -light variant adds the light class to a label and to a dot, and keeps the color of the variant', () => {
+    const { container } = render(<><Badge variant="success-light" label="Done" /><Badge variant="critical-light" type="dot" label="Failed" /><Badge variant="success" label="Plain" /></>);
     const [a, b, c] = [...container.querySelectorAll('[data-slot="badge"]')];
     expect(a.className).toContain('bui-badge--success');
     expect(a.className).toContain('bui-badge--light');

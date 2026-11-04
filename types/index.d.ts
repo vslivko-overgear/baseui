@@ -176,11 +176,6 @@ export interface BadgeProps {
    */
   variant?: 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'critical' | 'accent-light' | 'success-light' | 'warning-light' | 'critical-light';
   /**
-   * The same as a `-light` variant: `<Badge variant="warning" light />` is `<Badge variant="warning-light" />`. Primary and secondary ignore it
-   * @default false
-   */
-  light?: boolean;
-  /**
    * Badge height: 18, 22 or 28px; the dot is 6, 8 or 10px
    * @default 'md'
    */

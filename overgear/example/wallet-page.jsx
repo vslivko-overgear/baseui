@@ -17,7 +17,7 @@ import { useRank, RankBadge } from './rank.jsx';
 import { SUBSCRIPTIONS, coinsText, openTopUp } from './wallet-core.js';
 
 /** The reward of a subscription: the coins it pays, big, in the tag of the bonuses. */
-const Reward = ({ coins, paid }) => <Badge variant="warning" light size="lg" icon={<CashbackMark />} label={paid ? `+${coins} received` : `+${coins}`} data-test-id="subscription-reward" />;
+const Reward = ({ coins, paid }) => <Badge variant="warning-light" size="lg" icon={<CashbackMark />} label={paid ? `+${coins} received` : `+${coins}`} data-test-id="subscription-reward" />;
 
 /** A subscription: what it is, the reward, and the button that turns it on; the button becomes the status "Subscribed" (to whom, for the email), and the reward is paid once. The email has a switch for the wishlist notifications. */
 function Subscription({ item }) {
