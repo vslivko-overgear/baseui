@@ -170,7 +170,12 @@ code.val { background: none; padding: 0; color: var(--baseui-text-and-icon-secon
 .motion-row .val { display: block; font: var(--baseui-typography-text-12-regular); color: var(--baseui-text-and-icon-secondary); }
 .motion-track { position: relative; height: 40px; border-radius: var(--baseui-radius-xl); background: var(--baseui-background-secondary); }
 .motion-ball { position: absolute; top: 4px; bottom: 4px; width: 32px; border-radius: var(--baseui-radius-lg); background: var(--baseui-background-brand); }
-@media (max-width: 767px) { .space-row, .motion-row { grid-template-columns: 1fr; } }
+.space-row--relation { grid-template-columns: 200px 1fr 60px minmax(0, 1.4fr); align-items: start; }
+.space-relation__what { display: flex; flex-direction: column; gap: var(--baseui-spacing-2); font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-secondary); }
+.space-relation__what strong { color: var(--baseui-text-and-icon-primary); font-weight: 700; }
+.space-relation__demo { display: flex; flex-direction: column; width: 96px; }   /* two blocks apart by the relation */
+.space-relation__demo i { display: block; height: 16px; border-radius: var(--baseui-radius-md); background: var(--baseui-background-secondary); }
+@media (max-width: 767px) { .space-row, .motion-row, .space-row--relation { grid-template-columns: 1fr; } }
 
 /* sidebar header, search, preview width */
 .search { padding-top: 0; }
