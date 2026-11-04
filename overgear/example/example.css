@@ -611,7 +611,7 @@ a { color: inherit; }
 
 /* the profile popup is drawn like the panel of a Dropdown: 4px between the panel and the rows (the rows bleed 12px, so 16px of side padding), radius 20px, rows 16px */
 .og-acc__pop { width: 360px; max-width: calc(100vw - 2 * var(--baseui-spacing-3)); padding: var(--baseui-spacing-1) var(--baseui-spacing-4); border-radius: var(--baseui-radius-custom-20); }
-.og-acc__div { margin-block: var(--baseui-spacing-2); }
+.og-acc__div { margin-block: calc(var(--baseui-spacing-2) + var(--baseui-spacing-1) / 2); }   /* 10px above and below the divider of the profile */
 /* the profile row: 12px above and below the avatar, as at its side; its corners are concentric with the row (16px - 12px = 4px) */
 .og-profilerow .bui-list__header { min-height: calc(40px + 2 * var(--baseui-spacing-3)); }
 .og-profilerow__avatar { border-radius: var(--baseui-radius-sm); }
