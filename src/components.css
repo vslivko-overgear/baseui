@@ -2830,7 +2830,7 @@ textarea.bui-input {
 .bui-tooltip { position: relative; display: inline-flex; }
 .bui-tooltip__bubble {
   position: fixed; z-index: var(--bui-z-index-50); width: max-content; max-width: 280px; pointer-events: none;
-  padding: calc(var(--bui-spacing-1-5) + var(--bui-spacing-1)) calc(var(--bui-spacing-3) + var(--bui-spacing-1)); border-radius: var(--bui-radius-xl);   /* the room round the text: 4 more on every side (10 / 16) */
+  padding: calc(var(--bui-spacing-1-5) + var(--bui-spacing-1)) calc(var(--bui-spacing-3) + var(--bui-spacing-1)); border-radius: var(--bui-radius-2xl);   /* the room round the text: 4 more on every side (10 / 16), and the corner 4 more (16) */
   background: var(--bui-extensions-background-inverse-primary); color: var(--bui-extensions-text-and-icon-on-color);
   font: var(--bui-typography-text-14-regular); animation: bui-fade var(--bui-duration-150) var(--bui-ease-out);
 }

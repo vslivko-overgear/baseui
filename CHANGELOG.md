@@ -2,7 +2,7 @@
 
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
-- Hint and Tooltip: 4px more room round the text on every side: the bubble has 10px at the top and bottom and 16px at the sides (it was 6 and 12), and the text of the dialog of a hint on a touch screen has 4px of its own. Not run: the browser checks beyond the plan
+- Hint and Tooltip: 4px more room round the text on every side: the bubble has 10px at the top and bottom and 16px at the sides (it was 6 and 12) and the corner is 16 (it was 12), and the text of the dialog of a hint on a touch screen has 4px of its own. Not run: the browser checks beyond the plan
 - Overgear: the count after a title is regular everywhere (it took the bold of the title: "Secure checkout 3", "My orders 34", the title of the cart panel, the favorites); a decision test holds that the counters of the titles are regular and secondary. Not run: the browser checks beyond the plan
 - Overgear: the side padding of the cards of the pages (the cards with the padding of 20) is 24 on a desktop (`--og-card-x`, `CARD_X`), on every page: the offer, the order, the rank, the settings, the wallet, the home and the games; on a phone it stays 20, also in the price column of an offer. Not run: the browser checks beyond the plan
 - Overgear, My orders: the tags of the statuses are the light colors (`accent-light`, `success-light`, `warning-light`, `critical-light`), as in the payment history, in the list and on the page of an order; the paginator is replaced by an endless scroll on a desktop and on a phone: 20 cards at a time, the next 20 come when the end of the list is 400px away, and the Show More button is gone. Not run: the browser checks beyond the plan
