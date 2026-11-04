@@ -38,6 +38,7 @@ describe('decisions of the product', () => {
     expect(css).toMatch(/\.og--mobile \.og-page--bar \{ padding-top: 0; \}/);
     expect(css).toMatch(/\.og--mobile \.og-co \{[^}]*padding-top: 0;/);
     expect(css, 'a page under a bar with a padding of its own').not.toMatch(/\.og-page--bar:has\([^)]*\) \{ padding-top: (?!0)/);
+    expect(css, 'no breadcrumbs under the navbar of a phone').toMatch(/\.og--mobile \.og-page--bar \.bui-breadcrumbs \{ display: none; \}/);
     const account = sources.find(([f]) => f === 'account.jsx')[1];
     expect(account).toMatch(/<Page bar=\{tab === 'settings'\}>/);
     const app = sources.find(([f]) => f === 'app.jsx')[1];

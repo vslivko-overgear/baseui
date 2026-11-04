@@ -1437,6 +1437,8 @@
 /* the icon of the edge buttons stands on the margin of the content: the button (48px, icon 24px) reaches 12px past it */
 .bui-navbar:not(.bui-navbar--floating) .bui-navbar__side:not(.bui-navbar__side--end) > [data-slot="icon-button"]:first-child { margin-inline-start: calc(var(--baseui-spacing-3) * -1); }
 .bui-navbar:not(.bui-navbar--floating) .bui-navbar__side--end > [data-slot="icon-button"]:last-child { margin-inline-end: calc(var(--baseui-spacing-3) * -1); }
+/* the arrow is drawn 9px inside its 24px box, so the box is moved to put the point of the arrow on the margin of the page, where the titles and the content start (the button keeps its size) */
+.bui-navbar:not(.bui-navbar--floating) .bui-navbar__back svg { translate: -9px 0; }
 .bui-navbar__heading { min-width: 0; text-align: center; }
 .bui-navbar__title { margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: var(--baseui-typography-text-16-regular); }
 .bui-navbar__title { transition: opacity var(--baseui-duration-200, 200ms) ease; }

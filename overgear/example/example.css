@@ -322,6 +322,8 @@ a { color: inherit; }
 .og--mobile .og-page--crumbs { padding-top: calc(var(--baseui-spacing-4) - 4px); }
 /* a page that starts under a bar on a phone (the navbar with back, or the search of the catalog): its content starts right under the bar, 0 from it */
 .og--mobile .og-page--bar { padding-top: 0; }
+/* the account and the pages behind it have the navbar with back on a phone, so the breadcrumbs are not drawn there (they stay on a desktop) */
+.og--mobile .og-page--bar .bui-breadcrumbs { display: none; }
 .og--mobile .og-catalog__left .bui-control-row { --row-text: 14px; }   /* the text of the search is the text of the search of the header */
 .og--mobile .og-catalog__search .bui-input, .og--mobile .og-catalog__search .bui-field__label { font-size: 14px; }
 
