@@ -688,7 +688,6 @@ a { color: inherit; }
 .og-tx__link:hover { text-decoration: underline; }
 .og-tx__sub { font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-secondary); overflow-wrap: anywhere; }
 .og-tx__amount { font: var(--baseui-typography-text-16-regular); font-weight: 700; color: var(--baseui-text-and-icon-primary); white-space: nowrap; }   /* the main color for every direction: the sign says it */
-.og-tx__state { font: var(--baseui-typography-text-14-regular); color: var(--baseui-text-and-icon-secondary); }   /* a completed payment is a quiet word */
 .og-tx__side { display: flex; flex-direction: column; align-items: flex-end; gap: var(--baseui-spacing-1); text-align: end; flex: none; }
 .og-tx__empty { text-align: center; }
 /* the games of the home page on a desktop: blocks of two rows of tiles of different widths that always fit the width with no scroll (the widths are proportions, see fitTiles); the rows of a block grow to its width */

@@ -77,20 +77,16 @@ export const signOf = (t) => {
   return d === 'incoming' ? '+' : d === 'outgoing' ? '-' : '';
 };
 
-/** The amount as the page writes it: "$24.00", or "5.00 OG Coins" for coins. */
-export const amountText = (t) => {
-  const n = (+t.amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  return t.currency === 'COINS' ? `${n} OG Coins` : `$${n}`;
-};
+/** The number of an amount, two decimals: "24.00". */
+export const numberText = (t) => (+t.amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+/** The amount as it is read: "$24.00", or "5.00 OG Coins" for coins (the page draws the mark of the coins for the words). */
+export const amountText = (t) => (t.currency === 'COINS' ? `${numberText(t)} OG Coins` : `$${numberText(t)}`);
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-/** The date as the real service writes it: "03 Nov 2026 11:08 (GMT+3)", in the time zone of the viewer. */
+/** The date as the page writes it: "03 Nov 2026 11:08", in the time zone of the viewer (the zone is not written). */
 export const dateText = (time) => {
   const d = new Date(time);
   const pad = (n) => String(n).padStart(2, '0');
-  const offset = d.getTimezoneOffset();
-  const hours = Math.floor(Math.abs(offset) / 60);
-  const minutes = Math.abs(offset) % 60;
-  const zone = `GMT${offset <= 0 ? '+' : '-'}${hours}${minutes ? `:${pad(minutes)}` : ''}`;
-  return `${pad(d.getDate())} ${MONTHS[d.getMonth()]} ${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())} (${zone})`;
+  return `${pad(d.getDate())} ${MONTHS[d.getMonth()]} ${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
 };

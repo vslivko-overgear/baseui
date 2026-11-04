@@ -10,9 +10,9 @@ import { Selector } from '../../src/components/Selector.jsx';
 import { Status } from '../../src/components/Status.jsx';
 import { go, href } from './util.js';
 import { gameOf } from './data.js';
-import { Page, PageHead } from './ui.jsx';
+import { Page, PageHead, CashbackMark } from './ui.jsx';
 import { useStore } from './store.jsx';
-import { DIRECTION_OPTIONS, STATE_LABEL, transactionsOf, filterTransactions, pagesOf, pageOf, titleOf, shownDirection, signOf, amountText, dateText } from './transactions-core.js';
+import { DIRECTION_OPTIONS, STATE_LABEL, transactionsOf, filterTransactions, pagesOf, pageOf, titleOf, shownDirection, signOf, amountText, numberText, dateText } from './transactions-core.js';
 
 /** The title of a row: a payment or a cashback for an order is a link to the order. */
 function Title({ t }) {
@@ -21,14 +21,16 @@ function Title({ t }) {
   return <a className="og-tx__title og-tx__link" href={href(`/order/${t.orderLink}`)} onClick={(e) => { e.preventDefault(); go(`/order/${t.orderLink}`); }} data-test-id={`transaction-order-link-${t.id}`}>{`${text} ${t.orderLink}`}</a>;
 }
 
-/** The amount, in the main color: the sign says the direction (a plus comes in, a minus goes out), the color does not shout it. */
-const Amount = ({ t }) => <span className="og-tx__amount" data-direction={shownDirection(t)}>{`${signOf(t)}${signOf(t) ? ' ' : ''}${amountText(t)}`}</span>;
+/** The amount, in the main color: the sign says the direction (a plus comes in, a minus goes out), the color does not shout it. Coins are the number and the mark of the coins, not the words. */
+const Amount = ({ t }) => (
+  <span className="og-tx__amount" data-direction={shownDirection(t)} aria-label={`${signOf(t)} ${amountText(t)}`.trim()}>
+    {signOf(t) ? `${signOf(t)} ` : ''}{t.currency === 'COINS' ? <span className="og-cbtag">{numberText(t)}<CashbackMark /></span> : `$${numberText(t)}`}
+  </span>
+);
 
-// the state: a completed payment is a quiet word; only what is not completed is marked (a badge marks an exception)
-const BADGE = { pending: 'warning-light', hold: 'warning-light', failed: 'error', cancelled: 'secondary', arbitrage: 'secondary' };
-const Status_ = ({ t }) => (t.state === 'completed'
-  ? <span className="og-tx__state" data-state={t.state}>{STATE_LABEL[t.state]}</span>
-  : <Badge variant={BADGE[t.state] || 'secondary'} size="sm" label={STATE_LABEL[t.state] || t.state} data-state={t.state} />);
+// the state is a colored tag, a color for each: green is done, yellow waits, red failed, the others are neutral or orange
+const TAG = { completed: 'green-light', pending: 'warning-light', hold: 'warning-light', failed: 'error', cancelled: 'secondary', arbitrage: 'orange' };
+const Status_ = ({ t }) => <Badge variant={TAG[t.state] || 'secondary'} size="sm" label={STATE_LABEL[t.state] || t.state} data-state={t.state} />;
 
 /** A transaction: a card of its own. On the left what it is (the title, what it was for, the date), on the right how much and the state. */
 function Transaction({ t }) {
