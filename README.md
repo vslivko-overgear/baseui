@@ -114,7 +114,7 @@ Every custom property is `--bui-` plus lowercase kebab-case, with no exceptions 
 
 | Group | Names |
 |---|---|
-| Color | `text-and-icon-*`, `background-*`, `border-*`, `accent-colors-*`, `extensions-*` (the roles of the Figma library, in kebab-case: `extensions-text-and-icon-on-color`) |
+| Color | `text-and-icon-*`, `background-*`, `border-*`, `extensions-*` (the roles of the Figma library, in kebab-case: `extensions-text-and-icon-on-color`) |
 | Spacing | `spacing-0, 0-5, 1 … 20`: 1 gap = 4px, a token is its number of gaps (`spacing-4` is 16px) |
 | Radius | Tailwind's names: `radius-none · sm · md · lg · xl · 2xl · 3xl · 4xl · full` (4, 6, 8, 12, 16, 24, 32px), plus the custom radii `radius-custom-10 · 14 · 20 · 28`: agents do not use them by default, only on request or to keep corners concentric (see Foundations / Radius) |
 | Shadow | `shadow-sm · md · lg` |

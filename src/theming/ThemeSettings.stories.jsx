@@ -75,7 +75,7 @@ describe(ThemePreview, 'The theme of this site and of your own app: the settings
     'A ready set of the settings below; changing any of them switches it to custom',
   ],
   brand: [
-    "'default' | 'blue' | 'green' | 'pink' | 'orange' | 'red' | 'blue-light' | 'green-light' | 'custom'",
+    "'default' | 'blue' | 'green' | 'orange' | 'red' | 'custom'",
     "'default'",
     'Brand color: primary buttons, the slider, the current step and page. default is black in the light theme and white in the dark one',
   ],

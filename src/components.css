@@ -88,25 +88,25 @@
 .bui-badge--warning { background: var(--bui-extensions-background-warning); color: var(--bui-extensions-text-and-icon-always-dark); }
 .bui-badge--warning-light { background: var(--bui-extensions-background-light-warning); color: var(--bui-text-and-icon-primary); }
 .bui-badge--error { background: var(--bui-extensions-background-error); color: var(--bui-extensions-text-and-icon-always-dark); }
-.bui-badge--blue { background: var(--bui-accent-colors-blue); color: var(--bui-extensions-text-and-icon-on-color); }
-.bui-badge--blue-light { background: var(--bui-accent-colors-blue-light); color: var(--bui-extensions-text-and-icon-always-dark); }
-.bui-badge--green { background: var(--bui-accent-colors-green); color: var(--bui-extensions-text-and-icon-always-dark); }
-.bui-badge--green-light { background: var(--bui-accent-colors-green-light); color: var(--bui-extensions-text-and-icon-always-dark); }
-.bui-badge--orange { background: var(--bui-accent-colors-orange); color: var(--bui-extensions-text-and-icon-always-dark); }
+.bui-badge--blue { background: var(--bui-background-accent); color: var(--bui-extensions-text-and-icon-on-color); }
+.bui-badge--blue-light { background: var(--bui-extensions-background-light-accent); color: var(--bui-text-and-icon-primary); }
+.bui-badge--green { background: var(--bui-extensions-background-success); color: var(--bui-extensions-text-and-icon-always-dark); }
+.bui-badge--green-light { background: var(--bui-extensions-background-light-success); color: var(--bui-text-and-icon-primary); }
+.bui-badge--orange { background: var(--bui-extensions-background-warning); color: var(--bui-extensions-text-and-icon-always-dark); }
 .bui-badge--primary { background: var(--bui-extensions-background-inverse-primary); color: var(--bui-extensions-text-and-icon-on-color); }
-.bui-badge--pink { background: var(--bui-accent-colors-pink); color: var(--bui-extensions-text-and-icon-always-dark); }
-.bui-badge--red { background: var(--bui-accent-colors-red); color: var(--bui-extensions-text-and-icon-always-dark); }
+.bui-badge--pink { background: var(--bui-extensions-background-light-error); color: var(--bui-text-and-icon-primary); }
+.bui-badge--red { background: var(--bui-extensions-background-error); color: var(--bui-extensions-text-and-icon-always-dark); }
 /* light: the color of the variant as a tint, with the main text color, where a bright tag would shout. The semantic colors have tokens of their own (light in both themes); an accent color is mixed into the page */
 .bui-badge--light { color: var(--bui-text-and-icon-primary); }
 .bui-badge--light.bui-badge--info { background: var(--bui-extensions-background-light-accent); }
 .bui-badge--light.bui-badge--success { background: var(--bui-extensions-background-light-success); }
 .bui-badge--light.bui-badge--warning { background: var(--bui-extensions-background-light-warning); }
 .bui-badge--light.bui-badge--error { background: var(--bui-extensions-background-light-error); }
-.bui-badge--light.bui-badge--blue, .bui-badge--light.bui-badge--blue-light { background: color-mix(in oklab, var(--bui-accent-colors-blue) 32%, var(--bui-background-primary)); }
-.bui-badge--light.bui-badge--green, .bui-badge--light.bui-badge--green-light { background: color-mix(in oklab, var(--bui-accent-colors-green) 32%, var(--bui-background-primary)); }
-.bui-badge--light.bui-badge--orange { background: color-mix(in oklab, var(--bui-accent-colors-orange) 32%, var(--bui-background-primary)); }
-.bui-badge--light.bui-badge--pink { background: color-mix(in oklab, var(--bui-accent-colors-pink) 32%, var(--bui-background-primary)); }
-.bui-badge--light.bui-badge--red { background: color-mix(in oklab, var(--bui-accent-colors-red) 32%, var(--bui-background-primary)); }
+.bui-badge--light.bui-badge--blue, .bui-badge--light.bui-badge--blue-light { background: var(--bui-extensions-background-light-accent); }
+.bui-badge--light.bui-badge--green, .bui-badge--light.bui-badge--green-light { background: var(--bui-extensions-background-light-success); }
+.bui-badge--light.bui-badge--orange { background: var(--bui-extensions-background-light-warning); }
+.bui-badge--light.bui-badge--pink { background: var(--bui-extensions-background-light-error); }
+.bui-badge--light.bui-badge--red { background: var(--bui-extensions-background-light-error); }
 .bui-badge--disabled { background: var(--bui-background-disabled); color: var(--bui-text-and-icon-disabled); }
 /* Badge: counter and dot */
 .bui-badge--counter { justify-content: center; min-width: 22px; padding: 0 var(--bui-spacing-1-5); }
@@ -263,11 +263,11 @@
 .bui-card--surface { background: var(--bui-extensions-background-surface); box-shadow: var(--bui-shadow-sm); }
 [data-theme="dark"] .bui-card--surface { box-shadow: none; }
 .bui-card--muted { background: color-mix(in srgb, var(--bui-background-secondary) 50%, var(--bui-background-primary)); }
-.bui-card--blue { background: color-mix(in srgb, var(--bui-accent-colors-blue) 14%, var(--bui-background-primary)); }
-.bui-card--green { background: color-mix(in srgb, var(--bui-accent-colors-green) 14%, var(--bui-background-primary)); }
-.bui-card--orange { background: color-mix(in srgb, var(--bui-accent-colors-orange) 14%, var(--bui-background-primary)); }
-.bui-card--pink { background: color-mix(in srgb, var(--bui-accent-colors-pink) 14%, var(--bui-background-primary)); }
-.bui-card--red { background: color-mix(in srgb, var(--bui-accent-colors-red) 14%, var(--bui-background-primary)); }
+.bui-card--blue { background: var(--bui-extensions-background-light-accent); }
+.bui-card--green { background: var(--bui-extensions-background-light-success); }
+.bui-card--orange { background: var(--bui-extensions-background-light-warning); }
+.bui-card--pink { background: var(--bui-extensions-background-light-error); }
+.bui-card--red { background: var(--bui-extensions-background-light-error); }
 .bui-card__content { position: relative; z-index: 1; pointer-events: none; display: flex; flex-direction: column; flex: 1; min-width: 0; }
 .bui-card__content a, .bui-card__content button, .bui-card__content input, .bui-card__content select, .bui-card__content textarea, .bui-card__content [role="button"] { pointer-events: auto; }
 .bui-card__hit { all: unset; position: absolute; inset: 0; z-index: 0; border-radius: inherit; cursor: pointer; }
@@ -1594,13 +1594,13 @@
 .bui-progress[data-color="success"] { --bui-progress-color: var(--bui-extensions-background-success); }
 .bui-progress[data-color="warning"] { --bui-progress-color: var(--bui-extensions-background-warning); }
 .bui-progress[data-color="error"] { --bui-progress-color: var(--bui-extensions-background-error); }
-.bui-progress[data-color="blue"] { --bui-progress-color: var(--bui-accent-colors-blue); }
-.bui-progress[data-color="blue-light"] { --bui-progress-color: var(--bui-accent-colors-blue-light); }
-.bui-progress[data-color="green"] { --bui-progress-color: var(--bui-accent-colors-green); }
-.bui-progress[data-color="green-light"] { --bui-progress-color: var(--bui-accent-colors-green-light); }
-.bui-progress[data-color="orange"] { --bui-progress-color: var(--bui-accent-colors-orange); }
-.bui-progress[data-color="pink"] { --bui-progress-color: var(--bui-accent-colors-pink); }
-.bui-progress[data-color="red"] { --bui-progress-color: var(--bui-accent-colors-red); }
+.bui-progress[data-color="blue"] { --bui-progress-color: var(--bui-background-accent); }
+.bui-progress[data-color="blue-light"] { --bui-progress-color: var(--bui-extensions-background-light-accent); }
+.bui-progress[data-color="green"] { --bui-progress-color: var(--bui-extensions-background-success); }
+.bui-progress[data-color="green-light"] { --bui-progress-color: var(--bui-extensions-background-light-success); }
+.bui-progress[data-color="orange"] { --bui-progress-color: var(--bui-extensions-background-warning); }
+.bui-progress[data-color="pink"] { --bui-progress-color: var(--bui-extensions-background-light-error); }
+.bui-progress[data-color="red"] { --bui-progress-color: var(--bui-extensions-background-error); }
 /* sections: equal parts with a gap, each its own small track */
 .bui-progress__section .bui-progress__fill { display: block; }
 .bui-progress__track--sections { display: flex; gap: var(--bui-spacing-1); overflow: visible; background: none; }

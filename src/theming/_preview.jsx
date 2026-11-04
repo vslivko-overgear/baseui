@@ -30,7 +30,7 @@ export const PhoneDemo = () => {
         height: 360,
         overflow: 'hidden',
         borderRadius: 'var(--bui-radius-3xl)',
-        background: 'linear-gradient(135deg, var(--bui-accent-colors-blue-light), var(--bui-accent-colors-pink) 55%, var(--bui-accent-colors-orange))',
+        background: 'linear-gradient(135deg, var(--bui-extensions-background-light-accent), var(--bui-extensions-background-light-error) 55%, var(--bui-extensions-background-light-warning))',
       }}
     >
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 1 }}>

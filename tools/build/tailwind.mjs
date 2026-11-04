@@ -21,7 +21,6 @@ const colorName = (n) => {
   if ((m = n.match(/^(?:extensions-)?text-and-icon-(.+)$/))) return `fg-${kebab(m[1])}`;
   if ((m = n.match(/^(?:extensions-)?background-(.+)$/))) return `bg-${kebab(m[1])}`;
   if ((m = n.match(/^(?:extensions-)?border-(.+)$/))) return `border-${kebab(m[1])}`;
-  if ((m = n.match(/^accent-colors-(.+)$/))) return kebab(m[1]);
   return null;
 };
 

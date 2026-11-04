@@ -34,13 +34,6 @@
   --bui-border-disabled: #dfe0e2;
 
   /* Accent Colors */
-  --bui-accent-colors-green-light: #bbfb60;
-  --bui-accent-colors-pink: #ef9ffa;
-  --bui-accent-colors-blue: #575df6;
-  --bui-accent-colors-green: #53b67d;
-  --bui-accent-colors-orange: #f5ba44;
-  --bui-accent-colors-blue-light: #8abafa;
-  --bui-accent-colors-red: #e8634c;
 
   /* Extensions / Text and Icon */
   --bui-extensions-text-and-icon-error: #e8634c;
@@ -97,13 +90,6 @@
   --bui-border-primary-hover: #c9cbcf;
   --bui-border-accent-hover: #b6bdca;
   --bui-border-disabled-hover: #c8c9cb;
-  --bui-accent-colors-green-light-hover: #aeed51;
-  --bui-accent-colors-pink-hover: #db8ce6;
-  --bui-accent-colors-blue-hover: #4949e1;
-  --bui-accent-colors-green-hover: #3ea36b;
-  --bui-accent-colors-orange-hover: #e1a72a;
-  --bui-accent-colors-blue-light-hover: #78a7e6;
-  --bui-accent-colors-red-hover: #d3503a;
   --bui-extensions-text-and-icon-error-hover: #c84630;
   --bui-extensions-text-and-icon-warning-hover: #d79d19;
   --bui-extensions-text-and-icon-success-hover: #15b241;
@@ -150,13 +136,6 @@
   --bui-border-disabled: #333333;
 
   /* Accent Colors */
-  --bui-accent-colors-green-light: #bbfb60;
-  --bui-accent-colors-pink: #ef9ffa;
-  --bui-accent-colors-blue: #575df6;
-  --bui-accent-colors-green: #53b67d;
-  --bui-accent-colors-orange: #f5ba44;
-  --bui-accent-colors-blue-light: #8abafa;
-  --bui-accent-colors-red: #e8634c;
 
   /* Extensions / Text and Icon */
   --bui-extensions-text-and-icon-error: #e8634c;
@@ -213,13 +192,6 @@
   --bui-border-primary-hover: #3b3b3b;
   --bui-border-accent-hover: #555555;
   --bui-border-disabled-hover: #404040;
-  --bui-accent-colors-green-light-hover: #aeed51;
-  --bui-accent-colors-pink-hover: #db8ce6;
-  --bui-accent-colors-blue-hover: #4949e1;
-  --bui-accent-colors-green-hover: #3ea36b;
-  --bui-accent-colors-orange-hover: #e1a72a;
-  --bui-accent-colors-blue-light-hover: #78a7e6;
-  --bui-accent-colors-red-hover: #d3503a;
   --bui-extensions-text-and-icon-error-hover: #fe8871;
   --bui-extensions-text-and-icon-warning-hover: #d79d19;
   --bui-extensions-text-and-icon-success-hover: #15b241;

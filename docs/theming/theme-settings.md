@@ -9,7 +9,7 @@ Pick a ready theme, the brand color, the shape, the base radius and the fonts. E
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `preset` | `'default' \| 'ocean' \| 'forest' \| 'sunset' \| 'berry' \| 'graphite' \| 'custom'` | `'default'` | A ready set of the settings below; changing any of them switches it to custom |
-| `brand` | `'default' \| 'blue' \| 'green' \| 'pink' \| 'orange' \| 'red' \| 'blue-light' \| 'green-light' \| 'custom'` | `'default'` | Brand color: primary buttons, the slider, the current step and page. default is black in the light theme and white in the dark one |
+| `brand` | `'default' \| 'blue' \| 'green' \| 'orange' \| 'red' \| 'custom'` | `'default'` | Brand color: primary buttons, the slider, the current step and page. default is black in the light theme and white in the dark one |
 | `brandColor` | `string` | `'#575df6'` | Your own brand color, any CSS color (with brand: custom) |
 | `shape` | `'rounded' \| 'circle'` | `'rounded'` | rounded follows the base radius; circle makes buttons, fields, tokens and segmented controls pills (`data-shape` on `<html>`) |
 | `radius` | `number` | `12` | Base radius in px: every radius token (4 to 32) scales from it; 0 makes square corners |

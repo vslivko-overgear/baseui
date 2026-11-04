@@ -79,10 +79,10 @@ export const Phone = ({ top, bottom, children, height = 320, overlay = false }) 
         {bottom}
       </div>
     );
-  const blob = (x, y, c) => `radial-gradient(circle at ${x}% ${y}%, var(--bui-accent-colors-${c}) 0, transparent 38%)`;
+  const blob = (x, y, c) => `radial-gradient(circle at ${x}% ${y}%, var(--bui-extensions-background-${c}) 0, transparent 38%)`;
   return (
     <div
-      style={{ ...frame, background: `${blob(15, 30, 'Blue-Light')}, ${blob(85, 55, 'Pink')}, ${blob(40, 95, 'Orange')}, var(--bui-background-secondary)` }}
+      style={{ ...frame, background: `${blob(15, 30, 'light-accent')}, ${blob(85, 55, 'light-error')}, ${blob(40, 95, 'light-warning')}, var(--bui-background-secondary)` }}
     >
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 1 }}>{top}</div>
       <div

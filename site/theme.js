@@ -3,8 +3,7 @@
 
 const BRANDS = {
   default: null,
-  blue: 'var(--bui-accent-colors-blue)', green: 'var(--bui-accent-colors-green)', pink: 'var(--bui-accent-colors-pink)', orange: 'var(--bui-accent-colors-orange)',
-  red: 'var(--bui-accent-colors-red)', 'blue-light': 'var(--bui-accent-colors-blue-light)', 'green-light': 'var(--bui-accent-colors-green-light)',
+  blue: 'var(--bui-background-accent)', green: 'var(--bui-extensions-background-success)', orange: 'var(--bui-extensions-background-warning)', red: 'var(--bui-extensions-background-error)',
 };
 export const BRAND_OPTIONS = [...Object.keys(BRANDS), 'custom'];
 
@@ -22,7 +21,7 @@ export const PRESETS = {
   ocean: { brand: 'blue', shape: 'rounded', radius: 16, headingFont: 'Montserrat Alternates', textFont: 'Inter', motion: 'enhanced', floating: false, glass: true },
   forest: { brand: 'green', shape: 'rounded', radius: 8, headingFont: 'Playfair Display', textFont: 'Manrope', motion: 'basic', floating: false, glass: false },
   sunset: { brand: 'orange', shape: 'circle', radius: 12, headingFont: 'Unbounded', textFont: 'Golos Text', motion: 'enhanced', floating: true, glass: false },
-  berry: { brand: 'pink', shape: 'circle', radius: 20, headingFont: 'Comfortaa', textFont: 'Nunito', motion: 'enhanced', floating: true, glass: true },
+  berry: { brand: 'red', shape: 'circle', radius: 20, headingFont: 'Comfortaa', textFont: 'Nunito', motion: 'enhanced', floating: true, glass: true },
   graphite: { brand: 'default', shape: 'rounded', radius: 4, headingFont: 'Oswald', textFont: 'IBM Plex Sans', motion: 'basic', floating: false, glass: false },
 };
 delete PRESETS.default.preset;
