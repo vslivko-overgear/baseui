@@ -95,4 +95,12 @@ describe('decisions of the product', () => {
     expect(colors.length).toBeGreaterThan(2);
     for (const c of colors) expect(css, c).toMatch(new RegExp(`\\.og-usp__tag--${c}\\b`));
   });
+
+  test('the count after a title is regular and secondary, never bold (the counters of the titles of the pages, of the cart panel and of the lists)', () => {
+    for (const cls of ['og-title__count', 'og-h3__count', 'og-count']) {
+      const line = css.split('\n').find((l) => l.startsWith(`.${cls} {`));
+      expect(line, cls).toMatch(/font-weight: 400/);
+      expect(line, cls).toMatch(/color: var\(--bui-text-and-icon-secondary\)/);
+    }
+  });
 });

@@ -2,6 +2,7 @@
 
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
+- Overgear: the count after a title is regular everywhere (it took the bold of the title: "Secure checkout 3", "My orders 34", the title of the cart panel, the favorites); a decision test holds that the counters of the titles are regular and secondary. Not run: the browser checks beyond the plan
 - Overgear: the side padding of the cards of the pages (the cards with the padding of 20) is 24 on a desktop (`--og-card-x`, `CARD_X`), on every page: the offer, the order, the rank, the settings, the wallet, the home and the games; on a phone it stays 20, also in the price column of an offer. Not run: the browser checks beyond the plan
 - Overgear, My orders: the tags of the statuses are the light colors (`accent-light`, `success-light`, `warning-light`, `critical-light`), as in the payment history, in the list and on the page of an order; the paginator is replaced by an endless scroll on a desktop and on a phone: 20 cards at a time, the next 20 come when the end of the list is 400px away, and the Show More button is gone. Not run: the browser checks beyond the plan
 - Overgear, the home page: the tile of Fortnite is narrower (170, it was 210) and the tile of Apex Legends is wider (180, it was 140); the row keeps its length. Not run: the browser checks beyond the plan
