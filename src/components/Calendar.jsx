@@ -330,7 +330,7 @@ describe(Calendar, 'A month grid for picking a date or a date range', {
 /* ------------------------------------------------------------- DatePicker */
 
 // the panel of a date picker follows its control between these widths (a calendar is not narrower than a week of dates, nor wider than 480)
-const CALENDAR_WIDTH = { min: 280, max: 480 };
+const CALENDAR_WIDTH = { min: 320, max: 480 };
 export function DatePicker({
   value,
   defaultValue,
