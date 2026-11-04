@@ -17,7 +17,6 @@ import { money } from './data.js';
 import { CashbackMark, CashbackTag, CASHBACK_HINT, cashbackOf } from './ui.jsx';
 import { useStore } from './store.jsx';
 
-export const plural = (n) => `${n} item${n === 1 ? '' : 's'}`;
 
 /** A line of the order: the picture, the name and the price, what it is, who sells it and when it comes. */
 function CartLine({ item, onRemove, onQty }) {
@@ -90,12 +89,11 @@ function CashbackRow({ amount }) {
 // the pay bar is a component of the sublibrary (overgear/components): it keeps the room it takes at the bottom of the page by itself
 export { PayBar, PayBarContent } from '../components/paybar.jsx';
 
-/** The title of an order page and, under it, how many items there are (secondary): the checkout and the cart have the same. */
+/** The title of an order page with how many items there are, a secondary number at its side (as the count of the orders): the checkout and the cart have the same. */
 export function OrderHead({ title, count, className = '' }) {
   return (
     <div className={`og-stack og-stack--close ${className}`}>
-      <h1 className="og-title og-order__title">{title}</h1>
-      {!!count && <p className="og-caption">{plural(count)}</p>}
+      <h1 className="og-title og-order__title">{title}{!!count && <span className="og-title__count" data-test-id="order-count">{count}</span>}</h1>
     </div>
   );
 }

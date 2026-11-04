@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // The checkout and the promo code, in a real browser. A desktop: the button back (a button with its own background) and the logo are in a row with a divider under it, no band; the title
-// "Secure Checkout" is plain under the divider; there is no "Review order" and no "Order summary" heading. The promo code is a row of a list, text on the left and a chevron on the right, with no icon;
+// "Secure Checkout" is under the divider, with the count of the items as a secondary number at its side; there is no "Review order" and no "Order summary" heading. The promo code is a row of a list, text on the left and a chevron on the right, with no icon;
 // it opens a dialog: a wrong code is refused and the dialog stays, a right one closes it; the discount is green (the success color) in the summary; with a code applied the row has the code
 // on the right and a cross that takes it off. The payment methods are tiles under their own heading "Payment method", after the items: each a radio in an outline, the chosen one with 2px in the selected
 // color and the others with the standard outline (a button shows the other methods); the items are cards of their own; the summary sticks 24px from the top, not further.
@@ -29,7 +29,7 @@ for (const [width, phone] of [[1440, false], [390, true]]) {
       const back = top?.querySelector('[aria-label="Back"]');
       const logo = top?.querySelector('.og-checkout__logo');
       const divider = top?.nextElementSibling;
-      const title = [...document.querySelectorAll('h1')].find((h) => h.textContent === 'Secure Checkout');
+      const title = [...document.querySelectorAll('h1')].find((h) => h.textContent.startsWith('Secure Checkout'));
       return {
         hasTop: !!top, backBeforeLogo: !!back && !!logo && back.getBoundingClientRect().left < logo.getBoundingClientRect().left,
         backBackground: back ? getComputedStyle(back).backgroundColor : null, noBand: !document.querySelector('.og-checkout__bar'),
@@ -53,8 +53,9 @@ for (const [width, phone] of [[1440, false], [390, true]]) {
     expectThat(down.op === 1 && down.text === 'Secure Checkout', `phone: scrolled, the bar does not show "Secure Checkout" (${JSON.stringify(down)})`);
     await page.evaluate(() => window.scrollTo(0, 0)); await page.waitForTimeout(300);
   }
-  const head = await page.evaluate(() => { const h = document.querySelector('.og-order__title'); const c = h?.nextElementSibling; const probe = document.createElement('span'); probe.style.color = 'var(--baseui-text-and-icon-secondary)'; document.body.append(probe); const sec = getComputedStyle(probe).color; probe.remove(); return c ? { text: c.textContent, below: c.getBoundingClientRect().top >= h.getBoundingClientRect().bottom, secondary: getComputedStyle(c).color === sec } : null; });
-  expectThat(head && head.text === '7 items' && head.below && head.secondary, `${where}: under "Secure Checkout" there is no secondary count of the items (${JSON.stringify(head)})`);
+  // the count of the items is a secondary number at the side of the title (the decision: it is not a line under it)
+  const head = await page.evaluate(() => { const h = document.querySelector('.og-order__title'); const c = h?.querySelector('.og-title__count'); const probe = document.createElement('span'); probe.style.color = 'var(--baseui-text-and-icon-secondary)'; document.body.append(probe); const sec = getComputedStyle(probe).color; probe.remove(); return c ? { text: c.textContent, beside: c.getBoundingClientRect().left > h.getBoundingClientRect().left && Math.abs(c.getBoundingClientRect().top - h.getBoundingClientRect().top) < h.getBoundingClientRect().height, secondary: getComputedStyle(c).color === sec } : null; });
+  expectThat(head && head.text === '7' && head.beside && head.secondary, `${where}: "Secure Checkout" has no secondary number of the items at its side (${JSON.stringify(head)})`);
   const qty = await page.evaluate(() => [...document.querySelectorAll('.og-lines--surface > .og-line')].map((l) => { const q = l.querySelector('.og-line__qty'); const meta = [...l.querySelectorAll('.og-line__meta')].at(-1).getBoundingClientRect();  const body = l.querySelector('.og-line__body').getBoundingClientRect(); const price = l.querySelector('.og-line__price').getBoundingClientRect(); const bin = l.querySelector('[data-slot=icon-button]').getBoundingClientRect(); const r = q?.getBoundingClientRect(); return { has: !!q, after: !!r && r.top >= meta.bottom && r.left >= body.left - 1 && r.right <= body.right + 1, priceTop: price.top - l.getBoundingClientRect().top < 40 && bin.top >= price.bottom && Math.abs(bin.right - price.right) <= 8 && l.getBoundingClientRect().bottom - bin.bottom <= 20 }; }));
   expectThat(qty.every((x) => x.priceTop) && qty.filter((x) => x.has).length === 1 && qty.at(-1).has && qty.at(-1).after, `${where}: the price is not on top and the bin at the bottom of a right column as high as the line (no empty row under the text), or the quantity is not a row after the delivery time, only on the line of several units (${JSON.stringify(qty)})`);
   const strip = await page.evaluate(() => {

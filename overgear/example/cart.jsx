@@ -42,7 +42,7 @@ export function CartDrawer({ open, onClose }) {
   const body = store.cart.length ? <div className="og-stack"><ItemLines /><PromoCard /></div> : <EmptyCart onBrowse={() => { onClose(); go('/catalog'); }} />;
   if (mobile) {
     return (
-      <Dialog open={open} onOpenChange={(o) => !o && onClose()} title={`Shopping Cart · ${store.count}`} className="og-minicart" primaryAction={store.cart.length ? <PayBarContent amount={store.total} action="Secure checkout" onClick={checkout} /> : undefined}>
+      <Dialog open={open} onOpenChange={(o) => !o && onClose()} title={<>Shopping Cart{!!store.count && <span className="og-title__count">{store.count}</span>}</>} className="og-minicart" primaryAction={store.cart.length ? <PayBarContent amount={store.total} action="Secure checkout" onClick={checkout} /> : undefined}>
         {body}
       </Dialog>
     );
@@ -78,7 +78,7 @@ export function Cart() {
     <Page>
       <div>
         <OrderHead title="Shopping Cart" count={store.count} />
-        <div className="og-co">
+        <div className="og-co og-co--cart">
           <ItemLines />
           <div className="og-stack og-sticky"><OrderSummary label="Subtotal" amount={store.total} action="Secure checkout" onAction={() => go('/checkout')} pinned={mobile} /></div>
         </div>

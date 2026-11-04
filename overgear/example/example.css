@@ -420,7 +420,8 @@ a { color: inherit; }
 .og-method__tile { width: 40px; height: 40px; flex: none; display: grid; place-items: center; border-radius: var(--baseui-radius-lg); background: var(--baseui-background-tertiary); font: var(--baseui-typography-text-16-semi-bold); }
 .og-method__tile img { width: 28px; height: auto; }
 .og-method__name { font-weight: 600; }
-.og--mobile .og-co { grid-template-columns: minmax(0, 1fr); gap: var(--bui-rel-section); padding-top: 0; }   /* under the bar: 0 from it, as every page under a bar */
+.og--mobile .og-co { grid-template-columns: minmax(0, 1fr); gap: var(--bui-rel-section); padding-top: 0; }
+.og--mobile .og-co--cart { gap: var(--bui-rel-related); padding-top: var(--bui-rel-related); }   /* the cart: the items and the money are as close as the money and the promo code (16px), and 16px under the title */
 .og--mobile .og-checkout__foot .og-row { flex-direction: column; align-items: flex-start; }
 .og-checkout > .og-wrap { width: 100%; }
 .og-checkout .bui-radio { align-items: center; }
