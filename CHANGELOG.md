@@ -2,6 +2,7 @@
 
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
+- A new token `--bui-extensions-background-popup`: the color of a floating layer (the list of a Dropdown or Selector, a Popover and the calendar). It is white in the light theme and a step lighter than the surface in the dark one (`#2c2c2c`), so a list does not merge with a card of the surface color it opens over; `--bui-popover` points at it. Overgear takes its `tertiary`. Not run: the browser checks beyond the plan
 - Overgear, the offer page: the form of the order has the controls of a real raid page: Region and Boost method and Number of bosses as chips (the price on the chip), Loot options as a selector, Additional options with the price at the right end of the line (the old price struck out), the raid slot (the day, the date, the time) and the help line with a Chat button. The difficulty, the quantity and the note are gone from the form (the price counts the number of bosses, the method and the options). Not run: the browser checks beyond the plan
 - Overgear, the offer page: the four promises of "Why Players Choose Overgear" have their own icons (32px, gradient): boosters, time, price, zero ban
 - Overgear, the offer page on a desktop: the right column starts level with the breadcrumbs (the head of the page stands in the left column); on a phone the head is the first block of the page as before. Not run: the browser checks beyond the plan

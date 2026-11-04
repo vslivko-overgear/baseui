@@ -1013,7 +1013,7 @@
 .bui-dropdown {
   box-sizing: border-box;
   padding: var(--bui-spacing-1);
-  background-color: var(--bui-extensions-background-surface);
+  background-color: var(--bui-extensions-background-popup);
   color: var(--bui-text-and-icon-primary);
   border-radius: var(--bui-radius-custom-20);
   box-shadow: 0 4px 28px color-mix(in srgb, var(--bui-extensions-text-and-icon-always-dark) 12%, transparent);
@@ -1575,7 +1575,7 @@
 .bui-popover__trigger { display: inline-flex; }
 .bui-popover__panel {
   position: fixed; z-index: var(--bui-z-index-40); box-sizing: border-box; min-width: 240px; max-width: min(360px, calc(100vw - 16px)); padding: var(--bui-spacing-4); overflow-y: auto;
-  border-radius: var(--bui-radius-2xl); background: var(--bui-extensions-background-surface); box-shadow: var(--bui-shadow-md);
+  border-radius: var(--bui-radius-2xl); background: var(--bui-extensions-background-popup); box-shadow: var(--bui-shadow-md);
   font: var(--bui-typography-text-14-regular); color: var(--bui-text-and-icon-primary); animation: bui-fade var(--bui-duration-150) var(--bui-ease-out);
 }
 
@@ -2221,7 +2221,7 @@
 .bui-choice-popup__popup {
   box-sizing: border-box;
   width: var(--anchor-width);
-  background-color: var(--bui-extensions-background-surface);
+  background-color: var(--bui-extensions-background-popup);
   max-width: calc(100vw - 16px);
   color: var(--bui-text-and-icon-primary);
   box-shadow: 0 4px 28px color-mix(in srgb, var(--bui-extensions-text-and-icon-always-dark) 12%, transparent);
@@ -2875,6 +2875,9 @@ textarea.bui-input {
 :is([data-glass="on"] :is(.bui-popover__panel, .bui-dropdown, [data-slot="dropdown-popup"], [data-slot="dialog"], .bui-toast):not([data-glass="off"]), [data-glass="dropdowns"] :is(.bui-dropdown, [data-slot="dropdown-popup"]):not([data-glass="off"]), :is(.bui-popover__panel, .bui-dropdown, [data-slot="dropdown-popup"], [data-slot="dialog"], .bui-toast)[data-glass="on"]):not(.bui-toast--inverse) {
   background: color-mix(in srgb, var(--bui-extensions-background-surface) var(--bui-glass-fill), transparent);
   -webkit-backdrop-filter: var(--bui-glass-blur); backdrop-filter: var(--bui-glass-blur);
+}
+:is([data-glass="on"] :is(.bui-popover__panel, .bui-dropdown, [data-slot="dropdown-popup"]):not([data-glass="off"]), [data-glass="dropdowns"] :is(.bui-dropdown, [data-slot="dropdown-popup"]):not([data-glass="off"]), :is(.bui-popover__panel, .bui-dropdown, [data-slot="dropdown-popup"])[data-glass="on"]):not(.bui-toast--inverse) {
+  background: color-mix(in srgb, var(--bui-extensions-background-popup) var(--bui-glass-fill), transparent);   /* a floating list on glass takes its own layer color, as without glass */
 }
 /* the active item of a bottom bar on glass: a tint of the text color (not a gray that melts into the glass, not a bright fill), so it reads on any backdrop and in both themes */
 :is([data-glass="on"] .bui-bottombar:not([data-glass="off"]), .bui-bottombar[data-glass="on"]) .bui-bottombar__pill {

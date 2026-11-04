@@ -38,6 +38,7 @@
   --color-fg-on-color: var(--bui-extensions-text-and-icon-on-color);
   --color-fg-on-brand: var(--bui-extensions-text-and-icon-on-brand);
   --color-bg-surface: var(--bui-extensions-background-surface);
+  --color-bg-popup: var(--bui-extensions-background-popup);
   --color-bg-inverse-primary: var(--bui-extensions-background-inverse-primary);
   --color-bg-overlay-dark: var(--bui-extensions-background-overlay-dark);
   --color-bg-overlay-light: var(--bui-extensions-background-overlay-light);

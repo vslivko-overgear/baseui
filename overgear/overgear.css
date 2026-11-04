@@ -36,6 +36,7 @@
   --bui-border-disabled: #1e2242;
   --bui-extensions-background-surface: #0b0d2b;
   --bui-extensions-background-surface-hover: #131632;
+  --bui-extensions-background-popup: var(--bui-background-tertiary);   /* a floating layer is lighter than the card it opens over */
 }
 
 /* The blue cast of the dark theme has five steps. The full cast (step 5) is the navy scale of overgear.com (#050622, #1e2242, #293054, text #ededf5 and #a7a7c8);
@@ -59,6 +60,7 @@
     --bui-border-disabled: color-mix(in oklab, #1e2242 calc(var(--og-tint, 1) * 100%), oklch(from #262b36 l 0 h));
     --bui-extensions-background-surface: color-mix(in oklab, #0b0d2b calc(var(--og-tint, 1) * 100%), oklch(from #161a22 l 0 h));
     --bui-extensions-background-surface-hover: color-mix(in oklab, #131632 calc(var(--og-tint, 1) * 100%), oklch(from #1c212b l 0 h));
+    --bui-extensions-background-popup: var(--bui-background-tertiary);
   }
 }
 
