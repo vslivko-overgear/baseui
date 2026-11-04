@@ -2,6 +2,7 @@
 
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
+- Checkboxes, radios and their groups are 480px wide at most, as the fields; on the offer page of Overgear the price of an extra stands 4px from its text (it was at the right end of the line)
 - Overgear, the offer page: the first point of the trust block (ID-verified pros) has its icon back (it was lost when the icons of "Why Players Choose Overgear" were replaced)
 - Fields (Text Input, Selector, Typeahead, Date Picker, Number Input) are 480px wide at most; they no longer stretch across a wide column. New prop `labelPlacement="outside"` on the fields and on Segmented Control: the label is a semi-bold title above the control, as the title of a group of radios, checkboxes or tags (a field then takes a `placeholder`). The offer form of Overgear uses it for Loot options. Not run: the browser checks beyond the plan
 - A new token `--bui-extensions-background-popup`: the color of a floating layer (the list of a Dropdown or Selector, a Popover and the calendar). It is white in the light theme and a step lighter than the surface in the dark one (`#2c2c2c`), so a list does not merge with a card of the surface color it opens over; `--bui-popover` points at it. Overgear takes its `tertiary`. Not run: the browser checks beyond the plan

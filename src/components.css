@@ -354,6 +354,8 @@
   font: var(--bui-typography-text-14-regular);
   color: var(--bui-extensions-text-and-icon-error);
 }
+/* a checkbox, a radio and their groups are 480px wide at most, as the fields */
+.bui-checkbox__field, .bui-checkbox-group__field, .bui-radio-group__field, .bui-radio { max-width: 480px; }
 .bui-checkbox-group__field {
   align-items: flex-start;
   gap: var(--bui-spacing-3);
