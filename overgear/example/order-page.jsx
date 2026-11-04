@@ -21,6 +21,7 @@ import { useToast } from '../../src/components/Toast.jsx';
 import { go, href, useMedia } from './util.js';
 import { money, gameOf } from './data.js';
 import { Page, PageHead } from './ui.jsx';
+import { useFieldErrors } from '../../src/use-field-errors.js';
 import { useStore } from './store.jsx';
 import { reorderPath } from './orders.jsx';
 import {
@@ -110,16 +111,16 @@ function StatusPanel({ order, now, actions }) {
 /** What the seller needs from the buyer: a form while it is not filled (the order cannot start without it), then the list of what was given. */
 function DeliveryDetails({ order, onSave }) {
   const [values, setValues] = useState(order.delivery.values || {});
-  const [errors, setErrors] = useState({});
-  const [shown, setShown] = useState(false);
+  const [shown, setShown] = useState(false);   // the secret values of the list (the password) are shown
   const { fields } = order.delivery;
+  const errors = deliveryErrors(fields, values);   // always current; the form shows an error on Submit and hides it when its field is focused again or edited
+  const form = useFieldErrors(errors);
   const unfilled = hasUnfilledDelivery(order);
   const done = isClosed(order.status);
   const submit = (e) => {
     e.preventDefault();
-    const bad = deliveryErrors(fields, values);
-    setErrors(bad);
-    if (!Object.keys(bad).length) onSave(values);
+    form.reveal();
+    if (!Object.keys(errors).length) onSave(values);
   };
   if (unfilled) {
     return (
@@ -128,7 +129,7 @@ function DeliveryDetails({ order, onSave }) {
           <FormSection title="Fill Delivery Details" titleAs="h2">
             <p className="og-text">Please provide your delivery details—we can’t start your order until they’re submitted. Rest assured, your information is safe and private with us. Please note, after submission any changes can be made through manager</p>
             {fields.map((f) => (
-              <TextInput key={f.key} label={f.label} type={f.secret ? 'password' : 'text'} value={values[f.key] || ''} onChange={(e) => setValues({ ...values, [f.key]: e.target.value })} status={errors[f.key] ? 'error' : undefined} caption={errors[f.key] || f.note} autoComplete="off" />
+              <TextInput key={f.key} label={f.label} type={f.secret ? 'password' : 'text'} value={values[f.key] || ''} autoComplete="off" {...form.field(f.key, { caption: f.note, onChange: (e) => setValues({ ...values, [f.key]: e.target.value }) })} />
             ))}
             <Button type="submit" variant="primary" size="lg" label="Submit Details" data-test-id="order-delivery-submit" />
           </FormSection>
