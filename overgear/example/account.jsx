@@ -99,7 +99,7 @@ export function Account({ tab, onLogin }) {
     <Page bar={tab === 'settings'}>
       <PageHead crumbs={tab === 'wishlist' && phone ? undefined : [{ label: 'Home', href: '#/' }, { label: 'Account', href: '#/account' }, { label: titles[tab] || 'Account' }]} title={<>{titles[tab] || 'Account'}{tab === 'wishlist' && wished.length > 0 && <span className="og-title__count" data-test-id="favorites-count">{wished.length}</span>}</>} />
       {tab === 'wishlist' && (
-        <OfferListing offers={wished} points={false} />
+        <OfferListing offers={wished} compact />
       )}
       {tab === 'settings' && <Settings />}
     </Page>
