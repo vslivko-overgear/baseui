@@ -85,6 +85,8 @@ export function useStored(key, initial) {
 }
 
 /** The mini-cart of the header (a desktop) opens on this event, so any page can open it without owning its state. */
+export const OPEN_ORDER_FILTERS = 'og:open-order-filters';   // the filters of the orders on a phone open in a sheet, from the button of the page or the one of the navbar
+export const openOrderFilters = () => window.dispatchEvent(new Event(OPEN_ORDER_FILTERS));
 export const OPEN_CART = 'og:open-cart';
 export const openMiniCart = () => window.dispatchEvent(new Event(OPEN_CART));
 

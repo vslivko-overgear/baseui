@@ -55,7 +55,7 @@ A **must** protects people and is always reported. A **should** is a strong defa
 
 ### Hug and fill
 
-- A control or a tag is as wide as its content (hug) unless it stands alone in a row of its own or the row is a grid of equal cells (fill). In a row of filters, the control with a short value (a sort) hugs and the rest fill
+- A control or a tag is as wide as its content (hug) unless it stands alone in a row of its own or the row is a grid of equal cells (fill). A row of filters is a grid of equal cells: every filter fills, the sort too. On a phone the filters are not a row: they open in a sheet from a button opposite the title, and from the right side of the navbar once the title has scrolled under it
 - A row that does not fit on a phone scrolls sideways as a whole, in a `Bleed`, with every item hugging its content. Never scroll the content inside one long shape
 
 ### Status colors

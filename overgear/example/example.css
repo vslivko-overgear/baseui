@@ -502,10 +502,8 @@ a { color: inherit; }
 .og--mobile .og-ocard__head { grid-column: 1 / -1; display: flex; align-items: center; gap: var(--baseui-spacing-3); }
 .og--mobile .og-ocard__pic { flex: none; }
 .og--mobile .og-ocard__row > .bui-button { width: 100%; }   /* the price and Reorder share the last row */
-.og-ofilters { display: flex; flex-wrap: wrap; gap: var(--baseui-spacing-2); }
-.og-ofilters > .bui-field, .og-ofilters > [data-slot] { flex: 1 1 160px; min-width: 0; }   /* the filters fill the row, the sorting hugs its value */
-.og-ofilters__sort { flex: none; width: max-content; min-width: 0; }
-.og--mobile .og-ofilters > :not(.og-ofilters__sort) { flex: 1 1 calc(50% - 4px); }
+/* the four filters of the orders on a desktop fill the row in equal parts (the sort as well) */
+.og-ofilters { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--baseui-spacing-2); }
 
 /* the states of a page are opened from a line of links at its end (the demo) */
 

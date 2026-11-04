@@ -2,7 +2,8 @@
 // the seller, the price, Reorder; the whole card opens the order), 20 to a page (numbered pages on a desktop, "Show more" on a phone), and the states of the list: loading, an error with a retry, empty, and the guest
 // (temporary) account, which has no history. The rules are in order-core.js.
 import { useEffect, useState } from '../../src/react.js';
-import { Button } from '../../src/components/Button.jsx';
+import { Button, IconButton } from '../../src/components/Button.jsx';
+import { Dialog } from '../../src/components/Dialog.jsx';
 import { Badge } from '../../src/components/Badge.jsx';
 import { ClickableCard } from '../../src/components/Card.jsx';
 import { Selector } from '../../src/components/Selector.jsx';
@@ -11,7 +12,7 @@ import { Skeleton } from '../../src/components/Skeleton.jsx';
 import { Status } from '../../src/components/Status.jsx';
 import { Avatar } from '../../src/components/Avatar.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
-import { go, href, useMedia, useTitleUnderBar } from './util.js';
+import { go, href, useMedia, useTitleUnderBar, OPEN_ORDER_FILTERS, openOrderFilters } from './util.js';
 import { money, gameOf } from './data.js';
 import { Page, PageHead } from './ui.jsx';
 import { useStore } from './store.jsx';
@@ -77,6 +78,9 @@ export function Orders({ onLogin, demo = '' }) {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [attempt, setAttempt] = useState(0);
+  const [sheet, setSheet] = useState(false);   // the filters in a sheet, on a phone
+  useEffect(() => { const open = () => setSheet(true); window.addEventListener(OPEN_ORDER_FILTERS, open); return () => window.removeEventListener(OPEN_ORDER_FILTERS, open); }, []);
+  useEffect(() => { if (!mobile) setSheet(false); }, [mobile]);
   // the list is asked for when the page opens: a short wait with the skeleton, as on the network
   useEffect(() => { setLoading(true); const id = setTimeout(() => setLoading(false), 450); return () => clearTimeout(id); }, [attempt]);
   // the page goes back to the first when the filter or the sort changes
@@ -109,18 +113,23 @@ export function Orders({ onLogin, demo = '' }) {
   }[phase];
 
   const showControls = phase === 'list' || phase === 'loading' || (phase === 'empty' && filtering);
+  // the four filters, all the same: on a desktop in a row, on a phone in the sheet
+  const selectors = (size, floatingLabel) => (
+    <>
+      <Selector size={size} label="Game" floatingLabel={floatingLabel} value={game} onValueChange={setGame} options={gameFilters(store.orders, (g) => gameOf(g)?.name)} />
+      <Selector size={size} label="State" floatingLabel={floatingLabel} value={state} onValueChange={setState} options={STATE_FILTERS} />
+      <Selector size={size} label="Status" floatingLabel={floatingLabel} value={status} onValueChange={setStatus} options={STATUS_FILTERS} />
+      <Selector size={size} label="Sort by" floatingLabel={floatingLabel} value={sort} onValueChange={setSort} options={SORTS} data-test-id="orders-sort" />
+    </>
+  );
   return (
     <Page bar density="dense">
-      <PageHead title={<>My orders{(phase === 'list' || phase === 'empty') && <span className="og-title__count" data-test-id="orders-count">{filtered.length}</span>}</>} />
-      {showControls && (
-        <div className="og-ofilters" data-test-id="orders-filters">
-          <Selector size="sm" label="Game" floatingLabel={false} value={game} onValueChange={setGame} options={gameFilters(store.orders, (g) => gameOf(g)?.name)} />
-          <Selector size="sm" label="State" floatingLabel={false} value={state} onValueChange={setState} options={STATE_FILTERS} />
-          <Selector size="sm" label="Status" floatingLabel={false} value={status} onValueChange={setStatus} options={STATUS_FILTERS} />
-          <div className="og-ofilters__sort"><Selector size="sm" label="Sort by" floatingLabel={false} value={sort} onValueChange={setSort} options={SORTS} data-test-id="orders-sort" /></div>
-        </div>
-      )}
+      <PageHead action={mobile && showControls ? <IconButton variant="secondary" size="sm" label="Filters" icon={<Icon name="FilterLines" size={24} />} onClick={openOrderFilters} data-test-id="orders-filters-open" /> : undefined} title={<>My orders{(phase === 'list' || phase === 'empty') && <span className="og-title__count" data-test-id="orders-count">{filtered.length}</span>}</>} />
+      {showControls && !mobile && <div className="og-ofilters" data-test-id="orders-filters">{selectors('sm', false)}</div>}
       {body}
+      <Dialog open={sheet} onOpenChange={setSheet} title="Filters" primaryAction={<Button variant="primary" label={`Show ${filtered.length} ${filtered.length === 1 ? 'order' : 'orders'}`} onClick={() => setSheet(false)} data-test-id="orders-filters-show" />} secondaryAction={filtering ? <Button variant="secondary" label="Reset filters" onClick={reset} data-test-id="orders-filters-reset" /> : undefined}>
+        <div className="og-stack" data-test-id="orders-filters-sheet">{selectors('md', true)}</div>
+      </Dialog>
     </Page>
   );
 }
@@ -131,5 +140,7 @@ export function OrdersBar({ route }) {
   const list = first === 'orders' || first === 'rank' || first === 'wallet' || first === 'account';
   const under = useTitleUnderBar('.og-title', route.path);
   const history = first === 'wallet' && route.parts[1] === 'history';   // the payment history is behind the wallet
-  return <Navbar title={history ? 'Payment History' : first === 'account' ? 'Settings' : first === 'rank' ? 'Your Rank' : first === 'wallet' ? 'Wallet' : list ? 'My orders' : 'Order'} titleVisible={under} onBack={() => go(history ? '/wallet' : list ? '/account' : '/orders')} />;
+  // the filters of the list: the button of the page goes under the bar when the title does, and the bar takes it at its right
+  const filters = first === 'orders' && under ? [{ label: 'Filters', icon: <Icon name="FilterLines" size={24} />, onClick: openOrderFilters }] : [];
+  return <Navbar actions={filters} title={history ? 'Payment History' : first === 'account' ? 'Settings' : first === 'rank' ? 'Your Rank' : first === 'wallet' ? 'Wallet' : list ? 'My orders' : 'Order'} titleVisible={under} onBack={() => go(history ? '/wallet' : list ? '/account' : '/orders')} />;
 }

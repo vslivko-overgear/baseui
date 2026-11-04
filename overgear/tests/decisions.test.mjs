@@ -52,4 +52,13 @@ describe('decisions of the product', () => {
     const offer = sources.find(([f]) => f === 'offer.jsx')[1];
     expect(offer).toMatch(/\{mobile && <PayBar amount=/);
   });
+
+  test('the four filters of the orders fill the row in equal parts on a desktop, and a phone has them in a sheet', () => {
+    expect(css).toMatch(/\.og-ofilters \{ display: grid; grid-template-columns: repeat\(4, minmax\(0, 1fr\)\)/);
+    expect(css, 'a sort that hugs').not.toMatch(/og-ofilters__sort/);
+    const orders = sources.find(([f]) => f === 'orders.jsx')[1];
+    expect(orders).toMatch(/showControls && !mobile && <div className="og-ofilters"/);
+    expect(orders).toMatch(/orders-filters-sheet/);
+    expect(orders).toMatch(/first === 'orders' && under/);
+  });
 });
