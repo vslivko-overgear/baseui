@@ -25,7 +25,7 @@ export function page() {
         <div className="space-list">
           {tokens.map((t) => (
             <div key={t.name} className="space-row">
-              <code>{`--baseui-${t.name}`}</code>
+              <code>{`--bui-${t.name}`}</code>
               <span className="space-bar-wrap">
                 <span className="tok-bar" style={{ width: t.value === '0' ? 1 : t.value }} />
               </span>
@@ -63,9 +63,9 @@ export function page() {
       </Block>
       <Block title="Negative Spacing">
         <p className="doc-p">
-          There is one more token, <code>--baseui-spacing-negative</code>, a plain <code>-1</code>. Multiply any spacing token by it to get the same step as a negative value, for example to let a block bleed into the padding of its container
+          There is one more token, <code>--bui-spacing-negative</code>, a plain <code>-1</code>. Multiply any spacing token by it to get the same step as a negative value, for example to let a block bleed into the padding of its container
                 </p>
-        <pre className="const-code">{`margin-inline: calc(var(--baseui-spacing-4) * var(--baseui-spacing-negative));   /* -16px */`}</pre>
+        <pre className="const-code">{`margin-inline: calc(var(--bui-spacing-4) * var(--bui-spacing-negative));   /* -16px */`}</pre>
         <div className="space-negative">
           <div className="space-negative__box">
             <div className="space-negative__bleed">margin-inline: -spacing-4</div>

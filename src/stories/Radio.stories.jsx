@@ -33,7 +33,7 @@ export const WithLabel = example({
   name: 'With Label',
   description: 'With and without a label',
   render: () => (
-    <BaseRadioGroup defaultValue="a" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--baseui-spacing-3)' }}>
+    <BaseRadioGroup defaultValue="a" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--bui-spacing-3)' }}>
       <Radio value="a" label="With a label" />
       <Radio value="b" aria-label="no label" />
     </BaseRadioGroup>

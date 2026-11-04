@@ -28,7 +28,7 @@ export const Indeterminate = example({
 export const Colors = example({
   name: 'Colors',
   render: () => (
-    <Stack width={360} gap="var(--baseui-spacing-3)">
+    <Stack width={360} gap="var(--bui-spacing-3)">
       {PROGRESS_COLORS.map((c) => (
         <ProgressBar key={c} color={c} value={65} label={c} showValue />
       ))}
@@ -39,7 +39,7 @@ export const Colors = example({
 export const Sections = example({
   name: 'Sections',
   render: () => (
-    <Stack width={360} gap="var(--baseui-spacing-4)">
+    <Stack width={360} gap="var(--bui-spacing-4)">
       <ProgressBar sections={3} value={50} label="Step 2 of 3" color="accent" />
       <ProgressBar sections={5} value={70} label="Password strength" color="success" />
       <ProgressBar sections={8} value={37} size="sm" label="Eight sections" />

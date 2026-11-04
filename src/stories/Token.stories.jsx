@@ -46,7 +46,7 @@ export const Slots = example({
   name: 'Slots',
   description: 'An icon, an avatar, a counter, or no label (needs `aria-label`)',
   render: () => (
-    <Stack gap="var(--baseui-spacing-3)">
+    <Stack gap="var(--bui-spacing-3)">
       <Row>
         <Token>Label</Token>
         <Token icon={<Heart />}>Label</Token>

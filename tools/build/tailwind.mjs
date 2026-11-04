@@ -10,12 +10,12 @@ import { dirname, join } from 'node:path';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const css = await readFile(join(root, 'tokens.css'), 'utf8');
-const names = [...new Set([...css.matchAll(/^\s*--baseui-([A-Za-z0-9-]+)\s*:/gm)].map((m) => m[1]))];
+const names = [...new Set([...css.matchAll(/^\s*--bui-([A-Za-z0-9-]+)\s*:/gm)].map((m) => m[1]))];
 // Tailwind v4 default radii in px (sm .25rem ... 4xl 2rem): the baseui radius tokens carry the same names
 export const TAILWIND_RADIUS = { sm: 4, md: 6, lg: 8, xl: 12, '2xl': 16, '3xl': 24, '4xl': 32 };
 const kebab = (s) => s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 
-const valueOf = (n) => css.match(new RegExp(`--baseui-${n}\\s*:\\s*([^;]+);`))[1].trim();
+const valueOf = (n) => css.match(new RegExp(`--bui-${n}\\s*:\\s*([^;]+);`))[1].trim();
 const colorName = (n) => {
   let m;
   if ((m = n.match(/^(?:extensions-)?text-and-icon-(.+)$/))) return `fg-${kebab(m[1])}`;
@@ -48,35 +48,35 @@ const lines = [
   '@theme inline {',
   '  --spacing: 4px;',
   '',
-  ...[...colors].map(([c, n]) => `  --color-${c}: var(--baseui-${n});`),
+  ...[...colors].map(([c, n]) => `  --color-${c}: var(--bui-${n});`),
   '',
-  ...pick(/^radius-(?!scale)/).map((n) => `  --radius-${n.slice(7)}: var(--baseui-${n});`),
+  ...pick(/^radius-(?!scale)/).map((n) => `  --radius-${n.slice(7)}: var(--bui-${n});`),
   '',
-  ...pick(/^shadow-(sm|md|lg)$/).map((n) => `  --shadow-${n.slice(7)}: var(--baseui-${n});`),
+  ...pick(/^shadow-(sm|md|lg)$/).map((n) => `  --shadow-${n.slice(7)}: var(--bui-${n});`),
   '',
-  ...pick(/^ease-/).map((n) => `  --ease-${n.slice(5)}: var(--baseui-${n});`),
+  ...pick(/^ease-/).map((n) => `  --ease-${n.slice(5)}: var(--bui-${n});`),
   '',
-  ...pick(/^text-(xs|sm|base|xl|2xl)(--line-height)?$/).map((n) => `  --${n.replace(/^text-/, 'text-')}: var(--baseui-${n});`),
-  ...pick(/^font-weight-/).map((n) => `  --${n}: var(--baseui-${n});`),
+  ...pick(/^text-(xs|sm|base|xl|2xl)(--line-height)?$/).map((n) => `  --${n.replace(/^text-/, 'text-')}: var(--bui-${n});`),
+  ...pick(/^font-weight-/).map((n) => `  --${n}: var(--bui-${n});`),
   '',
-  '  --font-sans: var(--baseui-typography-font-family);',
-  '  --font-mono: var(--baseui-typography-font-family-mono);',
+  '  --font-sans: var(--bui-typography-font-family);',
+  '  --font-mono: var(--bui-typography-font-family-mono);',
   '',
   '}',
   '',
   '/* Type styles are `font` shorthands, so they are utilities rather than theme keys: type-text-14-regular, type-header-32 ... */',
-  ...pick(/^typography-(text|header)-/).flatMap((n) => [`@utility type-${n.slice(11).toLowerCase()} {`, `  font: var(--baseui-${n});`, '}']),
+  ...pick(/^typography-(text|header)-/).flatMap((n) => [`@utility type-${n.slice(11).toLowerCase()} {`, `  font: var(--bui-${n});`, '}']),
   '',
   '/* The space between paragraphs of a text size: paragraphs-16 puts the Paragraph-16 gap between the p elements inside it */',
-  ...pick(/^typography-paragraph-/).flatMap((n) => [`@utility paragraphs-${n.slice(21).toLowerCase()} {`, `  & p + p {`, `    margin-top: var(--baseui-${n});`, `  }`, '}']),
+  ...pick(/^typography-paragraph-/).flatMap((n) => [`@utility paragraphs-${n.slice(21).toLowerCase()} {`, `  & p + p {`, `    margin-top: var(--bui-${n});`, `  }`, '}']),
   '',
   '/* Tailwind\'s duration-150, 300 and 500 over the tokens, which are 0 under data-motion="off" and prefers-reduced-motion */',
-  ...pick(/^duration-/).flatMap((n) => [`@utility ${n} {`, `  transition-duration: var(--baseui-${n});`, '}']),
+  ...pick(/^duration-/).flatMap((n) => [`@utility ${n} {`, `  transition-duration: var(--bui-${n});`, '}']),
   '',
   '/* The focus ring of the system */',
   '@utility focus-ring {',
-  '  outline: var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color);',
-  '  outline-offset: var(--baseui-focus-outline-offset);',
+  '  outline: var(--bui-focus-outline-width) var(--bui-focus-outline-style) var(--bui-focus-outline-color);',
+  '  outline-offset: var(--bui-focus-outline-offset);',
   '}',
   '',
 ];

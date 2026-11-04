@@ -28,7 +28,7 @@ const LOGO_FULL = 'https://overgear.com/images/overgear-logo-full.svg';
 const BRANDS = {
   Google: <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M21.6 12.2c0-.7-.1-1.3-.2-1.9H12v3.6h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.2Z" /><path fill="currentColor" d="M12 22c2.7 0 5-.9 6.6-2.4l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0 0 12 22Z" /><path fill="currentColor" d="M6.4 13.9a6 6 0 0 1 0-3.8V7.5H3.1a10 10 0 0 0 0 9l3.3-2.6Z" /><path fill="currentColor" d="M12 5.9c1.5 0 2.8.5 3.8 1.5l2.8-2.8A10 10 0 0 0 3.1 7.5l3.3 2.6C7.2 7.7 9.4 5.9 12 5.9Z" /></svg>,
   Discord: <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M19.6 5.3A16.6 16.6 0 0 0 15.5 4l-.2.4a15 15 0 0 1 3.7 1.9 13.8 13.8 0 0 0-12.1 0A15 15 0 0 1 10.6 4.4L10.5 4a16.600 16.600 0 0 0-4.100 1.300C3.800 9.200 3.100 13 3.400 16.700a16.700 16.700 0 0 0 5 2.500l1.100-1.800a11 11 0 0 1-1.700-.8l.4-.3a11.900 11.900 0 0 0 10.200 0l.4.300c-.5.300-1.100.6-1.700.8l1.100 1.800a16.700 16.700 0 0 0 5-2.500c.4-4.300-.7-8.100-3-11.400ZM9.500 14.500c-1 0-1.800-.9-1.800-2s.8-2 1.800-2 1.800.9 1.800 2-.8 2-1.800 2Zm5 0c-1 0-1.800-.9-1.800-2s.8-2 1.800-2 1.800.9 1.800 2-.8 2-1.800 2Z" /></svg>,
-  Facebook: <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor" /><path fill="var(--baseui-background-secondary)" d="M13.300 20v-6.500h2.200l.3-2.600h-2.500V9.300c0-.7.200-1.200 1.300-1.200h1.300V5.800c-.2 0-1-.1-1.900-.1-1.900 0-3.200 1.200-3.200 3.300v1.900H8.600v2.600h2.200V20h2.500Z" /></svg>,
+  Facebook: <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor" /><path fill="var(--bui-background-secondary)" d="M13.300 20v-6.500h2.200l.3-2.600h-2.500V9.300c0-.7.200-1.200 1.300-1.200h1.300V5.800c-.2 0-1-.1-1.900-.1-1.900 0-3.200 1.200-3.200 3.300v1.900H8.600v2.600h2.200V20h2.500Z" /></svg>,
 };
 
 /** The sign-in sheet: an email, then the code that was sent to it, or one of three services. */
@@ -241,7 +241,7 @@ export function Footer() {
         <Divider />
         <div className="og-row og-row--between og-footer__brand">
           <svg width="0" height="0" aria-hidden="true" focusable="false" style={{ position: 'absolute' }}>
-            <filter id="og-tint" colorInterpolationFilters="sRGB"><feFlood style={{ floodColor: 'var(--baseui-text-and-icon-secondary)' }} /><feComposite in2="SourceAlpha" operator="in" /></filter>
+            <filter id="og-tint" colorInterpolationFilters="sRGB"><feFlood style={{ floodColor: 'var(--bui-text-and-icon-secondary)' }} /><feComposite in2="SourceAlpha" operator="in" /></filter>
           </svg>
           <img className="og-footer__logo" src={LOGO_FULL} alt="Overgear" />
           <ul className="og-social" aria-label="Social networks">

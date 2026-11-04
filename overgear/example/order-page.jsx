@@ -418,7 +418,7 @@ export function OrderPage({ link, onLogin }) {
           crumbs={[{ label: 'Home', href: href('/') }, { label: 'My orders', href: href('/orders') }, { label: order.title }]}
           title={order.title}
           titleTestId="order-title"
-          titleGap="var(--baseui-spacing-2)"
+          titleGap="var(--bui-spacing-2)"
           media={<div className="og-art og-art--square" role="img" aria-label={order.title}>{order.image ? <img className="og-art__img" src={order.image} alt="" /> : <Icon name="Image01" size={32} />}</div>}
         >
           <div className="og-row og-row--wrap">

@@ -36,7 +36,7 @@ function Orders({ start }) {
   const shown = useRef(start);
   const [text, setText] = useState(start);
   useEffect(() => {
-    const off = () => !parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--baseui-duration-500'));
+    const off = () => !parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--bui-duration-500'));
     let timer;
     const schedule = () => { timer = setTimeout(() => { if (!off() && !document.hidden) setValue((v) => v + 1 + Math.floor(Math.random() * 3)); schedule(); }, 5000 + Math.random() * 4000); };
     schedule();
@@ -68,7 +68,7 @@ function useTakeTurns(count, every = 3600) {
   const [now, setNow] = useState(-1);
   const turn = useRef(0);
   useEffect(() => {
-    const off = () => !parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--baseui-duration-500'));
+    const off = () => !parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--bui-duration-500'));
     const id = setInterval(() => {
       if (off() || document.hidden) return;
       setNow(turn.current % count);

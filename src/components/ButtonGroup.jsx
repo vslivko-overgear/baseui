@@ -19,7 +19,7 @@ export function ButtonGroup({ orientation = 'horizontal', stackOnMobile = false,
       data-orientation={orientation}
       data-stack={stackOnMobile ? 'mobile' : undefined}
       className={cx('bui-button-group', className)}
-      style={{ gap: `var(--baseui-spacing-${gap})`, justifyContent: orientation === 'horizontal' && justify ? JUSTIFY[justify] : undefined, ...style }}
+      style={{ gap: `var(--bui-spacing-${gap})`, justifyContent: orientation === 'horizontal' && justify ? JUSTIFY[justify] : undefined, ...style }}
       {...rest}
     >
       {children}

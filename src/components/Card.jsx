@@ -2,7 +2,7 @@ import { cx, useControllable } from '../react.js';
 import { describe } from '../doc.js';
 
 const px = (v) => (typeof v === 'number' ? `${v}px` : v);
-const SHADOW = { none: 'none', low: 'var(--baseui-shadow-sm)', med: 'var(--baseui-shadow-md)', high: 'var(--baseui-shadow-lg)' };
+const SHADOW = { none: 'none', low: 'var(--bui-shadow-sm)', med: 'var(--bui-shadow-md)', high: 'var(--bui-shadow-lg)' };
 const CARD_DOC = {
   variant: ["'default' | 'surface' | 'transparent' | 'muted' | 'blue' | 'green' | 'orange' | 'pink' | 'red'", "'default'", 'Background; surface is the Surface color of the theme (a shadow in the light theme, none in the dark one) for a card that holds Secondary elements: fields, avatars, a progress track'],
   padding: ["number | 'list'", '4', 'Inner padding in gaps (1 gap = 4px), a step of the spacing scale: 4 is 16px. `list` is for a card that holds a List: 16px above and below and 4px at the sides, because the rows reach 12px out of their box, so the icons stand 16px from the edge and the rows are 4px from it'],
@@ -20,7 +20,7 @@ function cardProps({ variant = 'default', padding = 4, elevation, width, height,
     className: cx('bui-card', `bui-card--${variant}`, className, extra),
     style: {
       // `list`: the rows of a List reach 12px out of their box (the highlight of a row), so 4px at the sides put the icons 16px from the edge and the rows 4px from it
-      ...(String(padding) === 'list' ? { padding: 'var(--baseui-spacing-4) var(--baseui-spacing-1)', '--bui-card-pad': 'var(--baseui-spacing-1)' } : { padding: `var(--baseui-spacing-${padding})`, '--bui-card-pad': `var(--baseui-spacing-${padding})` }),
+      ...(String(padding) === 'list' ? { padding: 'var(--bui-spacing-4) var(--bui-spacing-1)', '--bui-card-pad': 'var(--bui-spacing-1)' } : { padding: `var(--bui-spacing-${padding})`, '--bui-card-pad': `var(--bui-spacing-${padding})` }),
       boxShadow: elevation ? SHADOW[elevation] : undefined,
       width: px(width),
       height: px(height),

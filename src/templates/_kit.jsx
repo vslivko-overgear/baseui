@@ -21,7 +21,7 @@ export function Page({ width = 1120, padding = 6, gap, children, ...rest }) {
     body = [...kids.slice(0, from), group, ...kids.slice(at + 2)];
   }
   return (
-    <main className="tpl-page" style={{ maxWidth: width, padding: `calc(var(--baseui-spacing-${padding}, 24px))`, ...(gap ? { gap: `var(--baseui-spacing-${gap})` } : {}) }} {...rest}>
+    <main className="tpl-page" style={{ maxWidth: width, padding: `calc(var(--bui-spacing-${padding}, 24px))`, ...(gap ? { gap: `var(--bui-spacing-${gap})` } : {}) }} {...rest}>
       {body}
     </main>
   );
@@ -72,7 +72,7 @@ export function Spark({ data, height = 40 }) {
   const pts = data.map((v, i) => `${(i / (data.length - 1)) * w},${height - 4 - ((v - min) / (max - min || 1)) * (height - 8)}`).join(' ');
   return (
     <svg className="tpl-spark" viewBox={`0 0 ${w} ${height}`} preserveAspectRatio="none" role="img" aria-label={`Trend, from ${data[0]} to ${data[data.length - 1]}`} style={{ height }}>
-      <polyline points={pts} fill="none" stroke="var(--baseui-background-brand)" strokeWidth="2" vectorEffect="non-scaling-stroke" strokeLinejoin="round" strokeLinecap="round" />
+      <polyline points={pts} fill="none" stroke="var(--bui-background-brand)" strokeWidth="2" vectorEffect="non-scaling-stroke" strokeLinejoin="round" strokeLinecap="round" />
     </svg>
   );
 }

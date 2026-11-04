@@ -38,7 +38,7 @@ export const WithLabel = example({
   name: 'With Label',
   description: 'With and without a label. For a group of checkboxes see Checkbox Group',
   render: () => (
-    <Stack gap="var(--baseui-spacing-3)">
+    <Stack gap="var(--bui-spacing-3)">
       <Checkbox label="With a label" defaultChecked />
       <Checkbox aria-label="no label" />
     </Stack>

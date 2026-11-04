@@ -54,7 +54,7 @@ for (const [width, phone] of [[1440, false], [390, true]]) {
     await page.evaluate(() => window.scrollTo(0, 0)); await page.waitForTimeout(300);
   }
   // the count of the items is a secondary number at the side of the title (the decision: it is not a line under it)
-  const head = await page.evaluate(() => { const h = document.querySelector('.og-order__title'); const c = h?.querySelector('.og-title__count'); const probe = document.createElement('span'); probe.style.color = 'var(--baseui-text-and-icon-secondary)'; document.body.append(probe); const sec = getComputedStyle(probe).color; probe.remove(); return c ? { text: c.textContent, beside: c.getBoundingClientRect().left > h.getBoundingClientRect().left && Math.abs(c.getBoundingClientRect().top - h.getBoundingClientRect().top) < h.getBoundingClientRect().height, secondary: getComputedStyle(c).color === sec } : null; });
+  const head = await page.evaluate(() => { const h = document.querySelector('.og-order__title'); const c = h?.querySelector('.og-title__count'); const probe = document.createElement('span'); probe.style.color = 'var(--bui-text-and-icon-secondary)'; document.body.append(probe); const sec = getComputedStyle(probe).color; probe.remove(); return c ? { text: c.textContent, beside: c.getBoundingClientRect().left > h.getBoundingClientRect().left && Math.abs(c.getBoundingClientRect().top - h.getBoundingClientRect().top) < h.getBoundingClientRect().height, secondary: getComputedStyle(c).color === sec } : null; });
   expectThat(head && head.text === '7' && head.beside && head.secondary, `${where}: "Secure Checkout" has no secondary number of the items at its side (${JSON.stringify(head)})`);
   const qty = await page.evaluate(() => [...document.querySelectorAll('.og-lines--surface > .og-line')].map((l) => { const q = l.querySelector('.og-line__qty'); const meta = [...l.querySelectorAll('.og-line__meta')].at(-1).getBoundingClientRect();  const body = l.querySelector('.og-line__body').getBoundingClientRect(); const price = l.querySelector('.og-line__price').getBoundingClientRect(); const bin = l.querySelector('[data-slot=icon-button]').getBoundingClientRect(); const r = q?.getBoundingClientRect(); return { has: !!q, after: !!r && r.top >= meta.bottom && r.left >= body.left - 1 && r.right <= body.right + 1, priceTop: price.top - l.getBoundingClientRect().top < 40 && bin.top >= price.bottom && Math.abs(bin.right - price.right) <= 8 && l.getBoundingClientRect().bottom - bin.bottom <= 20 }; }));
   expectThat(qty.every((x) => x.priceTop) && qty.filter((x) => x.has).length === 1 && qty.at(-1).has && qty.at(-1).after, `${where}: the price is not on top and the bin at the bottom of a right column as high as the line (no empty row under the text), or the quantity is not a row after the delivery time, only on the line of several units (${JSON.stringify(qty)})`);
@@ -71,7 +71,7 @@ for (const [width, phone] of [[1440, false], [390, true]]) {
       gapOut: heading && items.length ? heading.getBoundingClientRect().top - items.at(-1).getBoundingClientRect().bottom : 0,
       radios: tiles.every((t) => t.querySelector('input[type=radio]')) && document.querySelector('[role=radiogroup]')?.getAttribute('aria-label') === 'Payment method',
       headed: !!heading && heading.getBoundingClientRect().top >= items.at(-1).getBoundingClientRect().bottom && heading.getBoundingClientRect().bottom <= tiles[0].getBoundingClientRect().top,
-      on: look(on), off: look(off), selected: probe('--baseui-extensions-border-selected'), standard: probe('--baseui-border-primary'),
+      on: look(on), off: look(off), selected: probe('--bui-extensions-border-selected'), standard: probe('--bui-border-primary'),
       items: items.map((l) => { const r = l.getBoundingClientRect(); return { top: r.top, bottom: r.bottom, radius: parseFloat(getComputedStyle(l).borderTopLeftRadius), background: getComputedStyle(l).backgroundColor }; }),
     };
   });
@@ -112,7 +112,7 @@ for (const [width, phone] of [[1440, false], [390, true]]) {
   expectThat(shape.icons === 1 && shape.chevronRight, `${where}: the promo row is not a text on the left and a chevron on the right and nothing else (${JSON.stringify(shape)})`);
   const pr = await page.evaluate(() => {
     const row = [...document.querySelectorAll('[data-slot="list-item"]')].find((e) => e.textContent.includes('Apply promo code'));
-    const probe = document.createElement('span'); probe.style.color = 'var(--baseui-text-and-icon-secondary)'; document.body.append(probe); const sec = getComputedStyle(probe).color; probe.remove();
+    const probe = document.createElement('span'); probe.style.color = 'var(--bui-text-and-icon-secondary)'; document.body.append(probe); const sec = getComputedStyle(probe).color; probe.remove();
     const sum = document.querySelector('.og-sticky .bui-card, .og-sticky [data-slot=card]');
     const card = row.closest('.og-coupon'); const cr = card.getBoundingClientRect(); const rr = row.querySelector('button').getBoundingClientRect(); const carded = !!card && Math.abs(rr.width - cr.width) < 2 && Math.abs(rr.height - cr.height) < 2;   // the whole card is the button
     return { color: getComputedStyle(row.querySelector('[data-slot="list-item-title"]')).color, sec, carded, under: row.getBoundingClientRect().top >= sum.getBoundingClientRect().bottom, right: row.getBoundingClientRect().left >= sum.getBoundingClientRect().left - 1 };
@@ -133,7 +133,7 @@ for (const [width, phone] of [[1440, false], [390, true]]) {
   await page.getByRole('button', { name: 'Apply', exact: true }).click();
   await page.waitForTimeout(900);
   expectThat((await dialog.count()) === 0, `${where}: a right code does not close the dialog`);
-  const green = await page.evaluate(() => { const row = document.querySelector('.og-sum__row--discount'); if (!row) return null; const probe = document.createElement('span'); probe.style.color = 'var(--baseui-extensions-text-and-icon-success)'; document.body.append(probe); const success = getComputedStyle(probe).color; probe.remove(); return { row: getComputedStyle(row).color, label: getComputedStyle(row.querySelector('.og-sum__label')).color, value: getComputedStyle(row.lastElementChild).color, success, text: row.textContent }; });
+  const green = await page.evaluate(() => { const row = document.querySelector('.og-sum__row--discount'); if (!row) return null; const probe = document.createElement('span'); probe.style.color = 'var(--bui-extensions-text-and-icon-success)'; document.body.append(probe); const success = getComputedStyle(probe).color; probe.remove(); return { row: getComputedStyle(row).color, label: getComputedStyle(row.querySelector('.og-sum__label')).color, value: getComputedStyle(row.lastElementChild).color, success, text: row.textContent }; });
   expectThat(!!green && green.row === green.success && green.label === green.success && green.value === green.success, `${where}: the discount is not in the success color (${JSON.stringify(green)})`);
   expectThat(!!green && /−\$\d/.test(green.text), `${where}: the discount row has no amount`);
   const applied = page.locator('[data-slot="list-item"]', { hasText: 'Promo code' });

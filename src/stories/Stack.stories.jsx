@@ -66,7 +66,7 @@ export const BleedRow = example({
   name: 'Bleed',
   description: 'A row that scrolls out to the screen edges: it reaches past the page padding and keeps the padding inside, so the first chip stands on the edge of the text',
   render: () => (
-    <div style={{ width: 360, padding: '0 var(--baseui-spacing-4)', overflow: 'hidden', boxSizing: 'border-box' }}>
+    <div style={{ width: 360, padding: '0 var(--bui-spacing-4)', overflow: 'hidden', boxSizing: 'border-box' }}>
       <Bleed scroll>
         <HStack gap={2} wrap={false}>
           {['All games', 'World of Warcraft', 'Action RPG', 'MMO', 'Shooters'].map((t) => <Token key={t} size="sm">{t}</Token>)}

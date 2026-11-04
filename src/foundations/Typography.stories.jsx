@@ -55,14 +55,14 @@ function Scale() {
                     </span>
                   }
                 >
-                  <div className="type-setting" style={{ font: `var(--${varName})`, '--para': paragraph ? `var(--baseui-typography-paragraph-${paragraph})` : undefined }}>
+                  <div className="type-setting" style={{ font: `var(--${varName})`, '--para': paragraph ? `var(--bui-typography-paragraph-${paragraph})` : undefined }}>
                     <p>{setting}</p>
                     {paragraph && <p>{title === 'Headers' ? SECOND_HEADER : SECOND}</p>}
                   </div>
                   <p className="type-token">
                     <code>{`var(--${varName})`}</code>
                     <code>{t.value}</code>
-                    {paragraph && <code>{`paragraph spacing var(--baseui-typography-paragraph-${paragraph}): ${paragraphs[paragraph]}`}</code>}
+                    {paragraph && <code>{`paragraph spacing var(--bui-typography-paragraph-${paragraph}): ${paragraphs[paragraph]}`}</code>}
                   </p>
                 </Collapsible>
               );
@@ -78,7 +78,7 @@ export const Scale_ = {
   render: () => <Scale />,
   parameters: {
     docs: {
-      description: { story: 'Type styles `--baseui-typography-*` from tokens.css, grouped into headers and text. Open a row to see a text set in that style' },
+      description: { story: 'Type styles `--bui-typography-*` from tokens.css, grouped into headers and text. Open a row to see a text set in that style' },
       source: { originalSource: '<Typography />' },
     },
   },
@@ -86,7 +86,7 @@ export const Scale_ = {
 export { Scale_ as Scale };
 function Periods() {
   const defaults = AGENT_DEFAULTS.find((d) => d.id === 'punctuation');
-  const text = { margin: 0, font: 'var(--baseui-typography-text-16-regular)' };
+  const text = { margin: 0, font: 'var(--bui-typography-text-16-regular)' };
   return (
     <div className="type-page">
       <p className="doc-p">
@@ -139,8 +139,8 @@ export const __namedExportsOrder = ['Scale', 'TextColor', 'Periods'];
 
 function TextColor() {
   const defaults = AGENT_DEFAULTS.find((d) => d.id === 'typography');
-  const sample = { margin: 0, font: 'var(--baseui-typography-text-16-regular)' };
-  const note = { margin: 'var(--baseui-spacing-1) 0 0', font: 'var(--baseui-typography-text-12-regular)', color: 'var(--baseui-text-and-icon-secondary)' };
+  const sample = { margin: 0, font: 'var(--bui-typography-text-16-regular)' };
+  const note = { margin: 'var(--bui-spacing-1) 0 0', font: 'var(--bui-typography-text-12-regular)', color: 'var(--bui-text-and-icon-secondary)' };
   return (
     <div className="type-page">
       <p className="doc-p">
@@ -151,16 +151,16 @@ function TextColor() {
           <h3>
             <BuiltinIcon name="success" size={20} aria-hidden="true" /> Do
           </h3>
-          <p style={{ ...sample, font: 'var(--baseui-typography-text-16-semi-bold)' }}>Your plan renews on 1 March</p>
-          <p style={{ ...sample, color: 'var(--baseui-text-and-icon-primary)' }}>You can change or cancel it at any time before then. We will send a receipt to your email after each payment</p>
+          <p style={{ ...sample, font: 'var(--bui-typography-text-16-semi-bold)' }}>Your plan renews on 1 March</p>
+          <p style={{ ...sample, color: 'var(--bui-text-and-icon-primary)' }}>You can change or cancel it at any time before then. We will send a receipt to your email after each payment</p>
           <p style={note}>Billed monthly · Visa ending in 4242</p>
         </div>
         <div className="usage__col usage__col--dont">
           <h3>
             <BuiltinIcon name="error" size={20} aria-hidden="true" /> Don&apos;t
           </h3>
-          <p style={{ ...sample, font: 'var(--baseui-typography-text-16-semi-bold)', color: 'var(--baseui-text-and-icon-secondary)' }}>Your plan renews on 1 March</p>
-          <p style={{ ...sample, color: 'var(--baseui-text-and-icon-secondary)' }} data-constitution-example="">
+          <p style={{ ...sample, font: 'var(--bui-typography-text-16-semi-bold)', color: 'var(--bui-text-and-icon-secondary)' }}>Your plan renews on 1 March</p>
+          <p style={{ ...sample, color: 'var(--bui-text-and-icon-secondary)' }} data-constitution-example="">
                       You can change or cancel it at any time before then. We will send a receipt to your email after each payment
                     </p>
           <p style={note}>Billed monthly · Visa ending in 4242</p>
@@ -180,7 +180,7 @@ export const TextColor_ = {
   parameters: {
     docs: {
       description: { story: 'Primary for the main text, Secondary only for supporting text' },
-      source: { originalSource: '<p style={{ color: "var(--baseui-text-and-icon-primary)" }}>…</p>' },
+      source: { originalSource: '<p style={{ color: "var(--bui-text-and-icon-primary)" }}>…</p>' },
     },
   },
 };

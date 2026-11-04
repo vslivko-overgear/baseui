@@ -16,7 +16,7 @@ export const Playground = playground({ source: '{}' });
 export const Sizes = example({
   name: 'Sizes',
   render: () => (
-    <Row gap="var(--baseui-spacing-6)">
+    <Row gap="var(--bui-spacing-6)">
       {['xsm', 'sm', 'md', 'lg'].map((z) => (
         <Spinner key={z} size={z} />
       ))}
@@ -29,11 +29,11 @@ export const Sizes = example({
 export const Colors = example({
   name: 'Colors',
   render: () => (
-    <Row gap="var(--baseui-spacing-6)">
+    <Row gap="var(--bui-spacing-6)">
       {COLORS.filter((c) => c !== 'on-color').map((c) => (
         <Spinner key={c} color={c} />
       ))}
-      <span style={{ display: 'inline-flex', padding: 12, borderRadius: 'var(--baseui-radius-xl)', background: 'var(--baseui-background-accent)' }}>
+      <span style={{ display: 'inline-flex', padding: 12, borderRadius: 'var(--bui-radius-xl)', background: 'var(--bui-background-accent)' }}>
         <Spinner color="on-color" />
       </span>
     </Row>

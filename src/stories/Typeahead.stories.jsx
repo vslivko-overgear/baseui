@@ -58,7 +58,7 @@ export const States = story(
     </>
   ),
   `<Typeahead label="Team" options={options} status="error" caption="Choose a team" />`,
-  'var(--baseui-spacing-3)',
+  'var(--bui-spacing-3)',
 );
 export const IconAndLoading = story(
   'Icon and Loading',
@@ -84,7 +84,7 @@ export const Multiple = story(
   'Multiple',
   'One, a few, a counter and many tokens',
   () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--baseui-spacing-3)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--bui-spacing-3)' }}>
       <Typeahead multiple label="Teams" options={OPTIONS} defaultValue={['design']} />
       <Typeahead multiple label="Teams" options={OPTIONS} defaultValue={['design', 'engineering']} />
       <Typeahead multiple label="Teams" options={OPTIONS} multipleDisplay="counter" defaultValue={OPTIONS.map((o) => o.value)} />
@@ -97,7 +97,7 @@ export const MobileSheet = story(
   'Mobile Sheet',
   'On viewports below 768px the search moves to a separate input inside a bottom sheet',
   () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--baseui-spacing-3)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--bui-spacing-3)' }}>
       <Typeahead label="Team" options={OPTIONS} />
       <Typeahead multiple label="Teams" options={OPTIONS} defaultValue={['design']} />
     </div>

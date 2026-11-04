@@ -378,7 +378,7 @@ The interface is made of the system, not next to it
 
 ### D1 Tokens, not values (must)
 
-- **Do:** Take colors, type, spacing, radius, shadow and motion from the tokens (var(--baseui-…))
+- **Do:** Take colors, type, spacing, radius, shadow and motion from the tokens (var(--bui-…))
 - **Don't:** write hex colors, arbitrary pixel gaps, custom fonts or one-off shadows
 - **Why:** Tokens carry the themes, the dark mode and the contrast; a literal value breaks them
 - **Source:** Design system: token coverage; needs a review

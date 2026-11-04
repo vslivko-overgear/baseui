@@ -34,12 +34,12 @@ export function ThemePreview(theme) {
     { value: 'week', label: 'Week' },
     { value: 'month', label: 'Month' },
   ];
-  const row = { display: 'flex', flexWrap: 'wrap', gap: 'var(--baseui-spacing-3)', alignItems: 'center' };
+  const row = { display: 'flex', flexWrap: 'wrap', gap: 'var(--bui-spacing-3)', alignItems: 'center' };
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--baseui-spacing-6)', width: '100%' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--bui-spacing-6)', width: '100%' }}>
       <div>
-        <div style={{ font: 'var(--baseui-typography-header-32)' }}>Headline font</div>
-        <p style={{ margin: '8px 0 0', font: 'var(--baseui-typography-text-16-regular)' }}>
+        <div style={{ font: 'var(--bui-typography-header-32)' }}>Headline font</div>
+        <p style={{ margin: '8px 0 0', font: 'var(--bui-typography-text-16-regular)' }}>
                   The quick brown fox jumps over the lazy dog. Съешь же ещё этих мягких французских булок
                 </p>
       </div>
@@ -49,7 +49,7 @@ export function ThemePreview(theme) {
         <Button variant="ghost" label="Ghost" />
         <IconButton label="Add" icon={<Plus size={24} />} />
       </div>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--baseui-spacing-4)', alignItems: 'flex-start' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--bui-spacing-4)', alignItems: 'flex-start' }}>
         <div style={{ width: 240 }}>
           <TextInput label="Email" defaultValue="name@example.com" />
         </div>
@@ -89,9 +89,9 @@ describe(ThemePreview, 'The theme of this site and of your own app: the settings
   headingFont: [
     "'Geist' | 'Unbounded' | 'Montserrat Alternates' | …",
     "'Geist'",
-    'Font of the headings (`--baseui-typography-headline-font-family`); Google Fonts with Cyrillic',
+    'Font of the headings (`--bui-typography-headline-font-family`); Google Fonts with Cyrillic',
   ],
-  textFont: ["'Geist' | 'Inter' | 'Manrope' | …", "'Geist'", 'Font of all other text (`--baseui-typography-font-family`); Google Fonts with Cyrillic'],
+  textFont: ["'Geist' | 'Inter' | 'Manrope' | …", "'Geist'", 'Font of all other text (`--bui-typography-font-family`); Google Fonts with Cyrillic'],
   motion: [
     "'off' | 'basic' | 'enhanced'",
     "'basic'",
@@ -136,7 +136,7 @@ export const Playground = {
     docs: {
       source: {
         originalSource: `// Set the tokens on <html>, or pick the settings on this page
-document.documentElement.style.setProperty('--baseui-background-brand', '#575df6');
+document.documentElement.style.setProperty('--bui-background-brand', '#575df6');
 document.documentElement.dataset.shape = 'circle';`,
       },
     },

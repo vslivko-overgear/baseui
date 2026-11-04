@@ -117,7 +117,7 @@ export function FunnelCohortDashboard() {
           {['Week 0', 'Week 1', 'Week 2', 'Week 3'].map((w) => <span key={w} className="tpl-meta">{w}</span>)}
           {cohorts.map(([name, ...vals]) => [
             <span key={name} className="tpl-text">{name}</span>,
-            ...vals.map((v, i) => <span key={`${name}${i}`} className="tpl-heat__cell" style={{ background: v ? `color-mix(in srgb, var(--baseui-background-brand) ${Number(v) >= 60 ? Math.max(75, Number(v)) : Math.min(35, Number(v) * 0.7)}%, var(--baseui-background-primary))` : 'transparent', color: Number(v) >= 60 ? 'var(--baseui-extensions-text-and-icon-on-brand)' : undefined }}>{v ? `${v}%` : ''}</span>),
+            ...vals.map((v, i) => <span key={`${name}${i}`} className="tpl-heat__cell" style={{ background: v ? `color-mix(in srgb, var(--bui-background-brand) ${Number(v) >= 60 ? Math.max(75, Number(v)) : Math.min(35, Number(v) * 0.7)}%, var(--bui-background-primary))` : 'transparent', color: Number(v) >= 60 ? 'var(--bui-extensions-text-and-icon-on-brand)' : undefined }}>{v ? `${v}%` : ''}</span>),
           ])}
         </div>
       </Panel>

@@ -28,17 +28,17 @@ function Demo({ rows }) {
   );
 }
 
-const EASE = 'var(--baseui-ease-out)';
-const SLOW = 'var(--baseui-duration-500)';
+const EASE = 'var(--bui-ease-out)';
+const SLOW = 'var(--bui-duration-500)';
 
 export function page() {
   const s = section('Duration & easing', useTokens());
   if (!s) return <Loading />;
   const tokens = s.groups[0].tokens;
-  const durations = tokens.filter((t) => t.name.startsWith('duration')).map((t) => ({ label: t.name, duration: `var(--baseui-${t.name})`, easing: EASE }));
+  const durations = tokens.filter((t) => t.name.startsWith('duration')).map((t) => ({ label: t.name, duration: `var(--bui-${t.name})`, easing: EASE }));
   const easings = [
     { label: 'linear', duration: SLOW, easing: 'linear' },
-    ...tokens.filter((t) => t.name.startsWith('ease')).map((t) => ({ label: t.name, duration: SLOW, easing: `var(--baseui-${t.name})` })),
+    ...tokens.filter((t) => t.name.startsWith('ease')).map((t) => ({ label: t.name, duration: SLOW, easing: `var(--bui-${t.name})` })),
   ];
   return (
     <>

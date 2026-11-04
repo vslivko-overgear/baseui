@@ -64,7 +64,7 @@ function Stars({
   const interactive = !disabled && !readOnly && !!onChange;
   const current = hover ?? value;
   const stars = (
-    <div data-slot="rating-stars" className="bui-rating__stars" style={{ '--baseui-rating-max': max }}>
+    <div data-slot="rating-stars" className="bui-rating__stars" style={{ '--bui-rating-max': max }}>
       {Array.from({ length: max }, (_, i) => {
         const index = i + 1;
         const star = <Star fill={fillOf(current, index, max, round)} />;

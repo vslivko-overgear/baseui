@@ -3,7 +3,7 @@ import { describe } from '../doc.js';
 import { ControlSizeContext } from '../control-size.js';
 
 // a step of the spacing scale in gaps (1 gap = 4px): 4 is 16px
-const sp = (n) => (n === undefined ? undefined : `var(--baseui-spacing-${n})`);
+const sp = (n) => (n === undefined ? undefined : `var(--bui-spacing-${n})`);
 const ALIGN = { start: 'flex-start', end: 'flex-end', center: 'center', stretch: 'stretch', baseline: 'baseline' };
 const JUSTIFY = { start: 'flex-start', end: 'flex-end', center: 'center', between: 'space-between', around: 'space-around' };
 

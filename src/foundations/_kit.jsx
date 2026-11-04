@@ -28,7 +28,7 @@ function parse(css) {
       let current = { title: '', tokens: [] };
       for (const line of body.split('\n')) {
         const c = line.match(/^\s*\/\*\s*(.+?)\s*\*\/\s*$/);
-        const t = line.match(/^\s*--baseui-([\w-]+):\s*(.+?);\s*$/);
+        const t = line.match(/^\s*--bui-([\w-]+):\s*(.+?);\s*$/);
         if (c) {
           if (current.tokens.length) groups.push(current);
           current = { title: c[1], tokens: [] };
@@ -94,14 +94,14 @@ export const colorPreview =
   );
 
 export function Swatch({ name, size = 40 }) {
-  return <span className="tok-swatch" style={{ width: size, height: size, background: `var(--baseui-${name})` }} aria-hidden="true" />;
+  return <span className="tok-swatch" style={{ width: size, height: size, background: `var(--bui-${name})` }} aria-hidden="true" />;
 }
 
 export function TokenTable({ tokens, themed, preview, previewWidth = 72 }) {
   const val = (key) => (t) => <code className="val">{t[key]}</code>;
   const columns = [
     ...(preview ? [{ key: 'preview', header: '', width: pixel(previewWidth), renderCell: preview }] : []),
-    { key: 'name', header: 'Token', width: proportional(3, { minWidth: 220 }), renderCell: (t) => <code>{`--baseui-${t.name}`}</code> },
+    { key: 'name', header: 'Token', width: proportional(3, { minWidth: 220 }), renderCell: (t) => <code>{`--bui-${t.name}`}</code> },
     ...(themed
       ? [
           { key: 'light', header: 'Light', width: proportional(2, { minWidth: 120 }), renderCell: val('light') },
@@ -116,6 +116,6 @@ export const Loading = () => (
   <div className="doc-block" aria-busy="true" aria-label="Loading tokens">
     <Skeleton variant="text" width={160} height={28} />
     <div style={{ height: 16 }} />
-    <Skeleton variant="rect" height={220} style={{ borderRadius: 'var(--baseui-radius-2xl)' }} />
+    <Skeleton variant="rect" height={220} style={{ borderRadius: 'var(--bui-radius-2xl)' }} />
   </div>
 );

@@ -24,9 +24,9 @@ export const Playground = {
           </Button>
         )}
       >
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--baseui-spacing-2)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--bui-spacing-2)' }}>
           <strong>Share this page</strong>
-          <span style={{ color: 'var(--baseui-text-and-icon-secondary)' }}>Anyone with the link can view</span>
+          <span style={{ color: 'var(--bui-text-and-icon-secondary)' }}>Anyone with the link can view</span>
         </div>
       </Popover>
     </div>

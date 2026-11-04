@@ -10,7 +10,7 @@ export default meta({
 export const Playground = {
   ...playground({ source: `<Section padding={6} maxWidth={480}>…</Section>` }),
   render: (args) => (
-    <Section {...args} style={{ background: 'var(--baseui-background-secondary)', borderRadius: 'var(--baseui-radius-2xl)' }}>
+    <Section {...args} style={{ background: 'var(--bui-background-secondary)', borderRadius: 'var(--bui-radius-2xl)' }}>
       Section content
     </Section>
   ),

@@ -23,19 +23,19 @@ export const example = ({ name, render, description, source }) => ({
   parameters: { controls: { disable: true }, docs: { description: { story: description }, source: { originalSource: source } } },
 });
 
-export const Stack = ({ gap = 'var(--baseui-spacing-4)', width, children }) => (
+export const Stack = ({ gap = 'var(--bui-spacing-4)', width, children }) => (
   <div style={{ display: 'flex', flexDirection: 'column', gap, width, maxWidth: '100%' }}>{children}</div>
 );
-export const Row = ({ gap = 'var(--baseui-spacing-4)', align = 'center', children }) => (
+export const Row = ({ gap = 'var(--bui-spacing-4)', align = 'center', children }) => (
   <div style={{ display: 'flex', flexWrap: 'wrap', gap, alignItems: align }}>{children}</div>
 );
 export const Box = ({ children, style }) => (
   <div
     style={{
-      padding: 'var(--baseui-spacing-3) var(--baseui-spacing-4)',
-      borderRadius: 'var(--baseui-radius-xl)',
-      background: 'var(--baseui-background-secondary)',
-      font: 'var(--baseui-typography-text-14-regular)',
+      padding: 'var(--bui-spacing-3) var(--bui-spacing-4)',
+      borderRadius: 'var(--bui-radius-xl)',
+      background: 'var(--bui-background-secondary)',
+      font: 'var(--bui-typography-text-14-regular)',
       ...style,
     }}
   >
@@ -59,17 +59,17 @@ export const Phone = ({ top, bottom, children, height = 320, overlay = false }) 
     width: 375,
     maxWidth: '100%',
     height,
-    borderRadius: 'var(--baseui-radius-3xl, 24px)',
+    borderRadius: 'var(--bui-radius-3xl, 24px)',
     overflow: 'hidden',
-    background: 'var(--baseui-background-primary)',
+    background: 'var(--bui-background-primary)',
   };
   const content = {
     flex: 1,
-    margin: '0 var(--baseui-spacing-2)',
-    padding: 'var(--baseui-spacing-4)',
-    borderRadius: 'var(--baseui-radius-2xl, 16px)',
-    background: 'var(--baseui-background-secondary)',
-    font: 'var(--baseui-typography-text-14-regular)',
+    margin: '0 var(--bui-spacing-2)',
+    padding: 'var(--bui-spacing-4)',
+    borderRadius: 'var(--bui-radius-2xl, 16px)',
+    background: 'var(--bui-background-secondary)',
+    font: 'var(--bui-typography-text-14-regular)',
   };
   if (!overlay)
     return (
@@ -79,19 +79,19 @@ export const Phone = ({ top, bottom, children, height = 320, overlay = false }) 
         {bottom}
       </div>
     );
-  const blob = (x, y, c) => `radial-gradient(circle at ${x}% ${y}%, var(--baseui-accent-colors-${c}) 0, transparent 38%)`;
+  const blob = (x, y, c) => `radial-gradient(circle at ${x}% ${y}%, var(--bui-accent-colors-${c}) 0, transparent 38%)`;
   return (
     <div
-      style={{ ...frame, background: `${blob(15, 30, 'Blue-Light')}, ${blob(85, 55, 'Pink')}, ${blob(40, 95, 'Orange')}, var(--baseui-background-secondary)` }}
+      style={{ ...frame, background: `${blob(15, 30, 'Blue-Light')}, ${blob(85, 55, 'Pink')}, ${blob(40, 95, 'Orange')}, var(--bui-background-secondary)` }}
     >
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 1 }}>{top}</div>
       <div
         style={{
           flex: 1,
-          padding: 'var(--baseui-spacing-4)',
+          padding: 'var(--bui-spacing-4)',
           paddingTop: 72,
-          font: 'var(--baseui-typography-text-14-regular)',
-          color: 'var(--baseui-text-and-icon-primary)',
+          font: 'var(--bui-typography-text-14-regular)',
+          color: 'var(--bui-text-and-icon-primary)',
         }}
       >
         {children}

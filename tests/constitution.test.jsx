@@ -230,8 +230,8 @@ describe('constitution', () => {
   describe('H5: primary for the main text', () => {
     // jsdom does not resolve var(); the token is set on the page and the text uses its value, as the browser computes it
     const withTokens = (html) => {
-      document.documentElement.style.setProperty('--baseui-text-and-icon-secondary', 'rgb(95, 104, 119)');
-      document.documentElement.style.setProperty('--baseui-text-and-icon-primary', 'rgb(23, 23, 23)');
+      document.documentElement.style.setProperty('--bui-text-and-icon-secondary', 'rgb(95, 104, 119)');
+      document.documentElement.style.setProperty('--bui-text-and-icon-primary', 'rgb(23, 23, 23)');
       const host = document.createElement('div');
       host.innerHTML = html;
       document.body.append(host);
@@ -299,9 +299,9 @@ describe('constitution', () => {
   describe('D11: Secondary background on Primary or Surface', () => {
     const audit = (html) => {
       const root = document.documentElement.style;
-      root.setProperty('--baseui-background-primary', 'rgb(255, 255, 255)');
-      root.setProperty('--baseui-background-secondary', 'rgb(239, 242, 246)');
-      root.setProperty('--baseui-extensions-background-surface', 'rgb(34, 34, 34)');
+      root.setProperty('--bui-background-primary', 'rgb(255, 255, 255)');
+      root.setProperty('--bui-background-secondary', 'rgb(239, 242, 246)');
+      root.setProperty('--bui-extensions-background-surface', 'rgb(34, 34, 34)');
       const host = document.createElement('div');
       host.innerHTML = html;
       document.body.append(host);

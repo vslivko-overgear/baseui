@@ -3,13 +3,13 @@ import { describe } from '../doc.js';
 
 const SIZES = { xsm: 16, sm: 24, md: 40, lg: 56 };
 const COLORS = {
-  primary: 'var(--baseui-text-and-icon-primary)',
-  secondary: 'var(--baseui-text-and-icon-secondary)',
-  accent: 'var(--baseui-text-and-icon-accent)',
-  success: 'var(--baseui-extensions-text-and-icon-success)',
-  warning: 'var(--baseui-extensions-text-and-icon-warning)',
-  error: 'var(--baseui-extensions-text-and-icon-error)',
-  'on-color': 'var(--baseui-extensions-text-and-icon-on-color)',
+  primary: 'var(--bui-text-and-icon-primary)',
+  secondary: 'var(--bui-text-and-icon-secondary)',
+  accent: 'var(--bui-text-and-icon-accent)',
+  success: 'var(--bui-extensions-text-and-icon-success)',
+  warning: 'var(--bui-extensions-text-and-icon-warning)',
+  error: 'var(--bui-extensions-text-and-icon-error)',
+  'on-color': 'var(--bui-extensions-text-and-icon-on-color)',
   inherit: 'currentColor',
 };
 

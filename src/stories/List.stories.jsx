@@ -44,7 +44,7 @@ export const Sections = example({
   render: () =>
     W(
       360,
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--baseui-spacing-4)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--bui-spacing-4)' }}>
         <List title="Mailbox" divider>
           {rows({ rows: 2, ...ROW_ARGS, leading: 'icon' }, 'md')}
         </List>
@@ -58,7 +58,7 @@ export const Sizes = example({
   render: () =>
     W(
       360,
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--baseui-spacing-4)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--bui-spacing-4)' }}>
         {['md', 'sm'].map((s) => (
           <List key={s} title={s} size={s}>
             {rows({ rows: 2, ...ROW_ARGS, leading: 'icon', details: 'text' }, s)}
@@ -73,7 +73,7 @@ export const Spacing = example({
   render: () =>
     W(
       360,
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--baseui-spacing-4)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--bui-spacing-4)' }}>
         {['sm', 'md', 'lg'].map((sp) => (
           <List key={sp} title={`spacing ${sp}`} spacing={sp}>
             {rows({ rows: 3, ...ROW_ARGS, leading: 'icon' }, 'md')}

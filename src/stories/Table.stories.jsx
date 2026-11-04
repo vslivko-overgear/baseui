@@ -109,7 +109,7 @@ function SelectionDemo({ mode }) {
     <div style={{ display: 'grid', gap: 12 }}>
       <Table data={data} columns={rich} selectionMode={mode} selectedKeys={keys} onSelectionChange={setKeys} caption="Selectable" />
       <div
-        style={{ font: 'var(--baseui-typography-text-14-regular)', color: 'var(--baseui-text-and-icon-secondary)' }}
+        style={{ font: 'var(--bui-typography-text-14-regular)', color: 'var(--bui-text-and-icon-secondary)' }}
       >{`Selected: ${keys.length ? keys.join(', ') : 'none'}`}</div>
     </div>
   );

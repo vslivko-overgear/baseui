@@ -16,7 +16,7 @@ export function page() {
         <div className="shadow-grid">
           {tokens.map((t) => (
             <figure key={t.name} className="shadow-item">
-              <div className="shadow-box" style={{ boxShadow: `var(--baseui-${t.name})` }} />
+              <div className="shadow-box" style={{ boxShadow: `var(--bui-${t.name})` }} />
               <figcaption>
                 <code>{t.name}</code>
               </figcaption>

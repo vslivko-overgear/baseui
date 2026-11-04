@@ -306,7 +306,7 @@ export const RULES = [
   },
   {
     id: 'D1', category: 'D', level: 'must', title: 'Tokens, not values',
-    do: 'Take colors, type, spacing, radius, shadow and motion from the tokens (var(--baseui-…))',
+    do: 'Take colors, type, spacing, radius, shadow and motion from the tokens (var(--bui-…))',
     dont: 'Do not write hex colors, arbitrary pixel gaps, custom fonts or one-off shadows',
     why: 'Tokens carry the themes, the dark mode and the contrast; a literal value breaks them',
     source: 'Design system: token coverage', check: 'review',

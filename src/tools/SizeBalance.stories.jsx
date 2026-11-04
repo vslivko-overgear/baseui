@@ -18,7 +18,7 @@ export default {
 };
 
 const card = {
-  background: 'var(--baseui-extensions-background-surface)',
+  background: 'var(--bui-extensions-background-surface)',
   borderRadius: 16,
   padding: 16,
   display: 'flex',

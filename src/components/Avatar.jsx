@@ -5,7 +5,7 @@ import { describe } from '../doc.js';
 const PX = { xsm: 20, sm: 24, md: 36, lg: 48, xl: 128 };
 export const resolveSize = (size = 'md') => (typeof size === 'number' ? size : PX[size]);
 // Rounded corners follow the size, like the other controls: about 30% of the side.
-const rounded = (px) => `var(--baseui-radius-${px <= 20 ? 'md' : px <= 24 ? 'lg' : px <= 32 ? 'custom-10' : px <= 40 ? 'xl' : px <= 56 ? '2xl' : px <= 72 ? 'custom-20' : 'custom-28'})`;
+const rounded = (px) => `var(--bui-radius-${px <= 20 ? 'md' : px <= 24 ? 'lg' : px <= 32 ? 'custom-10' : px <= 40 ? 'xl' : px <= 56 ? '2xl' : px <= 72 ? 'custom-20' : 'custom-28'})`;
 const radiusOf = (shape, px) => (shape === 'circle' ? '9999px' : shape === 'rounded' ? rounded(px) : '0');
 
 export const AvatarGroupContext = createContext(null);
@@ -166,7 +166,7 @@ export function AvatarStatusDot({ variant = 'success', label, icon, className, s
       role={parent == null ? 'img' : undefined}
       aria-label={parent == null ? label : undefined}
       title={label}
-      style={{ width: size, height: size, boxShadow: `0 0 0 ${border}px var(--baseui-background-primary)`, ...style }}
+      style={{ width: size, height: size, boxShadow: `0 0 0 ${border}px var(--bui-background-primary)`, ...style }}
       {...rest}
     >
       {icon && tier !== 'sm' ? (

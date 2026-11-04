@@ -41,7 +41,7 @@ function useValues(theme) {
     ref.current.append(probe);
     const out = {};
     for (const [, names] of GROUPS) for (const n of names) {
-      probe.style.color = `var(--baseui-${n})`;
+      probe.style.color = `var(--bui-${n})`;
       out[n] = hex(getComputedStyle(probe).color);
     }
     probe.remove();
@@ -62,7 +62,7 @@ function Mode({ theme, title }) {
           <div className="ov-swatches">
             {names.map((n) => (
               <div key={n} className="ov-swatch">
-                <div className="ov-swatch__chip" style={{ background: `var(--baseui-${n})`, color: n.startsWith('Text') ? undefined : 'var(--baseui-text-and-icon-primary)' }}>{n.startsWith('Text') ? 'Aa' : ''}</div>
+                <div className="ov-swatch__chip" style={{ background: `var(--bui-${n})`, color: n.startsWith('Text') ? undefined : 'var(--bui-text-and-icon-primary)' }}>{n.startsWith('Text') ? 'Aa' : ''}</div>
                 <span className="ov-swatch__name">{n}</span>
                 <span className="ov-swatch__value">{values[n] || ''}</span>
               </div>
@@ -91,7 +91,7 @@ function useDefaults() {
     fetch('../tokens.css').then((r) => r.text()).then((css) => {
       const block = (css.match(/\[data-theme="dark"\]\s*\{([^}]*)\}/) || [])[1] || '';
       const out = {};
-      for (const m of block.matchAll(/--baseui-([A-Za-z0-9-]+):\s*([^;]+);/g)) out[m[1]] = m[2].trim();
+      for (const m of block.matchAll(/--bui-([A-Za-z0-9-]+):\s*([^;]+);/g)) out[m[1]] = m[2].trim();
       setMap(out);
     }).catch(() => {});
   }, []);
@@ -104,7 +104,7 @@ function Changes() {
   const rows = CHANGED.map((n) => ({ id: n, name: n, was: (defaults[n] || '').toLowerCase(), now: now[n] || '' }));
   const swatch = (v) => <span className="ov-dot" style={{ background: v }} aria-hidden="true" />;
   return (
-    <div className="ov-table" data-theme="dark" ref={ref} style={{ borderRadius: 'var(--baseui-radius-2xl)', background: 'var(--baseui-background-primary)' }}>
+    <div className="ov-table" data-theme="dark" ref={ref} style={{ borderRadius: 'var(--bui-radius-2xl)', background: 'var(--bui-background-primary)' }}>
       <Table
         data={rows}
         rowKey="id"

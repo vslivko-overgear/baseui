@@ -3,8 +3,8 @@
 
 const BRANDS = {
   default: null,
-  blue: 'var(--baseui-accent-colors-blue)', green: 'var(--baseui-accent-colors-green)', pink: 'var(--baseui-accent-colors-pink)', orange: 'var(--baseui-accent-colors-orange)',
-  red: 'var(--baseui-accent-colors-red)', 'blue-light': 'var(--baseui-accent-colors-blue-light)', 'green-light': 'var(--baseui-accent-colors-green-light)',
+  blue: 'var(--bui-accent-colors-blue)', green: 'var(--bui-accent-colors-green)', pink: 'var(--bui-accent-colors-pink)', orange: 'var(--bui-accent-colors-orange)',
+  red: 'var(--bui-accent-colors-red)', 'blue-light': 'var(--bui-accent-colors-blue-light)', 'green-light': 'var(--bui-accent-colors-green-light)',
 };
 export const BRAND_OPTIONS = [...Object.keys(BRANDS), 'custom'];
 
@@ -68,19 +68,19 @@ export function applyTheme(t) {
   const set = (k, v) => (v == null ? root.style.removeProperty(k) : root.style.setProperty(k, v));
   delete root.dataset.pack;
   const brand = t.brand === 'custom' ? t.brandColor : BRANDS[t.brand];
-  set('--baseui-background-brand', brand);
-  set('--baseui-background-brand-hover', brand && `color-mix(in srgb, ${brand} 88%, black)`);
-  set('--baseui-extensions-text-and-icon-on-brand', brand && onColor(brand));
+  set('--bui-background-brand', brand);
+  set('--bui-background-brand-hover', brand && `color-mix(in srgb, ${brand} 88%, black)`);
+  set('--bui-extensions-text-and-icon-on-brand', brand && onColor(brand));
   root.dataset.shape = t.shape;
   const k = t.radius / DEFAULT.radius;
-  // the radius tokens follow --baseui-radius-scale in CSS; a browser without round() gets every value set here
+  // the radius tokens follow --bui-radius-scale in CSS; a browser without round() gets every value set here
   const scaled = CSS.supports('width', 'round(1px, 1px)');
-  set('--baseui-radius-scale', k === 1 ? null : String(k));
-  for (const [name, n] of RADII) set(`--baseui-radius-${name}`, scaled || k === 1 ? null : `${Math.round(Number(n) * k * 2) / 2}px`);
+  set('--bui-radius-scale', k === 1 ? null : String(k));
+  for (const [name, n] of RADII) set(`--bui-radius-${name}`, scaled || k === 1 ? null : `${Math.round(Number(n) * k * 2) / 2}px`);
   const head = HEADLINE_FONTS[t.headingFont], text = TEXT_FONTS[t.textFont];
   loadFont(t.headingFont, head); loadFont(t.textFont, text);
-  set('--baseui-typography-headline-font-family', family(t.headingFont, head));
-  set('--baseui-typography-font-family', family(t.textFont, text));
+  set('--bui-typography-headline-font-family', family(t.headingFont, head));
+  set('--bui-typography-font-family', family(t.textFont, text));
   root.dataset.motion = t.motion; root.dataset.floating = t.floating ? 'on' : 'off'; root.dataset.glass = t.glass === 'dropdowns' ? 'dropdowns' : t.glass ? 'on' : 'off';
 }
 

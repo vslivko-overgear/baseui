@@ -75,7 +75,7 @@ describe('decisions of the product', () => {
     expect(stack.length).toBeGreaterThanOrEqual(7);
     for (const [line, , body] of stack) {
       if (/display: flex/.test(body)) continue;   // the base class: its gap is checked below
-      expect(body, line).toMatch(/gap: var\(--(bui-rel-(pair|tight|related|group|section)|baseui-spacing-1)\)/);
+      expect(body, line).toMatch(/gap: var\(--(bui-rel-(pair|tight|related|group|section)|bui-spacing-1)\)/);
     }
     expect(css).toMatch(/^\.og-stack \{ display: flex; flex-direction: column; gap: var\(--bui-rel-related\)/m);
     expect(css).toMatch(/^\.og-page \{ display: flex; flex-direction: column; gap: var\(--bui-rel-section\)/m);

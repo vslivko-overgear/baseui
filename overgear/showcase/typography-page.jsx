@@ -10,7 +10,7 @@ const TEXT_SETTING = 'Good typography makes a page easy to read. Lines are short
 const HEADERS = [48, 40, 32, 28, 24, 20].map((n) => ({ id: `Header-${n}`, label: `Header ${n}`, token: `typography-header-${n}`, para: `typography-paragraph-Header-${n}` }));
 const TEXTS = [['20', 'Semi-Bold'], ['20', 'Regular'], ['16', 'Bold'], ['16', 'Semi-Bold'], ['16', 'Regular'], ['14', 'Bold'], ['14', 'Semi-Bold'], ['14', 'Regular'], ['12', 'Semi-Bold'], ['12', 'Regular']].map(([n, w]) => ({ id: `Text-${n}-${w}`, label: `Text ${n} ${w.replace('-', ' ')}`, token: `typography-text-${n}-${w}`, para: `typography-paragraph-${n}` }));
 
-const valueOf = (name) => getComputedStyle(document.documentElement).getPropertyValue(`--baseui-${name}`).trim().replace(/\s+/g, ' ');
+const valueOf = (name) => getComputedStyle(document.documentElement).getPropertyValue(`--bui-${name}`).trim().replace(/\s+/g, ' ');
 
 function Style({ item, setting, header }) {
   const spec = (valueOf(item.token).match(/^\d+ \d+px \/ \d+px/) || [''])[0];
@@ -20,16 +20,16 @@ function Style({ item, setting, header }) {
       className="ov-type-row"
       title={
         <span className="ov-type-head">
-          <span className="ov-type-sample" style={{ font: `var(--baseui-${item.token})` }}>{item.label}</span>
+          <span className="ov-type-sample" style={{ font: `var(--bui-${item.token})` }}>{item.label}</span>
           <span className="ov-type-meta"><span className="ov-type-name">{item.id}</span><span className="ov-note">{spec}</span></span>
         </span>
       }
     >
-      <div className="ov-type-setting" style={{ font: `var(--baseui-${item.token})`, '--para': para || '0px' }}>
+      <div className="ov-type-setting" style={{ font: `var(--bui-${item.token})`, '--para': para || '0px' }}>
         <p>{setting}</p>
         {para && <p>{header ? 'Pack my box with five dozen liquor jugs' : 'A second paragraph follows after the paragraph spacing of this size, so the two read as separate thoughts of one text'}</p>}
       </div>
-      <p className="ov-note">{`var(--baseui-${item.token})${para ? `, paragraph spacing ${para}` : ''}`}</p>
+      <p className="ov-note">{`var(--bui-${item.token})${para ? `, paragraph spacing ${para}` : ''}`}</p>
     </Collapsible>
   );
 }
@@ -39,7 +39,7 @@ export function Typography() {
     <>
       <section className="ov-section">
         <h3 className="ov-h2">Apfel Grotezk</h3>
-        <div className="ov-mode" style={{ background: 'var(--baseui-background-primary)' }}>
+        <div className="ov-mode" style={{ background: 'var(--bui-background-primary)' }}>
           <p className="ov-type-big" aria-label="Aa">Aa</p>
           <p className="ov-type-alphabet">{ALPHABET}</p>
           <div className="ov-type-weights">

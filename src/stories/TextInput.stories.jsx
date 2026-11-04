@@ -2,7 +2,7 @@ import { TextInput } from '../components/TextInput.jsx';
 import { InfoCircle, Heart } from './_ui.jsx';
 import { meta, playground, example } from './_helpers.jsx';
 
-const Col = ({ children }) => <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--baseui-spacing-4)', maxWidth: 360 }}>{children}</div>;
+const Col = ({ children }) => <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--bui-spacing-4)', maxWidth: 360 }}>{children}</div>;
 const info = (
   <button type="button" className="bui-input__icon-button" aria-label="Info">
     <InfoCircle size={24} />

@@ -36,7 +36,7 @@ export const States = example({
 export const WithLabel = example({
   name: 'With Label',
   render: () => (
-    <Stack gap="var(--baseui-spacing-3)">
+    <Stack gap="var(--bui-spacing-3)">
       <Switch label="Small label" size="sm" defaultChecked />
       <Switch label="Medium label" defaultChecked />
       <Switch label="Large label" size="lg" defaultChecked />

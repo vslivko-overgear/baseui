@@ -96,7 +96,7 @@ export function auditConstitution(root = typeof document === 'undefined' ? null 
   const all = [...root.querySelectorAll('*')].filter((el) => !el.closest('[data-constitution-banner], script, style'));
   // the Secondary text color of the page, for H5; null when the tokens are not loaded (jsdom, a page without tokens.css)
   const secondaryColor = (() => {
-    const raw = win.getComputedStyle(doc.documentElement).getPropertyValue('--baseui-text-and-icon-secondary').trim();
+    const raw = win.getComputedStyle(doc.documentElement).getPropertyValue('--bui-text-and-icon-secondary').trim();
     if (!raw) return null;
     // the token's own value, put through a probe so that it is in the form the computed style of text has
     const probe = doc.createElement('span');
@@ -117,8 +117,8 @@ export function auditConstitution(root = typeof document === 'undefined' ? null 
     probe.remove();
     return c;
   };
-  const secondaryBg = tokenColor('--baseui-background-secondary');
-  const groundOk = new Set([tokenColor('--baseui-background-primary'), tokenColor('--baseui-extensions-background-surface')]);
+  const secondaryBg = tokenColor('--bui-background-secondary');
+  const groundOk = new Set([tokenColor('--bui-background-primary'), tokenColor('--bui-extensions-background-surface')]);
 
   for (const el of /** @type {any[]} */ (all)) {
     if (!visible(el, win)) continue;

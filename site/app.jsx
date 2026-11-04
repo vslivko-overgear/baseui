@@ -460,13 +460,13 @@ function PageSkeleton({ entry }) {
       <Skeleton variant="text" lines={2} width="70%" className="skel-lead" />
       <div className="skel-chips">
         {[88, 64, 96, 80].map((w, i) => (
-          <Skeleton key={i} variant="rect" width={w} height={32} style={{ borderRadius: 'var(--baseui-radius-full)' }} />
+          <Skeleton key={i} variant="rect" width={w} height={32} style={{ borderRadius: 'var(--bui-radius-full)' }} />
         ))}
       </div>
       <Skeleton variant="text" width={160} height={28} className="skel-title" />
-      <Skeleton variant="rect" height={96} style={{ borderRadius: 'var(--baseui-radius-2xl)' }} />
+      <Skeleton variant="rect" height={96} style={{ borderRadius: 'var(--bui-radius-2xl)' }} />
       <Skeleton variant="text" width={120} height={28} className="skel-title" />
-      <Skeleton variant="rect" height={220} style={{ borderRadius: 'var(--baseui-radius-2xl)' }} />
+      <Skeleton variant="rect" height={220} style={{ borderRadius: 'var(--bui-radius-2xl)' }} />
     </article>
   );
 }

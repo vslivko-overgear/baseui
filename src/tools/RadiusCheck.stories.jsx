@@ -14,13 +14,13 @@ export default {
   },
 };
 
-const box = { background: 'var(--baseui-background-secondary)', padding: 8 };
+const box = { background: 'var(--bui-background-secondary)', padding: 8 };
 const inner = {
-  background: 'var(--baseui-background-primary)',
+  background: 'var(--bui-background-primary)',
   height: 48,
   display: 'grid',
   placeItems: 'center',
-  font: 'var(--baseui-typography-text-14-regular)',
+  font: 'var(--bui-typography-text-14-regular)',
 };
 
 /** Two nested surfaces: the outer radius 24 and the inset 8, so the inner radius must be 16. */

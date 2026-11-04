@@ -110,7 +110,7 @@ Store-specific rules live in the [Overgear sublibrary](overgear/README.md), with
 
 ## Tokens
 
-Every custom property is `--baseui-` plus lowercase kebab-case, with no exceptions and no aliases; `tests/tokens.test.js` fails on a capital letter and on a `var(--baseui-…)` that nothing defines.
+Every custom property is `--bui-` plus lowercase kebab-case, with no exceptions and no aliases; `tests/tokens.test.js` fails on a capital letter and on a `var(--bui-…)` that nothing defines.
 
 | Group | Names |
 |---|---|
@@ -132,7 +132,7 @@ Every custom property is `--baseui-` plus lowercase kebab-case, with no exceptio
 - **Hooks for styles and tests.** Every element a DS component renders has `data-slot` (its name: `button`, `tablist`, `otp-cell`…). Size, variant and state go to `data-size`, `data-variant`, `data-status`, `data-checked`. Product CSS selects these or the readable `bui-<component>__<part>` classes.
 - **Theme settings are data attributes.** The theme writes `data-motion` (`off · basic · enhanced`), `data-glass` (`on · off`) and `data-floating` on `<html>`; a `motion` or `glass` prop writes the same attribute on the component (`themeAttrs()` in `src/theme-flags.js`). CSS reads the nearest one; `--bui-fx` is 1 only on enhanced. Floating is read with `useFloating()`.
 - **Shared behaviour lives in one place:** `useDismiss` (outside click, Escape, focus back to the trigger) in `src/floating.js`, `useHighlight` (the sliding underline, thumb, pill and OTP ring, measured by layout offsets) in `src/highlight.js`, `useReady`, `usePresence`, `useMediaQuery`, `useTouchScreen` in `src/theme-flags.js`.
-- **Focus has three placements,** all from the focus tokens: around (`outline-offset: var(--baseui-focus-outline-offset)`), inside (offset minus the width, for items in a container: segments, calendar days, table rows, bar items) and flush (offset 0, fields: Text Input, OTP cells).
+- **Focus has three placements,** all from the focus tokens: around (`outline-offset: var(--bui-focus-outline-offset)`), inside (offset minus the width, for items in a container: segments, calendar days, table rows, bar items) and flush (offset 0, fields: Text Input, OTP cells).
 - **Fixed heights, flexible widths.** Buttons and fields take their height from `size`; a menu opened from a field or a button takes the same size.
 - **Outline icons have the standard stroke.** The `Icon` component draws every outline icon with a stroke of 2, and the weight is not checked against the text. `weight="auto"` is still there for who wants the stroke to follow the text beside the icon (from 1 to 2.5; `tools/icon-weight.js`); `tools/check/icons.mjs` audits that for the pages that use it and is not part of the rules.
 - **No outlines.** Fills, spacing and shadows separate elements. Rings appear for focus and selection.

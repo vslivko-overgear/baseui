@@ -15,115 +15,115 @@
   color-scheme: light;
 
   /* Text and Icon */
-  --baseui-text-and-icon-primary: #171717;
-  --baseui-text-and-icon-secondary: #5f6877;
-  --baseui-text-and-icon-disabled: #babfca;
-  --baseui-text-and-icon-accent: #575df6;
+  --bui-text-and-icon-primary: #171717;
+  --bui-text-and-icon-secondary: #5f6877;
+  --bui-text-and-icon-disabled: #babfca;
+  --bui-text-and-icon-accent: #575df6;
 
   /* Background */
-  --baseui-background-primary: #ffffff;
-  --baseui-background-secondary: #eff2f6;
-  --baseui-background-tertiary: #d4dae2;
-  --baseui-background-disabled: #f0f0f0;
-  --baseui-background-accent: #575df6;
-  --baseui-background-brand: #171717;
+  --bui-background-primary: #ffffff;
+  --bui-background-secondary: #eff2f6;
+  --bui-background-tertiary: #d4dae2;
+  --bui-background-disabled: #f0f0f0;
+  --bui-background-accent: #575df6;
+  --bui-background-brand: #171717;
 
   /* Border */
-  --baseui-border-primary: #e0e2e6;
-  --baseui-border-accent: #ccd4e1;
-  --baseui-border-disabled: #dfe0e2;
+  --bui-border-primary: #e0e2e6;
+  --bui-border-accent: #ccd4e1;
+  --bui-border-disabled: #dfe0e2;
 
   /* Accent Colors */
-  --baseui-accent-colors-green-light: #bbfb60;
-  --baseui-accent-colors-pink: #ef9ffa;
-  --baseui-accent-colors-blue: #575df6;
-  --baseui-accent-colors-green: #53b67d;
-  --baseui-accent-colors-orange: #f5ba44;
-  --baseui-accent-colors-blue-light: #8abafa;
-  --baseui-accent-colors-red: #e8634c;
+  --bui-accent-colors-green-light: #bbfb60;
+  --bui-accent-colors-pink: #ef9ffa;
+  --bui-accent-colors-blue: #575df6;
+  --bui-accent-colors-green: #53b67d;
+  --bui-accent-colors-orange: #f5ba44;
+  --bui-accent-colors-blue-light: #8abafa;
+  --bui-accent-colors-red: #e8634c;
 
   /* Extensions / Text and Icon */
-  --baseui-extensions-text-and-icon-error: #e8634c;
-  --baseui-extensions-text-and-icon-warning: #f5ba44;
-  --baseui-extensions-text-and-icon-success: #44cf5e;
-  --baseui-extensions-text-and-icon-always-dark: #171717;
-  --baseui-extensions-text-and-icon-always-light: #ffffff;
-  --baseui-extensions-text-and-icon-on-color: #ffffff;
-  --baseui-extensions-text-and-icon-on-brand: #ffffff;
+  --bui-extensions-text-and-icon-error: #e8634c;
+  --bui-extensions-text-and-icon-warning: #f5ba44;
+  --bui-extensions-text-and-icon-success: #44cf5e;
+  --bui-extensions-text-and-icon-always-dark: #171717;
+  --bui-extensions-text-and-icon-always-light: #ffffff;
+  --bui-extensions-text-and-icon-on-color: #ffffff;
+  --bui-extensions-text-and-icon-on-brand: #ffffff;
 
   /* Extensions / Background */
-  --baseui-extensions-background-surface: #ffffff;
-  --baseui-extensions-background-inverse-primary: #171717;
-  --baseui-extensions-background-overlay-dark: rgba(0, 0, 0, 0.5);
-  --baseui-extensions-background-overlay-light: rgba(255, 255, 255, 0.7);
-  --baseui-extensions-background-always-dark: #171717;
-  --baseui-extensions-background-always-light: #ffffff;
-  --baseui-extensions-background-error: #e8634c;
-  --baseui-extensions-background-warning: #f5ba44;
-  --baseui-extensions-background-success: #44cf5e;
-  --baseui-extensions-background-light-success: #dff7e3;
-  --baseui-extensions-background-light-accent: #e7e8fe;
-  --baseui-extensions-background-light-error: #f9d8d2;
-  --baseui-extensions-background-light-warning: #fbe2b2;
+  --bui-extensions-background-surface: #ffffff;
+  --bui-extensions-background-inverse-primary: #171717;
+  --bui-extensions-background-overlay-dark: rgba(0, 0, 0, 0.5);
+  --bui-extensions-background-overlay-light: rgba(255, 255, 255, 0.7);
+  --bui-extensions-background-always-dark: #171717;
+  --bui-extensions-background-always-light: #ffffff;
+  --bui-extensions-background-error: #e8634c;
+  --bui-extensions-background-warning: #f5ba44;
+  --bui-extensions-background-success: #44cf5e;
+  --bui-extensions-background-light-success: #dff7e3;
+  --bui-extensions-background-light-accent: #e7e8fe;
+  --bui-extensions-background-light-error: #f9d8d2;
+  --bui-extensions-background-light-warning: #fbe2b2;
 
   /* Extensions / Border */
-  --baseui-extensions-border-selected: #171717;
-  --baseui-extensions-border-selected-always-dark: #171717;
-  --baseui-extensions-border-selected-always-light: #ffffff;
-  --baseui-extensions-border-accent: #575df6;
-  --baseui-extensions-border-error: #e8634c;
-  --baseui-extensions-border-warning: #f5ba44;
-  --baseui-extensions-border-success: #44cf5e;
+  --bui-extensions-border-selected: #171717;
+  --bui-extensions-border-selected-always-dark: #171717;
+  --bui-extensions-border-selected-always-light: #ffffff;
+  --bui-extensions-border-accent: #575df6;
+  --bui-extensions-border-error: #e8634c;
+  --bui-extensions-border-warning: #f5ba44;
+  --bui-extensions-border-success: #44cf5e;
 
   /* Hover */
-  --baseui-background-primary-hover: #f5f7fa;
-  --baseui-background-secondary-hover: #e5e9ef;
-  --baseui-background-tertiary-hover: #c8cfd9;
-  --baseui-background-accent-hover: #4b51ec;
-  --baseui-background-brand-hover: #3b3b3b;
-  --baseui-background-transparent-hover: rgba(88, 122, 172, 0.06);
-  --baseui-extensions-background-surface-hover: #f5f7fa;
-  --baseui-extensions-background-error-hover: #d9523b;
-  --baseui-extensions-background-warning-hover: #e7a92c;
-  --baseui-extensions-background-success-hover: #37bd51;
-  --baseui-extensions-background-light-accent-hover: #dcdefd;
-  --baseui-text-and-icon-primary-hover: #2c2c2c;
-  --baseui-text-and-icon-secondary-hover: #464f5d;
-  --baseui-extensions-text-and-icon-on-color-hover: #e1e1e1;
-  --baseui-extensions-text-and-icon-on-brand-hover: #e1e1e1;
-  --baseui-text-and-icon-disabled-hover: #9ea3ad;
-  --baseui-text-and-icon-accent-hover: #423ed6;
-  --baseui-background-disabled-hover: #e3e3e3;
-  --baseui-border-primary-hover: #c9cbcf;
-  --baseui-border-accent-hover: #b6bdca;
-  --baseui-border-disabled-hover: #c8c9cb;
-  --baseui-accent-colors-green-light-hover: #aeed51;
-  --baseui-accent-colors-pink-hover: #db8ce6;
-  --baseui-accent-colors-blue-hover: #4949e1;
-  --baseui-accent-colors-green-hover: #3ea36b;
-  --baseui-accent-colors-orange-hover: #e1a72a;
-  --baseui-accent-colors-blue-light-hover: #78a7e6;
-  --baseui-accent-colors-red-hover: #d3503a;
-  --baseui-extensions-text-and-icon-error-hover: #c84630;
-  --baseui-extensions-text-and-icon-warning-hover: #d79d19;
-  --baseui-extensions-text-and-icon-success-hover: #15b241;
-  --baseui-extensions-text-and-icon-always-dark-hover: #2c2c2c;
-  --baseui-extensions-text-and-icon-always-light-hover: #e1e1e1;
-  --baseui-extensions-background-inverse-primary-hover: #252525;
-  --baseui-extensions-background-overlay-dark-hover: rgba(0, 0, 0, 0.6);
-  --baseui-extensions-background-overlay-light-hover: rgba(255, 255, 255, 0.8);
-  --baseui-extensions-background-always-dark-hover: #252525;
-  --baseui-extensions-background-always-light-hover: #f2f2f2;
-  --baseui-extensions-background-light-success-hover: #d2ead6;
-  --baseui-extensions-background-light-error-hover: #eccbc5;
-  --baseui-extensions-background-light-warning-hover: #eed5a5;
-  --baseui-extensions-border-selected-hover: #272727;
-  --baseui-extensions-border-selected-always-dark-hover: #272727;
-  --baseui-extensions-border-selected-always-light-hover: #e8e8e8;
-  --baseui-extensions-border-accent-hover: #4645dd;
-  --baseui-extensions-border-error-hover: #cf4c37;
-  --baseui-extensions-border-warning-hover: #dea425;
-  --baseui-extensions-border-success-hover: #23b847;
+  --bui-background-primary-hover: #f5f7fa;
+  --bui-background-secondary-hover: #e5e9ef;
+  --bui-background-tertiary-hover: #c8cfd9;
+  --bui-background-accent-hover: #4b51ec;
+  --bui-background-brand-hover: #3b3b3b;
+  --bui-background-transparent-hover: rgba(88, 122, 172, 0.06);
+  --bui-extensions-background-surface-hover: #f5f7fa;
+  --bui-extensions-background-error-hover: #d9523b;
+  --bui-extensions-background-warning-hover: #e7a92c;
+  --bui-extensions-background-success-hover: #37bd51;
+  --bui-extensions-background-light-accent-hover: #dcdefd;
+  --bui-text-and-icon-primary-hover: #2c2c2c;
+  --bui-text-and-icon-secondary-hover: #464f5d;
+  --bui-extensions-text-and-icon-on-color-hover: #e1e1e1;
+  --bui-extensions-text-and-icon-on-brand-hover: #e1e1e1;
+  --bui-text-and-icon-disabled-hover: #9ea3ad;
+  --bui-text-and-icon-accent-hover: #423ed6;
+  --bui-background-disabled-hover: #e3e3e3;
+  --bui-border-primary-hover: #c9cbcf;
+  --bui-border-accent-hover: #b6bdca;
+  --bui-border-disabled-hover: #c8c9cb;
+  --bui-accent-colors-green-light-hover: #aeed51;
+  --bui-accent-colors-pink-hover: #db8ce6;
+  --bui-accent-colors-blue-hover: #4949e1;
+  --bui-accent-colors-green-hover: #3ea36b;
+  --bui-accent-colors-orange-hover: #e1a72a;
+  --bui-accent-colors-blue-light-hover: #78a7e6;
+  --bui-accent-colors-red-hover: #d3503a;
+  --bui-extensions-text-and-icon-error-hover: #c84630;
+  --bui-extensions-text-and-icon-warning-hover: #d79d19;
+  --bui-extensions-text-and-icon-success-hover: #15b241;
+  --bui-extensions-text-and-icon-always-dark-hover: #2c2c2c;
+  --bui-extensions-text-and-icon-always-light-hover: #e1e1e1;
+  --bui-extensions-background-inverse-primary-hover: #252525;
+  --bui-extensions-background-overlay-dark-hover: rgba(0, 0, 0, 0.6);
+  --bui-extensions-background-overlay-light-hover: rgba(255, 255, 255, 0.8);
+  --bui-extensions-background-always-dark-hover: #252525;
+  --bui-extensions-background-always-light-hover: #f2f2f2;
+  --bui-extensions-background-light-success-hover: #d2ead6;
+  --bui-extensions-background-light-error-hover: #eccbc5;
+  --bui-extensions-background-light-warning-hover: #eed5a5;
+  --bui-extensions-border-selected-hover: #272727;
+  --bui-extensions-border-selected-always-dark-hover: #272727;
+  --bui-extensions-border-selected-always-light-hover: #e8e8e8;
+  --bui-extensions-border-accent-hover: #4645dd;
+  --bui-extensions-border-error-hover: #cf4c37;
+  --bui-extensions-border-warning-hover: #dea425;
+  --bui-extensions-border-success-hover: #23b847;
 
 }
 
@@ -131,321 +131,321 @@
   color-scheme: dark;
 
   /* Text and Icon */
-  --baseui-text-and-icon-primary: #ffffff;
-  --baseui-text-and-icon-secondary: #999999;
-  --baseui-text-and-icon-disabled: #7a7a7a;
-  --baseui-text-and-icon-accent: #575df6;
+  --bui-text-and-icon-primary: #ffffff;
+  --bui-text-and-icon-secondary: #999999;
+  --bui-text-and-icon-disabled: #7a7a7a;
+  --bui-text-and-icon-accent: #575df6;
 
   /* Background */
-  --baseui-background-primary: #121212;
-  --baseui-background-secondary: #252525;
-  --baseui-background-tertiary: #2c2c2c;
-  --baseui-background-disabled: #373737;
-  --baseui-background-accent: #575df6;
-  --baseui-background-brand: #ffffff;
+  --bui-background-primary: #121212;
+  --bui-background-secondary: #252525;
+  --bui-background-tertiary: #2c2c2c;
+  --bui-background-disabled: #373737;
+  --bui-background-accent: #575df6;
+  --bui-background-brand: #ffffff;
 
   /* Border */
-  --baseui-border-primary: #2d2d2d;
-  --baseui-border-accent: #484848;
-  --baseui-border-disabled: #333333;
+  --bui-border-primary: #2d2d2d;
+  --bui-border-accent: #484848;
+  --bui-border-disabled: #333333;
 
   /* Accent Colors */
-  --baseui-accent-colors-green-light: #bbfb60;
-  --baseui-accent-colors-pink: #ef9ffa;
-  --baseui-accent-colors-blue: #575df6;
-  --baseui-accent-colors-green: #53b67d;
-  --baseui-accent-colors-orange: #f5ba44;
-  --baseui-accent-colors-blue-light: #8abafa;
-  --baseui-accent-colors-red: #e8634c;
+  --bui-accent-colors-green-light: #bbfb60;
+  --bui-accent-colors-pink: #ef9ffa;
+  --bui-accent-colors-blue: #575df6;
+  --bui-accent-colors-green: #53b67d;
+  --bui-accent-colors-orange: #f5ba44;
+  --bui-accent-colors-blue-light: #8abafa;
+  --bui-accent-colors-red: #e8634c;
 
   /* Extensions / Text and Icon */
-  --baseui-extensions-text-and-icon-error: #e8634c;
-  --baseui-extensions-text-and-icon-warning: #f5ba44;
-  --baseui-extensions-text-and-icon-success: #44cf5e;
-  --baseui-extensions-text-and-icon-always-dark: #171717;
-  --baseui-extensions-text-and-icon-always-light: #ffffff;
-  --baseui-extensions-text-and-icon-on-color: #171717;
-  --baseui-extensions-text-and-icon-on-brand: #171717;
+  --bui-extensions-text-and-icon-error: #e8634c;
+  --bui-extensions-text-and-icon-warning: #f5ba44;
+  --bui-extensions-text-and-icon-success: #44cf5e;
+  --bui-extensions-text-and-icon-always-dark: #171717;
+  --bui-extensions-text-and-icon-always-light: #ffffff;
+  --bui-extensions-text-and-icon-on-color: #171717;
+  --bui-extensions-text-and-icon-on-brand: #171717;
 
   /* Extensions / Background */
-  --baseui-extensions-background-surface: #1b1b1b;
-  --baseui-extensions-background-inverse-primary: #ffffff;
-  --baseui-extensions-background-overlay-dark: rgba(0, 0, 0, 0.7);
-  --baseui-extensions-background-overlay-light: rgba(18, 18, 18, 0.7);
-  --baseui-extensions-background-always-dark: #171717;
-  --baseui-extensions-background-always-light: #ffffff;
-  --baseui-extensions-background-error: #e8634c;
-  --baseui-extensions-background-warning: #f5ba44;
-  --baseui-extensions-background-success: #44cf5e;
-  --baseui-extensions-background-light-success: #114119;
-  --baseui-extensions-background-light-accent: #24276a;
-  --baseui-extensions-background-light-error: #51150a;
-  --baseui-extensions-background-light-warning: #503806;
+  --bui-extensions-background-surface: #1b1b1b;
+  --bui-extensions-background-inverse-primary: #ffffff;
+  --bui-extensions-background-overlay-dark: rgba(0, 0, 0, 0.7);
+  --bui-extensions-background-overlay-light: rgba(18, 18, 18, 0.7);
+  --bui-extensions-background-always-dark: #171717;
+  --bui-extensions-background-always-light: #ffffff;
+  --bui-extensions-background-error: #e8634c;
+  --bui-extensions-background-warning: #f5ba44;
+  --bui-extensions-background-success: #44cf5e;
+  --bui-extensions-background-light-success: #114119;
+  --bui-extensions-background-light-accent: #24276a;
+  --bui-extensions-background-light-error: #51150a;
+  --bui-extensions-background-light-warning: #503806;
 
   /* Extensions / Border */
-  --baseui-extensions-border-selected: #ffffff;
-  --baseui-extensions-border-selected-always-dark: #171717;
-  --baseui-extensions-border-selected-always-light: #ffffff;
-  --baseui-extensions-border-accent: #575df6;
-  --baseui-extensions-border-error: #e8634c;
-  --baseui-extensions-border-warning: #f5ba44;
-  --baseui-extensions-border-success: #44cf5e;
+  --bui-extensions-border-selected: #ffffff;
+  --bui-extensions-border-selected-always-dark: #171717;
+  --bui-extensions-border-selected-always-light: #ffffff;
+  --bui-extensions-border-accent: #575df6;
+  --bui-extensions-border-error: #e8634c;
+  --bui-extensions-border-warning: #f5ba44;
+  --bui-extensions-border-success: #44cf5e;
 
   /* Hover */
-  --baseui-background-primary-hover: #1c1c1c;
-  --baseui-background-secondary-hover: #2e2e2e;
-  --baseui-background-tertiary-hover: #363636;
-  --baseui-background-accent-hover: #6a6ff8;
-  --baseui-background-brand-hover: #e0e0e0;
-  --baseui-background-transparent-hover: rgba(255, 255, 255, 0.05);
-  --baseui-extensions-background-surface-hover: #222222;
-  --baseui-extensions-background-error-hover: #ee7561;
-  --baseui-extensions-background-warning-hover: #f8c866;
-  --baseui-extensions-background-success-hover: #5bda73;
-  --baseui-extensions-background-light-accent-hover: #2d3180;
-  --baseui-text-and-icon-primary-hover: #e1e1e1;
-  --baseui-text-and-icon-secondary-hover: #b5b5b5;
-  --baseui-extensions-text-and-icon-on-color-hover: #2c2c2c;
-  --baseui-extensions-text-and-icon-on-brand-hover: #2c2c2c;
-  --baseui-text-and-icon-disabled-hover: #959595;
-  --baseui-text-and-icon-accent-hover: #7383fc;
-  --baseui-background-disabled-hover: #444444;
-  --baseui-border-primary-hover: #3b3b3b;
-  --baseui-border-accent-hover: #555555;
-  --baseui-border-disabled-hover: #404040;
-  --baseui-accent-colors-green-light-hover: #aeed51;
-  --baseui-accent-colors-pink-hover: #db8ce6;
-  --baseui-accent-colors-blue-hover: #4949e1;
-  --baseui-accent-colors-green-hover: #3ea36b;
-  --baseui-accent-colors-orange-hover: #e1a72a;
-  --baseui-accent-colors-blue-light-hover: #78a7e6;
-  --baseui-accent-colors-red-hover: #d3503a;
-  --baseui-extensions-text-and-icon-error-hover: #fe8871;
-  --baseui-extensions-text-and-icon-warning-hover: #d79d19;
-  --baseui-extensions-text-and-icon-success-hover: #15b241;
-  --baseui-extensions-text-and-icon-always-dark-hover: #2c2c2c;
-  --baseui-extensions-text-and-icon-always-light-hover: #e1e1e1;
-  --baseui-extensions-background-inverse-primary-hover: #f2f2f2;
-  --baseui-extensions-background-overlay-dark-hover: rgba(0, 0, 0, 0.8);
-  --baseui-extensions-background-overlay-light-hover: rgba(18, 18, 18, 0.8);
-  --baseui-extensions-background-always-dark-hover: #252525;
-  --baseui-extensions-background-always-light-hover: #f2f2f2;
-  --baseui-extensions-background-light-success-hover: #235129;
-  --baseui-extensions-background-light-error-hover: #63261a;
-  --baseui-extensions-background-light-warning-hover: #634508;
-  --baseui-extensions-border-selected-hover: #e8e8e8;
-  --baseui-extensions-border-selected-always-dark-hover: #272727;
-  --baseui-extensions-border-selected-always-light-hover: #e8e8e8;
-  --baseui-extensions-border-accent-hover: #6c7aff;
-  --baseui-extensions-border-error-hover: #fd7d65;
-  --baseui-extensions-border-warning-hover: #dea425;
-  --baseui-extensions-border-success-hover: #23b847;
+  --bui-background-primary-hover: #1c1c1c;
+  --bui-background-secondary-hover: #2e2e2e;
+  --bui-background-tertiary-hover: #363636;
+  --bui-background-accent-hover: #6a6ff8;
+  --bui-background-brand-hover: #e0e0e0;
+  --bui-background-transparent-hover: rgba(255, 255, 255, 0.05);
+  --bui-extensions-background-surface-hover: #222222;
+  --bui-extensions-background-error-hover: #ee7561;
+  --bui-extensions-background-warning-hover: #f8c866;
+  --bui-extensions-background-success-hover: #5bda73;
+  --bui-extensions-background-light-accent-hover: #2d3180;
+  --bui-text-and-icon-primary-hover: #e1e1e1;
+  --bui-text-and-icon-secondary-hover: #b5b5b5;
+  --bui-extensions-text-and-icon-on-color-hover: #2c2c2c;
+  --bui-extensions-text-and-icon-on-brand-hover: #2c2c2c;
+  --bui-text-and-icon-disabled-hover: #959595;
+  --bui-text-and-icon-accent-hover: #7383fc;
+  --bui-background-disabled-hover: #444444;
+  --bui-border-primary-hover: #3b3b3b;
+  --bui-border-accent-hover: #555555;
+  --bui-border-disabled-hover: #404040;
+  --bui-accent-colors-green-light-hover: #aeed51;
+  --bui-accent-colors-pink-hover: #db8ce6;
+  --bui-accent-colors-blue-hover: #4949e1;
+  --bui-accent-colors-green-hover: #3ea36b;
+  --bui-accent-colors-orange-hover: #e1a72a;
+  --bui-accent-colors-blue-light-hover: #78a7e6;
+  --bui-accent-colors-red-hover: #d3503a;
+  --bui-extensions-text-and-icon-error-hover: #fe8871;
+  --bui-extensions-text-and-icon-warning-hover: #d79d19;
+  --bui-extensions-text-and-icon-success-hover: #15b241;
+  --bui-extensions-text-and-icon-always-dark-hover: #2c2c2c;
+  --bui-extensions-text-and-icon-always-light-hover: #e1e1e1;
+  --bui-extensions-background-inverse-primary-hover: #f2f2f2;
+  --bui-extensions-background-overlay-dark-hover: rgba(0, 0, 0, 0.8);
+  --bui-extensions-background-overlay-light-hover: rgba(18, 18, 18, 0.8);
+  --bui-extensions-background-always-dark-hover: #252525;
+  --bui-extensions-background-always-light-hover: #f2f2f2;
+  --bui-extensions-background-light-success-hover: #235129;
+  --bui-extensions-background-light-error-hover: #63261a;
+  --bui-extensions-background-light-warning-hover: #634508;
+  --bui-extensions-border-selected-hover: #e8e8e8;
+  --bui-extensions-border-selected-always-dark-hover: #272727;
+  --bui-extensions-border-selected-always-light-hover: #e8e8e8;
+  --bui-extensions-border-accent-hover: #6c7aff;
+  --bui-extensions-border-error-hover: #fd7d65;
+  --bui-extensions-border-warning-hover: #dea425;
+  --bui-extensions-border-success-hover: #23b847;
 
 }
 
 /* ---------- Semantic aliases ----------
  * Surface / on-surface pairs, so a component names its role, not a palette entry:
- * background: var(--baseui-popover); color: var(--baseui-on-popover).
+ * background: var(--bui-popover); color: var(--bui-on-popover).
  * They only point at the colors above, so they follow the theme (also a nested [data-theme]). */
 :root,
 [data-theme] {
-  --baseui-surface: var(--baseui-background-primary);
-  --baseui-on-surface: var(--baseui-text-and-icon-primary);
-  --baseui-on-surface-muted: var(--baseui-text-and-icon-secondary);
-  --baseui-muted: var(--baseui-background-secondary);
-  --baseui-on-muted: var(--baseui-text-and-icon-primary);
-  --baseui-popover: var(--baseui-extensions-background-surface);
-  --baseui-on-popover: var(--baseui-text-and-icon-primary);
-  --baseui-accent: var(--baseui-background-accent);
-  --baseui-on-accent: var(--baseui-extensions-text-and-icon-on-color);
-  --baseui-brand: var(--baseui-background-brand);
-  --baseui-on-brand: var(--baseui-extensions-text-and-icon-on-brand);
-  --baseui-destructive: var(--baseui-extensions-background-error);
-  --baseui-on-destructive: var(--baseui-extensions-text-and-icon-on-color);
-  --baseui-border: var(--baseui-border-primary);
-  --baseui-disabled: var(--baseui-background-disabled);
-  --baseui-on-disabled: var(--baseui-text-and-icon-disabled);
+  --bui-surface: var(--bui-background-primary);
+  --bui-on-surface: var(--bui-text-and-icon-primary);
+  --bui-on-surface-muted: var(--bui-text-and-icon-secondary);
+  --bui-muted: var(--bui-background-secondary);
+  --bui-on-muted: var(--bui-text-and-icon-primary);
+  --bui-popover: var(--bui-extensions-background-surface);
+  --bui-on-popover: var(--bui-text-and-icon-primary);
+  --bui-accent: var(--bui-background-accent);
+  --bui-on-accent: var(--bui-extensions-text-and-icon-on-color);
+  --bui-brand: var(--bui-background-brand);
+  --bui-on-brand: var(--bui-extensions-text-and-icon-on-brand);
+  --bui-destructive: var(--bui-extensions-background-error);
+  --bui-on-destructive: var(--bui-extensions-text-and-icon-on-color);
+  --bui-border: var(--bui-border-primary);
+  --bui-disabled: var(--bui-background-disabled);
+  --bui-on-disabled: var(--bui-text-and-icon-disabled);
 }
 
 /* ---------- Spacing ---------- */
 :root {
   /* A step is 1 gap = 4px: spacing-1 is 1 gap, spacing-0-5 is half a gap, spacing-4 is 4 gaps. */
-  --baseui-spacing-0: 0px;
-  --baseui-spacing-0-5: 2px;
-  --baseui-spacing-1: 4px;
-  --baseui-spacing-1-5: 6px;
-  --baseui-spacing-2: 8px;
-  --baseui-spacing-3: 12px;
-  --baseui-spacing-4: 16px;
-  --baseui-spacing-5: 20px;
-  --baseui-spacing-6: 24px;
-  --baseui-spacing-8: 32px;
-  --baseui-spacing-10: 40px;
-  --baseui-spacing-12: 48px;
-  --baseui-spacing-16: 64px;
-  --baseui-spacing-20: 80px;
-  /* Negative: multiply any spacing token by this one, e.g. margin-inline: calc(var(--baseui-spacing-4) * var(--baseui-spacing-negative)) */
-  --baseui-spacing-negative: -1;
+  --bui-spacing-0: 0px;
+  --bui-spacing-0-5: 2px;
+  --bui-spacing-1: 4px;
+  --bui-spacing-1-5: 6px;
+  --bui-spacing-2: 8px;
+  --bui-spacing-3: 12px;
+  --bui-spacing-4: 16px;
+  --bui-spacing-5: 20px;
+  --bui-spacing-6: 24px;
+  --bui-spacing-8: 32px;
+  --bui-spacing-10: 40px;
+  --bui-spacing-12: 48px;
+  --bui-spacing-16: 64px;
+  --bui-spacing-20: 80px;
+  /* Negative: multiply any spacing token by this one, e.g. margin-inline: calc(var(--bui-spacing-4) * var(--bui-spacing-negative)) */
+  --bui-spacing-negative: -1;
 }
 
 /* ---------- Layout ---------- */
 /* Page and container geometry. The breakpoints are Tailwind's; media queries cannot read variables, so they are written out in CSS: below md (767px) is mobile, below md (767px) a dialog or a list is a sheet. */
 :root {
   /* Margins */
-  --baseui-layout-margin-mobile: 20px;
-  --baseui-layout-margin-desktop: 24px;
+  --bui-layout-margin-mobile: 20px;
+  --bui-layout-margin-desktop: 24px;
 
   /* Sizes */
-  --baseui-layout-header-height: 64px;
-  --baseui-layout-sidebar-width: 280px;
-  --baseui-layout-settings-width: 280px;
-  --baseui-layout-content-max-width: 1040px;
-  --baseui-layout-dialog-width: 520px;
-  --baseui-layout-mobile-preview-width: 360px;
+  --bui-layout-header-height: 64px;
+  --bui-layout-sidebar-width: 280px;
+  --bui-layout-settings-width: 280px;
+  --bui-layout-content-max-width: 1040px;
+  --bui-layout-dialog-width: 520px;
+  --bui-layout-mobile-preview-width: 360px;
 
   /* Breakpoints (Tailwind's) */
-  --baseui-breakpoint-sm: 640px;
-  --baseui-breakpoint-md: 768px;
-  --baseui-breakpoint-lg: 1024px;
-  --baseui-breakpoint-xl: 1280px;
-  --baseui-breakpoint-2xl: 1536px;
+  --bui-breakpoint-sm: 640px;
+  --bui-breakpoint-md: 768px;
+  --bui-breakpoint-lg: 1024px;
+  --bui-breakpoint-xl: 1280px;
+  --bui-breakpoint-2xl: 1536px;
 
 }
 
 /* ---------- Radius ---------- */
 :root {
   /* Scale */
-  --baseui-radius-none: 0;
-  --baseui-radius-sm: 4px;
-  --baseui-radius-md: 6px;
-  --baseui-radius-lg: 8px;
-  --baseui-radius-xl: 12px;
-  --baseui-radius-2xl: 16px;
-  --baseui-radius-3xl: 24px;
-  --baseui-radius-4xl: 32px;
-  --baseui-radius-full: 9999px;
+  --bui-radius-none: 0;
+  --bui-radius-sm: 4px;
+  --bui-radius-md: 6px;
+  --bui-radius-lg: 8px;
+  --bui-radius-xl: 12px;
+  --bui-radius-2xl: 16px;
+  --bui-radius-3xl: 24px;
+  --bui-radius-4xl: 32px;
+  --bui-radius-full: 9999px;
 
   /* Custom */
-  --baseui-radius-custom-10: 10px;
-  --baseui-radius-custom-14: 14px;
-  --baseui-radius-custom-20: 20px;
-  --baseui-radius-custom-28: 28px;
+  --bui-radius-custom-10: 10px;
+  --bui-radius-custom-14: 14px;
+  --bui-radius-custom-20: 20px;
+  --bui-radius-custom-28: 28px;
 
   /* Scale factor */
-  --baseui-radius-scale: 1;
+  --bui-radius-scale: 1;
 }
 @supports (width: round(1px, 1px)) {
   :root {
-    --baseui-radius-sm: round(calc(4px * var(--baseui-radius-scale)), 0.5px);
-    --baseui-radius-md: round(calc(6px * var(--baseui-radius-scale)), 0.5px);
-    --baseui-radius-lg: round(calc(8px * var(--baseui-radius-scale)), 0.5px);
-    --baseui-radius-xl: round(calc(12px * var(--baseui-radius-scale)), 0.5px);
-    --baseui-radius-2xl: round(calc(16px * var(--baseui-radius-scale)), 0.5px);
-    --baseui-radius-3xl: round(calc(24px * var(--baseui-radius-scale)), 0.5px);
-    --baseui-radius-4xl: round(calc(32px * var(--baseui-radius-scale)), 0.5px);
-    --baseui-radius-custom-10: round(calc(10px * var(--baseui-radius-scale)), 0.5px);
-    --baseui-radius-custom-14: round(calc(14px * var(--baseui-radius-scale)), 0.5px);
-    --baseui-radius-custom-20: round(calc(20px * var(--baseui-radius-scale)), 0.5px);
-    --baseui-radius-custom-28: round(calc(28px * var(--baseui-radius-scale)), 0.5px);
+    --bui-radius-sm: round(calc(4px * var(--bui-radius-scale)), 0.5px);
+    --bui-radius-md: round(calc(6px * var(--bui-radius-scale)), 0.5px);
+    --bui-radius-lg: round(calc(8px * var(--bui-radius-scale)), 0.5px);
+    --bui-radius-xl: round(calc(12px * var(--bui-radius-scale)), 0.5px);
+    --bui-radius-2xl: round(calc(16px * var(--bui-radius-scale)), 0.5px);
+    --bui-radius-3xl: round(calc(24px * var(--bui-radius-scale)), 0.5px);
+    --bui-radius-4xl: round(calc(32px * var(--bui-radius-scale)), 0.5px);
+    --bui-radius-custom-10: round(calc(10px * var(--bui-radius-scale)), 0.5px);
+    --bui-radius-custom-14: round(calc(14px * var(--bui-radius-scale)), 0.5px);
+    --bui-radius-custom-20: round(calc(20px * var(--bui-radius-scale)), 0.5px);
+    --bui-radius-custom-28: round(calc(28px * var(--bui-radius-scale)), 0.5px);
   }
 }
 
 /* ---------- Shadow ---------- */
 :root {
-  --baseui-shadow-color: rgb(from var(--baseui-extensions-background-always-dark) r g b / 12%);
-  --baseui-shadow-sm: 0 2px 8px 0 var(--baseui-shadow-color);
-  --baseui-shadow-md: 0 6px 20px 0 var(--baseui-shadow-color);
-  --baseui-shadow-lg: 0 4px 28px 0 var(--baseui-shadow-color);
+  --bui-shadow-color: rgb(from var(--bui-extensions-background-always-dark) r g b / 12%);
+  --bui-shadow-sm: 0 2px 8px 0 var(--bui-shadow-color);
+  --bui-shadow-md: 0 6px 20px 0 var(--bui-shadow-color);
+  --bui-shadow-lg: 0 4px 28px 0 var(--bui-shadow-color);
 }
 
 /* ---------- Focus ---------- */
 :root {
-  --baseui-focus-outline-width: 2px;
-  --baseui-focus-outline-style: solid;
-  --baseui-focus-outline-color: var(--baseui-text-and-icon-primary);
-  --baseui-focus-outline-offset: 2px;
+  --bui-focus-outline-width: 2px;
+  --bui-focus-outline-style: solid;
+  --bui-focus-outline-color: var(--bui-text-and-icon-primary);
+  --bui-focus-outline-offset: 2px;
 }
 
 /* ---------- Duration & easing (instant under prefers-reduced-motion) ---------- */
 :root {
-  --baseui-duration-150: 150ms;
-  --baseui-duration-300: 300ms;
-  --baseui-duration-500: 500ms;
+  --bui-duration-150: 150ms;
+  --bui-duration-300: 300ms;
+  --bui-duration-500: 500ms;
   /* Tailwind's easings */
-  --baseui-ease-in: cubic-bezier(0.4, 0, 1, 1);
-  --baseui-ease-out: cubic-bezier(0, 0, 0.2, 1);
-  --baseui-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --bui-ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --bui-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --bui-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
 }
 /* data-motion="off" on <html> does the same for the whole page; "basic" drops the extra effects of "enhanced" (the default) */
 [data-motion="off"] {
-  --baseui-duration-150: 0ms;
-  --baseui-duration-300: 0ms;
-  --baseui-duration-500: 0ms;
+  --bui-duration-150: 0ms;
+  --bui-duration-300: 0ms;
+  --bui-duration-500: 0ms;
 }
 @media (prefers-reduced-motion: reduce) {
   :root {
-    --baseui-duration-150: 0ms;
-    --baseui-duration-300: 0ms;
-    --baseui-duration-500: 0ms;
+    --bui-duration-150: 0ms;
+    --bui-duration-300: 0ms;
+    --bui-duration-500: 0ms;
   }
 }
 
 /* ---------- Z-index ---------- */
 :root {
-  --baseui-z-index-10: 10;
-  --baseui-z-index-20: 20;
-  --baseui-z-index-30: 30;
-  --baseui-z-index-40: 40;
-  --baseui-z-index-50: 50;
+  --bui-z-index-10: 10;
+  --bui-z-index-20: 20;
+  --bui-z-index-30: 30;
+  --bui-z-index-40: 40;
+  --bui-z-index-50: 50;
 }
 
 /* Typography */
 :root {
   /* Tailwind's text sizes and weights (text-sm, font-semibold ...); the composite styles below are built from these numbers */
-  --baseui-text-xs: 12px;
-  --baseui-text-xs--line-height: 16px;
-  --baseui-text-sm: 14px;
-  --baseui-text-sm--line-height: 20px;
-  --baseui-text-base: 16px;
-  --baseui-text-base--line-height: 24px;
-  --baseui-text-xl: 20px;
-  --baseui-text-xl--line-height: 28px;
-  --baseui-text-2xl: 24px;
-  --baseui-text-2xl--line-height: 32px;
-  --baseui-font-weight-normal: 400;
-  --baseui-font-weight-medium: 500;
-  --baseui-font-weight-semibold: 600;
-  --baseui-font-weight-bold: 700;
+  --bui-text-xs: 12px;
+  --bui-text-xs--line-height: 16px;
+  --bui-text-sm: 14px;
+  --bui-text-sm--line-height: 20px;
+  --bui-text-base: 16px;
+  --bui-text-base--line-height: 24px;
+  --bui-text-xl: 20px;
+  --bui-text-xl--line-height: 28px;
+  --bui-text-2xl: 24px;
+  --bui-text-2xl--line-height: 32px;
+  --bui-font-weight-normal: 400;
+  --bui-font-weight-medium: 500;
+  --bui-font-weight-semibold: 600;
+  --bui-font-weight-bold: 700;
 
-  --baseui-typography-font-family:var(--font-geist,"Geist"), system-ui, -apple-system, "Segoe UI", sans-serif;
-  --baseui-typography-font-family-mono:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  --baseui-typography-header-56:700 56px / 60px var(--baseui-typography-headline-font-family, var(--baseui-typography-font-family));
-  --baseui-typography-header-48:700 48px / 52px var(--baseui-typography-headline-font-family, var(--baseui-typography-font-family));
-  --baseui-typography-header-40:700 40px / 44px var(--baseui-typography-headline-font-family, var(--baseui-typography-font-family));
-  --baseui-typography-header-32:700 32px / 36px var(--baseui-typography-headline-font-family, var(--baseui-typography-font-family));
-  --baseui-typography-header-28:700 28px / 32px var(--baseui-typography-headline-font-family, var(--baseui-typography-font-family));
-  --baseui-typography-header-24:700 24px / 28px var(--baseui-typography-headline-font-family, var(--baseui-typography-font-family));
-  --baseui-typography-header-20:700 20px / 24px var(--baseui-typography-headline-font-family, var(--baseui-typography-font-family));
-  --baseui-typography-text-20-semi-bold:600 20px / 28px var(--baseui-typography-font-family);
-  --baseui-typography-text-20-regular:400 20px / 28px var(--baseui-typography-font-family);
-  --baseui-typography-text-16-bold:700 16px / 24px var(--baseui-typography-font-family);
-  --baseui-typography-text-16-semi-bold:600 16px / 24px var(--baseui-typography-font-family);
-  --baseui-typography-text-16-regular:400 16px / 24px var(--baseui-typography-font-family);
-  --baseui-typography-text-14-bold:700 14px / 20px var(--baseui-typography-font-family);
-  --baseui-typography-text-14-semi-bold:600 14px / 20px var(--baseui-typography-font-family);
-  --baseui-typography-text-14-regular:400 14px / 20px var(--baseui-typography-font-family);
-  --baseui-typography-text-12-regular:400 12px / 16px var(--baseui-typography-font-family);
-  --baseui-typography-text-12-semi-bold:600 12px / 16px var(--baseui-typography-font-family);
+  --bui-typography-font-family:var(--font-geist,"Geist"), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --bui-typography-font-family-mono:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --bui-typography-header-56:700 56px / 60px var(--bui-typography-headline-font-family, var(--bui-typography-font-family));
+  --bui-typography-header-48:700 48px / 52px var(--bui-typography-headline-font-family, var(--bui-typography-font-family));
+  --bui-typography-header-40:700 40px / 44px var(--bui-typography-headline-font-family, var(--bui-typography-font-family));
+  --bui-typography-header-32:700 32px / 36px var(--bui-typography-headline-font-family, var(--bui-typography-font-family));
+  --bui-typography-header-28:700 28px / 32px var(--bui-typography-headline-font-family, var(--bui-typography-font-family));
+  --bui-typography-header-24:700 24px / 28px var(--bui-typography-headline-font-family, var(--bui-typography-font-family));
+  --bui-typography-header-20:700 20px / 24px var(--bui-typography-headline-font-family, var(--bui-typography-font-family));
+  --bui-typography-text-20-semi-bold:600 20px / 28px var(--bui-typography-font-family);
+  --bui-typography-text-20-regular:400 20px / 28px var(--bui-typography-font-family);
+  --bui-typography-text-16-bold:700 16px / 24px var(--bui-typography-font-family);
+  --bui-typography-text-16-semi-bold:600 16px / 24px var(--bui-typography-font-family);
+  --bui-typography-text-16-regular:400 16px / 24px var(--bui-typography-font-family);
+  --bui-typography-text-14-bold:700 14px / 20px var(--bui-typography-font-family);
+  --bui-typography-text-14-semi-bold:600 14px / 20px var(--bui-typography-font-family);
+  --bui-typography-text-14-regular:400 14px / 20px var(--bui-typography-font-family);
+  --bui-typography-text-12-regular:400 12px / 16px var(--bui-typography-font-family);
+  --bui-typography-text-12-semi-bold:600 12px / 16px var(--bui-typography-font-family);
   /* Space between two paragraphs set in a style of that size (the weights share it): about half to 0.6 of the line height for text, half of it for headers, on the 4px grid. Header lines are the size plus 4px */
-  --baseui-typography-paragraph-header-56:24px;
-  --baseui-typography-paragraph-header-48:20px;
-  --baseui-typography-paragraph-header-40:16px;
-  --baseui-typography-paragraph-header-32:16px;
-  --baseui-typography-paragraph-header-28:12px;
-  --baseui-typography-paragraph-header-24:12px;
-  --baseui-typography-paragraph-header-20:8px;
-  --baseui-typography-paragraph-20:16px;
-  --baseui-typography-paragraph-16:12px;
-  --baseui-typography-paragraph-14:12px;
-  --baseui-typography-paragraph-12:8px;
+  --bui-typography-paragraph-header-56:24px;
+  --bui-typography-paragraph-header-48:20px;
+  --bui-typography-paragraph-header-40:16px;
+  --bui-typography-paragraph-header-32:16px;
+  --bui-typography-paragraph-header-28:12px;
+  --bui-typography-paragraph-header-24:12px;
+  --bui-typography-paragraph-header-20:8px;
+  --bui-typography-paragraph-20:16px;
+  --bui-typography-paragraph-16:12px;
+  --bui-typography-paragraph-14:12px;
+  --bui-typography-paragraph-12:8px;
 }

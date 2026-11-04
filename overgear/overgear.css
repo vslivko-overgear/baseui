@@ -11,31 +11,31 @@
 @font-face { font-family: "TT Interphases Pro"; font-weight: 1 1000; font-style: normal; font-display: swap; src: local("TT Interphases Pro"), url("https://raw.githubusercontent.com/dalwoo-ru/overgear/a0373607e594a5281dfeb168d0806132eb032941/assets/fonts/tt-interphases.woff2"); }
 :root {
   /* !important: the theme settings of the documentation site write the fonts inline, and Overgear keeps its own */
-  --baseui-typography-font-family: "Apfel Grotezk", system-ui, -apple-system, "Segoe UI", sans-serif !important;
-  --baseui-typography-headline-font-family: "Apfel Grotezk", system-ui, -apple-system, "Segoe UI", sans-serif !important;
+  --bui-typography-font-family: "Apfel Grotezk", system-ui, -apple-system, "Segoe UI", sans-serif !important;
+  --bui-typography-headline-font-family: "Apfel Grotezk", system-ui, -apple-system, "Segoe UI", sans-serif !important;
 }
 
 /* The colors of Overgear. They answer only to the pages that load this file (the showcase and the example), not to the rest of the site.
    The light theme stays the default one; the dark theme is graphite with a slight blue cast: a deep ground, bluish gray layers and a soft cool-white text. */
 [data-theme="dark"] {
-  --baseui-text-and-icon-primary: #ededf5;
-  --baseui-text-and-icon-secondary: #a7a7c8;
-  --baseui-text-and-icon-disabled: #676b8b;
-  --baseui-text-and-icon-accent: #8b93ff;
-  --baseui-background-primary: #050622;
-  --baseui-background-secondary: #131632;
-  --baseui-background-tertiary: #1e2242;
-  --baseui-background-disabled: #293054;
-  --baseui-background-accent: #6a72ff;
-  --baseui-background-primary-hover: #0b0d2a;
-  --baseui-background-secondary-hover: #191c3a;
-  --baseui-background-tertiary-hover: #262b4d;
-  --baseui-border-primary: #293054;
-  --baseui-border-primary-hover: #353d66;
-  --baseui-border-accent: #3d4366;
-  --baseui-border-disabled: #1e2242;
-  --baseui-extensions-background-surface: #0b0d2b;
-  --baseui-extensions-background-surface-hover: #131632;
+  --bui-text-and-icon-primary: #ededf5;
+  --bui-text-and-icon-secondary: #a7a7c8;
+  --bui-text-and-icon-disabled: #676b8b;
+  --bui-text-and-icon-accent: #8b93ff;
+  --bui-background-primary: #050622;
+  --bui-background-secondary: #131632;
+  --bui-background-tertiary: #1e2242;
+  --bui-background-disabled: #293054;
+  --bui-background-accent: #6a72ff;
+  --bui-background-primary-hover: #0b0d2a;
+  --bui-background-secondary-hover: #191c3a;
+  --bui-background-tertiary-hover: #262b4d;
+  --bui-border-primary: #293054;
+  --bui-border-primary-hover: #353d66;
+  --bui-border-accent: #3d4366;
+  --bui-border-disabled: #1e2242;
+  --bui-extensions-background-surface: #0b0d2b;
+  --bui-extensions-background-surface-hover: #131632;
 }
 
 /* The blue cast of the dark theme has five steps. The full cast (step 5) is the navy scale of overgear.com (#050622, #1e2242, #293054, text #ededf5 and #a7a7c8);
@@ -43,34 +43,34 @@
    of the navy is mixed in. The accent blue is not part of it. A browser without relative colors keeps the full cast. */
 @supports (color: oklch(from #000 l 0 h)) {
   [data-theme="dark"] {
-    --baseui-text-and-icon-primary: color-mix(in oklab, #ededf5 calc(var(--og-tint, 1) * 100%), oklch(from #eceff5 l 0 h));
-    --baseui-text-and-icon-secondary: color-mix(in oklab, #a7a7c8 calc(var(--og-tint, 1) * 100%), oklch(from #9aa3b5 l 0 h));
-    --baseui-text-and-icon-disabled: color-mix(in oklab, #676b8b calc(var(--og-tint, 1) * 100%), oklch(from #5f6778 l 0 h));
-    --baseui-background-primary: color-mix(in oklab, #050622 calc(var(--og-tint, 1) * 100%), oklch(from #11141a l 0 h));
-    --baseui-background-secondary: color-mix(in oklab, #131632 calc(var(--og-tint, 1) * 100%), oklch(from #1c2029 l 0 h));
-    --baseui-background-tertiary: color-mix(in oklab, #1e2242 calc(var(--og-tint, 1) * 100%), oklch(from #262b37 l 0 h));
-    --baseui-background-disabled: color-mix(in oklab, #293054 calc(var(--og-tint, 1) * 100%), oklch(from #303644 l 0 h));
-    --baseui-background-primary-hover: color-mix(in oklab, #0b0d2a calc(var(--og-tint, 1) * 100%), oklch(from #181b22 l 0 h));
-    --baseui-background-secondary-hover: color-mix(in oklab, #191c3a calc(var(--og-tint, 1) * 100%), oklch(from #232835 l 0 h));
-    --baseui-background-tertiary-hover: color-mix(in oklab, #262b4d calc(var(--og-tint, 1) * 100%), oklch(from #2e3442 l 0 h));
-    --baseui-border-primary: color-mix(in oklab, #293054 calc(var(--og-tint, 1) * 100%), oklch(from #2a303c l 0 h));
-    --baseui-border-primary-hover: color-mix(in oklab, #353d66 calc(var(--og-tint, 1) * 100%), oklch(from #384050 l 0 h));
-    --baseui-border-accent: color-mix(in oklab, #3d4366 calc(var(--og-tint, 1) * 100%), oklch(from #3d4658 l 0 h));
-    --baseui-border-disabled: color-mix(in oklab, #1e2242 calc(var(--og-tint, 1) * 100%), oklch(from #262b36 l 0 h));
-    --baseui-extensions-background-surface: color-mix(in oklab, #0b0d2b calc(var(--og-tint, 1) * 100%), oklch(from #161a22 l 0 h));
-    --baseui-extensions-background-surface-hover: color-mix(in oklab, #131632 calc(var(--og-tint, 1) * 100%), oklch(from #1c212b l 0 h));
+    --bui-text-and-icon-primary: color-mix(in oklab, #ededf5 calc(var(--og-tint, 1) * 100%), oklch(from #eceff5 l 0 h));
+    --bui-text-and-icon-secondary: color-mix(in oklab, #a7a7c8 calc(var(--og-tint, 1) * 100%), oklch(from #9aa3b5 l 0 h));
+    --bui-text-and-icon-disabled: color-mix(in oklab, #676b8b calc(var(--og-tint, 1) * 100%), oklch(from #5f6778 l 0 h));
+    --bui-background-primary: color-mix(in oklab, #050622 calc(var(--og-tint, 1) * 100%), oklch(from #11141a l 0 h));
+    --bui-background-secondary: color-mix(in oklab, #131632 calc(var(--og-tint, 1) * 100%), oklch(from #1c2029 l 0 h));
+    --bui-background-tertiary: color-mix(in oklab, #1e2242 calc(var(--og-tint, 1) * 100%), oklch(from #262b37 l 0 h));
+    --bui-background-disabled: color-mix(in oklab, #293054 calc(var(--og-tint, 1) * 100%), oklch(from #303644 l 0 h));
+    --bui-background-primary-hover: color-mix(in oklab, #0b0d2a calc(var(--og-tint, 1) * 100%), oklch(from #181b22 l 0 h));
+    --bui-background-secondary-hover: color-mix(in oklab, #191c3a calc(var(--og-tint, 1) * 100%), oklch(from #232835 l 0 h));
+    --bui-background-tertiary-hover: color-mix(in oklab, #262b4d calc(var(--og-tint, 1) * 100%), oklch(from #2e3442 l 0 h));
+    --bui-border-primary: color-mix(in oklab, #293054 calc(var(--og-tint, 1) * 100%), oklch(from #2a303c l 0 h));
+    --bui-border-primary-hover: color-mix(in oklab, #353d66 calc(var(--og-tint, 1) * 100%), oklch(from #384050 l 0 h));
+    --bui-border-accent: color-mix(in oklab, #3d4366 calc(var(--og-tint, 1) * 100%), oklch(from #3d4658 l 0 h));
+    --bui-border-disabled: color-mix(in oklab, #1e2242 calc(var(--og-tint, 1) * 100%), oklch(from #262b36 l 0 h));
+    --bui-extensions-background-surface: color-mix(in oklab, #0b0d2b calc(var(--og-tint, 1) * 100%), oklch(from #161a22 l 0 h));
+    --bui-extensions-background-surface-hover: color-mix(in oklab, #131632 calc(var(--og-tint, 1) * 100%), oklch(from #1c212b l 0 h));
   }
 }
 
 /* the font set of the site (the Theme page sets data-og-fonts="site" on <html>) */
 html[data-og-fonts="site"] {
-  --baseui-typography-font-family: "TT Interphases Pro", Inter, Arial, Helvetica, sans-serif !important;
-  --baseui-typography-headline-font-family: "TT Interphases Pro", Inter, Arial, Helvetica, sans-serif !important;
+  --bui-typography-font-family: "TT Interphases Pro", Inter, Arial, Helvetica, sans-serif !important;
+  --bui-typography-headline-font-family: "TT Interphases Pro", Inter, Arial, Helvetica, sans-serif !important;
 }
 /* a font of the catalogue uncut.wtf (the Theme page sets data-og-fonts to its key and --og-font to its name; the font files come from Fontsource when it is chosen) */
 html[data-og-fonts]:not([data-og-fonts="apfel"], [data-og-fonts="site"]) {
-  --baseui-typography-font-family: var(--og-font), system-ui, -apple-system, "Segoe UI", sans-serif !important;
-  --baseui-typography-headline-font-family: var(--og-font), system-ui, -apple-system, "Segoe UI", sans-serif !important;
+  --bui-typography-font-family: var(--og-font), system-ui, -apple-system, "Segoe UI", sans-serif !important;
+  --bui-typography-headline-font-family: var(--og-font), system-ui, -apple-system, "Segoe UI", sans-serif !important;
 }
 html[data-og-fonts="site"] body { letter-spacing: -0.2px; }
 html[data-og-fonts="site"] :is(h1, h2, h3, h4, h5, h6) { letter-spacing: -0.4px; }
