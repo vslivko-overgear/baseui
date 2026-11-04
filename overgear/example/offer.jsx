@@ -90,6 +90,42 @@ export function Offer({ id }) {
       ))}
     </ul>
   );
+  // the price and the buttons, the facts and the payment methods, and the reasons to trust: a column at the right on a desktop; on a phone under the form of the order
+  const aside = (
+  <div className="og-stack og-sticky">
+    <Card variant="surface" padding={5}>
+      <div className="og-stack">
+        {(
+          <div className="og-stack">
+            <div className="og-pricerow">
+              <p className="og-price og-price--lg">{money(unit * qty)}</p>
+              <CashbackTag size="lg" label={`Cashback ${CASHBACK}%`} />
+            </div>
+            {qty > 1 && <p className="og-meta">{`${money(unit)} each`}</p>}
+          </div>
+        )}
+        <ul className="og-facts" data-test-id="offer-facts">
+          <li><Icon name="Clock" size={20} /><span><b>15 minutes</b> average start time</span></li>
+          <li><Icon name="Clock" size={20} /><span><b>3 hours 15 minutes</b> order completion</span></li>
+        </ul>
+        <div className="og-stack">
+          <Button variant={mobile ? 'secondary' : 'primary'} size="lg" width="100%" label="Add to cart" icon={<Icon name="ShoppingCart01" size={24} />} onClick={add} />
+          <div className="og-offer-pay"><PaymentLogos items={PAY_OFFER} /></div>
+          <p className="og-guarantee" data-test-id="offer-guarantee"><Icon name="ShieldTick" size={20} />100% moneyback guarantee</p>
+        </div>
+      </div>
+    </Card>
+    <Card variant="surface" padding={5}>
+      <div className="og-stack og-stack--lg">
+        <ul className="og-trust">
+          {TRUST.map(([icon, t, d]) => (
+            <li key={t}><Icon name={icon} size={24} /><div className="og-stack og-stack--pair"><p className="og-trust__title">{t}</p><p className="og-meta">{d}</p></div></li>
+          ))}
+        </ul>
+      </div>
+    </Card>
+  </div>
+  );
   return (
     <Page>
       <PageHead crumbs={[{ label: 'Home', href: '#/' }, { label: game.name, href: `#/games/${game.slug}` }, { label: service.label, href: `#/games/wow?s=${service.id}` }, { label: offer.title }]} title={offer.title} titleGap={0} mediaTop media={<div className="og-art og-art--square" role="img" aria-label={offer.title}>{offer.image ? <img className="og-art__img" src={offer.image} alt="" /> : <Icon name="Image01" size={32} />}</div>}>
@@ -113,6 +149,7 @@ export function Offer({ id }) {
                   <TextInput label="Note for the booster" multiline minRows={2} value={note} onChange={(e) => setNote(e.target.value)} />
               </div>
             </Card>
+            {mobile && aside}
             </div>
             <div className="og-stack og-stack--xl og-offer-info">
             <Section title="Your wins">
@@ -176,39 +213,7 @@ export function Offer({ id }) {
             <Section title="Questions"><Faq /></Section>
                 </div>
           </div>
-          <div className="og-stack og-sticky">
-            <Card variant="surface" padding={5}>
-              <div className="og-stack">
-                {!mobile && (
-                  <div className="og-stack">
-                    <div className="og-pricerow">
-                      <p className="og-price og-price--lg">{money(unit * qty)}</p>
-                      <CashbackTag size="lg" label={`Cashback ${CASHBACK}%`} />
-                    </div>
-                    {qty > 1 && <p className="og-meta">{`${money(unit)} each`}</p>}
-                  </div>
-                )}
-                <ul className="og-facts" data-test-id="offer-facts">
-                  <li><Icon name="Clock" size={20} /><span><b>15 minutes</b> average start time</span></li>
-                  <li><Icon name="Clock" size={20} /><span><b>3 hours 15 minutes</b> order completion</span></li>
-                </ul>
-                <div className="og-stack">
-                  {!mobile && <Button variant="primary" size="lg" width="100%" label="Add to cart" icon={<Icon name="ShoppingCart01" size={24} />} onClick={add} />}
-                  <div className="og-offer-pay"><PaymentLogos items={PAY_OFFER} /></div>
-                  <p className="og-guarantee" data-test-id="offer-guarantee"><Icon name="ShieldTick" size={20} />100% moneyback guarantee</p>
-                </div>
-              </div>
-            </Card>
-            <Card variant="surface" padding={5}>
-              <div className="og-stack og-stack--lg">
-                <ul className="og-trust">
-                  {TRUST.map(([icon, t, d]) => (
-                    <li key={t}><Icon name={icon} size={24} /><div className="og-stack og-stack--pair"><p className="og-trust__title">{t}</p><p className="og-meta">{d}</p></div></li>
-                  ))}
-                </ul>
-              </div>
-            </Card>
-          </div>
+          {!mobile && aside}
         </div>
       {related.length > 0 && (
         <Section title="You may also like">
