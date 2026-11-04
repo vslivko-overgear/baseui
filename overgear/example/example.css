@@ -724,3 +724,14 @@ a { color: inherit; }
 
 /* the footer of a phone ends above the bottom bar of the tabs; a page without the tabs (an offer, the pages behind the account) has the usual padding (the pay bar keeps its own room) */
 .og--mobile:not(:has(.og-bottom)) .og-footer { padding-bottom: var(--bui-spacing-8); }
+
+/* the form of an offer: the price on a chip, the price of an extra at the right end of its line, the help under the slots */
+.og-pill__price { opacity: 0.6; margin-inline-start: var(--bui-spacing-1); }   /* the price on a chip follows the text of the chip, selected or not */
+.og-offerform .bui-checkbox__field, .og-offerform .bui-checkbox { display: flex; width: 100%; }
+.og-offerform .bui-checkbox > span:last-child { flex: 1; min-width: 0; }
+.og-extra { display: flex; justify-content: space-between; gap: var(--bui-spacing-3); width: 100%; }
+.og-extra__price { color: var(--bui-text-and-icon-secondary); white-space: nowrap; }
+.og-extra__price s { margin-inline-end: var(--bui-spacing-1); }
+.og-extra__price b { color: var(--bui-extensions-text-and-icon-success, var(--bui-text-and-icon-primary)); font-weight: inherit; }
+.og-slothelp { display: flex; align-items: center; justify-content: space-between; gap: var(--bui-spacing-3); padding: var(--bui-spacing-3) var(--bui-spacing-4); border-radius: var(--bui-radius-xl); background: var(--bui-background-secondary); }
+.og-slothelp p { margin: 0; }

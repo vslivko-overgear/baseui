@@ -1,12 +1,10 @@
 import { useState } from '../../src/react.js';
 import { Button } from '../../src/components/Button.jsx';
 import { Card } from '../../src/components/Card.jsx';
-import { SegmentedControl } from '../../src/components/SegmentedControl.jsx';
-import { RadioGroup } from '../../src/components/RadioGroup.jsx';
+import { TokenGroup } from '../../src/components/TokenGroup.jsx';
+import { DatePicker } from '../../src/components/Calendar.jsx';
 import { CheckboxGroup } from '../../src/components/CheckboxGroup.jsx';
 import { Selector } from '../../src/components/Selector.jsx';
-import { TextInput } from '../../src/components/TextInput.jsx';
-import { NumberInput } from '../../src/components/NumberInput.jsx';
 import { Status } from '../../src/components/Status.jsx';
 import { Avatar } from '../../src/components/Avatar.jsx';
 import { List, ListItem } from '../../src/components/List.jsx';
@@ -20,8 +18,13 @@ import { useAddedToCart, Page, PageHead, Section, OfferListing, BADGE_VARIANT, S
 import { useStore } from './store.jsx';
 import { Faq } from './games.jsx';
 
-const MODES = [{ value: 'piloted', label: 'Piloted' }, { value: 'self', label: 'Self-play' }, { value: 'remote', label: 'Remote control' }];
-const EXTRAS = [{ value: 'express', label: 'Express start, +$12', price: 12 }, { value: 'stream', label: 'Live stream, +$8', price: 8 }, { value: 'loot', label: 'Priority loot, +$20', price: 20 }];
+const REGIONS = [{ value: 'eu', label: 'EU' }, { value: 'us', label: 'US' }];
+const LOOT = [{ value: 'group', label: 'Group loot' }, { value: 'personal', label: 'Personal loot' }, { value: 'master', label: 'Master loot' }];
+// the way it is played: the price of a way is a share of the price of the offer
+const MODES = [{ value: 'self', label: 'Self-play', k: 1 }, { value: 'piloted', label: 'Piloted', k: 1 }, { value: 'remote', label: 'Remote', k: 1.05, note: '+5%' }];
+const DAYS = [{ value: 'today', label: 'Today' }, { value: 'tomorrow', label: 'Tomorrow' }];
+const TIMES = ['22:30', '22:45', '23:00', '23:30', '23:45'].map((v) => ({ value: v, label: v }));
+const EXTRAS = [{ value: 'grotto', label: 'Add Tidebound Grotto at 30% OFF', price: 10.95, was: 15.64 }, { value: 'kithix', label: "Add Kith'ix", price: 11.17 }];
 const TRUST = [
   ['in-house-boosters', 'ID-verified pros', 'Every player passes our selection and checks'],
   ['Lock01', 'Secure payment', 'Cards and wallets are processed by certified providers'],
@@ -48,28 +51,32 @@ const USP_MORE = [
   (b) => `${b}. Your loot, gold and progress stay with you, and the money is released only when you confirm the result`,
 ];
 const USP_ICONS = ['Zap', 'Star01', 'ShieldTick'];
-const DIFFICULTY = [{ value: 'normal', label: 'Normal', k: 0.6 }, { value: 'heroic', label: 'Heroic', k: 1 }, { value: 'mythic', label: 'Mythic', k: 2.2 }];
+// how much of the raid is played: a share of the price
+const BOSSES = [{ value: 'all', label: '8/8 bosses', k: 1 }, { value: 'last', label: '2/2 last bosses', k: 0.58 }];
 
 /** An offer: what it gives, the options that change the price, the purchase panel, details and reviews. */
 export function Offer({ id }) {
   const store = useStore();
   const addedToCart = useAddedToCart();
   const offer = offerOf(id);
-  const [mode, setMode] = useState('piloted');
-  const [difficulty, setDifficulty] = useState('heroic');
+  const [region, setRegion] = useState('eu');
+  const [loot, setLoot] = useState('group');
+  const [mode, setMode] = useState('self');
+  const [bosses, setBosses] = useState('all');
+  const [day, setDay] = useState('today');
+  const [date, setDate] = useState(null);
+  const [time, setTime] = useState('22:30');
   const [extras, setExtras] = useState([]);
-  const [qty, setQty] = useState(1);
   const mobile = useMedia('(max-width: 767px)');
   const [reviewsShown, setReviewsShown] = useState(4);
-  const [note, setNote] = useState('');
   if (!offer) return <Page><Status status="neutral" title="Offer not found" actionLabel="All games" onAction={() => go('/catalog')} /></Page>;
   const game = gameOf(offer.game);
-  const k = DIFFICULTY.find((d) => d.value === difficulty).k;
+  const bossK = BOSSES.find((d) => d.value === bosses).k;
   const extra = extras.reduce((n, e) => n + EXTRAS.find((x) => x.value === e).price, 0);
-  const unit = +(offer.price * k + extra + (mode === 'self' ? -offer.price * 0.1 : 0)).toFixed(2);
+  const unit = +(offer.price * bossK * MODES.find((m) => m.value === mode).k + extra).toFixed(2);
   const service = SERVICES.find((s) => s.id === offer.service) || { id: offer.service, label: 'Services' };
   const add = () => {
-    store.add({ key: `${offer.id}-${mode}-${difficulty}-${extras.join()}`, id: offer.id, image: offer.image, eta: offer.eta, title: offer.title, sub: `${MODES.find((m) => m.value === mode).label}, ${difficulty}${extras.length ? `, ${extras.length} extras` : ''}`, price: unit, qty });
+    store.add({ key: `${offer.id}-${mode}-${bosses}-${extras.join()}`, id: offer.id, image: offer.image, eta: offer.eta, title: offer.title, sub: `${MODES.find((m) => m.value === mode).label}, ${BOSSES.find((d) => d.value === bosses).label}${extras.length ? `, ${extras.length} extras` : ''}`, price: unit, qty: 1 });
     addedToCart();
   };
   // all the other offers, closest first (the listing shows whole rows and goes on as it is scrolled): the same service first, then the other offers of the game, then the most sold ones of the other games
@@ -98,10 +105,9 @@ export function Offer({ id }) {
         {(
           <div className="og-stack">
             <div className="og-pricerow">
-              <p className="og-price og-price--lg">{money(unit * qty)}</p>
+              <p className="og-price og-price--lg">{money(unit)}</p>
               <CashbackTag size="lg" label={`Cashback ${CASHBACK}%`} />
             </div>
-            {qty > 1 && <p className="og-meta">{`${money(unit)} each`}</p>}
           </div>
         )}
         <ul className="og-facts" data-test-id="offer-facts">
@@ -147,12 +153,18 @@ export function Offer({ id }) {
             {!mobile && head}
             {mobile ? <Bleed scroll>{usp}</Bleed> : usp}
             <Card variant="surface" padding={5}>
-              <div className="og-stack og-stack--lg">
-                  <SegmentedControl label="Difficulty" fullWidth size="sm" value={difficulty} onValueChange={setDifficulty} items={DIFFICULTY.map((d) => ({ value: d.value, label: d.label }))} />
-                  <RadioGroup title="How it is played" value={mode} onValueChange={setMode} options={MODES} />
-                  <CheckboxGroup title="Extras" value={extras} onValueChange={setExtras} options={EXTRAS.map((e) => ({ value: e.value, label: e.label }))} />
-                  <NumberInput label="Quantity" min={1} max={10} value={qty} onValueChange={(v) => setQty(v ?? 1)} />
-                  <TextInput label="Note for the booster" multiline minRows={2} value={note} onChange={(e) => setNote(e.target.value)} />
+              <div className="og-stack og-stack--lg og-offerform">
+                <TokenGroup title="Region" options={REGIONS} value={[region]} onValueChange={(v) => v[0] && setRegion(v[0])} />
+                <Selector label="Loot options" options={LOOT} value={loot} onValueChange={setLoot} />
+                <TokenGroup title="Number of bosses" options={BOSSES.map((d) => ({ value: d.value, label: <>{d.label} <span className="og-pill__price">{money(offer.price * d.k)}</span></> }))} value={[bosses]} onValueChange={(v) => v[0] && setBosses(v[0])} />
+                <TokenGroup title="Boost method" options={MODES.map((m) => ({ value: m.value, label: <>{m.label}{m.note && <> <span className="og-pill__price">{m.note}</span></>}</> }))} value={[mode]} onValueChange={(v) => v[0] && setMode(v[0])} />
+                <CheckboxGroup title="Additional options" value={extras} onValueChange={setExtras} options={EXTRAS.map((e) => ({ value: e.value, label: <span className="og-extra"><span>{e.label}</span>{e.was ? <span className="og-extra__price"><s>{money(e.was)}</s> <b>{money(e.price)}</b></span> : <span className="og-extra__price">{`+${money(e.price)}`}</span>}</span> }))} />
+                <div className="og-stack og-stack--tight" data-test-id="offer-slot">
+                  <TokenGroup title="Select raid slot" caption="8 spots left in this run" options={DAYS} value={[date ? '' : day]} onValueChange={(v) => { if (v[0]) { setDay(v[0]); setDate(null); } }} />
+                  <DatePicker label="Choose date" value={date} onValueChange={(v) => setDate(v)} />
+                  <TokenGroup options={TIMES} value={[time]} onValueChange={(v) => v[0] && setTime(v[0])} />
+                </div>
+                <div className="og-slothelp"><p className="og-text">Can't find a time that works for you? Send us a message and we'll find one that does</p><Button variant="primary" size="sm" label="Chat" /></div>
               </div>
             </Card>
             {mobile && aside}
@@ -228,7 +240,7 @@ export function Offer({ id }) {
           </div>
         </Section>
       )}
-      {mobile && <PayBar amount={unit * qty} action="Add to cart" onClick={add} />}
+      {mobile && <PayBar amount={unit} action="Add to cart" onClick={add} />}
     </Page>
   );
 }
