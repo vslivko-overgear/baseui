@@ -74,7 +74,7 @@ export function RankPage({ onLogin }) {
   return (
     <Page bar>
       <div className="og-stack og-stack--xl" data-test-id="rank-page" data-rank={grade.code}>
-        <PageHead crumbs={[{ label: 'Home', href: '#/' }, { label: 'Account', href: '#/account' }, { label: 'Your Rank' }]} media={<Avatar name={store.user.name} src={store.user.avatar} size={64} shape="rounded" />} title={store.user.name} titleTestId="rank-user" titleGap={0} action={<IconButton variant="ghost" size="sm" label="Edit profile" icon={<Icon name="Edit01" size={24} />} onClick={() => go('/account?tab=settings')} data-test-id="rank-edit" />}><p className="og-text" data-test-id="rank-email">{store.user.email}</p></PageHead>
+        <PageHead crumbs={[{ label: 'Home', href: '#/' }, { label: 'Account', href: '#/account' }, { label: 'Your Rank' }]} media={<Avatar name={store.user.name} src={store.user.avatar} size={64} shape="rounded" />} title={store.user.name} titleTestId="rank-user" titleGap={0} action={<IconButton variant="secondary" size="sm" label="Settings" icon={<Icon name="Settings01" size={24} />} onClick={() => go('/account?tab=settings')} data-test-id="rank-edit" />}><p className="og-text" data-test-id="rank-email">{store.user.email}</p></PageHead>
         <Card variant="surface" padding={5}>
           <div className="og-stack og-stack--lg">
             <div className="og-rank__now">
@@ -82,10 +82,6 @@ export function RankPage({ onLogin }) {
               <div className="og-stack og-stack--hair">
                 <h2 className="og-h2" data-test-id="rank-name">{grade.name}</h2>
                 <p className="og-meta">{`${money(paid)} spent in the last 365 days`}</p>
-              </div>
-              <div className="og-rank__actions">
-                <Link href="https://loyalty.overgear.com/ranks" target="_blank" rel="noopener noreferrer" data-test-id="rank-all">See all ranks</Link>
-                <Button variant="secondary" size="md" label="Rank history" onClick={() => setHistory(true)} data-test-id="rank-history" />
               </div>
             </div>
             {progress.isMax ? (
@@ -104,6 +100,10 @@ export function RankPage({ onLogin }) {
             )}
             <BenefitsTable grade={grade} next={next} />
             <Button variant="secondary" size="lg" width="100%" label="Continue shopping" onClick={() => go('/')} />
+            <div className="og-rank__links">
+              <Link href="https://loyalty.overgear.com/ranks" target="_blank" rel="noopener noreferrer" data-test-id="rank-all">See all ranks</Link>
+              <Link href={href('/rank')} onClick={(e) => { e.preventDefault(); setHistory(true); }} data-test-id="rank-history">Rank history</Link>
+            </div>
           </div>
         </Card>
         <Card variant="surface" padding={5}>
