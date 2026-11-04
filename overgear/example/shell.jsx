@@ -188,7 +188,6 @@ export function MobileHeader({ route, onLogin }) {
 
 export function MobileBar({ route }) {
   const store = useStore();
-  // the bottom bar has its own floating and glass (it is not a setting of the theme)
   // the badge of the favorites is white (primary), not red: it is drawn here, in the icon, in the place of the badge of the bar
   const wishBadge = store.wishlist.length > 0 && <Badge type="counter" variant="primary" size="sm" label={store.wishlist.length} className="bui-bottombar__badge" />;
   const first = route.parts[0] || 'home';
@@ -199,8 +198,6 @@ export function MobileBar({ route }) {
       <BottomBar
         label="Main"
         showLabels={false}
-        floating
-        glass
         value={value}
         onValueChange={(v) => go(path[v])}
         items={[

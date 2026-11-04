@@ -1,5 +1,5 @@
 // The theme of Overgear (the showcase and the example share it, in one cookie): the global settings of the system (...)
-// The bottom bar, the menus of dropdowns and the header have their own glass, floating and blur, fixed: they are not settings.
+// Overgear has no glass, no floating bars and no blur in the header.
 import { applyTheme, loadTheme, saveTheme } from '../site/theme.js';
 import { CATALOGUE_FONTS } from './fonts/catalogue/catalogue.js';
 
@@ -33,10 +33,9 @@ const stylesheet = (id, href) => {
   document.head.append(link);
 };
 
-/** The theme as the page applies it: it has no floating and no glass of its own; the menus of dropdowns have theirs. */
+/** The theme as the page applies it: no floating and no glass. */
 export function resolveTheme(t) {
-  // there is no floating and no glass in the theme: the bottom bar and the menus of dropdowns have their own (see the bar and the menus)
-  return { ...t, floating: false, glass: 'dropdowns' };
+  return { ...t, floating: false, glass: false };
 }
 
 /** Writes the settings on <html>. */

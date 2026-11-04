@@ -3,17 +3,10 @@
 *, *::before, *::after { box-sizing: border-box; }
 body { margin: 0; font: var(--bui-typography-text-16-regular); background: var(--bui-background-primary); color: var(--bui-text-and-icon-primary); -webkit-font-smoothing: antialiased; }
 a { color: inherit; }
-:root { --og-bottom: 84px; }
+:root { --og-bottom: calc(56px + env(safe-area-inset-bottom, 0px)); }   /* the plain bottom bar of the tabs: 56 and the safe area under it */
 .og-wrap { max-width: 1280px; margin: 0 auto; padding-inline: var(--bui-spacing-6); }
 .og { --og-header-h: 72px; }
 .og-header { position: sticky; top: 0; z-index: var(--bui-z-index-30); background: var(--bui-background-primary); }
-/* the header blur: the header is transparent and a layer under it blurs what scrolls beneath and fades out downwards, like the bottom bar (fixed, not a setting; the theme glass gives it too) */
-.og-header { background: transparent; }
-.og-header::before {
-  content: ""; position: absolute; inset: 0 0 -24px; z-index: -1; pointer-events: none;
-  -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
-  -webkit-mask-image: linear-gradient(to bottom, #000 65%, transparent); mask-image: linear-gradient(to bottom, #000 65%, transparent);
-}
 .og-top { display: flex; align-items: center; gap: var(--bui-spacing-1); padding-block: var(--bui-spacing-3); }
 .og-brand { display: inline-flex; align-items: center; gap: var(--bui-spacing-2); text-decoration: none; font: var(--bui-typography-header-24); font-family: var(--bui-typography-headline-font-family); flex: none; }
 .og-brand__mark { width: 48px; height: 48px; border-radius: var(--bui-radius-2xl); display: grid; place-items: center; background: var(--bui-background-secondary); color: var(--bui-text-and-icon-primary); }
