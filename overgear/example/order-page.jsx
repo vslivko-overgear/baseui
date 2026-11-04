@@ -98,7 +98,7 @@ function StatusPanel({ order, now, actions, track, extra = [] }) {
     <Card variant="surface" padding={0} className="og-ostatus" data-tone={tone} data-test-id="order-status" data-status={order.status}>
       {track && stepLooks(order, now) ? <div className="og-ostatus__track">{track}</div> : isClosed(order.status) && <div className="og-ostatus__done" aria-hidden="true"><span className="og-ostatus__done-dot"><Icon name="CheckCircle" size={32} /></span></div>}
       <div className="og-ostatus__head og-stack og-stack--lg">
-        <div className="og-stack og-stack--close">
+        <div className="og-stack og-stack--pair">
           <h2 className="og-h3" data-test-id="order-status-title">{title}</h2>
           <p className="og-ostatus__text" data-test-id="order-status-text">{description}</p>
         </div>
@@ -155,8 +155,13 @@ function DeliveryDetails({ order, onSave }) {
     return (
       <Card variant="surface" padding={5} style={CARD_X} data-test-id="order-delivery-form">
         <Form onSubmit={submit} noValidate>
-          <FormSection title="Fill Delivery Details" titleAs="h2">
-            <p className="og-text">Please provide your delivery details—we can’t start your order until they’re submitted. Rest assured, your information is safe and private with us. Please note, after submission any changes can be made through manager</p>
+          <FormSection>
+            <div className="og-stack og-stack--close">
+              <h2 className="og-h3">Fill in delivery details</h2>
+              <ul className="og-bullets og-bullets--body">
+                {['The order starts once the details are submitted', 'Your information is safe and private', 'After submission, changes go through the manager'].map((t) => <li key={t}><Icon name="Check" size={20} /><span>{t}</span></li>)}
+              </ul>
+            </div>
             {fields.map((f) => (
               <TextInput key={f.key} label={f.label} type={f.secret ? 'password' : 'text'} value={values[f.key] || ''} autoComplete="off" {...form.field(f.key, { caption: f.note, onChange: (e) => setValues({ ...values, [f.key]: e.target.value }) })} />
             ))}

@@ -751,3 +751,5 @@ a { color: inherit; }
 .og-ostatus__done { display: grid; place-items: center; padding: var(--bui-spacing-5) var(--bui-spacing-3) 0; }
 .og-ostatus__done-dot { width: 56px; height: 56px; border-radius: var(--bui-radius-full); display: grid; place-items: center; background: var(--bui-extensions-background-light-success); color: var(--bui-extensions-text-and-icon-success); }
 .og-ostatus__review { align-items: center; }
+
+.og-bullets--body { font: var(--bui-typography-text-16-regular); color: var(--bui-text-and-icon-primary); gap: var(--bui-spacing-2); }   /* a list of the points of a block of the order page: 16, the color of the text */
