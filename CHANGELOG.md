@@ -2,6 +2,7 @@
 
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
+- Overgear, the offer page: the colored tag (Hot Offer) is the first of the row of selling points, in the shape of the others; "Add to favorites" is a heart and a line of text, clickable, in the type of the rating and the sales (16 regular), not a button
 - Overgear: the favorites have five cards in a row on a desktop (they had four), as the home page. Not run: the browser checks
 - Overgear: every subpage of the account has the full trail of breadcrumbs from Home on a desktop: My orders, Favorites (it had none), Settings (it began at Account) and the page of an order (My orders now sits under Account). On a phone the trail stays hidden under the navbar. Not run: the browser checks
 - Overgear: cards in a list stand 8px apart, the tight relation: the items of the cart and the checkout (they were 16 in the lines and 24 in the cart list), the orders and the payment history (`og-stack--cards`); a decision test holds it. Not run: the browser checks

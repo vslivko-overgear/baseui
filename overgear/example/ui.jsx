@@ -106,7 +106,7 @@ export function WishButton({ id, compact, variant = 'ghost', text = false }) {
   const [move, setMove] = useState('');
   const icon = <span className={`og-heart${move ? ` is-${move}` : ''}`} onAnimationEnd={() => setMove('')}><Icon name="Heart" size={text ? 20 : 24} filled={on} /></span>;
   // with `text`: a line heart and the words, in a row of information (the offer page)
-  if (text) return <Button variant="ghost" size="sm" icon={icon} label={on ? 'In favorites' : 'Add to favorites'} aria-pressed={on} onClick={(e) => { e.stopPropagation(); setMove(on ? 'off' : 'on'); store.toggleWish(id); }} />;
+  if (text) return <button type="button" className="og-wishlink" aria-pressed={on} onClick={(e) => { e.stopPropagation(); setMove(on ? 'off' : 'on'); store.toggleWish(id); }}>{icon}<span>{on ? 'In favorites' : 'Add to favorites'}</span></button>;
   return <IconButton variant={variant} size={compact ? 'xsm' : 'md'} tooltip={false} label={on ? 'Remove from favorites' : 'Add to favorites'} icon={icon} onClick={(e) => { e.stopPropagation(); setMove(on ? 'off' : 'on'); store.toggleWish(id); }} />;
 }
 
