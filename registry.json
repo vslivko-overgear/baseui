@@ -475,7 +475,7 @@
       "name": "collapsible",
       "type": "registry:ui",
       "title": "Collapsible",
-      "description": "A section that expands and collapses",
+      "description": "A section that expands and collapses: an island on the secondary background with its content inside it (a group of them is islands 8px apart, no dividers)",
       "dependencies": [],
       "registryDependencies": [
         "https://baseuikit.vercel.app/r/baseui-core.json",

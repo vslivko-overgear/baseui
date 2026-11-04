@@ -33,7 +33,7 @@ export function Collapsible({ title, headingLevel = 3, open, defaultOpen = false
     </div>
   );
 }
-describe(Collapsible, 'A section that expands and collapses', {
+describe(Collapsible, 'A section that expands and collapses: an island on the secondary background with its content inside it (a group of them is islands 8px apart, no dividers)', {
   title: ['ReactNode', null, 'Heading that toggles the content'],
   headingLevel: ['2 | 3 | 4 | 5 | 6', '3', 'The level of the heading: one below the heading of the page or of the section it belongs to (rule A9: no level is skipped)'],
   open: ['boolean', null, 'Open state'],

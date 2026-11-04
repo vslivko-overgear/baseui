@@ -830,7 +830,7 @@ export interface CollapsibleProps {
   [dataAttribute: `data-${string}`]: string | number | boolean | undefined;
   [ariaAttribute: `aria-${string}`]: string | number | boolean | undefined;
 }
-/** A section that expands and collapses */
+/** A section that expands and collapses: an island on the secondary background with its content inside it (a group of them is islands 8px apart, no dividers) */
 export function Collapsible(props: CollapsibleProps): ReactElement | null;
 
 export interface CollapsibleGroupProps {

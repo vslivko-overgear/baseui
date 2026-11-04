@@ -1,6 +1,6 @@
 # Collapsible
 
-A section that expands and collapses
+A section that expands and collapses: an island on the secondary background with its content inside it (a group of them is islands 8px apart, no dividers)
 
 ## Usage
 

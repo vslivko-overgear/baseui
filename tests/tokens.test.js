@@ -152,3 +152,15 @@ describe('the clear button of a field', () => {
   });
 });
 
+describe('the Collapsible is an island', () => {
+  test('a section is a block on the secondary background with a radius, and a group is islands apart: no divider lines', () => {
+    const css = readFileSync('src/components.css', 'utf8');
+    const block = (sel) => css.slice(css.indexOf(sel), css.indexOf('}', css.indexOf(sel)));
+    expect(block('.bui-collapsible {')).toMatch(/background: var\(--baseui-background-secondary\)/);
+    expect(block('.bui-collapsible {')).toMatch(/border-radius: var\(--baseui-radius-2xl\)/);
+    expect(block('.bui-collapsible {')).not.toMatch(/box-shadow/);
+    expect(block('.bui-collapsible-group {')).toMatch(/gap: var\(--baseui-spacing-2\)/);
+    expect(block('.bui-collapsible-group {')).not.toMatch(/box-shadow/);
+  });
+});
+
