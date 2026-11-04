@@ -982,10 +982,15 @@ export interface DatePickerProps {
    */
   mode?: 'single' | 'range';
   /**
-   * Accessible name and label of the field
+   * Accessible name and label of the field; with `appearance="token"` the text of the chip while nothing is chosen
    * @default 'Date'
    */
   label?: string;
+  /**
+   * The trigger: a field with the calendar icon and a chevron, or a chip with the date (or the label) and a chevron, selected once a date is chosen, for a row of chips
+   * @default 'field'
+   */
+  appearance?: 'field' | 'token';
   /**
    * Where the calendar opens: auto uses the dialog below 768px
    * @default 'auto'
@@ -1887,6 +1892,11 @@ export interface PopoverProps {
    * Class of the floating panel (it is drawn in the body, so a class on the trigger does not reach it)
    */
   panelClassName?: string;
+  /**
+   * Give the panel the width of its trigger; `{ min, max }` keeps that width between two limits in px
+   * @default false
+   */
+  matchWidth?: boolean | { min?: number; max?: number };
   /**
    * Open state
    */

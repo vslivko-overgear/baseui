@@ -2,6 +2,7 @@ import { useState } from '../../src/react.js';
 import { Button } from '../../src/components/Button.jsx';
 import { Card } from '../../src/components/Card.jsx';
 import { TokenGroup } from '../../src/components/TokenGroup.jsx';
+import { Token } from '../../src/components/Token.jsx';
 import { DatePicker } from '../../src/components/Calendar.jsx';
 import { CheckboxGroup } from '../../src/components/CheckboxGroup.jsx';
 import { Selector } from '../../src/components/Selector.jsx';
@@ -160,8 +161,10 @@ export function Offer({ id }) {
                 <TokenGroup title="Boost method" options={MODES.map((m) => ({ value: m.value, label: <>{m.label}{m.note && <> <span className="og-pill__price">{m.note}</span></>}</> }))} value={[mode]} onValueChange={(v) => v[0] && setMode(v[0])} />
                 <CheckboxGroup title="Additional options" value={extras} onValueChange={setExtras} options={EXTRAS.map((e) => ({ value: e.value, label: <span className="og-extra"><span>{e.label}</span>{e.was ? <span className="og-extra__price"><s>{money(e.was)}</s> <b>{money(e.price)}</b></span> : <span className="og-extra__price">{`+${money(e.price)}`}</span>}</span> }))} />
                 <div className="og-stack og-stack--tight" data-test-id="offer-slot">
-                  <TokenGroup title="Select raid slot" caption="8 spots left in this run" options={DAYS} value={[date ? '' : day]} onValueChange={(v) => { if (v[0]) { setDay(v[0]); setDate(null); } }} />
-                  <DatePicker label="Choose date" value={date} onValueChange={(v) => setDate(v)} />
+                  <TokenGroup title="Select raid slot" caption="8 spots left in this run">
+                    {DAYS.map((d) => <Token key={d.value} pressed={!date && day === d.value} onPressedChange={() => { setDay(d.value); setDate(null); }}>{d.label}</Token>)}
+                    <DatePicker appearance="token" label="Choose date" value={date} onValueChange={setDate} />
+                  </TokenGroup>
                   <TokenGroup options={TIMES} value={[time]} onValueChange={(v) => v[0] && setTime(v[0])} />
                 </div>
                 <div className="og-slothelp"><p className="og-text">Can't find a time that works for you? Send us a message and we'll find one that does</p><Button variant="primary" size="sm" label="Chat" /></div>

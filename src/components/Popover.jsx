@@ -61,6 +61,7 @@ describe(
     trigger: ['(props) => ReactElement', null, 'Render function that receives the trigger props'],
     children: ['ReactNode', null, 'Panel content'],
     panelClassName: ['string', null, 'Class of the floating panel (it is drawn in the body, so a class on the trigger does not reach it)'],
+    matchWidth: ['boolean | { min?: number; max?: number }', 'false', 'Give the panel the width of its trigger; `{ min, max }` keeps that width between two limits in px'],
     open: ['boolean', null, 'Open state'],
     defaultOpen: ['boolean', 'false', 'Initially open'],
     onOpenChange: ['(open: boolean) => void', null, 'Called when it opens or closes'],

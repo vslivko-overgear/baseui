@@ -16,7 +16,7 @@ export const Floating = ({ children }) => createPortal(children, document.body);
  * @param panelRef   the panel itself, measured after it is rendered
  * @param placement  'bottom-start' | 'bottom-end' | 'top-start' | 'top-end'; the opposite side is used when this one has no room, and the other alignment
  *                  (left edge or right edge of the anchor) when this one runs out of the window
- * @param matchWidth give the panel the width of the anchor
+ * @param matchWidth give the panel the width of the anchor; `{ min, max }` keeps it between two limits (px)
  */
 export function useAnchoredPosition(open, anchorRef, panelRef, placement, matchWidth = false) {
   const [pos, setPos] = useState(null);
@@ -27,7 +27,10 @@ export function useAnchoredPosition(open, anchorRef, panelRef, placement, matchW
     const r = anchor.getBoundingClientRect();
     const vw = document.documentElement.clientWidth;
     const vh = window.innerHeight;
-    const width = matchWidth ? r.width : panel.offsetWidth;
+    // matchWidth: the width of the anchor; `{ min, max }` keeps it between two limits
+    const limits = typeof matchWidth === 'object' ? matchWidth : {};
+    const matched = matchWidth ? Math.min(limits.max ?? Infinity, Math.max(limits.min ?? 0, r.width)) : undefined;
+    const width = matchWidth ? matched : panel.offsetWidth;
     const natural = panel.scrollHeight;
     const below = vh - r.bottom - GAP - EDGE;
     const above = r.top - GAP - EDGE;
@@ -46,7 +49,7 @@ export function useAnchoredPosition(open, anchorRef, panelRef, placement, matchW
     const left = Math.max(EDGE, Math.min(end ? r.right - width : r.left, vw - width - EDGE));
     const top = side === 'bottom' ? r.bottom + GAP : r.top - GAP - height;
     setPos((p) => {
-      const next = { top: Math.round(top), left: Math.round(left), width: matchWidth ? Math.round(r.width) : undefined, maxHeight: Math.floor(room), placement: `${side}-${end ? 'end' : 'start'}` };
+      const next = { top: Math.round(top), left: Math.round(left), width: matchWidth ? Math.round(matched) : undefined, maxHeight: Math.floor(room), placement: `${side}-${end ? 'end' : 'start'}` };
       return p && Object.keys(next).every((k) => p[k] === next[k]) ? p : next;
     });
   }, [anchorRef, panelRef, placement, matchWidth]);

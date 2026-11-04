@@ -375,7 +375,8 @@
         "https://baseuikit.vercel.app/r/button.json",
         "https://baseuikit.vercel.app/r/dialog.json",
         "https://baseuikit.vercel.app/r/popover.json",
-        "https://baseuikit.vercel.app/r/text-input.json"
+        "https://baseuikit.vercel.app/r/text-input.json",
+        "https://baseuikit.vercel.app/r/token.json"
       ],
       "files": [
         {

@@ -1,6 +1,7 @@
 import { cx, React, useEffect, useId, useMemo, useRef, useState, useControllable } from '../react.js';
 import { BuiltinIcon } from '../builtin-icons.jsx';
 import { TextInput } from './TextInput.jsx';
+import { Token } from './Token.jsx';
 import { Dialog } from './Dialog.jsx';
 import { Button } from './Button.jsx';
 import { Popover } from './Popover.jsx';
@@ -328,12 +329,15 @@ describe(Calendar, 'A month grid for picking a date or a date range', {
 
 /* ------------------------------------------------------------- DatePicker */
 
+// the panel of a date picker follows its control between these widths (a calendar is not narrower than a week of dates, nor wider than 480)
+const CALENDAR_WIDTH = { min: 280, max: 480 };
 export function DatePicker({
   value,
   defaultValue,
   onValueChange,
   mode = 'single',
   label = 'Date',
+  appearance = 'field',
   presentation = 'auto',
   locale,
   min,
@@ -362,7 +366,21 @@ export function DatePicker({
   const cal = { mode, locale, min, max, dateConstraints, weekStartsOn };
 
   // The whole field is the trigger: a click on the icon or the padding opens it too, not only a click on the input.
-  const trigger = (extra = {}) => (
+  const trigger = (extra = {}) => appearance === 'token' ? (
+    <Token
+      pressed={!!text}
+      onPressedChange={() => {}}
+      size={field.size === 'sm' ? 'sm' : 'md'}
+      endIcon={<BuiltinIcon name="chevronDown" size={20} />}
+      onClick={extra.onClick}
+      aria-haspopup="dialog"
+      aria-expanded={extra['aria-expanded']}
+      aria-controls={extra['aria-controls']}
+      disabled={field.disabled}
+    >
+      {text || label}
+    </Token>
+  ) : (
     <div
       data-slot="datepicker-field"
       className="bui-datepicker__field"
@@ -392,7 +410,7 @@ export function DatePicker({
 
   if (asDialog) {
     return (
-      <div data-slot="datepicker" className={cx('bui-datepicker', className)}>
+      <div data-slot="datepicker" className={cx('bui-datepicker', appearance === 'token' && 'bui-datepicker--token', className)}>
         {trigger({
           onClick: () => {
             setDraft(selected);
@@ -428,9 +446,9 @@ export function DatePicker({
   }
   return (
     <Popover
-      className={cx('bui-datepicker', className)}
+      className={cx('bui-datepicker', appearance === 'token' && 'bui-datepicker--token', className)}
       panelClassName="bui-datepicker__panel"
-      matchWidth
+      matchWidth={CALENDAR_WIDTH}
       open={open}
       onOpenChange={setOpen}
       label={label}
@@ -457,7 +475,8 @@ describe(
     defaultValue: ['ISODateString | { start, end } | null', null, 'Initial selection (uncontrolled)'],
     onValueChange: ['(value) => void', null, 'Called when a date (or a complete range) is chosen'],
     mode: ["'single' | 'range'", "'single'", 'One date or a range of two'],
-    label: ['string', "'Date'", 'Accessible name and label of the field'],
+    label: ['string', "'Date'", 'Accessible name and label of the field; with `appearance="token"` the text of the chip while nothing is chosen'],
+    appearance: ["'field' | 'token'", "'field'", 'The trigger: a field with the calendar icon and a chevron, or a chip with the date (or the label) and a chevron, selected once a date is chosen, for a row of chips'],
     presentation: ["'auto' | 'popover' | 'dialog'", "'auto'", 'Where the calendar opens: auto uses the dialog below 768px'],
     confirmLabel: ['string', "'Apply'", 'Dialog apply button text'],
     cancelLabel: ['string', "'Cancel'", 'Dialog cancel button text'],

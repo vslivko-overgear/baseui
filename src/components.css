@@ -224,10 +224,10 @@
 .bui-calendar--fluid .bui-calendar__grid { flex: 1; min-width: 0; }
 .bui-calendar__grid { display: flex; flex-direction: column; }
 .bui-calendar__grid--weeks .bui-calendar__row { grid-template-columns: 28px repeat(7, var(--cal-day)) !important; }
-.bui-calendar--fluid .bui-calendar__grid--weeks .bui-calendar__row { grid-template-columns: 28px repeat(7, minmax(var(--cal-day), 1fr)) !important; }
+.bui-calendar--fluid .bui-calendar__grid--weeks .bui-calendar__row { grid-template-columns: 28px repeat(7, minmax(0, 1fr)) !important; }
 .bui-calendar__week-number { display: flex; align-items: center; justify-content: center; font: var(--bui-typography-text-12-regular); color: var(--bui-text-and-icon-secondary); }
 [dir=rtl] .bui-calendar__nav svg { transform: scaleX(-1); }
-.bui-calendar__row { display: grid; grid-template-columns: repeat(7, minmax(var(--cal-day), 1fr)); }
+.bui-calendar__row { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }   /* a fluid calendar fits any width: the day buttons shrink (max-width 100%) */
 .bui-calendar:not(.bui-calendar--fluid) .bui-calendar__row { grid-template-columns: repeat(7, var(--cal-day)); }
 .bui-calendar__weekday { display: flex; align-items: center; justify-content: center; height: var(--cal-day); font: var(--bui-typography-text-12-regular); color: var(--bui-text-and-icon-secondary); text-transform: capitalize; }
 .bui-calendar__cell { display: flex; align-items: center; justify-content: center; height: var(--cal-day); }
@@ -250,6 +250,7 @@
 .bui-datepicker { display: block; width: 100%; } /* a field fills the width of its frame */
 .bui-datepicker.bui-popover { display: block; }
 .bui-datepicker .bui-popover__trigger { display: block; width: 100%; }
+.bui-datepicker--token, .bui-datepicker--token.bui-popover, .bui-datepicker--token .bui-popover__trigger { display: inline-flex; width: auto; }   /* a chip hugs its text, in a row with other chips */
 .bui-datepicker__field { display: block; width: 100%; cursor: pointer; }
 /* the same surface as the Selector / Typeahead dropdown */
 .bui-datepicker__panel.bui-popover__panel { box-sizing: border-box; width: 100%; min-width: 0; max-width: none; padding: var(--bui-spacing-4); border-radius: var(--bui-radius-custom-20); box-shadow: 0 4px 28px color-mix(in srgb, var(--bui-extensions-text-and-icon-always-dark) 12%, transparent); }
