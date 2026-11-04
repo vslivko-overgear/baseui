@@ -2330,7 +2330,7 @@
   width: calc(100% + 16px);
   margin-inline: calc(var(--baseui-spacing-2) * var(--baseui-spacing-negative));
 }
-.bui-choice-sheet__option .bui-dropdown__icon, .bui-choice-sheet__option .bui-dropdown__avatar { width: 32px; height: 32px; }   /* the picture of an option in a sheet is 32px (a menu keeps 24px): a finger sees it, and every picture is one size */
+.bui-choice-sheet__option .bui-dropdown__icon, .bui-choice-sheet__option .bui-dropdown__avatar { width: 28px; height: 28px; }   /* the picture of an option in a sheet is 28px (a menu keeps 24px): a finger sees it, and every picture is one size */
 .bui-choice-sheet__option:focus-visible {
   outline: var(--baseui-focus-outline-width) var(--baseui-focus-outline-style) var(--baseui-focus-outline-color);
   outline-offset: calc(var(--baseui-focus-outline-width) * -1);

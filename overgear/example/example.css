@@ -703,7 +703,7 @@ a { color: inherit; }
 .og .og-listing--five { --bui-listing-min: 200px; }
 
 /* the sign of a currency in the list of currencies: a round chip like the flag of a language */
-.og-cursign { display: inline-grid; place-items: center; box-sizing: border-box; width: 100%; height: 100%; border-radius: var(--baseui-radius-full); background: var(--baseui-background-tertiary); color: var(--baseui-text-and-icon-primary); font: var(--baseui-typography-text-14-regular); font-weight: 700; }
+.og-cursign { display: inline-grid; place-items: center; box-sizing: border-box; width: 100%; height: 100%; border-radius: var(--baseui-radius-full); background: var(--baseui-background-tertiary); color: var(--baseui-text-and-icon-primary); font: var(--baseui-typography-text-16-regular); font-weight: 700; line-height: 1; }
 
 /* the line under the title of an offer (the mark, the rating, the sold, the favorites) is one line that scrolls sideways on a phone, out to the edge of the screen, and never wraps */
 .og--mobile .og-offer-meta { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline-end: calc(var(--bui-page-pad) * -1); padding-inline-end: var(--bui-page-pad); }
