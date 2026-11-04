@@ -128,10 +128,12 @@ export function Offer({ id }) {
   );
   return (
     <Page>
-      <PageHead crumbs={[{ label: 'Home', href: '#/' }, { label: game.name, href: `#/games/${game.slug}` }, { label: service.label, href: `#/games/wow?s=${service.id}` }, { label: offer.title }]} title={offer.title} titleGap={0} mediaTop media={<div className="og-art og-art--square" role="img" aria-label={offer.title}>{offer.image ? <img className="og-art__img" src={offer.image} alt="" /> : <Icon name="Image01" size={32} />}</div>}>
+      <PageHead crumbs={[{ label: 'Home', href: '#/' }, { label: game.name, href: `#/games/${game.slug}` }, { label: service.label, href: `#/games/wow?s=${service.id}` }, { label: offer.title }]} title={offer.title} mediaTop media={<div className="og-art og-art--square" role="img" aria-label={offer.title}>{offer.image ? <img className="og-art__img" src={offer.image} alt="" /> : <Icon name="Image01" size={32} />}</div>}>
         <div className="og-row og-offer-meta">
           <Stars value={offer.rating} reviews={offer.reviews} size="md" />
+          <span className="og-dot" aria-hidden="true">·</span>
           <span className="og-rate__text og-rate__text--md"><span className="og-rate__count">{`${sold(offer.sold)} sold`}</span></span>
+          <span className="og-dot" aria-hidden="true">·</span>
           <WishButton id={offer.id} text />
         </div>
       </PageHead>

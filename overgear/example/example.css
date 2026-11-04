@@ -646,6 +646,9 @@ a { color: inherit; }
 .og-usp__tag svg { flex: none; }
 .og-usp__tag--badge { background: var(--bui-background-accent); color: var(--bui-extensions-text-and-icon-on-color); }   /* the colored tag of the offer leads the row, in the shape of the others */
 .og-wishlink { display: inline-flex; align-items: center; gap: var(--bui-spacing-2); padding: 0; border: 0; background: none; cursor: pointer; font: var(--bui-typography-text-16-regular); color: var(--bui-text-and-icon-primary); }   /* the heart and the words: a link of the row of information, in its type */
+.og-wishlink:hover span { text-decoration: underline; }
+.og-offer-meta { gap: var(--bui-spacing-2); }   /* the dots between the facts sit 8 from each of them */
+.og-dot { font: var(--bui-typography-text-16-regular); color: var(--bui-text-and-icon-secondary); }
 .og-wishlink:focus-visible { outline: var(--bui-focus-outline-width) var(--bui-focus-outline-style) var(--bui-focus-outline-color); outline-offset: 2px; border-radius: var(--bui-radius-sm); }
 .og--mobile .og-usp { flex-wrap: nowrap; width: max-content; }
 

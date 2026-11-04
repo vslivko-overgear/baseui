@@ -2,6 +2,7 @@
 
 ## Overgear: the account with a menu on a desktop, the ranks, the checkout, payment methods as outlined tiles, the items apart
 
+- Overgear, the offer page: the subtitle line is 4px lower under the title (4 instead of 0); the rating, the sales and the favorites are parted by dots; "Add to favorites" is underlined on hover
 - Overgear, the offer page: the colored tag (Hot Offer) is the first of the row of selling points, in the shape of the others; "Add to favorites" is a heart and a line of text, clickable, in the type of the rating and the sales (16 regular), not a button
 - Overgear: the favorites have five cards in a row on a desktop (they had four), as the home page. Not run: the browser checks
 - Overgear: every subpage of the account has the full trail of breadcrumbs from Home on a desktop: My orders, Favorites (it had none), Settings (it began at Account) and the page of an order (My orders now sits under Account). On a phone the trail stays hidden under the navbar. Not run: the browser checks
