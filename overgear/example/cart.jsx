@@ -10,6 +10,7 @@ import { Divider } from '../../src/components/Divider.jsx';
 import { Navbar } from '../../src/components/MobileNavigation.jsx';
 import { Icon } from '../../src/components/Icon.jsx';
 import { go, href, useMedia, useTitleUnderBar } from './util.js';
+import { useFieldErrors } from '../../src/use-field-errors.js';
 import { OrderHead, ItemLines, OrderSummary, PayBar, PayBarContent, PromoCard } from './order.jsx';
 import { Dialog } from '../../src/components/Dialog.jsx';
 import { money } from './data.js';
@@ -135,13 +136,13 @@ export function Checkout() {
   const scrolled = useTitleUnderBar('.og-order__title');   // the bar shows the title only once the heading of the page has scrolled under it
 
   const [email, setEmail] = useState(store.user?.email || '');
-  const [tried, setTried] = useState(false);
   const mobile = useMedia('(max-width: 767px)');
   const fee = [...METHODS, ...MORE_METHODS].find((m) => m.id === method)?.fee ?? 0;
   const amount = +(store.total + fee).toFixed(2);
   const badEmail = !store.user && !email.includes('@');
+  const form = useFieldErrors({ email: badEmail ? 'Enter an email we can send the receipt to' : '' });   // the error shows on Pay and goes when the field is focused again or edited
   const pay = () => {
-    setTried(true);
+    form.reveal();
     if (badEmail) return;
     // the payment method decides what the provider answers (outcomeOf): paid, to be verified, or declined
     const outcome = outcomeOf(method);
@@ -180,7 +181,7 @@ export function Checkout() {
             <div className="og-stack og-stack--xl og-co__main">
               <div className="og-stack">
                 <ItemLines />
-                {!store.user && <TextInput label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} status={tried && badEmail ? 'error' : undefined} caption={tried && badEmail ? 'Enter an email we can send the receipt to' : 'The receipt and the order chat link come here'} />}
+                {!store.user && <TextInput label="Email" type="email" value={email} {...form.field('email', { caption: 'The receipt and the order chat link come here', onChange: (e) => setEmail(e.target.value) })} />}
               </div>
               <div className="og-stack og-co__pay">
                 <h2 className="og-h2">Payment method</h2>

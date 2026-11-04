@@ -44,6 +44,7 @@ export { Table, TableHeader, TableBody, TableRow, TableHeaderCell, TableCell, pi
 export { Tabs } from './components/Tabs.jsx';
 export { TextInput } from './components/TextInput.jsx';
 export { ToastProvider, useToast } from './components/Toast.jsx';
+export { useFieldErrors } from './use-field-errors.js';
 export { Token } from './components/Token.jsx';
 export { TokenGroup } from './components/TokenGroup.jsx';
 export { Tooltip } from './components/Tooltip.jsx';

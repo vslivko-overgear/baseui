@@ -3412,6 +3412,7 @@ export interface TypeaheadProps {
 export function Typeahead(props: TypeaheadProps): ReactElement | null;
 
 export function useColumns(...args: any[]): any;
+export function useFieldErrors(...args: any[]): any;
 export function useToast(...args: any[]): any;
 export interface VStackProps {
   /**

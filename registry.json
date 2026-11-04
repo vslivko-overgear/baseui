@@ -153,6 +153,11 @@
           "target": "~/baseui/src/usage.js"
         },
         {
+          "path": "src/use-field-errors.js",
+          "type": "registry:lib",
+          "target": "~/baseui/src/use-field-errors.js"
+        },
+        {
           "path": "src/constitution/audit-tabs.js",
           "type": "registry:lib",
           "target": "~/baseui/src/constitution/audit-tabs.js"

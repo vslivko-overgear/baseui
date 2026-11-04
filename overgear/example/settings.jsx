@@ -9,6 +9,7 @@ import { Section } from './ui.jsx';
 import { useStore } from './store.jsx';
 import { SUBSCRIPTIONS } from './wallet-core.js';
 import { passwordErrors, passwordValid, avatarError } from './settings-core.js';
+import { useFieldErrors } from '../../src/use-field-errors.js';
 import { Avatar } from '../../src/components/Avatar.jsx';
 
 /** The notifications: Discord, email and the wishlist (it needs the email). Turning one on the first time pays the reward of the subscription. */
@@ -35,18 +36,18 @@ function Notifications() {
 function Password() {
   const { toast } = useToast();
   const [values, setValues] = useState({ current: '', next: '', repeat: '' });
-  const [tried, setTried] = useState(false);
   const errors = passwordErrors(values);
+  const form = useFieldErrors(errors);   // an error shows on Save and goes when its field is focused again or edited
   const set = (key) => (e) => { setValues((v) => ({ ...v, [key]: e.target.value })); };
   const save = (e) => {
     e.preventDefault();
-    setTried(true);
+    form.reveal();
     if (!passwordValid(values)) return;
     setValues({ current: '', next: '', repeat: '' });
-    setTried(false);
+    form.reset();
     toast({ message: 'Your password is changed', status: 'success' });
   };
-  const field = (key, label, caption) => <TextInput label={label} type="password" autoComplete={key === 'current' ? 'current-password' : 'new-password'} value={values[key]} onChange={set(key)} status={tried && errors[key] ? 'error' : undefined} caption={tried && errors[key] ? errors[key] : caption} data-test-id={`settings-password-${key}`} />;
+  const field = (key, label, caption) => <TextInput label={label} type="password" autoComplete={key === 'current' ? 'current-password' : 'new-password'} value={values[key]} {...form.field(key, { caption, onChange: set(key) })} data-test-id={`settings-password-${key}`} />;
   return (
     <Card variant="surface" padding={5}>
       <form className="og-stack" noValidate onSubmit={save} style={{ maxWidth: 480 }} data-test-id="settings-password">

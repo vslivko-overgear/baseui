@@ -3,7 +3,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, test, vi } from 'vitest';
 import { useState } from 'react';
-import { Breadcrumbs, Button, ChoiceSheet, Hint, Typeahead, Card, ProductCard, Stack, ButtonGroup, Form, FormRow, FormSection, IconButton, ControlRow, Checkbox, Dialog, OtpInput, Pagination, ProgressBar, Slider, Rating, Selector, Dropdown, Switch, Tabs, TextInput } from '../src/index.jsx';
+import { Breadcrumbs, Button, useFieldErrors, ChoiceSheet, Hint, Typeahead, Card, ProductCard, Stack, ButtonGroup, Form, FormRow, FormSection, IconButton, ControlRow, Checkbox, Dialog, OtpInput, Pagination, ProgressBar, Slider, Rating, Selector, Dropdown, Switch, Tabs, TextInput } from '../src/index.jsx';
 
 describe('Switch', () => {
   test('toggles and reports', async () => {
@@ -566,6 +566,54 @@ describe('Typeahead (rule M4): a sheet on a phone', () => {
     const dialog = await screen.findByRole('dialog');
     expect(dialog.querySelector('[role="listbox"], [role="option"]')).not.toBeNull();
     restore();
+  });
+});
+
+describe('useFieldErrors', () => {
+  function Form({ valid = false }) {
+    const [v, setV] = useState({ a: '', b: '' });
+    const errors = { a: v.a ? '' : 'Fill A', b: v.b.length >= 3 ? '' : 'B is short' };
+    const form = useFieldErrors(errors);
+    return (
+      <form onSubmit={(e) => { e.preventDefault(); form.reveal(); }}>
+        <TextInput label="A" value={v.a} {...form.field('a', { caption: 'hint A', onChange: (e) => setV({ ...v, a: e.target.value }) })} />
+        <TextInput label="B" value={v.b} {...form.field('b', { onChange: (e) => setV({ ...v, b: e.target.value }) })} />
+        <button type="submit">Send</button>
+        <button type="button" onClick={form.reset}>Reset</button>
+      </form>
+    );
+  }
+  const errorsOnScreen = () => [...document.querySelectorAll('.bui-field')].filter((f) => f.getAttribute('data-status') === 'error').length;
+
+  test('nothing is red before Submit; Submit shows the errors of the wrong fields', async () => {
+    render(<Form />);
+    expect(errorsOnScreen()).toBe(0);
+    await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+    expect(errorsOnScreen()).toBe(2);
+    expect(screen.getByText('Fill A')).toBeInTheDocument();
+  });
+  test('an error goes when its field is focused again, the others stay', async () => {
+    render(<Form />);
+    await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+    await userEvent.click(screen.getByLabelText('A'));
+    expect(errorsOnScreen()).toBe(1);
+    expect(screen.queryByText('Fill A')).toBeNull();
+    expect(screen.getByText('hint A')).toBeInTheDocument();
+    expect(screen.getByText('B is short')).toBeInTheDocument();
+  });
+  test('an error goes when the value changes, and comes back with the next Submit if the field is still wrong', async () => {
+    render(<Form />);
+    await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+    await userEvent.type(screen.getByLabelText('B'), 'x');
+    expect(screen.queryByText('B is short')).toBeNull();
+    await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+    expect(screen.getByText('B is short')).toBeInTheDocument();
+  });
+  test('reset hides every error', async () => {
+    render(<Form />);
+    await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Reset' }));
+    expect(errorsOnScreen()).toBe(0);
   });
 });
 

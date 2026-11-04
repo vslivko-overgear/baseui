@@ -15,6 +15,7 @@ import { money } from './data.js';
 import { go } from './util.js';
 import { Badge } from '../../src/components/Badge.jsx';
 import { CashbackMark } from './ui.jsx';
+import { useFieldErrors } from '../../src/use-field-errors.js';
 import { OPEN_TOP_UP, BONUS_RULES, openTopUp, parseAmount, amountError, coinsText, bonusFor, bonusRateFor, lowestBonusAmount, SUGGESTIONS, PURCHASE_LIMIT } from './wallet-core.js';
 
 /** The money and the OG Coins of the visitor, side by side. */
@@ -84,19 +85,19 @@ export function TopUpDialog() {
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [text, setText] = useState('100');
-  const [tried, setTried] = useState(false);
   const [paying, setPaying] = useState(false);
   useEffect(() => {
-    const show = () => { setText('100'); setTried(false); setPaying(false); setOpen(true); };
+    const show = () => { setText('100'); form.reset(); setPaying(false); setOpen(true); };
     window.addEventListener(OPEN_TOP_UP, show);
     return () => window.removeEventListener(OPEN_TOP_UP, show);
   }, []);
   const error = amountError(text);
+  const form = useFieldErrors({ amount: error });   // the error shows on Pay and goes when the field is edited (the focus the page puts on it keeps it)
   const amount = parseAmount(text);
   const bonus = amount != null ? bonusFor(amount) : null;
   const lowest = lowestBonusAmount();
   const pay = () => {
-    setTried(true);
+    form.reveal();
     if (error) { document.getElementById('og-topup-amount')?.focus(); return; }
     setPaying(true);
     setTimeout(() => {
@@ -110,7 +111,7 @@ export function TopUpDialog() {
     <Dialog open={open} onOpenChange={(o) => !paying && setOpen(o)} title="Top Up Balance">
       <form className="og-stack og-stack--lg og-topup" noValidate onSubmit={(e) => { e.preventDefault(); pay(); }}>
         <div className="og-stack og-stack--close">
-          <TextInput id="og-topup-amount" label="Amount, USD" inputMode="decimal" autoComplete="off" prefix="$" value={text} onChange={(e) => setText(e.target.value)} status={tried && error ? 'error' : undefined} caption={tried && error ? error : undefined} />
+          <TextInput id="og-topup-amount" label="Amount, USD" inputMode="decimal" autoComplete="off" prefix="$" value={text} {...form.field('amount', { onChange: (e) => setText(e.target.value) })} />
           <TokenGroup size="sm" aria-label="Amount suggestions" value={SUGGESTIONS.includes(amount) ? [String(amount)] : []} onValueChange={(v) => v.length && setText(v[v.length - 1])} options={SUGGESTIONS.map((n) => ({ value: String(n), label: <span className="og-topup__chip">{`$${n}`}<Badge variant="warning-light" size="sm" label={`+${bonusRateFor(n)}%`} icon={<CashbackMark />} /></span> }))} />
         </div>
         <div className="og-stack og-stack--close">
