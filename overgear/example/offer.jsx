@@ -243,7 +243,7 @@ export function Offer({ id }) {
           </div>
         </Section>
       )}
-      {mobile && <PayBar amount={unit} action="Add to cart" onClick={add} />}
+      {mobile && <PayBar above amount={unit} action="Add to cart" onClick={add} />}
     </Page>
   );
 }

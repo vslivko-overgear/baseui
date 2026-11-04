@@ -7,9 +7,9 @@ a { color: inherit; }
 .og-wrap { max-width: 1280px; margin: 0 auto; padding-inline: var(--bui-spacing-6); }
 .og { --og-header-h: 72px; }
 .og-header { position: sticky; top: 0; z-index: var(--bui-z-index-30); background: var(--bui-background-primary); }
-/* the header blur: the header is transparent and a layer under it blurs what scrolls beneath and fades out downwards, like the bottom bar (the setting `Header` of the Theme page; the theme glass gives it too) */
-:is([data-og-header="own"], [data-glass="on"]) .og-header { background: transparent; }
-:is([data-og-header="own"], [data-glass="on"]) .og-header::before {
+/* the header blur: the header is transparent and a layer under it blurs what scrolls beneath and fades out downwards, like the bottom bar (fixed, not a setting; the theme glass gives it too) */
+.og-header { background: transparent; }
+.og-header::before {
   content: ""; position: absolute; inset: 0 0 -24px; z-index: -1; pointer-events: none;
   -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
   -webkit-mask-image: linear-gradient(to bottom, #000 65%, transparent); mask-image: linear-gradient(to bottom, #000 65%, transparent);

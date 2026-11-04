@@ -10,14 +10,13 @@ import { Slider } from '../../src/components/Slider.jsx';
 import { SegmentedControl } from '../../src/components/SegmentedControl.jsx';
 import { TokenGroup } from '../../src/components/TokenGroup.jsx';
 import { Tabs } from '../../src/components/Tabs.jsx';
-import { Switch } from '../../src/components/Switch.jsx';
 import { Selector } from '../../src/components/Selector.jsx';
 import { saveTheme, loadTheme, DEFAULT, MOTION_OPTIONS, BRAND_OPTIONS } from '../../site/theme.js';
 import { AUDIENCES, AUDIENCE_DEFAULT, audienceOf } from '../audience.js';
-import { COOKIE, LOCAL_DEFAULT, TINT_DEFAULT, FONTS, FONTS_DEFAULT, applyOvergearTheme } from '../theme.js';
+import { COOKIE, TINT_DEFAULT, FONTS, FONTS_DEFAULT, applyOvergearTheme } from '../theme.js';
 
 // Overgear starts from the default of the system with the enhanced animations; the brand stays the default one (white in the dark theme)
-const START = { ...DEFAULT, motion: 'enhanced', tint: TINT_DEFAULT, fonts: FONTS_DEFAULT, audience: AUDIENCE_DEFAULT, local: { ...LOCAL_DEFAULT } };
+const START = { ...DEFAULT, motion: 'enhanced', tint: TINT_DEFAULT, fonts: FONTS_DEFAULT, audience: AUDIENCE_DEFAULT };
 const seg = (values) => values.map((v) => ({ value: v, label: v[0].toUpperCase() + v.slice(1) }));
 
 function Row({ title, hint, children }) {
@@ -35,8 +34,6 @@ function Row({ title, hint, children }) {
 export function Theme() {
   const [theme, setTheme] = useState(() => loadTheme(COOKIE));
   const set = (patch) => setTheme((t) => ({ ...t, ...patch }));
-  const local = { ...LOCAL_DEFAULT, ...theme.local };
-  const setLocal = (patch) => set({ local: { ...local, ...patch } });
   const onOff = (v) => (v ? 'on' : 'off');
   useEffect(() => {
     applyOvergearTheme(theme);
@@ -84,23 +81,6 @@ export function Theme() {
         <div className="ov-settings">
           <Row title="Audience" hint="All players is the example as it is. World of Warcraft and the three games with the most content now are audiences of their own: a player of Diablo 4 has Diablo 4 first, a player of World of Warcraft has World of Warcraft first">
             <Selector label="Audience" options={AUDIENCES.map(([value, label]) => ({ value, label }))} value={audienceOf(theme)} onValueChange={(audience) => set({ audience })} />
-          </Row>
-        </div>
-      </section>
-      <section className="ov-section">
-        <div className="ov-section__head">
-          <h3 className="ov-h2">Elements with settings of their own</h3>
-          <p className="ov-note">These elements keep their own floating, glass and blur: the theme has none of its own. Switch one off and it is plain</p>
-        </div>
-        <div className="ov-settings">
-          <Row title="Bottom bar" hint="Floating, with glass: separate rounded pieces over a blurred gradient">
-            <Switch label="Own settings" checked={local.bottombar} onCheckedChange={(bottombar) => setLocal({ bottombar })} />
-          </Row>
-          <Row title="Dropdowns" hint="Glass: the menus of dropdowns are translucent and blurred">
-            <Switch label="Own settings" checked={local.dropdowns} onCheckedChange={(dropdowns) => setLocal({ dropdowns })} />
-          </Row>
-          <Row title="Header" hint="Blur: the page fades out and blurs under the header as it scrolls, on a desktop and on a phone. Off, the header is solid">
-            <Switch label="Own settings" checked={local.header} onCheckedChange={(header) => setLocal({ header })} />
           </Row>
         </div>
       </section>

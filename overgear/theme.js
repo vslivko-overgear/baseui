@@ -1,11 +1,9 @@
 // The theme of Overgear (the showcase and the example share it, in one cookie): the global settings of the system (...)
-// and the local settings of the elements Overgear shapes itself. A local setting that is switched off hands the element back to the theme.
+// The bottom bar, the menus of dropdowns and the header have their own glass, floating and blur, fixed: they are not settings.
 import { applyTheme, loadTheme, saveTheme } from '../site/theme.js';
 import { CATALOGUE_FONTS } from './fonts/catalogue/catalogue.js';
 
 export const COOKIE = 'baseui-overgear-theme';
-/** The elements with settings of their own (on by default): the bottom bar (floating and glass), the dropdowns (glass) and the header (a blurred gradient under it). */
-export const LOCAL_DEFAULT = { bottombar: true, dropdowns: true, header: true };
 /** The five steps of the blue cast of the dark theme: the share of the chroma of its grays that stays. The last one is the full cast of Overgear. */
 export const TINT_STEPS = [0, 0.25, 0.5, 0.75, 1];
 export const TINT_DEFAULT = TINT_STEPS.length - 1;
@@ -35,14 +33,13 @@ const stylesheet = (id, href) => {
   document.head.append(link);
 };
 
-/** The theme as the page applies it: it has no floating and no glass of its own; the glass of the dropdown menus is written when their local setting asks for it. */
+/** The theme as the page applies it: it has no floating and no glass of its own; the menus of dropdowns have theirs. */
 export function resolveTheme(t) {
-  const local = { ...LOCAL_DEFAULT, ...t.local };
-  // there is no floating and no glass in the theme: only the elements with settings of their own have them (the bottom bar, the menus of dropdowns)
-  return { ...t, floating: false, glass: local.dropdowns ? 'dropdowns' : false };
+  // there is no floating and no glass in the theme: the bottom bar and the menus of dropdowns have their own (see the bar and the menus)
+  return { ...t, floating: false, glass: 'dropdowns' };
 }
 
-/** Writes the settings on <html>; `data-og-bottombar` tells the bottom bar whether it keeps its own floating and glass, `data-og-header` whether the header has its own blur. */
+/** Writes the settings on <html>. */
 export function applyOvergearTheme(t) {
   applyTheme(resolveTheme(t));
   const fonts = fontOf(t);
@@ -55,9 +52,6 @@ export function applyOvergearTheme(t) {
   if (fonts !== 'site' && fonts !== FONTS_DEFAULT && named) document.documentElement.style.setProperty('--og-font', `"${named[1]}"`);
   else document.documentElement.style.removeProperty('--og-font');
   document.documentElement.style.setProperty('--og-tint', String(TINT_STEPS[t.tint ?? TINT_DEFAULT] ?? 1));
-  const local = { ...LOCAL_DEFAULT, ...t.local };
-  document.documentElement.dataset.ogBottombar = local.bottombar ? 'own' : 'theme';
-  document.documentElement.dataset.ogHeader = local.header ? 'own' : 'theme';
 }
 
 /** Applies the stored theme now and again when the light/dark theme changes (the brand text color depends on it). */

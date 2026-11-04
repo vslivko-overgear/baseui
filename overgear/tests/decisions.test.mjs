@@ -45,12 +45,12 @@ describe('decisions of the product', () => {
     expect(app, 'the settings have the bar with back on a phone').toMatch(/route\.query\.tab === 'settings'/);
   });
 
-  test('on a phone the pages behind the account and the offer have no bottom bar, and the offer pins its pay bar', () => {
+  test('on a phone the pages behind the account have no bottom bar; the offer has it, with its pay bar pinned over it', () => {
     const app = sources.find(([f]) => f === 'app.jsx')[1];
-    expect(app).toMatch(/const hideTabs = orders \|\| \(mobile && route\.parts\[0\] === 'offer'\)/);
+    expect(app).toMatch(/const hideTabs = orders;/);
     expect(app).toMatch(/!hideTabs && <MobileBar/);
     const offer = sources.find(([f]) => f === 'offer.jsx')[1];
-    expect(offer).toMatch(/\{mobile && <PayBar amount=/);
+    expect(offer).toMatch(/\{mobile && <PayBar above amount=/);
   });
 
   test('the four filters of the orders fill the row in equal parts on a desktop, and a phone has them in a sheet', () => {
