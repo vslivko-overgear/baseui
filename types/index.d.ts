@@ -2975,8 +2975,8 @@ export interface TextInputProps {
    */
   loading?: boolean;
   /**
-   * Clear button (×) once there is a value
-   * @default false
+   * Clear button (×): shown while the field is in focus and has a character, never out of focus. Set it to false to switch it off, or to true to have it with an action or on several lines
+   * @default true unless the field has an `action`, a password toggle, several lines or is read-only
    */
   clearable?: boolean;
   /**

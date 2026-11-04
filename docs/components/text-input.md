@@ -30,7 +30,7 @@ A single-line or multi-line text field with a floating label
 | `caption` | `ReactNode` | — | The only text under the field: a gray hint, and with `status` a colored message. Swapping “hint → error” is up to the caller |
 | `status` | `'error' \| 'warning' \| 'success'` | — | Validation status: `error` is a red outline and caption plus `aria-invalid`; `warning` is amber; `success` is green |
 | `loading` | `boolean` | `false` | Loading state: a skeleton instead of the content, input is blocked |
-| `clearable` | `boolean` | `false` | Clear button (×) once there is a value |
+| `clearable` | `boolean` | `true unless the field has an `action`, a password toggle, several lines or is read-only` | Clear button (×): shown while the field is in focus and has a character, never out of focus. Set it to false to switch it off, or to true to have it with an action or on several lines |
 | `onClear` | `() => void` | — | Called after the field is cleared with the × button. The field clears the value itself (an ordinary onChange with an empty value fires too) |
 | `startIcon` | `ReactNode` | — | Icon at the start of the field (24px) |
 | `action` | `ReactNode` | — | A custom action at the end of the field (any icon or button). Not shown where the action slot is taken: the visibility toggle of `type="password"` and the clear button |

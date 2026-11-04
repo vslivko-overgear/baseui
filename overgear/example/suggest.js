@@ -31,7 +31,7 @@ export function matchOffers(query, offers = OFFERS) {
   return q ? scoredOffers(q, offers).map((m) => m.offer) : offers;
 }
 
-export const LIMITS = { total: 8, recent: 5, popular: 6 };
+export const LIMITS = { total: 8, recent: 5, popular: 4, offers: 4 };
 
 /** The popular games for an empty query: the games of the tiles of the home page that have offers, in the order of the tiles. */
 export function popularGames(games = GAMES, offers = OFFERS, tiles = TILE_ROWS) {
@@ -39,13 +39,19 @@ export function popularGames(games = GAMES, offers = OFFERS, tiles = TILE_ROWS) 
   return tiles.flat().map(([slug]) => games.find((g) => g.slug === slug)).filter((g) => g && has.has(g.slug)).slice(0, LIMITS.popular);
 }
 
+/** The popular offers for an empty query: the most sold, one of a game at most, so the first screen shows different games. */
+export function popularOffers(offers = OFFERS) {
+  const seen = new Set();
+  return [...offers].sort((a, b) => b.sold - a.sold).filter((o) => (seen.has(o.game) ? false : seen.add(o.game))).slice(0, LIMITS.offers);
+}
+
 /**
  * The suggestions for what is typed: one list, games and offers together, by how close each is to the text (a game before an offer of the same closeness), `total` at most:
- * { empty: false, items: [{ type: 'game' | 'offer', game | offer }] }. For nothing typed: { empty: true, recent, popular }, the recent searches and the popular games.
+ * { empty: false, items: [{ type: 'game' | 'offer', game | offer }] }. For nothing typed: { empty: true, recent, popular, offers }: three kinds, the recent searches, the popular games and the popular offers.
  */
 export function suggest(query, recent = []) {
   const q = norm(query);
-  if (!q) return { empty: true, recent: recent.slice(0, LIMITS.recent), popular: popularGames() };
+  if (!q) return { empty: true, recent: recent.slice(0, LIMITS.recent), popular: popularGames(), offers: popularOffers() };
   const items = [
     ...scoredGames(q, GAMES).map((m, i) => ({ type: 'game', game: m.game, r: m.r, order: i })),
     ...scoredOffers(q, OFFERS).map((m, i) => ({ type: 'offer', offer: m.offer, r: m.r, order: i })),

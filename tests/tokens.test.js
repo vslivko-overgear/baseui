@@ -142,3 +142,13 @@ describe('tailwind-conformance', () => {
     });
   });
 });
+
+describe('the clear button of a field', () => {
+  test('it shows only while the field is in focus (the text field and the typeahead)', () => {
+    const css = readFileSync('src/components.css', 'utf8');
+    expect(css).toContain('[data-filled]:focus-within .bui-input__clear-btn');
+    expect(css).not.toMatch(/\n\[data-filled\] \.bui-input__clear-btn/);
+    expect(css).toContain('.bui-field:not(:focus-within) .bui-typeahead__clear');
+  });
+});
+

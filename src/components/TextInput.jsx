@@ -18,7 +18,7 @@ export function TextInput({
   caption,
   status,
   loading = false,
-  clearable = false,
+  clearable,
   onClear,
   startIcon,
   action,
@@ -52,6 +52,8 @@ export function TextInput({
     clearable = true;
     actionLabel = actionLabel ?? 'Clear search';
   }
+  // the clear button is the default of a text field: it shows while the field is in focus and has a character, unless another action stands at its end (a password, an `action`), the field is a textarea or it is read-only; `clearable` says it either way
+  const canClear = clearable ?? (!action && !multiline && !rest.readOnly);
   const isPassword = type === 'password';
   const [shown, setShown] = useState(false);
   const inputType = isPassword && shown && !disabled ? 'text' : type;
@@ -84,13 +86,13 @@ export function TextInput({
     onClear?.();
   };
   const iconButton = (extra, onClick, icon) => (
-    <button type="button" className={cx('bui-input__icon-button', extra)} aria-label={actionLabel} onMouseDown={(e) => e.preventDefault()} onClick={onClick}>
+    <button type="button" className={cx('bui-input__icon-button', extra)} aria-label={extra === 'bui-input__clear-btn' ? (actionLabel ?? 'Clear') : actionLabel} onMouseDown={(e) => e.preventDefault()} onClick={onClick}>
       {icon}
     </button>
   );
   let trailing = null;
   if (isPassword) trailing = !disabled && iconButton('bui-input__revealable', reveal, <BuiltinIcon name={shown ? 'eyeOff' : 'eye'} size={24} />);
-  else if (clearable) trailing = !disabled && iconButton('bui-input__clear-btn', clear, <BuiltinIcon name="close" size={24} />);
+  else if (canClear) trailing = !disabled && iconButton('bui-input__clear-btn', clear, <BuiltinIcon name="close" size={24} />);
   else if (action) trailing = action;
   const props = { ...rest, value: current, onChange: change, ref: setRef, className: 'bui-input', disabled: disabled || loading };
   return (
@@ -140,7 +142,7 @@ describe(TextInput, 'A single-line or multi-line text field with a floating labe
     'Validation status: `error` is a red outline and caption plus `aria-invalid`; `warning` is amber; `success` is green',
   ],
   loading: ['boolean', 'false', 'Loading state: a skeleton instead of the content, input is blocked'],
-  clearable: ['boolean', 'false', 'Clear button (×) once there is a value'],
+  clearable: ['boolean', 'true unless the field has an `action`, a password toggle, several lines or is read-only', 'Clear button (×): shown while the field is in focus and has a character, never out of focus. Set it to false to switch it off, or to true to have it with an action or on several lines'],
   onClear: [
     '() => void',
     null,

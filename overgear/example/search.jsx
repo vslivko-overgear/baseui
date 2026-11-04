@@ -1,5 +1,5 @@
 // The search of the header. On a desktop a dropdown under the field suggests games and offers as you type (arrows and Enter work, Escape closes it); on a phone the field opens a screen of its
-// own with the field on top and the suggestions under it. With nothing typed both show the recent searches and the popular games.
+// own with the field on top and the suggestions under it. With nothing typed both show three kinds: the recent searches, the popular games and the popular offers.
 import { createPortal } from 'react-dom';
 import { useState, useRef, useEffect, useId } from '../../src/react.js';
 import { TextInput } from '../../src/components/TextInput.jsx';
@@ -15,15 +15,14 @@ function rowsFor(query, recent, search, open) {
   const s = suggest(query, recent);
   const rows = [];
   const gameRow = (g, sub) => ({ id: `game-${g.slug}`, kind: 'game', text: g.name, sub, image: g.cover, run: () => open(`/games/${g.slug}`) });
+  const offerRow = (o) => ({ id: `offer-${o.id}`, kind: 'offer', text: o.title, sub: `${gameOf(o.game)?.name || ''} · ${money(o.price)}`, image: o.image, run: () => open(`/offer/${o.id}`) });
   if (s.empty) {
     for (const text of s.recent) rows.push({ id: `recent-${text}`, kind: 'recent', text, run: () => search(text) });
     for (const g of s.popular) rows.push(gameRow(g, 'Game'));
+    for (const o of s.offers) rows.push(offerRow(o));
     return rows;
   }
-  for (const it of s.items) {
-    if (it.type === 'game') rows.push(gameRow(it.game, it.game.category));
-    else rows.push({ id: `offer-${it.offer.id}`, kind: 'offer', text: it.offer.title, sub: `${gameOf(it.offer.game)?.name || ''} · ${money(it.offer.price)}`, image: it.offer.image, run: () => open(`/offer/${it.offer.id}`) });
-  }
+  for (const it of s.items) rows.push(it.type === 'game' ? gameRow(it.game, it.game.category) : offerRow(it.offer));
   rows.push({ id: 'query', kind: 'query', text: `Search for “${query.trim()}”`, run: () => search(query) });
   return rows;
 }

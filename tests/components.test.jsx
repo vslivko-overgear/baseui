@@ -484,3 +484,19 @@ describe('Dialog actions', () => {
   });
 });
 
+describe('TextInput clear button by default', () => {
+  const has = (ui) => render(ui).container.querySelector('.bui-input__clear-btn') !== null;
+  test('a text field has it', () => { expect(has(<TextInput label="Name" defaultValue="a" />)).toBe(true); });
+  test('not with another action at the end, with several lines, read-only or with clearable off', () => {
+    expect(has(<TextInput label="Name" defaultValue="a" action={<button type="button">x</button>} />)).toBe(false);
+    expect(has(<TextInput label="Name" type="password" defaultValue="a" />)).toBe(false);
+    expect(has(<TextInput label="Name" multiline defaultValue="a" />)).toBe(false);
+    expect(has(<TextInput label="Name" readOnly defaultValue="a" />)).toBe(false);
+    expect(has(<TextInput label="Name" defaultValue="a" clearable={false} />)).toBe(false);
+  });
+  test('it is named for a screen reader', () => {
+    render(<TextInput label="Name" defaultValue="a" />);
+    expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument();
+  });
+});
+

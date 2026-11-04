@@ -2359,6 +2359,10 @@
 .bui-typeahead__clear:focus-visible {
   outline-offset: var(--baseui-focus-outline-offset);
 }
+/* as in the text field: the clear button is there only while the field is in focus */
+.bui-field:not(:focus-within) .bui-typeahead__clear {
+  visibility: hidden;
+}
 
 .bui-field {
   flex-direction: column;
@@ -2632,7 +2636,8 @@ textarea.bui-input {
 .bui-input__clear-btn {
   visibility: hidden;
 }
-[data-filled] .bui-input__clear-btn {
+/* the clear button shows only while the field is in focus and has a value: out of focus the field is just its text */
+[data-filled]:focus-within .bui-input__clear-btn {
   visibility: visible;
 }
 .bui-input__revealable {

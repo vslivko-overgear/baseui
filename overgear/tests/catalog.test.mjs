@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { OFFERS, SERVICES, kindLabel, kindsOf, GAMES, TILE_ROWS, gameOf } from '../example/data.js';
-import { LIMITS, matchGames, matchOffers, popularGames, suggest, withRecent } from '../example/suggest.js';
+import { LIMITS, matchGames, matchOffers, popularGames, popularOffers, suggest, withRecent } from '../example/suggest.js';
 import { AUDIENCES, AUDIENCE_DEFAULT, AUDIENCE_GROUP, TILE_GAP, gameNameOf, audienceOf, tileRows, tileLayout, fitTiles, levelRows, splitOffers, gameTabs } from '../audience.js';
 
 describe('kinds', () => {
@@ -295,6 +295,24 @@ describe('fitTiles', () => {
     const narrow = fitTiles(tileLayout(TILE_ROWS, 'wow'), 700);
     expect(narrow.blocks.flatMap((b) => b.rows.flat()).length).toBeLessThan(wide);
     expect(narrow.blocks[0].rows.flat()).toHaveLength(4);
+  });
+});
+
+describe('what the search suggests at the start', () => {
+  test('three kinds: the recent searches, the popular games and the popular offers, no game twice among the offers', () => {
+    const s = suggest('', ['wow gold']);
+    expect(s.empty).toBe(true);
+    expect(s.recent).toEqual(['wow gold']);
+    expect(s.popular).toHaveLength(LIMITS.popular);
+    expect(s.offers).toHaveLength(LIMITS.offers);
+    const games = s.offers.map((o) => o.game);
+    expect(new Set(games).size).toBe(games.length);
+  });
+
+  test('the popular offers are the most sold of their games, the most sold first', () => {
+    const offers = popularOffers();
+    for (let i = 1; i < offers.length; i++) expect(offers[i - 1].sold).toBeGreaterThanOrEqual(offers[i].sold);
+    expect(offers[0].sold).toBe(Math.max(...OFFERS.map((o) => o.sold)));
   });
 });
 
