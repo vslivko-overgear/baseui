@@ -1,4 +1,4 @@
-// The theme of Overgear (the showcase and the example share it, in one cookie): the global settings of the system (floating, ...)
+// The theme of Overgear (the showcase and the example share it, in one cookie): the global settings of the system (...)
 // and the local settings of the elements Overgear shapes itself. A local setting that is switched off hands the element back to the theme.
 import { applyTheme, loadTheme, saveTheme } from '../site/theme.js';
 import { CATALOGUE_FONTS } from './fonts/catalogue/catalogue.js';
@@ -35,11 +35,11 @@ const stylesheet = (id, href) => {
   document.head.append(link);
 };
 
-/** The theme as the page applies it: it has no glass of its own; the glass of the dropdown menus is written when their local setting asks for it. */
+/** The theme as the page applies it: it has no floating and no glass of its own; the glass of the dropdown menus is written when their local setting asks for it. */
 export function resolveTheme(t) {
   const local = { ...LOCAL_DEFAULT, ...t.local };
-  // there is no glass in the theme: only the elements with settings of their own have it (the menus of dropdowns)
-  return { ...t, floating: t.floating === true, glass: local.dropdowns ? 'dropdowns' : false };
+  // there is no floating and no glass in the theme: only the elements with settings of their own have them (the bottom bar, the menus of dropdowns)
+  return { ...t, floating: false, glass: local.dropdowns ? 'dropdowns' : false };
 }
 
 /** Writes the settings on <html>; `data-og-bottombar` tells the bottom bar whether it keeps its own floating and glass, `data-og-header` whether the header has its own blur. */

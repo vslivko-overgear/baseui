@@ -61,9 +61,6 @@ export function Theme() {
           <Row title="Animation" hint="Off: nothing moves. Basic: simple transitions. Enhanced: highlights slide, menus grow from their trigger">
             <SegmentedControl label="Animation" items={seg(MOTION_OPTIONS)} value={theme.motion} onValueChange={(motion) => set({ motion })} />
           </Row>
-          <Row title="Floating" hint="Bars and dialogs float as separate rounded pieces over a gradient. It is the theme setting: it reaches every element that has no setting of its own">
-            <SegmentedControl label="Floating" items={seg(['off', 'on'])} value={onOff(theme.floating === true)} onValueChange={(v) => set({ floating: v === 'on' })} />
-          </Row>
           <Row title="Blue cast" hint="How much blue the grays of the dark theme carry, in five steps: 1 is neutral gray, 5 is the deep navy of overgear.com. The accent blue does not change">
             <SegmentedControl label="Blue cast" items={['1', '2', '3', '4', '5'].map((v) => ({ value: v, label: v }))} value={String((theme.tint ?? TINT_DEFAULT) + 1)} onValueChange={(v) => set({ tint: Number(v) - 1 })} />
           </Row>
@@ -92,7 +89,7 @@ export function Theme() {
       <section className="ov-section">
         <div className="ov-section__head">
           <h3 className="ov-h2">Elements with settings of their own</h3>
-          <p className="ov-note">These elements keep their own floating, glass and blur whatever the theme says. Switch one off and it follows the theme settings above</p>
+          <p className="ov-note">These elements keep their own floating, glass and blur: the theme has none of its own. Switch one off and it is plain</p>
         </div>
         <div className="ov-settings">
           <Row title="Bottom bar" hint="Floating, with glass: separate rounded pieces over a blurred gradient">
