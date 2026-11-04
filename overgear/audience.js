@@ -25,6 +25,12 @@ export const AUDIENCE_GROUP = {
   wow: [[['wow', 170], ['wow-forever', 130]], [['wow-20th-anniversary', 140], ['wow-classic-era', 160]]],
 };
 
+/**
+ * The tiles an audience leaves out of the rest, because the family takes their room (World of Warcraft has four tiles of its own: Valorant and Escape from Tarkov, the last of each row,
+ * go, and the tiles that stay are stretched over the rows by their widths).
+ */
+export const AUDIENCE_LEAVES = { wow: ['valorant', 'eft'] };
+
 /** The audience of a theme: one of those offered, or all players. */
 export const audienceOf = (theme) => (AUDIENCES.some(([slug]) => slug === theme?.audience) ? theme.audience : AUDIENCE_DEFAULT);
 
@@ -75,7 +81,7 @@ export function tileRows(rows, audience) {
 export function tileLayout(rows, audience) {
   const group = AUDIENCE_GROUP[audience];
   if (!group) return { group: [], rows: tileRows(rows, audience) };
-  const taken = new Set(group.flat().map(([slug]) => slug));
+  const taken = new Set([...group.flat().map(([slug]) => slug), ...(AUDIENCE_LEAVES[audience] || [])]);
   return { group, rows: levelRows(rows.map((row) => row.filter(([slug]) => !taken.has(slug)))) };
 }
 

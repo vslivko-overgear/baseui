@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { OFFERS, SERVICES, kindLabel, kindsOf, GAMES, TILE_ROWS, gameOf } from '../example/data.js';
 import { LIMITS, matchGames, matchOffers, popularGames, popularOffers, suggest, withRecent } from '../example/suggest.js';
-import { AUDIENCES, AUDIENCE_DEFAULT, AUDIENCE_GROUP, TILE_GAP, gameNameOf, audienceOf, tileRows, tileLayout, fitTiles, levelRows, splitOffers, gameTabs } from '../audience.js';
+import { AUDIENCE_LEAVES, AUDIENCES, AUDIENCE_DEFAULT, AUDIENCE_GROUP, TILE_GAP, gameNameOf, audienceOf, tileRows, tileLayout, fitTiles, levelRows, splitOffers, gameTabs } from '../audience.js';
 
 describe('kinds', () => {
   // The kinds of offers, the second level of tabs of the listing on the home page: every offer has a label for its kind, and a game's kinds come in a known order.
@@ -177,7 +177,7 @@ describe('audience', () => {
       for (const [slug] of group.flat()) expect(gameOf(slug)?.cover, `${slug} has a cover`).toBeTruthy();
       const left = rows.flat().map(([s]) => s);
       for (const [slug] of group.flat()) expect(left).not.toContain(slug);
-      expect(left.sort()).toEqual(TILE_ROWS.flat().map(([s]) => s).filter((s) => s !== 'wow').sort());
+      expect(left.sort()).toEqual(TILE_ROWS.flat().map(([s]) => s).filter((s) => s !== 'wow' && !AUDIENCE_LEAVES.wow.includes(s)).sort());
     });
 
     test('an audience without a family has no group; all players keep the rows', () => {
@@ -210,7 +210,7 @@ describe('audience', () => {
         for (const [slug, w] of rows.flat()) expect(w / base[slug], slug).toBeLessThan(1.08);
         const all = [...group.flat(), ...rows.flat()].map(([s]) => s);
         expect(new Set(all).size).toBe(all.length);
-        expect(all.sort()).toEqual([...TILE_ROWS.flat().map(([s]) => s), ...(AUDIENCE_GROUP[audience] || []).flat().map(([s]) => s).filter((s) => !(s in base))].sort());
+        expect(all.sort()).toEqual([...TILE_ROWS.flat().map(([s]) => s).filter((s) => !(AUDIENCE_LEAVES[audience] || []).includes(s)), ...(AUDIENCE_GROUP[audience] || []).flat().map(([s]) => s).filter((s) => !(s in base))].sort());
       });
 
       test('levelRows moves a tile to the shorter row when that helps, keeps the tile it is told to keep, and ends both rows at one place', () => {
@@ -264,6 +264,16 @@ describe('audience', () => {
 describe('fitTiles', () => {
   const rowLength = (block, i) => block.rows[i].reduce((n, [, w]) => n + w, 0) + (block.rows[i].length - 1) * TILE_GAP;
   const widths = [1232, 1100, 960, 800];
+
+  test('with the World of Warcraft audience Valorant and Escape from Tarkov are left out, and the tiles that stay fill both rows', () => {
+    const layout = tileLayout(TILE_ROWS, 'wow');
+    const slugs = layout.rows.flat().map(([s]) => s);
+    expect(slugs).not.toContain('valorant');
+    expect(slugs).not.toContain('eft');
+    const all = tileLayout(TILE_ROWS, 'all').rows.flat().map(([s]) => s);
+    expect(all).toContain('valorant');
+    expect(Math.abs(rowLength({ rows: layout.rows }, 0) - rowLength({ rows: layout.rows }, 1))).toBeLessThan(0.5);
+  });
 
   test.each(AUDIENCES.flatMap(([slug]) => widths.map((w) => [slug, w])))('%s at %ipx: every block is two rows of one length, and the tiles are squeezed by no more than a fifth', (audience, width) => {
     const { blocks, scale } = fitTiles(tileLayout(TILE_ROWS, audience), width);
