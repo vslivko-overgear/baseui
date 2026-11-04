@@ -128,8 +128,8 @@ export function Orders({ onLogin, demo = '' }) {
 /** The top bar of the orders pages on a phone: back (the list goes back to the account, an order to the list), no title at the start, the title when the heading scrolls under the bar. */
 export function OrdersBar({ route }) {
   const first = route.parts[0];
-  const list = first === 'orders' || first === 'rank' || first === 'wallet';
+  const list = first === 'orders' || first === 'rank' || first === 'wallet' || first === 'account';
   const under = useTitleUnderBar('.og-title', route.path);
   const history = first === 'wallet' && route.parts[1] === 'history';   // the payment history is behind the wallet
-  return <Navbar title={history ? 'Payment History' : first === 'rank' ? 'Your Rank' : first === 'wallet' ? 'Wallet' : list ? 'My orders' : 'Order'} titleVisible={under} onBack={() => go(history ? '/wallet' : list ? '/account' : '/orders')} />;
+  return <Navbar title={history ? 'Payment History' : first === 'account' ? 'Settings' : first === 'rank' ? 'Your Rank' : first === 'wallet' ? 'Wallet' : list ? 'My orders' : 'Order'} titleVisible={under} onBack={() => go(history ? '/wallet' : list ? '/account' : '/orders')} />;
 }

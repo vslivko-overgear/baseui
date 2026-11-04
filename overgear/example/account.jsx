@@ -95,7 +95,7 @@ export function Account({ tab, onLogin }) {
   }
   const titles = { wishlist: 'Favorites', settings: 'Settings' };
   return (
-    <Page>
+    <Page bar={tab === 'settings'}>
       <PageHead crumbs={tab === 'wishlist' ? undefined : [{ label: 'Account', href: '#/account' }, { label: titles[tab] || 'Account' }]} title={titles[tab] || 'Account'} />
       {tab === 'wishlist' && (
         <OfferListing offers={wished} points={false} />

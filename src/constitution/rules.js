@@ -654,4 +654,12 @@ export const AGENT_DEFAULTS = [
       'A product screen has no demo or debug controls: no strip to switch states, no sample-data labels, no notes for the designer. A state is reached by a real action or by a story, not by a switch on the page',
     ],
   },
+  {
+    id: 'navbar-start',
+    rules: ['U6'],
+    title: 'Under a navbar',
+    text: [
+      'On a phone, the content of a page that starts under a navbar (the bar with back) starts right under it, 0 from the bar: the title of the page is the first thing under the bar, and the bar shows the title once the heading scrolls away. Do not add a top padding to such a page',
+    ],
+  },
 ];

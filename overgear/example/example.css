@@ -320,8 +320,8 @@ a { color: inherit; }
 .og-stack--crumbs { gap: var(--baseui-spacing-4); }
 .og-page--crumbs { padding-top: calc(var(--baseui-spacing-8) - 4px); }
 .og--mobile .og-page--crumbs { padding-top: calc(var(--baseui-spacing-4) - 4px); }
-/* a page that starts with a bar of 48px like the header (the search of the catalog): the bar stands where the bar of the header stands, 12px from the top, so nothing jumps between them */
-.og--mobile .og-page--bar { padding-top: calc(var(--baseui-spacing-4) - 4px); }
+/* a page that starts under a bar on a phone (the navbar with back, or the search of the catalog): its content starts right under the bar, 0 from it */
+.og--mobile .og-page--bar { padding-top: 0; }
 .og--mobile .og-catalog__left .bui-control-row { --row-text: 14px; }   /* the text of the search is the text of the search of the header */
 .og--mobile .og-catalog__search .bui-input, .og--mobile .og-catalog__search .bui-field__label { font-size: 14px; }
 
@@ -416,7 +416,7 @@ a { color: inherit; }
 .og-method__tile { width: 40px; height: 40px; flex: none; display: grid; place-items: center; border-radius: var(--baseui-radius-lg); background: var(--baseui-background-tertiary); font: var(--baseui-typography-text-16-semi-bold); }
 .og-method__tile img { width: 28px; height: auto; }
 .og-method__name { font-weight: 600; }
-.og--mobile .og-co { grid-template-columns: minmax(0, 1fr); gap: var(--bui-rel-section); padding-top: var(--bui-rel-group); }
+.og--mobile .og-co { grid-template-columns: minmax(0, 1fr); gap: var(--bui-rel-section); padding-top: 0; }   /* under the bar: 0 from it, as every page under a bar */
 .og--mobile .og-checkout__foot .og-row { flex-direction: column; align-items: flex-start; }
 .og-checkout > .og-wrap { width: 100%; }
 .og-checkout .bui-radio { align-items: center; }
@@ -473,10 +473,8 @@ a { color: inherit; }
 .og-gpic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 /* on a phone the search and the sort stay at the top of the list while it scrolls */
 .og--mobile .og-catalog__left > .bui-control-row { position: sticky; top: 0; z-index: 3; background: var(--baseui-background-primary); padding-block: var(--baseui-spacing-3) var(--baseui-spacing-2); }   /* the 12px above are the top of the bar, where the bar of the header stands: the page has none of its own here */
-.og--mobile .og-page--bar:has(.og-catalog__left) { padding-top: 0; }
 /* the steps of the catalog on a phone: the title of the page under the bar, 4px from it; the bar shows it once it scrolls away */
 .og-step__title { padding-top: 0; }
-.og--mobile .og-page--bar:has(.og-step) { padding-top: var(--baseui-spacing-1); }
 
 /* ---- the orders after the purchase: the list, the page of an order, the result of a payment ---- */
 /* a card of the list: the picture, the info, the game, the seller, the price and Reorder in a row; on a phone the picture stands by the info and the rest in two rows under it */

@@ -33,4 +33,14 @@ describe('decisions of the product', () => {
     for (const [f, text] of sources) for (const m of text.matchAll(/<p className="og-meta"[^>]*>([^<{]{80,})<\/p>/g)) long.push(`${f}: ${m[1].slice(0, 40)}`);
     expect(long, 'a long text in og-meta').toEqual([]);
   });
+
+  test('on a phone a page under a navbar starts 0 from it, and the pages with a navbar say so', () => {
+    expect(css).toMatch(/\.og--mobile \.og-page--bar \{ padding-top: 0; \}/);
+    expect(css).toMatch(/\.og--mobile \.og-co \{[^}]*padding-top: 0;/);
+    expect(css, 'a page under a bar with a padding of its own').not.toMatch(/\.og-page--bar:has\([^)]*\) \{ padding-top: (?!0)/);
+    const account = sources.find(([f]) => f === 'account.jsx')[1];
+    expect(account).toMatch(/<Page bar=\{tab === 'settings'\}>/);
+    const app = sources.find(([f]) => f === 'app.jsx')[1];
+    expect(app, 'the settings have the bar with back on a phone').toMatch(/route\.query\.tab === 'settings'/);
+  });
 });

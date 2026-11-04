@@ -33,6 +33,7 @@ This repository is the baseui design system. When you build an interface or a pr
    - **Hug and fill.** A row that does not fit on a phone scrolls sideways as a whole, in a `Bleed`, with every item hugging its content. Never scroll the content inside one long shape
    - **Status colors.** A state has one color everywhere: success is green, a problem or a warning is yellow, an error is red, a passed step is neutral with a check, the current one is the accent. Do not take the brand color for a status
    - **Product screens.** A product screen has no demo or debug controls: no strip to switch states, no sample-data labels, no notes for the designer. A state is reached by a real action or by a story, not by a switch on the page
+   - **Under a navbar.** On a phone, the content of a page that starts under a navbar (the bar with back) starts right under it, 0 from the bar: the title of the page is the first thing under the bar, and the bar shows the title once the heading scrolls away. Do not add a top padding to such a page
 
 ## Verify by the size of the change
 
