@@ -62,7 +62,7 @@ export function OrderCard({ order }) {
 }
 
 const Skeletons = () => (
-  <div className="og-stack" data-test-id="orders-list-skeleton" aria-busy="true" aria-label="Loading the orders">
+  <div className="og-stack og-stack--cards" data-test-id="orders-list-skeleton" aria-busy="true" aria-label="Loading the orders">
     {Array.from({ length: 5 }).map((_, i) => <Skeleton key={i} variant="rect" height={88} />)}
   </div>
 );
@@ -104,7 +104,7 @@ export function Orders({ onLogin, demo = '' }) {
     empty: <Status status="neutral" icon={<Icon name="ShoppingBag01" size={28} />} title={filtering ? 'No orders found' : 'No orders yet'} description={filtering ? 'Try other filters' : 'Your orders will be here'} actionLabel={filtering ? 'Reset filters' : 'Browse games'} onAction={() => (filtering ? reset() : go('/catalog'))} data-test-id="orders-empty" />,
     list: (
       <div className="og-stack" data-test-id="orders-list">
-        <div className="og-stack">{view.nodes.map((o) => <OrderCard key={o.link} order={o} />)}</div>
+        <div className="og-stack og-stack--cards">{view.nodes.map((o) => <OrderCard key={o.link} order={o} />)}</div>
         {mobile
           ? view.nodes.length < filtered.length && <Button variant="secondary" size="lg" width="100%" label="Show More" onClick={() => setPage(view.page + 1)} data-test-id="orders-show-more" />
           : view.totalPages > 1 && <Pagination page={view.page} total={view.totalPages} onPageChange={setPage} />}

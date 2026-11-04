@@ -72,7 +72,7 @@ export function TransactionsPage({ onLogin }) {
         {!list.length ? (
           <p className="og-text og-tx__empty" data-test-id="transactions-empty">You have not any transactions yet</p>
         ) : (
-          <div className="og-stack" data-test-id="transactions-list">
+          <div className="og-stack og-stack--cards" data-test-id="transactions-list">
             {shown.map((t) => <Transaction key={t.id} t={t} />)}
           </div>
         )}

@@ -70,6 +70,12 @@ describe('decisions of the product', () => {
     }
   });
 
+  test('cards in a list stand 8 apart (the tight relation): the lists of the cart, the orders and the payments', () => {
+    expect(css).toMatch(/^\.og-lines--cards \{ gap: var\(--bui-rel-tight\)/m);
+    expect(css).toMatch(/\.og-stack--cards \{ gap: var\(--bui-rel-tight\)/);
+    for (const f of ['orders.jsx', 'transactions.jsx']) expect(sources.find(([n]) => n === f)[1], f).toMatch(/og-stack og-stack--cards/);
+  });
+
   test('the gaps between blocks are the relation scale: the stack classes are made of --bui-rel-* (and the hair), and the pages have no stack class of their own', () => {
     const stack = [...css.matchAll(/^\.og-stack(--[\w, .-]+)? \{ ([^}]*) \}/gm)];
     expect(stack.length).toBeGreaterThanOrEqual(7);

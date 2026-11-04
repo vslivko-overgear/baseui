@@ -46,7 +46,7 @@ a { color: inherit; }
 .og-stack { display: flex; flex-direction: column; gap: var(--bui-rel-related); min-width: 0; }
 .og-stack--pair { gap: var(--bui-rel-pair); }
 .og-stack--hair { gap: var(--bui-spacing-1); }
-.og-stack--tight, .og-stack--close, .og-stack--snug { gap: var(--bui-rel-tight); }
+.og-stack--tight, .og-stack--close, .og-stack--snug, .og-stack--cards { gap: var(--bui-rel-tight); }
 .og-stack--related { gap: var(--bui-rel-related); }
 .og-stack--lg, .og-stack--group { gap: var(--bui-rel-group); }
 .og-stack--xl, .og-stack--2xl, .og-stack--section { gap: var(--bui-rel-section); }
@@ -430,7 +430,7 @@ a { color: inherit; }
 
 /* the cart panel: the count after the title is secondary and regular; every line lies on a card; the left corners of the panel are round */
 .og-h3__count { font-weight: 400; color: var(--bui-text-and-icon-secondary); }
-.og-lines--cards { gap: var(--bui-rel-related); }
+.og-lines--cards { gap: var(--bui-rel-tight); }   /* cards in a list: 8, the tight relation, the same as the stack of cards */
 .og-lines--cards > .og-line { padding: var(--bui-spacing-4); border-radius: var(--bui-radius-2xl); background: var(--bui-background-tertiary); }
 .og-lines--surface > .og-line { background: var(--bui-extensions-background-surface); }   /* the items of the checkout: each its own card, as the cards of the page */
 .og:not(.og--mobile) .og-drawer { border-radius: var(--bui-radius-3xl) 0 0 var(--bui-radius-3xl); overflow: hidden; }
