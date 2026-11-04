@@ -124,7 +124,7 @@ export function Orders({ onLogin, demo = '' }) {
   );
   return (
     <Page bar density="dense">
-      <PageHead action={mobile && showControls ? <IconButton variant="secondary" size="sm" label="Filters" icon={<Icon name="FilterLines" size={24} />} onClick={openOrderFilters} data-test-id="orders-filters-open" /> : undefined} title={<>My orders{(phase === 'list' || phase === 'empty') && <span className="og-title__count" data-test-id="orders-count">{filtered.length}</span>}</>} />
+      <PageHead crumbs={[{ label: 'Home', href: '#/' }, { label: 'Account', href: '#/account' }, { label: 'My orders' }]} action={mobile && showControls ? <IconButton variant="secondary" size="sm" label="Filters" icon={<Icon name="FilterLines" size={24} />} onClick={openOrderFilters} data-test-id="orders-filters-open" /> : undefined} title={<>My orders{(phase === 'list' || phase === 'empty') && <span className="og-title__count" data-test-id="orders-count">{filtered.length}</span>}</>} />
       {showControls && !mobile && <div className="og-ofilters" data-test-id="orders-filters">{selectors('sm', false)}</div>}
       {body}
       <Dialog open={sheet} onOpenChange={setSheet} title="Filters" primaryAction={<Button variant="primary" label={`Show ${filtered.length} ${filtered.length === 1 ? 'order' : 'orders'}`} onClick={() => setSheet(false)} data-test-id="orders-filters-show" />} secondaryAction={filtering ? <Button variant="secondary" label="Reset filters" onClick={reset} data-test-id="orders-filters-reset" /> : undefined}>

@@ -6,7 +6,7 @@ import { Icon } from '../../src/components/Icon.jsx';
 import { Divider } from '../../src/components/Divider.jsx';
 import { List, ListItem } from '../../src/components/List.jsx';
 import { usePrefs } from './prefs.jsx';
-import { go } from './util.js';
+import { go, useMedia } from './util.js';
 import { offerOf } from './data.js';
 import { Page, PageHead, OfferListing } from './ui.jsx';
 import { useStore } from './store.jsx';
@@ -66,6 +66,7 @@ export function AccountMenu({ active, hide = [], prefs, onPick, ...rest }) {
 /** The account: a list like the profile of the real service. The orders, the favorites and the settings are screens behind its rows. */
 export function Account({ tab, onLogin }) {
   const store = useStore();
+  const phone = useMedia('(max-width: 767px)');
   // the wishlist is kept on the device, so it opens without a login
   if (!store.user && tab !== 'wishlist') {
     return (
@@ -96,7 +97,7 @@ export function Account({ tab, onLogin }) {
   const titles = { wishlist: 'Favorites', settings: 'Settings' };
   return (
     <Page bar={tab === 'settings'}>
-      <PageHead crumbs={tab === 'wishlist' ? undefined : [{ label: 'Account', href: '#/account' }, { label: titles[tab] || 'Account' }]} title={<>{titles[tab] || 'Account'}{tab === 'wishlist' && wished.length > 0 && <span className="og-title__count" data-test-id="favorites-count">{wished.length}</span>}</>} />
+      <PageHead crumbs={tab === 'wishlist' && phone ? undefined : [{ label: 'Home', href: '#/' }, { label: 'Account', href: '#/account' }, { label: titles[tab] || 'Account' }]} title={<>{titles[tab] || 'Account'}{tab === 'wishlist' && wished.length > 0 && <span className="og-title__count" data-test-id="favorites-count">{wished.length}</span>}</>} />
       {tab === 'wishlist' && (
         <OfferListing offers={wished} points={false} />
       )}

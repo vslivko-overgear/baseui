@@ -415,7 +415,7 @@ export function OrderPage({ link, onLogin }) {
     <Page bar>
       <div className="og-stack og-stack--xl" data-test-id="order-page" data-status={order.status}>
         <PageHead
-          crumbs={[{ label: 'Home', href: href('/') }, { label: 'My orders', href: href('/orders') }, { label: order.title }]}
+          crumbs={[{ label: 'Home', href: href('/') }, { label: 'Account', href: href('/account') }, { label: 'My orders', href: href('/orders') }, { label: order.title }]}
           title={order.title}
           titleTestId="order-title"
           titleGap="var(--bui-spacing-2)"
