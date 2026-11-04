@@ -28,8 +28,8 @@ export const purchaseState = (order) => {
  * @param {(game: string) => string} [gameName] the name of a game by its slug
  */
 export const fromOrders = (orders, gameName = () => '') => orders.flatMap((o) => {
-  const out = [{ id: `pay-${o.link}`, type: TX_TYPES.PURCHASE, direction: 'outgoing', state: purchaseState(o), amount: o.price, currency: 'USD', orderLink: o.link, description: [gameName(o.game), o.title].filter(Boolean).join(' · '), date: o.createdAt }];
-  if ([S.COMPLETED, S.RESOLVED].includes(o.status)) out.push({ id: `cash-${o.link}`, type: TX_TYPES.CASHBACK, direction: 'incoming', state: TX_STATES.COMPLETED, amount: +(o.price * 0.01).toFixed(2), currency: 'COINS', orderLink: o.link, description: o.title, date: o.completedAt ?? o.createdAt });
+  const out = [{ id: `pay-${o.link}`, type: TX_TYPES.PURCHASE, direction: 'outgoing', state: purchaseState(o), amount: o.price, currency: 'USD', orderLink: o.link, product: o.title, description: [gameName(o.game), o.title].filter(Boolean).join(' · '), date: o.createdAt }];
+  if ([S.COMPLETED, S.RESOLVED].includes(o.status)) out.push({ id: `cash-${o.link}`, type: TX_TYPES.CASHBACK, direction: 'incoming', state: TX_STATES.COMPLETED, amount: +(o.price * 0.01).toFixed(2), currency: 'COINS', orderLink: o.link, product: o.title, description: o.title, date: o.completedAt ?? o.createdAt });
   return out;
 });
 
@@ -82,6 +82,9 @@ export const titleOf = (t) => {
     default: return 'Transaction';
   }
 };
+
+/** What a row that belongs to an order is, in a word (its title is the name of the product): "Cashback", "Payment for the order", "Arbitrage". */
+export const kindOf = (t) => (t.type === TX_TYPES.CASHBACK ? 'Cashback' : titleOf(t));
 
 /** The direction a row is shown in: a transaction that did not move money has none. */
 export const shownDirection = (t) => (TERMINAL.includes(t.state) ? 'default' : t.direction);

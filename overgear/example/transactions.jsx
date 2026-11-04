@@ -12,13 +12,12 @@ import { go, href } from './util.js';
 import { gameOf } from './data.js';
 import { Page, PageHead, CashbackMark } from './ui.jsx';
 import { useStore } from './store.jsx';
-import { DIRECTION_OPTIONS, STATE_LABEL, transactionsOf, filterTransactions, pagesOf, pageOf, titleOf, shownDirection, signOf, amountText, numberText, dateText } from './transactions-core.js';
+import { DIRECTION_OPTIONS, STATE_LABEL, transactionsOf, filterTransactions, pagesOf, pageOf, titleOf, kindOf, shownDirection, signOf, amountText, numberText, dateText } from './transactions-core.js';
 
 /** The title of a row: a payment or a cashback for an order is a link to the order. */
 function Title({ t }) {
-  const text = titleOf(t);
-  if (!t.orderLink) return <span className="og-tx__title">{text}</span>;
-  return <a className="og-tx__title og-tx__link" href={href(`/order/${t.orderLink}`)} onClick={(e) => { e.preventDefault(); go(`/order/${t.orderLink}`); }} data-test-id={`transaction-order-link-${t.id}`}>{`${text} ${t.orderLink}`}</a>;
+  if (!t.orderLink) return <span className="og-tx__title">{titleOf(t)}</span>;
+  return <a className="og-tx__title og-tx__link" href={href(`/order/${t.orderLink}`)} onClick={(e) => { e.preventDefault(); go(`/order/${t.orderLink}`); }} data-test-id={`transaction-order-link-${t.id}`}>{t.product || t.description || kindOf(t)}</a>;
 }
 
 /** The amount, in the main color: the sign says the direction (a plus comes in, a minus goes out), the color does not shout it. Coins are the number and the mark of the coins, not the words. */
@@ -39,8 +38,7 @@ function Transaction({ t }) {
       <div className="og-tx">
         <div className="og-tx__main">
           <Title t={t} />
-          {t.description && <span className="og-tx__sub">{t.description}</span>}
-          <span className="og-tx__sub">{dateText(t.date)}</span>
+          {t.orderLink ? <span className="og-tx__sub">{`${kindOf(t)} · ${dateText(t.date)}`}</span> : (<>{t.description && <span className="og-tx__sub">{t.description}</span>}<span className="og-tx__sub">{dateText(t.date)}</span></>)}
         </div>
         <div className="og-tx__side"><Amount t={t} /><Status_ t={t} /></div>
       </div>
@@ -63,7 +61,7 @@ export function TransactionsPage({ onLogin }) {
   const shown = pageOf(list, page);
   return (
     <Page bar>
-      <div className="og-stack og-stack--xl" data-test-id="transactions-page">
+      <div className="og-stack" data-test-id="transactions-page">
         <PageHead crumbs={[{ label: 'Home', href: '#/' }, { label: 'Account', href: '#/account' }, { label: 'Wallet', href: '#/wallet' }, { label: 'Payment History' }]} title="Payment History" />
         <div className="og-txfilters" data-test-id="transactions-filters">
           <Selector size="sm" label="Type" value={direction} onValueChange={(v) => { setDirection(v); setPage(1); }} options={DIRECTION_OPTIONS} data-test-id="transactions-direction" />

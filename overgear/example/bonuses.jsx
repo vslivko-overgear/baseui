@@ -8,7 +8,7 @@ import { go, href } from './util.js';
 import { gameOf } from './data.js';
 import { Page, PageHead, CashbackMark } from './ui.jsx';
 import { useStore } from './store.jsx';
-import { BONUS_LIFETIME_DAYS, bonusesOf, isBurnt, pagesOf, pageOf, titleOf, numberText, dateText, dayText } from './transactions-core.js';
+import { bonusesOf, isBurnt, pagesOf, pageOf, titleOf, kindOf, numberText, dateText, dayText } from './transactions-core.js';
 
 /** A bonus: a card of its own. On the left what it is (the title, what it was for, the date), on the right the coins and the day they burn (a spending has none). */
 function Bonus({ t, now }) {
@@ -20,10 +20,9 @@ function Bonus({ t, now }) {
       <div className="og-tx">
         <div className="og-tx__main">
           {t.orderLink
-            ? <a className="og-tx__title og-tx__link" href={href(`/order/${t.orderLink}`)} onClick={(e) => { e.preventDefault(); go(`/order/${t.orderLink}`); }}>{`${title} ${t.orderLink}`}</a>
+            ? <a className="og-tx__title og-tx__link" href={href(`/order/${t.orderLink}`)} onClick={(e) => { e.preventDefault(); go(`/order/${t.orderLink}`); }}>{t.product || t.description || kindOf(t)}</a>
             : <span className="og-tx__title">{title}</span>}
-          {t.description && <span className="og-tx__sub">{t.description}</span>}
-          <span className="og-tx__sub">{dateText(t.date)}</span>
+          {t.orderLink ? <span className="og-tx__sub">{`${kindOf(t)} · ${dateText(t.date)}`}</span> : (<>{t.description && <span className="og-tx__sub">{t.description}</span>}<span className="og-tx__sub">{dateText(t.date)}</span></>)}
         </div>
         <div className="og-tx__side">
           <span className="og-tx__amount" data-direction={t.direction} aria-label={`${sign} ${numberText(t)} OG Coins`}>{`${sign} `}<span className="og-cbtag">{numberText(t)}<CashbackMark /></span></span>
@@ -44,8 +43,8 @@ export function BonusesPage({ onLogin }) {
   const shown = pageOf(list, page);
   return (
     <Page bar>
-      <div className="og-stack og-stack--xl" data-test-id="bonuses-page">
-        <PageHead crumbs={[{ label: 'Home', href: '#/' }, { label: 'Account', href: '#/account' }, { label: 'Wallet', href: '#/wallet' }, { label: 'Bonus History' }]} title="Bonus History" meta={`A bonus burns ${BONUS_LIFETIME_DAYS} days after it is credited`} />
+      <div className="og-stack" data-test-id="bonuses-page">
+        <PageHead crumbs={[{ label: 'Home', href: '#/' }, { label: 'Account', href: '#/account' }, { label: 'Wallet', href: '#/wallet' }, { label: 'Bonus History' }]} title="Bonus History" />
         {!list.length ? (
           <p className="og-text og-tx__empty" data-test-id="bonuses-empty">You have not any bonuses yet</p>
         ) : (
