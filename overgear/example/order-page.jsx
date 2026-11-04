@@ -2,7 +2,7 @@
 // buyer), the delivery details the seller needs, the review and the tips once it is done, the Discord panel, the info of the order and the chat. On a phone the status and the chat are two tabs.
 // The rules (what each status says, which buttons it has, the locks and the timers, what happens next) are in order-core.js; this file draws them and keeps the choices of the buyer.
 // "What happens next" at the bottom is for the demo: it plays the seller, the time and the support, which the real service does by itself.
-import { useEffect, useState } from '../../src/react.js';
+import { memo, useEffect, useState } from '../../src/react.js';
 import { Button, IconButton } from '../../src/components/Button.jsx';
 import { ButtonGroup } from '../../src/components/ButtonGroup.jsx';
 import { Card } from '../../src/components/Card.jsx';
@@ -39,25 +39,47 @@ function useNow(ms = 1000) {
 }
 const dateTime = (t) => new Date(t).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
 
+/** The head of the page: the crumbs, the title and the number. It does not depend on the clock of the page, so it is drawn once and does not move while the time runs. */
+const OrderHead = memo(function OrderHead({ title, image, link, createdAt }) {
+  return (
+    <PageHead
+      crumbs={[{ label: 'Home', href: href('/') }, { label: 'Account', href: href('/account') }, { label: 'My orders', href: href('/orders') }, { label: title }]}
+      title={title}
+      titleTestId="order-title"
+      titleGap="var(--bui-spacing-2)"
+      media={<div className="og-art og-art--square" role="img" aria-label={title}>{image ? <img className="og-art__img" src={image} alt="" /> : <Icon name="Image01" size={32} />}</div>}
+    >
+      <span className="og-meta" data-test-id="order-meta">{`Order ID ${link} · Created ${dateTime(createdAt)}`}</span>
+    </PageHead>
+  );
+});
+
 // ---- the steps ----
 
-/** The timeline of the order: a segment for each step, filled as far as the step is done, in the color of the state of the order. */
-/** The look of a step by its state: passed is a dimmed (disabled) white bar with a check at its text, the current stage is green, the stage where the work goes on is a full green bar with a soft light moving over it, the stage with a problem is yellow, the rest is empty. */
-const STEP_BAR = { done: { color: 'success', value: 100 }, current: { color: 'success', value: 100 }, run: { color: 'success', value: 100 }, problem: { color: 'warning', value: 100 }, todo: { color: 'success', value: 0 } };
+/** The icon of each step: it stands in its circle, alone for the steps that are passed and the steps to come. */
+const STEP_ICON = { placed: 'ReceiptCheck', addDeliveryDetails: 'Edit03', searchingForBooster: 'SearchMd', inProgress: 'Play', confirmation: 'PackageCheck', completed: 'Flag01' };
 
-function Steps({ order, now }) {
+/**
+ * The tracker of the order, as the delivery of a parcel has it: a circle for each step on a line. The steps that are passed are filled with a check, the step the order is at is the large one with its
+ * icon and the only one with words (its name under it), the steps to come are empty circles with their icons; the names of the others are for the screen reader and the tooltip. A failed, a cancelled
+ * or an arbitrated order has a bar in the color of its state instead.
+ */
+function Tracker({ order, now }) {
   const line = stepLooks(order, now);
   if (!line) return null;
   if (line.kind === 'bar') return <ProgressBar size="sm" color={line.tone} value={100} aria-label="Order progress" data-test-id="order-steps" />;
   const { steps, current } = line;
   return (
-    <ol className="og-osteps" aria-label="Order progress" data-test-id="order-steps" style={{ '--steps': steps.length }}>
-      {steps.map((s) => (
-        <li key={s.name} className="og-osteps__step" data-active={s.active || undefined} data-look={s.look} aria-current={s.name === current ? 'step' : undefined} data-test-id={`order-step-${s.name}`}>
-          <ProgressBar size="sm" color={STEP_BAR[s.look].color} value={STEP_BAR[s.look].value} aria-label={s.title} />
-          <span className="og-osteps__title">{s.look === 'done' && <Icon name="Check" size={14} />}{s.title}</span>
-        </li>
-      ))}
+    <ol className="og-track" aria-label="Order progress" data-test-id="order-steps">
+      {steps.map((s) => {
+        const now_ = s.name === current;
+        return (
+          <li key={s.name} className="og-track__step" data-look={s.look} aria-current={now_ ? 'step' : undefined} title={s.title} data-test-id={`order-step-${s.name}`}>
+            <span className="og-track__dot" aria-hidden="true"><Icon name={s.look === 'done' ? 'Check' : STEP_ICON[s.name] || 'Play'} size={s.look === 'done' ? 18 : 20} /></span>
+            <span className={now_ ? 'og-track__label' : 'bui-visually-hidden'}>{s.title}</span>
+          </li>
+        );
+      })}
     </ol>
   );
 }
@@ -65,7 +87,7 @@ function Steps({ order, now }) {
 // ---- the status ----
 
 /** The status of the order for the buyer: its title and words, the time left, the buttons. */
-function StatusPanel({ order, now, actions }) {
+function StatusPanel({ order, now, actions, track }) {
   const { title, description } = statusText(order, now);
   const tone = panelTone(order, now);
   const paused = isPaused(order.status, order.state);
@@ -75,6 +97,7 @@ function StatusPanel({ order, now, actions }) {
   const waiting = order.status === S.CONFIRM_DELIVERY;
   return (
     <Card variant="surface" padding={0} className="og-ostatus" data-tone={tone} data-test-id="order-status" data-status={order.status}>
+      {track && <div className="og-ostatus__track">{track}</div>}
       <div className="og-ostatus__head og-stack og-stack--lg">
         <div className="og-stack og-stack--close">
           <h2 className="og-h3" data-test-id="order-status-title">{title}</h2>
@@ -402,7 +425,7 @@ export function OrderPage({ link, onLogin }) {
 
   const left = (
     <>
-      <StatusPanel order={order} now={now} actions={actions} />
+      <StatusPanel order={order} now={now} actions={actions} track={<Tracker order={order} now={now} />} />
       {kyc && order.status === S.KYC_LOCK && <p className="og-text" data-test-id="order-kyc">The seller waits for your identity verification. The real service opens the verification page here</p>}
       {order.delivery && <DeliveryDetails key={order.delivery.filled ? 'filled' : 'form'} order={order} onSave={(values) => { update(fillDelivery(order, values)); toast({ message: 'Delivery details saved', status: 'success' }); }} />}
       {showReview(order) && <ReviewAndTips order={order} now={now} onReview={(rate, text) => { update(addReview(order, rate, text, Date.now())); toast({ message: 'Thank you for your review', status: 'success' }); }} onTip={(a) => { update(addTip(order, a)); toast({ message: `Tip sent: ${money(a)}`, status: 'success' }); }} />}
@@ -414,19 +437,7 @@ export function OrderPage({ link, onLogin }) {
   return (
     <Page bar>
       <div className="og-stack og-stack--xl" data-test-id="order-page" data-status={order.status}>
-        <PageHead
-          crumbs={[{ label: 'Home', href: href('/') }, { label: 'Account', href: href('/account') }, { label: 'My orders', href: href('/orders') }, { label: order.title }]}
-          title={order.title}
-          titleTestId="order-title"
-          titleGap="var(--bui-spacing-2)"
-          media={<div className="og-art og-art--square" role="img" aria-label={order.title}>{order.image ? <img className="og-art__img" src={order.image} alt="" /> : <Icon name="Image01" size={32} />}</div>}
-        >
-          <div className="og-row og-row--wrap">
-            <Badge variant={statusBadge(order.status)} size="md" label={statusLabel(order.status)} data-test-id="order-badge" />
-            <span className="og-meta" data-test-id="order-meta">{`Order ID ${order.link} · Created ${dateTime(order.createdAt)}`}</span>
-          </div>
-        </PageHead>
-        <Steps order={order} now={now} />
+        <OrderHead title={order.title} image={order.image} link={order.link} createdAt={order.createdAt} />
         {mobile ? (
           <div className="og-stack">
             <SegmentedControl label="Order sections" fullWidth value={tab} onValueChange={setTab} items={[{ value: 'status', label: 'Status' }, { value: 'chat', label: 'Chat' }]} />

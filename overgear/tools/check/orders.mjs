@@ -146,8 +146,10 @@ blocks.push(async () => {
     const line = orderTimeline(o, now);
     const wantSteps = line?.kind === 'steps' ? line.steps.length : 0;   // a completed order has none, a failed or cancelled one is one bar
     expectThat(steps === wantSteps, `${where}: ${steps} steps, not ${wantSteps}`);
-    const bars = await page.evaluate(() => [...document.querySelectorAll('.og-osteps .bui-progress__track')].every((b) => b.getBoundingClientRect().width > 20));
-    expectThat(bars, `${where}: the bars of the steps are not drawn`);
+    const dots = await page.evaluate(() => [...document.querySelectorAll('.og-track__dot')].every((b) => b.getBoundingClientRect().width >= 36));
+    expectThat(dots, `${where}: the circles of the steps are not drawn`);
+    const named = await page.evaluate(() => [...document.querySelectorAll('.og-track__label')].length);
+    expectThat(named === (wantSteps ? 1 : 0), `${where}: ${named} steps have words, only the current one has`);
   }
   expectThat(seen.size >= 14, `the seed shows ${seen.size} statuses, not at least 14`);
   expectThat(!page.errors.length, `the page of an order: errors ${page.errors.join('; ')}`);

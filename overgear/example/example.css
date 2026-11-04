@@ -511,13 +511,10 @@ a { color: inherit; }
 .og-result__overline--warning { color: var(--bui-extensions-text-and-icon-warning, var(--bui-text-and-icon-primary)); }
 .og-result__spin { position: relative; display: inline-grid; place-items: center; }
 .og-result__spin .bui-spinner { position: absolute; inset: -14px; margin: auto; }
-.og-result__main 
 /* the page of an order */
 .og-order { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: var(--bui-spacing-6); align-items: start; }
-.og-osteps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(var(--steps, 3), minmax(0, 1fr)); gap: var(--bui-spacing-2); }
-.og-osteps__step { display: flex; flex-direction: column; gap: var(--bui-spacing-1-5, 6px); }
-.og-osteps__title { font: var(--bui-typography-text-12-regular); color: var(--bui-text-and-icon-secondary); text-transform: uppercase; letter-spacing: 0.04em; }
-.og-osteps__step[data-active] .og-osteps__title { color: var(--bui-text-and-icon-primary); font: var(--bui-typography-text-12-semi-bold); }
+.og-order > :last-child { position: sticky; top: calc(var(--og-header-h) + var(--bui-spacing-6)); }   /* the order info stays in view while the chat and the forms scroll */
+.og--mobile .og-order > :last-child { position: static; }
 .og-ostatus { overflow: hidden; }
 .og-ostatus__head { padding: var(--bui-spacing-5); }   /* the tint is the head of the panel: the buttons stand on the surface under it, not on a color (D11) */
 .og-ostatus__foot { padding: var(--bui-spacing-5); }
@@ -538,10 +535,8 @@ a { color: inherit; }
 .og-next { border: 1px dashed var(--bui-border-primary); display: flex; flex-direction: column; gap: var(--bui-spacing-4); }
 .og-next__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--bui-spacing-2); }
 .og-next__list li { align-items: center; gap: var(--bui-spacing-3); }
-.og-osteps__step .bui-progress { width: 100%; }
 .og-next__list li { display: grid; grid-template-columns: 88px auto; justify-content: start; }
 .og-result__block .bui-status__text { white-space: pre-line; }
-.og-osteps .bui-progress__track { width: 100%; }
 
 /* the balance of the header: the card that opens on hover (the balance, the coins, the top-up, what the coins are) and the top-up with its bonus */
 .og-wallet .og-info { gap: var(--bui-spacing-2); }
@@ -681,14 +676,6 @@ a { color: inherit; }
 .og-wamount__label { display: inline-flex; align-items: center; gap: var(--bui-spacing-1); }
 /* the terms: 16px from the edge of the surface to the icon (the list bleeds 12px, so 4px of side padding) and a bigger gap between the rows */
 .og-terms [data-slot="list"] { gap: var(--bui-spacing-3); }
-/* a passed step: the bar in the disabled color of the system, and a check before its text */
-.og-osteps__step[data-look="done"] .bui-progress { --bui-progress-color: var(--bui-text-and-icon-disabled); }
-.og-osteps__title { display: inline-flex; align-items: center; gap: var(--bui-spacing-1); }
-.og-osteps__step[data-look="done"] .og-osteps__title { color: var(--bui-text-and-icon-secondary); }
-/* the stage where the work goes on: the whole bar is filled, and a soft light moves over it (nothing moves with reduced motion) */
-.og-osteps__step[data-look="run"] .bui-progress__track::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--bui-background-secondary) 55%, transparent), transparent); transform: translateX(-100%); animation: og-run 2.2s var(--bui-ease-out, ease-in-out) infinite; }
-@keyframes og-run { to { transform: translateX(100%); } }
-@media (prefers-reduced-motion: reduce) { .og-osteps__step[data-look="run"] .bui-progress__track::after { animation: none; } }
 /* the offers at the bottom of an offer page: bigger cards (the narrowest 280px, four in a row on a desktop) */
 
 /* the payment history: the filters in a row, the amount and the state of a transaction */
@@ -741,3 +728,19 @@ a { color: inherit; }
 /* the side padding of the cards of the pages: 24 on a desktop (20 and 4 more), 20 on a phone */
 .og { --og-card-x: var(--bui-spacing-6); }
 .og.og--mobile { --og-card-x: var(--bui-spacing-5); }
+
+/* the tracker of an order, as a parcel has it: circles on a line, the passed ones filled with a check, the one the order is at large with its name, the ones to come empty */
+.og-ostatus__track { padding: var(--bui-spacing-5) var(--bui-spacing-3) var(--bui-spacing-1); }
+.og-track { list-style: none; margin: 0; padding: 0; display: flex; align-items: flex-start; }
+.og-track__step { position: relative; flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: var(--bui-spacing-2); }
+.og-track__step:not(:last-child)::after { content: ""; position: absolute; top: 17px; left: calc(50% + 22px); right: calc(-50% + 22px); height: 2px; border-radius: 1px; background: var(--bui-background-tertiary); }
+.og-track__step[data-look="done"]:not(:last-child)::after { background: var(--bui-extensions-background-success); }
+.og-track__dot { position: relative; z-index: 1; width: 36px; height: 36px; box-sizing: border-box; border-radius: var(--bui-radius-full); display: grid; place-items: center; border: 2px solid var(--bui-background-tertiary); color: var(--bui-text-and-icon-disabled); background: var(--bui-extensions-background-surface); }
+.og-track__step[data-look="done"] .og-track__dot { border-color: transparent; background: var(--bui-extensions-background-success); color: var(--bui-extensions-text-and-icon-always-dark); }
+.og-track__step[data-look="current"] .og-track__dot, .og-track__step[data-look="run"] .og-track__dot { width: 44px; height: 44px; margin-top: -4px; border-color: transparent; background: var(--bui-extensions-background-success); color: var(--bui-extensions-text-and-icon-always-dark); }
+.og-track__step[data-look="problem"] .og-track__dot { width: 44px; height: 44px; margin-top: -4px; border-color: transparent; background: var(--bui-extensions-background-warning); color: var(--bui-extensions-text-and-icon-always-dark); }
+.og-track__step[data-look="run"] .og-track__dot { animation: og-track-pulse 2s var(--bui-ease-out) infinite; }
+@keyframes og-track-pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--bui-extensions-background-success) 45%, transparent); } 70%, 100% { box-shadow: 0 0 0 10px transparent; } }
+@media (prefers-reduced-motion: reduce) { .og-track__step[data-look="run"] .og-track__dot { animation: none; } }
+.og-track__label { width: max-content; max-width: 112px; font: var(--bui-typography-text-14-semi-bold); color: var(--bui-text-and-icon-primary); text-align: center; text-wrap: balance; }
+.og-track__step[data-look="problem"] .og-track__label { color: var(--bui-extensions-text-and-icon-warning); }
