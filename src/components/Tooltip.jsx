@@ -5,21 +5,28 @@ import { Floating, useAnchoredSide } from '../floating.js';
 
 export function Tooltip({ content, placement = 'top', delay = 300, children, className, ...rest }) {
   const [open, setOpen] = useState(false);
+  // the bubble stays drawn while it plays out (data-closing), so it leaves as it came
+  const [mounted, setMounted] = useState(false);
+  const leaving = useRef();
   const touch = useTouchScreen();
   const id = useId();
   const timer = useRef();
   const root = useRef(null);
   const bubble = useRef(null);
-  const pos = useAnchoredSide(open && !touch, root, bubble, placement);
+  const pos = useAnchoredSide(mounted && !touch, root, bubble, placement);
   const show = () => {
     clearTimeout(timer.current);
-    if (!touch) timer.current = setTimeout(() => setOpen(true), delay);
+    clearTimeout(leaving.current);
+    if (!touch) timer.current = setTimeout(() => { setMounted(true); setOpen(true); }, delay);
   };
   const hide = () => {
     clearTimeout(timer.current);
     setOpen(false);
+    // unmount when the animation of leaving ends (the timer is for the motion that is off or reduced: no animation, no end)
+    clearTimeout(leaving.current);
+    leaving.current = setTimeout(() => setMounted(false), 200);
   };
-  useEffect(() => () => clearTimeout(timer.current), []);
+  useEffect(() => () => { clearTimeout(timer.current); clearTimeout(leaving.current); }, []);
   useEffect(() => {
     if (!open) return undefined;
     const onKey = (e) => e.key === 'Escape' && hide();
@@ -31,7 +38,7 @@ export function Tooltip({ content, placement = 'top', delay = 300, children, cla
   return (
     <span ref={root} data-slot="tooltip" className={cx('bui-tooltip', className)} onMouseEnter={show} onMouseLeave={hide} onFocus={show} onBlur={hide} {...rest}>
       {child}
-      {open && !touch && (
+      {mounted && !touch && (
         <Floating>
           <span
             ref={bubble}
@@ -39,6 +46,8 @@ export function Tooltip({ content, placement = 'top', delay = 300, children, cla
             id={id}
             data-slot="tooltip-bubble"
             className="bui-tooltip__bubble"
+            data-closing={open ? undefined : ''}
+            onAnimationEnd={() => { if (!open) setMounted(false); }}
             data-placement={pos?.side ?? placement}
             style={pos ? { top: pos.top, left: pos.left } : { top: 0, left: 0, visibility: 'hidden' }}
           >

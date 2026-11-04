@@ -1,5 +1,5 @@
 // Behaviour of the main components: what a user does and what the component reports.
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, test, vi } from 'vitest';
 import { useState } from 'react';
@@ -676,3 +676,22 @@ describe('Badge light', () => {
   });
 });
 
+describe('Tooltip leaves as it comes', () => {
+  test('the bubble stays drawn with data-closing while it plays out, then goes', async () => {
+    vi.useFakeTimers();
+    try {
+      const { Tooltip } = await import('../src/components/Tooltip.jsx');
+      render(<Tooltip content="Tip" delay={0}><button type="button">Trigger</button></Tooltip>);
+      fireEvent.mouseEnter(screen.getByRole('button'));
+      await act(async () => { vi.advanceTimersByTime(10); });
+      const bubble = screen.getByRole('tooltip');
+      expect(bubble).not.toHaveAttribute('data-closing');
+      fireEvent.mouseLeave(screen.getByRole('button'));
+      expect(screen.getByRole('tooltip')).toHaveAttribute('data-closing');
+      await act(async () => { vi.advanceTimersByTime(250); });
+      expect(screen.queryByRole('tooltip')).toBeNull();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+});

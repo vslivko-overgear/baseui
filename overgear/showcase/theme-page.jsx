@@ -8,6 +8,7 @@ import { Card } from '../../src/components/Card.jsx';
 import { TextInput } from '../../src/components/TextInput.jsx';
 import { Slider } from '../../src/components/Slider.jsx';
 import { SegmentedControl } from '../../src/components/SegmentedControl.jsx';
+import { TokenGroup } from '../../src/components/TokenGroup.jsx';
 import { Tabs } from '../../src/components/Tabs.jsx';
 import { Switch } from '../../src/components/Switch.jsx';
 import { Selector } from '../../src/components/Selector.jsx';
@@ -65,7 +66,7 @@ export function Theme() {
             <SegmentedControl label="Blue cast" items={['1', '2', '3', '4', '5'].map((v) => ({ value: v, label: v }))} value={String((theme.tint ?? TINT_DEFAULT) + 1)} onValueChange={(v) => set({ tint: Number(v) - 1 })} />
           </Row>
           <Row title="Brand" hint="The color of primary buttons and of the current step; the default is white in the dark theme. Custom takes any color">
-            <SegmentedControl label="Brand" items={seg(BRAND_OPTIONS)} value={BRAND_OPTIONS.includes(theme.brand) ? theme.brand : 'default'} onValueChange={(brand) => set({ brand })} />
+            <TokenGroup aria-label="Brand" options={seg(BRAND_OPTIONS)} value={[BRAND_OPTIONS.includes(theme.brand) ? theme.brand : 'default']} onValueChange={(v) => v[0] && set({ brand: v[0] })} />
           </Row>
           {theme.brand === 'custom' && (
             <Row title="Brand color" hint="Your own color for the brand: primary buttons and the current step">

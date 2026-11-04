@@ -2835,6 +2835,21 @@ textarea.bui-input {
   font: var(--bui-typography-text-14-regular); animation: bui-fade var(--bui-duration-150) var(--bui-ease-out);
 }
 
+/* The bubble leaves as it came, on the same motion as the menus: basic = a quick fade in and out, off = none, enhanced = it grows from its trigger (from the side it hangs on) and plays out. */
+@keyframes bui-fade-out { to { opacity: 0; } }
+@keyframes bui-tip-in { from { opacity: 0; transform: translate(var(--bui-tip-x, 0), var(--bui-tip-y, 4px)) scale(0.9); } }
+@keyframes bui-tip-out { to { opacity: 0; transform: translate(var(--bui-tip-x, 0), var(--bui-tip-y, 4px)) scale(0.95); } }
+.bui-tooltip__bubble { transform-origin: var(--bui-tip-origin, bottom center); }
+.bui-tooltip__bubble[data-placement="top"] { --bui-tip-origin: bottom center; --bui-tip-y: 4px; }
+.bui-tooltip__bubble[data-placement="bottom"] { --bui-tip-origin: top center; --bui-tip-y: -4px; }
+.bui-tooltip__bubble[data-placement="left"] { --bui-tip-origin: center right; --bui-tip-x: 4px; --bui-tip-y: 0; }
+.bui-tooltip__bubble[data-placement="right"] { --bui-tip-origin: center left; --bui-tip-x: -4px; --bui-tip-y: 0; }
+.bui-tooltip__bubble[data-closing] { animation: bui-fade-out var(--bui-duration-150) var(--bui-ease-out) both; }
+html[data-motion="enhanced"] .bui-tooltip__bubble { animation: bui-tip-in var(--bui-duration-300) var(--bui-ease-in-out) both; }
+html[data-motion="enhanced"] .bui-tooltip__bubble[data-closing] { animation: bui-tip-out var(--bui-duration-150) var(--bui-ease-out) both; }
+html[data-motion="off"] .bui-tooltip__bubble, html[data-motion="off"] .bui-tooltip__bubble[data-closing] { animation: none; }
+@media (prefers-reduced-motion: reduce) { .bui-tooltip__bubble, .bui-tooltip__bubble[data-closing] { animation: none; } }
+
 /* ---------- Hint ---------- */
 .bui-hint { all: unset; box-sizing: border-box; cursor: pointer; display: inline-grid; place-items: center; border-radius: var(--bui-radius-full); color: var(--bui-text-and-icon-secondary); }
 .bui-hint:focus-visible { outline: var(--bui-focus-outline-width) var(--bui-focus-outline-style) var(--bui-focus-outline-color); outline-offset: var(--bui-focus-outline-offset); }

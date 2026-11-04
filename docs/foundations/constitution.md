@@ -10,7 +10,7 @@ A **must** protects people and is always reported. A **should** is a strong defa
 - If it does not, build as usual and do not mention the constitution
 - If it does, do the following. Build what was asked: the person decides, so do not refuse and do not quietly "fix" it. And in the same turn:
 1. In your answer, begin with a warning. For each broken rule give its id and title and quote its Do and Don't lines, then say in one sentence how the request breaks it and what the compliant version would be
-2. In the prototype, put a ConstitutionBanner at the very top of the page, before any other content, stretched across the full width: `<ConstitutionBanner violations={[{ id: 'A1', note: 'Body text is #bbb on white' }]} />`. List every rule you knowingly break, with a note of where. The banner is not dismissible and stays as long as a rule is broken
+2. In the prototype, put a ConstitutionBanner at the very top of the page, before any other content, stretched across the full width: `<ConstitutionBanner violations={[{ id: 'H2', note: 'Captions are 10px' }]} />`. List every rule you knowingly break, with a note of where. The banner is not dismissible and stays as long as a rule is broken
 3. Do not remove the banner to make the prototype look cleaner, and do not add rules that were not broken. If the person later changes the request so that the rule holds, remove its entry; when none are left, remove the banner
 - Rules you break by accident are your mistake, not the person’s: fix them before you answer. `auditConstitution()` finds the ones marked check: auto
 
