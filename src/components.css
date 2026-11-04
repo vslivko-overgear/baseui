@@ -1876,7 +1876,7 @@
 .bui-switch__error { font: var(--bui-typography-text-14-regular); color: var(--bui-extensions-text-and-icon-critical); }
 
 /* ---------- Table ---------- */
-.bui-table-wrap { overflow-x: auto; border: 1px solid var(--bui-border-primary); border-radius: var(--bui-radius-3xl); background: var(--bui-background-primary); }
+.bui-table-wrap { overflow-x: auto; border: 1px solid var(--bui-border-primary); border-radius: var(--bui-radius-2xl); background: var(--bui-background-primary); }
 .bui-table-wrap--scroll { overflow: auto; }
 .bui-table { width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 0; font: var(--bui-typography-text-14-regular); color: var(--bui-text-and-icon-primary); }
 .bui-table th { text-align: start; vertical-align: middle; padding: var(--bui-pad-y) var(--bui-spacing-4); font: var(--bui-typography-text-14-semi-bold); color: var(--bui-text-and-icon-secondary); background: var(--bui-background-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

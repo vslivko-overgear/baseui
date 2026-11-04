@@ -12,6 +12,11 @@ describe('radiusFor', () => {
     expect(radiusFor(177, 341)).toBeGreaterThan(radiusFor(100, 100));
     expect(radiusFor(2000, 2000)).toBe(FIT.max);
   });
+  test('the radius is always even', () => {
+    for (let side = 1; side <= 2000; side += 7) expect(radiusFor(side, side) % 2).toBe(0);
+    expect(radiusFor(177, 341)).toBe(22);
+    expect(radiusFor(240, 375)).toBe(24);
+  });
   test('the smaller side decides', () => {
     expect(radiusFor(1000, 76)).toBe(radiusFor(76, 76));
   });

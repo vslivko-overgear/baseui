@@ -2,13 +2,14 @@ import { useCallback, useRef } from './react.js';
 
 /**
  * The corner of a surface follows its mass: a big card is rounder than a small one, so a row of five cards and a row of two
- * are both in proportion. The radius is `K × √(the smaller side)` between `MIN` and `MAX` (px): 100px is 16, 300px is 28, a page-wide card is 32.
+ * are both in proportion. The radius is `K × √(the smaller side)` between `MIN` and `MAX` (px), always an even number: 100px is 16, 177px is 22, 240px is 24, 300px is 28, a page-wide card is 32.
  */
 export const FIT = { min: 12, max: 32, k: 1.6 };
 export const radiusFor = (width, height) => {
   const side = Math.min(width, height);
   if (!(side > 0)) return FIT.max;
-  return Math.max(FIT.min, Math.min(FIT.max, Math.round(FIT.k * Math.sqrt(side))));
+  // even only: 2 × a whole half
+  return Math.max(FIT.min, Math.min(FIT.max, 2 * Math.round((FIT.k * Math.sqrt(side)) / 2)));
 };
 
 /**

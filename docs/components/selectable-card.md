@@ -30,7 +30,7 @@ A card that can be selected, like a checkbox
 | `height` | `number \| string` | — | Number is px |
 | `maxWidth` | `number \| string` | — | Number is px |
 | `minHeight` | `number \| string` | — | Number is px |
-| `radius` | `'fit' \| number \| string` | `'fit'` | The corner: `fit` follows the size of the card (the smaller side: a big card is rounder than a small one, 12 to 32px), a number is px, a string is any CSS length. What stands inside takes `var(--bui-card-radius)` minus the padding |
+| `radius` | `'fit' \| number \| string` | `'fit'` | The corner: `fit` follows the size of the card (the smaller side: a big card is rounder than a small one, an even number from 12 to 32px), a number is px, a string is any CSS length. What stands inside takes `var(--bui-card-radius)` minus the padding |
 | `children` | `ReactNode` | — | Card content |
 
 ## Examples
