@@ -189,9 +189,9 @@ export function CashbackMark() {
 /** The words that explain the cashback: the hint of the line of the summary and of every tag of it. */
 export const CASHBACK_HINT = 'Cashback is credited to your balance in OG Coins after the order is completed';
 
-/** A tag of the cashback (light yellow, the mark of OG Coins): it explains itself, a tooltip with a mouse and a dialog on a phone. Every tag of the cashback is this one. */
+/** A tag of the cashback (light yellow, the amount and the mark of OG Coins at its end, close to it): it explains itself, a tooltip with a mouse and a dialog on a phone. Every tag of the cashback is this one. */
 export function CashbackTag({ label, size = 'md', hint = CASHBACK_HINT }) {
-  return <Hint label={`About the bonus, ${label}`} content={hint}><Badge variant="warning-light" size={size} label={label} icon={<CashbackMark />} /></Hint>;
+  return <Hint label={`About the bonus, ${label}`} content={hint}><Badge variant="warning-light" size={size} label={<span className="og-cbtag">{label}<CashbackMark /></span>} /></Hint>;
 }
 
 /** The cashback of an order, in percent of its price (paid in OG Coins). */
