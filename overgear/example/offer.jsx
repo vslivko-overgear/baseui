@@ -100,7 +100,7 @@ export function Offer({ id }) {
   );
   // the price and the buttons, the facts and the payment methods, and the reasons to trust: a column at the right on a desktop; on a phone under the form of the order
   const aside = (
-  <div className="og-stack og-sticky og-aside">
+  <div className="og-stack og-sticky">
     <Card variant="surface" padding={5} style={CARD_X}>
       <div className="og-stack">
         {(

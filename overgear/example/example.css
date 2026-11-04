@@ -738,7 +738,6 @@ a { color: inherit; }
 .og-slothelp { display: flex; align-items: center; justify-content: space-between; gap: var(--bui-spacing-3); padding: var(--bui-spacing-3) var(--bui-spacing-4); border-radius: var(--bui-radius-2xl); background: var(--bui-background-secondary); }
 .og-slothelp p { margin: 0; }
 
-/* the side padding of the cards of the pages: 24 on a desktop (20 and 4 more), 20 on a phone, 16 in the price column of an offer on a phone */
+/* the side padding of the cards of the pages: 24 on a desktop (20 and 4 more), 20 on a phone */
 .og { --og-card-x: var(--bui-spacing-6); }
 .og.og--mobile { --og-card-x: var(--bui-spacing-5); }
-.og.og--mobile .og-aside { --og-card-x: var(--bui-spacing-4); }
