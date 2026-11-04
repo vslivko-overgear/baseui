@@ -212,6 +212,7 @@ export function Typeahead({
       loading={loading}
       startIcon={startIcon}
       multiple={multiple}
+      valueKey={JSON.stringify(current ?? null)}
       onBlur={handleBlur}
       cellRef={cell}
       className={cx(suffix && !multiple && 'bui-typeahead__has-suffix', className)}

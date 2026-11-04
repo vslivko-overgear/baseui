@@ -630,3 +630,33 @@ describe('useFieldErrors', () => {
   });
 });
 
+describe('an error goes at the first change of the value, in any field (no help from the form)', () => {
+  const state = (label) => screen.getByLabelText(label).closest('.bui-field');
+  test('a text field with an error keeps it until the first typed character, and the error comes back with the next submit', async () => {
+    render(<form onSubmit={(e) => e.preventDefault()}><TextInput label="Code" status="error" caption="This code does not work" /><button type="submit">Go</button></form>);
+    expect(state('Code').getAttribute('data-status')).toBe('error');
+    await userEvent.click(screen.getByLabelText('Code'));
+    expect(state('Code').getAttribute('data-status')).toBe('error');
+    await userEvent.keyboard('a');
+    expect(state('Code').getAttribute('data-status')).toBeNull();
+    expect(screen.queryByText('This code does not work')).toBeNull();
+    await userEvent.click(screen.getByRole('button', { name: 'Go' }));
+    expect(state('Code').getAttribute('data-status')).toBe('error');
+    expect(screen.getByText('This code does not work')).toBeInTheDocument();
+  });
+  test('a new error text brings the error back at once', async () => {
+    const { rerender } = render(<TextInput label="Code" status="error" caption="one" />);
+    await userEvent.type(screen.getByLabelText('Code'), 'a');
+    expect(screen.queryByText('one')).toBeNull();
+    rerender(<TextInput label="Code" status="error" caption="two" />);
+    expect(screen.getByText('two')).toBeInTheDocument();
+  });
+  test('a selector drops its error when another option is chosen', async () => {
+    render(<Selector label="Letter" status="error" caption="Pick one" options={[{ value: 'a', label: 'Alpha' }, { value: 'b', label: 'Beta' }]} />);
+    expect(screen.getByText('Pick one')).toBeInTheDocument();
+    await userEvent.click(screen.getByRole('combobox'));
+    await userEvent.click(await screen.findByRole('option', { name: 'Beta' }));
+    expect(screen.queryByText('Pick one')).toBeNull();
+  });
+});
+

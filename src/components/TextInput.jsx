@@ -110,6 +110,7 @@ export function TextInput({
       startIcon={startIcon}
       trailing={trailing}
       focusRef={control}
+      valueKey={String(current ?? '')}
       className={cx(suffix && 'bui-input__has-suffix', className)}
     >
       {prefix && <span className="bui-input__affix">{prefix}</span>}

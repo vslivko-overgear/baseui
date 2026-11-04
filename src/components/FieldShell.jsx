@@ -1,4 +1,4 @@
-import { cx } from '../react.js';
+import { cx, useState, useEffect, useRef } from '../react.js';
 import { Field } from '@base-ui/react/field';
 import { useControlSize, FIELD_OF_TIER } from '../control-size.js';
 
@@ -7,6 +7,9 @@ import { useControlSize, FIELD_OF_TIER } from '../control-size.js';
  * slots for an icon and an action, and a caption or an error. The label, the control and the caption are wired by the Base UI Field
  * (`aria-describedby`, `aria-invalid`, the data attributes of the states). The control itself is passed as `children`.
  * An internal component: it is not part of the public API.
+ *
+ * An error goes at the first change of the value (`valueKey` is the value as a string or a number): the field stops looking wrong and drops the error text (the caption), whatever the form does.
+ * It comes back when the form is submitted again, or when `status` or `caption` change (a new error): the form need not know about it.
  */
 export function FieldShell({
   variant = 'filled',
@@ -26,13 +29,31 @@ export function FieldShell({
   trailing,
   focusRef,
   cellRef,
+  valueKey,
   children,
   onBlur,
   className,
 }) {
   const row = useControlSize();
   const size = sizeProp ?? (row ? FIELD_OF_TIER[row] : undefined) ?? 'md';
-  const hasCaption = !loading && !!caption;
+  // the error goes at the first change of the value, and comes back with a new error (status or caption change) or with the next submit of the form
+  const [seen, setSeen] = useState({ valueKey, status, caption });
+  const [dismissed, setDismissed] = useState(false);
+  if (seen.valueKey !== valueKey || seen.status !== status || seen.caption !== caption) {
+    setSeen({ valueKey, status, caption });
+    if (seen.status !== status || seen.caption !== caption) setDismissed(false);
+    else if (status === 'error') setDismissed(true);
+  }
+  const root = useRef(null);
+  useEffect(() => {
+    const form = root.current?.closest('form');
+    if (!form) return undefined;
+    const again = () => setDismissed(false);
+    form.addEventListener('submit', again);
+    return () => form.removeEventListener('submit', again);
+  }, []);
+  const shownStatus = dismissed ? undefined : status;
+  const hasCaption = !loading && !!caption && !(dismissed && status === 'error');
   return (
     <Field.Root
       data-slot="textinput"
@@ -50,9 +71,10 @@ export function FieldShell({
       data-control={control}
       data-float={label ? (floatingLabel ? 'floating' : 'placeholder') : 'none'}
       data-multiple={multiple || undefined}
-      data-status={status}
+      ref={root}
+      data-status={shownStatus}
       disabled={disabled || loading}
-      invalid={status === 'error'}
+      invalid={shownStatus === 'error'}
       aria-busy={loading || undefined}
     >
       <span
@@ -102,7 +124,7 @@ export function FieldShell({
           id={captionId}
           data-slot="textinput-caption"
           className="bui-field__caption"
-          data-test={status === 'error' ? 'inputError' : undefined}
+          data-test={shownStatus === 'error' ? 'inputError' : undefined}
         >
           {caption}
         </Field.Description>

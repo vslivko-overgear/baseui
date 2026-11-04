@@ -257,6 +257,7 @@ export function Selector({
       multiple={multiple}
       onBlur={handleBlur}
       cellRef={cell}
+      valueKey={JSON.stringify(current ?? null)}
       className={cx(suffix && 'bui-selector__has-suffix', className)}
     >
       {body}
